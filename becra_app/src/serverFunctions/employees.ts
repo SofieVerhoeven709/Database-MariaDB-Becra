@@ -42,7 +42,7 @@ export const registerAction = publicFormAction({
     logger.info(`New employee created: ${employee.id}`);
 
     const role = await prismaClient.role.findUnique({
-      where: { id: employee!.roleId },
+      where: { id: employee!.roleId! },
     });
     if (!role) throw new Error("Employee has no role assigned.");
 
@@ -84,7 +84,7 @@ export const signInAction = publicFormAction({
     logger.info(`Successful authentication request for ${employee!.id}`);
 
     const role = await prismaClient.role.findUnique({
-      where: { id: employee!.roleId },
+      where: { id: employee!.roleId! },
     });
     if (!role) throw new Error("Employee has no role assigned.");
 

@@ -134,7 +134,7 @@ function apiRoute<
       (!profile && authenticated) ||
       (profile &&
         options.requiredRoles &&
-        !options.requiredRoles.includes(profile.Role_Employee_roleIdToRole))
+        !options.requiredRoles.includes(profile.Role_Employee_roleIdToRole!))
     ) {
       logger.warn("Unauthorized user tried accessing API route.");
       return unauthorized();

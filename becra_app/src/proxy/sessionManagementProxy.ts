@@ -14,14 +14,14 @@ export async function sessionManagementProxy(
 
   if (
     session.activeUntil.getTime() - Date.now() <
-    SessionDuration[session.Employee.Role_Employee_roleIdToRole.name] / 2
+    SessionDuration[session.Employee.Role_Employee_roleIdToRole!.name] / 2
   ) {
     await extendSessionAndSetCookie(
       session.id,
-      session.Employee.Role_Employee_roleIdToRole,
+      session.Employee.Role_Employee_roleIdToRole!,
     );
     logger.info(
-      `Extended session ${session.id} by ${SessionDuration[session.Employee.Role_Employee_roleIdToRole.name]} ms`,
+      `Extended session ${session.id} by ${SessionDuration[session.Employee.Role_Employee_roleIdToRole!.name]} ms`,
     );
   }
 

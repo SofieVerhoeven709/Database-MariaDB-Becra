@@ -222,7 +222,7 @@ async function handleServerFunction<
     if (
       authenticated &&
       options.requiredRoles &&
-      !options.requiredRoles.includes(profile!.Role_Employee_roleIdToRole)
+      !options.requiredRoles.includes(profile!.Role_Employee_roleIdToRole!)
     ) {
       logger.warn(
         `Unauthorized user ${profile?.id} tried executing ${functionName ?? "a server function"}.`,

@@ -1,44 +1,56 @@
 import { z } from "zod";
+import { Buffer } from "buffer";
+
+const dateSchema = z.preprocess(
+  (val) =>
+    typeof val === "string" || val instanceof Date ? new Date(val) : val,
+  z.date(),
+);
+
+const bytesSchema = z.instanceof(Uint8Array<ArrayBuffer>);
 
 export const employeeSchemas = z.object({
-  id: z.string(),
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-  mail: z.string(),
+  id: bytesSchema,
+
+  firstName: z.string().min(1).max(100),
+  lastName: z.string().min(1).max(100),
+  mail: z.string().max(100),
+
   password_hash: z.string().min(8).max(100),
-  phoneNumber: z.string().nullable().optional(),
-  startDate: z.preprocess((arg) => new Date(arg as string), z.date()),
-  endDate: z
-    .preprocess(
-      (arg) => (arg ? new Date(arg as string) : null),
-      z.date().nullable(),
-    )
-    .optional(),
-  info: z.string().nullable().optional(),
-  birthDate: z
-    .preprocess(
-      (arg) => (arg ? new Date(arg as string) : null),
-      z.date().nullable(),
-    )
-    .optional(),
-  street: z.string().nullable().optional(),
-  houseNumber: z.string().nullable().optional(),
-  busNumber: z.string().nullable().optional(),
-  zipCode: z.string().nullable().optional(),
-  place: z.string().nullable().optional(),
-  userName: z.string().min(3),
-  createdAt: z.preprocess((arg) => new Date(arg as string), z.date()),
-  permanentEmployee: z.boolean().optional(),
-  checkInfo: z.boolean().optional(),
-  newYearCard: z.boolean().optional(),
-  active: z.boolean().optional(),
-  passwordCreatedAt: z.preprocess((arg) => new Date(arg as string), z.date()),
-  createdBy: z.string().uuid(),
-  roleId: z.string(),
-  functionId: z.string(),
-  departmentId: z.string(),
-  titleId: z.string(),
-  pictureId: z.string().nullable().optional(),
+
+  phoneNumber: z.string().max(100).nullable(),
+
+  startDate: dateSchema,
+  endDate: dateSchema.nullable(),
+
+  info: z.string().nullable(),
+
+  birthDate: dateSchema.nullable(),
+
+  street: z.string().max(100).nullable(),
+  houseNumber: z.string().max(100).nullable(),
+  busNumber: z.string().max(100).nullable(),
+  zipCode: z.string().max(100).nullable(),
+  place: z.string().max(100).nullable(),
+
+  userName: z.string().min(3).max(100),
+
+  createdAt: dateSchema,
+
+  permanentEmployee: z.boolean(),
+  checkInfo: z.boolean(),
+  newYearCard: z.boolean(),
+  active: z.boolean(),
+
+  passwordCreatedAt: dateSchema,
+
+  createdBy: bytesSchema,
+  roleId: bytesSchema,
+  functionId: bytesSchema,
+  departmentId: bytesSchema,
+  titleId: bytesSchema,
+
+  pictureId: bytesSchema.nullable(),
 });
 
 export const signInSchema = employeeSchemas.omit({
@@ -48,16 +60,12 @@ export const signInSchema = employeeSchemas.omit({
 });
 
 export const registerSchema = employeeSchemas
-  .omit({ id: true, createdAt: true, passwordCreatedAt: true })
-  // Via extend kunnen we een bestaand schema uitbreiden met extra velden.
   .extend({
     passwordConfirmation: z.string(),
   })
-  // De refine methode, die beschikbaar is op properties en het schema zelf, kan gebruikt worden om extra validatie toe
-  // te voegen die niet standaard aanwezig is in Zod.
   .refine((data) => data.password_hash === data.passwordConfirmation, {
     path: ["passwordConfirmation"],
-    message: "The password and confirmation do not match.",
+    message: "The password and confirmation do not match",
   });
 
 export const updateEmployeeSchema = employeeSchemas.pick({ userName: true });

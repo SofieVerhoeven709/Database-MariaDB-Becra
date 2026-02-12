@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { Buffer } from "buffer";
 
 const dateSchema = z.preprocess(
   (val) =>
@@ -14,7 +13,7 @@ export const employeeSchemas = z.object({
 
   firstName: z.string().min(1).max(100),
   lastName: z.string().min(1).max(100),
-  mail: z.string().max(100),
+  mail: z.string().max(100).nullable(),
 
   password_hash: z.string().min(8).max(100),
 
@@ -44,12 +43,11 @@ export const employeeSchemas = z.object({
 
   passwordCreatedAt: dateSchema,
 
-  createdBy: bytesSchema,
-  roleId: bytesSchema,
-  functionId: bytesSchema,
-  departmentId: bytesSchema,
-  titleId: bytesSchema,
-
+  createdBy: bytesSchema.nullable(),
+  roleId: bytesSchema.nullable(),
+  functionId: bytesSchema.nullable(),
+  departmentId: bytesSchema.nullable(),
+  titleId: bytesSchema.nullable(),
   pictureId: bytesSchema.nullable(),
 });
 

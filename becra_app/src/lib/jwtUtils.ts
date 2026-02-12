@@ -11,7 +11,7 @@ const PRIVATE_KEY_DECODED = Buffer.from(PRIVATE_KEY!, "base64").toString(
 );
 
 export interface TokenBody {
-  mail: string;
+  //mail: string;
   id: Uint8Array<ArrayBuffer>;
   username: string;
   iat: number;
@@ -55,7 +55,7 @@ export const validateStatefulJwtToken = (
 export const createJwtToken = (employee: Profile) => {
   return JWT.sign(
     {
-      mail: employee.mail,
+      //mail: employee.mail,
       id: employee.id,
       userName: employee.userName,
       Role_Employee_roleIdToRole: employee.Role_Employee_roleIdToRole,
@@ -64,7 +64,7 @@ export const createJwtToken = (employee: Profile) => {
     {
       algorithm: "RS256",
       expiresIn: TOKEN_EXPIRATION,
-      subject: employee.mail,
+      subject: employee.userName,
       issuer: "contacts-app",
     },
   );
@@ -73,7 +73,7 @@ export const createJwtToken = (employee: Profile) => {
 export const createStatefulJwtToken = (session: SessionWithProfile) => {
   return JWT.sign(
     {
-      mail: session.Employee.mail,
+      //mail: session.Employee.mail,
       id: session.Employee.id,
       username: session.Employee.userName,
       Role_Employee_roleIdToRole: session.Employee.Role_Employee_roleIdToRole,
@@ -83,7 +83,7 @@ export const createStatefulJwtToken = (session: SessionWithProfile) => {
     {
       algorithm: "RS256",
       expiresIn: TOKEN_EXPIRATION,
-      subject: session.Employee.mail,
+      subject: session.Employee.userName,
       issuer: "contacts-app",
     },
   );

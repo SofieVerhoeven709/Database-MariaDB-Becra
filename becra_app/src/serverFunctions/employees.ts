@@ -60,7 +60,7 @@ export const registerAction = publicFormAction({
 export const signInAction = publicFormAction({
   schema: signInSchema,
   serverFn: async ({ data, logger }) => {
-    const employee = await getEmployeeByEmail(data.mail);
+    const employee = await getEmployeeByEmail(data.mail!);
 
     // Als we meteen een unauthorized terug geven nadat een gebruiker niet gevonden is in de database, kan een aanvaller
     // hieruit afleiden dat het e-mailadres niet bestaat.

@@ -9,10 +9,11 @@ import type {
 } from '@/models/serverFunctions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {validateSchema} from '@/lib/validateSchema'
-import type {Role} from '@/generated/prisma/enums'
 import type {Logger} from 'pino'
 import {getLogger} from '@/lib/logger'
 import {convertFormData} from '@/lib/convertFormData'
+import type {Role} from '@/generated/prisma/client'
+import {binaryToUuid} from '@/lib/utils'
 
 const emptySchema = z.object({})
 type EmptySchema = ZodType<typeof emptySchema>
@@ -161,8 +162,14 @@ async function handleServerFunction<Schema extends ZodType, ReturnType, Auth ext
     const profile = authenticated ? await getSessionProfileFromCookieOrThrow() : undefined
 
     logger.trace(`Checking authorization for ${functionName}.`)
-    if (authenticated && options.requiredRoles && !options.requiredRoles.includes(profile!.role)) {
-      logger.warn(`Unauthorized user ${profile?.id} tried executing ${functionName ?? 'a server function'}.`)
+    if (
+      authenticated &&
+      options.requiredRoles &&
+      !options.requiredRoles.includes(profile!.Role_Employee_roleIdToRole!)
+    ) {
+      logger.warn(
+        `Unauthorized user ${binaryToUuid(profile!.id)} tried executing ${functionName ?? 'a server function'}.`,
+      )
       return {
         success: false,
       }

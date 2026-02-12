@@ -13,6 +13,7 @@ import {getLogger} from '@/lib/logger'
 import {validateJwtToken} from '@/lib/jwtUtils'
 import type {Role} from '@/generated/prisma/client'
 import {prismaClient} from '@/dal/prismaClient'
+import {binaryToUuid} from '@/lib/utils'
 
 const emptySchema = z.object({})
 type EmptySchema = ZodType<typeof emptySchema>
@@ -97,44 +98,43 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
           where: {id: tokenBody.id},
           include: {Role_Employee_roleIdToRole: true},
         })
-      } else if (authenticated) {
-        logger.trace(`Checking authentication through a session cookie.`)
-        profile = await getSessionProfileFromCookie()
       }
+    } else if (authenticated) {
+      logger.trace(`Checking authentication through a session cookie.`)
+      profile = await getSessionProfileFromCookie()
+    }
 
-      if (
-        (!profile && authenticated) ||
-        (profile && options.requiredRoles && !options.requiredRoles.includes(profile.roleId!))
-      ) {
-        logger.warn(`Unauthorized user ${profile?.id} tried executing API Route.`)
-        return unauthorized()
-      }
+    if (
+      (!profile && authenticated) ||
+      (profile && options.requiredRoles && !options.requiredRoles.includes(profile.Role_Employee_roleIdToRole!))
+    ) {
+      logger.warn(`Unauthorized user ${binaryToUuid(profile!.id)} tried executing API Route.`)
+      return unauthorized()
+    }
 
-      let unvalidatedData: unknown
+    let unvalidatedData: unknown
 
-      if (type === 'body') {
-        unvalidatedData = await getBody(request)
-      } else if (type === 'searchParams') {
-        unvalidatedData = Object.fromEntries(request.nextUrl.searchParams.entries())
-      } else {
-        unvalidatedData = await getFormData(request)
-      }
-      const {data, errors} = validateSchema(schema, unvalidatedData)
+    if (type === 'body') {
+      unvalidatedData = await getBody(request)
+    } else if (type === 'searchParams') {
+      unvalidatedData = Object.fromEntries(request.nextUrl.searchParams.entries())
+    } else {
+      unvalidatedData = await getFormData(request)
+    }
+    const {data, errors} = validateSchema(schema, unvalidatedData)
 
-      if (errors || !data) {
-        logger.trace(`Validation of submitted data failed for API Route.`)
-        return badRequest(errors)
-      }
+    if (errors || !data) {
+      return badRequest(errors)
+    }
 
-      try {
-        const context = {request, data, profile, logger} as Context<Schema, Auth>
-        const result = await options.routeFn(context, awaitedParams)
-        logger.info(`API Route completed successfully in ${Date.now() - start} ms`)
-        return result ?? ok()
-      } catch (error) {
-        logger.error(error)
-        return internalServerError()
-      }
+    try {
+      const context = {request, data, profile, logger} as Context<Schema, Auth>
+      const result = await options.routeFn(context, awaitedParams)
+      logger.info(`API Route completed successfully in ${Date.now() - start} ms`)
+      return result ?? ok()
+    } catch (error) {
+      logger.error(error)
+      return internalServerError()
     }
   }
 }

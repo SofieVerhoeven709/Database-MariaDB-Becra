@@ -10,23 +10,29 @@
 
 import {redirect} from 'next/navigation'
 import {revalidatePath} from 'next/cache'
-import {createUser, getUserByEmail, startSession, stopSession, updateUser} from '@/dal/users'
+import {createEmployee, getEmployeeByEmail, startSession, stopSession, updateEmployee} from '@/dal/users'
 import {getSalt, hashOptions, verifyPassword} from '@/lib/passwordUtils'
 import {clearSessionCookie, getSessionId, setSessionCookie} from '@/lib/sessionUtils'
 import {protectedFormAction, protectedServerFunction, publicFormAction} from '@/lib/serverFunctions'
-import {registerSchema, signInSchema, updateUserSchema} from '@/schemas/userSchemas'
+import {registerSchema, signInSchema, updateEmployeeSchema} from '@/schemas/userSchemas'
+import {prismaClient} from '@/dal/prismaClient'
 
 export const registerAction = publicFormAction({
   schema: registerSchema,
   serverFn: async ({data: {passwordConfirmation: _, ...data}, logger}) => {
-    const user = await createUser(data)
-    logger.info(`New user created: ${user.id}`)
+    const employee = await createEmployee(data)
+    logger.info(`New employee created: ${employee.id}`)
 
-    const session = await startSession(user.id, user.role)
+    const role = await prismaClient.role.findUnique({
+      where: {id: employee.roleId!},
+    })
+    if (!role) throw new Error('Employee has no role assigned.')
+
+    const session = await startSession(employee.id, role)
     logger.info(`New session started: ${session.id}, ends at ${session.activeUntil.toISOString()}`)
 
     await setSessionCookie(session)
-    redirect('/contacts')
+    redirect('/')
   },
   functionName: 'Register action',
   globalErrorMessage: "We couldn't create an account for you, please try again or log in with an existing account.",
@@ -35,7 +41,7 @@ export const registerAction = publicFormAction({
 export const signInAction = publicFormAction({
   schema: signInSchema,
   serverFn: async ({data, logger}) => {
-    const user = await getUserByEmail(data.email)
+    const employee = await getEmployeeByEmail(data.mail!)
 
     // Als we meteen een unauthorized terug geven nadat een gebruiker niet gevonden is in de database, kan een aanvaller
     // hieruit afleiden dat het e-mailadres niet bestaat.
@@ -46,10 +52,10 @@ export const signInAction = publicFormAction({
     // Omdat we nu in alle gevallen een wachtwoord hashen, is het moeilijker om te bepalen of een e-mailadres bestaat of
     // niet op basis van de response tijd.
     const timingSafePassword = `${hashOptions.iterations}$${hashOptions.keyLength}$preventTimingBasedAttacks123$${getSalt()}`
-    const isValidPassword = verifyPassword(user?.password ?? timingSafePassword, data.password)
+    const isValidPassword = verifyPassword(employee?.password_hash ?? timingSafePassword, data.password_hash)
 
     if (!isValidPassword) {
-      logger.warn(`Failed sign in attempt for ${data.email}.`)
+      logger.warn(`Failed sign in attempt for ${data.mail}.`)
       return {
         success: false,
         errors: {
@@ -58,14 +64,20 @@ export const signInAction = publicFormAction({
       }
     }
 
-    logger.info(`Successful authentication request for ${user!.id}`)
-    const session = await startSession(user!.id, user!.role)
+    logger.info(`Successful authentication request for ${employee!.id}`)
+
+    const role = await prismaClient.role.findUnique({
+      where: {id: employee!.roleId!},
+    })
+    if (!role) throw new Error('Employee has no role assigned.')
+
+    const session = await startSession(employee!.id, role)
     logger.info(`New session started: ${session.id}, ends at ${session.activeUntil.toISOString()}`)
 
     await setSessionCookie(session)
 
     // De gebruiker is ingelogd, dus redirecten we naar de contactenpagina.
-    redirect('/contacts')
+    redirect('/')
   },
   functionName: 'Sign in action',
 })
@@ -78,13 +90,13 @@ export const signInAction = publicFormAction({
  * @param formData De data die ingestuurd werd naar de actie.
  */
 export const updateProfileAction = protectedFormAction({
-  schema: updateUserSchema,
+  schema: updateEmployeeSchema,
   serverFn: async ({data, profile}) => {
     // Het is belangrijk dat het id van de gebruiker opgehaald wordt op basis van de sessie (via de backend) en niet
     // zomaar door de client ingevuld kan worden.
     // Als je de formuliergegevens die de client doorstuurt blindelings vertrouwd, kan een kwaadwillige gebruiker data van
     // andere gebruikers aanpassen.
-    await updateUser({...data, id: profile.id})
+    await updateEmployee({...data, id: profile.id})
 
     // Het profiel wordt gebruikt in de Navbar component, aangezien deze component op de homepagina staat moeten we
     // het root path van de applicatie revalideren.
@@ -109,7 +121,7 @@ export const signOutServerFunction = protectedServerFunction({
       await clearSessionCookie()
     }
 
-    redirect('/login')
+    redirect('/')
   },
   functionName: 'Sign out action',
 })

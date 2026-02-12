@@ -3,6 +3,7 @@ import {extendSessionAndSetCookie} from '@/lib/sessionUtils'
 import {SessionDuration} from '@/constants'
 import type {SessionWithProfile} from '@/models/users'
 import {getLogger} from '@/lib/logger'
+import {binaryToUuid} from '@/lib/utils'
 
 export async function sessionManagementProxy(
   _: NextRequest,
@@ -12,9 +13,14 @@ export async function sessionManagementProxy(
   if (!session || session.activeUntil.getTime() < Date.now()) return response
   const logger = await getLogger()
 
-  if (session.activeUntil.getTime() - Date.now() < SessionDuration[session.user.role] / 2) {
-    await extendSessionAndSetCookie(session.id, session.user.role)
-    logger.info(`Extended session ${session.id} by ${SessionDuration[session.user.role]} ms`)
+  if (
+    session.activeUntil.getTime() - Date.now() <
+    SessionDuration[session.Employee.Role_Employee_roleIdToRole!.name] / 2
+  ) {
+    await extendSessionAndSetCookie(session.id, session.Employee.Role_Employee_roleIdToRole!)
+    logger.info(
+      `Extended session ${binaryToUuid(session.id)} by ${SessionDuration[session.Employee.Role_Employee_roleIdToRole!.name]} ms`,
+    )
   }
 
   return response

@@ -4,11 +4,12 @@ import type {Role} from '@/generated/prisma/client'
 import {extendSession, getSessionProfile} from '@/dal/users'
 import type {StatefulJwtTokenBody} from '@/lib/jwtUtils'
 import {createStatefulJwtToken, validateStatefulJwtToken} from '@/lib/jwtUtils'
+import {uuidToBinary} from '@/lib/utils'
+import {prismaClient} from '@/dal/prismaClient'
 
 // *********************************************************************************************************************
 //                                                   UTILS
 // *********************************************************************************************************************
-
 /**
  * Retrieve the session information from the session cookie.
  *
@@ -22,25 +23,27 @@ export async function getSessionFromCookie(stateful = true): Promise<SessionWith
   }
 
   const tokenBody = await getJwtBody()
-  return tokenBody
-    ? {
-        id: tokenBody.sessionId,
-        userId: tokenBody.sub,
-        user: {
-          username: tokenBody.username,
-          role: tokenBody.role,
-          id: tokenBody.sub,
-          email: tokenBody.email,
-        },
-        activeUntil: new Date(tokenBody.exp * 1000),
-        activeFrom: new Date(tokenBody.iat * 1000),
-      }
-    : null
+  if (!tokenBody) return null
+
+  const employee = await prismaClient.employee.findUnique({
+    where: {id: uuidToBinary(tokenBody.sub)},
+    include: {Role_Employee_roleIdToRole: true},
+  })
+
+  if (!employee) return null
+
+  return {
+    id: tokenBody.sessionId,
+    employeeId: employee.id,
+    Employee: employee,
+    activeFrom: new Date(tokenBody.iat * 1000),
+    activeUntil: new Date(tokenBody.exp * 1000),
+  }
 }
 
 export async function getSessionProfileFromCookie(stateful = true): Promise<Profile | null> {
   const session = await getSessionFromCookie(stateful)
-  return session?.user ?? null
+  return session?.Employee ?? null
 }
 
 export async function getSessionProfileFromCookieOrThrow(stateful = true): Promise<Profile> {
@@ -50,10 +53,10 @@ export async function getSessionProfileFromCookieOrThrow(stateful = true): Promi
     throw new Error("Couldn't retrieve the user's profile in getSessionProfileFromCookieOrThrow.")
   }
 
-  return session?.user ?? null
+  return session?.Employee ?? null
 }
 
-export async function extendSessionAndSetCookie(id: string, role: Role): Promise<void> {
+export async function extendSessionAndSetCookie(id: Uint8Array<ArrayBuffer>, role: Role): Promise<void> {
   const extendedSession = await extendSession(id, role)
   await setSessionCookie(extendedSession)
 }
@@ -94,7 +97,7 @@ export async function clearSessionCookie(): Promise<void> {
 /**
  * Retrieve the id of the current session if there is one.
  */
-export async function getSessionId(): Promise<string | undefined> {
+export async function getSessionId(): Promise<Uint8Array<ArrayBuffer> | undefined> {
   const jwt = (await cookies()).get(cookieName)?.value
 
   if (!jwt) return undefined

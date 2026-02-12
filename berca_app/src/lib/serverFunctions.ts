@@ -1,6 +1,6 @@
 import 'server-only'
 import {z, type ZodType} from 'zod/v4'
-import type {Profile} from '@/models/users'
+import type {Profile} from '@/models/employees'
 import type {
   FormAction,
   FormActionResponse,

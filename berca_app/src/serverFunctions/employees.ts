@@ -10,11 +10,11 @@
 
 import {redirect} from 'next/navigation'
 import {revalidatePath} from 'next/cache'
-import {createEmployee, getEmployeeByEmail, startSession, stopSession, updateEmployee} from '@/dal/users'
+import {createEmployee, getEmployeeByEmail, startSession, stopSession, updateEmployee} from '@/dal/employees'
 import {getSalt, hashOptions, verifyPassword} from '@/lib/passwordUtils'
 import {clearSessionCookie, getSessionId, setSessionCookie} from '@/lib/sessionUtils'
 import {protectedFormAction, protectedServerFunction, publicFormAction} from '@/lib/serverFunctions'
-import {registerSchema, signInSchema, updateEmployeeSchema} from '@/schemas/userSchemas'
+import {registerSchema, signInSchema, updateEmployeeSchema} from '@/schemas/employeeSchemas'
 import {prismaClient} from '@/dal/prismaClient'
 
 export const registerAction = publicFormAction({

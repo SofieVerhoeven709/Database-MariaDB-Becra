@@ -1,7 +1,7 @@
 import type {NextRequest, NextResponse} from 'next/server'
 import {extendSessionAndSetCookie} from '@/lib/sessionUtils'
 import {SessionDuration} from '@/constants'
-import type {SessionWithProfile} from '@/models/users'
+import type {SessionWithProfile} from '@/models/employees'
 import {getLogger} from '@/lib/logger'
 import {binaryToUuid} from '@/lib/utils'
 

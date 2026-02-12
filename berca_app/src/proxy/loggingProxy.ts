@@ -1,6 +1,6 @@
 import type {NextRequest, NextResponse} from 'next/server'
 import {cookies} from 'next/headers'
-import type {SessionWithProfile} from '@/models/users'
+import type {SessionWithProfile} from '@/models/employees'
 import {binaryToUuid} from '@/lib/utils'
 
 export async function loggingProxy(

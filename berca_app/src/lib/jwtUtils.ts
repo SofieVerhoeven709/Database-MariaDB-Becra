@@ -1,6 +1,6 @@
 import 'server-only'
 import JWT from 'jsonwebtoken'
-import type {Profile, SessionWithProfile} from '@/models/users'
+import type {Profile, SessionWithProfile} from '@/models/employees'
 import type {Role} from '@/generated/prisma/client'
 
 const {PUBLIC_KEY, PRIVATE_KEY} = process.env

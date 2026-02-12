@@ -1,6 +1,6 @@
 import type {NextProxy, NextRequest} from 'next/server'
 import {NextResponse} from 'next/server'
-import type {SessionWithProfile} from '@/models/users'
+import type {SessionWithProfile} from '@/models/employees'
 import {getSessionFromCookie} from '@/lib/sessionUtils'
 
 export type ChainedProxy = (

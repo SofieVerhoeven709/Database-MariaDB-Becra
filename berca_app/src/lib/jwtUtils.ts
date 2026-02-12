@@ -20,7 +20,7 @@ export interface TokenBody {
 }
 
 export interface StatefulJwtTokenBody extends TokenBody {
-  sessionId: string
+  sessionId: Uint8Array<ArrayBuffer>
 }
 
 export const validateJwtToken = (token: string): TokenBody | undefined => {

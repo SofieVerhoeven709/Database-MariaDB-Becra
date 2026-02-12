@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:latest
+    restart: no
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgresPassword
+    ports:
+      - 5432:5432
+    volumes:
+      - type: volume
+        source: db-data-backend
+        target: /var/lib/postgresql
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  db-data-backend:

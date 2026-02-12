@@ -1,0 +1,893 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Certificate {
+  id                Bytes              @id @db.Binary(16)
+  description       String?            @db.Text
+  descriptionShort  String?            @db.Text
+  createdAt         DateTime           @db.DateTime(0)
+  createdBy         Bytes              @db.Binary(16)
+  certificateTypeId Bytes              @db.Binary(16)
+  targetId          Bytes              @db.Binary(16)
+  Employee          Employee           @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Certificate_ibfk_1")
+  CertificateType   CertificateType    @relation(fields: [certificateTypeId], references: [id], onUpdate: Restrict, map: "Certificate_ibfk_2")
+  Target            Target             @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Certificate_ibfk_3")
+  TrainingStandard  TrainingStandard[]
+
+  @@index([certificateTypeId], map: "certificateTypeId")
+  @@index([createdBy], map: "createdBy")
+  @@index([targetId], map: "targetId")
+}
+
+model CertificateType {
+  id          Bytes         @id @db.Binary(16)
+  name        String        @db.VarChar(100)
+  createdAt   DateTime      @db.DateTime(0)
+  createdBy   Bytes         @db.Binary(16)
+  Certificate Certificate[]
+  Employee    Employee      @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "CertificateType_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model Company {
+  id                     Bytes            @id @db.Binary(16)
+  name                   String           @db.VarChar(100)
+  number                 String           @db.VarChar(100)
+  mail                   String?          @db.VarChar(100)
+  businessPhone          String?          @db.VarChar(100)
+  website                String?          @db.VarChar(100)
+  vatNumber              String?          @db.VarChar(100)
+  bankNumber             String?          @db.VarChar(100)
+  iban                   String?          @db.VarChar(100)
+  bic                    String?          @db.VarChar(100)
+  becraCustomerNumber    String?          @db.VarChar(100)
+  becraWebsiteLogin      String?          @db.VarChar(100)
+  supplier               Boolean          @default(false)
+  prefferedSupplier      Boolean          @default(false)
+  companyActive          Boolean          @default(true)
+  newsLetter             Boolean          @default(false)
+  customer               Boolean          @default(false)
+  potentialCustomer      Boolean          @default(false)
+  headQuarters           Boolean          @default(false)
+  potentialSubContractor Boolean          @default(false)
+  subContractor          Boolean          @default(false)
+  notes                  String?          @db.Text
+  createdAt              DateTime         @db.DateTime(0)
+  createdBy              Bytes            @db.Binary(16)
+  companyId              Bytes?           @db.Binary(16)
+  targetId               Bytes            @db.Binary(16)
+  Employee               Employee         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_1")
+  Company                Company?         @relation("CompanyToCompany", fields: [companyId], references: [id], onUpdate: Restrict, map: "Company_ibfk_2")
+  other_Company          Company[]        @relation("CompanyToCompany")
+  Target                 Target           @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Company_ibfk_3")
+  CompanyAdress          CompanyAdress[]
+  CompanyContact         CompanyContact[]
+  Project                Project[]
+
+  @@index([companyId], map: "companyId")
+  @@index([createdBy], map: "createdBy")
+  @@index([targetId], map: "targetId")
+}
+
+model CompanyAdress {
+  id          Bytes    @id @db.Binary(16)
+  street      String?  @db.VarChar(100)
+  houseNumber String?  @db.VarChar(100)
+  busNumber   String?  @db.VarChar(100)
+  zipCode     String?  @db.VarChar(100)
+  place       String?  @db.VarChar(100)
+  createdAt   DateTime @db.DateTime(0)
+  typeAdress  String?  @db.VarChar(100)
+  createdBy   Bytes    @db.Binary(16)
+  companyId   Bytes    @db.Binary(16)
+  Employee    Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_1")
+  Company     Company  @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_2")
+
+  @@index([companyId], map: "companyId")
+  @@index([createdBy], map: "createdBy")
+}
+
+model CompanyContact {
+  id              Bytes     @id @db.Binary(16)
+  startedDate     DateTime  @db.DateTime(0)
+  endDate         DateTime? @db.DateTime(0)
+  roleWithCompany String?   @db.VarChar(100)
+  createdAt       DateTime  @db.DateTime(0)
+  contactId       Bytes     @db.Binary(16)
+  companyId       Bytes     @db.Binary(16)
+  createdBy       Bytes     @db.Binary(16)
+  Employee        Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_1")
+  Contact         Contact   @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_2")
+  Company         Company   @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_3")
+
+  @@index([companyId], map: "companyId")
+  @@index([contactId], map: "contactId")
+  @@index([createdBy], map: "createdBy")
+}
+
+model Contact {
+  id                                 Bytes               @id @db.Binary(16)
+  firstName                          String              @db.VarChar(100)
+  lastName                           String              @db.VarChar(100)
+  mail1                              String?             @db.VarChar(100)
+  mail2                              String?             @db.VarChar(100)
+  mail3                              String?             @db.VarChar(100)
+  generalPhone                       String?             @db.VarChar(100)
+  homePhone                          String?             @db.VarChar(100)
+  mobilePhone                        String?             @db.VarChar(100)
+  info                               String?             @db.Text
+  birthDate                          DateTime?           @db.DateTime(0)
+  trough                             String?             @db.VarChar(100)
+  description                        String?             @db.Text
+  createdAt                          DateTime            @db.DateTime(0)
+  infoCorrect                        Boolean             @default(false)
+  checkInfo                          Boolean             @default(false)
+  newYearCard                        Boolean             @default(false)
+  active                             Boolean             @default(true)
+  newsLetter                         Boolean             @default(false)
+  mailing                            Boolean             @default(false)
+  trainingAdvice                     Boolean             @default(false)
+  contactForTrainingAndAdvice        Boolean             @default(false)
+  customerTrainingAndAdvice          Boolean             @default(false)
+  potentialCustomerTrainingAndAdvice Boolean             @default(false)
+  potentialTeacherTrainingAndAdvice  Boolean             @default(false)
+  teacherTrainingAndAdvice           Boolean             @default(false)
+  participantTrainingAndAdvice       Boolean             @default(false)
+  createdBy                          Bytes               @db.Binary(16)
+  functionId                         Bytes?              @db.Binary(16)
+  departmentId                       Bytes?              @db.Binary(16)
+  titleId                            Bytes?              @db.Binary(16)
+  businessCardId                     Bytes?              @db.Binary(16)
+  targetId                           Bytes               @db.Binary(16)
+  CompanyContact                     CompanyContact[]
+  Employee                           Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Contact_ibfk_1")
+  Function                           Function?           @relation(fields: [functionId], references: [id], onUpdate: Restrict, map: "Contact_ibfk_2")
+  Department                         Department?         @relation(fields: [departmentId], references: [id], onUpdate: Restrict, map: "Contact_ibfk_3")
+  Title                              Title?              @relation(fields: [titleId], references: [id], onUpdate: Restrict, map: "Contact_ibfk_4")
+  DocumentStructure                  DocumentStructure?  @relation(fields: [businessCardId], references: [id], onUpdate: Restrict, map: "Contact_ibfk_5")
+  Target                             Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Contact_ibfk_6")
+  FollowUpStructure                  FollowUpStructure[]
+  ProjectContact                     ProjectContact[]
+  TrainingContact                    TrainingContact[]
+
+  @@index([businessCardId], map: "businessCardId")
+  @@index([createdBy], map: "createdBy")
+  @@index([departmentId], map: "departmentId")
+  @@index([functionId], map: "functionId")
+  @@index([targetId], map: "targetId")
+  @@index([titleId], map: "titleId")
+}
+
+model Department {
+  id                                         Bytes      @id @db.Binary(16)
+  name                                       String     @db.VarChar(100)
+  createdAt                                  DateTime   @db.DateTime(0)
+  createdBy                                  Bytes      @db.Binary(16)
+  Contact                                    Contact[]
+  Employee_Department_createdByToEmployee    Employee   @relation("Department_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_department_createdBy")
+  Employee_Employee_departmentIdToDepartment Employee[] @relation("Employee_departmentIdToDepartment")
+
+  @@index([createdBy], map: "fk_department_createdBy")
+}
+
+model DocumentStructure {
+  id                                               Bytes               @id @db.Binary(16)
+  documentNumber                                   String              @db.VarChar(100)
+  description                                      String?             @db.Text
+  descriptionShort                                 String              @db.VarChar(100)
+  createdAt                                        DateTime            @db.DateTime(0)
+  expiryDate                                       DateTime?           @db.DateTime(0)
+  revisionNumber                                   Int?
+  revisionDetail                                   String?             @db.Text
+  valid                                            Boolean             @default(true)
+  process                                          Boolean             @default(false)
+  aditionalInfo                                    String?             @db.Text
+  referenceDocId                                   Bytes?              @db.Binary(16)
+  roleId                                           Bytes?              @db.Binary(16)
+  createdBy                                        Bytes               @db.Binary(16)
+  revisedById                                      Bytes               @db.Binary(16)
+  managedById                                      Bytes               @db.Binary(16)
+  targetId                                         Bytes               @db.Binary(16)
+  Contact                                          Contact[]
+  DocumentStructure                                DocumentStructure?  @relation("DocumentStructureToDocumentStructure", fields: [referenceDocId], references: [id], onUpdate: Restrict, map: "DocumentStructure_ibfk_1")
+  other_DocumentStructure                          DocumentStructure[] @relation("DocumentStructureToDocumentStructure")
+  Role                                             Role?               @relation(fields: [roleId], references: [id], onUpdate: Restrict, map: "DocumentStructure_ibfk_2")
+  Employee_DocumentStructure_createdByToEmployee   Employee            @relation("DocumentStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_documentStructure_createdBy")
+  Employee_DocumentStructure_managedByIdToEmployee Employee            @relation("DocumentStructure_managedByIdToEmployee", fields: [managedById], references: [id], onUpdate: Restrict, map: "fk_documentStructure_managedBy")
+  Employee_DocumentStructure_revisedByIdToEmployee Employee            @relation("DocumentStructure_revisedByIdToEmployee", fields: [revisedById], references: [id], onUpdate: Restrict, map: "fk_documentStructure_revisedBy")
+  Target                                           Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_documentStructure_target")
+  Employee_Employee_pictureIdToDocumentStructure   Employee[]          @relation("Employee_pictureIdToDocumentStructure")
+  FollowUp                                         FollowUp[]
+  FollowUpStructure                                FollowUpStructure[]
+  TrainingDocument                                 TrainingDocument[]
+
+  @@index([createdBy], map: "fk_documentStructure_createdBy")
+  @@index([managedById], map: "fk_documentStructure_managedBy")
+  @@index([revisedById], map: "fk_documentStructure_revisedBy")
+  @@index([targetId], map: "fk_documentStructure_target")
+  @@index([referenceDocId], map: "referenceDocId")
+  @@index([roleId], map: "roleId")
+}
+
+model EmergencyContact {
+  id           Bytes    @id @db.Binary(16)
+  name         String   @db.VarChar(100)
+  relationship String   @db.VarChar(100)
+  mail         String   @db.VarChar(100)
+  phoneNumber  String   @db.VarChar(100)
+  employeeId   Bytes    @db.Binary(16)
+  Employee     Employee @relation(fields: [employeeId], references: [id], onUpdate: Restrict, map: "EmergencyContact_ibfk_1")
+
+  @@index([employeeId], map: "employeeId")
+}
+
+model Employee {
+  id                                                        Bytes                  @id @db.Binary(16)
+  firstName                                                 String                 @db.VarChar(100)
+  lastName                                                  String                 @db.VarChar(100)
+  mail                                                      String?                @db.VarChar(100)
+  password_hash                                             String                 @db.VarChar(100)
+  phoneNumber                                               String?                @db.VarChar(100)
+  startDate                                                 DateTime               @db.DateTime(0)
+  endDate                                                   DateTime?              @db.DateTime(0)
+  info                                                      String?                @db.Text
+  birthDate                                                 DateTime?              @db.DateTime(0)
+  street                                                    String?                @db.VarChar(100)
+  houseNumber                                               String?                @db.VarChar(100)
+  busNumber                                                 String?                @db.VarChar(100)
+  zipCode                                                   String?                @db.VarChar(100)
+  place                                                     String?                @db.VarChar(100)
+  userName                                                  String                 @db.VarChar(100)
+  createdAt                                                 DateTime               @db.DateTime(0)
+  permanentEmployee                                         Boolean                @default(false)
+  checkInfo                                                 Boolean                @default(false)
+  newYearCard                                               Boolean                @default(false)
+  active                                                    Boolean                @default(true)
+  passwordCreatedAt                                         DateTime               @db.DateTime(0)
+  createdBy                                                 Bytes?                 @db.Binary(16)
+  roleId                                                    Bytes?                 @db.Binary(16)
+  functionId                                                Bytes?                 @db.Binary(16)
+  departmentId                                              Bytes?                 @db.Binary(16)
+  titleId                                                   Bytes?                 @db.Binary(16)
+  pictureId                                                 Bytes?                 @db.Binary(16)
+  Certificate                                               Certificate[]
+  CertificateType                                           CertificateType[]
+  Company                                                   Company[]
+  CompanyAdress                                             CompanyAdress[]
+  CompanyContact                                            CompanyContact[]
+  Contact                                                   Contact[]
+  Department_Department_createdByToEmployee                 Department[]           @relation("Department_createdByToEmployee")
+  DocumentStructure_DocumentStructure_createdByToEmployee   DocumentStructure[]    @relation("DocumentStructure_createdByToEmployee")
+  DocumentStructure_DocumentStructure_managedByIdToEmployee DocumentStructure[]    @relation("DocumentStructure_managedByIdToEmployee")
+  DocumentStructure_DocumentStructure_revisedByIdToEmployee DocumentStructure[]    @relation("DocumentStructure_revisedByIdToEmployee")
+  EmergencyContact                                          EmergencyContact[]
+  Employee                                                  Employee?              @relation("EmployeeToEmployee", fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_1")
+  other_Employee                                            Employee[]             @relation("EmployeeToEmployee")
+  Role_Employee_roleIdToRole                                Role?                  @relation("Employee_roleIdToRole", fields: [roleId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_2")
+  Function_Employee_functionIdToFunction                    Function?              @relation("Employee_functionIdToFunction", fields: [functionId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_3")
+  Department_Employee_departmentIdToDepartment              Department?            @relation("Employee_departmentIdToDepartment", fields: [departmentId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_4")
+  Title_Employee_titleIdToTitle                             Title?                 @relation("Employee_titleIdToTitle", fields: [titleId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_5")
+  DocumentStructure_Employee_pictureIdToDocumentStructure   DocumentStructure?     @relation("Employee_pictureIdToDocumentStructure", fields: [pictureId], references: [id], onUpdate: Restrict, map: "Employee_ibfk_6")
+  FollowUp_FollowUp_ownedByToEmployee                       FollowUp[]             @relation("FollowUp_ownedByToEmployee")
+  FollowUp_FollowUp_executedByToEmployee                    FollowUp[]             @relation("FollowUp_executedByToEmployee")
+  FollowUp_FollowUp_createdByToEmployee                     FollowUp[]             @relation("FollowUp_createdByToEmployee")
+  FollowUpStructure_FollowUpStructure_ownedByToEmployee     FollowUpStructure[]    @relation("FollowUpStructure_ownedByToEmployee")
+  FollowUpStructure_FollowUpStructure_executedByToEmployee  FollowUpStructure[]    @relation("FollowUpStructure_executedByToEmployee")
+  FollowUpStructure_FollowUpStructure_taskForToEmployee     FollowUpStructure[]    @relation("FollowUpStructure_taskForToEmployee")
+  FollowUpStructure_FollowUpStructure_createdByToEmployee   FollowUpStructure[]    @relation("FollowUpStructure_createdByToEmployee")
+  FollowUpType                                              FollowUpType[]
+  Function_Function_createdByToEmployee                     Function[]             @relation("Function_createdByToEmployee")
+  HourType                                                  HourType[]
+  InvoiceIn                                                 InvoiceIn[]
+  InvoiceOut                                                InvoiceOut[]
+  InvoiceType                                               InvoiceType[]
+  Project                                                   Project[]
+  ProjectContact_ProjectContact_createdByToEmployee         ProjectContact[]       @relation("ProjectContact_createdByToEmployee")
+  ProjectContact_ProjectContact_moddifiedByToEmployee       ProjectContact[]       @relation("ProjectContact_moddifiedByToEmployee")
+  ProjectType                                               ProjectType[]
+  Role_Role_createdByToEmployee                             Role[]                 @relation("Role_createdByToEmployee")
+  Session                                                   Session[]
+  Status                                                    Status[]
+  Target                                                    Target[]
+  TargetType                                                TargetType[]
+  TimeRegistry                                              TimeRegistry[]
+  TimeRegistryEmployee                                      TimeRegistryEmployee[]
+  Title_Title_createdByToEmployee                           Title[]                @relation("Title_createdByToEmployee")
+  Training                                                  Training[]
+  TrainingContact                                           TrainingContact[]
+  TrainingStandard                                          TrainingStandard[]
+  UrgencyType                                               UrgencyType[]
+  WorkOrder                                                 WorkOrder[]
+  WorkOrderStructure                                        WorkOrderStructure[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([departmentId], map: "departmentId")
+  @@index([functionId], map: "functionId")
+  @@index([pictureId], map: "pictureId")
+  @@index([roleId], map: "roleId")
+  @@index([titleId], map: "titleId")
+}
+
+model FollowUp {
+  id                                     Bytes               @id @db.Binary(16)
+  activityDescription                    String?             @db.Text
+  aditionalInfo                          String?             @db.Text
+  actionAgenda                           DateTime?           @db.DateTime(0)
+  closedAgenda                           DateTime?           @db.DateTime(0)
+  recurringCallDays                      Int?
+  createdAt                              DateTime            @db.DateTime(0)
+  itemClosed                             Boolean             @default(false)
+  salesFollowUp                          Boolean             @default(false)
+  nonConform                             Boolean             @default(false)
+  periodicControl                        Boolean             @default(false)
+  recurringActive                        Boolean             @default(false)
+  review                                 Boolean             @default(false)
+  createdBy                              Bytes               @db.Binary(16)
+  ownedBy                                Bytes               @db.Binary(16)
+  statusId                               Bytes               @db.Binary(16)
+  executedBy                             Bytes               @db.Binary(16)
+  urgencyTypeId                          Bytes               @db.Binary(16)
+  documentId                             Bytes               @db.Binary(16)
+  targetId                               Bytes               @db.Binary(16)
+  followUpTypeId                         Bytes               @db.Binary(16)
+  UrgencyType                            UrgencyType         @relation(fields: [urgencyTypeId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_1")
+  Employee_FollowUp_ownedByToEmployee    Employee            @relation("FollowUp_ownedByToEmployee", fields: [ownedBy], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_2")
+  Status                                 Status              @relation(fields: [statusId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_3")
+  Employee_FollowUp_executedByToEmployee Employee            @relation("FollowUp_executedByToEmployee", fields: [executedBy], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_4")
+  DocumentStructure                      DocumentStructure   @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_5")
+  Employee_FollowUp_createdByToEmployee  Employee            @relation("FollowUp_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_6")
+  FollowUpType                           FollowUpType        @relation(fields: [followUpTypeId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_7")
+  Target                                 Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_8")
+  FollowUpStructure                      FollowUpStructure[]
+  FollowUpTarget                         FollowUpTarget[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([documentId], map: "documentId")
+  @@index([executedBy], map: "executedBy")
+  @@index([followUpTypeId], map: "followUpTypeId")
+  @@index([ownedBy], map: "ownedBy")
+  @@index([statusId], map: "statusId")
+  @@index([targetId], map: "targetId")
+  @@index([urgencyTypeId], map: "urgencyTypeId")
+}
+
+model FollowUpStructure {
+  id                                              Bytes             @id @db.Binary(16)
+  activityDescription                             String?           @db.Text
+  aditionalInfo                                   String?           @db.Text
+  actionAgenda                                    DateTime?         @db.DateTime(0)
+  closedAgenda                                    DateTime?         @db.DateTime(0)
+  recurringItem                                   String?           @db.VarChar(100)
+  item                                            String?           @db.VarChar(100)
+  contactDate                                     DateTime          @db.DateTime(0)
+  taskDescription                                 String?           @db.Text
+  taskStartDate                                   DateTime?         @db.DateTime(0)
+  taskCompleteDate                                DateTime?         @db.DateTime(0)
+  createdAt                                       DateTime          @db.DateTime(0)
+  recurringActive                                 Boolean           @default(false)
+  createdBy                                       Bytes             @db.Binary(16)
+  ownedBy                                         Bytes             @db.Binary(16)
+  statusId                                        Bytes             @db.Binary(16)
+  executedBy                                      Bytes             @db.Binary(16)
+  urgencyTypeId                                   Bytes             @db.Binary(16)
+  followUpId                                      Bytes             @db.Binary(16)
+  documentId                                      Bytes             @db.Binary(16)
+  contactId                                       Bytes             @db.Binary(16)
+  taskFor                                         Bytes             @db.Binary(16)
+  targetId                                        Bytes             @db.Binary(16)
+  UrgencyType                                     UrgencyType       @relation(fields: [urgencyTypeId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_1")
+  Target                                          Target            @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_10")
+  Employee_FollowUpStructure_ownedByToEmployee    Employee          @relation("FollowUpStructure_ownedByToEmployee", fields: [ownedBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_2")
+  Status                                          Status            @relation(fields: [statusId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_3")
+  Employee_FollowUpStructure_executedByToEmployee Employee          @relation("FollowUpStructure_executedByToEmployee", fields: [executedBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_4")
+  FollowUp                                        FollowUp          @relation(fields: [followUpId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_5")
+  DocumentStructure                               DocumentStructure @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_6")
+  Contact                                         Contact           @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_7")
+  Employee_FollowUpStructure_taskForToEmployee    Employee          @relation("FollowUpStructure_taskForToEmployee", fields: [taskFor], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_8")
+  Employee_FollowUpStructure_createdByToEmployee  Employee          @relation("FollowUpStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_9")
+
+  @@index([contactId], map: "contactId")
+  @@index([createdBy], map: "createdBy")
+  @@index([documentId], map: "documentId")
+  @@index([executedBy], map: "executedBy")
+  @@index([followUpId], map: "followUpId")
+  @@index([ownedBy], map: "ownedBy")
+  @@index([statusId], map: "statusId")
+  @@index([targetId], map: "targetId")
+  @@index([taskFor], map: "taskFor")
+  @@index([urgencyTypeId], map: "urgencyTypeId")
+}
+
+model FollowUpTarget {
+  id         Bytes    @id @db.Binary(16)
+  followUpId Bytes    @db.Binary(16)
+  targetId   Bytes    @db.Binary(16)
+  FollowUp   FollowUp @relation(fields: [followUpId], references: [id], onUpdate: Restrict, map: "FollowUpTarget_ibfk_1")
+  Target     Target   @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "FollowUpTarget_ibfk_2")
+
+  @@index([followUpId], map: "followUpId")
+  @@index([targetId], map: "targetId")
+}
+
+model FollowUpType {
+  id        Bytes      @id @db.Binary(16)
+  name      String     @db.VarChar(100)
+  createdAt DateTime   @db.DateTime(0)
+  createdBy Bytes      @db.Binary(16)
+  FollowUp  FollowUp[]
+  Employee  Employee   @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "FollowUpType_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model Function {
+  id                                     Bytes      @id @db.Binary(16)
+  name                                   String     @db.VarChar(100)
+  createdAt                              DateTime   @db.DateTime(0)
+  createdBy                              Bytes      @db.Binary(16)
+  Contact                                Contact[]
+  Employee_Employee_functionIdToFunction Employee[] @relation("Employee_functionIdToFunction")
+  Employee_Function_createdByToEmployee  Employee   @relation("Function_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_function_createdBy")
+
+  @@index([createdBy], map: "fk_function_createdBy")
+}
+
+model HourType {
+  id           Bytes          @id @db.Binary(16)
+  name         String         @db.VarChar(100)
+  createdAt    DateTime       @db.DateTime(0)
+  info         String?        @db.Text
+  createdBy    Bytes          @db.Binary(16)
+  Employee     Employee       @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "HourType_ibfk_1")
+  TimeRegistry TimeRegistry[]
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model InvoiceIn {
+  id                    Bytes             @id @db.Binary(16)
+  invoiceNumber         String?           @db.VarChar(100)
+  invoiceDate           DateTime          @db.DateTime(0)
+  expireDate            DateTime          @db.DateTime(0)
+  payDate               DateTime?         @db.DateTime(0)
+  invoiceReference      String?           @db.VarChar(100)
+  invoiceOutAttachement String?           @db.VarChar(100)
+  deliveryNote          String?           @db.Text
+  purchaseOrder         String?           @db.Text
+  transactionNumber     String?           @db.VarChar(100)
+  info                  String?           @db.Text
+  deliveryInvoiceCode   String?           @db.VarChar(100)
+  vatMargin             Float             @db.Float
+  amountWithoutVat      Float             @db.Float
+  deliveryBonDate       DateTime?         @db.DateTime(0)
+  deliveryBon           String?           @db.VarChar(100)
+  remark                String?           @db.Text
+  createdAt             DateTime          @db.DateTime(0)
+  completed             Boolean           @default(false)
+  masterCard            Boolean           @default(false)
+  cash                  Boolean           @default(false)
+  bankContact           Boolean           @default(false)
+  expectedInvoice       Boolean           @default(false)
+  private               Boolean           @default(false)
+  createdBy             Bytes             @db.Binary(16)
+  invoiceTypeId         Bytes             @db.Binary(16)
+  targetId              Bytes             @db.Binary(16)
+  InvoiceType           InvoiceType       @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_1")
+  Employee              Employee          @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_2")
+  Target                Target            @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_3")
+  InvoiceInTarget       InvoiceInTarget[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([invoiceTypeId], map: "invoiceTypeId")
+  @@index([targetId], map: "targetId")
+}
+
+model InvoiceInTarget {
+  id          Bytes     @id @db.Binary(16)
+  invoiceInId Bytes     @db.Binary(16)
+  targetId    Bytes     @db.Binary(16)
+  InvoiceIn   InvoiceIn @relation(fields: [invoiceInId], references: [id], onUpdate: Restrict, map: "InvoiceInTarget_ibfk_1")
+  Target      Target    @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceInTarget_ibfk_2")
+
+  @@index([invoiceInId], map: "invoiceInId")
+  @@index([targetId], map: "targetId")
+}
+
+model InvoiceOut {
+  id                   Bytes       @id @db.Binary(16)
+  invoiceNumber        String?     @db.VarChar(100)
+  invoiceDate          DateTime    @db.DateTime(0)
+  expireDate           DateTime    @db.DateTime(0)
+  payDate              DateTime?   @db.DateTime(0)
+  invoiceReference     String?     @db.VarChar(100)
+  invoiceInAttachement String?     @db.VarChar(100)
+  deliveryNote         String?     @db.Text
+  purchaseOrder        String?     @db.Text
+  transactionNumber    String?     @db.VarChar(100)
+  deliveryInvoiceInfo  String?     @db.Text
+  aditionalInfo        String?     @db.Text
+  info                 String?     @db.Text
+  deliveryInvoiceCode  String?     @db.VarChar(100)
+  vatMargin            Float       @db.Float
+  amountWithoutVat     Float       @db.Float
+  sentDate             DateTime?   @db.DateTime(0)
+  createdAt            DateTime    @db.DateTime(0)
+  materialCost         Boolean     @default(false)
+  completed            Boolean     @default(false)
+  createdBy            Bytes       @db.Binary(16)
+  invoiceTypeId        Bytes       @db.Binary(16)
+  workOrderId          Bytes       @db.Binary(16)
+  targetId             Bytes       @db.Binary(16)
+  InvoiceType          InvoiceType @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_1")
+  Employee             Employee    @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_2")
+  WorkOrder            WorkOrder   @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_3")
+  Target               Target      @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_4")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([invoiceTypeId], map: "invoiceTypeId")
+  @@index([targetId], map: "targetId")
+  @@index([workOrderId], map: "workOrderId")
+}
+
+model InvoiceType {
+  id         Bytes        @id @db.Binary(16)
+  name       String       @db.VarChar(100)
+  createdAt  DateTime     @db.DateTime(0)
+  createdBy  Bytes        @db.Binary(16)
+  InvoiceIn  InvoiceIn[]
+  InvoiceOut InvoiceOut[]
+  Employee   Employee     @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceType_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model Project {
+  id                   Bytes            @id @db.Binary(16)
+  projectNumber        String           @db.VarChar(100)
+  description          String?          @db.Text
+  extraInfo            String?          @db.Text
+  startDate            DateTime?        @db.DateTime(0)
+  endDate              DateTime?        @db.DateTime(0)
+  closingDate          DateTime?        @db.DateTime(0)
+  engineeringStartDate DateTime?        @db.DateTime(0)
+  createdAt            DateTime         @db.DateTime(0)
+  isMainProject        Boolean          @default(true)
+  isIntern             Boolean          @default(false)
+  isOpen               Boolean          @default(true)
+  isClosed             Boolean          @default(false)
+  createdBy            Bytes            @db.Binary(16)
+  companyId            Bytes            @db.Binary(16)
+  projectTypeId        Bytes            @db.Binary(16)
+  parentProjectId      Bytes?           @db.Binary(16)
+  targetId             Bytes            @db.Binary(16)
+  Employee             Employee         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Project_ibfk_1")
+  Company              Company          @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "Project_ibfk_2")
+  ProjectType          ProjectType      @relation(fields: [projectTypeId], references: [id], onUpdate: Restrict, map: "Project_ibfk_3")
+  Project              Project?         @relation("ProjectToProject", fields: [parentProjectId], references: [id], onUpdate: Restrict, map: "Project_ibfk_4")
+  other_Project        Project[]        @relation("ProjectToProject")
+  Target               Target           @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Project_ibfk_5")
+  ProjectContact       ProjectContact[]
+  WorkOrder            WorkOrder[]
+
+  @@index([companyId], map: "companyId")
+  @@index([createdBy], map: "createdBy")
+  @@index([parentProjectId], map: "parentProjectId")
+  @@index([projectTypeId], map: "projectTypeId")
+  @@index([targetId], map: "targetId")
+}
+
+model ProjectContact {
+  id                                            Bytes     @id @db.Binary(16)
+  description                                   String?   @db.Text
+  extraInfo                                     String?   @db.Text
+  createdAt                                     DateTime  @db.DateTime(0)
+  moddifiedAt                                   DateTime? @db.DateTime(0)
+  idValid                                       Boolean   @default(true)
+  createdBy                                     Bytes     @db.Binary(16)
+  moddifiedBy                                   Bytes     @db.Binary(16)
+  projectId                                     Bytes     @db.Binary(16)
+  contactId                                     Bytes     @db.Binary(16)
+  Employee_ProjectContact_createdByToEmployee   Employee  @relation("ProjectContact_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_1")
+  Project                                       Project   @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_2")
+  Employee_ProjectContact_moddifiedByToEmployee Employee  @relation("ProjectContact_moddifiedByToEmployee", fields: [moddifiedBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_3")
+  Contact                                       Contact   @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_4")
+
+  @@index([contactId], map: "contactId")
+  @@index([createdBy], map: "createdBy")
+  @@index([moddifiedBy], map: "moddifiedBy")
+  @@index([projectId], map: "projectId")
+}
+
+model ProjectType {
+  id        Bytes     @id @db.Binary(16)
+  name      String    @db.VarChar(100)
+  createdAt DateTime  @db.DateTime(0)
+  createdBy Bytes     @db.Binary(16)
+  Project   Project[]
+  Employee  Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectType_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model Role {
+  id                                Bytes               @id @db.Binary(16)
+  name                              String              @db.VarChar(100)
+  level                             Int
+  createdAt                         DateTime            @db.DateTime(0)
+  createdBy                         Bytes               @db.Binary(16)
+  DocumentStructure                 DocumentStructure[]
+  Employee_Employee_roleIdToRole    Employee[]          @relation("Employee_roleIdToRole")
+  Employee_Role_createdByToEmployee Employee            @relation("Role_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_role_createdBy")
+  VisibilityForRole                 VisibilityForRole[]
+
+  @@index([createdBy], map: "fk_role_createdBy")
+}
+
+model Status {
+  id                Bytes               @id @db.Binary(16)
+  name              String              @db.VarChar(100)
+  createdAt         DateTime            @db.DateTime(0)
+  createdBy         Bytes               @db.Binary(16)
+  FollowUp          FollowUp[]
+  FollowUpStructure FollowUpStructure[]
+  Employee          Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Status_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model Target {
+  id                 Bytes                @id @db.Binary(16)
+  createdAt          DateTime             @db.DateTime(0)
+  createdBy          Bytes                @db.Binary(16)
+  targetTypeId       Bytes                @db.Binary(16)
+  Certificate        Certificate[]
+  Company            Company[]
+  Contact            Contact[]
+  DocumentStructure  DocumentStructure[]
+  FollowUp           FollowUp[]
+  FollowUpStructure  FollowUpStructure[]
+  FollowUpTarget     FollowUpTarget[]
+  InvoiceIn          InvoiceIn[]
+  InvoiceInTarget    InvoiceInTarget[]
+  InvoiceOut         InvoiceOut[]
+  Project            Project[]
+  Employee           Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_1")
+  TargetType         TargetType           @relation(fields: [targetTypeId], references: [id], onUpdate: Restrict, map: "Target_ibfk_2")
+  Training           Training[]
+  TrainingStandard   TrainingStandard[]
+  VisibilityForRole  VisibilityForRole[]
+  WorkOrder          WorkOrder[]
+  WorkOrderStructure WorkOrderStructure[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([targetTypeId], map: "targetTypeId")
+}
+
+model TargetType {
+  id        Bytes    @id @db.Binary(16)
+  name      String   @db.VarChar(100)
+  createdAt DateTime @db.DateTime(0)
+  createdBy Bytes    @db.Binary(16)
+  Target    Target[]
+  Employee  Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "TargetType_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model TimeRegistry {
+  id                   Bytes                  @id @db.Binary(16)
+  activityDescription  String?                @db.Text
+  aditionalInfo        String?                @db.Text
+  invoiceInfo          String?                @db.Text
+  startTime            DateTime               @db.DateTime(0)
+  endTime              DateTime?              @db.DateTime(0)
+  workDate             DateTime               @db.DateTime(0)
+  startBreak           DateTime?              @db.DateTime(0)
+  endBreak             DateTime?              @db.DateTime(0)
+  createdAt            DateTime               @db.DateTime(0)
+  invoiceTime          Boolean                @default(false)
+  onSite               Boolean                @default(false)
+  createdBy            Bytes                  @db.Binary(16)
+  workOrderId          Bytes                  @db.Binary(16)
+  hourtypeId           Bytes                  @db.Binary(16)
+  Employee             Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_1")
+  HourType             HourType               @relation(fields: [hourtypeId], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_2")
+  WorkOrder            WorkOrder              @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_3")
+  TimeRegistryEmployee TimeRegistryEmployee[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([hourtypeId], map: "hourtypeId")
+  @@index([workOrderId], map: "workOrderId")
+}
+
+model TimeRegistryEmployee {
+  id             Bytes        @id @db.Binary(16)
+  employeeId     Bytes        @db.Binary(16)
+  timeRegistryId Bytes        @db.Binary(16)
+  Employee       Employee     @relation(fields: [employeeId], references: [id], onUpdate: Restrict, map: "TimeRegistryEmployee_ibfk_1")
+  TimeRegistry   TimeRegistry @relation(fields: [timeRegistryId], references: [id], onUpdate: Restrict, map: "TimeRegistryEmployee_ibfk_2")
+
+  @@index([employeeId], map: "employeeId")
+  @@index([timeRegistryId], map: "timeRegistryId")
+}
+
+model Title {
+  id                                 Bytes      @id @db.Binary(16)
+  name                               String     @db.VarChar(100)
+  createdAt                          DateTime   @db.DateTime(0)
+  createdBy                          Bytes      @db.Binary(16)
+  Contact                            Contact[]
+  Employee_Employee_titleIdToTitle   Employee[] @relation("Employee_titleIdToTitle")
+  Employee_Title_createdByToEmployee Employee   @relation("Title_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_title_createdBy")
+
+  @@index([createdBy], map: "fk_title_createdBy")
+}
+
+model Training {
+  id                 Bytes                @id @db.Binary(16)
+  trainingNumber     String?              @db.VarChar(100)
+  trainingDate       DateTime             @db.DateTime(0)
+  createdAt          DateTime             @db.DateTime(0)
+  closed             Boolean              @default(true)
+  createdBy          Bytes                @db.Binary(16)
+  workOrderId        Bytes                @db.Binary(16)
+  trainingStandardId Bytes                @db.Binary(16)
+  targetId           Bytes                @db.Binary(16)
+  WorkOrder          WorkOrder            @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "Training_ibfk_1")
+  Employee           Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Training_ibfk_2")
+  TrainingStandard   TrainingStandard     @relation(fields: [trainingStandardId], references: [id], onUpdate: Restrict, map: "Training_ibfk_3")
+  Target             Target               @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Training_ibfk_4")
+  TrainingContact    TrainingContact[]
+  WorkOrderStructure WorkOrderStructure[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([targetId], map: "targetId")
+  @@index([trainingStandardId], map: "trainingStandardId")
+  @@index([workOrderId], map: "workOrderId")
+}
+
+model TrainingContact {
+  id              Bytes     @id @db.Binary(16)
+  clientNumber    String?   @db.VarChar(100)
+  certSentDate    DateTime? @db.DateTime(0)
+  createdAt       DateTime  @db.DateTime(0)
+  succeeded       Boolean   @default(false)
+  attended        Boolean   @default(false)
+  certificateSent Boolean   @default(false)
+  createdBy       Bytes     @db.Binary(16)
+  contactId       Bytes     @db.Binary(16)
+  trainingId      Bytes     @db.Binary(16)
+  Contact         Contact   @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "TrainingContact_ibfk_1")
+  Employee        Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "TrainingContact_ibfk_2")
+  Training        Training  @relation(fields: [trainingId], references: [id], onUpdate: Restrict, map: "TrainingContact_ibfk_3")
+
+  @@index([contactId], map: "contactId")
+  @@index([createdBy], map: "createdBy")
+  @@index([trainingId], map: "trainingId")
+}
+
+model TrainingDocument {
+  id                 Bytes             @id @db.Binary(16)
+  documentId         Bytes             @db.Binary(16)
+  trainingStandardId Bytes             @db.Binary(16)
+  DocumentStructure  DocumentStructure @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "TrainingDocument_ibfk_1")
+  TrainingStandard   TrainingStandard  @relation(fields: [trainingStandardId], references: [id], onUpdate: Restrict, map: "TrainingDocument_ibfk_2")
+
+  @@index([documentId], map: "documentId")
+  @@index([trainingStandardId], map: "trainingStandardId")
+}
+
+model TrainingStandard {
+  id               Bytes              @id @db.Binary(16)
+  description      String?            @db.Text
+  descriptionShort String?            @db.Text
+  location         String?            @db.VarChar(100)
+  createdAt        DateTime           @db.DateTime(0)
+  certificate      Boolean            @default(true)
+  repeat           Boolean            @default(false)
+  createdBy        Bytes              @db.Binary(16)
+  certificateId    Bytes              @db.Binary(16)
+  targetId         Bytes              @db.Binary(16)
+  Training         Training[]
+  TrainingDocument TrainingDocument[]
+  Employee         Employee           @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "TrainingStandard_ibfk_1")
+  Certificate      Certificate        @relation(fields: [certificateId], references: [id], onUpdate: Restrict, map: "TrainingStandard_ibfk_2")
+  Target           Target             @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "TrainingStandard_ibfk_3")
+
+  @@index([certificateId], map: "certificateId")
+  @@index([createdBy], map: "createdBy")
+  @@index([targetId], map: "targetId")
+}
+
+model UrgencyType {
+  id                Bytes               @id @db.Binary(16)
+  name              String              @db.VarChar(100)
+  createdAt         DateTime            @db.DateTime(0)
+  createdBy         Bytes               @db.Binary(16)
+  FollowUp          FollowUp[]
+  FollowUpStructure FollowUpStructure[]
+  Employee          Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "UrgencyType_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model VisibilityForRole {
+  id       Bytes   @id @db.Binary(16)
+  visible  Boolean @default(false)
+  roleId   Bytes   @db.Binary(16)
+  targetId Bytes   @db.Binary(16)
+  Role     Role    @relation(fields: [roleId], references: [id], onUpdate: Restrict, map: "VisibilityForRole_ibfk_1")
+  Target   Target  @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "VisibilityForRole_ibfk_2")
+
+  @@index([roleId], map: "roleId")
+  @@index([targetId], map: "targetId")
+}
+
+model WorkOrder {
+  id                  Bytes                @id @db.Binary(16)
+  workOrderNumber     String?              @db.VarChar(100)
+  description         String?              @db.Text
+  aditionalInfo       String?              @db.Text
+  startDate           DateTime             @db.DateTime(0)
+  endDate             DateTime?            @db.DateTime(0)
+  createdAt           DateTime             @db.DateTime(0)
+  hoursMaterialClosed Boolean              @default(false)
+  invoiceSent         Boolean              @default(false)
+  completed           Boolean              @default(false)
+  createdBy           Bytes                @db.Binary(16)
+  projectId           Bytes                @db.Binary(16)
+  targetId            Bytes                @db.Binary(16)
+  InvoiceOut          InvoiceOut[]
+  TimeRegistry        TimeRegistry[]
+  Training            Training[]
+  Employee            Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WorkOrder_ibfk_1")
+  Project             Project              @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "WorkOrder_ibfk_2")
+  Target              Target               @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "WorkOrder_ibfk_3")
+  WorkOrderStructure  WorkOrderStructure[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([projectId], map: "projectId")
+  @@index([targetId], map: "targetId")
+}
+
+model WorkOrderStructure {
+  id              Bytes     @id @db.Binary(16)
+  clientNumber    String?   @db.VarChar(100)
+  tag             String?   @db.VarChar(100)
+  quantity        Int?
+  aditionalInfo   String?   @db.Text
+  shortDesciption String?   @db.VarChar(100)
+  longDescription String?   @db.Text
+  createdAt       DateTime  @db.DateTime(0)
+  createdBy       Bytes     @db.Binary(16)
+  workOrderId     Bytes     @db.Binary(16)
+  materialId      Bytes     @db.Binary(16)
+  targetId        Bytes     @db.Binary(16)
+  WorkOrder       WorkOrder @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_1")
+  Employee        Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_2")
+  Training        Training  @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_3")
+  Target          Target    @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_4")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([materialId], map: "materialId")
+  @@index([targetId], map: "targetId")
+  @@index([workOrderId], map: "workOrderId")
+}
+
+model Session {
+  id          Bytes    @id @db.Binary(16)
+  activeFrom  DateTime @default(now()) @db.DateTime(0)
+  activeUntil DateTime @db.DateTime(0)
+  employeeId  Bytes    @db.Binary(16)
+  Employee    Employee @relation(fields: [employeeId], references: [id], onUpdate: Restrict, map: "Session_ibfk_1")
+
+  @@index([employeeId], map: "employeeId")
+}

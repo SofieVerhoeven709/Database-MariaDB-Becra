@@ -32,8 +32,8 @@ export async function createEmployee(data: CreateEmployeeParams): Promise<Profil
  *
  * @param mail The email of the user to retrieve.
  */
-export async function getEmployeeByEmail(mail: string): Promise<Employee | null> {
-  return prismaClient.employee.findFirst({where: {mail}})
+export async function getEmployeeByUsername(username: string): Promise<Employee | null> {
+  return prismaClient.employee.findFirst({where: {username}})
 }
 
 /**

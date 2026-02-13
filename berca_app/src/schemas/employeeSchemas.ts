@@ -50,7 +50,6 @@ export const employeeSchemas = z.object({
 export const signInSchema = employeeSchemas.omit({
   id: true,
   roleId: true,
-  userName: true,
 })
 
 export const registerSchema = employeeSchemas

@@ -10,7 +10,7 @@
 
 import {redirect} from 'next/navigation'
 import {revalidatePath} from 'next/cache'
-import {createEmployee, getEmployeeByEmail, startSession, stopSession, updateEmployee} from '@/dal/employees'
+import {createEmployee, getEmployeeByUsername, startSession, stopSession, updateEmployee} from '@/dal/employees'
 import {getSalt, hashOptions, verifyPassword} from '@/lib/passwordUtils'
 import {clearSessionCookie, getSessionId, setSessionCookie} from '@/lib/sessionUtils'
 import {protectedFormAction, protectedServerFunction, publicFormAction} from '@/lib/serverFunctions'
@@ -41,7 +41,7 @@ export const registerAction = publicFormAction({
 export const signInAction = publicFormAction({
   schema: signInSchema,
   serverFn: async ({data, logger}) => {
-    const employee = await getEmployeeByEmail(data.mail!)
+    const employee = await getEmployeeByUsername(data.username)
 
     // Als we meteen een unauthorized terug geven nadat een gebruiker niet gevonden is in de database, kan een aanvaller
     // hieruit afleiden dat het e-mailadres niet bestaat.
@@ -55,7 +55,7 @@ export const signInAction = publicFormAction({
     const isValidPassword = verifyPassword(employee?.password_hash ?? timingSafePassword, data.password_hash)
 
     if (!isValidPassword) {
-      logger.warn(`Failed sign in attempt for ${data.mail}.`)
+      logger.warn(`Failed sign in attempt for ${data.username}.`)
       return {
         success: false,
         errors: {
@@ -77,7 +77,7 @@ export const signInAction = publicFormAction({
     await setSessionCookie(session)
 
     // De gebruiker is ingelogd, dus redirecten we naar de contactenpagina.
-    redirect('/')
+    redirect('/dashboard')
   },
   functionName: 'Sign in action',
 })

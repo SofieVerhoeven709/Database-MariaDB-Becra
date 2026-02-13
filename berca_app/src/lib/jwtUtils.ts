@@ -43,11 +43,11 @@ export const createJwtToken = (employee: Profile) => {
   return JWT.sign(
     {
       id: employee.id,
-      username: employee.userName,
+      username: employee.username,
       role: employee.roleId,
     },
     PRIVATE_KEY_DECODED,
-    {algorithm: 'RS256', expiresIn: TOKEN_EXPIRATION, subject: employee.userName, issuer: 'contacts-app'},
+    {algorithm: 'RS256', expiresIn: TOKEN_EXPIRATION, subject: employee.username, issuer: 'contacts-app'},
   )
 }
 
@@ -55,11 +55,11 @@ export const createStatefulJwtToken = (session: SessionWithProfile) => {
   return JWT.sign(
     {
       id: session.Employee.id,
-      username: session.Employee.userName,
+      username: session.Employee.username,
       role: session.Employee.roleId,
       sessionId: session.id,
     },
     PRIVATE_KEY_DECODED,
-    {algorithm: 'RS256', expiresIn: TOKEN_EXPIRATION, subject: session.Employee.userName, issuer: 'contacts-app'},
+    {algorithm: 'RS256', expiresIn: TOKEN_EXPIRATION, subject: session.Employee.username, issuer: 'contacts-app'},
   )
 }

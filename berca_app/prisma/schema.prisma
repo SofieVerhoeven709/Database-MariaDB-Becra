@@ -245,7 +245,7 @@ model Employee {
   busNumber                                                 String?                @db.VarChar(100)
   zipCode                                                   String?                @db.VarChar(100)
   place                                                     String?                @db.VarChar(100)
-  userName                                                  String                 @db.VarChar(100)
+  username                                                  String                 @db.VarChar(100)
   createdAt                                                 DateTime               @db.DateTime(0)
   permanentEmployee                                         Boolean                @default(false)
   checkInfo                                                 Boolean                @default(false)

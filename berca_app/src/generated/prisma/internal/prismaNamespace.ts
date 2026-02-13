@@ -3246,7 +3246,7 @@ export const EmployeeScalarFieldEnum = {
   busNumber: 'busNumber',
   zipCode: 'zipCode',
   place: 'place',
-  userName: 'userName',
+  username: 'username',
   createdAt: 'createdAt',
   permanentEmployee: 'permanentEmployee',
   checkInfo: 'checkInfo',
@@ -3821,7 +3821,7 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   busNumber: 'busNumber',
   zipCode: 'zipCode',
   place: 'place',
-  userName: 'userName'
+  username: 'username'
 } as const
 
 export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]

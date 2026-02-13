@@ -28,7 +28,7 @@ export const employeeSchemas = z.object({
   zipCode: z.string().max(100).nullable(),
   place: z.string().max(100).nullable(),
 
-  userName: z.string().min(3).max(100),
+  username: z.string().min(3).max(100),
 
   createdAt: dateSchema,
 
@@ -62,7 +62,7 @@ export const registerSchema = employeeSchemas
     message: 'The password and confirmation do not match',
   })
 
-export const updateEmployeeSchema = employeeSchemas.pick({userName: true})
+export const updateEmployeeSchema = employeeSchemas.pick({username: true})
 export const updateRoleSchema = employeeSchemas.pick({
   roleId: true,
   id: true,

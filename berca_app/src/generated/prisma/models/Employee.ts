@@ -40,7 +40,7 @@ export type EmployeeMinAggregateOutputType = {
   busNumber: string | null
   zipCode: string | null
   place: string | null
-  userName: string | null
+  username: string | null
   createdAt: Date | null
   permanentEmployee: boolean | null
   checkInfo: boolean | null
@@ -71,7 +71,7 @@ export type EmployeeMaxAggregateOutputType = {
   busNumber: string | null
   zipCode: string | null
   place: string | null
-  userName: string | null
+  username: string | null
   createdAt: Date | null
   permanentEmployee: boolean | null
   checkInfo: boolean | null
@@ -102,7 +102,7 @@ export type EmployeeCountAggregateOutputType = {
   busNumber: number
   zipCode: number
   place: number
-  userName: number
+  username: number
   createdAt: number
   permanentEmployee: number
   checkInfo: number
@@ -135,7 +135,7 @@ export type EmployeeMinAggregateInputType = {
   busNumber?: true
   zipCode?: true
   place?: true
-  userName?: true
+  username?: true
   createdAt?: true
   permanentEmployee?: true
   checkInfo?: true
@@ -166,7 +166,7 @@ export type EmployeeMaxAggregateInputType = {
   busNumber?: true
   zipCode?: true
   place?: true
-  userName?: true
+  username?: true
   createdAt?: true
   permanentEmployee?: true
   checkInfo?: true
@@ -197,7 +197,7 @@ export type EmployeeCountAggregateInputType = {
   busNumber?: true
   zipCode?: true
   place?: true
-  userName?: true
+  username?: true
   createdAt?: true
   permanentEmployee?: true
   checkInfo?: true
@@ -301,7 +301,7 @@ export type EmployeeGroupByOutputType = {
   busNumber: string | null
   zipCode: string | null
   place: string | null
-  userName: string
+  username: string
   createdAt: Date
   permanentEmployee: boolean
   checkInfo: boolean
@@ -353,7 +353,7 @@ export type EmployeeWhereInput = {
   busNumber?: Prisma.StringNullableFilter<"Employee"> | string | null
   zipCode?: Prisma.StringNullableFilter<"Employee"> | string | null
   place?: Prisma.StringNullableFilter<"Employee"> | string | null
-  userName?: Prisma.StringFilter<"Employee"> | string
+  username?: Prisma.StringFilter<"Employee"> | string
   createdAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
   permanentEmployee?: Prisma.BoolFilter<"Employee"> | boolean
   checkInfo?: Prisma.BoolFilter<"Employee"> | boolean
@@ -433,7 +433,7 @@ export type EmployeeOrderByWithRelationInput = {
   busNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   zipCode?: Prisma.SortOrderInput | Prisma.SortOrder
   place?: Prisma.SortOrderInput | Prisma.SortOrder
-  userName?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   permanentEmployee?: Prisma.SortOrder
   checkInfo?: Prisma.SortOrder
@@ -517,7 +517,7 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   busNumber?: Prisma.StringNullableFilter<"Employee"> | string | null
   zipCode?: Prisma.StringNullableFilter<"Employee"> | string | null
   place?: Prisma.StringNullableFilter<"Employee"> | string | null
-  userName?: Prisma.StringFilter<"Employee"> | string
+  username?: Prisma.StringFilter<"Employee"> | string
   createdAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
   permanentEmployee?: Prisma.BoolFilter<"Employee"> | boolean
   checkInfo?: Prisma.BoolFilter<"Employee"> | boolean
@@ -597,7 +597,7 @@ export type EmployeeOrderByWithAggregationInput = {
   busNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   zipCode?: Prisma.SortOrderInput | Prisma.SortOrder
   place?: Prisma.SortOrderInput | Prisma.SortOrder
-  userName?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   permanentEmployee?: Prisma.SortOrder
   checkInfo?: Prisma.SortOrder
@@ -634,7 +634,7 @@ export type EmployeeScalarWhereWithAggregatesInput = {
   busNumber?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
   zipCode?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
   place?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
-  userName?: Prisma.StringWithAggregatesFilter<"Employee"> | string
+  username?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Employee"> | Date | string
   permanentEmployee?: Prisma.BoolWithAggregatesFilter<"Employee"> | boolean
   checkInfo?: Prisma.BoolWithAggregatesFilter<"Employee"> | boolean
@@ -665,7 +665,7 @@ export type EmployeeCreateInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -739,7 +739,7 @@ export type EmployeeUncheckedCreateInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -813,7 +813,7 @@ export type EmployeeUpdateInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -887,7 +887,7 @@ export type EmployeeUncheckedUpdateInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -961,7 +961,7 @@ export type EmployeeCreateManyInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -992,7 +992,7 @@ export type EmployeeUpdateManyMutationInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1017,7 +1017,7 @@ export type EmployeeUncheckedUpdateManyInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1074,7 +1074,7 @@ export type EmployeeCountOrderByAggregateInput = {
   busNumber?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   place?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   permanentEmployee?: Prisma.SortOrder
   checkInfo?: Prisma.SortOrder
@@ -1105,7 +1105,7 @@ export type EmployeeMaxOrderByAggregateInput = {
   busNumber?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   place?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   permanentEmployee?: Prisma.SortOrder
   checkInfo?: Prisma.SortOrder
@@ -1136,7 +1136,7 @@ export type EmployeeMinOrderByAggregateInput = {
   busNumber?: Prisma.SortOrder
   zipCode?: Prisma.SortOrder
   place?: Prisma.SortOrder
-  userName?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   permanentEmployee?: Prisma.SortOrder
   checkInfo?: Prisma.SortOrder
@@ -2023,7 +2023,7 @@ export type EmployeeCreateWithoutCertificateInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -2096,7 +2096,7 @@ export type EmployeeUncheckedCreateWithoutCertificateInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -2185,7 +2185,7 @@ export type EmployeeUpdateWithoutCertificateInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2258,7 +2258,7 @@ export type EmployeeUncheckedUpdateWithoutCertificateInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2331,7 +2331,7 @@ export type EmployeeCreateWithoutCertificateTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -2404,7 +2404,7 @@ export type EmployeeUncheckedCreateWithoutCertificateTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -2493,7 +2493,7 @@ export type EmployeeUpdateWithoutCertificateTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2566,7 +2566,7 @@ export type EmployeeUncheckedUpdateWithoutCertificateTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2639,7 +2639,7 @@ export type EmployeeCreateWithoutCompanyInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -2712,7 +2712,7 @@ export type EmployeeUncheckedCreateWithoutCompanyInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -2801,7 +2801,7 @@ export type EmployeeUpdateWithoutCompanyInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2874,7 +2874,7 @@ export type EmployeeUncheckedUpdateWithoutCompanyInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2947,7 +2947,7 @@ export type EmployeeCreateWithoutCompanyAdressInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -3020,7 +3020,7 @@ export type EmployeeUncheckedCreateWithoutCompanyAdressInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -3109,7 +3109,7 @@ export type EmployeeUpdateWithoutCompanyAdressInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3182,7 +3182,7 @@ export type EmployeeUncheckedUpdateWithoutCompanyAdressInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3255,7 +3255,7 @@ export type EmployeeCreateWithoutCompanyContactInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -3328,7 +3328,7 @@ export type EmployeeUncheckedCreateWithoutCompanyContactInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -3417,7 +3417,7 @@ export type EmployeeUpdateWithoutCompanyContactInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3490,7 +3490,7 @@ export type EmployeeUncheckedUpdateWithoutCompanyContactInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3563,7 +3563,7 @@ export type EmployeeCreateWithoutContactInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -3636,7 +3636,7 @@ export type EmployeeUncheckedCreateWithoutContactInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -3725,7 +3725,7 @@ export type EmployeeUpdateWithoutContactInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3798,7 +3798,7 @@ export type EmployeeUncheckedUpdateWithoutContactInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3871,7 +3871,7 @@ export type EmployeeCreateWithoutDepartment_Department_createdByToEmployeeInput 
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -3944,7 +3944,7 @@ export type EmployeeUncheckedCreateWithoutDepartment_Department_createdByToEmplo
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -4022,7 +4022,7 @@ export type EmployeeCreateWithoutDepartment_Employee_departmentIdToDepartmentInp
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -4095,7 +4095,7 @@ export type EmployeeUncheckedCreateWithoutDepartment_Employee_departmentIdToDepa
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -4189,7 +4189,7 @@ export type EmployeeUpdateWithoutDepartment_Department_createdByToEmployeeInput 
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4262,7 +4262,7 @@ export type EmployeeUncheckedUpdateWithoutDepartment_Department_createdByToEmplo
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4354,7 +4354,7 @@ export type EmployeeScalarWhereInput = {
   busNumber?: Prisma.StringNullableFilter<"Employee"> | string | null
   zipCode?: Prisma.StringNullableFilter<"Employee"> | string | null
   place?: Prisma.StringNullableFilter<"Employee"> | string | null
-  userName?: Prisma.StringFilter<"Employee"> | string
+  username?: Prisma.StringFilter<"Employee"> | string
   createdAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
   permanentEmployee?: Prisma.BoolFilter<"Employee"> | boolean
   checkInfo?: Prisma.BoolFilter<"Employee"> | boolean
@@ -4385,7 +4385,7 @@ export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_createdByTo
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -4458,7 +4458,7 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_cr
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -4536,7 +4536,7 @@ export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_managedById
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -4609,7 +4609,7 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_ma
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -4687,7 +4687,7 @@ export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_revisedById
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -4760,7 +4760,7 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_re
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -4838,7 +4838,7 @@ export type EmployeeCreateWithoutDocumentStructure_Employee_pictureIdToDocumentS
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -4911,7 +4911,7 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_Employee_pictureIdTo
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -5005,7 +5005,7 @@ export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_createdByTo
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5078,7 +5078,7 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_cr
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5162,7 +5162,7 @@ export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_managedById
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5235,7 +5235,7 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_ma
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5319,7 +5319,7 @@ export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_revisedById
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5392,7 +5392,7 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_re
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5481,7 +5481,7 @@ export type EmployeeCreateWithoutEmergencyContactInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -5554,7 +5554,7 @@ export type EmployeeUncheckedCreateWithoutEmergencyContactInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -5643,7 +5643,7 @@ export type EmployeeUpdateWithoutEmergencyContactInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5716,7 +5716,7 @@ export type EmployeeUncheckedUpdateWithoutEmergencyContactInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5789,7 +5789,7 @@ export type EmployeeCreateWithoutOther_EmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -5862,7 +5862,7 @@ export type EmployeeUncheckedCreateWithoutOther_EmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -5940,7 +5940,7 @@ export type EmployeeCreateWithoutEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -6013,7 +6013,7 @@ export type EmployeeUncheckedCreateWithoutEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -6107,7 +6107,7 @@ export type EmployeeUpdateWithoutOther_EmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6180,7 +6180,7 @@ export type EmployeeUncheckedUpdateWithoutOther_EmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6269,7 +6269,7 @@ export type EmployeeCreateWithoutFollowUp_FollowUp_ownedByToEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -6342,7 +6342,7 @@ export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_ownedByToEmployeeInp
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -6420,7 +6420,7 @@ export type EmployeeCreateWithoutFollowUp_FollowUp_executedByToEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -6493,7 +6493,7 @@ export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_executedByToEmployee
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -6571,7 +6571,7 @@ export type EmployeeCreateWithoutFollowUp_FollowUp_createdByToEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -6644,7 +6644,7 @@ export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_createdByToEmployeeI
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -6733,7 +6733,7 @@ export type EmployeeUpdateWithoutFollowUp_FollowUp_ownedByToEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6806,7 +6806,7 @@ export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_ownedByToEmployeeInp
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6890,7 +6890,7 @@ export type EmployeeUpdateWithoutFollowUp_FollowUp_executedByToEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6963,7 +6963,7 @@ export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_executedByToEmployee
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7047,7 +7047,7 @@ export type EmployeeUpdateWithoutFollowUp_FollowUp_createdByToEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7120,7 +7120,7 @@ export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_createdByToEmployeeI
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7193,7 +7193,7 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_ownedByToEm
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -7266,7 +7266,7 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_ow
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -7344,7 +7344,7 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_executedByT
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -7417,7 +7417,7 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_ex
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -7495,7 +7495,7 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_taskForToEm
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -7568,7 +7568,7 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_ta
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -7646,7 +7646,7 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_createdByTo
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -7719,7 +7719,7 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_cr
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -7808,7 +7808,7 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_ownedByToEm
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7881,7 +7881,7 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_ow
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -7965,7 +7965,7 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_executedByT
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8038,7 +8038,7 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_ex
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8122,7 +8122,7 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_taskForToEm
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8195,7 +8195,7 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_ta
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8279,7 +8279,7 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_createdByTo
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8352,7 +8352,7 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_cr
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8425,7 +8425,7 @@ export type EmployeeCreateWithoutFollowUpTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -8498,7 +8498,7 @@ export type EmployeeUncheckedCreateWithoutFollowUpTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -8587,7 +8587,7 @@ export type EmployeeUpdateWithoutFollowUpTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8660,7 +8660,7 @@ export type EmployeeUncheckedUpdateWithoutFollowUpTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -8733,7 +8733,7 @@ export type EmployeeCreateWithoutFunction_Employee_functionIdToFunctionInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -8806,7 +8806,7 @@ export type EmployeeUncheckedCreateWithoutFunction_Employee_functionIdToFunction
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -8889,7 +8889,7 @@ export type EmployeeCreateWithoutFunction_Function_createdByToEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -8962,7 +8962,7 @@ export type EmployeeUncheckedCreateWithoutFunction_Function_createdByToEmployeeI
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -9067,7 +9067,7 @@ export type EmployeeUpdateWithoutFunction_Function_createdByToEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9140,7 +9140,7 @@ export type EmployeeUncheckedUpdateWithoutFunction_Function_createdByToEmployeeI
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9213,7 +9213,7 @@ export type EmployeeCreateWithoutHourTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -9286,7 +9286,7 @@ export type EmployeeUncheckedCreateWithoutHourTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -9375,7 +9375,7 @@ export type EmployeeUpdateWithoutHourTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9448,7 +9448,7 @@ export type EmployeeUncheckedUpdateWithoutHourTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9521,7 +9521,7 @@ export type EmployeeCreateWithoutInvoiceInInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -9594,7 +9594,7 @@ export type EmployeeUncheckedCreateWithoutInvoiceInInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -9683,7 +9683,7 @@ export type EmployeeUpdateWithoutInvoiceInInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9756,7 +9756,7 @@ export type EmployeeUncheckedUpdateWithoutInvoiceInInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -9829,7 +9829,7 @@ export type EmployeeCreateWithoutInvoiceOutInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -9902,7 +9902,7 @@ export type EmployeeUncheckedCreateWithoutInvoiceOutInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -9991,7 +9991,7 @@ export type EmployeeUpdateWithoutInvoiceOutInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10064,7 +10064,7 @@ export type EmployeeUncheckedUpdateWithoutInvoiceOutInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10137,7 +10137,7 @@ export type EmployeeCreateWithoutInvoiceTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -10210,7 +10210,7 @@ export type EmployeeUncheckedCreateWithoutInvoiceTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -10299,7 +10299,7 @@ export type EmployeeUpdateWithoutInvoiceTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10372,7 +10372,7 @@ export type EmployeeUncheckedUpdateWithoutInvoiceTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10445,7 +10445,7 @@ export type EmployeeCreateWithoutProjectInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -10518,7 +10518,7 @@ export type EmployeeUncheckedCreateWithoutProjectInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -10607,7 +10607,7 @@ export type EmployeeUpdateWithoutProjectInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10680,7 +10680,7 @@ export type EmployeeUncheckedUpdateWithoutProjectInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -10753,7 +10753,7 @@ export type EmployeeCreateWithoutProjectContact_ProjectContact_createdByToEmploy
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -10826,7 +10826,7 @@ export type EmployeeUncheckedCreateWithoutProjectContact_ProjectContact_createdB
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -10904,7 +10904,7 @@ export type EmployeeCreateWithoutProjectContact_ProjectContact_moddifiedByToEmpl
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -10977,7 +10977,7 @@ export type EmployeeUncheckedCreateWithoutProjectContact_ProjectContact_moddifie
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -11066,7 +11066,7 @@ export type EmployeeUpdateWithoutProjectContact_ProjectContact_createdByToEmploy
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11139,7 +11139,7 @@ export type EmployeeUncheckedUpdateWithoutProjectContact_ProjectContact_createdB
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11223,7 +11223,7 @@ export type EmployeeUpdateWithoutProjectContact_ProjectContact_moddifiedByToEmpl
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11296,7 +11296,7 @@ export type EmployeeUncheckedUpdateWithoutProjectContact_ProjectContact_moddifie
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11369,7 +11369,7 @@ export type EmployeeCreateWithoutProjectTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -11442,7 +11442,7 @@ export type EmployeeUncheckedCreateWithoutProjectTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -11531,7 +11531,7 @@ export type EmployeeUpdateWithoutProjectTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11604,7 +11604,7 @@ export type EmployeeUncheckedUpdateWithoutProjectTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -11677,7 +11677,7 @@ export type EmployeeCreateWithoutRole_Employee_roleIdToRoleInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -11750,7 +11750,7 @@ export type EmployeeUncheckedCreateWithoutRole_Employee_roleIdToRoleInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -11833,7 +11833,7 @@ export type EmployeeCreateWithoutRole_Role_createdByToEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -11906,7 +11906,7 @@ export type EmployeeUncheckedCreateWithoutRole_Role_createdByToEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -12011,7 +12011,7 @@ export type EmployeeUpdateWithoutRole_Role_createdByToEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12084,7 +12084,7 @@ export type EmployeeUncheckedUpdateWithoutRole_Role_createdByToEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12157,7 +12157,7 @@ export type EmployeeCreateWithoutStatusInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -12230,7 +12230,7 @@ export type EmployeeUncheckedCreateWithoutStatusInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -12319,7 +12319,7 @@ export type EmployeeUpdateWithoutStatusInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12392,7 +12392,7 @@ export type EmployeeUncheckedUpdateWithoutStatusInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12465,7 +12465,7 @@ export type EmployeeCreateWithoutTargetInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -12538,7 +12538,7 @@ export type EmployeeUncheckedCreateWithoutTargetInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -12627,7 +12627,7 @@ export type EmployeeUpdateWithoutTargetInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12700,7 +12700,7 @@ export type EmployeeUncheckedUpdateWithoutTargetInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -12773,7 +12773,7 @@ export type EmployeeCreateWithoutTargetTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -12846,7 +12846,7 @@ export type EmployeeUncheckedCreateWithoutTargetTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -12935,7 +12935,7 @@ export type EmployeeUpdateWithoutTargetTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13008,7 +13008,7 @@ export type EmployeeUncheckedUpdateWithoutTargetTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13081,7 +13081,7 @@ export type EmployeeCreateWithoutTimeRegistryInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -13154,7 +13154,7 @@ export type EmployeeUncheckedCreateWithoutTimeRegistryInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -13243,7 +13243,7 @@ export type EmployeeUpdateWithoutTimeRegistryInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13316,7 +13316,7 @@ export type EmployeeUncheckedUpdateWithoutTimeRegistryInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13389,7 +13389,7 @@ export type EmployeeCreateWithoutTimeRegistryEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -13462,7 +13462,7 @@ export type EmployeeUncheckedCreateWithoutTimeRegistryEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -13551,7 +13551,7 @@ export type EmployeeUpdateWithoutTimeRegistryEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13624,7 +13624,7 @@ export type EmployeeUncheckedUpdateWithoutTimeRegistryEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -13697,7 +13697,7 @@ export type EmployeeCreateWithoutTitle_Employee_titleIdToTitleInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -13770,7 +13770,7 @@ export type EmployeeUncheckedCreateWithoutTitle_Employee_titleIdToTitleInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -13853,7 +13853,7 @@ export type EmployeeCreateWithoutTitle_Title_createdByToEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -13926,7 +13926,7 @@ export type EmployeeUncheckedCreateWithoutTitle_Title_createdByToEmployeeInput =
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -14031,7 +14031,7 @@ export type EmployeeUpdateWithoutTitle_Title_createdByToEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14104,7 +14104,7 @@ export type EmployeeUncheckedUpdateWithoutTitle_Title_createdByToEmployeeInput =
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14177,7 +14177,7 @@ export type EmployeeCreateWithoutTrainingInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -14250,7 +14250,7 @@ export type EmployeeUncheckedCreateWithoutTrainingInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -14339,7 +14339,7 @@ export type EmployeeUpdateWithoutTrainingInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14412,7 +14412,7 @@ export type EmployeeUncheckedUpdateWithoutTrainingInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14485,7 +14485,7 @@ export type EmployeeCreateWithoutTrainingContactInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -14558,7 +14558,7 @@ export type EmployeeUncheckedCreateWithoutTrainingContactInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -14647,7 +14647,7 @@ export type EmployeeUpdateWithoutTrainingContactInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14720,7 +14720,7 @@ export type EmployeeUncheckedUpdateWithoutTrainingContactInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -14793,7 +14793,7 @@ export type EmployeeCreateWithoutTrainingStandardInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -14866,7 +14866,7 @@ export type EmployeeUncheckedCreateWithoutTrainingStandardInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -14955,7 +14955,7 @@ export type EmployeeUpdateWithoutTrainingStandardInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15028,7 +15028,7 @@ export type EmployeeUncheckedUpdateWithoutTrainingStandardInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15101,7 +15101,7 @@ export type EmployeeCreateWithoutUrgencyTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -15174,7 +15174,7 @@ export type EmployeeUncheckedCreateWithoutUrgencyTypeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -15263,7 +15263,7 @@ export type EmployeeUpdateWithoutUrgencyTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15336,7 +15336,7 @@ export type EmployeeUncheckedUpdateWithoutUrgencyTypeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15409,7 +15409,7 @@ export type EmployeeCreateWithoutWorkOrderInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -15482,7 +15482,7 @@ export type EmployeeUncheckedCreateWithoutWorkOrderInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -15571,7 +15571,7 @@ export type EmployeeUpdateWithoutWorkOrderInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15644,7 +15644,7 @@ export type EmployeeUncheckedUpdateWithoutWorkOrderInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15717,7 +15717,7 @@ export type EmployeeCreateWithoutWorkOrderStructureInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -15790,7 +15790,7 @@ export type EmployeeUncheckedCreateWithoutWorkOrderStructureInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -15879,7 +15879,7 @@ export type EmployeeUpdateWithoutWorkOrderStructureInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -15952,7 +15952,7 @@ export type EmployeeUncheckedUpdateWithoutWorkOrderStructureInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16025,7 +16025,7 @@ export type EmployeeCreateWithoutSessionInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -16098,7 +16098,7 @@ export type EmployeeUncheckedCreateWithoutSessionInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -16187,7 +16187,7 @@ export type EmployeeUpdateWithoutSessionInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16260,7 +16260,7 @@ export type EmployeeUncheckedUpdateWithoutSessionInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16333,7 +16333,7 @@ export type EmployeeCreateManyDepartment_Employee_departmentIdToDepartmentInput 
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -16363,7 +16363,7 @@ export type EmployeeUpdateWithoutDepartment_Employee_departmentIdToDepartmentInp
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16436,7 +16436,7 @@ export type EmployeeUncheckedUpdateWithoutDepartment_Employee_departmentIdToDepa
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16509,7 +16509,7 @@ export type EmployeeUncheckedUpdateManyWithoutDepartment_Employee_departmentIdTo
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16539,7 +16539,7 @@ export type EmployeeCreateManyDocumentStructure_Employee_pictureIdToDocumentStru
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -16569,7 +16569,7 @@ export type EmployeeUpdateWithoutDocumentStructure_Employee_pictureIdToDocumentS
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16642,7 +16642,7 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_Employee_pictureIdTo
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16715,7 +16715,7 @@ export type EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_picture
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16745,7 +16745,7 @@ export type EmployeeCreateManyEmployeeInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -16775,7 +16775,7 @@ export type EmployeeUpdateWithoutEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16848,7 +16848,7 @@ export type EmployeeUncheckedUpdateWithoutEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16921,7 +16921,7 @@ export type EmployeeUncheckedUpdateManyWithoutEmployeeInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -16951,7 +16951,7 @@ export type EmployeeCreateManyFunction_Employee_functionIdToFunctionInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -16981,7 +16981,7 @@ export type EmployeeUpdateWithoutFunction_Employee_functionIdToFunctionInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17054,7 +17054,7 @@ export type EmployeeUncheckedUpdateWithoutFunction_Employee_functionIdToFunction
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17127,7 +17127,7 @@ export type EmployeeUncheckedUpdateManyWithoutFunction_Employee_functionIdToFunc
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17157,7 +17157,7 @@ export type EmployeeCreateManyRole_Employee_roleIdToRoleInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -17187,7 +17187,7 @@ export type EmployeeUpdateWithoutRole_Employee_roleIdToRoleInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17260,7 +17260,7 @@ export type EmployeeUncheckedUpdateWithoutRole_Employee_roleIdToRoleInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17333,7 +17333,7 @@ export type EmployeeUncheckedUpdateManyWithoutRole_Employee_roleIdToRoleInput = 
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17363,7 +17363,7 @@ export type EmployeeCreateManyTitle_Employee_titleIdToTitleInput = {
   busNumber?: string | null
   zipCode?: string | null
   place?: string | null
-  userName: string
+  username: string
   createdAt: Date | string
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -17393,7 +17393,7 @@ export type EmployeeUpdateWithoutTitle_Employee_titleIdToTitleInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17466,7 +17466,7 @@ export type EmployeeUncheckedUpdateWithoutTitle_Employee_titleIdToTitleInput = {
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17539,7 +17539,7 @@ export type EmployeeUncheckedUpdateManyWithoutTitle_Employee_titleIdToTitleInput
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permanentEmployee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -17978,7 +17978,7 @@ export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   busNumber?: boolean
   zipCode?: boolean
   place?: boolean
-  userName?: boolean
+  username?: boolean
   createdAt?: boolean
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -18061,7 +18061,7 @@ export type EmployeeSelectScalar = {
   busNumber?: boolean
   zipCode?: boolean
   place?: boolean
-  userName?: boolean
+  username?: boolean
   createdAt?: boolean
   permanentEmployee?: boolean
   checkInfo?: boolean
@@ -18076,7 +18076,7 @@ export type EmployeeSelectScalar = {
   pictureId?: boolean
 }
 
-export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "mail" | "password_hash" | "phoneNumber" | "startDate" | "endDate" | "info" | "birthDate" | "street" | "houseNumber" | "busNumber" | "zipCode" | "place" | "userName" | "createdAt" | "permanentEmployee" | "checkInfo" | "newYearCard" | "active" | "passwordCreatedAt" | "createdBy" | "roleId" | "functionId" | "departmentId" | "titleId" | "pictureId", ExtArgs["result"]["employee"]>
+export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "mail" | "password_hash" | "phoneNumber" | "startDate" | "endDate" | "info" | "birthDate" | "street" | "houseNumber" | "busNumber" | "zipCode" | "place" | "username" | "createdAt" | "permanentEmployee" | "checkInfo" | "newYearCard" | "active" | "passwordCreatedAt" | "createdBy" | "roleId" | "functionId" | "departmentId" | "titleId" | "pictureId", ExtArgs["result"]["employee"]>
 export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Certificate?: boolean | Prisma.Employee$CertificateArgs<ExtArgs>
   CertificateType?: boolean | Prisma.Employee$CertificateTypeArgs<ExtArgs>
@@ -18199,7 +18199,7 @@ export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     busNumber: string | null
     zipCode: string | null
     place: string | null
-    userName: string
+    username: string
     createdAt: Date
     permanentEmployee: boolean
     checkInfo: boolean
@@ -18645,7 +18645,7 @@ export interface EmployeeFieldRefs {
   readonly busNumber: Prisma.FieldRef<"Employee", 'String'>
   readonly zipCode: Prisma.FieldRef<"Employee", 'String'>
   readonly place: Prisma.FieldRef<"Employee", 'String'>
-  readonly userName: Prisma.FieldRef<"Employee", 'String'>
+  readonly username: Prisma.FieldRef<"Employee", 'String'>
   readonly createdAt: Prisma.FieldRef<"Employee", 'DateTime'>
   readonly permanentEmployee: Prisma.FieldRef<"Employee", 'Boolean'>
   readonly checkInfo: Prisma.FieldRef<"Employee", 'Boolean'>

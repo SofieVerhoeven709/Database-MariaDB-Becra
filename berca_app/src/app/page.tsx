@@ -1,5 +1,7 @@
-import {Lock} from 'lucide-react'
+import Link from 'next/link'
+import {Lock, Eye} from 'lucide-react'
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card'
+import {Button} from '@/components/ui/button'
 import {LoginForm} from '@/components/custom/loginForm'
 
 export default function Page() {
@@ -22,7 +24,19 @@ export default function Page() {
             <LoginForm />
           </CardContent>
         </Card>
-        <p className="mt-6 text-center text-xs text-muted-foreground/60">
+        <div className="mt-6 flex justify-center">
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="text-muted-foreground/60 hover:text-foreground hover:bg-secondary text-xs gap-2">
+            <Link href="/dashboard">
+              <Eye className="h-3.5 w-3.5" />
+              Preview Dashboard
+            </Link>
+          </Button>
+        </div>
+        <p className="mt-3 text-center text-xs text-muted-foreground/60">
           By signing in, you agree to our Terms of Service and Privacy Policy.
         </p>
       </div>

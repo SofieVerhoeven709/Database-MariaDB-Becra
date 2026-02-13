@@ -5,4 +5,7 @@ export default defineConfig({
   migrations: {
     seed: 'pnpm run prisma:seed',
   },
+  datasource: {
+    url: process.env.DATABASE_URL!,
+  },
 })

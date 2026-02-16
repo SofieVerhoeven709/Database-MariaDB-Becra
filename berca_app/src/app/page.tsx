@@ -24,18 +24,6 @@ export default function Page() {
             <LoginForm />
           </CardContent>
         </Card>
-        <div className="mt-6 flex justify-center">
-          <Button
-            asChild
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground/60 hover:text-foreground hover:bg-secondary text-xs gap-2">
-            <Link href="/dashboard">
-              <Eye className="h-3.5 w-3.5" />
-              Preview Dashboard
-            </Link>
-          </Button>
-        </div>
         <p className="mt-3 text-center text-xs text-muted-foreground/60">
           By signing in, you agree to our Terms of Service and Privacy Policy.
         </p>

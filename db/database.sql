@@ -5,32 +5,32 @@ CREATE DATABASE BecraLocal;
 USE BecraLocal;
 
 CREATE TABLE `Role`(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   `level` INT NOT NULL,
   createdAt DATETIME NOT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Function`(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   createdAt DATETIME NOT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE Department(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   createdAt DATETIME NOT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE Title(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   createdAt DATETIME NOT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE DocumentStructure(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   documentNumber VARCHAR(100) NOT NULL,
   `description` TEXT,
   descriptionShort VARCHAR (100) NOT NULL,
@@ -42,8 +42,8 @@ CREATE TABLE DocumentStructure(
   process BOOLEAN NOT NULL DEFAULT 0,
   aditionalInfo TEXT,
 
-  referenceDocId BINARY(16),
-  roleId BINARY(16),
+  referenceDocId CHAR(36),
+  roleId CHAR(36),
 
   FOREIGN KEY (referenceDocId)
         REFERENCES DocumentStructure(id)
@@ -54,11 +54,11 @@ CREATE TABLE DocumentStructure(
 ) ENGINE=InnoDB;
 
 CREATE TABLE Employee (
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   firstName VARCHAR(100) NOT NULL,
   lastName VARCHAR(100) NOT NULL,
   mail VARCHAR(100),
-  password_hash VARCHAR(100) NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
   phoneNumber VARCHAR(100),
   startDate DATETIME NOT NULL,
   endDate DATETIME,
@@ -79,12 +79,12 @@ CREATE TABLE Employee (
 
   passwordCreatedAt DATETIME NOT NULL,
 
-  createdBy BINARY(16),
-  roleId BINARY(16),
-  functionId BINARY(16),
-  departmentId BINARY(16),
-  titleId BINARY(16),
-  pictureId BINARY(16),
+  createdBy CHAR(36),
+  roleId CHAR(36),
+  functionId CHAR(36),
+  departmentId CHAR(36),
+  titleId CHAR(36),
+  pictureId CHAR(36),
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -107,11 +107,11 @@ CREATE TABLE Employee (
 )ENGINE=InnoDB;
 
 CREATE TABLE `Session`(
-      id BINARY(16) NOT NULL PRIMARY KEY,
+      id CHAR(36) NOT NULL PRIMARY KEY,
       activeFrom DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
       activeUntil DATETIME NOT NULL,
 
-      employeeId BINARY(16) NOT NULL,
+      employeeId CHAR(36) NOT NULL,
 
       FOREIGN KEY (employeeId)
         REFERENCES Employee(id)
@@ -119,11 +119,11 @@ CREATE TABLE `Session`(
 )ENGINE=InnoDB;
 
 CREATE TABLE TargetType(
-      id BINARY(16) NOT NULL PRIMARY KEY,
+      id CHAR(36) NOT NULL PRIMARY KEY,
       `name` VARCHAR(100) NOT NULL,
       createdAt DATETIME NOT NULL,
 
-      createdBy BINARY(16) NOT NULL,
+      createdBy CHAR(36) NOT NULL,
 
       FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -131,11 +131,11 @@ CREATE TABLE TargetType(
 )ENGINE=InnoDB;
 
 CREATE TABLE `Target`(
-      id BINARY(16) NOT NULL PRIMARY KEY,
+      id CHAR(36) NOT NULL PRIMARY KEY,
       createdAt DATETIME NOT NULL,
 
-      createdBy BINARY(16) NOT NULL,
-      targetTypeId BINARY(16) NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      targetTypeId CHAR(36) NOT NULL,
 
       FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -146,69 +146,69 @@ CREATE TABLE `Target`(
 )ENGINE=InnoDB;
 
 ALTER TABLE `Role`
-ADD createdBy BINARY(16) NOT NULL,
+ADD createdBy CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_role_createdBy
 FOREIGN KEY (createdBy)
 REFERENCES Employee(id)
 ON DELETE RESTRICT;
 
 ALTER TABLE `Function`
-ADD createdBy BINARY(16) NOT NULL,
+ADD createdBy CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_function_createdBy
 FOREIGN KEY (createdBy)
 REFERENCES Employee(id)
 ON DELETE RESTRICT;
 
 ALTER TABLE Title
-ADD createdBy BINARY(16) NOT NULL,
+ADD createdBy CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_title_createdBy
 FOREIGN KEY (createdBy)
 REFERENCES Employee(id)
 ON DELETE RESTRICT;
 
 ALTER TABLE Department
-ADD createdBy BINARY(16) NOT NULL,
+ADD createdBy CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_department_createdBy
 FOREIGN KEY (createdBy)
 REFERENCES Employee(id)
 ON DELETE RESTRICT;
 
 ALTER TABLE DocumentStructure
-ADD createdBy BINARY(16) NOT NULL,
+ADD createdBy CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_createdBy
 FOREIGN KEY (createdBy)
 REFERENCES Employee(id)
 ON DELETE RESTRICT;
 
 ALTER TABLE DocumentStructure
-ADD revisedById BINARY(16) NOT NULL,
+ADD revisedById CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_revisedBy
 FOREIGN KEY (revisedById)
 REFERENCES Employee(id)
 ON DELETE RESTRICT;
 
 ALTER TABLE DocumentStructure
-ADD managedById BINARY(16) NOT NULL,
+ADD managedById CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_managedBy
 FOREIGN KEY (managedById)
 REFERENCES Employee(id)
 ON DELETE RESTRICT;
 
 ALTER TABLE DocumentStructure
-ADD targetId BINARY(16) NOT NULL,
+ADD targetId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_target
 FOREIGN KEY (targetId)
 REFERENCES `Target`(id)
 ON DELETE RESTRICT;
 
 CREATE TABLE EmergencyContact(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   relationship VARCHAR(100) NOT NULL,
   mail VARCHAR(100) NOT NULL,
   phoneNumber VARCHAR(100) NOT NULL,
 
-  employeeId BINARY(16) NOT NULL,
+  employeeId CHAR(36) NOT NULL,
 
   FOREIGN KEY (employeeId)
         REFERENCES Employee(id)
@@ -216,7 +216,7 @@ CREATE TABLE EmergencyContact(
 )ENGINE=InnoDB;
 
 CREATE TABLE Company(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   `number` VARCHAR(100) NOT NULL,
   mail VARCHAR(100),
@@ -240,9 +240,9 @@ CREATE TABLE Company(
   notes TEXT,
   createdAt DATETIME NOT NULL,
 
-  createdBy BINARY(16) NOT NULL,
-  companyId BINARY(16) NULL,
-  targetId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  companyId CHAR(36) NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -257,7 +257,7 @@ CREATE TABLE Company(
 )ENGINE=InnoDB;
 
 CREATE TABLE Contact (
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   firstName VARCHAR(100) NOT NULL,
   lastName VARCHAR(100) NOT NULL,
   mail1 VARCHAR(100),
@@ -286,12 +286,12 @@ CREATE TABLE Contact (
   teacherTrainingAndAdvice BOOLEAN NOT NULL DEFAULT 0,
   participantTrainingAndAdvice BOOLEAN NOT NULL DEFAULT 0,
 
-  createdBy BINARY(16) NOT NULL,
-  functionId BINARY(16) NULL,
-  departmentId BINARY(16) NULL,
-  titleId BINARY(16) NULL,
-  businessCardId BINARY(16) NULL,
-  targetId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  functionId CHAR(36) NULL,
+  departmentId CHAR(36) NULL,
+  titleId CHAR(36) NULL,
+  businessCardId CHAR(36) NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -314,7 +314,7 @@ CREATE TABLE Contact (
 )ENGINE=InnoDB;
 
 CREATE TABLE CompanyAdress(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   street VARCHAR(100),
   houseNumber VARCHAR(100),
   busNumber VARCHAR(100),
@@ -324,8 +324,8 @@ CREATE TABLE CompanyAdress(
 
   typeAdress VARCHAR(100),
 
-  createdBy BINARY(16) NOT NULL,
-  companyId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  companyId CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -336,15 +336,15 @@ CREATE TABLE CompanyAdress(
 )ENGINE=InnoDB;
 
 CREATE TABLE CompanyContact(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   startedDate DATETIME NOT NULL,
   endDate DATETIME,
   roleWithCompany VARCHAR(100),
   createdAt DATETIME NOT NULL,
 
-  contactId BINARY(16) NOT NULL,
-  companyId BINARY(16) NOT NULL,
-  createdBy BINARY(16) NOT NULL,
+  contactId CHAR(36) NOT NULL,
+  companyId CHAR(36) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -358,11 +358,11 @@ CREATE TABLE CompanyContact(
 )ENGINE=InnoDB;
 
 CREATE TABLE ProjectType(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   createdAt DATETIME NOT NULL,
 
-  createdBy BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -370,11 +370,11 @@ CREATE TABLE ProjectType(
 ) ENGINE=InnoDB;
 
 CREATE TABLE CertificateType(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   createdAt DATETIME NOT NULL,
 
-  createdBy BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -382,11 +382,11 @@ CREATE TABLE CertificateType(
 ) ENGINE=InnoDB;
 
 CREATE TABLE UrgencyType(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   createdAt DATETIME NOT NULL,
 
-  createdBy BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -394,11 +394,11 @@ CREATE TABLE UrgencyType(
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Status`(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   createdAt DATETIME NOT NULL,
 
-  createdBy BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -406,11 +406,11 @@ CREATE TABLE `Status`(
 ) ENGINE=InnoDB;
 
 CREATE TABLE FollowUpType(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   createdAt DATETIME NOT NULL,
 
-  createdBy BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -418,11 +418,11 @@ CREATE TABLE FollowUpType(
 ) ENGINE=InnoDB;
 
 CREATE TABLE InvoiceType(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   createdAt DATETIME NOT NULL,
 
-  createdBy BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -430,12 +430,12 @@ CREATE TABLE InvoiceType(
 ) ENGINE=InnoDB;
 
 CREATE TABLE HourType(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
   createdAt DATETIME NOT NULL,
   info TEXT,
 
-  createdBy BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -443,7 +443,7 @@ CREATE TABLE HourType(
 ) ENGINE=InnoDB;
 
 CREATE TABLE Project(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   projectNumber VARCHAR(100) NOT NULL,
   `description` TEXT,
   extraInfo TEXT,
@@ -458,11 +458,11 @@ CREATE TABLE Project(
   isOpen BOOLEAN NOT NULL DEFAULT 1,
   isClosed BOOLEAN NOT NULL DEFAULT 0,
 
-  createdBy BINARY(16) NOT NULL,
-  companyId BINARY(16) NOT NULL,
-  projectTypeId BINARY(16) NOT NULL,
-  parentProjectId BINARY(16) NULL,
-  targetId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  companyId CHAR(36) NOT NULL,
+  projectTypeId CHAR(36) NOT NULL,
+  parentProjectId CHAR(36) NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -483,14 +483,14 @@ CREATE TABLE Project(
 )ENGINE=InnoDB;
 
 CREATE TABLE `Certificate`(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `description` TEXT,
   descriptionShort TEXT,
   createdAt DATETIME NOT NULL,
 
-  createdBy BINARY(16) NOT NULL,
-  certificateTypeId BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  certificateTypeId CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -504,7 +504,7 @@ CREATE TABLE `Certificate`(
 )ENGINE=InnoDB;
 
 CREATE TABLE TrainingStandard(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `description` TEXT,
   descriptionShort TEXT,
   `location` VARCHAR(100),
@@ -513,9 +513,9 @@ CREATE TABLE TrainingStandard(
   `certificate` BOOLEAN NOT NULL DEFAULT 1,
   `repeat` BOOLEAN NOT NULL DEFAULT 0,
 
-  createdBy BINARY(16) NOT NULL,
-  certificateId BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  certificateId CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -529,10 +529,10 @@ CREATE TABLE TrainingStandard(
 )ENGINE=InnoDB;
 
 CREATE TABLE TrainingDocument(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
 
-  documentId BINARY(16) NOT NULL,
-  trainingStandardId BINARY(16) NOT NULL,
+  documentId CHAR(36) NOT NULL,
+  trainingStandardId CHAR(36) NOT NULL,
 
   FOREIGN KEY (documentId)
         REFERENCES DocumentStructure(id)
@@ -543,7 +543,7 @@ CREATE TABLE TrainingDocument(
 )ENGINE=InnoDB;
 
 CREATE TABLE WorkOrder(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   workOrderNumber VARCHAR(100),
   `description` TEXT,
   aditionalInfo TEXT,
@@ -555,9 +555,9 @@ CREATE TABLE WorkOrder(
   invoiceSent BOOLEAN NOT NULL DEFAULT 0,
   completed BOOLEAN NOT NULL DEFAULT 0,
 
-  createdBy BINARY(16) NOT NULL,
-  projectId BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  projectId CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -571,7 +571,7 @@ CREATE TABLE WorkOrder(
 )ENGINE=InnoDB;
 
 CREATE TABLE TimeRegistry(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   activityDescription TEXT,
   aditionalInfo TEXT,
   invoiceInfo TEXT,
@@ -585,9 +585,9 @@ CREATE TABLE TimeRegistry(
   invoiceTime BOOLEAN NOT NULL DEFAULT 0,
   onSite BOOLEAN NOT NULL DEFAULT 0,
 
-  createdBy BINARY(16) NOT NULL,
-  workOrderId BINARY(16) NOT NULL,
-  hourtypeId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  workOrderId CHAR(36) NOT NULL,
+  hourtypeId CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -601,10 +601,10 @@ CREATE TABLE TimeRegistry(
 )ENGINE=InnoDB;
 
 CREATE TABLE TimeRegistryEmployee(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
 
-  employeeId BINARY(16) NOT NULL,
-  timeRegistryId BINARY(16) NOT NULL,
+  employeeId CHAR(36) NOT NULL,
+  timeRegistryId CHAR(36) NOT NULL,
 
   FOREIGN KEY (employeeId)
         REFERENCES Employee(id)
@@ -615,7 +615,7 @@ CREATE TABLE TimeRegistryEmployee(
 )ENGINE=InnoDB;
 
 CREATE TABLE ProjectContact(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   `description` TEXT,
   extraInfo TEXT,
   createdAt DATETIME NOT NULL,
@@ -623,10 +623,10 @@ CREATE TABLE ProjectContact(
 
   idValid BOOLEAN NOT NULL DEFAULT 1,
 
-  createdBy BINARY(16) NOT NULL,
-  moddifiedBy BINARY(16) NOT NULL,
-  projectId BINARY(16) NOT NULL,
-  contactId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  moddifiedBy CHAR(36) NOT NULL,
+  projectId CHAR(36) NOT NULL,
+  contactId CHAR(36) NOT NULL,
 
   FOREIGN KEY (createdBy)
         REFERENCES Employee(id)
@@ -643,17 +643,17 @@ CREATE TABLE ProjectContact(
 )ENGINE=InnoDB;
 
 CREATe TABLE Training(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   trainingNumber VARCHAR(100),
   trainingDate DATETIME NOT NULL,
   createdAt DATETIME NOT NULL,
 
   closed BOOLEAN NOT NULL DEFAULT 1,
 
-  createdBy BINARY(16) NOT NULL,
-  workOrderId BINARY(16) NOT NULL,
-  trainingStandardId BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  workOrderId CHAR(36) NOT NULL,
+  trainingStandardId CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (workOrderId)
         REFERENCES WorkOrder(id)
@@ -670,7 +670,7 @@ CREATe TABLE Training(
 )ENGINE=InnoDB;
 
 CREATE TABLE TrainingContact(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   clientNumber VARCHAR(100),
   certSentDate DATETIME,
   createdAt DATETIME NOT NULL,
@@ -679,9 +679,9 @@ CREATE TABLE TrainingContact(
   attended BOOLEAN NOT NULL DEFAULT 0,
   certificateSent BOOLEAN NOT NULL DEFAULT 0,
 
-  createdBy BINARY(16) NOT NULL,
-  contactId BINARY(16) NOT NULL,
-  trainingId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  contactId CHAR(36) NOT NULL,
+  trainingId CHAR(36) NOT NULL,
 
   FOREIGN KEY (contactId)
         REFERENCES Contact(id)
@@ -696,7 +696,7 @@ CREATE TABLE TrainingContact(
 
 -- CHECK BELOW ONCE MATERIAL HAS JOINED!!!!!!!!!!!!!
 CREATE TABLE WorkOrderStructure(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   clientNumber VARCHAR(100),
   tag VARCHAR(100),
   quantity INT,
@@ -705,10 +705,10 @@ CREATE TABLE WorkOrderStructure(
   longDescription TEXT,
   createdAt DATETIME NOT NULL,
 
-  createdBy BINARY(16) NOT NULL,
-  workOrderId BINARY(16) NOT NULL,
-  materialId BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  workOrderId CHAR(36) NOT NULL,
+  materialId CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (workOrderId)
         REFERENCES WorkOrder(id)
@@ -725,7 +725,7 @@ CREATE TABLE WorkOrderStructure(
 )ENGINE=InnoDB;
 
 CREATE TABLE InvoiceOut(
-    id BINARY(16) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
   invoiceNumber VARCHAR(100),
   invoiceDate DATETIME NOT NULL,
   `expireDate` DATETIME NOT NULL,
@@ -747,10 +747,10 @@ CREATE TABLE InvoiceOut(
   materialCost BOOLEAN NOT NULL DEFAULT 0,
   completed BOOLEAN NOT NULL DEFAULT 0,
 
-  createdBy BINARY(16) NOT NULL,
-  invoiceTypeId BINARY(16) NOT NULL,
-  workOrderId BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  invoiceTypeId CHAR(36) NOT NULL,
+  workOrderId CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (invoiceTypeId)
         REFERENCES InvoiceType(id)
@@ -767,7 +767,7 @@ CREATE TABLE InvoiceOut(
 )ENGINE=InnoDB;
 
 CREATE TABLE InvoiceIn(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   invoiceNumber VARCHAR(100),
   invoiceDate DATETIME NOT NULL,
   `expireDate` DATETIME NOT NULL,
@@ -793,9 +793,9 @@ CREATE TABLE InvoiceIn(
   expectedInvoice BOOLEAN NOT NULL DEFAULT 0,
   `private` BOOLEAN NOT NULL DEFAULT 0,
 
-  createdBy BINARY(16) NOT NULL,
-  invoiceTypeId BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  invoiceTypeId CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (invoiceTypeId)
         REFERENCES InvoiceType(id)
@@ -809,10 +809,10 @@ CREATE TABLE InvoiceIn(
 )ENGINE=InnoDB;
 
 CREATE TABLE InvoiceInTarget(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
 
-  invoiceInId BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
+  invoiceInId CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (invoiceInId)
         REFERENCES InvoiceIn(id)
@@ -823,7 +823,7 @@ CREATE TABLE InvoiceInTarget(
 )ENGINE=InnoDB;
 
 CREATE TABLE FollowUp(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   activityDescription TEXT,
   aditionalInfo TEXT,
   actionAgenda DATETIME,
@@ -838,14 +838,14 @@ CREATE TABLE FollowUp(
   recurringActive BOOLEAN NOT NULL DEFAULT 0,
   review BOOLEAN NOT NULL DEFAULT 0,
 
-  createdBy BINARY(16) NOT NULL,
-  ownedBy BINARY(16) NOT NULL,
-  statusId BINARY(16) NOT NULL,
-  executedBy BINARY(16) NOT NULL,
-  urgencyTypeId BINARY(16) NOT NULL,
-  documentId BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
-  followUpTypeId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  ownedBy CHAR(36) NOT NULL,
+  statusId CHAR(36) NOT NULL,
+  executedBy CHAR(36) NOT NULL,
+  urgencyTypeId CHAR(36) NOT NULL,
+  documentId CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
+  followUpTypeId CHAR(36) NOT NULL,
 
   FOREIGN KEY (urgencyTypeId)
         REFERENCES UrgencyType(id)
@@ -874,7 +874,7 @@ CREATE TABLE FollowUp(
 )ENGINE=InnoDB;
 
 CREATE TABLE FollowUpStructure(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   activityDescription TEXT,
   aditionalInfo TEXT,
   actionAgenda DATETIME,
@@ -889,16 +889,16 @@ CREATE TABLE FollowUpStructure(
 
   recurringActive BOOLEAN NOT NULL DEFAULT 0,
 
-  createdBy BINARY(16) NOT NULL,
-  ownedBy BINARY(16) NOT NULL,
-  statusId BINARY(16) NOT NULL,
-  executedBy BINARY(16) NOT NULL,
-  urgencyTypeId BINARY(16) NOT NULL,
-  followUpId BINARY(16) NOT NULL,
-  documentId BINARY(16) NOT NULL,
-  contactId BINARY(16) NOT NULL,
-  taskFor BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
+  createdBy CHAR(36) NOT NULL,
+  ownedBy CHAR(36) NOT NULL,
+  statusId CHAR(36) NOT NULL,
+  executedBy CHAR(36) NOT NULL,
+  urgencyTypeId CHAR(36) NOT NULL,
+  followUpId CHAR(36) NOT NULL,
+  documentId CHAR(36) NOT NULL,
+  contactId CHAR(36) NOT NULL,
+  taskFor CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (urgencyTypeId)
         REFERENCES UrgencyType(id)
@@ -934,11 +934,11 @@ CREATE TABLE FollowUpStructure(
 )ENGINE=InnoDB;
 
 CREATE TABLE VisibilityForRole(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
   visible BOOLEAN NOT NULL DEFAULT 0,
 
-  roleId BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
+  roleId CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (roleId)
         REFERENCES `Role`(id)
@@ -949,10 +949,10 @@ CREATE TABLE VisibilityForRole(
 )ENGINE=InnoDB;
 
 CREATE TABLE FollowUpTarget(
-  id BINARY(16) NOT NULL PRIMARY KEY,
+  id CHAR(36) NOT NULL PRIMARY KEY,
 
-  followUpId BINARY(16) NOT NULL,
-  targetId BINARY(16) NOT NULL,
+  followUpId CHAR(36) NOT NULL,
+  targetId CHAR(36) NOT NULL,
 
   FOREIGN KEY (followUpId)
         REFERENCES FollowUp(id)

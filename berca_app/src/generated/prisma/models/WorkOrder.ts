@@ -25,7 +25,7 @@ export type AggregateWorkOrder = {
 }
 
 export type WorkOrderMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   workOrderNumber: string | null
   description: string | null
   aditionalInfo: string | null
@@ -35,13 +35,13 @@ export type WorkOrderMinAggregateOutputType = {
   hoursMaterialClosed: boolean | null
   invoiceSent: boolean | null
   completed: boolean | null
-  createdBy: runtime.Bytes | null
-  projectId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  projectId: string | null
+  targetId: string | null
 }
 
 export type WorkOrderMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   workOrderNumber: string | null
   description: string | null
   aditionalInfo: string | null
@@ -51,9 +51,9 @@ export type WorkOrderMaxAggregateOutputType = {
   hoursMaterialClosed: boolean | null
   invoiceSent: boolean | null
   completed: boolean | null
-  createdBy: runtime.Bytes | null
-  projectId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  projectId: string | null
+  targetId: string | null
 }
 
 export type WorkOrderCountAggregateOutputType = {
@@ -196,7 +196,7 @@ export type WorkOrderGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 export type WorkOrderGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber: string | null
   description: string | null
   aditionalInfo: string | null
@@ -206,9 +206,9 @@ export type WorkOrderGroupByOutputType = {
   hoursMaterialClosed: boolean
   invoiceSent: boolean
   completed: boolean
-  createdBy: runtime.Bytes
-  projectId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  projectId: string
+  targetId: string
   _count: WorkOrderCountAggregateOutputType | null
   _min: WorkOrderMinAggregateOutputType | null
   _max: WorkOrderMaxAggregateOutputType | null
@@ -233,7 +233,7 @@ export type WorkOrderWhereInput = {
   AND?: Prisma.WorkOrderWhereInput | Prisma.WorkOrderWhereInput[]
   OR?: Prisma.WorkOrderWhereInput[]
   NOT?: Prisma.WorkOrderWhereInput | Prisma.WorkOrderWhereInput[]
-  id?: Prisma.BytesFilter<"WorkOrder"> | runtime.Bytes
+  id?: Prisma.StringFilter<"WorkOrder"> | string
   workOrderNumber?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   description?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   aditionalInfo?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
@@ -243,9 +243,9 @@ export type WorkOrderWhereInput = {
   hoursMaterialClosed?: Prisma.BoolFilter<"WorkOrder"> | boolean
   invoiceSent?: Prisma.BoolFilter<"WorkOrder"> | boolean
   completed?: Prisma.BoolFilter<"WorkOrder"> | boolean
-  createdBy?: Prisma.BytesFilter<"WorkOrder"> | runtime.Bytes
-  projectId?: Prisma.BytesFilter<"WorkOrder"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"WorkOrder"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"WorkOrder"> | string
+  projectId?: Prisma.StringFilter<"WorkOrder"> | string
+  targetId?: Prisma.StringFilter<"WorkOrder"> | string
   InvoiceOut?: Prisma.InvoiceOutListRelationFilter
   TimeRegistry?: Prisma.TimeRegistryListRelationFilter
   Training?: Prisma.TrainingListRelationFilter
@@ -280,7 +280,7 @@ export type WorkOrderOrderByWithRelationInput = {
 }
 
 export type WorkOrderWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.WorkOrderWhereInput | Prisma.WorkOrderWhereInput[]
   OR?: Prisma.WorkOrderWhereInput[]
   NOT?: Prisma.WorkOrderWhereInput | Prisma.WorkOrderWhereInput[]
@@ -293,9 +293,9 @@ export type WorkOrderWhereUniqueInput = Prisma.AtLeast<{
   hoursMaterialClosed?: Prisma.BoolFilter<"WorkOrder"> | boolean
   invoiceSent?: Prisma.BoolFilter<"WorkOrder"> | boolean
   completed?: Prisma.BoolFilter<"WorkOrder"> | boolean
-  createdBy?: Prisma.BytesFilter<"WorkOrder"> | runtime.Bytes
-  projectId?: Prisma.BytesFilter<"WorkOrder"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"WorkOrder"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"WorkOrder"> | string
+  projectId?: Prisma.StringFilter<"WorkOrder"> | string
+  targetId?: Prisma.StringFilter<"WorkOrder"> | string
   InvoiceOut?: Prisma.InvoiceOutListRelationFilter
   TimeRegistry?: Prisma.TimeRegistryListRelationFilter
   Training?: Prisma.TrainingListRelationFilter
@@ -328,7 +328,7 @@ export type WorkOrderScalarWhereWithAggregatesInput = {
   AND?: Prisma.WorkOrderScalarWhereWithAggregatesInput | Prisma.WorkOrderScalarWhereWithAggregatesInput[]
   OR?: Prisma.WorkOrderScalarWhereWithAggregatesInput[]
   NOT?: Prisma.WorkOrderScalarWhereWithAggregatesInput | Prisma.WorkOrderScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"WorkOrder"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"WorkOrder"> | string
   workOrderNumber?: Prisma.StringNullableWithAggregatesFilter<"WorkOrder"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"WorkOrder"> | string | null
   aditionalInfo?: Prisma.StringNullableWithAggregatesFilter<"WorkOrder"> | string | null
@@ -338,13 +338,13 @@ export type WorkOrderScalarWhereWithAggregatesInput = {
   hoursMaterialClosed?: Prisma.BoolWithAggregatesFilter<"WorkOrder"> | boolean
   invoiceSent?: Prisma.BoolWithAggregatesFilter<"WorkOrder"> | boolean
   completed?: Prisma.BoolWithAggregatesFilter<"WorkOrder"> | boolean
-  createdBy?: Prisma.BytesWithAggregatesFilter<"WorkOrder"> | runtime.Bytes
-  projectId?: Prisma.BytesWithAggregatesFilter<"WorkOrder"> | runtime.Bytes
-  targetId?: Prisma.BytesWithAggregatesFilter<"WorkOrder"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"WorkOrder"> | string
+  projectId?: Prisma.StringWithAggregatesFilter<"WorkOrder"> | string
+  targetId?: Prisma.StringWithAggregatesFilter<"WorkOrder"> | string
 }
 
 export type WorkOrderCreateInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -364,7 +364,7 @@ export type WorkOrderCreateInput = {
 }
 
 export type WorkOrderUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -374,9 +374,9 @@ export type WorkOrderUncheckedCreateInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  createdBy: runtime.Bytes
-  projectId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  projectId: string
+  targetId: string
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutWorkOrderInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutWorkOrderInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -384,7 +384,7 @@ export type WorkOrderUncheckedCreateInput = {
 }
 
 export type WorkOrderUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -404,7 +404,7 @@ export type WorkOrderUpdateInput = {
 }
 
 export type WorkOrderUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -414,9 +414,9 @@ export type WorkOrderUncheckedUpdateInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutWorkOrderNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutWorkOrderNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutWorkOrderNestedInput
@@ -424,7 +424,7 @@ export type WorkOrderUncheckedUpdateInput = {
 }
 
 export type WorkOrderCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -434,13 +434,13 @@ export type WorkOrderCreateManyInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  createdBy: runtime.Bytes
-  projectId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  projectId: string
+  targetId: string
 }
 
 export type WorkOrderUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -453,7 +453,7 @@ export type WorkOrderUpdateManyMutationInput = {
 }
 
 export type WorkOrderUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -463,9 +463,9 @@ export type WorkOrderUncheckedUpdateManyInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type WorkOrderListRelationFilter = {
@@ -720,7 +720,7 @@ export type WorkOrderUpdateOneRequiredWithoutWorkOrderStructureNestedInput = {
 }
 
 export type WorkOrderCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -739,7 +739,7 @@ export type WorkOrderCreateWithoutEmployeeInput = {
 }
 
 export type WorkOrderUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -749,8 +749,8 @@ export type WorkOrderUncheckedCreateWithoutEmployeeInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  projectId: runtime.Bytes
-  targetId: runtime.Bytes
+  projectId: string
+  targetId: string
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutWorkOrderInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutWorkOrderInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -787,7 +787,7 @@ export type WorkOrderScalarWhereInput = {
   AND?: Prisma.WorkOrderScalarWhereInput | Prisma.WorkOrderScalarWhereInput[]
   OR?: Prisma.WorkOrderScalarWhereInput[]
   NOT?: Prisma.WorkOrderScalarWhereInput | Prisma.WorkOrderScalarWhereInput[]
-  id?: Prisma.BytesFilter<"WorkOrder"> | runtime.Bytes
+  id?: Prisma.StringFilter<"WorkOrder"> | string
   workOrderNumber?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   description?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   aditionalInfo?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
@@ -797,13 +797,13 @@ export type WorkOrderScalarWhereInput = {
   hoursMaterialClosed?: Prisma.BoolFilter<"WorkOrder"> | boolean
   invoiceSent?: Prisma.BoolFilter<"WorkOrder"> | boolean
   completed?: Prisma.BoolFilter<"WorkOrder"> | boolean
-  createdBy?: Prisma.BytesFilter<"WorkOrder"> | runtime.Bytes
-  projectId?: Prisma.BytesFilter<"WorkOrder"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"WorkOrder"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"WorkOrder"> | string
+  projectId?: Prisma.StringFilter<"WorkOrder"> | string
+  targetId?: Prisma.StringFilter<"WorkOrder"> | string
 }
 
 export type WorkOrderCreateWithoutInvoiceOutInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -822,7 +822,7 @@ export type WorkOrderCreateWithoutInvoiceOutInput = {
 }
 
 export type WorkOrderUncheckedCreateWithoutInvoiceOutInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -832,9 +832,9 @@ export type WorkOrderUncheckedCreateWithoutInvoiceOutInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  createdBy: runtime.Bytes
-  projectId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  projectId: string
+  targetId: string
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutWorkOrderInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutWorkOrderInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -857,7 +857,7 @@ export type WorkOrderUpdateToOneWithWhereWithoutInvoiceOutInput = {
 }
 
 export type WorkOrderUpdateWithoutInvoiceOutInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -876,7 +876,7 @@ export type WorkOrderUpdateWithoutInvoiceOutInput = {
 }
 
 export type WorkOrderUncheckedUpdateWithoutInvoiceOutInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -886,16 +886,16 @@ export type WorkOrderUncheckedUpdateWithoutInvoiceOutInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutWorkOrderNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutWorkOrderNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutWorkOrderNestedInput
 }
 
 export type WorkOrderCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -914,7 +914,7 @@ export type WorkOrderCreateWithoutProjectInput = {
 }
 
 export type WorkOrderUncheckedCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -924,8 +924,8 @@ export type WorkOrderUncheckedCreateWithoutProjectInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  createdBy: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  targetId: string
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutWorkOrderInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutWorkOrderInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -959,7 +959,7 @@ export type WorkOrderUpdateManyWithWhereWithoutProjectInput = {
 }
 
 export type WorkOrderCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -978,7 +978,7 @@ export type WorkOrderCreateWithoutTargetInput = {
 }
 
 export type WorkOrderUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -988,8 +988,8 @@ export type WorkOrderUncheckedCreateWithoutTargetInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  createdBy: runtime.Bytes
-  projectId: runtime.Bytes
+  createdBy: string
+  projectId: string
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutWorkOrderInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutWorkOrderInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -1023,7 +1023,7 @@ export type WorkOrderUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type WorkOrderCreateWithoutTimeRegistryInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -1042,7 +1042,7 @@ export type WorkOrderCreateWithoutTimeRegistryInput = {
 }
 
 export type WorkOrderUncheckedCreateWithoutTimeRegistryInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -1052,9 +1052,9 @@ export type WorkOrderUncheckedCreateWithoutTimeRegistryInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  createdBy: runtime.Bytes
-  projectId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  projectId: string
+  targetId: string
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutWorkOrderInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutWorkOrderInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -1077,7 +1077,7 @@ export type WorkOrderUpdateToOneWithWhereWithoutTimeRegistryInput = {
 }
 
 export type WorkOrderUpdateWithoutTimeRegistryInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1096,7 +1096,7 @@ export type WorkOrderUpdateWithoutTimeRegistryInput = {
 }
 
 export type WorkOrderUncheckedUpdateWithoutTimeRegistryInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1106,16 +1106,16 @@ export type WorkOrderUncheckedUpdateWithoutTimeRegistryInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutWorkOrderNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutWorkOrderNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutWorkOrderNestedInput
 }
 
 export type WorkOrderCreateWithoutTrainingInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -1134,7 +1134,7 @@ export type WorkOrderCreateWithoutTrainingInput = {
 }
 
 export type WorkOrderUncheckedCreateWithoutTrainingInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -1144,9 +1144,9 @@ export type WorkOrderUncheckedCreateWithoutTrainingInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  createdBy: runtime.Bytes
-  projectId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  projectId: string
+  targetId: string
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutWorkOrderInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutWorkOrderInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -1169,7 +1169,7 @@ export type WorkOrderUpdateToOneWithWhereWithoutTrainingInput = {
 }
 
 export type WorkOrderUpdateWithoutTrainingInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1188,7 +1188,7 @@ export type WorkOrderUpdateWithoutTrainingInput = {
 }
 
 export type WorkOrderUncheckedUpdateWithoutTrainingInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1198,16 +1198,16 @@ export type WorkOrderUncheckedUpdateWithoutTrainingInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutWorkOrderNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutWorkOrderNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutWorkOrderNestedInput
 }
 
 export type WorkOrderCreateWithoutWorkOrderStructureInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -1226,7 +1226,7 @@ export type WorkOrderCreateWithoutWorkOrderStructureInput = {
 }
 
 export type WorkOrderUncheckedCreateWithoutWorkOrderStructureInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -1236,9 +1236,9 @@ export type WorkOrderUncheckedCreateWithoutWorkOrderStructureInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  createdBy: runtime.Bytes
-  projectId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  projectId: string
+  targetId: string
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutWorkOrderInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutWorkOrderInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -1261,7 +1261,7 @@ export type WorkOrderUpdateToOneWithWhereWithoutWorkOrderStructureInput = {
 }
 
 export type WorkOrderUpdateWithoutWorkOrderStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1280,7 +1280,7 @@ export type WorkOrderUpdateWithoutWorkOrderStructureInput = {
 }
 
 export type WorkOrderUncheckedUpdateWithoutWorkOrderStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1290,16 +1290,16 @@ export type WorkOrderUncheckedUpdateWithoutWorkOrderStructureInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutWorkOrderNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutWorkOrderNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutWorkOrderNestedInput
 }
 
 export type WorkOrderCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -1309,12 +1309,12 @@ export type WorkOrderCreateManyEmployeeInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  projectId: runtime.Bytes
-  targetId: runtime.Bytes
+  projectId: string
+  targetId: string
 }
 
 export type WorkOrderUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1333,7 +1333,7 @@ export type WorkOrderUpdateWithoutEmployeeInput = {
 }
 
 export type WorkOrderUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1343,8 +1343,8 @@ export type WorkOrderUncheckedUpdateWithoutEmployeeInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutWorkOrderNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutWorkOrderNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutWorkOrderNestedInput
@@ -1352,7 +1352,7 @@ export type WorkOrderUncheckedUpdateWithoutEmployeeInput = {
 }
 
 export type WorkOrderUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1362,12 +1362,12 @@ export type WorkOrderUncheckedUpdateManyWithoutEmployeeInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type WorkOrderCreateManyProjectInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -1377,12 +1377,12 @@ export type WorkOrderCreateManyProjectInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  createdBy: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  targetId: string
 }
 
 export type WorkOrderUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1401,7 +1401,7 @@ export type WorkOrderUpdateWithoutProjectInput = {
 }
 
 export type WorkOrderUncheckedUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1411,8 +1411,8 @@ export type WorkOrderUncheckedUpdateWithoutProjectInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutWorkOrderNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutWorkOrderNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutWorkOrderNestedInput
@@ -1420,7 +1420,7 @@ export type WorkOrderUncheckedUpdateWithoutProjectInput = {
 }
 
 export type WorkOrderUncheckedUpdateManyWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1430,12 +1430,12 @@ export type WorkOrderUncheckedUpdateManyWithoutProjectInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type WorkOrderCreateManyTargetInput = {
-  id: runtime.Bytes
+  id: string
   workOrderNumber?: string | null
   description?: string | null
   aditionalInfo?: string | null
@@ -1445,12 +1445,12 @@ export type WorkOrderCreateManyTargetInput = {
   hoursMaterialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
-  createdBy: runtime.Bytes
-  projectId: runtime.Bytes
+  createdBy: string
+  projectId: string
 }
 
 export type WorkOrderUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1469,7 +1469,7 @@ export type WorkOrderUpdateWithoutTargetInput = {
 }
 
 export type WorkOrderUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1479,8 +1479,8 @@ export type WorkOrderUncheckedUpdateWithoutTargetInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutWorkOrderNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutWorkOrderNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutWorkOrderNestedInput
@@ -1488,7 +1488,7 @@ export type WorkOrderUncheckedUpdateWithoutTargetInput = {
 }
 
 export type WorkOrderUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1498,8 +1498,8 @@ export type WorkOrderUncheckedUpdateManyWithoutTargetInput = {
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -1626,7 +1626,7 @@ export type $WorkOrderPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     WorkOrderStructure: Prisma.$WorkOrderStructurePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     workOrderNumber: string | null
     description: string | null
     aditionalInfo: string | null
@@ -1636,9 +1636,9 @@ export type $WorkOrderPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     hoursMaterialClosed: boolean
     invoiceSent: boolean
     completed: boolean
-    createdBy: runtime.Bytes
-    projectId: runtime.Bytes
-    targetId: runtime.Bytes
+    createdBy: string
+    projectId: string
+    targetId: string
   }, ExtArgs["result"]["workOrder"]>
   composites: {}
 }
@@ -2015,7 +2015,7 @@ export interface Prisma__WorkOrderClient<T, Null = never, ExtArgs extends runtim
  * Fields of the WorkOrder model
  */
 export interface WorkOrderFieldRefs {
-  readonly id: Prisma.FieldRef<"WorkOrder", 'Bytes'>
+  readonly id: Prisma.FieldRef<"WorkOrder", 'String'>
   readonly workOrderNumber: Prisma.FieldRef<"WorkOrder", 'String'>
   readonly description: Prisma.FieldRef<"WorkOrder", 'String'>
   readonly aditionalInfo: Prisma.FieldRef<"WorkOrder", 'String'>
@@ -2025,9 +2025,9 @@ export interface WorkOrderFieldRefs {
   readonly hoursMaterialClosed: Prisma.FieldRef<"WorkOrder", 'Boolean'>
   readonly invoiceSent: Prisma.FieldRef<"WorkOrder", 'Boolean'>
   readonly completed: Prisma.FieldRef<"WorkOrder", 'Boolean'>
-  readonly createdBy: Prisma.FieldRef<"WorkOrder", 'Bytes'>
-  readonly projectId: Prisma.FieldRef<"WorkOrder", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"WorkOrder", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"WorkOrder", 'String'>
+  readonly projectId: Prisma.FieldRef<"WorkOrder", 'String'>
+  readonly targetId: Prisma.FieldRef<"WorkOrder", 'String'>
 }
     
 

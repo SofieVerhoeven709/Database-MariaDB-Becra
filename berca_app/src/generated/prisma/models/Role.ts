@@ -35,19 +35,19 @@ export type RoleSumAggregateOutputType = {
 }
 
 export type RoleMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   level: number | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type RoleMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   level: number | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type RoleCountAggregateOutputType = {
@@ -180,11 +180,11 @@ export type RoleGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 }
 
 export type RoleGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: RoleCountAggregateOutputType | null
   _avg: RoleAvgAggregateOutputType | null
   _sum: RoleSumAggregateOutputType | null
@@ -211,11 +211,11 @@ export type RoleWhereInput = {
   AND?: Prisma.RoleWhereInput | Prisma.RoleWhereInput[]
   OR?: Prisma.RoleWhereInput[]
   NOT?: Prisma.RoleWhereInput | Prisma.RoleWhereInput[]
-  id?: Prisma.BytesFilter<"Role"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Role"> | string
   name?: Prisma.StringFilter<"Role"> | string
   level?: Prisma.IntFilter<"Role"> | number
   createdAt?: Prisma.DateTimeFilter<"Role"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Role"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Role"> | string
   DocumentStructure?: Prisma.DocumentStructureListRelationFilter
   Employee_Employee_roleIdToRole?: Prisma.EmployeeListRelationFilter
   Employee_Role_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -236,14 +236,14 @@ export type RoleOrderByWithRelationInput = {
 }
 
 export type RoleWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.RoleWhereInput | Prisma.RoleWhereInput[]
   OR?: Prisma.RoleWhereInput[]
   NOT?: Prisma.RoleWhereInput | Prisma.RoleWhereInput[]
   name?: Prisma.StringFilter<"Role"> | string
   level?: Prisma.IntFilter<"Role"> | number
   createdAt?: Prisma.DateTimeFilter<"Role"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Role"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Role"> | string
   DocumentStructure?: Prisma.DocumentStructureListRelationFilter
   Employee_Employee_roleIdToRole?: Prisma.EmployeeListRelationFilter
   Employee_Role_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -267,15 +267,15 @@ export type RoleScalarWhereWithAggregatesInput = {
   AND?: Prisma.RoleScalarWhereWithAggregatesInput | Prisma.RoleScalarWhereWithAggregatesInput[]
   OR?: Prisma.RoleScalarWhereWithAggregatesInput[]
   NOT?: Prisma.RoleScalarWhereWithAggregatesInput | Prisma.RoleScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Role"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Role"> | string
   name?: Prisma.StringWithAggregatesFilter<"Role"> | string
   level?: Prisma.IntWithAggregatesFilter<"Role"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Role"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"Role"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"Role"> | string
 }
 
 export type RoleCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
@@ -286,18 +286,18 @@ export type RoleCreateInput = {
 }
 
 export type RoleUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutRoleInput
   Employee_Employee_roleIdToRole?: Prisma.EmployeeUncheckedCreateNestedManyWithoutRole_Employee_roleIdToRoleInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutRoleInput
 }
 
 export type RoleUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -308,37 +308,37 @@ export type RoleUpdateInput = {
 }
 
 export type RoleUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutRoleNestedInput
   Employee_Employee_roleIdToRole?: Prisma.EmployeeUncheckedUpdateManyWithoutRole_Employee_roleIdToRoleNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedUpdateManyWithoutRoleNestedInput
 }
 
 export type RoleCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type RoleUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RoleUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type RoleNullableScalarRelationFilter = {
@@ -496,7 +496,7 @@ export type RoleUpdateOneRequiredWithoutVisibilityForRoleNestedInput = {
 }
 
 export type RoleCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
@@ -506,11 +506,11 @@ export type RoleCreateWithoutDocumentStructureInput = {
 }
 
 export type RoleUncheckedCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Employee_Employee_roleIdToRole?: Prisma.EmployeeUncheckedCreateNestedManyWithoutRole_Employee_roleIdToRoleInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutRoleInput
 }
@@ -532,7 +532,7 @@ export type RoleUpdateToOneWithWhereWithoutDocumentStructureInput = {
 }
 
 export type RoleUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -542,17 +542,17 @@ export type RoleUpdateWithoutDocumentStructureInput = {
 }
 
 export type RoleUncheckedUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Employee_Employee_roleIdToRole?: Prisma.EmployeeUncheckedUpdateManyWithoutRole_Employee_roleIdToRoleNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedUpdateManyWithoutRoleNestedInput
 }
 
 export type RoleCreateWithoutEmployee_Employee_roleIdToRoleInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
@@ -562,11 +562,11 @@ export type RoleCreateWithoutEmployee_Employee_roleIdToRoleInput = {
 }
 
 export type RoleUncheckedCreateWithoutEmployee_Employee_roleIdToRoleInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutRoleInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutRoleInput
 }
@@ -577,7 +577,7 @@ export type RoleCreateOrConnectWithoutEmployee_Employee_roleIdToRoleInput = {
 }
 
 export type RoleCreateWithoutEmployee_Role_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
@@ -587,7 +587,7 @@ export type RoleCreateWithoutEmployee_Role_createdByToEmployeeInput = {
 }
 
 export type RoleUncheckedCreateWithoutEmployee_Role_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
@@ -618,7 +618,7 @@ export type RoleUpdateToOneWithWhereWithoutEmployee_Employee_roleIdToRoleInput =
 }
 
 export type RoleUpdateWithoutEmployee_Employee_roleIdToRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -628,11 +628,11 @@ export type RoleUpdateWithoutEmployee_Employee_roleIdToRoleInput = {
 }
 
 export type RoleUncheckedUpdateWithoutEmployee_Employee_roleIdToRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutRoleNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedUpdateManyWithoutRoleNestedInput
 }
@@ -657,15 +657,15 @@ export type RoleScalarWhereInput = {
   AND?: Prisma.RoleScalarWhereInput | Prisma.RoleScalarWhereInput[]
   OR?: Prisma.RoleScalarWhereInput[]
   NOT?: Prisma.RoleScalarWhereInput | Prisma.RoleScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Role"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Role"> | string
   name?: Prisma.StringFilter<"Role"> | string
   level?: Prisma.IntFilter<"Role"> | number
   createdAt?: Prisma.DateTimeFilter<"Role"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Role"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Role"> | string
 }
 
 export type RoleCreateWithoutVisibilityForRoleInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
@@ -675,11 +675,11 @@ export type RoleCreateWithoutVisibilityForRoleInput = {
 }
 
 export type RoleUncheckedCreateWithoutVisibilityForRoleInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutRoleInput
   Employee_Employee_roleIdToRole?: Prisma.EmployeeUncheckedCreateNestedManyWithoutRole_Employee_roleIdToRoleInput
 }
@@ -701,7 +701,7 @@ export type RoleUpdateToOneWithWhereWithoutVisibilityForRoleInput = {
 }
 
 export type RoleUpdateWithoutVisibilityForRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -711,24 +711,24 @@ export type RoleUpdateWithoutVisibilityForRoleInput = {
 }
 
 export type RoleUncheckedUpdateWithoutVisibilityForRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutRoleNestedInput
   Employee_Employee_roleIdToRole?: Prisma.EmployeeUncheckedUpdateManyWithoutRole_Employee_roleIdToRoleNestedInput
 }
 
 export type RoleCreateManyEmployee_Role_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   level: number
   createdAt: Date | string
 }
 
 export type RoleUpdateWithoutEmployee_Role_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -738,7 +738,7 @@ export type RoleUpdateWithoutEmployee_Role_createdByToEmployeeInput = {
 }
 
 export type RoleUncheckedUpdateWithoutEmployee_Role_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -748,7 +748,7 @@ export type RoleUncheckedUpdateWithoutEmployee_Role_createdByToEmployeeInput = {
 }
 
 export type RoleUncheckedUpdateManyWithoutEmployee_Role_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -844,11 +844,11 @@ export type $RolePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     VisibilityForRole: Prisma.$VisibilityForRolePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     level: number
     createdAt: Date
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["role"]>
   composites: {}
 }
@@ -1222,11 +1222,11 @@ export interface Prisma__RoleClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the Role model
  */
 export interface RoleFieldRefs {
-  readonly id: Prisma.FieldRef<"Role", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Role", 'String'>
   readonly name: Prisma.FieldRef<"Role", 'String'>
   readonly level: Prisma.FieldRef<"Role", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Role", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"Role", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"Role", 'String'>
 }
     
 

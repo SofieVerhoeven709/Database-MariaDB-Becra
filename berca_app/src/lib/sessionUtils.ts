@@ -4,7 +4,6 @@ import type {Role} from '@/generated/prisma/client'
 import {extendSession, getSessionProfile} from '@/dal/employees'
 import type {StatefulJwtTokenBody} from '@/lib/jwtUtils'
 import {createStatefulJwtToken, validateStatefulJwtToken} from '@/lib/jwtUtils'
-import {uuidToBinary} from '@/lib/utils'
 import {prismaClient} from '@/dal/prismaClient'
 
 // *********************************************************************************************************************
@@ -26,7 +25,7 @@ export async function getSessionFromCookie(stateful = true): Promise<SessionWith
   if (!tokenBody) return null
 
   const employee = await prismaClient.employee.findUnique({
-    where: {id: uuidToBinary(tokenBody.sub)},
+    where: {id: tokenBody.sub},
     include: {Role_Employee_roleIdToRole: true},
   })
 
@@ -56,7 +55,7 @@ export async function getSessionProfileFromCookieOrThrow(stateful = true): Promi
   return session?.Employee ?? null
 }
 
-export async function extendSessionAndSetCookie(id: Uint8Array<ArrayBuffer>, role: Role): Promise<void> {
+export async function extendSessionAndSetCookie(id: string, role: Role): Promise<void> {
   const extendedSession = await extendSession(id, role)
   await setSessionCookie(extendedSession)
 }
@@ -97,7 +96,7 @@ export async function clearSessionCookie(): Promise<void> {
 /**
  * Retrieve the id of the current session if there is one.
  */
-export async function getSessionId(): Promise<Uint8Array<ArrayBuffer> | undefined> {
+export async function getSessionId(): Promise<string | undefined> {
   const jwt = (await cookies()).get(cookieName)?.value
 
   if (!jwt) return undefined

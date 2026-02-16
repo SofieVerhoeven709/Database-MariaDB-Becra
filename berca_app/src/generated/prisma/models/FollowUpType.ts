@@ -25,17 +25,17 @@ export type AggregateFollowUpType = {
 }
 
 export type FollowUpTypeMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type FollowUpTypeMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type FollowUpTypeCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type FollowUpTypeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 export type FollowUpTypeGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: FollowUpTypeCountAggregateOutputType | null
   _min: FollowUpTypeMinAggregateOutputType | null
   _max: FollowUpTypeMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type FollowUpTypeWhereInput = {
   AND?: Prisma.FollowUpTypeWhereInput | Prisma.FollowUpTypeWhereInput[]
   OR?: Prisma.FollowUpTypeWhereInput[]
   NOT?: Prisma.FollowUpTypeWhereInput | Prisma.FollowUpTypeWhereInput[]
-  id?: Prisma.BytesFilter<"FollowUpType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"FollowUpType"> | string
   name?: Prisma.StringFilter<"FollowUpType"> | string
   createdAt?: Prisma.DateTimeFilter<"FollowUpType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"FollowUpType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"FollowUpType"> | string
   FollowUp?: Prisma.FollowUpListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
@@ -189,13 +189,13 @@ export type FollowUpTypeOrderByWithRelationInput = {
 }
 
 export type FollowUpTypeWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.FollowUpTypeWhereInput | Prisma.FollowUpTypeWhereInput[]
   OR?: Prisma.FollowUpTypeWhereInput[]
   NOT?: Prisma.FollowUpTypeWhereInput | Prisma.FollowUpTypeWhereInput[]
   name?: Prisma.StringFilter<"FollowUpType"> | string
   createdAt?: Prisma.DateTimeFilter<"FollowUpType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"FollowUpType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"FollowUpType"> | string
   FollowUp?: Prisma.FollowUpListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
@@ -214,14 +214,14 @@ export type FollowUpTypeScalarWhereWithAggregatesInput = {
   AND?: Prisma.FollowUpTypeScalarWhereWithAggregatesInput | Prisma.FollowUpTypeScalarWhereWithAggregatesInput[]
   OR?: Prisma.FollowUpTypeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.FollowUpTypeScalarWhereWithAggregatesInput | Prisma.FollowUpTypeScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"FollowUpType"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"FollowUpType"> | string
   name?: Prisma.StringWithAggregatesFilter<"FollowUpType"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FollowUpType"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"FollowUpType"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"FollowUpType"> | string
 }
 
 export type FollowUpTypeCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutFollowUpTypeInput
@@ -229,15 +229,15 @@ export type FollowUpTypeCreateInput = {
 }
 
 export type FollowUpTypeUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutFollowUpTypeInput
 }
 
 export type FollowUpTypeUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUp?: Prisma.FollowUpUpdateManyWithoutFollowUpTypeNestedInput
@@ -245,31 +245,31 @@ export type FollowUpTypeUpdateInput = {
 }
 
 export type FollowUpTypeUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutFollowUpTypeNestedInput
 }
 
 export type FollowUpTypeCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type FollowUpTypeUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FollowUpTypeUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpTypeListRelationFilter = {
@@ -371,14 +371,14 @@ export type FollowUpTypeUpdateOneRequiredWithoutFollowUpNestedInput = {
 }
 
 export type FollowUpTypeCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutFollowUpTypeInput
 }
 
 export type FollowUpTypeUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutFollowUpTypeInput
@@ -414,24 +414,24 @@ export type FollowUpTypeScalarWhereInput = {
   AND?: Prisma.FollowUpTypeScalarWhereInput | Prisma.FollowUpTypeScalarWhereInput[]
   OR?: Prisma.FollowUpTypeScalarWhereInput[]
   NOT?: Prisma.FollowUpTypeScalarWhereInput | Prisma.FollowUpTypeScalarWhereInput[]
-  id?: Prisma.BytesFilter<"FollowUpType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"FollowUpType"> | string
   name?: Prisma.StringFilter<"FollowUpType"> | string
   createdAt?: Prisma.DateTimeFilter<"FollowUpType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"FollowUpType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"FollowUpType"> | string
 }
 
 export type FollowUpTypeCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Employee: Prisma.EmployeeCreateNestedOneWithoutFollowUpTypeInput
 }
 
 export type FollowUpTypeUncheckedCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type FollowUpTypeCreateOrConnectWithoutFollowUpInput = {
@@ -451,41 +451,41 @@ export type FollowUpTypeUpdateToOneWithWhereWithoutFollowUpInput = {
 }
 
 export type FollowUpTypeUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUpTypeNestedInput
 }
 
 export type FollowUpTypeUncheckedUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpTypeCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
 }
 
 export type FollowUpTypeUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUp?: Prisma.FollowUpUpdateManyWithoutFollowUpTypeNestedInput
 }
 
 export type FollowUpTypeUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutFollowUpTypeNestedInput
 }
 
 export type FollowUpTypeUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -554,10 +554,10 @@ export type $FollowUpTypePayload<ExtArgs extends runtime.Types.Extensions.Intern
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     createdAt: Date
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["followUpType"]>
   composites: {}
 }
@@ -929,10 +929,10 @@ export interface Prisma__FollowUpTypeClient<T, Null = never, ExtArgs extends run
  * Fields of the FollowUpType model
  */
 export interface FollowUpTypeFieldRefs {
-  readonly id: Prisma.FieldRef<"FollowUpType", 'Bytes'>
+  readonly id: Prisma.FieldRef<"FollowUpType", 'String'>
   readonly name: Prisma.FieldRef<"FollowUpType", 'String'>
   readonly createdAt: Prisma.FieldRef<"FollowUpType", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"FollowUpType", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"FollowUpType", 'String'>
 }
     
 

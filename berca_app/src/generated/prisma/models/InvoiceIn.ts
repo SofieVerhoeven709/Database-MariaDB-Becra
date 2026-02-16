@@ -37,7 +37,7 @@ export type InvoiceInSumAggregateOutputType = {
 }
 
 export type InvoiceInMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   invoiceNumber: string | null
   invoiceDate: Date | null
   expireDate: Date | null
@@ -61,13 +61,13 @@ export type InvoiceInMinAggregateOutputType = {
   bankContact: boolean | null
   expectedInvoice: boolean | null
   private: boolean | null
-  createdBy: runtime.Bytes | null
-  invoiceTypeId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  invoiceTypeId: string | null
+  targetId: string | null
 }
 
 export type InvoiceInMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   invoiceNumber: string | null
   invoiceDate: Date | null
   expireDate: Date | null
@@ -91,9 +91,9 @@ export type InvoiceInMaxAggregateOutputType = {
   bankContact: boolean | null
   expectedInvoice: boolean | null
   private: boolean | null
-  createdBy: runtime.Bytes | null
-  invoiceTypeId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  invoiceTypeId: string | null
+  targetId: string | null
 }
 
 export type InvoiceInCountAggregateOutputType = {
@@ -316,7 +316,7 @@ export type InvoiceInGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 export type InvoiceInGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber: string | null
   invoiceDate: Date
   expireDate: Date
@@ -340,9 +340,9 @@ export type InvoiceInGroupByOutputType = {
   bankContact: boolean
   expectedInvoice: boolean
   private: boolean
-  createdBy: runtime.Bytes
-  invoiceTypeId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  invoiceTypeId: string
+  targetId: string
   _count: InvoiceInCountAggregateOutputType | null
   _avg: InvoiceInAvgAggregateOutputType | null
   _sum: InvoiceInSumAggregateOutputType | null
@@ -369,7 +369,7 @@ export type InvoiceInWhereInput = {
   AND?: Prisma.InvoiceInWhereInput | Prisma.InvoiceInWhereInput[]
   OR?: Prisma.InvoiceInWhereInput[]
   NOT?: Prisma.InvoiceInWhereInput | Prisma.InvoiceInWhereInput[]
-  id?: Prisma.BytesFilter<"InvoiceIn"> | runtime.Bytes
+  id?: Prisma.StringFilter<"InvoiceIn"> | string
   invoiceNumber?: Prisma.StringNullableFilter<"InvoiceIn"> | string | null
   invoiceDate?: Prisma.DateTimeFilter<"InvoiceIn"> | Date | string
   expireDate?: Prisma.DateTimeFilter<"InvoiceIn"> | Date | string
@@ -393,9 +393,9 @@ export type InvoiceInWhereInput = {
   bankContact?: Prisma.BoolFilter<"InvoiceIn"> | boolean
   expectedInvoice?: Prisma.BoolFilter<"InvoiceIn"> | boolean
   private?: Prisma.BoolFilter<"InvoiceIn"> | boolean
-  createdBy?: Prisma.BytesFilter<"InvoiceIn"> | runtime.Bytes
-  invoiceTypeId?: Prisma.BytesFilter<"InvoiceIn"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"InvoiceIn"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"InvoiceIn"> | string
+  invoiceTypeId?: Prisma.StringFilter<"InvoiceIn"> | string
+  targetId?: Prisma.StringFilter<"InvoiceIn"> | string
   InvoiceType?: Prisma.XOR<Prisma.InvoiceTypeScalarRelationFilter, Prisma.InvoiceTypeWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
@@ -438,7 +438,7 @@ export type InvoiceInOrderByWithRelationInput = {
 }
 
 export type InvoiceInWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.InvoiceInWhereInput | Prisma.InvoiceInWhereInput[]
   OR?: Prisma.InvoiceInWhereInput[]
   NOT?: Prisma.InvoiceInWhereInput | Prisma.InvoiceInWhereInput[]
@@ -465,9 +465,9 @@ export type InvoiceInWhereUniqueInput = Prisma.AtLeast<{
   bankContact?: Prisma.BoolFilter<"InvoiceIn"> | boolean
   expectedInvoice?: Prisma.BoolFilter<"InvoiceIn"> | boolean
   private?: Prisma.BoolFilter<"InvoiceIn"> | boolean
-  createdBy?: Prisma.BytesFilter<"InvoiceIn"> | runtime.Bytes
-  invoiceTypeId?: Prisma.BytesFilter<"InvoiceIn"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"InvoiceIn"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"InvoiceIn"> | string
+  invoiceTypeId?: Prisma.StringFilter<"InvoiceIn"> | string
+  targetId?: Prisma.StringFilter<"InvoiceIn"> | string
   InvoiceType?: Prisma.XOR<Prisma.InvoiceTypeScalarRelationFilter, Prisma.InvoiceTypeWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
@@ -513,7 +513,7 @@ export type InvoiceInScalarWhereWithAggregatesInput = {
   AND?: Prisma.InvoiceInScalarWhereWithAggregatesInput | Prisma.InvoiceInScalarWhereWithAggregatesInput[]
   OR?: Prisma.InvoiceInScalarWhereWithAggregatesInput[]
   NOT?: Prisma.InvoiceInScalarWhereWithAggregatesInput | Prisma.InvoiceInScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"InvoiceIn"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"InvoiceIn"> | string
   invoiceNumber?: Prisma.StringNullableWithAggregatesFilter<"InvoiceIn"> | string | null
   invoiceDate?: Prisma.DateTimeWithAggregatesFilter<"InvoiceIn"> | Date | string
   expireDate?: Prisma.DateTimeWithAggregatesFilter<"InvoiceIn"> | Date | string
@@ -537,13 +537,13 @@ export type InvoiceInScalarWhereWithAggregatesInput = {
   bankContact?: Prisma.BoolWithAggregatesFilter<"InvoiceIn"> | boolean
   expectedInvoice?: Prisma.BoolWithAggregatesFilter<"InvoiceIn"> | boolean
   private?: Prisma.BoolWithAggregatesFilter<"InvoiceIn"> | boolean
-  createdBy?: Prisma.BytesWithAggregatesFilter<"InvoiceIn"> | runtime.Bytes
-  invoiceTypeId?: Prisma.BytesWithAggregatesFilter<"InvoiceIn"> | runtime.Bytes
-  targetId?: Prisma.BytesWithAggregatesFilter<"InvoiceIn"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"InvoiceIn"> | string
+  invoiceTypeId?: Prisma.StringWithAggregatesFilter<"InvoiceIn"> | string
+  targetId?: Prisma.StringWithAggregatesFilter<"InvoiceIn"> | string
 }
 
 export type InvoiceInCreateInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -574,7 +574,7 @@ export type InvoiceInCreateInput = {
 }
 
 export type InvoiceInUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -598,14 +598,14 @@ export type InvoiceInUncheckedCreateInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
-  createdBy: runtime.Bytes
-  invoiceTypeId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  invoiceTypeId: string
+  targetId: string
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutInvoiceInInput
 }
 
 export type InvoiceInUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -636,7 +636,7 @@ export type InvoiceInUpdateInput = {
 }
 
 export type InvoiceInUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -660,14 +660,14 @@ export type InvoiceInUncheckedUpdateInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  invoiceTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutInvoiceInNestedInput
 }
 
 export type InvoiceInCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -691,13 +691,13 @@ export type InvoiceInCreateManyInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
-  createdBy: runtime.Bytes
-  invoiceTypeId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  invoiceTypeId: string
+  targetId: string
 }
 
 export type InvoiceInUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -724,7 +724,7 @@ export type InvoiceInUpdateManyMutationInput = {
 }
 
 export type InvoiceInUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -748,9 +748,9 @@ export type InvoiceInUncheckedUpdateManyInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  invoiceTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceInListRelationFilter = {
@@ -1023,7 +1023,7 @@ export type InvoiceInUncheckedUpdateManyWithoutTargetNestedInput = {
 }
 
 export type InvoiceInCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -1053,7 +1053,7 @@ export type InvoiceInCreateWithoutEmployeeInput = {
 }
 
 export type InvoiceInUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -1077,8 +1077,8 @@ export type InvoiceInUncheckedCreateWithoutEmployeeInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
-  invoiceTypeId: runtime.Bytes
-  targetId: runtime.Bytes
+  invoiceTypeId: string
+  targetId: string
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutInvoiceInInput
 }
 
@@ -1112,7 +1112,7 @@ export type InvoiceInScalarWhereInput = {
   AND?: Prisma.InvoiceInScalarWhereInput | Prisma.InvoiceInScalarWhereInput[]
   OR?: Prisma.InvoiceInScalarWhereInput[]
   NOT?: Prisma.InvoiceInScalarWhereInput | Prisma.InvoiceInScalarWhereInput[]
-  id?: Prisma.BytesFilter<"InvoiceIn"> | runtime.Bytes
+  id?: Prisma.StringFilter<"InvoiceIn"> | string
   invoiceNumber?: Prisma.StringNullableFilter<"InvoiceIn"> | string | null
   invoiceDate?: Prisma.DateTimeFilter<"InvoiceIn"> | Date | string
   expireDate?: Prisma.DateTimeFilter<"InvoiceIn"> | Date | string
@@ -1136,13 +1136,13 @@ export type InvoiceInScalarWhereInput = {
   bankContact?: Prisma.BoolFilter<"InvoiceIn"> | boolean
   expectedInvoice?: Prisma.BoolFilter<"InvoiceIn"> | boolean
   private?: Prisma.BoolFilter<"InvoiceIn"> | boolean
-  createdBy?: Prisma.BytesFilter<"InvoiceIn"> | runtime.Bytes
-  invoiceTypeId?: Prisma.BytesFilter<"InvoiceIn"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"InvoiceIn"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"InvoiceIn"> | string
+  invoiceTypeId?: Prisma.StringFilter<"InvoiceIn"> | string
+  targetId?: Prisma.StringFilter<"InvoiceIn"> | string
 }
 
 export type InvoiceInCreateWithoutInvoiceInTargetInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -1172,7 +1172,7 @@ export type InvoiceInCreateWithoutInvoiceInTargetInput = {
 }
 
 export type InvoiceInUncheckedCreateWithoutInvoiceInTargetInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -1196,9 +1196,9 @@ export type InvoiceInUncheckedCreateWithoutInvoiceInTargetInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
-  createdBy: runtime.Bytes
-  invoiceTypeId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  invoiceTypeId: string
+  targetId: string
 }
 
 export type InvoiceInCreateOrConnectWithoutInvoiceInTargetInput = {
@@ -1218,7 +1218,7 @@ export type InvoiceInUpdateToOneWithWhereWithoutInvoiceInTargetInput = {
 }
 
 export type InvoiceInUpdateWithoutInvoiceInTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1248,7 +1248,7 @@ export type InvoiceInUpdateWithoutInvoiceInTargetInput = {
 }
 
 export type InvoiceInUncheckedUpdateWithoutInvoiceInTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1272,13 +1272,13 @@ export type InvoiceInUncheckedUpdateWithoutInvoiceInTargetInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  invoiceTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceInCreateWithoutInvoiceTypeInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -1308,7 +1308,7 @@ export type InvoiceInCreateWithoutInvoiceTypeInput = {
 }
 
 export type InvoiceInUncheckedCreateWithoutInvoiceTypeInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -1332,8 +1332,8 @@ export type InvoiceInUncheckedCreateWithoutInvoiceTypeInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
-  createdBy: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  targetId: string
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutInvoiceInInput
 }
 
@@ -1364,7 +1364,7 @@ export type InvoiceInUpdateManyWithWhereWithoutInvoiceTypeInput = {
 }
 
 export type InvoiceInCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -1394,7 +1394,7 @@ export type InvoiceInCreateWithoutTargetInput = {
 }
 
 export type InvoiceInUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -1418,8 +1418,8 @@ export type InvoiceInUncheckedCreateWithoutTargetInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
-  createdBy: runtime.Bytes
-  invoiceTypeId: runtime.Bytes
+  createdBy: string
+  invoiceTypeId: string
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutInvoiceInInput
 }
 
@@ -1450,7 +1450,7 @@ export type InvoiceInUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type InvoiceInCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -1474,12 +1474,12 @@ export type InvoiceInCreateManyEmployeeInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
-  invoiceTypeId: runtime.Bytes
-  targetId: runtime.Bytes
+  invoiceTypeId: string
+  targetId: string
 }
 
 export type InvoiceInUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1509,7 +1509,7 @@ export type InvoiceInUpdateWithoutEmployeeInput = {
 }
 
 export type InvoiceInUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1533,13 +1533,13 @@ export type InvoiceInUncheckedUpdateWithoutEmployeeInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  invoiceTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutInvoiceInNestedInput
 }
 
 export type InvoiceInUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1563,12 +1563,12 @@ export type InvoiceInUncheckedUpdateManyWithoutEmployeeInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  invoiceTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceInCreateManyInvoiceTypeInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -1592,12 +1592,12 @@ export type InvoiceInCreateManyInvoiceTypeInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
-  createdBy: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  targetId: string
 }
 
 export type InvoiceInUpdateWithoutInvoiceTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1627,7 +1627,7 @@ export type InvoiceInUpdateWithoutInvoiceTypeInput = {
 }
 
 export type InvoiceInUncheckedUpdateWithoutInvoiceTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1651,13 +1651,13 @@ export type InvoiceInUncheckedUpdateWithoutInvoiceTypeInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutInvoiceInNestedInput
 }
 
 export type InvoiceInUncheckedUpdateManyWithoutInvoiceTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1681,12 +1681,12 @@ export type InvoiceInUncheckedUpdateManyWithoutInvoiceTypeInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceInCreateManyTargetInput = {
-  id: runtime.Bytes
+  id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
   expireDate: Date | string
@@ -1710,12 +1710,12 @@ export type InvoiceInCreateManyTargetInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
-  createdBy: runtime.Bytes
-  invoiceTypeId: runtime.Bytes
+  createdBy: string
+  invoiceTypeId: string
 }
 
 export type InvoiceInUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1745,7 +1745,7 @@ export type InvoiceInUpdateWithoutTargetInput = {
 }
 
 export type InvoiceInUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1769,13 +1769,13 @@ export type InvoiceInUncheckedUpdateWithoutTargetInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  invoiceTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutInvoiceInNestedInput
 }
 
 export type InvoiceInUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1799,8 +1799,8 @@ export type InvoiceInUncheckedUpdateManyWithoutTargetInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  invoiceTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -1919,7 +1919,7 @@ export type $InvoiceInPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     InvoiceInTarget: Prisma.$InvoiceInTargetPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     invoiceNumber: string | null
     invoiceDate: Date
     expireDate: Date
@@ -1943,9 +1943,9 @@ export type $InvoiceInPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     bankContact: boolean
     expectedInvoice: boolean
     private: boolean
-    createdBy: runtime.Bytes
-    invoiceTypeId: runtime.Bytes
-    targetId: runtime.Bytes
+    createdBy: string
+    invoiceTypeId: string
+    targetId: string
   }, ExtArgs["result"]["invoiceIn"]>
   composites: {}
 }
@@ -2319,7 +2319,7 @@ export interface Prisma__InvoiceInClient<T, Null = never, ExtArgs extends runtim
  * Fields of the InvoiceIn model
  */
 export interface InvoiceInFieldRefs {
-  readonly id: Prisma.FieldRef<"InvoiceIn", 'Bytes'>
+  readonly id: Prisma.FieldRef<"InvoiceIn", 'String'>
   readonly invoiceNumber: Prisma.FieldRef<"InvoiceIn", 'String'>
   readonly invoiceDate: Prisma.FieldRef<"InvoiceIn", 'DateTime'>
   readonly expireDate: Prisma.FieldRef<"InvoiceIn", 'DateTime'>
@@ -2343,9 +2343,9 @@ export interface InvoiceInFieldRefs {
   readonly bankContact: Prisma.FieldRef<"InvoiceIn", 'Boolean'>
   readonly expectedInvoice: Prisma.FieldRef<"InvoiceIn", 'Boolean'>
   readonly private: Prisma.FieldRef<"InvoiceIn", 'Boolean'>
-  readonly createdBy: Prisma.FieldRef<"InvoiceIn", 'Bytes'>
-  readonly invoiceTypeId: Prisma.FieldRef<"InvoiceIn", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"InvoiceIn", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"InvoiceIn", 'String'>
+  readonly invoiceTypeId: Prisma.FieldRef<"InvoiceIn", 'String'>
+  readonly targetId: Prisma.FieldRef<"InvoiceIn", 'String'>
 }
     
 

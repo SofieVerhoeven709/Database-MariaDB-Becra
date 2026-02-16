@@ -20,24 +20,3 @@ export function indentMultiline(text: string, spaces = 4): string {
     .map((line, i) => (i === 0 ? line : indent + line))
     .join('\n')
 }
-
-/**
- * Convert a UUID string to a 16-byte Uint8Array (for BINARY(16) columns)
- */
-export function uuidToBinary(uuid: string): Uint8Array<ArrayBuffer> {
-  return Uint8Array.from(uuidParse(uuid))
-}
-
-/**
- * Convert a 16-byte Uint8Array back to a UUID string
- */
-export function binaryToUuid(binary: Uint8Array<ArrayBuffer>): string {
-  return uuidStringify(binary)
-}
-
-/**
- * Generate a new UUID in binary form
- */
-export function generateBinaryUuid(): Uint8Array<ArrayBuffer> {
-  return uuidToBinary(uuidv4())
-}

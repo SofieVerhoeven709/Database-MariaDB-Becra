@@ -25,7 +25,7 @@ export type AggregateCompanyAdress = {
 }
 
 export type CompanyAdressMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   street: string | null
   houseNumber: string | null
   busNumber: string | null
@@ -33,12 +33,12 @@ export type CompanyAdressMinAggregateOutputType = {
   place: string | null
   createdAt: Date | null
   typeAdress: string | null
-  createdBy: runtime.Bytes | null
-  companyId: runtime.Bytes | null
+  createdBy: string | null
+  companyId: string | null
 }
 
 export type CompanyAdressMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   street: string | null
   houseNumber: string | null
   busNumber: string | null
@@ -46,8 +46,8 @@ export type CompanyAdressMaxAggregateOutputType = {
   place: string | null
   createdAt: Date | null
   typeAdress: string | null
-  createdBy: runtime.Bytes | null
-  companyId: runtime.Bytes | null
+  createdBy: string | null
+  companyId: string | null
 }
 
 export type CompanyAdressCountAggregateOutputType = {
@@ -178,7 +178,7 @@ export type CompanyAdressGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 export type CompanyAdressGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   street: string | null
   houseNumber: string | null
   busNumber: string | null
@@ -186,8 +186,8 @@ export type CompanyAdressGroupByOutputType = {
   place: string | null
   createdAt: Date
   typeAdress: string | null
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
+  createdBy: string
+  companyId: string
   _count: CompanyAdressCountAggregateOutputType | null
   _min: CompanyAdressMinAggregateOutputType | null
   _max: CompanyAdressMaxAggregateOutputType | null
@@ -212,7 +212,7 @@ export type CompanyAdressWhereInput = {
   AND?: Prisma.CompanyAdressWhereInput | Prisma.CompanyAdressWhereInput[]
   OR?: Prisma.CompanyAdressWhereInput[]
   NOT?: Prisma.CompanyAdressWhereInput | Prisma.CompanyAdressWhereInput[]
-  id?: Prisma.BytesFilter<"CompanyAdress"> | runtime.Bytes
+  id?: Prisma.StringFilter<"CompanyAdress"> | string
   street?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   houseNumber?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   busNumber?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
@@ -220,8 +220,8 @@ export type CompanyAdressWhereInput = {
   place?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CompanyAdress"> | Date | string
   typeAdress?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
-  createdBy?: Prisma.BytesFilter<"CompanyAdress"> | runtime.Bytes
-  companyId?: Prisma.BytesFilter<"CompanyAdress"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"CompanyAdress"> | string
+  companyId?: Prisma.StringFilter<"CompanyAdress"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
 }
@@ -243,7 +243,7 @@ export type CompanyAdressOrderByWithRelationInput = {
 }
 
 export type CompanyAdressWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.CompanyAdressWhereInput | Prisma.CompanyAdressWhereInput[]
   OR?: Prisma.CompanyAdressWhereInput[]
   NOT?: Prisma.CompanyAdressWhereInput | Prisma.CompanyAdressWhereInput[]
@@ -254,8 +254,8 @@ export type CompanyAdressWhereUniqueInput = Prisma.AtLeast<{
   place?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CompanyAdress"> | Date | string
   typeAdress?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
-  createdBy?: Prisma.BytesFilter<"CompanyAdress"> | runtime.Bytes
-  companyId?: Prisma.BytesFilter<"CompanyAdress"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"CompanyAdress"> | string
+  companyId?: Prisma.StringFilter<"CompanyAdress"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
 }, "id">
@@ -280,7 +280,7 @@ export type CompanyAdressScalarWhereWithAggregatesInput = {
   AND?: Prisma.CompanyAdressScalarWhereWithAggregatesInput | Prisma.CompanyAdressScalarWhereWithAggregatesInput[]
   OR?: Prisma.CompanyAdressScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CompanyAdressScalarWhereWithAggregatesInput | Prisma.CompanyAdressScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"CompanyAdress"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"CompanyAdress"> | string
   street?: Prisma.StringNullableWithAggregatesFilter<"CompanyAdress"> | string | null
   houseNumber?: Prisma.StringNullableWithAggregatesFilter<"CompanyAdress"> | string | null
   busNumber?: Prisma.StringNullableWithAggregatesFilter<"CompanyAdress"> | string | null
@@ -288,12 +288,12 @@ export type CompanyAdressScalarWhereWithAggregatesInput = {
   place?: Prisma.StringNullableWithAggregatesFilter<"CompanyAdress"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CompanyAdress"> | Date | string
   typeAdress?: Prisma.StringNullableWithAggregatesFilter<"CompanyAdress"> | string | null
-  createdBy?: Prisma.BytesWithAggregatesFilter<"CompanyAdress"> | runtime.Bytes
-  companyId?: Prisma.BytesWithAggregatesFilter<"CompanyAdress"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"CompanyAdress"> | string
+  companyId?: Prisma.StringWithAggregatesFilter<"CompanyAdress"> | string
 }
 
 export type CompanyAdressCreateInput = {
-  id: runtime.Bytes
+  id: string
   street?: string | null
   houseNumber?: string | null
   busNumber?: string | null
@@ -306,7 +306,7 @@ export type CompanyAdressCreateInput = {
 }
 
 export type CompanyAdressUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   street?: string | null
   houseNumber?: string | null
   busNumber?: string | null
@@ -314,12 +314,12 @@ export type CompanyAdressUncheckedCreateInput = {
   place?: string | null
   createdAt: Date | string
   typeAdress?: string | null
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
+  createdBy: string
+  companyId: string
 }
 
 export type CompanyAdressUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -332,7 +332,7 @@ export type CompanyAdressUpdateInput = {
 }
 
 export type CompanyAdressUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -340,12 +340,12 @@ export type CompanyAdressUncheckedUpdateInput = {
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyAdressCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   street?: string | null
   houseNumber?: string | null
   busNumber?: string | null
@@ -353,12 +353,12 @@ export type CompanyAdressCreateManyInput = {
   place?: string | null
   createdAt: Date | string
   typeAdress?: string | null
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
+  createdBy: string
+  companyId: string
 }
 
 export type CompanyAdressUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -369,7 +369,7 @@ export type CompanyAdressUpdateManyMutationInput = {
 }
 
 export type CompanyAdressUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -377,8 +377,8 @@ export type CompanyAdressUncheckedUpdateManyInput = {
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyAdressListRelationFilter = {
@@ -521,7 +521,7 @@ export type CompanyAdressUncheckedUpdateManyWithoutEmployeeNestedInput = {
 }
 
 export type CompanyAdressCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   street?: string | null
   houseNumber?: string | null
   busNumber?: string | null
@@ -533,7 +533,7 @@ export type CompanyAdressCreateWithoutCompanyInput = {
 }
 
 export type CompanyAdressUncheckedCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   street?: string | null
   houseNumber?: string | null
   busNumber?: string | null
@@ -541,7 +541,7 @@ export type CompanyAdressUncheckedCreateWithoutCompanyInput = {
   place?: string | null
   createdAt: Date | string
   typeAdress?: string | null
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type CompanyAdressCreateOrConnectWithoutCompanyInput = {
@@ -574,7 +574,7 @@ export type CompanyAdressScalarWhereInput = {
   AND?: Prisma.CompanyAdressScalarWhereInput | Prisma.CompanyAdressScalarWhereInput[]
   OR?: Prisma.CompanyAdressScalarWhereInput[]
   NOT?: Prisma.CompanyAdressScalarWhereInput | Prisma.CompanyAdressScalarWhereInput[]
-  id?: Prisma.BytesFilter<"CompanyAdress"> | runtime.Bytes
+  id?: Prisma.StringFilter<"CompanyAdress"> | string
   street?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   houseNumber?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   busNumber?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
@@ -582,12 +582,12 @@ export type CompanyAdressScalarWhereInput = {
   place?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CompanyAdress"> | Date | string
   typeAdress?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
-  createdBy?: Prisma.BytesFilter<"CompanyAdress"> | runtime.Bytes
-  companyId?: Prisma.BytesFilter<"CompanyAdress"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"CompanyAdress"> | string
+  companyId?: Prisma.StringFilter<"CompanyAdress"> | string
 }
 
 export type CompanyAdressCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   street?: string | null
   houseNumber?: string | null
   busNumber?: string | null
@@ -599,7 +599,7 @@ export type CompanyAdressCreateWithoutEmployeeInput = {
 }
 
 export type CompanyAdressUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   street?: string | null
   houseNumber?: string | null
   busNumber?: string | null
@@ -607,7 +607,7 @@ export type CompanyAdressUncheckedCreateWithoutEmployeeInput = {
   place?: string | null
   createdAt: Date | string
   typeAdress?: string | null
-  companyId: runtime.Bytes
+  companyId: string
 }
 
 export type CompanyAdressCreateOrConnectWithoutEmployeeInput = {
@@ -637,7 +637,7 @@ export type CompanyAdressUpdateManyWithWhereWithoutEmployeeInput = {
 }
 
 export type CompanyAdressCreateManyCompanyInput = {
-  id: runtime.Bytes
+  id: string
   street?: string | null
   houseNumber?: string | null
   busNumber?: string | null
@@ -645,11 +645,11 @@ export type CompanyAdressCreateManyCompanyInput = {
   place?: string | null
   createdAt: Date | string
   typeAdress?: string | null
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type CompanyAdressUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -661,7 +661,7 @@ export type CompanyAdressUpdateWithoutCompanyInput = {
 }
 
 export type CompanyAdressUncheckedUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -669,11 +669,11 @@ export type CompanyAdressUncheckedUpdateWithoutCompanyInput = {
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyAdressUncheckedUpdateManyWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -681,11 +681,11 @@ export type CompanyAdressUncheckedUpdateManyWithoutCompanyInput = {
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyAdressCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   street?: string | null
   houseNumber?: string | null
   busNumber?: string | null
@@ -693,11 +693,11 @@ export type CompanyAdressCreateManyEmployeeInput = {
   place?: string | null
   createdAt: Date | string
   typeAdress?: string | null
-  companyId: runtime.Bytes
+  companyId: string
 }
 
 export type CompanyAdressUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -709,7 +709,7 @@ export type CompanyAdressUpdateWithoutEmployeeInput = {
 }
 
 export type CompanyAdressUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -717,11 +717,11 @@ export type CompanyAdressUncheckedUpdateWithoutEmployeeInput = {
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyAdressUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -729,7 +729,7 @@ export type CompanyAdressUncheckedUpdateManyWithoutEmployeeInput = {
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -777,7 +777,7 @@ export type $CompanyAdressPayload<ExtArgs extends runtime.Types.Extensions.Inter
     Company: Prisma.$CompanyPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     street: string | null
     houseNumber: string | null
     busNumber: string | null
@@ -785,8 +785,8 @@ export type $CompanyAdressPayload<ExtArgs extends runtime.Types.Extensions.Inter
     place: string | null
     createdAt: Date
     typeAdress: string | null
-    createdBy: runtime.Bytes
-    companyId: runtime.Bytes
+    createdBy: string
+    companyId: string
   }, ExtArgs["result"]["companyAdress"]>
   composites: {}
 }
@@ -1158,7 +1158,7 @@ export interface Prisma__CompanyAdressClient<T, Null = never, ExtArgs extends ru
  * Fields of the CompanyAdress model
  */
 export interface CompanyAdressFieldRefs {
-  readonly id: Prisma.FieldRef<"CompanyAdress", 'Bytes'>
+  readonly id: Prisma.FieldRef<"CompanyAdress", 'String'>
   readonly street: Prisma.FieldRef<"CompanyAdress", 'String'>
   readonly houseNumber: Prisma.FieldRef<"CompanyAdress", 'String'>
   readonly busNumber: Prisma.FieldRef<"CompanyAdress", 'String'>
@@ -1166,8 +1166,8 @@ export interface CompanyAdressFieldRefs {
   readonly place: Prisma.FieldRef<"CompanyAdress", 'String'>
   readonly createdAt: Prisma.FieldRef<"CompanyAdress", 'DateTime'>
   readonly typeAdress: Prisma.FieldRef<"CompanyAdress", 'String'>
-  readonly createdBy: Prisma.FieldRef<"CompanyAdress", 'Bytes'>
-  readonly companyId: Prisma.FieldRef<"CompanyAdress", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"CompanyAdress", 'String'>
+  readonly companyId: Prisma.FieldRef<"CompanyAdress", 'String'>
 }
     
 

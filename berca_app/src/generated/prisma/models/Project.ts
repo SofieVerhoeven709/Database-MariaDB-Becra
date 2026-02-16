@@ -25,7 +25,7 @@ export type AggregateProject = {
 }
 
 export type ProjectMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   projectNumber: string | null
   description: string | null
   extraInfo: string | null
@@ -38,15 +38,15 @@ export type ProjectMinAggregateOutputType = {
   isIntern: boolean | null
   isOpen: boolean | null
   isClosed: boolean | null
-  createdBy: runtime.Bytes | null
-  companyId: runtime.Bytes | null
-  projectTypeId: runtime.Bytes | null
-  parentProjectId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  companyId: string | null
+  projectTypeId: string | null
+  parentProjectId: string | null
+  targetId: string | null
 }
 
 export type ProjectMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   projectNumber: string | null
   description: string | null
   extraInfo: string | null
@@ -59,11 +59,11 @@ export type ProjectMaxAggregateOutputType = {
   isIntern: boolean | null
   isOpen: boolean | null
   isClosed: boolean | null
-  createdBy: runtime.Bytes | null
-  companyId: runtime.Bytes | null
-  projectTypeId: runtime.Bytes | null
-  parentProjectId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  companyId: string | null
+  projectTypeId: string | null
+  parentProjectId: string | null
+  targetId: string | null
 }
 
 export type ProjectCountAggregateOutputType = {
@@ -226,7 +226,7 @@ export type ProjectGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 export type ProjectGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description: string | null
   extraInfo: string | null
@@ -239,11 +239,11 @@ export type ProjectGroupByOutputType = {
   isIntern: boolean
   isOpen: boolean
   isClosed: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId: string | null
+  targetId: string
   _count: ProjectCountAggregateOutputType | null
   _min: ProjectMinAggregateOutputType | null
   _max: ProjectMaxAggregateOutputType | null
@@ -268,7 +268,7 @@ export type ProjectWhereInput = {
   AND?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   OR?: Prisma.ProjectWhereInput[]
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
-  id?: Prisma.BytesFilter<"Project"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Project"> | string
   projectNumber?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringNullableFilter<"Project"> | string | null
   extraInfo?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -281,11 +281,11 @@ export type ProjectWhereInput = {
   isIntern?: Prisma.BoolFilter<"Project"> | boolean
   isOpen?: Prisma.BoolFilter<"Project"> | boolean
   isClosed?: Prisma.BoolFilter<"Project"> | boolean
-  createdBy?: Prisma.BytesFilter<"Project"> | runtime.Bytes
-  companyId?: Prisma.BytesFilter<"Project"> | runtime.Bytes
-  projectTypeId?: Prisma.BytesFilter<"Project"> | runtime.Bytes
-  parentProjectId?: Prisma.BytesNullableFilter<"Project"> | runtime.Bytes | null
-  targetId?: Prisma.BytesFilter<"Project"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Project"> | string
+  companyId?: Prisma.StringFilter<"Project"> | string
+  projectTypeId?: Prisma.StringFilter<"Project"> | string
+  parentProjectId?: Prisma.StringNullableFilter<"Project"> | string | null
+  targetId?: Prisma.StringFilter<"Project"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   ProjectType?: Prisma.XOR<Prisma.ProjectTypeScalarRelationFilter, Prisma.ProjectTypeWhereInput>
@@ -327,7 +327,7 @@ export type ProjectOrderByWithRelationInput = {
 }
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   OR?: Prisma.ProjectWhereInput[]
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
@@ -343,11 +343,11 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   isIntern?: Prisma.BoolFilter<"Project"> | boolean
   isOpen?: Prisma.BoolFilter<"Project"> | boolean
   isClosed?: Prisma.BoolFilter<"Project"> | boolean
-  createdBy?: Prisma.BytesFilter<"Project"> | runtime.Bytes
-  companyId?: Prisma.BytesFilter<"Project"> | runtime.Bytes
-  projectTypeId?: Prisma.BytesFilter<"Project"> | runtime.Bytes
-  parentProjectId?: Prisma.BytesNullableFilter<"Project"> | runtime.Bytes | null
-  targetId?: Prisma.BytesFilter<"Project"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Project"> | string
+  companyId?: Prisma.StringFilter<"Project"> | string
+  projectTypeId?: Prisma.StringFilter<"Project"> | string
+  parentProjectId?: Prisma.StringNullableFilter<"Project"> | string | null
+  targetId?: Prisma.StringFilter<"Project"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   ProjectType?: Prisma.XOR<Prisma.ProjectTypeScalarRelationFilter, Prisma.ProjectTypeWhereInput>
@@ -386,7 +386,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
   AND?: Prisma.ProjectScalarWhereWithAggregatesInput | Prisma.ProjectScalarWhereWithAggregatesInput[]
   OR?: Prisma.ProjectScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProjectScalarWhereWithAggregatesInput | Prisma.ProjectScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Project"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Project"> | string
   projectNumber?: Prisma.StringWithAggregatesFilter<"Project"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   extraInfo?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
@@ -399,15 +399,15 @@ export type ProjectScalarWhereWithAggregatesInput = {
   isIntern?: Prisma.BoolWithAggregatesFilter<"Project"> | boolean
   isOpen?: Prisma.BoolWithAggregatesFilter<"Project"> | boolean
   isClosed?: Prisma.BoolWithAggregatesFilter<"Project"> | boolean
-  createdBy?: Prisma.BytesWithAggregatesFilter<"Project"> | runtime.Bytes
-  companyId?: Prisma.BytesWithAggregatesFilter<"Project"> | runtime.Bytes
-  projectTypeId?: Prisma.BytesWithAggregatesFilter<"Project"> | runtime.Bytes
-  parentProjectId?: Prisma.BytesNullableWithAggregatesFilter<"Project"> | runtime.Bytes | null
-  targetId?: Prisma.BytesWithAggregatesFilter<"Project"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  companyId?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  projectTypeId?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  parentProjectId?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  targetId?: Prisma.StringWithAggregatesFilter<"Project"> | string
 }
 
 export type ProjectCreateInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -431,7 +431,7 @@ export type ProjectCreateInput = {
 }
 
 export type ProjectUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -444,18 +444,18 @@ export type ProjectUncheckedCreateInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -479,7 +479,7 @@ export type ProjectUpdateInput = {
 }
 
 export type ProjectUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -492,18 +492,18 @@ export type ProjectUncheckedUpdateInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -516,15 +516,15 @@ export type ProjectCreateManyInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
 }
 
 export type ProjectUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -540,7 +540,7 @@ export type ProjectUpdateManyMutationInput = {
 }
 
 export type ProjectUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -553,11 +553,11 @@ export type ProjectUncheckedUpdateManyInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectListRelationFilter = {
@@ -904,7 +904,7 @@ export type ProjectUpdateOneRequiredWithoutWorkOrderNestedInput = {
 }
 
 export type ProjectCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -927,7 +927,7 @@ export type ProjectCreateWithoutCompanyInput = {
 }
 
 export type ProjectUncheckedCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -940,10 +940,10 @@ export type ProjectUncheckedCreateWithoutCompanyInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
@@ -979,7 +979,7 @@ export type ProjectScalarWhereInput = {
   AND?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
   OR?: Prisma.ProjectScalarWhereInput[]
   NOT?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Project"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Project"> | string
   projectNumber?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringNullableFilter<"Project"> | string | null
   extraInfo?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -992,15 +992,15 @@ export type ProjectScalarWhereInput = {
   isIntern?: Prisma.BoolFilter<"Project"> | boolean
   isOpen?: Prisma.BoolFilter<"Project"> | boolean
   isClosed?: Prisma.BoolFilter<"Project"> | boolean
-  createdBy?: Prisma.BytesFilter<"Project"> | runtime.Bytes
-  companyId?: Prisma.BytesFilter<"Project"> | runtime.Bytes
-  projectTypeId?: Prisma.BytesFilter<"Project"> | runtime.Bytes
-  parentProjectId?: Prisma.BytesNullableFilter<"Project"> | runtime.Bytes | null
-  targetId?: Prisma.BytesFilter<"Project"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Project"> | string
+  companyId?: Prisma.StringFilter<"Project"> | string
+  projectTypeId?: Prisma.StringFilter<"Project"> | string
+  parentProjectId?: Prisma.StringNullableFilter<"Project"> | string | null
+  targetId?: Prisma.StringFilter<"Project"> | string
 }
 
 export type ProjectCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1023,7 +1023,7 @@ export type ProjectCreateWithoutEmployeeInput = {
 }
 
 export type ProjectUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1036,10 +1036,10 @@ export type ProjectUncheckedCreateWithoutEmployeeInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
@@ -1072,7 +1072,7 @@ export type ProjectUpdateManyWithWhereWithoutEmployeeInput = {
 }
 
 export type ProjectCreateWithoutOther_ProjectInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1095,7 +1095,7 @@ export type ProjectCreateWithoutOther_ProjectInput = {
 }
 
 export type ProjectUncheckedCreateWithoutOther_ProjectInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1108,11 +1108,11 @@ export type ProjectUncheckedCreateWithoutOther_ProjectInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1123,7 +1123,7 @@ export type ProjectCreateOrConnectWithoutOther_ProjectInput = {
 }
 
 export type ProjectCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1146,7 +1146,7 @@ export type ProjectCreateWithoutProjectInput = {
 }
 
 export type ProjectUncheckedCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1159,10 +1159,10 @@ export type ProjectUncheckedCreateWithoutProjectInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  targetId: string
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
@@ -1190,7 +1190,7 @@ export type ProjectUpdateToOneWithWhereWithoutOther_ProjectInput = {
 }
 
 export type ProjectUpdateWithoutOther_ProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1213,7 +1213,7 @@ export type ProjectUpdateWithoutOther_ProjectInput = {
 }
 
 export type ProjectUncheckedUpdateWithoutOther_ProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1226,11 +1226,11 @@ export type ProjectUncheckedUpdateWithoutOther_ProjectInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -1252,7 +1252,7 @@ export type ProjectUpdateManyWithWhereWithoutProjectInput = {
 }
 
 export type ProjectCreateWithoutProjectContactInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1275,7 +1275,7 @@ export type ProjectCreateWithoutProjectContactInput = {
 }
 
 export type ProjectUncheckedCreateWithoutProjectContactInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1288,11 +1288,11 @@ export type ProjectUncheckedCreateWithoutProjectContactInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1314,7 +1314,7 @@ export type ProjectUpdateToOneWithWhereWithoutProjectContactInput = {
 }
 
 export type ProjectUpdateWithoutProjectContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1337,7 +1337,7 @@ export type ProjectUpdateWithoutProjectContactInput = {
 }
 
 export type ProjectUncheckedUpdateWithoutProjectContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1350,17 +1350,17 @@ export type ProjectUncheckedUpdateWithoutProjectContactInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutProjectTypeInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1383,7 +1383,7 @@ export type ProjectCreateWithoutProjectTypeInput = {
 }
 
 export type ProjectUncheckedCreateWithoutProjectTypeInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1396,10 +1396,10 @@ export type ProjectUncheckedCreateWithoutProjectTypeInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId: string
+  parentProjectId?: string | null
+  targetId: string
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
@@ -1432,7 +1432,7 @@ export type ProjectUpdateManyWithWhereWithoutProjectTypeInput = {
 }
 
 export type ProjectCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1455,7 +1455,7 @@ export type ProjectCreateWithoutTargetInput = {
 }
 
 export type ProjectUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1468,10 +1468,10 @@ export type ProjectUncheckedCreateWithoutTargetInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
@@ -1504,7 +1504,7 @@ export type ProjectUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type ProjectCreateWithoutWorkOrderInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1527,7 +1527,7 @@ export type ProjectCreateWithoutWorkOrderInput = {
 }
 
 export type ProjectUncheckedCreateWithoutWorkOrderInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1540,11 +1540,11 @@ export type ProjectUncheckedCreateWithoutWorkOrderInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1566,7 +1566,7 @@ export type ProjectUpdateToOneWithWhereWithoutWorkOrderInput = {
 }
 
 export type ProjectUpdateWithoutWorkOrderInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1589,7 +1589,7 @@ export type ProjectUpdateWithoutWorkOrderInput = {
 }
 
 export type ProjectUncheckedUpdateWithoutWorkOrderInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1602,17 +1602,17 @@ export type ProjectUncheckedUpdateWithoutWorkOrderInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyCompanyInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1625,14 +1625,14 @@ export type ProjectCreateManyCompanyInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
 }
 
 export type ProjectUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1655,7 +1655,7 @@ export type ProjectUpdateWithoutCompanyInput = {
 }
 
 export type ProjectUncheckedUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1668,17 +1668,17 @@ export type ProjectUncheckedUpdateWithoutCompanyInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1691,14 +1691,14 @@ export type ProjectUncheckedUpdateManyWithoutCompanyInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1711,14 +1711,14 @@ export type ProjectCreateManyEmployeeInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
 }
 
 export type ProjectUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1741,7 +1741,7 @@ export type ProjectUpdateWithoutEmployeeInput = {
 }
 
 export type ProjectUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1754,17 +1754,17 @@ export type ProjectUncheckedUpdateWithoutEmployeeInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1777,14 +1777,14 @@ export type ProjectUncheckedUpdateManyWithoutEmployeeInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectCreateManyProjectInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1797,14 +1797,14 @@ export type ProjectCreateManyProjectInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  targetId: string
 }
 
 export type ProjectUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1827,7 +1827,7 @@ export type ProjectUpdateWithoutProjectInput = {
 }
 
 export type ProjectUncheckedUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1840,17 +1840,17 @@ export type ProjectUncheckedUpdateWithoutProjectInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1863,14 +1863,14 @@ export type ProjectUncheckedUpdateManyWithoutProjectInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectCreateManyProjectTypeInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1883,14 +1883,14 @@ export type ProjectCreateManyProjectTypeInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId: string
+  parentProjectId?: string | null
+  targetId: string
 }
 
 export type ProjectUpdateWithoutProjectTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1913,7 +1913,7 @@ export type ProjectUpdateWithoutProjectTypeInput = {
 }
 
 export type ProjectUncheckedUpdateWithoutProjectTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1926,17 +1926,17 @@ export type ProjectUncheckedUpdateWithoutProjectTypeInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutProjectTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1949,14 +1949,14 @@ export type ProjectUncheckedUpdateManyWithoutProjectTypeInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectCreateManyTargetInput = {
-  id: runtime.Bytes
+  id: string
   projectNumber: string
   description?: string | null
   extraInfo?: string | null
@@ -1969,14 +1969,14 @@ export type ProjectCreateManyTargetInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes
-  projectTypeId: runtime.Bytes
-  parentProjectId?: runtime.Bytes | null
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
 }
 
 export type ProjectUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1999,7 +1999,7 @@ export type ProjectUpdateWithoutTargetInput = {
 }
 
 export type ProjectUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2012,17 +2012,17 @@ export type ProjectUncheckedUpdateWithoutTargetInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2035,10 +2035,10 @@ export type ProjectUncheckedUpdateManyWithoutTargetInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  parentProjectId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -2169,7 +2169,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     WorkOrder: Prisma.$WorkOrderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     projectNumber: string
     description: string | null
     extraInfo: string | null
@@ -2182,11 +2182,11 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     isIntern: boolean
     isOpen: boolean
     isClosed: boolean
-    createdBy: runtime.Bytes
-    companyId: runtime.Bytes
-    projectTypeId: runtime.Bytes
-    parentProjectId: runtime.Bytes | null
-    targetId: runtime.Bytes
+    createdBy: string
+    companyId: string
+    projectTypeId: string
+    parentProjectId: string | null
+    targetId: string
   }, ExtArgs["result"]["project"]>
   composites: {}
 }
@@ -2564,7 +2564,7 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
  * Fields of the Project model
  */
 export interface ProjectFieldRefs {
-  readonly id: Prisma.FieldRef<"Project", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Project", 'String'>
   readonly projectNumber: Prisma.FieldRef<"Project", 'String'>
   readonly description: Prisma.FieldRef<"Project", 'String'>
   readonly extraInfo: Prisma.FieldRef<"Project", 'String'>
@@ -2577,11 +2577,11 @@ export interface ProjectFieldRefs {
   readonly isIntern: Prisma.FieldRef<"Project", 'Boolean'>
   readonly isOpen: Prisma.FieldRef<"Project", 'Boolean'>
   readonly isClosed: Prisma.FieldRef<"Project", 'Boolean'>
-  readonly createdBy: Prisma.FieldRef<"Project", 'Bytes'>
-  readonly companyId: Prisma.FieldRef<"Project", 'Bytes'>
-  readonly projectTypeId: Prisma.FieldRef<"Project", 'Bytes'>
-  readonly parentProjectId: Prisma.FieldRef<"Project", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"Project", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"Project", 'String'>
+  readonly companyId: Prisma.FieldRef<"Project", 'String'>
+  readonly projectTypeId: Prisma.FieldRef<"Project", 'String'>
+  readonly parentProjectId: Prisma.FieldRef<"Project", 'String'>
+  readonly targetId: Prisma.FieldRef<"Project", 'String'>
 }
     
 

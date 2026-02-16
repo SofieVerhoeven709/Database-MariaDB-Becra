@@ -3,7 +3,6 @@ import {extendSessionAndSetCookie} from '@/lib/sessionUtils'
 import {SessionDuration} from '@/constants'
 import type {SessionWithProfile} from '@/models/employees'
 import {getLogger} from '@/lib/logger'
-import {binaryToUuid} from '@/lib/utils'
 
 export async function sessionManagementProxy(
   _: NextRequest,
@@ -19,7 +18,7 @@ export async function sessionManagementProxy(
   ) {
     await extendSessionAndSetCookie(session.id, session.Employee.Role_Employee_roleIdToRole!)
     logger.info(
-      `Extended session ${binaryToUuid(session.id)} by ${SessionDuration[session.Employee.Role_Employee_roleIdToRole!.name]} ms`,
+      `Extended session ${session.id} by ${SessionDuration[session.Employee.Role_Employee_roleIdToRole!.name]} ms`,
     )
   }
 

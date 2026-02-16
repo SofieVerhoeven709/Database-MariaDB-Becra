@@ -25,17 +25,17 @@ export type AggregateCertificateType = {
 }
 
 export type CertificateTypeMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type CertificateTypeMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type CertificateTypeCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type CertificateTypeGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 export type CertificateTypeGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: CertificateTypeCountAggregateOutputType | null
   _min: CertificateTypeMinAggregateOutputType | null
   _max: CertificateTypeMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type CertificateTypeWhereInput = {
   AND?: Prisma.CertificateTypeWhereInput | Prisma.CertificateTypeWhereInput[]
   OR?: Prisma.CertificateTypeWhereInput[]
   NOT?: Prisma.CertificateTypeWhereInput | Prisma.CertificateTypeWhereInput[]
-  id?: Prisma.BytesFilter<"CertificateType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"CertificateType"> | string
   name?: Prisma.StringFilter<"CertificateType"> | string
   createdAt?: Prisma.DateTimeFilter<"CertificateType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"CertificateType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"CertificateType"> | string
   Certificate?: Prisma.CertificateListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
@@ -189,13 +189,13 @@ export type CertificateTypeOrderByWithRelationInput = {
 }
 
 export type CertificateTypeWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.CertificateTypeWhereInput | Prisma.CertificateTypeWhereInput[]
   OR?: Prisma.CertificateTypeWhereInput[]
   NOT?: Prisma.CertificateTypeWhereInput | Prisma.CertificateTypeWhereInput[]
   name?: Prisma.StringFilter<"CertificateType"> | string
   createdAt?: Prisma.DateTimeFilter<"CertificateType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"CertificateType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"CertificateType"> | string
   Certificate?: Prisma.CertificateListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
@@ -214,14 +214,14 @@ export type CertificateTypeScalarWhereWithAggregatesInput = {
   AND?: Prisma.CertificateTypeScalarWhereWithAggregatesInput | Prisma.CertificateTypeScalarWhereWithAggregatesInput[]
   OR?: Prisma.CertificateTypeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CertificateTypeScalarWhereWithAggregatesInput | Prisma.CertificateTypeScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"CertificateType"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"CertificateType"> | string
   name?: Prisma.StringWithAggregatesFilter<"CertificateType"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CertificateType"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"CertificateType"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"CertificateType"> | string
 }
 
 export type CertificateTypeCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutCertificateTypeInput
@@ -229,15 +229,15 @@ export type CertificateTypeCreateInput = {
 }
 
 export type CertificateTypeUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutCertificateTypeInput
 }
 
 export type CertificateTypeUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutCertificateTypeNestedInput
@@ -245,31 +245,31 @@ export type CertificateTypeUpdateInput = {
 }
 
 export type CertificateTypeUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutCertificateTypeNestedInput
 }
 
 export type CertificateTypeCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type CertificateTypeUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CertificateTypeUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CertificateTypeScalarRelationFilter = {
@@ -328,10 +328,6 @@ export type CertificateTypeUpdateOneRequiredWithoutCertificateNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CertificateTypeUpdateToOneWithWhereWithoutCertificateInput, Prisma.CertificateTypeUpdateWithoutCertificateInput>, Prisma.CertificateTypeUncheckedUpdateWithoutCertificateInput>
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
 export type CertificateTypeCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.CertificateTypeCreateWithoutEmployeeInput, Prisma.CertificateTypeUncheckedCreateWithoutEmployeeInput> | Prisma.CertificateTypeCreateWithoutEmployeeInput[] | Prisma.CertificateTypeUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.CertificateTypeCreateOrConnectWithoutEmployeeInput | Prisma.CertificateTypeCreateOrConnectWithoutEmployeeInput[]
@@ -375,17 +371,17 @@ export type CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput = {
 }
 
 export type CertificateTypeCreateWithoutCertificateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Employee: Prisma.EmployeeCreateNestedOneWithoutCertificateTypeInput
 }
 
 export type CertificateTypeUncheckedCreateWithoutCertificateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type CertificateTypeCreateOrConnectWithoutCertificateInput = {
@@ -405,28 +401,28 @@ export type CertificateTypeUpdateToOneWithWhereWithoutCertificateInput = {
 }
 
 export type CertificateTypeUpdateWithoutCertificateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCertificateTypeNestedInput
 }
 
 export type CertificateTypeUncheckedUpdateWithoutCertificateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CertificateTypeCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutCertificateTypeInput
 }
 
 export type CertificateTypeUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutCertificateTypeInput
@@ -462,34 +458,34 @@ export type CertificateTypeScalarWhereInput = {
   AND?: Prisma.CertificateTypeScalarWhereInput | Prisma.CertificateTypeScalarWhereInput[]
   OR?: Prisma.CertificateTypeScalarWhereInput[]
   NOT?: Prisma.CertificateTypeScalarWhereInput | Prisma.CertificateTypeScalarWhereInput[]
-  id?: Prisma.BytesFilter<"CertificateType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"CertificateType"> | string
   name?: Prisma.StringFilter<"CertificateType"> | string
   createdAt?: Prisma.DateTimeFilter<"CertificateType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"CertificateType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"CertificateType"> | string
 }
 
 export type CertificateTypeCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
 }
 
 export type CertificateTypeUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutCertificateTypeNestedInput
 }
 
 export type CertificateTypeUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutCertificateTypeNestedInput
 }
 
 export type CertificateTypeUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -558,10 +554,10 @@ export type $CertificateTypePayload<ExtArgs extends runtime.Types.Extensions.Int
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     createdAt: Date
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["certificateType"]>
   composites: {}
 }
@@ -933,10 +929,10 @@ export interface Prisma__CertificateTypeClient<T, Null = never, ExtArgs extends 
  * Fields of the CertificateType model
  */
 export interface CertificateTypeFieldRefs {
-  readonly id: Prisma.FieldRef<"CertificateType", 'Bytes'>
+  readonly id: Prisma.FieldRef<"CertificateType", 'String'>
   readonly name: Prisma.FieldRef<"CertificateType", 'String'>
   readonly createdAt: Prisma.FieldRef<"CertificateType", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"CertificateType", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"CertificateType", 'String'>
 }
     
 

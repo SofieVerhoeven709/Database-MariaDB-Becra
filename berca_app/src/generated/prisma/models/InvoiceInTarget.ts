@@ -25,15 +25,15 @@ export type AggregateInvoiceInTarget = {
 }
 
 export type InvoiceInTargetMinAggregateOutputType = {
-  id: runtime.Bytes | null
-  invoiceInId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  id: string | null
+  invoiceInId: string | null
+  targetId: string | null
 }
 
 export type InvoiceInTargetMaxAggregateOutputType = {
-  id: runtime.Bytes | null
-  invoiceInId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  id: string | null
+  invoiceInId: string | null
+  targetId: string | null
 }
 
 export type InvoiceInTargetCountAggregateOutputType = {
@@ -136,9 +136,9 @@ export type InvoiceInTargetGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 export type InvoiceInTargetGroupByOutputType = {
-  id: runtime.Bytes
-  invoiceInId: runtime.Bytes
-  targetId: runtime.Bytes
+  id: string
+  invoiceInId: string
+  targetId: string
   _count: InvoiceInTargetCountAggregateOutputType | null
   _min: InvoiceInTargetMinAggregateOutputType | null
   _max: InvoiceInTargetMaxAggregateOutputType | null
@@ -163,9 +163,9 @@ export type InvoiceInTargetWhereInput = {
   AND?: Prisma.InvoiceInTargetWhereInput | Prisma.InvoiceInTargetWhereInput[]
   OR?: Prisma.InvoiceInTargetWhereInput[]
   NOT?: Prisma.InvoiceInTargetWhereInput | Prisma.InvoiceInTargetWhereInput[]
-  id?: Prisma.BytesFilter<"InvoiceInTarget"> | runtime.Bytes
-  invoiceInId?: Prisma.BytesFilter<"InvoiceInTarget"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"InvoiceInTarget"> | runtime.Bytes
+  id?: Prisma.StringFilter<"InvoiceInTarget"> | string
+  invoiceInId?: Prisma.StringFilter<"InvoiceInTarget"> | string
+  targetId?: Prisma.StringFilter<"InvoiceInTarget"> | string
   InvoiceIn?: Prisma.XOR<Prisma.InvoiceInScalarRelationFilter, Prisma.InvoiceInWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
 }
@@ -176,15 +176,16 @@ export type InvoiceInTargetOrderByWithRelationInput = {
   targetId?: Prisma.SortOrder
   InvoiceIn?: Prisma.InvoiceInOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  _relevance?: Prisma.InvoiceInTargetOrderByRelevanceInput
 }
 
 export type InvoiceInTargetWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.InvoiceInTargetWhereInput | Prisma.InvoiceInTargetWhereInput[]
   OR?: Prisma.InvoiceInTargetWhereInput[]
   NOT?: Prisma.InvoiceInTargetWhereInput | Prisma.InvoiceInTargetWhereInput[]
-  invoiceInId?: Prisma.BytesFilter<"InvoiceInTarget"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"InvoiceInTarget"> | runtime.Bytes
+  invoiceInId?: Prisma.StringFilter<"InvoiceInTarget"> | string
+  targetId?: Prisma.StringFilter<"InvoiceInTarget"> | string
   InvoiceIn?: Prisma.XOR<Prisma.InvoiceInScalarRelationFilter, Prisma.InvoiceInWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
 }, "id">
@@ -202,49 +203,49 @@ export type InvoiceInTargetScalarWhereWithAggregatesInput = {
   AND?: Prisma.InvoiceInTargetScalarWhereWithAggregatesInput | Prisma.InvoiceInTargetScalarWhereWithAggregatesInput[]
   OR?: Prisma.InvoiceInTargetScalarWhereWithAggregatesInput[]
   NOT?: Prisma.InvoiceInTargetScalarWhereWithAggregatesInput | Prisma.InvoiceInTargetScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"InvoiceInTarget"> | runtime.Bytes
-  invoiceInId?: Prisma.BytesWithAggregatesFilter<"InvoiceInTarget"> | runtime.Bytes
-  targetId?: Prisma.BytesWithAggregatesFilter<"InvoiceInTarget"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"InvoiceInTarget"> | string
+  invoiceInId?: Prisma.StringWithAggregatesFilter<"InvoiceInTarget"> | string
+  targetId?: Prisma.StringWithAggregatesFilter<"InvoiceInTarget"> | string
 }
 
 export type InvoiceInTargetCreateInput = {
-  id: runtime.Bytes
+  id: string
   InvoiceIn: Prisma.InvoiceInCreateNestedOneWithoutInvoiceInTargetInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceInTargetInput
 }
 
 export type InvoiceInTargetUncheckedCreateInput = {
-  id: runtime.Bytes
-  invoiceInId: runtime.Bytes
-  targetId: runtime.Bytes
+  id: string
+  invoiceInId: string
+  targetId: string
 }
 
 export type InvoiceInTargetUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceIn?: Prisma.InvoiceInUpdateOneRequiredWithoutInvoiceInTargetNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceInTargetNestedInput
 }
 
 export type InvoiceInTargetUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  invoiceInId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceInId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceInTargetCreateManyInput = {
-  id: runtime.Bytes
-  invoiceInId: runtime.Bytes
-  targetId: runtime.Bytes
+  id: string
+  invoiceInId: string
+  targetId: string
 }
 
 export type InvoiceInTargetUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceInTargetUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  invoiceInId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceInId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceInTargetListRelationFilter = {
@@ -255,6 +256,12 @@ export type InvoiceInTargetListRelationFilter = {
 
 export type InvoiceInTargetOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type InvoiceInTargetOrderByRelevanceInput = {
+  fields: Prisma.InvoiceInTargetOrderByRelevanceFieldEnum | Prisma.InvoiceInTargetOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type InvoiceInTargetCountOrderByAggregateInput = {
@@ -360,13 +367,13 @@ export type InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput = {
 }
 
 export type InvoiceInTargetCreateWithoutInvoiceInInput = {
-  id: runtime.Bytes
+  id: string
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceInTargetInput
 }
 
 export type InvoiceInTargetUncheckedCreateWithoutInvoiceInInput = {
-  id: runtime.Bytes
-  targetId: runtime.Bytes
+  id: string
+  targetId: string
 }
 
 export type InvoiceInTargetCreateOrConnectWithoutInvoiceInInput = {
@@ -399,19 +406,19 @@ export type InvoiceInTargetScalarWhereInput = {
   AND?: Prisma.InvoiceInTargetScalarWhereInput | Prisma.InvoiceInTargetScalarWhereInput[]
   OR?: Prisma.InvoiceInTargetScalarWhereInput[]
   NOT?: Prisma.InvoiceInTargetScalarWhereInput | Prisma.InvoiceInTargetScalarWhereInput[]
-  id?: Prisma.BytesFilter<"InvoiceInTarget"> | runtime.Bytes
-  invoiceInId?: Prisma.BytesFilter<"InvoiceInTarget"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"InvoiceInTarget"> | runtime.Bytes
+  id?: Prisma.StringFilter<"InvoiceInTarget"> | string
+  invoiceInId?: Prisma.StringFilter<"InvoiceInTarget"> | string
+  targetId?: Prisma.StringFilter<"InvoiceInTarget"> | string
 }
 
 export type InvoiceInTargetCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   InvoiceIn: Prisma.InvoiceInCreateNestedOneWithoutInvoiceInTargetInput
 }
 
 export type InvoiceInTargetUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
-  invoiceInId: runtime.Bytes
+  id: string
+  invoiceInId: string
 }
 
 export type InvoiceInTargetCreateOrConnectWithoutTargetInput = {
@@ -441,43 +448,43 @@ export type InvoiceInTargetUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type InvoiceInTargetCreateManyInvoiceInInput = {
-  id: runtime.Bytes
-  targetId: runtime.Bytes
+  id: string
+  targetId: string
 }
 
 export type InvoiceInTargetUpdateWithoutInvoiceInInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceInTargetNestedInput
 }
 
 export type InvoiceInTargetUncheckedUpdateWithoutInvoiceInInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceInTargetUncheckedUpdateManyWithoutInvoiceInInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceInTargetCreateManyTargetInput = {
-  id: runtime.Bytes
-  invoiceInId: runtime.Bytes
+  id: string
+  invoiceInId: string
 }
 
 export type InvoiceInTargetUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceIn?: Prisma.InvoiceInUpdateOneRequiredWithoutInvoiceInTargetNestedInput
 }
 
 export type InvoiceInTargetUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  invoiceInId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceInId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceInTargetUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  invoiceInId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceInId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -511,9 +518,9 @@ export type $InvoiceInTargetPayload<ExtArgs extends runtime.Types.Extensions.Int
     Target: Prisma.$TargetPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
-    invoiceInId: runtime.Bytes
-    targetId: runtime.Bytes
+    id: string
+    invoiceInId: string
+    targetId: string
   }, ExtArgs["result"]["invoiceInTarget"]>
   composites: {}
 }
@@ -885,9 +892,9 @@ export interface Prisma__InvoiceInTargetClient<T, Null = never, ExtArgs extends 
  * Fields of the InvoiceInTarget model
  */
 export interface InvoiceInTargetFieldRefs {
-  readonly id: Prisma.FieldRef<"InvoiceInTarget", 'Bytes'>
-  readonly invoiceInId: Prisma.FieldRef<"InvoiceInTarget", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"InvoiceInTarget", 'Bytes'>
+  readonly id: Prisma.FieldRef<"InvoiceInTarget", 'String'>
+  readonly invoiceInId: Prisma.FieldRef<"InvoiceInTarget", 'String'>
+  readonly targetId: Prisma.FieldRef<"InvoiceInTarget", 'String'>
 }
     
 

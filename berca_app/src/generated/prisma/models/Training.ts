@@ -25,27 +25,27 @@ export type AggregateTraining = {
 }
 
 export type TrainingMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   trainingNumber: string | null
   trainingDate: Date | null
   createdAt: Date | null
   closed: boolean | null
-  createdBy: runtime.Bytes | null
-  workOrderId: runtime.Bytes | null
-  trainingStandardId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  workOrderId: string | null
+  trainingStandardId: string | null
+  targetId: string | null
 }
 
 export type TrainingMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   trainingNumber: string | null
   trainingDate: Date | null
   createdAt: Date | null
   closed: boolean | null
-  createdBy: runtime.Bytes | null
-  workOrderId: runtime.Bytes | null
-  trainingStandardId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  workOrderId: string | null
+  trainingStandardId: string | null
+  targetId: string | null
 }
 
 export type TrainingCountAggregateOutputType = {
@@ -172,15 +172,15 @@ export type TrainingGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 export type TrainingGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   trainingNumber: string | null
   trainingDate: Date
   createdAt: Date
   closed: boolean
-  createdBy: runtime.Bytes
-  workOrderId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  workOrderId: string
+  trainingStandardId: string
+  targetId: string
   _count: TrainingCountAggregateOutputType | null
   _min: TrainingMinAggregateOutputType | null
   _max: TrainingMaxAggregateOutputType | null
@@ -205,15 +205,15 @@ export type TrainingWhereInput = {
   AND?: Prisma.TrainingWhereInput | Prisma.TrainingWhereInput[]
   OR?: Prisma.TrainingWhereInput[]
   NOT?: Prisma.TrainingWhereInput | Prisma.TrainingWhereInput[]
-  id?: Prisma.BytesFilter<"Training"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Training"> | string
   trainingNumber?: Prisma.StringNullableFilter<"Training"> | string | null
   trainingDate?: Prisma.DateTimeFilter<"Training"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Training"> | Date | string
   closed?: Prisma.BoolFilter<"Training"> | boolean
-  createdBy?: Prisma.BytesFilter<"Training"> | runtime.Bytes
-  workOrderId?: Prisma.BytesFilter<"Training"> | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFilter<"Training"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"Training"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Training"> | string
+  workOrderId?: Prisma.StringFilter<"Training"> | string
+  trainingStandardId?: Prisma.StringFilter<"Training"> | string
+  targetId?: Prisma.StringFilter<"Training"> | string
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
@@ -242,7 +242,7 @@ export type TrainingOrderByWithRelationInput = {
 }
 
 export type TrainingWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.TrainingWhereInput | Prisma.TrainingWhereInput[]
   OR?: Prisma.TrainingWhereInput[]
   NOT?: Prisma.TrainingWhereInput | Prisma.TrainingWhereInput[]
@@ -250,10 +250,10 @@ export type TrainingWhereUniqueInput = Prisma.AtLeast<{
   trainingDate?: Prisma.DateTimeFilter<"Training"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Training"> | Date | string
   closed?: Prisma.BoolFilter<"Training"> | boolean
-  createdBy?: Prisma.BytesFilter<"Training"> | runtime.Bytes
-  workOrderId?: Prisma.BytesFilter<"Training"> | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFilter<"Training"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"Training"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Training"> | string
+  workOrderId?: Prisma.StringFilter<"Training"> | string
+  trainingStandardId?: Prisma.StringFilter<"Training"> | string
+  targetId?: Prisma.StringFilter<"Training"> | string
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
@@ -281,19 +281,19 @@ export type TrainingScalarWhereWithAggregatesInput = {
   AND?: Prisma.TrainingScalarWhereWithAggregatesInput | Prisma.TrainingScalarWhereWithAggregatesInput[]
   OR?: Prisma.TrainingScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TrainingScalarWhereWithAggregatesInput | Prisma.TrainingScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Training"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Training"> | string
   trainingNumber?: Prisma.StringNullableWithAggregatesFilter<"Training"> | string | null
   trainingDate?: Prisma.DateTimeWithAggregatesFilter<"Training"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Training"> | Date | string
   closed?: Prisma.BoolWithAggregatesFilter<"Training"> | boolean
-  createdBy?: Prisma.BytesWithAggregatesFilter<"Training"> | runtime.Bytes
-  workOrderId?: Prisma.BytesWithAggregatesFilter<"Training"> | runtime.Bytes
-  trainingStandardId?: Prisma.BytesWithAggregatesFilter<"Training"> | runtime.Bytes
-  targetId?: Prisma.BytesWithAggregatesFilter<"Training"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"Training"> | string
+  workOrderId?: Prisma.StringWithAggregatesFilter<"Training"> | string
+  trainingStandardId?: Prisma.StringWithAggregatesFilter<"Training"> | string
+  targetId?: Prisma.StringWithAggregatesFilter<"Training"> | string
 }
 
 export type TrainingCreateInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
@@ -307,21 +307,21 @@ export type TrainingCreateInput = {
 }
 
 export type TrainingUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  createdBy: runtime.Bytes
-  workOrderId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  workOrderId: string
+  trainingStandardId: string
+  targetId: string
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -335,33 +335,33 @@ export type TrainingUpdateInput = {
 }
 
 export type TrainingUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  workOrderId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  createdBy: runtime.Bytes
-  workOrderId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  workOrderId: string
+  trainingStandardId: string
+  targetId: string
 }
 
 export type TrainingUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -369,15 +369,15 @@ export type TrainingUpdateManyMutationInput = {
 }
 
 export type TrainingUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  workOrderId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingListRelationFilter = {
@@ -634,7 +634,7 @@ export type TrainingUpdateOneRequiredWithoutWorkOrderStructureNestedInput = {
 }
 
 export type TrainingCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
@@ -647,14 +647,14 @@ export type TrainingCreateWithoutEmployeeInput = {
 }
 
 export type TrainingUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  workOrderId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
-  targetId: runtime.Bytes
+  workOrderId: string
+  trainingStandardId: string
+  targetId: string
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
@@ -689,19 +689,19 @@ export type TrainingScalarWhereInput = {
   AND?: Prisma.TrainingScalarWhereInput | Prisma.TrainingScalarWhereInput[]
   OR?: Prisma.TrainingScalarWhereInput[]
   NOT?: Prisma.TrainingScalarWhereInput | Prisma.TrainingScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Training"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Training"> | string
   trainingNumber?: Prisma.StringNullableFilter<"Training"> | string | null
   trainingDate?: Prisma.DateTimeFilter<"Training"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Training"> | Date | string
   closed?: Prisma.BoolFilter<"Training"> | boolean
-  createdBy?: Prisma.BytesFilter<"Training"> | runtime.Bytes
-  workOrderId?: Prisma.BytesFilter<"Training"> | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFilter<"Training"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"Training"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Training"> | string
+  workOrderId?: Prisma.StringFilter<"Training"> | string
+  trainingStandardId?: Prisma.StringFilter<"Training"> | string
+  targetId?: Prisma.StringFilter<"Training"> | string
 }
 
 export type TrainingCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
@@ -714,14 +714,14 @@ export type TrainingCreateWithoutTargetInput = {
 }
 
 export type TrainingUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  createdBy: runtime.Bytes
-  workOrderId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
+  createdBy: string
+  workOrderId: string
+  trainingStandardId: string
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
@@ -753,7 +753,7 @@ export type TrainingUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type TrainingCreateWithoutTrainingContactInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
@@ -766,15 +766,15 @@ export type TrainingCreateWithoutTrainingContactInput = {
 }
 
 export type TrainingUncheckedCreateWithoutTrainingContactInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  createdBy: runtime.Bytes
-  workOrderId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  workOrderId: string
+  trainingStandardId: string
+  targetId: string
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -795,7 +795,7 @@ export type TrainingUpdateToOneWithWhereWithoutTrainingContactInput = {
 }
 
 export type TrainingUpdateWithoutTrainingContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -808,20 +808,20 @@ export type TrainingUpdateWithoutTrainingContactInput = {
 }
 
 export type TrainingUncheckedUpdateWithoutTrainingContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  workOrderId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingCreateWithoutTrainingStandardInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
@@ -834,14 +834,14 @@ export type TrainingCreateWithoutTrainingStandardInput = {
 }
 
 export type TrainingUncheckedCreateWithoutTrainingStandardInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  createdBy: runtime.Bytes
-  workOrderId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  workOrderId: string
+  targetId: string
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
@@ -873,7 +873,7 @@ export type TrainingUpdateManyWithWhereWithoutTrainingStandardInput = {
 }
 
 export type TrainingCreateWithoutWorkOrderInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
@@ -886,14 +886,14 @@ export type TrainingCreateWithoutWorkOrderInput = {
 }
 
 export type TrainingUncheckedCreateWithoutWorkOrderInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  createdBy: runtime.Bytes
-  trainingStandardId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  trainingStandardId: string
+  targetId: string
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
@@ -925,7 +925,7 @@ export type TrainingUpdateManyWithWhereWithoutWorkOrderInput = {
 }
 
 export type TrainingCreateWithoutWorkOrderStructureInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
@@ -938,15 +938,15 @@ export type TrainingCreateWithoutWorkOrderStructureInput = {
 }
 
 export type TrainingUncheckedCreateWithoutWorkOrderStructureInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  createdBy: runtime.Bytes
-  workOrderId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  workOrderId: string
+  trainingStandardId: string
+  targetId: string
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -967,7 +967,7 @@ export type TrainingUpdateToOneWithWhereWithoutWorkOrderStructureInput = {
 }
 
 export type TrainingUpdateWithoutWorkOrderStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -980,31 +980,31 @@ export type TrainingUpdateWithoutWorkOrderStructureInput = {
 }
 
 export type TrainingUncheckedUpdateWithoutWorkOrderStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  workOrderId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  workOrderId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
-  targetId: runtime.Bytes
+  workOrderId: string
+  trainingStandardId: string
+  targetId: string
 }
 
 export type TrainingUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1017,42 +1017,42 @@ export type TrainingUpdateWithoutEmployeeInput = {
 }
 
 export type TrainingUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  workOrderId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  workOrderId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingCreateManyTargetInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  createdBy: runtime.Bytes
-  workOrderId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
+  createdBy: string
+  workOrderId: string
+  trainingStandardId: string
 }
 
 export type TrainingUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1065,42 +1065,42 @@ export type TrainingUpdateWithoutTargetInput = {
 }
 
 export type TrainingUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  workOrderId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  workOrderId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingCreateManyTrainingStandardInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  createdBy: runtime.Bytes
-  workOrderId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  workOrderId: string
+  targetId: string
 }
 
 export type TrainingUpdateWithoutTrainingStandardInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1113,42 +1113,42 @@ export type TrainingUpdateWithoutTrainingStandardInput = {
 }
 
 export type TrainingUncheckedUpdateWithoutTrainingStandardInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  workOrderId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateManyWithoutTrainingStandardInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  workOrderId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingCreateManyWorkOrderInput = {
-  id: runtime.Bytes
+  id: string
   trainingNumber?: string | null
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
-  createdBy: runtime.Bytes
-  trainingStandardId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  trainingStandardId: string
+  targetId: string
 }
 
 export type TrainingUpdateWithoutWorkOrderInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1161,27 +1161,27 @@ export type TrainingUpdateWithoutWorkOrderInput = {
 }
 
 export type TrainingUncheckedUpdateWithoutWorkOrderInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateManyWithoutWorkOrderInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -1279,15 +1279,15 @@ export type $TrainingPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     WorkOrderStructure: Prisma.$WorkOrderStructurePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     trainingNumber: string | null
     trainingDate: Date
     createdAt: Date
     closed: boolean
-    createdBy: runtime.Bytes
-    workOrderId: runtime.Bytes
-    trainingStandardId: runtime.Bytes
-    targetId: runtime.Bytes
+    createdBy: string
+    workOrderId: string
+    trainingStandardId: string
+    targetId: string
   }, ExtArgs["result"]["training"]>
   composites: {}
 }
@@ -1663,15 +1663,15 @@ export interface Prisma__TrainingClient<T, Null = never, ExtArgs extends runtime
  * Fields of the Training model
  */
 export interface TrainingFieldRefs {
-  readonly id: Prisma.FieldRef<"Training", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Training", 'String'>
   readonly trainingNumber: Prisma.FieldRef<"Training", 'String'>
   readonly trainingDate: Prisma.FieldRef<"Training", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Training", 'DateTime'>
   readonly closed: Prisma.FieldRef<"Training", 'Boolean'>
-  readonly createdBy: Prisma.FieldRef<"Training", 'Bytes'>
-  readonly workOrderId: Prisma.FieldRef<"Training", 'Bytes'>
-  readonly trainingStandardId: Prisma.FieldRef<"Training", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"Training", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"Training", 'String'>
+  readonly workOrderId: Prisma.FieldRef<"Training", 'String'>
+  readonly trainingStandardId: Prisma.FieldRef<"Training", 'String'>
+  readonly targetId: Prisma.FieldRef<"Training", 'String'>
 }
     
 

@@ -35,7 +35,7 @@ export type DocumentStructureSumAggregateOutputType = {
 }
 
 export type DocumentStructureMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   documentNumber: string | null
   description: string | null
   descriptionShort: string | null
@@ -46,16 +46,16 @@ export type DocumentStructureMinAggregateOutputType = {
   valid: boolean | null
   process: boolean | null
   aditionalInfo: string | null
-  referenceDocId: runtime.Bytes | null
-  roleId: runtime.Bytes | null
-  createdBy: runtime.Bytes | null
-  revisedById: runtime.Bytes | null
-  managedById: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  referenceDocId: string | null
+  roleId: string | null
+  createdBy: string | null
+  revisedById: string | null
+  managedById: string | null
+  targetId: string | null
 }
 
 export type DocumentStructureMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   documentNumber: string | null
   description: string | null
   descriptionShort: string | null
@@ -66,12 +66,12 @@ export type DocumentStructureMaxAggregateOutputType = {
   valid: boolean | null
   process: boolean | null
   aditionalInfo: string | null
-  referenceDocId: runtime.Bytes | null
-  roleId: runtime.Bytes | null
-  createdBy: runtime.Bytes | null
-  revisedById: runtime.Bytes | null
-  managedById: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  referenceDocId: string | null
+  roleId: string | null
+  createdBy: string | null
+  revisedById: string | null
+  managedById: string | null
+  targetId: string | null
 }
 
 export type DocumentStructureCountAggregateOutputType = {
@@ -252,7 +252,7 @@ export type DocumentStructureGroupByArgs<ExtArgs extends runtime.Types.Extension
 }
 
 export type DocumentStructureGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description: string | null
   descriptionShort: string
@@ -263,12 +263,12 @@ export type DocumentStructureGroupByOutputType = {
   valid: boolean
   process: boolean
   aditionalInfo: string | null
-  referenceDocId: runtime.Bytes | null
-  roleId: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId: string | null
+  roleId: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
   _count: DocumentStructureCountAggregateOutputType | null
   _avg: DocumentStructureAvgAggregateOutputType | null
   _sum: DocumentStructureSumAggregateOutputType | null
@@ -295,7 +295,7 @@ export type DocumentStructureWhereInput = {
   AND?: Prisma.DocumentStructureWhereInput | Prisma.DocumentStructureWhereInput[]
   OR?: Prisma.DocumentStructureWhereInput[]
   NOT?: Prisma.DocumentStructureWhereInput | Prisma.DocumentStructureWhereInput[]
-  id?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
+  id?: Prisma.StringFilter<"DocumentStructure"> | string
   documentNumber?: Prisma.StringFilter<"DocumentStructure"> | string
   description?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   descriptionShort?: Prisma.StringFilter<"DocumentStructure"> | string
@@ -306,12 +306,12 @@ export type DocumentStructureWhereInput = {
   valid?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   aditionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  referenceDocId?: Prisma.BytesNullableFilter<"DocumentStructure"> | runtime.Bytes | null
-  roleId?: Prisma.BytesNullableFilter<"DocumentStructure"> | runtime.Bytes | null
-  createdBy?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
-  revisedById?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
-  managedById?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
+  referenceDocId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  roleId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  createdBy?: Prisma.StringFilter<"DocumentStructure"> | string
+  revisedById?: Prisma.StringFilter<"DocumentStructure"> | string
+  managedById?: Prisma.StringFilter<"DocumentStructure"> | string
+  targetId?: Prisma.StringFilter<"DocumentStructure"> | string
   Contact?: Prisma.ContactListRelationFilter
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   other_DocumentStructure?: Prisma.DocumentStructureListRelationFilter
@@ -360,7 +360,7 @@ export type DocumentStructureOrderByWithRelationInput = {
 }
 
 export type DocumentStructureWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.DocumentStructureWhereInput | Prisma.DocumentStructureWhereInput[]
   OR?: Prisma.DocumentStructureWhereInput[]
   NOT?: Prisma.DocumentStructureWhereInput | Prisma.DocumentStructureWhereInput[]
@@ -374,12 +374,12 @@ export type DocumentStructureWhereUniqueInput = Prisma.AtLeast<{
   valid?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   aditionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  referenceDocId?: Prisma.BytesNullableFilter<"DocumentStructure"> | runtime.Bytes | null
-  roleId?: Prisma.BytesNullableFilter<"DocumentStructure"> | runtime.Bytes | null
-  createdBy?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
-  revisedById?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
-  managedById?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
+  referenceDocId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  roleId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  createdBy?: Prisma.StringFilter<"DocumentStructure"> | string
+  revisedById?: Prisma.StringFilter<"DocumentStructure"> | string
+  managedById?: Prisma.StringFilter<"DocumentStructure"> | string
+  targetId?: Prisma.StringFilter<"DocumentStructure"> | string
   Contact?: Prisma.ContactListRelationFilter
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   other_DocumentStructure?: Prisma.DocumentStructureListRelationFilter
@@ -423,7 +423,7 @@ export type DocumentStructureScalarWhereWithAggregatesInput = {
   AND?: Prisma.DocumentStructureScalarWhereWithAggregatesInput | Prisma.DocumentStructureScalarWhereWithAggregatesInput[]
   OR?: Prisma.DocumentStructureScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DocumentStructureScalarWhereWithAggregatesInput | Prisma.DocumentStructureScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"DocumentStructure"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
   documentNumber?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
   descriptionShort?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
@@ -434,16 +434,16 @@ export type DocumentStructureScalarWhereWithAggregatesInput = {
   valid?: Prisma.BoolWithAggregatesFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolWithAggregatesFilter<"DocumentStructure"> | boolean
   aditionalInfo?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
-  referenceDocId?: Prisma.BytesNullableWithAggregatesFilter<"DocumentStructure"> | runtime.Bytes | null
-  roleId?: Prisma.BytesNullableWithAggregatesFilter<"DocumentStructure"> | runtime.Bytes | null
-  createdBy?: Prisma.BytesWithAggregatesFilter<"DocumentStructure"> | runtime.Bytes
-  revisedById?: Prisma.BytesWithAggregatesFilter<"DocumentStructure"> | runtime.Bytes
-  managedById?: Prisma.BytesWithAggregatesFilter<"DocumentStructure"> | runtime.Bytes
-  targetId?: Prisma.BytesWithAggregatesFilter<"DocumentStructure"> | runtime.Bytes
+  referenceDocId?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
+  roleId?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
+  createdBy?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
+  revisedById?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
+  managedById?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
+  targetId?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
 }
 
 export type DocumentStructureCreateInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -469,7 +469,7 @@ export type DocumentStructureCreateInput = {
 }
 
 export type DocumentStructureUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -480,12 +480,12 @@ export type DocumentStructureUncheckedCreateInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -495,7 +495,7 @@ export type DocumentStructureUncheckedCreateInput = {
 }
 
 export type DocumentStructureUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -521,7 +521,7 @@ export type DocumentStructureUpdateInput = {
 }
 
 export type DocumentStructureUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -532,12 +532,12 @@ export type DocumentStructureUncheckedUpdateInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
@@ -547,7 +547,7 @@ export type DocumentStructureUncheckedUpdateInput = {
 }
 
 export type DocumentStructureCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -558,16 +558,16 @@ export type DocumentStructureCreateManyInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
 }
 
 export type DocumentStructureUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -581,7 +581,7 @@ export type DocumentStructureUpdateManyMutationInput = {
 }
 
 export type DocumentStructureUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -592,12 +592,12 @@ export type DocumentStructureUncheckedUpdateManyInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DocumentStructureNullableScalarRelationFilter = {
@@ -1045,7 +1045,7 @@ export type DocumentStructureUpdateOneRequiredWithoutTrainingDocumentNestedInput
 }
 
 export type DocumentStructureCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1070,7 +1070,7 @@ export type DocumentStructureCreateWithoutContactInput = {
 }
 
 export type DocumentStructureUncheckedCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1081,12 +1081,12 @@ export type DocumentStructureUncheckedCreateWithoutContactInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -1111,7 +1111,7 @@ export type DocumentStructureUpdateToOneWithWhereWithoutContactInput = {
 }
 
 export type DocumentStructureUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1136,7 +1136,7 @@ export type DocumentStructureUpdateWithoutContactInput = {
 }
 
 export type DocumentStructureUncheckedUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1147,12 +1147,12 @@ export type DocumentStructureUncheckedUpdateWithoutContactInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -1161,7 +1161,7 @@ export type DocumentStructureUncheckedUpdateWithoutContactInput = {
 }
 
 export type DocumentStructureCreateWithoutOther_DocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1186,7 +1186,7 @@ export type DocumentStructureCreateWithoutOther_DocumentStructureInput = {
 }
 
 export type DocumentStructureUncheckedCreateWithoutOther_DocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1197,12 +1197,12 @@ export type DocumentStructureUncheckedCreateWithoutOther_DocumentStructureInput 
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -1216,7 +1216,7 @@ export type DocumentStructureCreateOrConnectWithoutOther_DocumentStructureInput 
 }
 
 export type DocumentStructureCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1241,7 +1241,7 @@ export type DocumentStructureCreateWithoutDocumentStructureInput = {
 }
 
 export type DocumentStructureUncheckedCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1252,11 +1252,11 @@ export type DocumentStructureUncheckedCreateWithoutDocumentStructureInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -1287,7 +1287,7 @@ export type DocumentStructureUpdateToOneWithWhereWithoutOther_DocumentStructureI
 }
 
 export type DocumentStructureUpdateWithoutOther_DocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1312,7 +1312,7 @@ export type DocumentStructureUpdateWithoutOther_DocumentStructureInput = {
 }
 
 export type DocumentStructureUncheckedUpdateWithoutOther_DocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1323,12 +1323,12 @@ export type DocumentStructureUncheckedUpdateWithoutOther_DocumentStructureInput 
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -1356,7 +1356,7 @@ export type DocumentStructureScalarWhereInput = {
   AND?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
   OR?: Prisma.DocumentStructureScalarWhereInput[]
   NOT?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
-  id?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
+  id?: Prisma.StringFilter<"DocumentStructure"> | string
   documentNumber?: Prisma.StringFilter<"DocumentStructure"> | string
   description?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   descriptionShort?: Prisma.StringFilter<"DocumentStructure"> | string
@@ -1367,16 +1367,16 @@ export type DocumentStructureScalarWhereInput = {
   valid?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   aditionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  referenceDocId?: Prisma.BytesNullableFilter<"DocumentStructure"> | runtime.Bytes | null
-  roleId?: Prisma.BytesNullableFilter<"DocumentStructure"> | runtime.Bytes | null
-  createdBy?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
-  revisedById?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
-  managedById?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"DocumentStructure"> | runtime.Bytes
+  referenceDocId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  roleId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  createdBy?: Prisma.StringFilter<"DocumentStructure"> | string
+  revisedById?: Prisma.StringFilter<"DocumentStructure"> | string
+  managedById?: Prisma.StringFilter<"DocumentStructure"> | string
+  targetId?: Prisma.StringFilter<"DocumentStructure"> | string
 }
 
 export type DocumentStructureCreateWithoutEmployee_DocumentStructure_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1401,7 +1401,7 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_createdByTo
 }
 
 export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1412,11 +1412,11 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_cr
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  revisedById: string
+  managedById: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -1436,7 +1436,7 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_createdByToEmp
 }
 
 export type DocumentStructureCreateWithoutEmployee_DocumentStructure_managedByIdToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1461,7 +1461,7 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_managedById
 }
 
 export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_managedByIdToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1472,11 +1472,11 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_ma
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -1496,7 +1496,7 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_managedByIdToE
 }
 
 export type DocumentStructureCreateWithoutEmployee_DocumentStructure_revisedByIdToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1521,7 +1521,7 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_revisedById
 }
 
 export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_revisedByIdToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1532,11 +1532,11 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_re
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  managedById: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -1556,7 +1556,7 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_revisedByIdToE
 }
 
 export type DocumentStructureCreateWithoutEmployee_Employee_pictureIdToDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1581,7 +1581,7 @@ export type DocumentStructureCreateWithoutEmployee_Employee_pictureIdToDocumentS
 }
 
 export type DocumentStructureUncheckedCreateWithoutEmployee_Employee_pictureIdToDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1592,12 +1592,12 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_Employee_pictureIdTo
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -1670,7 +1670,7 @@ export type DocumentStructureUpdateToOneWithWhereWithoutEmployee_Employee_pictur
 }
 
 export type DocumentStructureUpdateWithoutEmployee_Employee_pictureIdToDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1695,7 +1695,7 @@ export type DocumentStructureUpdateWithoutEmployee_Employee_pictureIdToDocumentS
 }
 
 export type DocumentStructureUncheckedUpdateWithoutEmployee_Employee_pictureIdToDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1706,12 +1706,12 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_Employee_pictureIdTo
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -1720,7 +1720,7 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_Employee_pictureIdTo
 }
 
 export type DocumentStructureCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1745,7 +1745,7 @@ export type DocumentStructureCreateWithoutFollowUpInput = {
 }
 
 export type DocumentStructureUncheckedCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1756,12 +1756,12 @@ export type DocumentStructureUncheckedCreateWithoutFollowUpInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -1786,7 +1786,7 @@ export type DocumentStructureUpdateToOneWithWhereWithoutFollowUpInput = {
 }
 
 export type DocumentStructureUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1811,7 +1811,7 @@ export type DocumentStructureUpdateWithoutFollowUpInput = {
 }
 
 export type DocumentStructureUncheckedUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1822,12 +1822,12 @@ export type DocumentStructureUncheckedUpdateWithoutFollowUpInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
@@ -1836,7 +1836,7 @@ export type DocumentStructureUncheckedUpdateWithoutFollowUpInput = {
 }
 
 export type DocumentStructureCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1861,7 +1861,7 @@ export type DocumentStructureCreateWithoutFollowUpStructureInput = {
 }
 
 export type DocumentStructureUncheckedCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1872,12 +1872,12 @@ export type DocumentStructureUncheckedCreateWithoutFollowUpStructureInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -1902,7 +1902,7 @@ export type DocumentStructureUpdateToOneWithWhereWithoutFollowUpStructureInput =
 }
 
 export type DocumentStructureUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1927,7 +1927,7 @@ export type DocumentStructureUpdateWithoutFollowUpStructureInput = {
 }
 
 export type DocumentStructureUncheckedUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1938,12 +1938,12 @@ export type DocumentStructureUncheckedUpdateWithoutFollowUpStructureInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
@@ -1952,7 +1952,7 @@ export type DocumentStructureUncheckedUpdateWithoutFollowUpStructureInput = {
 }
 
 export type DocumentStructureCreateWithoutRoleInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1977,7 +1977,7 @@ export type DocumentStructureCreateWithoutRoleInput = {
 }
 
 export type DocumentStructureUncheckedCreateWithoutRoleInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -1988,11 +1988,11 @@ export type DocumentStructureUncheckedCreateWithoutRoleInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -2028,7 +2028,7 @@ export type DocumentStructureUpdateManyWithWhereWithoutRoleInput = {
 }
 
 export type DocumentStructureCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -2053,7 +2053,7 @@ export type DocumentStructureCreateWithoutTargetInput = {
 }
 
 export type DocumentStructureUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -2064,11 +2064,11 @@ export type DocumentStructureUncheckedCreateWithoutTargetInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -2104,7 +2104,7 @@ export type DocumentStructureUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type DocumentStructureCreateWithoutTrainingDocumentInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -2129,7 +2129,7 @@ export type DocumentStructureCreateWithoutTrainingDocumentInput = {
 }
 
 export type DocumentStructureUncheckedCreateWithoutTrainingDocumentInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -2140,12 +2140,12 @@ export type DocumentStructureUncheckedCreateWithoutTrainingDocumentInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -2170,7 +2170,7 @@ export type DocumentStructureUpdateToOneWithWhereWithoutTrainingDocumentInput = 
 }
 
 export type DocumentStructureUpdateWithoutTrainingDocumentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2195,7 +2195,7 @@ export type DocumentStructureUpdateWithoutTrainingDocumentInput = {
 }
 
 export type DocumentStructureUncheckedUpdateWithoutTrainingDocumentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2206,12 +2206,12 @@ export type DocumentStructureUncheckedUpdateWithoutTrainingDocumentInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
@@ -2220,7 +2220,7 @@ export type DocumentStructureUncheckedUpdateWithoutTrainingDocumentInput = {
 }
 
 export type DocumentStructureCreateManyDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -2231,15 +2231,15 @@ export type DocumentStructureCreateManyDocumentStructureInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
 }
 
 export type DocumentStructureUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2264,7 +2264,7 @@ export type DocumentStructureUpdateWithoutDocumentStructureInput = {
 }
 
 export type DocumentStructureUncheckedUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2275,11 +2275,11 @@ export type DocumentStructureUncheckedUpdateWithoutDocumentStructureInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
@@ -2289,7 +2289,7 @@ export type DocumentStructureUncheckedUpdateWithoutDocumentStructureInput = {
 }
 
 export type DocumentStructureUncheckedUpdateManyWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2300,15 +2300,15 @@ export type DocumentStructureUncheckedUpdateManyWithoutDocumentStructureInput = 
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DocumentStructureCreateManyEmployee_DocumentStructure_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -2319,15 +2319,15 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_createdByToEmp
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  revisedById: string
+  managedById: string
+  targetId: string
 }
 
 export type DocumentStructureCreateManyEmployee_DocumentStructure_managedByIdToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -2338,15 +2338,15 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_managedByIdToE
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  targetId: string
 }
 
 export type DocumentStructureCreateManyEmployee_DocumentStructure_revisedByIdToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -2357,15 +2357,15 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_revisedByIdToE
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  managedById: string
+  targetId: string
 }
 
 export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2390,7 +2390,7 @@ export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_createdByTo
 }
 
 export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2401,11 +2401,11 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_cr
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
@@ -2415,7 +2415,7 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_cr
 }
 
 export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructure_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2426,15 +2426,15 @@ export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructur
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_managedByIdToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2459,7 +2459,7 @@ export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_managedById
 }
 
 export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_managedByIdToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2470,11 +2470,11 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_ma
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
@@ -2484,7 +2484,7 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_ma
 }
 
 export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructure_managedByIdToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2495,15 +2495,15 @@ export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructur
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_revisedByIdToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2528,7 +2528,7 @@ export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_revisedById
 }
 
 export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_revisedByIdToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2539,11 +2539,11 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_re
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
@@ -2553,7 +2553,7 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_re
 }
 
 export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructure_revisedByIdToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2564,15 +2564,15 @@ export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructur
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DocumentStructureCreateManyRoleInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -2583,15 +2583,15 @@ export type DocumentStructureCreateManyRoleInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
-  targetId: runtime.Bytes
+  referenceDocId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
+  targetId: string
 }
 
 export type DocumentStructureUpdateWithoutRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2616,7 +2616,7 @@ export type DocumentStructureUpdateWithoutRoleInput = {
 }
 
 export type DocumentStructureUncheckedUpdateWithoutRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2627,11 +2627,11 @@ export type DocumentStructureUncheckedUpdateWithoutRoleInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
@@ -2641,7 +2641,7 @@ export type DocumentStructureUncheckedUpdateWithoutRoleInput = {
 }
 
 export type DocumentStructureUncheckedUpdateManyWithoutRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2652,15 +2652,15 @@ export type DocumentStructureUncheckedUpdateManyWithoutRoleInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DocumentStructureCreateManyTargetInput = {
-  id: runtime.Bytes
+  id: string
   documentNumber: string
   description?: string | null
   descriptionShort: string
@@ -2671,15 +2671,15 @@ export type DocumentStructureCreateManyTargetInput = {
   valid?: boolean
   process?: boolean
   aditionalInfo?: string | null
-  referenceDocId?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  createdBy: runtime.Bytes
-  revisedById: runtime.Bytes
-  managedById: runtime.Bytes
+  referenceDocId?: string | null
+  roleId?: string | null
+  createdBy: string
+  revisedById: string
+  managedById: string
 }
 
 export type DocumentStructureUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2704,7 +2704,7 @@ export type DocumentStructureUpdateWithoutTargetInput = {
 }
 
 export type DocumentStructureUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2715,11 +2715,11 @@ export type DocumentStructureUncheckedUpdateWithoutTargetInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
@@ -2729,7 +2729,7 @@ export type DocumentStructureUncheckedUpdateWithoutTargetInput = {
 }
 
 export type DocumentStructureUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2740,11 +2740,11 @@ export type DocumentStructureUncheckedUpdateManyWithoutTargetInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  revisedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  managedById?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -2912,7 +2912,7 @@ export type $DocumentStructurePayload<ExtArgs extends runtime.Types.Extensions.I
     TrainingDocument: Prisma.$TrainingDocumentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     documentNumber: string
     description: string | null
     descriptionShort: string
@@ -2923,12 +2923,12 @@ export type $DocumentStructurePayload<ExtArgs extends runtime.Types.Extensions.I
     valid: boolean
     process: boolean
     aditionalInfo: string | null
-    referenceDocId: runtime.Bytes | null
-    roleId: runtime.Bytes | null
-    createdBy: runtime.Bytes
-    revisedById: runtime.Bytes
-    managedById: runtime.Bytes
-    targetId: runtime.Bytes
+    referenceDocId: string | null
+    roleId: string | null
+    createdBy: string
+    revisedById: string
+    managedById: string
+    targetId: string
   }, ExtArgs["result"]["documentStructure"]>
   composites: {}
 }
@@ -3310,7 +3310,7 @@ export interface Prisma__DocumentStructureClient<T, Null = never, ExtArgs extend
  * Fields of the DocumentStructure model
  */
 export interface DocumentStructureFieldRefs {
-  readonly id: Prisma.FieldRef<"DocumentStructure", 'Bytes'>
+  readonly id: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly documentNumber: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly description: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly descriptionShort: Prisma.FieldRef<"DocumentStructure", 'String'>
@@ -3321,12 +3321,12 @@ export interface DocumentStructureFieldRefs {
   readonly valid: Prisma.FieldRef<"DocumentStructure", 'Boolean'>
   readonly process: Prisma.FieldRef<"DocumentStructure", 'Boolean'>
   readonly aditionalInfo: Prisma.FieldRef<"DocumentStructure", 'String'>
-  readonly referenceDocId: Prisma.FieldRef<"DocumentStructure", 'Bytes'>
-  readonly roleId: Prisma.FieldRef<"DocumentStructure", 'Bytes'>
-  readonly createdBy: Prisma.FieldRef<"DocumentStructure", 'Bytes'>
-  readonly revisedById: Prisma.FieldRef<"DocumentStructure", 'Bytes'>
-  readonly managedById: Prisma.FieldRef<"DocumentStructure", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"DocumentStructure", 'Bytes'>
+  readonly referenceDocId: Prisma.FieldRef<"DocumentStructure", 'String'>
+  readonly roleId: Prisma.FieldRef<"DocumentStructure", 'String'>
+  readonly createdBy: Prisma.FieldRef<"DocumentStructure", 'String'>
+  readonly revisedById: Prisma.FieldRef<"DocumentStructure", 'String'>
+  readonly managedById: Prisma.FieldRef<"DocumentStructure", 'String'>
+  readonly targetId: Prisma.FieldRef<"DocumentStructure", 'String'>
 }
     
 

@@ -1,7 +1,6 @@
 import type {NextRequest, NextResponse} from 'next/server'
 import {cookies} from 'next/headers'
 import type {SessionWithProfile} from '@/models/employees'
-import {binaryToUuid} from '@/lib/utils'
 
 export async function loggingProxy(
   request: NextRequest,
@@ -20,8 +19,8 @@ export async function loggingProxy(
   response.headers.set('x-request-method', request.method)
 
   if (session) {
-    response.headers.set('x-session-id', binaryToUuid(session.id))
-    response.headers.set('x-user-id', binaryToUuid(session.employeeId))
+    response.headers.set('x-session-id', session.id)
+    response.headers.set('x-user-id', session.employeeId)
   }
 
   // Om het id op de client weer te geven, moet dit in een cookie bewaard worden.

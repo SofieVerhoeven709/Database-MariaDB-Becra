@@ -25,29 +25,29 @@ export type AggregateProjectContact = {
 }
 
 export type ProjectContactMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   description: string | null
   extraInfo: string | null
   createdAt: Date | null
   moddifiedAt: Date | null
   idValid: boolean | null
-  createdBy: runtime.Bytes | null
-  moddifiedBy: runtime.Bytes | null
-  projectId: runtime.Bytes | null
-  contactId: runtime.Bytes | null
+  createdBy: string | null
+  moddifiedBy: string | null
+  projectId: string | null
+  contactId: string | null
 }
 
 export type ProjectContactMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   description: string | null
   extraInfo: string | null
   createdAt: Date | null
   moddifiedAt: Date | null
   idValid: boolean | null
-  createdBy: runtime.Bytes | null
-  moddifiedBy: runtime.Bytes | null
-  projectId: runtime.Bytes | null
-  contactId: runtime.Bytes | null
+  createdBy: string | null
+  moddifiedBy: string | null
+  projectId: string | null
+  contactId: string | null
 }
 
 export type ProjectContactCountAggregateOutputType = {
@@ -178,16 +178,16 @@ export type ProjectContactGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 export type ProjectContactGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   description: string | null
   extraInfo: string | null
   createdAt: Date
   moddifiedAt: Date | null
   idValid: boolean
-  createdBy: runtime.Bytes
-  moddifiedBy: runtime.Bytes
-  projectId: runtime.Bytes
-  contactId: runtime.Bytes
+  createdBy: string
+  moddifiedBy: string
+  projectId: string
+  contactId: string
   _count: ProjectContactCountAggregateOutputType | null
   _min: ProjectContactMinAggregateOutputType | null
   _max: ProjectContactMaxAggregateOutputType | null
@@ -212,16 +212,16 @@ export type ProjectContactWhereInput = {
   AND?: Prisma.ProjectContactWhereInput | Prisma.ProjectContactWhereInput[]
   OR?: Prisma.ProjectContactWhereInput[]
   NOT?: Prisma.ProjectContactWhereInput | Prisma.ProjectContactWhereInput[]
-  id?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
+  id?: Prisma.StringFilter<"ProjectContact"> | string
   description?: Prisma.StringNullableFilter<"ProjectContact"> | string | null
   extraInfo?: Prisma.StringNullableFilter<"ProjectContact"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ProjectContact"> | Date | string
   moddifiedAt?: Prisma.DateTimeNullableFilter<"ProjectContact"> | Date | string | null
   idValid?: Prisma.BoolFilter<"ProjectContact"> | boolean
-  createdBy?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
-  moddifiedBy?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
-  projectId?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
-  contactId?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"ProjectContact"> | string
+  moddifiedBy?: Prisma.StringFilter<"ProjectContact"> | string
+  projectId?: Prisma.StringFilter<"ProjectContact"> | string
+  contactId?: Prisma.StringFilter<"ProjectContact"> | string
   Employee_ProjectContact_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   Employee_ProjectContact_moddifiedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -247,7 +247,7 @@ export type ProjectContactOrderByWithRelationInput = {
 }
 
 export type ProjectContactWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.ProjectContactWhereInput | Prisma.ProjectContactWhereInput[]
   OR?: Prisma.ProjectContactWhereInput[]
   NOT?: Prisma.ProjectContactWhereInput | Prisma.ProjectContactWhereInput[]
@@ -256,10 +256,10 @@ export type ProjectContactWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"ProjectContact"> | Date | string
   moddifiedAt?: Prisma.DateTimeNullableFilter<"ProjectContact"> | Date | string | null
   idValid?: Prisma.BoolFilter<"ProjectContact"> | boolean
-  createdBy?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
-  moddifiedBy?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
-  projectId?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
-  contactId?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"ProjectContact"> | string
+  moddifiedBy?: Prisma.StringFilter<"ProjectContact"> | string
+  projectId?: Prisma.StringFilter<"ProjectContact"> | string
+  contactId?: Prisma.StringFilter<"ProjectContact"> | string
   Employee_ProjectContact_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   Employee_ProjectContact_moddifiedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -286,20 +286,20 @@ export type ProjectContactScalarWhereWithAggregatesInput = {
   AND?: Prisma.ProjectContactScalarWhereWithAggregatesInput | Prisma.ProjectContactScalarWhereWithAggregatesInput[]
   OR?: Prisma.ProjectContactScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProjectContactScalarWhereWithAggregatesInput | Prisma.ProjectContactScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"ProjectContact"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"ProjectContact"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"ProjectContact"> | string | null
   extraInfo?: Prisma.StringNullableWithAggregatesFilter<"ProjectContact"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProjectContact"> | Date | string
   moddifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ProjectContact"> | Date | string | null
   idValid?: Prisma.BoolWithAggregatesFilter<"ProjectContact"> | boolean
-  createdBy?: Prisma.BytesWithAggregatesFilter<"ProjectContact"> | runtime.Bytes
-  moddifiedBy?: Prisma.BytesWithAggregatesFilter<"ProjectContact"> | runtime.Bytes
-  projectId?: Prisma.BytesWithAggregatesFilter<"ProjectContact"> | runtime.Bytes
-  contactId?: Prisma.BytesWithAggregatesFilter<"ProjectContact"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"ProjectContact"> | string
+  moddifiedBy?: Prisma.StringWithAggregatesFilter<"ProjectContact"> | string
+  projectId?: Prisma.StringWithAggregatesFilter<"ProjectContact"> | string
+  contactId?: Prisma.StringWithAggregatesFilter<"ProjectContact"> | string
 }
 
 export type ProjectContactCreateInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
@@ -312,20 +312,20 @@ export type ProjectContactCreateInput = {
 }
 
 export type ProjectContactUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
-  createdBy: runtime.Bytes
-  moddifiedBy: runtime.Bytes
-  projectId: runtime.Bytes
-  contactId: runtime.Bytes
+  createdBy: string
+  moddifiedBy: string
+  projectId: string
+  contactId: string
 }
 
 export type ProjectContactUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -338,33 +338,33 @@ export type ProjectContactUpdateInput = {
 }
 
 export type ProjectContactUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  moddifiedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectContactCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
-  createdBy: runtime.Bytes
-  moddifiedBy: runtime.Bytes
-  projectId: runtime.Bytes
-  contactId: runtime.Bytes
+  createdBy: string
+  moddifiedBy: string
+  projectId: string
+  contactId: string
 }
 
 export type ProjectContactUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -373,16 +373,16 @@ export type ProjectContactUpdateManyMutationInput = {
 }
 
 export type ProjectContactUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  moddifiedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectContactListRelationFilter = {
@@ -609,7 +609,7 @@ export type ProjectContactUncheckedUpdateManyWithoutProjectNestedInput = {
 }
 
 export type ProjectContactCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
@@ -621,15 +621,15 @@ export type ProjectContactCreateWithoutContactInput = {
 }
 
 export type ProjectContactUncheckedCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
-  createdBy: runtime.Bytes
-  moddifiedBy: runtime.Bytes
-  projectId: runtime.Bytes
+  createdBy: string
+  moddifiedBy: string
+  projectId: string
 }
 
 export type ProjectContactCreateOrConnectWithoutContactInput = {
@@ -662,20 +662,20 @@ export type ProjectContactScalarWhereInput = {
   AND?: Prisma.ProjectContactScalarWhereInput | Prisma.ProjectContactScalarWhereInput[]
   OR?: Prisma.ProjectContactScalarWhereInput[]
   NOT?: Prisma.ProjectContactScalarWhereInput | Prisma.ProjectContactScalarWhereInput[]
-  id?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
+  id?: Prisma.StringFilter<"ProjectContact"> | string
   description?: Prisma.StringNullableFilter<"ProjectContact"> | string | null
   extraInfo?: Prisma.StringNullableFilter<"ProjectContact"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ProjectContact"> | Date | string
   moddifiedAt?: Prisma.DateTimeNullableFilter<"ProjectContact"> | Date | string | null
   idValid?: Prisma.BoolFilter<"ProjectContact"> | boolean
-  createdBy?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
-  moddifiedBy?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
-  projectId?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
-  contactId?: Prisma.BytesFilter<"ProjectContact"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"ProjectContact"> | string
+  moddifiedBy?: Prisma.StringFilter<"ProjectContact"> | string
+  projectId?: Prisma.StringFilter<"ProjectContact"> | string
+  contactId?: Prisma.StringFilter<"ProjectContact"> | string
 }
 
 export type ProjectContactCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
@@ -687,15 +687,15 @@ export type ProjectContactCreateWithoutEmployee_ProjectContact_createdByToEmploy
 }
 
 export type ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
-  moddifiedBy: runtime.Bytes
-  projectId: runtime.Bytes
-  contactId: runtime.Bytes
+  moddifiedBy: string
+  projectId: string
+  contactId: string
 }
 
 export type ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
@@ -709,7 +709,7 @@ export type ProjectContactCreateManyEmployee_ProjectContact_createdByToEmployeeI
 }
 
 export type ProjectContactCreateWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
@@ -721,15 +721,15 @@ export type ProjectContactCreateWithoutEmployee_ProjectContact_moddifiedByToEmpl
 }
 
 export type ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
-  createdBy: runtime.Bytes
-  projectId: runtime.Bytes
-  contactId: runtime.Bytes
+  createdBy: string
+  projectId: string
+  contactId: string
 }
 
 export type ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput = {
@@ -775,7 +775,7 @@ export type ProjectContactUpdateManyWithWhereWithoutEmployee_ProjectContact_modd
 }
 
 export type ProjectContactCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
@@ -787,15 +787,15 @@ export type ProjectContactCreateWithoutProjectInput = {
 }
 
 export type ProjectContactUncheckedCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
-  createdBy: runtime.Bytes
-  moddifiedBy: runtime.Bytes
-  contactId: runtime.Bytes
+  createdBy: string
+  moddifiedBy: string
+  contactId: string
 }
 
 export type ProjectContactCreateOrConnectWithoutProjectInput = {
@@ -825,19 +825,19 @@ export type ProjectContactUpdateManyWithWhereWithoutProjectInput = {
 }
 
 export type ProjectContactCreateManyContactInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
-  createdBy: runtime.Bytes
-  moddifiedBy: runtime.Bytes
-  projectId: runtime.Bytes
+  createdBy: string
+  moddifiedBy: string
+  projectId: string
 }
 
 export type ProjectContactUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -849,55 +849,55 @@ export type ProjectContactUpdateWithoutContactInput = {
 }
 
 export type ProjectContactUncheckedUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  moddifiedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectContactUncheckedUpdateManyWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  moddifiedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectContactCreateManyEmployee_ProjectContact_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
-  moddifiedBy: runtime.Bytes
-  projectId: runtime.Bytes
-  contactId: runtime.Bytes
+  moddifiedBy: string
+  projectId: string
+  contactId: string
 }
 
 export type ProjectContactCreateManyEmployee_ProjectContact_moddifiedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
-  createdBy: runtime.Bytes
-  projectId: runtime.Bytes
-  contactId: runtime.Bytes
+  createdBy: string
+  projectId: string
+  contactId: string
 }
 
 export type ProjectContactUpdateWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -909,31 +909,31 @@ export type ProjectContactUpdateWithoutEmployee_ProjectContact_createdByToEmploy
 }
 
 export type ProjectContactUncheckedUpdateWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  moddifiedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  moddifiedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectContactUpdateWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -945,43 +945,43 @@ export type ProjectContactUpdateWithoutEmployee_ProjectContact_moddifiedByToEmpl
 }
 
 export type ProjectContactUncheckedUpdateWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  projectId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectContactCreateManyProjectInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   extraInfo?: string | null
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
-  createdBy: runtime.Bytes
-  moddifiedBy: runtime.Bytes
-  contactId: runtime.Bytes
+  createdBy: string
+  moddifiedBy: string
+  contactId: string
 }
 
 export type ProjectContactUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -993,27 +993,27 @@ export type ProjectContactUpdateWithoutProjectInput = {
 }
 
 export type ProjectContactUncheckedUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  moddifiedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectContactUncheckedUpdateManyWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  moddifiedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -1067,16 +1067,16 @@ export type $ProjectContactPayload<ExtArgs extends runtime.Types.Extensions.Inte
     Contact: Prisma.$ContactPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     description: string | null
     extraInfo: string | null
     createdAt: Date
     moddifiedAt: Date | null
     idValid: boolean
-    createdBy: runtime.Bytes
-    moddifiedBy: runtime.Bytes
-    projectId: runtime.Bytes
-    contactId: runtime.Bytes
+    createdBy: string
+    moddifiedBy: string
+    projectId: string
+    contactId: string
   }, ExtArgs["result"]["projectContact"]>
   composites: {}
 }
@@ -1450,16 +1450,16 @@ export interface Prisma__ProjectContactClient<T, Null = never, ExtArgs extends r
  * Fields of the ProjectContact model
  */
 export interface ProjectContactFieldRefs {
-  readonly id: Prisma.FieldRef<"ProjectContact", 'Bytes'>
+  readonly id: Prisma.FieldRef<"ProjectContact", 'String'>
   readonly description: Prisma.FieldRef<"ProjectContact", 'String'>
   readonly extraInfo: Prisma.FieldRef<"ProjectContact", 'String'>
   readonly createdAt: Prisma.FieldRef<"ProjectContact", 'DateTime'>
   readonly moddifiedAt: Prisma.FieldRef<"ProjectContact", 'DateTime'>
   readonly idValid: Prisma.FieldRef<"ProjectContact", 'Boolean'>
-  readonly createdBy: Prisma.FieldRef<"ProjectContact", 'Bytes'>
-  readonly moddifiedBy: Prisma.FieldRef<"ProjectContact", 'Bytes'>
-  readonly projectId: Prisma.FieldRef<"ProjectContact", 'Bytes'>
-  readonly contactId: Prisma.FieldRef<"ProjectContact", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"ProjectContact", 'String'>
+  readonly moddifiedBy: Prisma.FieldRef<"ProjectContact", 'String'>
+  readonly projectId: Prisma.FieldRef<"ProjectContact", 'String'>
+  readonly contactId: Prisma.FieldRef<"ProjectContact", 'String'>
 }
     
 

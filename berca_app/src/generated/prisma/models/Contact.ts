@@ -25,7 +25,7 @@ export type AggregateContact = {
 }
 
 export type ContactMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   firstName: string | null
   lastName: string | null
   mail1: string | null
@@ -52,16 +52,16 @@ export type ContactMinAggregateOutputType = {
   potentialTeacherTrainingAndAdvice: boolean | null
   teacherTrainingAndAdvice: boolean | null
   participantTrainingAndAdvice: boolean | null
-  createdBy: runtime.Bytes | null
-  functionId: runtime.Bytes | null
-  departmentId: runtime.Bytes | null
-  titleId: runtime.Bytes | null
-  businessCardId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  functionId: string | null
+  departmentId: string | null
+  titleId: string | null
+  businessCardId: string | null
+  targetId: string | null
 }
 
 export type ContactMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   firstName: string | null
   lastName: string | null
   mail1: string | null
@@ -88,12 +88,12 @@ export type ContactMaxAggregateOutputType = {
   potentialTeacherTrainingAndAdvice: boolean | null
   teacherTrainingAndAdvice: boolean | null
   participantTrainingAndAdvice: boolean | null
-  createdBy: runtime.Bytes | null
-  functionId: runtime.Bytes | null
-  departmentId: runtime.Bytes | null
-  titleId: runtime.Bytes | null
-  businessCardId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  functionId: string | null
+  departmentId: string | null
+  titleId: string | null
+  businessCardId: string | null
+  targetId: string | null
 }
 
 export type ContactCountAggregateOutputType = {
@@ -316,7 +316,7 @@ export type ContactGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 export type ContactGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1: string | null
@@ -343,12 +343,12 @@ export type ContactGroupByOutputType = {
   potentialTeacherTrainingAndAdvice: boolean
   teacherTrainingAndAdvice: boolean
   participantTrainingAndAdvice: boolean
-  createdBy: runtime.Bytes
-  functionId: runtime.Bytes | null
-  departmentId: runtime.Bytes | null
-  titleId: runtime.Bytes | null
-  businessCardId: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId: string | null
+  departmentId: string | null
+  titleId: string | null
+  businessCardId: string | null
+  targetId: string
   _count: ContactCountAggregateOutputType | null
   _min: ContactMinAggregateOutputType | null
   _max: ContactMaxAggregateOutputType | null
@@ -373,7 +373,7 @@ export type ContactWhereInput = {
   AND?: Prisma.ContactWhereInput | Prisma.ContactWhereInput[]
   OR?: Prisma.ContactWhereInput[]
   NOT?: Prisma.ContactWhereInput | Prisma.ContactWhereInput[]
-  id?: Prisma.BytesFilter<"Contact"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Contact"> | string
   firstName?: Prisma.StringFilter<"Contact"> | string
   lastName?: Prisma.StringFilter<"Contact"> | string
   mail1?: Prisma.StringNullableFilter<"Contact"> | string | null
@@ -400,12 +400,12 @@ export type ContactWhereInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
   participantTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
-  createdBy?: Prisma.BytesFilter<"Contact"> | runtime.Bytes
-  functionId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  departmentId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  titleId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  businessCardId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  targetId?: Prisma.BytesFilter<"Contact"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Contact"> | string
+  functionId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  titleId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  businessCardId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  targetId?: Prisma.StringFilter<"Contact"> | string
   CompanyContact?: Prisma.CompanyContactListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Function?: Prisma.XOR<Prisma.FunctionNullableScalarRelationFilter, Prisma.FunctionWhereInput> | null
@@ -466,7 +466,7 @@ export type ContactOrderByWithRelationInput = {
 }
 
 export type ContactWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.ContactWhereInput | Prisma.ContactWhereInput[]
   OR?: Prisma.ContactWhereInput[]
   NOT?: Prisma.ContactWhereInput | Prisma.ContactWhereInput[]
@@ -496,12 +496,12 @@ export type ContactWhereUniqueInput = Prisma.AtLeast<{
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
   participantTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
-  createdBy?: Prisma.BytesFilter<"Contact"> | runtime.Bytes
-  functionId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  departmentId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  titleId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  businessCardId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  targetId?: Prisma.BytesFilter<"Contact"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Contact"> | string
+  functionId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  titleId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  businessCardId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  targetId?: Prisma.StringFilter<"Contact"> | string
   CompanyContact?: Prisma.CompanyContactListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Function?: Prisma.XOR<Prisma.FunctionNullableScalarRelationFilter, Prisma.FunctionWhereInput> | null
@@ -557,7 +557,7 @@ export type ContactScalarWhereWithAggregatesInput = {
   AND?: Prisma.ContactScalarWhereWithAggregatesInput | Prisma.ContactScalarWhereWithAggregatesInput[]
   OR?: Prisma.ContactScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ContactScalarWhereWithAggregatesInput | Prisma.ContactScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Contact"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Contact"> | string
   firstName?: Prisma.StringWithAggregatesFilter<"Contact"> | string
   lastName?: Prisma.StringWithAggregatesFilter<"Contact"> | string
   mail1?: Prisma.StringNullableWithAggregatesFilter<"Contact"> | string | null
@@ -584,16 +584,16 @@ export type ContactScalarWhereWithAggregatesInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolWithAggregatesFilter<"Contact"> | boolean
   teacherTrainingAndAdvice?: Prisma.BoolWithAggregatesFilter<"Contact"> | boolean
   participantTrainingAndAdvice?: Prisma.BoolWithAggregatesFilter<"Contact"> | boolean
-  createdBy?: Prisma.BytesWithAggregatesFilter<"Contact"> | runtime.Bytes
-  functionId?: Prisma.BytesNullableWithAggregatesFilter<"Contact"> | runtime.Bytes | null
-  departmentId?: Prisma.BytesNullableWithAggregatesFilter<"Contact"> | runtime.Bytes | null
-  titleId?: Prisma.BytesNullableWithAggregatesFilter<"Contact"> | runtime.Bytes | null
-  businessCardId?: Prisma.BytesNullableWithAggregatesFilter<"Contact"> | runtime.Bytes | null
-  targetId?: Prisma.BytesWithAggregatesFilter<"Contact"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"Contact"> | string
+  functionId?: Prisma.StringNullableWithAggregatesFilter<"Contact"> | string | null
+  departmentId?: Prisma.StringNullableWithAggregatesFilter<"Contact"> | string | null
+  titleId?: Prisma.StringNullableWithAggregatesFilter<"Contact"> | string | null
+  businessCardId?: Prisma.StringNullableWithAggregatesFilter<"Contact"> | string | null
+  targetId?: Prisma.StringWithAggregatesFilter<"Contact"> | string
 }
 
 export type ContactCreateInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -633,7 +633,7 @@ export type ContactCreateInput = {
 }
 
 export type ContactUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -660,12 +660,12 @@ export type ContactUncheckedCreateInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
@@ -673,7 +673,7 @@ export type ContactUncheckedCreateInput = {
 }
 
 export type ContactUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -713,7 +713,7 @@ export type ContactUpdateInput = {
 }
 
 export type ContactUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -740,12 +740,12 @@ export type ContactUncheckedUpdateInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
@@ -753,7 +753,7 @@ export type ContactUncheckedUpdateInput = {
 }
 
 export type ContactCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -780,16 +780,16 @@ export type ContactCreateManyInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
 }
 
 export type ContactUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -819,7 +819,7 @@ export type ContactUpdateManyMutationInput = {
 }
 
 export type ContactUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -846,12 +846,12 @@ export type ContactUncheckedUpdateManyInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ContactScalarRelationFilter = {
@@ -1292,7 +1292,7 @@ export type ContactUpdateOneRequiredWithoutTrainingContactNestedInput = {
 }
 
 export type ContactCreateWithoutCompanyContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -1331,7 +1331,7 @@ export type ContactCreateWithoutCompanyContactInput = {
 }
 
 export type ContactUncheckedCreateWithoutCompanyContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -1358,12 +1358,12 @@ export type ContactUncheckedCreateWithoutCompanyContactInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutContactInput
@@ -1386,7 +1386,7 @@ export type ContactUpdateToOneWithWhereWithoutCompanyContactInput = {
 }
 
 export type ContactUpdateWithoutCompanyContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1425,7 +1425,7 @@ export type ContactUpdateWithoutCompanyContactInput = {
 }
 
 export type ContactUncheckedUpdateWithoutCompanyContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1452,19 +1452,19 @@ export type ContactUncheckedUpdateWithoutCompanyContactInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutContactNestedInput
 }
 
 export type ContactCreateWithoutDepartmentInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -1503,7 +1503,7 @@ export type ContactCreateWithoutDepartmentInput = {
 }
 
 export type ContactUncheckedCreateWithoutDepartmentInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -1530,11 +1530,11 @@ export type ContactUncheckedCreateWithoutDepartmentInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
@@ -1571,7 +1571,7 @@ export type ContactScalarWhereInput = {
   AND?: Prisma.ContactScalarWhereInput | Prisma.ContactScalarWhereInput[]
   OR?: Prisma.ContactScalarWhereInput[]
   NOT?: Prisma.ContactScalarWhereInput | Prisma.ContactScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Contact"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Contact"> | string
   firstName?: Prisma.StringFilter<"Contact"> | string
   lastName?: Prisma.StringFilter<"Contact"> | string
   mail1?: Prisma.StringNullableFilter<"Contact"> | string | null
@@ -1598,16 +1598,16 @@ export type ContactScalarWhereInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
   participantTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
-  createdBy?: Prisma.BytesFilter<"Contact"> | runtime.Bytes
-  functionId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  departmentId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  titleId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  businessCardId?: Prisma.BytesNullableFilter<"Contact"> | runtime.Bytes | null
-  targetId?: Prisma.BytesFilter<"Contact"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Contact"> | string
+  functionId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  titleId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  businessCardId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  targetId?: Prisma.StringFilter<"Contact"> | string
 }
 
 export type ContactCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -1646,7 +1646,7 @@ export type ContactCreateWithoutDocumentStructureInput = {
 }
 
 export type ContactUncheckedCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -1673,11 +1673,11 @@ export type ContactUncheckedCreateWithoutDocumentStructureInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  targetId: string
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
@@ -1711,7 +1711,7 @@ export type ContactUpdateManyWithWhereWithoutDocumentStructureInput = {
 }
 
 export type ContactCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -1750,7 +1750,7 @@ export type ContactCreateWithoutEmployeeInput = {
 }
 
 export type ContactUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -1777,11 +1777,11 @@ export type ContactUncheckedCreateWithoutEmployeeInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
@@ -1815,7 +1815,7 @@ export type ContactUpdateManyWithWhereWithoutEmployeeInput = {
 }
 
 export type ContactCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -1854,7 +1854,7 @@ export type ContactCreateWithoutFollowUpStructureInput = {
 }
 
 export type ContactUncheckedCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -1881,12 +1881,12 @@ export type ContactUncheckedCreateWithoutFollowUpStructureInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutContactInput
@@ -1909,7 +1909,7 @@ export type ContactUpdateToOneWithWhereWithoutFollowUpStructureInput = {
 }
 
 export type ContactUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1948,7 +1948,7 @@ export type ContactUpdateWithoutFollowUpStructureInput = {
 }
 
 export type ContactUncheckedUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1975,19 +1975,19 @@ export type ContactUncheckedUpdateWithoutFollowUpStructureInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutContactNestedInput
 }
 
 export type ContactCreateWithoutFunctionInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2026,7 +2026,7 @@ export type ContactCreateWithoutFunctionInput = {
 }
 
 export type ContactUncheckedCreateWithoutFunctionInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2053,11 +2053,11 @@ export type ContactUncheckedCreateWithoutFunctionInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
@@ -2091,7 +2091,7 @@ export type ContactUpdateManyWithWhereWithoutFunctionInput = {
 }
 
 export type ContactCreateWithoutProjectContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2130,7 +2130,7 @@ export type ContactCreateWithoutProjectContactInput = {
 }
 
 export type ContactUncheckedCreateWithoutProjectContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2157,12 +2157,12 @@ export type ContactUncheckedCreateWithoutProjectContactInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutContactInput
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutContactInput
@@ -2185,7 +2185,7 @@ export type ContactUpdateToOneWithWhereWithoutProjectContactInput = {
 }
 
 export type ContactUpdateWithoutProjectContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2224,7 +2224,7 @@ export type ContactUpdateWithoutProjectContactInput = {
 }
 
 export type ContactUncheckedUpdateWithoutProjectContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2251,19 +2251,19 @@ export type ContactUncheckedUpdateWithoutProjectContactInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutContactNestedInput
 }
 
 export type ContactCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2302,7 +2302,7 @@ export type ContactCreateWithoutTargetInput = {
 }
 
 export type ContactUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2329,11 +2329,11 @@ export type ContactUncheckedCreateWithoutTargetInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
@@ -2367,7 +2367,7 @@ export type ContactUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type ContactCreateWithoutTitleInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2406,7 +2406,7 @@ export type ContactCreateWithoutTitleInput = {
 }
 
 export type ContactUncheckedCreateWithoutTitleInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2433,11 +2433,11 @@ export type ContactUncheckedCreateWithoutTitleInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  businessCardId?: string | null
+  targetId: string
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
@@ -2471,7 +2471,7 @@ export type ContactUpdateManyWithWhereWithoutTitleInput = {
 }
 
 export type ContactCreateWithoutTrainingContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2510,7 +2510,7 @@ export type ContactCreateWithoutTrainingContactInput = {
 }
 
 export type ContactUncheckedCreateWithoutTrainingContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2537,12 +2537,12 @@ export type ContactUncheckedCreateWithoutTrainingContactInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
@@ -2565,7 +2565,7 @@ export type ContactUpdateToOneWithWhereWithoutTrainingContactInput = {
 }
 
 export type ContactUpdateWithoutTrainingContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2604,7 +2604,7 @@ export type ContactUpdateWithoutTrainingContactInput = {
 }
 
 export type ContactUncheckedUpdateWithoutTrainingContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2631,19 +2631,19 @@ export type ContactUncheckedUpdateWithoutTrainingContactInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
 }
 
 export type ContactCreateManyDepartmentInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2670,15 +2670,15 @@ export type ContactCreateManyDepartmentInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
 }
 
 export type ContactUpdateWithoutDepartmentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2717,7 +2717,7 @@ export type ContactUpdateWithoutDepartmentInput = {
 }
 
 export type ContactUncheckedUpdateWithoutDepartmentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2744,11 +2744,11 @@ export type ContactUncheckedUpdateWithoutDepartmentInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
@@ -2756,7 +2756,7 @@ export type ContactUncheckedUpdateWithoutDepartmentInput = {
 }
 
 export type ContactUncheckedUpdateManyWithoutDepartmentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2783,15 +2783,15 @@ export type ContactUncheckedUpdateManyWithoutDepartmentInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ContactCreateManyDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2818,15 +2818,15 @@ export type ContactCreateManyDocumentStructureInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  targetId: string
 }
 
 export type ContactUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2865,7 +2865,7 @@ export type ContactUpdateWithoutDocumentStructureInput = {
 }
 
 export type ContactUncheckedUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2892,11 +2892,11 @@ export type ContactUncheckedUpdateWithoutDocumentStructureInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
@@ -2904,7 +2904,7 @@ export type ContactUncheckedUpdateWithoutDocumentStructureInput = {
 }
 
 export type ContactUncheckedUpdateManyWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2931,15 +2931,15 @@ export type ContactUncheckedUpdateManyWithoutDocumentStructureInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ContactCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -2966,15 +2966,15 @@ export type ContactCreateManyEmployeeInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
 }
 
 export type ContactUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3013,7 +3013,7 @@ export type ContactUpdateWithoutEmployeeInput = {
 }
 
 export type ContactUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3040,11 +3040,11 @@ export type ContactUncheckedUpdateWithoutEmployeeInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
@@ -3052,7 +3052,7 @@ export type ContactUncheckedUpdateWithoutEmployeeInput = {
 }
 
 export type ContactUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3079,15 +3079,15 @@ export type ContactUncheckedUpdateManyWithoutEmployeeInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ContactCreateManyFunctionInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -3114,15 +3114,15 @@ export type ContactCreateManyFunctionInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
 }
 
 export type ContactUpdateWithoutFunctionInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3161,7 +3161,7 @@ export type ContactUpdateWithoutFunctionInput = {
 }
 
 export type ContactUncheckedUpdateWithoutFunctionInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3188,11 +3188,11 @@ export type ContactUncheckedUpdateWithoutFunctionInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
@@ -3200,7 +3200,7 @@ export type ContactUncheckedUpdateWithoutFunctionInput = {
 }
 
 export type ContactUncheckedUpdateManyWithoutFunctionInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3227,15 +3227,15 @@ export type ContactUncheckedUpdateManyWithoutFunctionInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ContactCreateManyTargetInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -3262,15 +3262,15 @@ export type ContactCreateManyTargetInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
 }
 
 export type ContactUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3309,7 +3309,7 @@ export type ContactUpdateWithoutTargetInput = {
 }
 
 export type ContactUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3336,11 +3336,11 @@ export type ContactUncheckedUpdateWithoutTargetInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
@@ -3348,7 +3348,7 @@ export type ContactUncheckedUpdateWithoutTargetInput = {
 }
 
 export type ContactUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3375,15 +3375,15 @@ export type ContactUncheckedUpdateManyWithoutTargetInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ContactCreateManyTitleInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail1?: string | null
@@ -3410,15 +3410,15 @@ export type ContactCreateManyTitleInput = {
   potentialTeacherTrainingAndAdvice?: boolean
   teacherTrainingAndAdvice?: boolean
   participantTrainingAndAdvice?: boolean
-  createdBy: runtime.Bytes
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  businessCardId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  functionId?: string | null
+  departmentId?: string | null
+  businessCardId?: string | null
+  targetId: string
 }
 
 export type ContactUpdateWithoutTitleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3457,7 +3457,7 @@ export type ContactUpdateWithoutTitleInput = {
 }
 
 export type ContactUncheckedUpdateWithoutTitleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3484,11 +3484,11 @@ export type ContactUncheckedUpdateWithoutTitleInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
@@ -3496,7 +3496,7 @@ export type ContactUncheckedUpdateWithoutTitleInput = {
 }
 
 export type ContactUncheckedUpdateManyWithoutTitleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3523,11 +3523,11 @@ export type ContactUncheckedUpdateManyWithoutTitleInput = {
   potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  businessCardId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -3703,7 +3703,7 @@ export type $ContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     TrainingContact: Prisma.$TrainingContactPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     firstName: string
     lastName: string
     mail1: string | null
@@ -3730,12 +3730,12 @@ export type $ContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     potentialTeacherTrainingAndAdvice: boolean
     teacherTrainingAndAdvice: boolean
     participantTrainingAndAdvice: boolean
-    createdBy: runtime.Bytes
-    functionId: runtime.Bytes | null
-    departmentId: runtime.Bytes | null
-    titleId: runtime.Bytes | null
-    businessCardId: runtime.Bytes | null
-    targetId: runtime.Bytes
+    createdBy: string
+    functionId: string | null
+    departmentId: string | null
+    titleId: string | null
+    businessCardId: string | null
+    targetId: string
   }, ExtArgs["result"]["contact"]>
   composites: {}
 }
@@ -4115,7 +4115,7 @@ export interface Prisma__ContactClient<T, Null = never, ExtArgs extends runtime.
  * Fields of the Contact model
  */
 export interface ContactFieldRefs {
-  readonly id: Prisma.FieldRef<"Contact", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Contact", 'String'>
   readonly firstName: Prisma.FieldRef<"Contact", 'String'>
   readonly lastName: Prisma.FieldRef<"Contact", 'String'>
   readonly mail1: Prisma.FieldRef<"Contact", 'String'>
@@ -4142,12 +4142,12 @@ export interface ContactFieldRefs {
   readonly potentialTeacherTrainingAndAdvice: Prisma.FieldRef<"Contact", 'Boolean'>
   readonly teacherTrainingAndAdvice: Prisma.FieldRef<"Contact", 'Boolean'>
   readonly participantTrainingAndAdvice: Prisma.FieldRef<"Contact", 'Boolean'>
-  readonly createdBy: Prisma.FieldRef<"Contact", 'Bytes'>
-  readonly functionId: Prisma.FieldRef<"Contact", 'Bytes'>
-  readonly departmentId: Prisma.FieldRef<"Contact", 'Bytes'>
-  readonly titleId: Prisma.FieldRef<"Contact", 'Bytes'>
-  readonly businessCardId: Prisma.FieldRef<"Contact", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"Contact", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"Contact", 'String'>
+  readonly functionId: Prisma.FieldRef<"Contact", 'String'>
+  readonly departmentId: Prisma.FieldRef<"Contact", 'String'>
+  readonly titleId: Prisma.FieldRef<"Contact", 'String'>
+  readonly businessCardId: Prisma.FieldRef<"Contact", 'String'>
+  readonly targetId: Prisma.FieldRef<"Contact", 'String'>
 }
     
 

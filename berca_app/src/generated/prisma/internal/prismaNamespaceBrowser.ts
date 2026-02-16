@@ -758,21 +758,28 @@ export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 export const CertificateOrderByRelevanceFieldEnum = {
+  id: 'id',
   description: 'description',
-  descriptionShort: 'descriptionShort'
+  descriptionShort: 'descriptionShort',
+  createdBy: 'createdBy',
+  certificateTypeId: 'certificateTypeId',
+  targetId: 'targetId'
 } as const
 
 export type CertificateOrderByRelevanceFieldEnum = (typeof CertificateOrderByRelevanceFieldEnum)[keyof typeof CertificateOrderByRelevanceFieldEnum]
 
 
 export const CertificateTypeOrderByRelevanceFieldEnum = {
-  name: 'name'
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy'
 } as const
 
 export type CertificateTypeOrderByRelevanceFieldEnum = (typeof CertificateTypeOrderByRelevanceFieldEnum)[keyof typeof CertificateTypeOrderByRelevanceFieldEnum]
 
 
 export const CompanyOrderByRelevanceFieldEnum = {
+  id: 'id',
   name: 'name',
   number: 'number',
   mail: 'mail',
@@ -784,32 +791,43 @@ export const CompanyOrderByRelevanceFieldEnum = {
   bic: 'bic',
   becraCustomerNumber: 'becraCustomerNumber',
   becraWebsiteLogin: 'becraWebsiteLogin',
-  notes: 'notes'
+  notes: 'notes',
+  createdBy: 'createdBy',
+  companyId: 'companyId',
+  targetId: 'targetId'
 } as const
 
 export type CompanyOrderByRelevanceFieldEnum = (typeof CompanyOrderByRelevanceFieldEnum)[keyof typeof CompanyOrderByRelevanceFieldEnum]
 
 
 export const CompanyAdressOrderByRelevanceFieldEnum = {
+  id: 'id',
   street: 'street',
   houseNumber: 'houseNumber',
   busNumber: 'busNumber',
   zipCode: 'zipCode',
   place: 'place',
-  typeAdress: 'typeAdress'
+  typeAdress: 'typeAdress',
+  createdBy: 'createdBy',
+  companyId: 'companyId'
 } as const
 
 export type CompanyAdressOrderByRelevanceFieldEnum = (typeof CompanyAdressOrderByRelevanceFieldEnum)[keyof typeof CompanyAdressOrderByRelevanceFieldEnum]
 
 
 export const CompanyContactOrderByRelevanceFieldEnum = {
-  roleWithCompany: 'roleWithCompany'
+  id: 'id',
+  roleWithCompany: 'roleWithCompany',
+  contactId: 'contactId',
+  companyId: 'companyId',
+  createdBy: 'createdBy'
 } as const
 
 export type CompanyContactOrderByRelevanceFieldEnum = (typeof CompanyContactOrderByRelevanceFieldEnum)[keyof typeof CompanyContactOrderByRelevanceFieldEnum]
 
 
 export const ContactOrderByRelevanceFieldEnum = {
+  id: 'id',
   firstName: 'firstName',
   lastName: 'lastName',
   mail1: 'mail1',
@@ -820,41 +838,59 @@ export const ContactOrderByRelevanceFieldEnum = {
   mobilePhone: 'mobilePhone',
   info: 'info',
   trough: 'trough',
-  description: 'description'
+  description: 'description',
+  createdBy: 'createdBy',
+  functionId: 'functionId',
+  departmentId: 'departmentId',
+  titleId: 'titleId',
+  businessCardId: 'businessCardId',
+  targetId: 'targetId'
 } as const
 
 export type ContactOrderByRelevanceFieldEnum = (typeof ContactOrderByRelevanceFieldEnum)[keyof typeof ContactOrderByRelevanceFieldEnum]
 
 
 export const DepartmentOrderByRelevanceFieldEnum = {
-  name: 'name'
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy'
 } as const
 
 export type DepartmentOrderByRelevanceFieldEnum = (typeof DepartmentOrderByRelevanceFieldEnum)[keyof typeof DepartmentOrderByRelevanceFieldEnum]
 
 
 export const DocumentStructureOrderByRelevanceFieldEnum = {
+  id: 'id',
   documentNumber: 'documentNumber',
   description: 'description',
   descriptionShort: 'descriptionShort',
   revisionDetail: 'revisionDetail',
-  aditionalInfo: 'aditionalInfo'
+  aditionalInfo: 'aditionalInfo',
+  referenceDocId: 'referenceDocId',
+  roleId: 'roleId',
+  createdBy: 'createdBy',
+  revisedById: 'revisedById',
+  managedById: 'managedById',
+  targetId: 'targetId'
 } as const
 
 export type DocumentStructureOrderByRelevanceFieldEnum = (typeof DocumentStructureOrderByRelevanceFieldEnum)[keyof typeof DocumentStructureOrderByRelevanceFieldEnum]
 
 
 export const EmergencyContactOrderByRelevanceFieldEnum = {
+  id: 'id',
   name: 'name',
   relationship: 'relationship',
   mail: 'mail',
-  phoneNumber: 'phoneNumber'
+  phoneNumber: 'phoneNumber',
+  employeeId: 'employeeId'
 } as const
 
 export type EmergencyContactOrderByRelevanceFieldEnum = (typeof EmergencyContactOrderByRelevanceFieldEnum)[keyof typeof EmergencyContactOrderByRelevanceFieldEnum]
 
 
 export const EmployeeOrderByRelevanceFieldEnum = {
+  id: 'id',
   firstName: 'firstName',
   lastName: 'lastName',
   mail: 'mail',
@@ -866,54 +902,96 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   busNumber: 'busNumber',
   zipCode: 'zipCode',
   place: 'place',
-  username: 'username'
+  username: 'username',
+  createdBy: 'createdBy',
+  roleId: 'roleId',
+  functionId: 'functionId',
+  departmentId: 'departmentId',
+  titleId: 'titleId',
+  pictureId: 'pictureId'
 } as const
 
 export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]
 
 
 export const FollowUpOrderByRelevanceFieldEnum = {
+  id: 'id',
   activityDescription: 'activityDescription',
-  aditionalInfo: 'aditionalInfo'
+  aditionalInfo: 'aditionalInfo',
+  createdBy: 'createdBy',
+  ownedBy: 'ownedBy',
+  statusId: 'statusId',
+  executedBy: 'executedBy',
+  urgencyTypeId: 'urgencyTypeId',
+  documentId: 'documentId',
+  targetId: 'targetId',
+  followUpTypeId: 'followUpTypeId'
 } as const
 
 export type FollowUpOrderByRelevanceFieldEnum = (typeof FollowUpOrderByRelevanceFieldEnum)[keyof typeof FollowUpOrderByRelevanceFieldEnum]
 
 
 export const FollowUpStructureOrderByRelevanceFieldEnum = {
+  id: 'id',
   activityDescription: 'activityDescription',
   aditionalInfo: 'aditionalInfo',
   recurringItem: 'recurringItem',
   item: 'item',
-  taskDescription: 'taskDescription'
+  taskDescription: 'taskDescription',
+  createdBy: 'createdBy',
+  ownedBy: 'ownedBy',
+  statusId: 'statusId',
+  executedBy: 'executedBy',
+  urgencyTypeId: 'urgencyTypeId',
+  followUpId: 'followUpId',
+  documentId: 'documentId',
+  contactId: 'contactId',
+  taskFor: 'taskFor',
+  targetId: 'targetId'
 } as const
 
 export type FollowUpStructureOrderByRelevanceFieldEnum = (typeof FollowUpStructureOrderByRelevanceFieldEnum)[keyof typeof FollowUpStructureOrderByRelevanceFieldEnum]
 
 
+export const FollowUpTargetOrderByRelevanceFieldEnum = {
+  id: 'id',
+  followUpId: 'followUpId',
+  targetId: 'targetId'
+} as const
+
+export type FollowUpTargetOrderByRelevanceFieldEnum = (typeof FollowUpTargetOrderByRelevanceFieldEnum)[keyof typeof FollowUpTargetOrderByRelevanceFieldEnum]
+
+
 export const FollowUpTypeOrderByRelevanceFieldEnum = {
-  name: 'name'
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy'
 } as const
 
 export type FollowUpTypeOrderByRelevanceFieldEnum = (typeof FollowUpTypeOrderByRelevanceFieldEnum)[keyof typeof FollowUpTypeOrderByRelevanceFieldEnum]
 
 
 export const FunctionOrderByRelevanceFieldEnum = {
-  name: 'name'
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy'
 } as const
 
 export type FunctionOrderByRelevanceFieldEnum = (typeof FunctionOrderByRelevanceFieldEnum)[keyof typeof FunctionOrderByRelevanceFieldEnum]
 
 
 export const HourTypeOrderByRelevanceFieldEnum = {
+  id: 'id',
   name: 'name',
-  info: 'info'
+  info: 'info',
+  createdBy: 'createdBy'
 } as const
 
 export type HourTypeOrderByRelevanceFieldEnum = (typeof HourTypeOrderByRelevanceFieldEnum)[keyof typeof HourTypeOrderByRelevanceFieldEnum]
 
 
 export const InvoiceInOrderByRelevanceFieldEnum = {
+  id: 'id',
   invoiceNumber: 'invoiceNumber',
   invoiceReference: 'invoiceReference',
   invoiceOutAttachement: 'invoiceOutAttachement',
@@ -923,13 +1001,26 @@ export const InvoiceInOrderByRelevanceFieldEnum = {
   info: 'info',
   deliveryInvoiceCode: 'deliveryInvoiceCode',
   deliveryBon: 'deliveryBon',
-  remark: 'remark'
+  remark: 'remark',
+  createdBy: 'createdBy',
+  invoiceTypeId: 'invoiceTypeId',
+  targetId: 'targetId'
 } as const
 
 export type InvoiceInOrderByRelevanceFieldEnum = (typeof InvoiceInOrderByRelevanceFieldEnum)[keyof typeof InvoiceInOrderByRelevanceFieldEnum]
 
 
+export const InvoiceInTargetOrderByRelevanceFieldEnum = {
+  id: 'id',
+  invoiceInId: 'invoiceInId',
+  targetId: 'targetId'
+} as const
+
+export type InvoiceInTargetOrderByRelevanceFieldEnum = (typeof InvoiceInTargetOrderByRelevanceFieldEnum)[keyof typeof InvoiceInTargetOrderByRelevanceFieldEnum]
+
+
 export const InvoiceOutOrderByRelevanceFieldEnum = {
+  id: 'id',
   invoiceNumber: 'invoiceNumber',
   invoiceReference: 'invoiceReference',
   invoiceInAttachement: 'invoiceInAttachement',
@@ -939,126 +1030,225 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   deliveryInvoiceInfo: 'deliveryInvoiceInfo',
   aditionalInfo: 'aditionalInfo',
   info: 'info',
-  deliveryInvoiceCode: 'deliveryInvoiceCode'
+  deliveryInvoiceCode: 'deliveryInvoiceCode',
+  createdBy: 'createdBy',
+  invoiceTypeId: 'invoiceTypeId',
+  workOrderId: 'workOrderId',
+  targetId: 'targetId'
 } as const
 
 export type InvoiceOutOrderByRelevanceFieldEnum = (typeof InvoiceOutOrderByRelevanceFieldEnum)[keyof typeof InvoiceOutOrderByRelevanceFieldEnum]
 
 
 export const InvoiceTypeOrderByRelevanceFieldEnum = {
-  name: 'name'
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy'
 } as const
 
 export type InvoiceTypeOrderByRelevanceFieldEnum = (typeof InvoiceTypeOrderByRelevanceFieldEnum)[keyof typeof InvoiceTypeOrderByRelevanceFieldEnum]
 
 
 export const ProjectOrderByRelevanceFieldEnum = {
+  id: 'id',
   projectNumber: 'projectNumber',
   description: 'description',
-  extraInfo: 'extraInfo'
+  extraInfo: 'extraInfo',
+  createdBy: 'createdBy',
+  companyId: 'companyId',
+  projectTypeId: 'projectTypeId',
+  parentProjectId: 'parentProjectId',
+  targetId: 'targetId'
 } as const
 
 export type ProjectOrderByRelevanceFieldEnum = (typeof ProjectOrderByRelevanceFieldEnum)[keyof typeof ProjectOrderByRelevanceFieldEnum]
 
 
 export const ProjectContactOrderByRelevanceFieldEnum = {
+  id: 'id',
   description: 'description',
-  extraInfo: 'extraInfo'
+  extraInfo: 'extraInfo',
+  createdBy: 'createdBy',
+  moddifiedBy: 'moddifiedBy',
+  projectId: 'projectId',
+  contactId: 'contactId'
 } as const
 
 export type ProjectContactOrderByRelevanceFieldEnum = (typeof ProjectContactOrderByRelevanceFieldEnum)[keyof typeof ProjectContactOrderByRelevanceFieldEnum]
 
 
 export const ProjectTypeOrderByRelevanceFieldEnum = {
-  name: 'name'
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy'
 } as const
 
 export type ProjectTypeOrderByRelevanceFieldEnum = (typeof ProjectTypeOrderByRelevanceFieldEnum)[keyof typeof ProjectTypeOrderByRelevanceFieldEnum]
 
 
 export const RoleOrderByRelevanceFieldEnum = {
-  name: 'name'
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy'
 } as const
 
 export type RoleOrderByRelevanceFieldEnum = (typeof RoleOrderByRelevanceFieldEnum)[keyof typeof RoleOrderByRelevanceFieldEnum]
 
 
 export const StatusOrderByRelevanceFieldEnum = {
-  name: 'name'
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy'
 } as const
 
 export type StatusOrderByRelevanceFieldEnum = (typeof StatusOrderByRelevanceFieldEnum)[keyof typeof StatusOrderByRelevanceFieldEnum]
 
 
+export const TargetOrderByRelevanceFieldEnum = {
+  id: 'id',
+  createdBy: 'createdBy',
+  targetTypeId: 'targetTypeId'
+} as const
+
+export type TargetOrderByRelevanceFieldEnum = (typeof TargetOrderByRelevanceFieldEnum)[keyof typeof TargetOrderByRelevanceFieldEnum]
+
+
 export const TargetTypeOrderByRelevanceFieldEnum = {
-  name: 'name'
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy'
 } as const
 
 export type TargetTypeOrderByRelevanceFieldEnum = (typeof TargetTypeOrderByRelevanceFieldEnum)[keyof typeof TargetTypeOrderByRelevanceFieldEnum]
 
 
 export const TimeRegistryOrderByRelevanceFieldEnum = {
+  id: 'id',
   activityDescription: 'activityDescription',
   aditionalInfo: 'aditionalInfo',
-  invoiceInfo: 'invoiceInfo'
+  invoiceInfo: 'invoiceInfo',
+  createdBy: 'createdBy',
+  workOrderId: 'workOrderId',
+  hourtypeId: 'hourtypeId'
 } as const
 
 export type TimeRegistryOrderByRelevanceFieldEnum = (typeof TimeRegistryOrderByRelevanceFieldEnum)[keyof typeof TimeRegistryOrderByRelevanceFieldEnum]
 
 
+export const TimeRegistryEmployeeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  timeRegistryId: 'timeRegistryId'
+} as const
+
+export type TimeRegistryEmployeeOrderByRelevanceFieldEnum = (typeof TimeRegistryEmployeeOrderByRelevanceFieldEnum)[keyof typeof TimeRegistryEmployeeOrderByRelevanceFieldEnum]
+
+
 export const TitleOrderByRelevanceFieldEnum = {
-  name: 'name'
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy'
 } as const
 
 export type TitleOrderByRelevanceFieldEnum = (typeof TitleOrderByRelevanceFieldEnum)[keyof typeof TitleOrderByRelevanceFieldEnum]
 
 
 export const TrainingOrderByRelevanceFieldEnum = {
-  trainingNumber: 'trainingNumber'
+  id: 'id',
+  trainingNumber: 'trainingNumber',
+  createdBy: 'createdBy',
+  workOrderId: 'workOrderId',
+  trainingStandardId: 'trainingStandardId',
+  targetId: 'targetId'
 } as const
 
 export type TrainingOrderByRelevanceFieldEnum = (typeof TrainingOrderByRelevanceFieldEnum)[keyof typeof TrainingOrderByRelevanceFieldEnum]
 
 
 export const TrainingContactOrderByRelevanceFieldEnum = {
-  clientNumber: 'clientNumber'
+  id: 'id',
+  clientNumber: 'clientNumber',
+  createdBy: 'createdBy',
+  contactId: 'contactId',
+  trainingId: 'trainingId'
 } as const
 
 export type TrainingContactOrderByRelevanceFieldEnum = (typeof TrainingContactOrderByRelevanceFieldEnum)[keyof typeof TrainingContactOrderByRelevanceFieldEnum]
 
 
+export const TrainingDocumentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentId: 'documentId',
+  trainingStandardId: 'trainingStandardId'
+} as const
+
+export type TrainingDocumentOrderByRelevanceFieldEnum = (typeof TrainingDocumentOrderByRelevanceFieldEnum)[keyof typeof TrainingDocumentOrderByRelevanceFieldEnum]
+
+
 export const TrainingStandardOrderByRelevanceFieldEnum = {
+  id: 'id',
   description: 'description',
   descriptionShort: 'descriptionShort',
-  location: 'location'
+  location: 'location',
+  createdBy: 'createdBy',
+  certificateId: 'certificateId',
+  targetId: 'targetId'
 } as const
 
 export type TrainingStandardOrderByRelevanceFieldEnum = (typeof TrainingStandardOrderByRelevanceFieldEnum)[keyof typeof TrainingStandardOrderByRelevanceFieldEnum]
 
 
 export const UrgencyTypeOrderByRelevanceFieldEnum = {
-  name: 'name'
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy'
 } as const
 
 export type UrgencyTypeOrderByRelevanceFieldEnum = (typeof UrgencyTypeOrderByRelevanceFieldEnum)[keyof typeof UrgencyTypeOrderByRelevanceFieldEnum]
 
 
+export const VisibilityForRoleOrderByRelevanceFieldEnum = {
+  id: 'id',
+  roleId: 'roleId',
+  targetId: 'targetId'
+} as const
+
+export type VisibilityForRoleOrderByRelevanceFieldEnum = (typeof VisibilityForRoleOrderByRelevanceFieldEnum)[keyof typeof VisibilityForRoleOrderByRelevanceFieldEnum]
+
+
 export const WorkOrderOrderByRelevanceFieldEnum = {
+  id: 'id',
   workOrderNumber: 'workOrderNumber',
   description: 'description',
-  aditionalInfo: 'aditionalInfo'
+  aditionalInfo: 'aditionalInfo',
+  createdBy: 'createdBy',
+  projectId: 'projectId',
+  targetId: 'targetId'
 } as const
 
 export type WorkOrderOrderByRelevanceFieldEnum = (typeof WorkOrderOrderByRelevanceFieldEnum)[keyof typeof WorkOrderOrderByRelevanceFieldEnum]
 
 
 export const WorkOrderStructureOrderByRelevanceFieldEnum = {
+  id: 'id',
   clientNumber: 'clientNumber',
   tag: 'tag',
   aditionalInfo: 'aditionalInfo',
   shortDesciption: 'shortDesciption',
-  longDescription: 'longDescription'
+  longDescription: 'longDescription',
+  createdBy: 'createdBy',
+  workOrderId: 'workOrderId',
+  materialId: 'materialId',
+  targetId: 'targetId'
 } as const
 
 export type WorkOrderStructureOrderByRelevanceFieldEnum = (typeof WorkOrderStructureOrderByRelevanceFieldEnum)[keyof typeof WorkOrderStructureOrderByRelevanceFieldEnum]
+
+
+export const SessionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId'
+} as const
+
+export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum]
 

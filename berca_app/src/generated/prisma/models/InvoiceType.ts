@@ -25,17 +25,17 @@ export type AggregateInvoiceType = {
 }
 
 export type InvoiceTypeMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type InvoiceTypeMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type InvoiceTypeCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type InvoiceTypeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 export type InvoiceTypeGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: InvoiceTypeCountAggregateOutputType | null
   _min: InvoiceTypeMinAggregateOutputType | null
   _max: InvoiceTypeMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type InvoiceTypeWhereInput = {
   AND?: Prisma.InvoiceTypeWhereInput | Prisma.InvoiceTypeWhereInput[]
   OR?: Prisma.InvoiceTypeWhereInput[]
   NOT?: Prisma.InvoiceTypeWhereInput | Prisma.InvoiceTypeWhereInput[]
-  id?: Prisma.BytesFilter<"InvoiceType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"InvoiceType"> | string
   name?: Prisma.StringFilter<"InvoiceType"> | string
   createdAt?: Prisma.DateTimeFilter<"InvoiceType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"InvoiceType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"InvoiceType"> | string
   InvoiceIn?: Prisma.InvoiceInListRelationFilter
   InvoiceOut?: Prisma.InvoiceOutListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -191,13 +191,13 @@ export type InvoiceTypeOrderByWithRelationInput = {
 }
 
 export type InvoiceTypeWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.InvoiceTypeWhereInput | Prisma.InvoiceTypeWhereInput[]
   OR?: Prisma.InvoiceTypeWhereInput[]
   NOT?: Prisma.InvoiceTypeWhereInput | Prisma.InvoiceTypeWhereInput[]
   name?: Prisma.StringFilter<"InvoiceType"> | string
   createdAt?: Prisma.DateTimeFilter<"InvoiceType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"InvoiceType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"InvoiceType"> | string
   InvoiceIn?: Prisma.InvoiceInListRelationFilter
   InvoiceOut?: Prisma.InvoiceOutListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -217,14 +217,14 @@ export type InvoiceTypeScalarWhereWithAggregatesInput = {
   AND?: Prisma.InvoiceTypeScalarWhereWithAggregatesInput | Prisma.InvoiceTypeScalarWhereWithAggregatesInput[]
   OR?: Prisma.InvoiceTypeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.InvoiceTypeScalarWhereWithAggregatesInput | Prisma.InvoiceTypeScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"InvoiceType"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"InvoiceType"> | string
   name?: Prisma.StringWithAggregatesFilter<"InvoiceType"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"InvoiceType"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"InvoiceType"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"InvoiceType"> | string
 }
 
 export type InvoiceTypeCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutInvoiceTypeInput
@@ -233,16 +233,16 @@ export type InvoiceTypeCreateInput = {
 }
 
 export type InvoiceTypeUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutInvoiceTypeInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutInvoiceTypeInput
 }
 
 export type InvoiceTypeUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutInvoiceTypeNestedInput
@@ -251,32 +251,32 @@ export type InvoiceTypeUpdateInput = {
 }
 
 export type InvoiceTypeUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutInvoiceTypeNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutInvoiceTypeNestedInput
 }
 
 export type InvoiceTypeCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type InvoiceTypeUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InvoiceTypeUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceTypeListRelationFilter = {
@@ -392,7 +392,7 @@ export type InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput = {
 }
 
 export type InvoiceTypeCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutInvoiceTypeInput
@@ -400,7 +400,7 @@ export type InvoiceTypeCreateWithoutEmployeeInput = {
 }
 
 export type InvoiceTypeUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutInvoiceTypeInput
@@ -437,14 +437,14 @@ export type InvoiceTypeScalarWhereInput = {
   AND?: Prisma.InvoiceTypeScalarWhereInput | Prisma.InvoiceTypeScalarWhereInput[]
   OR?: Prisma.InvoiceTypeScalarWhereInput[]
   NOT?: Prisma.InvoiceTypeScalarWhereInput | Prisma.InvoiceTypeScalarWhereInput[]
-  id?: Prisma.BytesFilter<"InvoiceType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"InvoiceType"> | string
   name?: Prisma.StringFilter<"InvoiceType"> | string
   createdAt?: Prisma.DateTimeFilter<"InvoiceType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"InvoiceType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"InvoiceType"> | string
 }
 
 export type InvoiceTypeCreateWithoutInvoiceInInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutInvoiceTypeInput
@@ -452,10 +452,10 @@ export type InvoiceTypeCreateWithoutInvoiceInInput = {
 }
 
 export type InvoiceTypeUncheckedCreateWithoutInvoiceInInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutInvoiceTypeInput
 }
 
@@ -476,7 +476,7 @@ export type InvoiceTypeUpdateToOneWithWhereWithoutInvoiceInInput = {
 }
 
 export type InvoiceTypeUpdateWithoutInvoiceInInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutInvoiceTypeNestedInput
@@ -484,15 +484,15 @@ export type InvoiceTypeUpdateWithoutInvoiceInInput = {
 }
 
 export type InvoiceTypeUncheckedUpdateWithoutInvoiceInInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutInvoiceTypeNestedInput
 }
 
 export type InvoiceTypeCreateWithoutInvoiceOutInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutInvoiceTypeInput
@@ -500,10 +500,10 @@ export type InvoiceTypeCreateWithoutInvoiceOutInput = {
 }
 
 export type InvoiceTypeUncheckedCreateWithoutInvoiceOutInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutInvoiceTypeInput
 }
 
@@ -524,7 +524,7 @@ export type InvoiceTypeUpdateToOneWithWhereWithoutInvoiceOutInput = {
 }
 
 export type InvoiceTypeUpdateWithoutInvoiceOutInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutInvoiceTypeNestedInput
@@ -532,21 +532,21 @@ export type InvoiceTypeUpdateWithoutInvoiceOutInput = {
 }
 
 export type InvoiceTypeUncheckedUpdateWithoutInvoiceOutInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutInvoiceTypeNestedInput
 }
 
 export type InvoiceTypeCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
 }
 
 export type InvoiceTypeUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutInvoiceTypeNestedInput
@@ -554,7 +554,7 @@ export type InvoiceTypeUpdateWithoutEmployeeInput = {
 }
 
 export type InvoiceTypeUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutInvoiceTypeNestedInput
@@ -562,7 +562,7 @@ export type InvoiceTypeUncheckedUpdateWithoutEmployeeInput = {
 }
 
 export type InvoiceTypeUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -643,10 +643,10 @@ export type $InvoiceTypePayload<ExtArgs extends runtime.Types.Extensions.Interna
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     createdAt: Date
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["invoiceType"]>
   composites: {}
 }
@@ -1019,10 +1019,10 @@ export interface Prisma__InvoiceTypeClient<T, Null = never, ExtArgs extends runt
  * Fields of the InvoiceType model
  */
 export interface InvoiceTypeFieldRefs {
-  readonly id: Prisma.FieldRef<"InvoiceType", 'Bytes'>
+  readonly id: Prisma.FieldRef<"InvoiceType", 'String'>
   readonly name: Prisma.FieldRef<"InvoiceType", 'String'>
   readonly createdAt: Prisma.FieldRef<"InvoiceType", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"InvoiceType", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"InvoiceType", 'String'>
 }
     
 

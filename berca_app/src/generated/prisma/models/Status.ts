@@ -25,17 +25,17 @@ export type AggregateStatus = {
 }
 
 export type StatusMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type StatusMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type StatusCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type StatusGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 export type StatusGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: StatusCountAggregateOutputType | null
   _min: StatusMinAggregateOutputType | null
   _max: StatusMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type StatusWhereInput = {
   AND?: Prisma.StatusWhereInput | Prisma.StatusWhereInput[]
   OR?: Prisma.StatusWhereInput[]
   NOT?: Prisma.StatusWhereInput | Prisma.StatusWhereInput[]
-  id?: Prisma.BytesFilter<"Status"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Status"> | string
   name?: Prisma.StringFilter<"Status"> | string
   createdAt?: Prisma.DateTimeFilter<"Status"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Status"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Status"> | string
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -191,13 +191,13 @@ export type StatusOrderByWithRelationInput = {
 }
 
 export type StatusWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.StatusWhereInput | Prisma.StatusWhereInput[]
   OR?: Prisma.StatusWhereInput[]
   NOT?: Prisma.StatusWhereInput | Prisma.StatusWhereInput[]
   name?: Prisma.StringFilter<"Status"> | string
   createdAt?: Prisma.DateTimeFilter<"Status"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Status"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Status"> | string
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -217,14 +217,14 @@ export type StatusScalarWhereWithAggregatesInput = {
   AND?: Prisma.StatusScalarWhereWithAggregatesInput | Prisma.StatusScalarWhereWithAggregatesInput[]
   OR?: Prisma.StatusScalarWhereWithAggregatesInput[]
   NOT?: Prisma.StatusScalarWhereWithAggregatesInput | Prisma.StatusScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Status"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Status"> | string
   name?: Prisma.StringWithAggregatesFilter<"Status"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Status"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"Status"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"Status"> | string
 }
 
 export type StatusCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutStatusInput
@@ -233,16 +233,16 @@ export type StatusCreateInput = {
 }
 
 export type StatusUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutStatusInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutStatusInput
 }
 
 export type StatusUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUp?: Prisma.FollowUpUpdateManyWithoutStatusNestedInput
@@ -251,32 +251,32 @@ export type StatusUpdateInput = {
 }
 
 export type StatusUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutStatusNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutStatusNestedInput
 }
 
 export type StatusCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type StatusUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StatusUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type StatusListRelationFilter = {
@@ -392,7 +392,7 @@ export type StatusUpdateOneRequiredWithoutFollowUpStructureNestedInput = {
 }
 
 export type StatusCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutStatusInput
@@ -400,7 +400,7 @@ export type StatusCreateWithoutEmployeeInput = {
 }
 
 export type StatusUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutStatusInput
@@ -437,14 +437,14 @@ export type StatusScalarWhereInput = {
   AND?: Prisma.StatusScalarWhereInput | Prisma.StatusScalarWhereInput[]
   OR?: Prisma.StatusScalarWhereInput[]
   NOT?: Prisma.StatusScalarWhereInput | Prisma.StatusScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Status"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Status"> | string
   name?: Prisma.StringFilter<"Status"> | string
   createdAt?: Prisma.DateTimeFilter<"Status"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Status"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Status"> | string
 }
 
 export type StatusCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutStatusInput
@@ -452,10 +452,10 @@ export type StatusCreateWithoutFollowUpInput = {
 }
 
 export type StatusUncheckedCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutStatusInput
 }
 
@@ -476,7 +476,7 @@ export type StatusUpdateToOneWithWhereWithoutFollowUpInput = {
 }
 
 export type StatusUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutStatusNestedInput
@@ -484,15 +484,15 @@ export type StatusUpdateWithoutFollowUpInput = {
 }
 
 export type StatusUncheckedUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutStatusNestedInput
 }
 
 export type StatusCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutStatusInput
@@ -500,10 +500,10 @@ export type StatusCreateWithoutFollowUpStructureInput = {
 }
 
 export type StatusUncheckedCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutStatusInput
 }
 
@@ -524,7 +524,7 @@ export type StatusUpdateToOneWithWhereWithoutFollowUpStructureInput = {
 }
 
 export type StatusUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUp?: Prisma.FollowUpUpdateManyWithoutStatusNestedInput
@@ -532,21 +532,21 @@ export type StatusUpdateWithoutFollowUpStructureInput = {
 }
 
 export type StatusUncheckedUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutStatusNestedInput
 }
 
 export type StatusCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
 }
 
 export type StatusUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUp?: Prisma.FollowUpUpdateManyWithoutStatusNestedInput
@@ -554,7 +554,7 @@ export type StatusUpdateWithoutEmployeeInput = {
 }
 
 export type StatusUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutStatusNestedInput
@@ -562,7 +562,7 @@ export type StatusUncheckedUpdateWithoutEmployeeInput = {
 }
 
 export type StatusUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -643,10 +643,10 @@ export type $StatusPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     createdAt: Date
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["status"]>
   composites: {}
 }
@@ -1019,10 +1019,10 @@ export interface Prisma__StatusClient<T, Null = never, ExtArgs extends runtime.T
  * Fields of the Status model
  */
 export interface StatusFieldRefs {
-  readonly id: Prisma.FieldRef<"Status", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Status", 'String'>
   readonly name: Prisma.FieldRef<"Status", 'String'>
   readonly createdAt: Prisma.FieldRef<"Status", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"Status", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"Status", 'String'>
 }
     
 

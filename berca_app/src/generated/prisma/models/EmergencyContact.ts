@@ -25,21 +25,21 @@ export type AggregateEmergencyContact = {
 }
 
 export type EmergencyContactMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   relationship: string | null
   mail: string | null
   phoneNumber: string | null
-  employeeId: runtime.Bytes | null
+  employeeId: string | null
 }
 
 export type EmergencyContactMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   relationship: string | null
   mail: string | null
   phoneNumber: string | null
-  employeeId: runtime.Bytes | null
+  employeeId: string | null
 }
 
 export type EmergencyContactCountAggregateOutputType = {
@@ -154,12 +154,12 @@ export type EmergencyContactGroupByArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 export type EmergencyContactGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   relationship: string
   mail: string
   phoneNumber: string
-  employeeId: runtime.Bytes
+  employeeId: string
   _count: EmergencyContactCountAggregateOutputType | null
   _min: EmergencyContactMinAggregateOutputType | null
   _max: EmergencyContactMaxAggregateOutputType | null
@@ -184,12 +184,12 @@ export type EmergencyContactWhereInput = {
   AND?: Prisma.EmergencyContactWhereInput | Prisma.EmergencyContactWhereInput[]
   OR?: Prisma.EmergencyContactWhereInput[]
   NOT?: Prisma.EmergencyContactWhereInput | Prisma.EmergencyContactWhereInput[]
-  id?: Prisma.BytesFilter<"EmergencyContact"> | runtime.Bytes
+  id?: Prisma.StringFilter<"EmergencyContact"> | string
   name?: Prisma.StringFilter<"EmergencyContact"> | string
   relationship?: Prisma.StringFilter<"EmergencyContact"> | string
   mail?: Prisma.StringFilter<"EmergencyContact"> | string
   phoneNumber?: Prisma.StringFilter<"EmergencyContact"> | string
-  employeeId?: Prisma.BytesFilter<"EmergencyContact"> | runtime.Bytes
+  employeeId?: Prisma.StringFilter<"EmergencyContact"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
 
@@ -205,7 +205,7 @@ export type EmergencyContactOrderByWithRelationInput = {
 }
 
 export type EmergencyContactWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.EmergencyContactWhereInput | Prisma.EmergencyContactWhereInput[]
   OR?: Prisma.EmergencyContactWhereInput[]
   NOT?: Prisma.EmergencyContactWhereInput | Prisma.EmergencyContactWhereInput[]
@@ -213,7 +213,7 @@ export type EmergencyContactWhereUniqueInput = Prisma.AtLeast<{
   relationship?: Prisma.StringFilter<"EmergencyContact"> | string
   mail?: Prisma.StringFilter<"EmergencyContact"> | string
   phoneNumber?: Prisma.StringFilter<"EmergencyContact"> | string
-  employeeId?: Prisma.BytesFilter<"EmergencyContact"> | runtime.Bytes
+  employeeId?: Prisma.StringFilter<"EmergencyContact"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
 
@@ -233,16 +233,16 @@ export type EmergencyContactScalarWhereWithAggregatesInput = {
   AND?: Prisma.EmergencyContactScalarWhereWithAggregatesInput | Prisma.EmergencyContactScalarWhereWithAggregatesInput[]
   OR?: Prisma.EmergencyContactScalarWhereWithAggregatesInput[]
   NOT?: Prisma.EmergencyContactScalarWhereWithAggregatesInput | Prisma.EmergencyContactScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"EmergencyContact"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"EmergencyContact"> | string
   name?: Prisma.StringWithAggregatesFilter<"EmergencyContact"> | string
   relationship?: Prisma.StringWithAggregatesFilter<"EmergencyContact"> | string
   mail?: Prisma.StringWithAggregatesFilter<"EmergencyContact"> | string
   phoneNumber?: Prisma.StringWithAggregatesFilter<"EmergencyContact"> | string
-  employeeId?: Prisma.BytesWithAggregatesFilter<"EmergencyContact"> | runtime.Bytes
+  employeeId?: Prisma.StringWithAggregatesFilter<"EmergencyContact"> | string
 }
 
 export type EmergencyContactCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   relationship: string
   mail: string
@@ -251,16 +251,16 @@ export type EmergencyContactCreateInput = {
 }
 
 export type EmergencyContactUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   relationship: string
   mail: string
   phoneNumber: string
-  employeeId: runtime.Bytes
+  employeeId: string
 }
 
 export type EmergencyContactUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -269,25 +269,25 @@ export type EmergencyContactUpdateInput = {
 }
 
 export type EmergencyContactUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  employeeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type EmergencyContactCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   relationship: string
   mail: string
   phoneNumber: string
-  employeeId: runtime.Bytes
+  employeeId: string
 }
 
 export type EmergencyContactUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -295,12 +295,12 @@ export type EmergencyContactUpdateManyMutationInput = {
 }
 
 export type EmergencyContactUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  employeeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type EmergencyContactOrderByRelevanceInput = {
@@ -389,7 +389,7 @@ export type EmergencyContactUncheckedUpdateManyWithoutEmployeeNestedInput = {
 }
 
 export type EmergencyContactCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   relationship: string
   mail: string
@@ -397,7 +397,7 @@ export type EmergencyContactCreateWithoutEmployeeInput = {
 }
 
 export type EmergencyContactUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   relationship: string
   mail: string
@@ -434,16 +434,16 @@ export type EmergencyContactScalarWhereInput = {
   AND?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
   OR?: Prisma.EmergencyContactScalarWhereInput[]
   NOT?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
-  id?: Prisma.BytesFilter<"EmergencyContact"> | runtime.Bytes
+  id?: Prisma.StringFilter<"EmergencyContact"> | string
   name?: Prisma.StringFilter<"EmergencyContact"> | string
   relationship?: Prisma.StringFilter<"EmergencyContact"> | string
   mail?: Prisma.StringFilter<"EmergencyContact"> | string
   phoneNumber?: Prisma.StringFilter<"EmergencyContact"> | string
-  employeeId?: Prisma.BytesFilter<"EmergencyContact"> | runtime.Bytes
+  employeeId?: Prisma.StringFilter<"EmergencyContact"> | string
 }
 
 export type EmergencyContactCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   relationship: string
   mail: string
@@ -451,7 +451,7 @@ export type EmergencyContactCreateManyEmployeeInput = {
 }
 
 export type EmergencyContactUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -459,7 +459,7 @@ export type EmergencyContactUpdateWithoutEmployeeInput = {
 }
 
 export type EmergencyContactUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -467,7 +467,7 @@ export type EmergencyContactUncheckedUpdateWithoutEmployeeInput = {
 }
 
 export type EmergencyContactUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -508,12 +508,12 @@ export type $EmergencyContactPayload<ExtArgs extends runtime.Types.Extensions.In
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     relationship: string
     mail: string
     phoneNumber: string
-    employeeId: runtime.Bytes
+    employeeId: string
   }, ExtArgs["result"]["emergencyContact"]>
   composites: {}
 }
@@ -884,12 +884,12 @@ export interface Prisma__EmergencyContactClient<T, Null = never, ExtArgs extends
  * Fields of the EmergencyContact model
  */
 export interface EmergencyContactFieldRefs {
-  readonly id: Prisma.FieldRef<"EmergencyContact", 'Bytes'>
+  readonly id: Prisma.FieldRef<"EmergencyContact", 'String'>
   readonly name: Prisma.FieldRef<"EmergencyContact", 'String'>
   readonly relationship: Prisma.FieldRef<"EmergencyContact", 'String'>
   readonly mail: Prisma.FieldRef<"EmergencyContact", 'String'>
   readonly phoneNumber: Prisma.FieldRef<"EmergencyContact", 'String'>
-  readonly employeeId: Prisma.FieldRef<"EmergencyContact", 'Bytes'>
+  readonly employeeId: Prisma.FieldRef<"EmergencyContact", 'String'>
 }
     
 

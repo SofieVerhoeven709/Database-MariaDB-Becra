@@ -25,19 +25,19 @@ export type AggregateHourType = {
 }
 
 export type HourTypeMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
   info: string | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type HourTypeMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
   info: string | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type HourTypeCountAggregateOutputType = {
@@ -148,11 +148,11 @@ export type HourTypeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 export type HourTypeGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date
   info: string | null
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: HourTypeCountAggregateOutputType | null
   _min: HourTypeMinAggregateOutputType | null
   _max: HourTypeMaxAggregateOutputType | null
@@ -177,11 +177,11 @@ export type HourTypeWhereInput = {
   AND?: Prisma.HourTypeWhereInput | Prisma.HourTypeWhereInput[]
   OR?: Prisma.HourTypeWhereInput[]
   NOT?: Prisma.HourTypeWhereInput | Prisma.HourTypeWhereInput[]
-  id?: Prisma.BytesFilter<"HourType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"HourType"> | string
   name?: Prisma.StringFilter<"HourType"> | string
   createdAt?: Prisma.DateTimeFilter<"HourType"> | Date | string
   info?: Prisma.StringNullableFilter<"HourType"> | string | null
-  createdBy?: Prisma.BytesFilter<"HourType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"HourType"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TimeRegistry?: Prisma.TimeRegistryListRelationFilter
 }
@@ -198,14 +198,14 @@ export type HourTypeOrderByWithRelationInput = {
 }
 
 export type HourTypeWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.HourTypeWhereInput | Prisma.HourTypeWhereInput[]
   OR?: Prisma.HourTypeWhereInput[]
   NOT?: Prisma.HourTypeWhereInput | Prisma.HourTypeWhereInput[]
   name?: Prisma.StringFilter<"HourType"> | string
   createdAt?: Prisma.DateTimeFilter<"HourType"> | Date | string
   info?: Prisma.StringNullableFilter<"HourType"> | string | null
-  createdBy?: Prisma.BytesFilter<"HourType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"HourType"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TimeRegistry?: Prisma.TimeRegistryListRelationFilter
 }, "id">
@@ -225,15 +225,15 @@ export type HourTypeScalarWhereWithAggregatesInput = {
   AND?: Prisma.HourTypeScalarWhereWithAggregatesInput | Prisma.HourTypeScalarWhereWithAggregatesInput[]
   OR?: Prisma.HourTypeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.HourTypeScalarWhereWithAggregatesInput | Prisma.HourTypeScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"HourType"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"HourType"> | string
   name?: Prisma.StringWithAggregatesFilter<"HourType"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"HourType"> | Date | string
   info?: Prisma.StringNullableWithAggregatesFilter<"HourType"> | string | null
-  createdBy?: Prisma.BytesWithAggregatesFilter<"HourType"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"HourType"> | string
 }
 
 export type HourTypeCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   info?: string | null
@@ -242,16 +242,16 @@ export type HourTypeCreateInput = {
 }
 
 export type HourTypeUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   info?: string | null
-  createdBy: runtime.Bytes
+  createdBy: string
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutHourTypeInput
 }
 
 export type HourTypeUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -260,35 +260,35 @@ export type HourTypeUpdateInput = {
 }
 
 export type HourTypeUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutHourTypeNestedInput
 }
 
 export type HourTypeCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   info?: string | null
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type HourTypeUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type HourTypeUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type HourTypeListRelationFilter = {
@@ -393,7 +393,7 @@ export type HourTypeUpdateOneRequiredWithoutTimeRegistryNestedInput = {
 }
 
 export type HourTypeCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   info?: string | null
@@ -401,7 +401,7 @@ export type HourTypeCreateWithoutEmployeeInput = {
 }
 
 export type HourTypeUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   info?: string | null
@@ -438,15 +438,15 @@ export type HourTypeScalarWhereInput = {
   AND?: Prisma.HourTypeScalarWhereInput | Prisma.HourTypeScalarWhereInput[]
   OR?: Prisma.HourTypeScalarWhereInput[]
   NOT?: Prisma.HourTypeScalarWhereInput | Prisma.HourTypeScalarWhereInput[]
-  id?: Prisma.BytesFilter<"HourType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"HourType"> | string
   name?: Prisma.StringFilter<"HourType"> | string
   createdAt?: Prisma.DateTimeFilter<"HourType"> | Date | string
   info?: Prisma.StringNullableFilter<"HourType"> | string | null
-  createdBy?: Prisma.BytesFilter<"HourType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"HourType"> | string
 }
 
 export type HourTypeCreateWithoutTimeRegistryInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   info?: string | null
@@ -454,11 +454,11 @@ export type HourTypeCreateWithoutTimeRegistryInput = {
 }
 
 export type HourTypeUncheckedCreateWithoutTimeRegistryInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   info?: string | null
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type HourTypeCreateOrConnectWithoutTimeRegistryInput = {
@@ -478,7 +478,7 @@ export type HourTypeUpdateToOneWithWhereWithoutTimeRegistryInput = {
 }
 
 export type HourTypeUpdateWithoutTimeRegistryInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -486,22 +486,22 @@ export type HourTypeUpdateWithoutTimeRegistryInput = {
 }
 
 export type HourTypeUncheckedUpdateWithoutTimeRegistryInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type HourTypeCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   info?: string | null
 }
 
 export type HourTypeUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -509,7 +509,7 @@ export type HourTypeUpdateWithoutEmployeeInput = {
 }
 
 export type HourTypeUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -517,7 +517,7 @@ export type HourTypeUncheckedUpdateWithoutEmployeeInput = {
 }
 
 export type HourTypeUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -589,11 +589,11 @@ export type $HourTypePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     TimeRegistry: Prisma.$TimeRegistryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     createdAt: Date
     info: string | null
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["hourType"]>
   composites: {}
 }
@@ -965,11 +965,11 @@ export interface Prisma__HourTypeClient<T, Null = never, ExtArgs extends runtime
  * Fields of the HourType model
  */
 export interface HourTypeFieldRefs {
-  readonly id: Prisma.FieldRef<"HourType", 'Bytes'>
+  readonly id: Prisma.FieldRef<"HourType", 'String'>
   readonly name: Prisma.FieldRef<"HourType", 'String'>
   readonly createdAt: Prisma.FieldRef<"HourType", 'DateTime'>
   readonly info: Prisma.FieldRef<"HourType", 'String'>
-  readonly createdBy: Prisma.FieldRef<"HourType", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"HourType", 'String'>
 }
     
 

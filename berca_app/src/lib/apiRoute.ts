@@ -13,7 +13,6 @@ import {getLogger} from '@/lib/logger'
 import {validateJwtToken} from '@/lib/jwtUtils'
 import type {Role} from '@/generated/prisma/client'
 import {prismaClient} from '@/dal/prismaClient'
-import {binaryToUuid} from '@/lib/utils'
 
 const emptySchema = z.object({})
 type EmptySchema = ZodType<typeof emptySchema>
@@ -108,7 +107,7 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
       (!profile && authenticated) ||
       (profile && options.requiredRoles && !options.requiredRoles.includes(profile.Role_Employee_roleIdToRole!))
     ) {
-      logger.warn(`Unauthorized user ${binaryToUuid(profile!.id)} tried executing API Route.`)
+      logger.warn(`Unauthorized user ${profile!.id} tried executing API Route.`)
       return unauthorized()
     }
 

@@ -25,29 +25,29 @@ export type AggregateTrainingStandard = {
 }
 
 export type TrainingStandardMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   description: string | null
   descriptionShort: string | null
   location: string | null
   createdAt: Date | null
   certificate: boolean | null
   repeat: boolean | null
-  createdBy: runtime.Bytes | null
-  certificateId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  certificateId: string | null
+  targetId: string | null
 }
 
 export type TrainingStandardMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   description: string | null
   descriptionShort: string | null
   location: string | null
   createdAt: Date | null
   certificate: boolean | null
   repeat: boolean | null
-  createdBy: runtime.Bytes | null
-  certificateId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  certificateId: string | null
+  targetId: string | null
 }
 
 export type TrainingStandardCountAggregateOutputType = {
@@ -178,16 +178,16 @@ export type TrainingStandardGroupByArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 export type TrainingStandardGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   description: string | null
   descriptionShort: string | null
   location: string | null
   createdAt: Date
   certificate: boolean
   repeat: boolean
-  createdBy: runtime.Bytes
-  certificateId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  certificateId: string
+  targetId: string
   _count: TrainingStandardCountAggregateOutputType | null
   _min: TrainingStandardMinAggregateOutputType | null
   _max: TrainingStandardMaxAggregateOutputType | null
@@ -212,16 +212,16 @@ export type TrainingStandardWhereInput = {
   AND?: Prisma.TrainingStandardWhereInput | Prisma.TrainingStandardWhereInput[]
   OR?: Prisma.TrainingStandardWhereInput[]
   NOT?: Prisma.TrainingStandardWhereInput | Prisma.TrainingStandardWhereInput[]
-  id?: Prisma.BytesFilter<"TrainingStandard"> | runtime.Bytes
+  id?: Prisma.StringFilter<"TrainingStandard"> | string
   description?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   descriptionShort?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   location?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TrainingStandard"> | Date | string
   certificate?: Prisma.BoolFilter<"TrainingStandard"> | boolean
   repeat?: Prisma.BoolFilter<"TrainingStandard"> | boolean
-  createdBy?: Prisma.BytesFilter<"TrainingStandard"> | runtime.Bytes
-  certificateId?: Prisma.BytesFilter<"TrainingStandard"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"TrainingStandard"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"TrainingStandard"> | string
+  certificateId?: Prisma.StringFilter<"TrainingStandard"> | string
+  targetId?: Prisma.StringFilter<"TrainingStandard"> | string
   Training?: Prisma.TrainingListRelationFilter
   TrainingDocument?: Prisma.TrainingDocumentListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -249,7 +249,7 @@ export type TrainingStandardOrderByWithRelationInput = {
 }
 
 export type TrainingStandardWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.TrainingStandardWhereInput | Prisma.TrainingStandardWhereInput[]
   OR?: Prisma.TrainingStandardWhereInput[]
   NOT?: Prisma.TrainingStandardWhereInput | Prisma.TrainingStandardWhereInput[]
@@ -259,9 +259,9 @@ export type TrainingStandardWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"TrainingStandard"> | Date | string
   certificate?: Prisma.BoolFilter<"TrainingStandard"> | boolean
   repeat?: Prisma.BoolFilter<"TrainingStandard"> | boolean
-  createdBy?: Prisma.BytesFilter<"TrainingStandard"> | runtime.Bytes
-  certificateId?: Prisma.BytesFilter<"TrainingStandard"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"TrainingStandard"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"TrainingStandard"> | string
+  certificateId?: Prisma.StringFilter<"TrainingStandard"> | string
+  targetId?: Prisma.StringFilter<"TrainingStandard"> | string
   Training?: Prisma.TrainingListRelationFilter
   TrainingDocument?: Prisma.TrainingDocumentListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -289,20 +289,20 @@ export type TrainingStandardScalarWhereWithAggregatesInput = {
   AND?: Prisma.TrainingStandardScalarWhereWithAggregatesInput | Prisma.TrainingStandardScalarWhereWithAggregatesInput[]
   OR?: Prisma.TrainingStandardScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TrainingStandardScalarWhereWithAggregatesInput | Prisma.TrainingStandardScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"TrainingStandard"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"TrainingStandard"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"TrainingStandard"> | string | null
   descriptionShort?: Prisma.StringNullableWithAggregatesFilter<"TrainingStandard"> | string | null
   location?: Prisma.StringNullableWithAggregatesFilter<"TrainingStandard"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TrainingStandard"> | Date | string
   certificate?: Prisma.BoolWithAggregatesFilter<"TrainingStandard"> | boolean
   repeat?: Prisma.BoolWithAggregatesFilter<"TrainingStandard"> | boolean
-  createdBy?: Prisma.BytesWithAggregatesFilter<"TrainingStandard"> | runtime.Bytes
-  certificateId?: Prisma.BytesWithAggregatesFilter<"TrainingStandard"> | runtime.Bytes
-  targetId?: Prisma.BytesWithAggregatesFilter<"TrainingStandard"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"TrainingStandard"> | string
+  certificateId?: Prisma.StringWithAggregatesFilter<"TrainingStandard"> | string
+  targetId?: Prisma.StringWithAggregatesFilter<"TrainingStandard"> | string
 }
 
 export type TrainingStandardCreateInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
@@ -317,22 +317,22 @@ export type TrainingStandardCreateInput = {
 }
 
 export type TrainingStandardUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
-  createdBy: runtime.Bytes
-  certificateId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  certificateId: string
+  targetId: string
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
 
 export type TrainingStandardUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -347,35 +347,35 @@ export type TrainingStandardUpdateInput = {
 }
 
 export type TrainingStandardUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  certificateId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  certificateId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
 
 export type TrainingStandardCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
-  createdBy: runtime.Bytes
-  certificateId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  certificateId: string
+  targetId: string
 }
 
 export type TrainingStandardUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -385,16 +385,16 @@ export type TrainingStandardUpdateManyMutationInput = {
 }
 
 export type TrainingStandardUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  certificateId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  certificateId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingStandardListRelationFilter = {
@@ -612,7 +612,7 @@ export type TrainingStandardUpdateOneRequiredWithoutTrainingDocumentNestedInput 
 }
 
 export type TrainingStandardCreateWithoutCertificateInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
@@ -626,15 +626,15 @@ export type TrainingStandardCreateWithoutCertificateInput = {
 }
 
 export type TrainingStandardUncheckedCreateWithoutCertificateInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
-  createdBy: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  targetId: string
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -669,20 +669,20 @@ export type TrainingStandardScalarWhereInput = {
   AND?: Prisma.TrainingStandardScalarWhereInput | Prisma.TrainingStandardScalarWhereInput[]
   OR?: Prisma.TrainingStandardScalarWhereInput[]
   NOT?: Prisma.TrainingStandardScalarWhereInput | Prisma.TrainingStandardScalarWhereInput[]
-  id?: Prisma.BytesFilter<"TrainingStandard"> | runtime.Bytes
+  id?: Prisma.StringFilter<"TrainingStandard"> | string
   description?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   descriptionShort?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   location?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TrainingStandard"> | Date | string
   certificate?: Prisma.BoolFilter<"TrainingStandard"> | boolean
   repeat?: Prisma.BoolFilter<"TrainingStandard"> | boolean
-  createdBy?: Prisma.BytesFilter<"TrainingStandard"> | runtime.Bytes
-  certificateId?: Prisma.BytesFilter<"TrainingStandard"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"TrainingStandard"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"TrainingStandard"> | string
+  certificateId?: Prisma.StringFilter<"TrainingStandard"> | string
+  targetId?: Prisma.StringFilter<"TrainingStandard"> | string
 }
 
 export type TrainingStandardCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
@@ -696,15 +696,15 @@ export type TrainingStandardCreateWithoutEmployeeInput = {
 }
 
 export type TrainingStandardUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
-  certificateId: runtime.Bytes
-  targetId: runtime.Bytes
+  certificateId: string
+  targetId: string
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -736,7 +736,7 @@ export type TrainingStandardUpdateManyWithWhereWithoutEmployeeInput = {
 }
 
 export type TrainingStandardCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
@@ -750,15 +750,15 @@ export type TrainingStandardCreateWithoutTargetInput = {
 }
 
 export type TrainingStandardUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
-  createdBy: runtime.Bytes
-  certificateId: runtime.Bytes
+  createdBy: string
+  certificateId: string
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -790,7 +790,7 @@ export type TrainingStandardUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type TrainingStandardCreateWithoutTrainingInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
@@ -804,16 +804,16 @@ export type TrainingStandardCreateWithoutTrainingInput = {
 }
 
 export type TrainingStandardUncheckedCreateWithoutTrainingInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
-  createdBy: runtime.Bytes
-  certificateId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  certificateId: string
+  targetId: string
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
 
@@ -834,7 +834,7 @@ export type TrainingStandardUpdateToOneWithWhereWithoutTrainingInput = {
 }
 
 export type TrainingStandardUpdateWithoutTrainingInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -848,21 +848,21 @@ export type TrainingStandardUpdateWithoutTrainingInput = {
 }
 
 export type TrainingStandardUncheckedUpdateWithoutTrainingInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  certificateId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  certificateId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
 
 export type TrainingStandardCreateWithoutTrainingDocumentInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
@@ -876,16 +876,16 @@ export type TrainingStandardCreateWithoutTrainingDocumentInput = {
 }
 
 export type TrainingStandardUncheckedCreateWithoutTrainingDocumentInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
-  createdBy: runtime.Bytes
-  certificateId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  certificateId: string
+  targetId: string
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
 
@@ -906,7 +906,7 @@ export type TrainingStandardUpdateToOneWithWhereWithoutTrainingDocumentInput = {
 }
 
 export type TrainingStandardUpdateWithoutTrainingDocumentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -920,33 +920,33 @@ export type TrainingStandardUpdateWithoutTrainingDocumentInput = {
 }
 
 export type TrainingStandardUncheckedUpdateWithoutTrainingDocumentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  certificateId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  certificateId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
 
 export type TrainingStandardCreateManyCertificateInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
-  createdBy: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  targetId: string
 }
 
 export type TrainingStandardUpdateWithoutCertificateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -960,45 +960,45 @@ export type TrainingStandardUpdateWithoutCertificateInput = {
 }
 
 export type TrainingStandardUncheckedUpdateWithoutCertificateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
 
 export type TrainingStandardUncheckedUpdateManyWithoutCertificateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingStandardCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
-  certificateId: runtime.Bytes
-  targetId: runtime.Bytes
+  certificateId: string
+  targetId: string
 }
 
 export type TrainingStandardUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1012,45 +1012,45 @@ export type TrainingStandardUpdateWithoutEmployeeInput = {
 }
 
 export type TrainingStandardUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  certificateId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  certificateId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
 
 export type TrainingStandardUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  certificateId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  certificateId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingStandardCreateManyTargetInput = {
-  id: runtime.Bytes
+  id: string
   description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
-  createdBy: runtime.Bytes
-  certificateId: runtime.Bytes
+  createdBy: string
+  certificateId: string
 }
 
 export type TrainingStandardUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1064,29 +1064,29 @@ export type TrainingStandardUpdateWithoutTargetInput = {
 }
 
 export type TrainingStandardUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  certificateId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  certificateId?: Prisma.StringFieldUpdateOperationsInput | string
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
 
 export type TrainingStandardUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  certificateId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  certificateId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -1183,16 +1183,16 @@ export type $TrainingStandardPayload<ExtArgs extends runtime.Types.Extensions.In
     Target: Prisma.$TargetPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     description: string | null
     descriptionShort: string | null
     location: string | null
     createdAt: Date
     certificate: boolean
     repeat: boolean
-    createdBy: runtime.Bytes
-    certificateId: runtime.Bytes
-    targetId: runtime.Bytes
+    createdBy: string
+    certificateId: string
+    targetId: string
   }, ExtArgs["result"]["trainingStandard"]>
   composites: {}
 }
@@ -1567,16 +1567,16 @@ export interface Prisma__TrainingStandardClient<T, Null = never, ExtArgs extends
  * Fields of the TrainingStandard model
  */
 export interface TrainingStandardFieldRefs {
-  readonly id: Prisma.FieldRef<"TrainingStandard", 'Bytes'>
+  readonly id: Prisma.FieldRef<"TrainingStandard", 'String'>
   readonly description: Prisma.FieldRef<"TrainingStandard", 'String'>
   readonly descriptionShort: Prisma.FieldRef<"TrainingStandard", 'String'>
   readonly location: Prisma.FieldRef<"TrainingStandard", 'String'>
   readonly createdAt: Prisma.FieldRef<"TrainingStandard", 'DateTime'>
   readonly certificate: Prisma.FieldRef<"TrainingStandard", 'Boolean'>
   readonly repeat: Prisma.FieldRef<"TrainingStandard", 'Boolean'>
-  readonly createdBy: Prisma.FieldRef<"TrainingStandard", 'Bytes'>
-  readonly certificateId: Prisma.FieldRef<"TrainingStandard", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"TrainingStandard", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"TrainingStandard", 'String'>
+  readonly certificateId: Prisma.FieldRef<"TrainingStandard", 'String'>
+  readonly targetId: Prisma.FieldRef<"TrainingStandard", 'String'>
 }
     
 

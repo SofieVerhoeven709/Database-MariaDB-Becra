@@ -25,17 +25,17 @@ export type AggregateTitle = {
 }
 
 export type TitleMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type TitleMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type TitleCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type TitleGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 export type TitleGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: TitleCountAggregateOutputType | null
   _min: TitleMinAggregateOutputType | null
   _max: TitleMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type TitleWhereInput = {
   AND?: Prisma.TitleWhereInput | Prisma.TitleWhereInput[]
   OR?: Prisma.TitleWhereInput[]
   NOT?: Prisma.TitleWhereInput | Prisma.TitleWhereInput[]
-  id?: Prisma.BytesFilter<"Title"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Title"> | string
   name?: Prisma.StringFilter<"Title"> | string
   createdAt?: Prisma.DateTimeFilter<"Title"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Title"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Title"> | string
   Contact?: Prisma.ContactListRelationFilter
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeListRelationFilter
   Employee_Title_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -191,13 +191,13 @@ export type TitleOrderByWithRelationInput = {
 }
 
 export type TitleWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.TitleWhereInput | Prisma.TitleWhereInput[]
   OR?: Prisma.TitleWhereInput[]
   NOT?: Prisma.TitleWhereInput | Prisma.TitleWhereInput[]
   name?: Prisma.StringFilter<"Title"> | string
   createdAt?: Prisma.DateTimeFilter<"Title"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Title"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Title"> | string
   Contact?: Prisma.ContactListRelationFilter
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeListRelationFilter
   Employee_Title_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -217,14 +217,14 @@ export type TitleScalarWhereWithAggregatesInput = {
   AND?: Prisma.TitleScalarWhereWithAggregatesInput | Prisma.TitleScalarWhereWithAggregatesInput[]
   OR?: Prisma.TitleScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TitleScalarWhereWithAggregatesInput | Prisma.TitleScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Title"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Title"> | string
   name?: Prisma.StringWithAggregatesFilter<"Title"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Title"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"Title"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"Title"> | string
 }
 
 export type TitleCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactCreateNestedManyWithoutTitleInput
@@ -233,16 +233,16 @@ export type TitleCreateInput = {
 }
 
 export type TitleUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTitleInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
 }
 
 export type TitleUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUpdateManyWithoutTitleNestedInput
@@ -251,32 +251,32 @@ export type TitleUpdateInput = {
 }
 
 export type TitleUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTitleNestedInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedUpdateManyWithoutTitle_Employee_titleIdToTitleNestedInput
 }
 
 export type TitleCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type TitleUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TitleUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TitleNullableScalarRelationFilter = {
@@ -396,7 +396,7 @@ export type TitleUncheckedUpdateManyWithoutEmployee_Title_createdByToEmployeeNes
 }
 
 export type TitleCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
@@ -404,10 +404,10 @@ export type TitleCreateWithoutContactInput = {
 }
 
 export type TitleUncheckedCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
 }
 
@@ -428,7 +428,7 @@ export type TitleUpdateToOneWithWhereWithoutContactInput = {
 }
 
 export type TitleUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUpdateManyWithoutTitle_Employee_titleIdToTitleNestedInput
@@ -436,15 +436,15 @@ export type TitleUpdateWithoutContactInput = {
 }
 
 export type TitleUncheckedUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedUpdateManyWithoutTitle_Employee_titleIdToTitleNestedInput
 }
 
 export type TitleCreateWithoutEmployee_Employee_titleIdToTitleInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactCreateNestedManyWithoutTitleInput
@@ -452,10 +452,10 @@ export type TitleCreateWithoutEmployee_Employee_titleIdToTitleInput = {
 }
 
 export type TitleUncheckedCreateWithoutEmployee_Employee_titleIdToTitleInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTitleInput
 }
 
@@ -465,7 +465,7 @@ export type TitleCreateOrConnectWithoutEmployee_Employee_titleIdToTitleInput = {
 }
 
 export type TitleCreateWithoutEmployee_Title_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactCreateNestedManyWithoutTitleInput
@@ -473,7 +473,7 @@ export type TitleCreateWithoutEmployee_Title_createdByToEmployeeInput = {
 }
 
 export type TitleUncheckedCreateWithoutEmployee_Title_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTitleInput
@@ -502,7 +502,7 @@ export type TitleUpdateToOneWithWhereWithoutEmployee_Employee_titleIdToTitleInpu
 }
 
 export type TitleUpdateWithoutEmployee_Employee_titleIdToTitleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUpdateManyWithoutTitleNestedInput
@@ -510,10 +510,10 @@ export type TitleUpdateWithoutEmployee_Employee_titleIdToTitleInput = {
 }
 
 export type TitleUncheckedUpdateWithoutEmployee_Employee_titleIdToTitleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTitleNestedInput
 }
 
@@ -537,20 +537,20 @@ export type TitleScalarWhereInput = {
   AND?: Prisma.TitleScalarWhereInput | Prisma.TitleScalarWhereInput[]
   OR?: Prisma.TitleScalarWhereInput[]
   NOT?: Prisma.TitleScalarWhereInput | Prisma.TitleScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Title"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Title"> | string
   name?: Prisma.StringFilter<"Title"> | string
   createdAt?: Prisma.DateTimeFilter<"Title"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Title"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Title"> | string
 }
 
 export type TitleCreateManyEmployee_Title_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
 }
 
 export type TitleUpdateWithoutEmployee_Title_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUpdateManyWithoutTitleNestedInput
@@ -558,7 +558,7 @@ export type TitleUpdateWithoutEmployee_Title_createdByToEmployeeInput = {
 }
 
 export type TitleUncheckedUpdateWithoutEmployee_Title_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTitleNestedInput
@@ -566,7 +566,7 @@ export type TitleUncheckedUpdateWithoutEmployee_Title_createdByToEmployeeInput =
 }
 
 export type TitleUncheckedUpdateManyWithoutEmployee_Title_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -647,10 +647,10 @@ export type $TitlePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     Employee_Title_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     createdAt: Date
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["title"]>
   composites: {}
 }
@@ -1023,10 +1023,10 @@ export interface Prisma__TitleClient<T, Null = never, ExtArgs extends runtime.Ty
  * Fields of the Title model
  */
 export interface TitleFieldRefs {
-  readonly id: Prisma.FieldRef<"Title", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Title", 'String'>
   readonly name: Prisma.FieldRef<"Title", 'String'>
   readonly createdAt: Prisma.FieldRef<"Title", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"Title", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"Title", 'String'>
 }
     
 

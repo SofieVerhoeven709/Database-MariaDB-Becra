@@ -25,15 +25,15 @@ export type AggregateTrainingDocument = {
 }
 
 export type TrainingDocumentMinAggregateOutputType = {
-  id: runtime.Bytes | null
-  documentId: runtime.Bytes | null
-  trainingStandardId: runtime.Bytes | null
+  id: string | null
+  documentId: string | null
+  trainingStandardId: string | null
 }
 
 export type TrainingDocumentMaxAggregateOutputType = {
-  id: runtime.Bytes | null
-  documentId: runtime.Bytes | null
-  trainingStandardId: runtime.Bytes | null
+  id: string | null
+  documentId: string | null
+  trainingStandardId: string | null
 }
 
 export type TrainingDocumentCountAggregateOutputType = {
@@ -136,9 +136,9 @@ export type TrainingDocumentGroupByArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 export type TrainingDocumentGroupByOutputType = {
-  id: runtime.Bytes
-  documentId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
+  id: string
+  documentId: string
+  trainingStandardId: string
   _count: TrainingDocumentCountAggregateOutputType | null
   _min: TrainingDocumentMinAggregateOutputType | null
   _max: TrainingDocumentMaxAggregateOutputType | null
@@ -163,9 +163,9 @@ export type TrainingDocumentWhereInput = {
   AND?: Prisma.TrainingDocumentWhereInput | Prisma.TrainingDocumentWhereInput[]
   OR?: Prisma.TrainingDocumentWhereInput[]
   NOT?: Prisma.TrainingDocumentWhereInput | Prisma.TrainingDocumentWhereInput[]
-  id?: Prisma.BytesFilter<"TrainingDocument"> | runtime.Bytes
-  documentId?: Prisma.BytesFilter<"TrainingDocument"> | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFilter<"TrainingDocument"> | runtime.Bytes
+  id?: Prisma.StringFilter<"TrainingDocument"> | string
+  documentId?: Prisma.StringFilter<"TrainingDocument"> | string
+  trainingStandardId?: Prisma.StringFilter<"TrainingDocument"> | string
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureScalarRelationFilter, Prisma.DocumentStructureWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
 }
@@ -176,15 +176,16 @@ export type TrainingDocumentOrderByWithRelationInput = {
   trainingStandardId?: Prisma.SortOrder
   DocumentStructure?: Prisma.DocumentStructureOrderByWithRelationInput
   TrainingStandard?: Prisma.TrainingStandardOrderByWithRelationInput
+  _relevance?: Prisma.TrainingDocumentOrderByRelevanceInput
 }
 
 export type TrainingDocumentWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.TrainingDocumentWhereInput | Prisma.TrainingDocumentWhereInput[]
   OR?: Prisma.TrainingDocumentWhereInput[]
   NOT?: Prisma.TrainingDocumentWhereInput | Prisma.TrainingDocumentWhereInput[]
-  documentId?: Prisma.BytesFilter<"TrainingDocument"> | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFilter<"TrainingDocument"> | runtime.Bytes
+  documentId?: Prisma.StringFilter<"TrainingDocument"> | string
+  trainingStandardId?: Prisma.StringFilter<"TrainingDocument"> | string
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureScalarRelationFilter, Prisma.DocumentStructureWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
 }, "id">
@@ -202,49 +203,49 @@ export type TrainingDocumentScalarWhereWithAggregatesInput = {
   AND?: Prisma.TrainingDocumentScalarWhereWithAggregatesInput | Prisma.TrainingDocumentScalarWhereWithAggregatesInput[]
   OR?: Prisma.TrainingDocumentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TrainingDocumentScalarWhereWithAggregatesInput | Prisma.TrainingDocumentScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"TrainingDocument"> | runtime.Bytes
-  documentId?: Prisma.BytesWithAggregatesFilter<"TrainingDocument"> | runtime.Bytes
-  trainingStandardId?: Prisma.BytesWithAggregatesFilter<"TrainingDocument"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"TrainingDocument"> | string
+  documentId?: Prisma.StringWithAggregatesFilter<"TrainingDocument"> | string
+  trainingStandardId?: Prisma.StringWithAggregatesFilter<"TrainingDocument"> | string
 }
 
 export type TrainingDocumentCreateInput = {
-  id: runtime.Bytes
+  id: string
   DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutTrainingDocumentInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingDocumentInput
 }
 
 export type TrainingDocumentUncheckedCreateInput = {
-  id: runtime.Bytes
-  documentId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
+  id: string
+  documentId: string
+  trainingStandardId: string
 }
 
 export type TrainingDocumentUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutTrainingDocumentNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingDocumentNestedInput
 }
 
 export type TrainingDocumentUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingDocumentCreateManyInput = {
-  id: runtime.Bytes
-  documentId: runtime.Bytes
-  trainingStandardId: runtime.Bytes
+  id: string
+  documentId: string
+  trainingStandardId: string
 }
 
 export type TrainingDocumentUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingDocumentUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingDocumentListRelationFilter = {
@@ -255,6 +256,12 @@ export type TrainingDocumentListRelationFilter = {
 
 export type TrainingDocumentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type TrainingDocumentOrderByRelevanceInput = {
+  fields: Prisma.TrainingDocumentOrderByRelevanceFieldEnum | Prisma.TrainingDocumentOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type TrainingDocumentCountOrderByAggregateInput = {
@@ -360,13 +367,13 @@ export type TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInpu
 }
 
 export type TrainingDocumentCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingDocumentInput
 }
 
 export type TrainingDocumentUncheckedCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
-  trainingStandardId: runtime.Bytes
+  id: string
+  trainingStandardId: string
 }
 
 export type TrainingDocumentCreateOrConnectWithoutDocumentStructureInput = {
@@ -399,19 +406,19 @@ export type TrainingDocumentScalarWhereInput = {
   AND?: Prisma.TrainingDocumentScalarWhereInput | Prisma.TrainingDocumentScalarWhereInput[]
   OR?: Prisma.TrainingDocumentScalarWhereInput[]
   NOT?: Prisma.TrainingDocumentScalarWhereInput | Prisma.TrainingDocumentScalarWhereInput[]
-  id?: Prisma.BytesFilter<"TrainingDocument"> | runtime.Bytes
-  documentId?: Prisma.BytesFilter<"TrainingDocument"> | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFilter<"TrainingDocument"> | runtime.Bytes
+  id?: Prisma.StringFilter<"TrainingDocument"> | string
+  documentId?: Prisma.StringFilter<"TrainingDocument"> | string
+  trainingStandardId?: Prisma.StringFilter<"TrainingDocument"> | string
 }
 
 export type TrainingDocumentCreateWithoutTrainingStandardInput = {
-  id: runtime.Bytes
+  id: string
   DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutTrainingDocumentInput
 }
 
 export type TrainingDocumentUncheckedCreateWithoutTrainingStandardInput = {
-  id: runtime.Bytes
-  documentId: runtime.Bytes
+  id: string
+  documentId: string
 }
 
 export type TrainingDocumentCreateOrConnectWithoutTrainingStandardInput = {
@@ -441,43 +448,43 @@ export type TrainingDocumentUpdateManyWithWhereWithoutTrainingStandardInput = {
 }
 
 export type TrainingDocumentCreateManyDocumentStructureInput = {
-  id: runtime.Bytes
-  trainingStandardId: runtime.Bytes
+  id: string
+  trainingStandardId: string
 }
 
 export type TrainingDocumentUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingDocumentNestedInput
 }
 
 export type TrainingDocumentUncheckedUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingDocumentUncheckedUpdateManyWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingStandardId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingDocumentCreateManyTrainingStandardInput = {
-  id: runtime.Bytes
-  documentId: runtime.Bytes
+  id: string
+  documentId: string
 }
 
 export type TrainingDocumentUpdateWithoutTrainingStandardInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutTrainingDocumentNestedInput
 }
 
 export type TrainingDocumentUncheckedUpdateWithoutTrainingStandardInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -511,9 +518,9 @@ export type $TrainingDocumentPayload<ExtArgs extends runtime.Types.Extensions.In
     TrainingStandard: Prisma.$TrainingStandardPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
-    documentId: runtime.Bytes
-    trainingStandardId: runtime.Bytes
+    id: string
+    documentId: string
+    trainingStandardId: string
   }, ExtArgs["result"]["trainingDocument"]>
   composites: {}
 }
@@ -885,9 +892,9 @@ export interface Prisma__TrainingDocumentClient<T, Null = never, ExtArgs extends
  * Fields of the TrainingDocument model
  */
 export interface TrainingDocumentFieldRefs {
-  readonly id: Prisma.FieldRef<"TrainingDocument", 'Bytes'>
-  readonly documentId: Prisma.FieldRef<"TrainingDocument", 'Bytes'>
-  readonly trainingStandardId: Prisma.FieldRef<"TrainingDocument", 'Bytes'>
+  readonly id: Prisma.FieldRef<"TrainingDocument", 'String'>
+  readonly documentId: Prisma.FieldRef<"TrainingDocument", 'String'>
+  readonly trainingStandardId: Prisma.FieldRef<"TrainingDocument", 'String'>
 }
     
 

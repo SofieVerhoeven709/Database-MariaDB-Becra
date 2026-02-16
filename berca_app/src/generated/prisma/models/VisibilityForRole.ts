@@ -25,17 +25,17 @@ export type AggregateVisibilityForRole = {
 }
 
 export type VisibilityForRoleMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   visible: boolean | null
-  roleId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  roleId: string | null
+  targetId: string | null
 }
 
 export type VisibilityForRoleMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   visible: boolean | null
-  roleId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  roleId: string | null
+  targetId: string | null
 }
 
 export type VisibilityForRoleCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type VisibilityForRoleGroupByArgs<ExtArgs extends runtime.Types.Extension
 }
 
 export type VisibilityForRoleGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   visible: boolean
-  roleId: runtime.Bytes
-  targetId: runtime.Bytes
+  roleId: string
+  targetId: string
   _count: VisibilityForRoleCountAggregateOutputType | null
   _min: VisibilityForRoleMinAggregateOutputType | null
   _max: VisibilityForRoleMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type VisibilityForRoleWhereInput = {
   AND?: Prisma.VisibilityForRoleWhereInput | Prisma.VisibilityForRoleWhereInput[]
   OR?: Prisma.VisibilityForRoleWhereInput[]
   NOT?: Prisma.VisibilityForRoleWhereInput | Prisma.VisibilityForRoleWhereInput[]
-  id?: Prisma.BytesFilter<"VisibilityForRole"> | runtime.Bytes
+  id?: Prisma.StringFilter<"VisibilityForRole"> | string
   visible?: Prisma.BoolFilter<"VisibilityForRole"> | boolean
-  roleId?: Prisma.BytesFilter<"VisibilityForRole"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"VisibilityForRole"> | runtime.Bytes
+  roleId?: Prisma.StringFilter<"VisibilityForRole"> | string
+  targetId?: Prisma.StringFilter<"VisibilityForRole"> | string
   Role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
 }
@@ -185,16 +185,17 @@ export type VisibilityForRoleOrderByWithRelationInput = {
   targetId?: Prisma.SortOrder
   Role?: Prisma.RoleOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  _relevance?: Prisma.VisibilityForRoleOrderByRelevanceInput
 }
 
 export type VisibilityForRoleWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.VisibilityForRoleWhereInput | Prisma.VisibilityForRoleWhereInput[]
   OR?: Prisma.VisibilityForRoleWhereInput[]
   NOT?: Prisma.VisibilityForRoleWhereInput | Prisma.VisibilityForRoleWhereInput[]
   visible?: Prisma.BoolFilter<"VisibilityForRole"> | boolean
-  roleId?: Prisma.BytesFilter<"VisibilityForRole"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"VisibilityForRole"> | runtime.Bytes
+  roleId?: Prisma.StringFilter<"VisibilityForRole"> | string
+  targetId?: Prisma.StringFilter<"VisibilityForRole"> | string
   Role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
 }, "id">
@@ -213,57 +214,57 @@ export type VisibilityForRoleScalarWhereWithAggregatesInput = {
   AND?: Prisma.VisibilityForRoleScalarWhereWithAggregatesInput | Prisma.VisibilityForRoleScalarWhereWithAggregatesInput[]
   OR?: Prisma.VisibilityForRoleScalarWhereWithAggregatesInput[]
   NOT?: Prisma.VisibilityForRoleScalarWhereWithAggregatesInput | Prisma.VisibilityForRoleScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"VisibilityForRole"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"VisibilityForRole"> | string
   visible?: Prisma.BoolWithAggregatesFilter<"VisibilityForRole"> | boolean
-  roleId?: Prisma.BytesWithAggregatesFilter<"VisibilityForRole"> | runtime.Bytes
-  targetId?: Prisma.BytesWithAggregatesFilter<"VisibilityForRole"> | runtime.Bytes
+  roleId?: Prisma.StringWithAggregatesFilter<"VisibilityForRole"> | string
+  targetId?: Prisma.StringWithAggregatesFilter<"VisibilityForRole"> | string
 }
 
 export type VisibilityForRoleCreateInput = {
-  id: runtime.Bytes
+  id: string
   visible?: boolean
   Role: Prisma.RoleCreateNestedOneWithoutVisibilityForRoleInput
   Target: Prisma.TargetCreateNestedOneWithoutVisibilityForRoleInput
 }
 
 export type VisibilityForRoleUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   visible?: boolean
-  roleId: runtime.Bytes
-  targetId: runtime.Bytes
+  roleId: string
+  targetId: string
 }
 
 export type VisibilityForRoleUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Role?: Prisma.RoleUpdateOneRequiredWithoutVisibilityForRoleNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutVisibilityForRoleNestedInput
 }
 
 export type VisibilityForRoleUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roleId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type VisibilityForRoleCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   visible?: boolean
-  roleId: runtime.Bytes
-  targetId: runtime.Bytes
+  roleId: string
+  targetId: string
 }
 
 export type VisibilityForRoleUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type VisibilityForRoleUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roleId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type VisibilityForRoleListRelationFilter = {
@@ -274,6 +275,12 @@ export type VisibilityForRoleListRelationFilter = {
 
 export type VisibilityForRoleOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type VisibilityForRoleOrderByRelevanceInput = {
+  fields: Prisma.VisibilityForRoleOrderByRelevanceFieldEnum | Prisma.VisibilityForRoleOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type VisibilityForRoleCountOrderByAggregateInput = {
@@ -382,15 +389,15 @@ export type VisibilityForRoleUncheckedUpdateManyWithoutTargetNestedInput = {
 }
 
 export type VisibilityForRoleCreateWithoutRoleInput = {
-  id: runtime.Bytes
+  id: string
   visible?: boolean
   Target: Prisma.TargetCreateNestedOneWithoutVisibilityForRoleInput
 }
 
 export type VisibilityForRoleUncheckedCreateWithoutRoleInput = {
-  id: runtime.Bytes
+  id: string
   visible?: boolean
-  targetId: runtime.Bytes
+  targetId: string
 }
 
 export type VisibilityForRoleCreateOrConnectWithoutRoleInput = {
@@ -423,22 +430,22 @@ export type VisibilityForRoleScalarWhereInput = {
   AND?: Prisma.VisibilityForRoleScalarWhereInput | Prisma.VisibilityForRoleScalarWhereInput[]
   OR?: Prisma.VisibilityForRoleScalarWhereInput[]
   NOT?: Prisma.VisibilityForRoleScalarWhereInput | Prisma.VisibilityForRoleScalarWhereInput[]
-  id?: Prisma.BytesFilter<"VisibilityForRole"> | runtime.Bytes
+  id?: Prisma.StringFilter<"VisibilityForRole"> | string
   visible?: Prisma.BoolFilter<"VisibilityForRole"> | boolean
-  roleId?: Prisma.BytesFilter<"VisibilityForRole"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"VisibilityForRole"> | runtime.Bytes
+  roleId?: Prisma.StringFilter<"VisibilityForRole"> | string
+  targetId?: Prisma.StringFilter<"VisibilityForRole"> | string
 }
 
 export type VisibilityForRoleCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   visible?: boolean
   Role: Prisma.RoleCreateNestedOneWithoutVisibilityForRoleInput
 }
 
 export type VisibilityForRoleUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   visible?: boolean
-  roleId: runtime.Bytes
+  roleId: string
 }
 
 export type VisibilityForRoleCreateOrConnectWithoutTargetInput = {
@@ -468,51 +475,51 @@ export type VisibilityForRoleUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type VisibilityForRoleCreateManyRoleInput = {
-  id: runtime.Bytes
+  id: string
   visible?: boolean
-  targetId: runtime.Bytes
+  targetId: string
 }
 
 export type VisibilityForRoleUpdateWithoutRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Target?: Prisma.TargetUpdateOneRequiredWithoutVisibilityForRoleNestedInput
 }
 
 export type VisibilityForRoleUncheckedUpdateWithoutRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type VisibilityForRoleUncheckedUpdateManyWithoutRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type VisibilityForRoleCreateManyTargetInput = {
-  id: runtime.Bytes
+  id: string
   visible?: boolean
-  roleId: runtime.Bytes
+  roleId: string
 }
 
 export type VisibilityForRoleUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Role?: Prisma.RoleUpdateOneRequiredWithoutVisibilityForRoleNestedInput
 }
 
 export type VisibilityForRoleUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roleId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type VisibilityForRoleUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roleId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -548,10 +555,10 @@ export type $VisibilityForRolePayload<ExtArgs extends runtime.Types.Extensions.I
     Target: Prisma.$TargetPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     visible: boolean
-    roleId: runtime.Bytes
-    targetId: runtime.Bytes
+    roleId: string
+    targetId: string
   }, ExtArgs["result"]["visibilityForRole"]>
   composites: {}
 }
@@ -923,10 +930,10 @@ export interface Prisma__VisibilityForRoleClient<T, Null = never, ExtArgs extend
  * Fields of the VisibilityForRole model
  */
 export interface VisibilityForRoleFieldRefs {
-  readonly id: Prisma.FieldRef<"VisibilityForRole", 'Bytes'>
+  readonly id: Prisma.FieldRef<"VisibilityForRole", 'String'>
   readonly visible: Prisma.FieldRef<"VisibilityForRole", 'Boolean'>
-  readonly roleId: Prisma.FieldRef<"VisibilityForRole", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"VisibilityForRole", 'Bytes'>
+  readonly roleId: Prisma.FieldRef<"VisibilityForRole", 'String'>
+  readonly targetId: Prisma.FieldRef<"VisibilityForRole", 'String'>
 }
     
 

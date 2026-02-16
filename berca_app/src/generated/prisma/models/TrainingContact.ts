@@ -25,29 +25,29 @@ export type AggregateTrainingContact = {
 }
 
 export type TrainingContactMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   clientNumber: string | null
   certSentDate: Date | null
   createdAt: Date | null
   succeeded: boolean | null
   attended: boolean | null
   certificateSent: boolean | null
-  createdBy: runtime.Bytes | null
-  contactId: runtime.Bytes | null
-  trainingId: runtime.Bytes | null
+  createdBy: string | null
+  contactId: string | null
+  trainingId: string | null
 }
 
 export type TrainingContactMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   clientNumber: string | null
   certSentDate: Date | null
   createdAt: Date | null
   succeeded: boolean | null
   attended: boolean | null
   certificateSent: boolean | null
-  createdBy: runtime.Bytes | null
-  contactId: runtime.Bytes | null
-  trainingId: runtime.Bytes | null
+  createdBy: string | null
+  contactId: string | null
+  trainingId: string | null
 }
 
 export type TrainingContactCountAggregateOutputType = {
@@ -178,16 +178,16 @@ export type TrainingContactGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 export type TrainingContactGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   clientNumber: string | null
   certSentDate: Date | null
   createdAt: Date
   succeeded: boolean
   attended: boolean
   certificateSent: boolean
-  createdBy: runtime.Bytes
-  contactId: runtime.Bytes
-  trainingId: runtime.Bytes
+  createdBy: string
+  contactId: string
+  trainingId: string
   _count: TrainingContactCountAggregateOutputType | null
   _min: TrainingContactMinAggregateOutputType | null
   _max: TrainingContactMaxAggregateOutputType | null
@@ -212,16 +212,16 @@ export type TrainingContactWhereInput = {
   AND?: Prisma.TrainingContactWhereInput | Prisma.TrainingContactWhereInput[]
   OR?: Prisma.TrainingContactWhereInput[]
   NOT?: Prisma.TrainingContactWhereInput | Prisma.TrainingContactWhereInput[]
-  id?: Prisma.BytesFilter<"TrainingContact"> | runtime.Bytes
+  id?: Prisma.StringFilter<"TrainingContact"> | string
   clientNumber?: Prisma.StringNullableFilter<"TrainingContact"> | string | null
   certSentDate?: Prisma.DateTimeNullableFilter<"TrainingContact"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TrainingContact"> | Date | string
   succeeded?: Prisma.BoolFilter<"TrainingContact"> | boolean
   attended?: Prisma.BoolFilter<"TrainingContact"> | boolean
   certificateSent?: Prisma.BoolFilter<"TrainingContact"> | boolean
-  createdBy?: Prisma.BytesFilter<"TrainingContact"> | runtime.Bytes
-  contactId?: Prisma.BytesFilter<"TrainingContact"> | runtime.Bytes
-  trainingId?: Prisma.BytesFilter<"TrainingContact"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"TrainingContact"> | string
+  contactId?: Prisma.StringFilter<"TrainingContact"> | string
+  trainingId?: Prisma.StringFilter<"TrainingContact"> | string
   Contact?: Prisma.XOR<Prisma.ContactScalarRelationFilter, Prisma.ContactWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Training?: Prisma.XOR<Prisma.TrainingScalarRelationFilter, Prisma.TrainingWhereInput>
@@ -245,7 +245,7 @@ export type TrainingContactOrderByWithRelationInput = {
 }
 
 export type TrainingContactWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.TrainingContactWhereInput | Prisma.TrainingContactWhereInput[]
   OR?: Prisma.TrainingContactWhereInput[]
   NOT?: Prisma.TrainingContactWhereInput | Prisma.TrainingContactWhereInput[]
@@ -255,9 +255,9 @@ export type TrainingContactWhereUniqueInput = Prisma.AtLeast<{
   succeeded?: Prisma.BoolFilter<"TrainingContact"> | boolean
   attended?: Prisma.BoolFilter<"TrainingContact"> | boolean
   certificateSent?: Prisma.BoolFilter<"TrainingContact"> | boolean
-  createdBy?: Prisma.BytesFilter<"TrainingContact"> | runtime.Bytes
-  contactId?: Prisma.BytesFilter<"TrainingContact"> | runtime.Bytes
-  trainingId?: Prisma.BytesFilter<"TrainingContact"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"TrainingContact"> | string
+  contactId?: Prisma.StringFilter<"TrainingContact"> | string
+  trainingId?: Prisma.StringFilter<"TrainingContact"> | string
   Contact?: Prisma.XOR<Prisma.ContactScalarRelationFilter, Prisma.ContactWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Training?: Prisma.XOR<Prisma.TrainingScalarRelationFilter, Prisma.TrainingWhereInput>
@@ -283,20 +283,20 @@ export type TrainingContactScalarWhereWithAggregatesInput = {
   AND?: Prisma.TrainingContactScalarWhereWithAggregatesInput | Prisma.TrainingContactScalarWhereWithAggregatesInput[]
   OR?: Prisma.TrainingContactScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TrainingContactScalarWhereWithAggregatesInput | Prisma.TrainingContactScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"TrainingContact"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"TrainingContact"> | string
   clientNumber?: Prisma.StringNullableWithAggregatesFilter<"TrainingContact"> | string | null
   certSentDate?: Prisma.DateTimeNullableWithAggregatesFilter<"TrainingContact"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TrainingContact"> | Date | string
   succeeded?: Prisma.BoolWithAggregatesFilter<"TrainingContact"> | boolean
   attended?: Prisma.BoolWithAggregatesFilter<"TrainingContact"> | boolean
   certificateSent?: Prisma.BoolWithAggregatesFilter<"TrainingContact"> | boolean
-  createdBy?: Prisma.BytesWithAggregatesFilter<"TrainingContact"> | runtime.Bytes
-  contactId?: Prisma.BytesWithAggregatesFilter<"TrainingContact"> | runtime.Bytes
-  trainingId?: Prisma.BytesWithAggregatesFilter<"TrainingContact"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"TrainingContact"> | string
+  contactId?: Prisma.StringWithAggregatesFilter<"TrainingContact"> | string
+  trainingId?: Prisma.StringWithAggregatesFilter<"TrainingContact"> | string
 }
 
 export type TrainingContactCreateInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
@@ -309,20 +309,20 @@ export type TrainingContactCreateInput = {
 }
 
 export type TrainingContactUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
   succeeded?: boolean
   attended?: boolean
   certificateSent?: boolean
-  createdBy: runtime.Bytes
-  contactId: runtime.Bytes
-  trainingId: runtime.Bytes
+  createdBy: string
+  contactId: string
+  trainingId: string
 }
 
 export type TrainingContactUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -335,33 +335,33 @@ export type TrainingContactUpdateInput = {
 }
 
 export type TrainingContactUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   succeeded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingContactCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
   succeeded?: boolean
   attended?: boolean
   certificateSent?: boolean
-  createdBy: runtime.Bytes
-  contactId: runtime.Bytes
-  trainingId: runtime.Bytes
+  createdBy: string
+  contactId: string
+  trainingId: string
 }
 
 export type TrainingContactUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -371,16 +371,16 @@ export type TrainingContactUpdateManyMutationInput = {
 }
 
 export type TrainingContactUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   succeeded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingContactListRelationFilter = {
@@ -565,7 +565,7 @@ export type TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput = {
 }
 
 export type TrainingContactCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
@@ -577,15 +577,15 @@ export type TrainingContactCreateWithoutContactInput = {
 }
 
 export type TrainingContactUncheckedCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
   succeeded?: boolean
   attended?: boolean
   certificateSent?: boolean
-  createdBy: runtime.Bytes
-  trainingId: runtime.Bytes
+  createdBy: string
+  trainingId: string
 }
 
 export type TrainingContactCreateOrConnectWithoutContactInput = {
@@ -618,20 +618,20 @@ export type TrainingContactScalarWhereInput = {
   AND?: Prisma.TrainingContactScalarWhereInput | Prisma.TrainingContactScalarWhereInput[]
   OR?: Prisma.TrainingContactScalarWhereInput[]
   NOT?: Prisma.TrainingContactScalarWhereInput | Prisma.TrainingContactScalarWhereInput[]
-  id?: Prisma.BytesFilter<"TrainingContact"> | runtime.Bytes
+  id?: Prisma.StringFilter<"TrainingContact"> | string
   clientNumber?: Prisma.StringNullableFilter<"TrainingContact"> | string | null
   certSentDate?: Prisma.DateTimeNullableFilter<"TrainingContact"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TrainingContact"> | Date | string
   succeeded?: Prisma.BoolFilter<"TrainingContact"> | boolean
   attended?: Prisma.BoolFilter<"TrainingContact"> | boolean
   certificateSent?: Prisma.BoolFilter<"TrainingContact"> | boolean
-  createdBy?: Prisma.BytesFilter<"TrainingContact"> | runtime.Bytes
-  contactId?: Prisma.BytesFilter<"TrainingContact"> | runtime.Bytes
-  trainingId?: Prisma.BytesFilter<"TrainingContact"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"TrainingContact"> | string
+  contactId?: Prisma.StringFilter<"TrainingContact"> | string
+  trainingId?: Prisma.StringFilter<"TrainingContact"> | string
 }
 
 export type TrainingContactCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
@@ -643,15 +643,15 @@ export type TrainingContactCreateWithoutEmployeeInput = {
 }
 
 export type TrainingContactUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
   succeeded?: boolean
   attended?: boolean
   certificateSent?: boolean
-  contactId: runtime.Bytes
-  trainingId: runtime.Bytes
+  contactId: string
+  trainingId: string
 }
 
 export type TrainingContactCreateOrConnectWithoutEmployeeInput = {
@@ -681,7 +681,7 @@ export type TrainingContactUpdateManyWithWhereWithoutEmployeeInput = {
 }
 
 export type TrainingContactCreateWithoutTrainingInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
@@ -693,15 +693,15 @@ export type TrainingContactCreateWithoutTrainingInput = {
 }
 
 export type TrainingContactUncheckedCreateWithoutTrainingInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
   succeeded?: boolean
   attended?: boolean
   certificateSent?: boolean
-  createdBy: runtime.Bytes
-  contactId: runtime.Bytes
+  createdBy: string
+  contactId: string
 }
 
 export type TrainingContactCreateOrConnectWithoutTrainingInput = {
@@ -731,19 +731,19 @@ export type TrainingContactUpdateManyWithWhereWithoutTrainingInput = {
 }
 
 export type TrainingContactCreateManyContactInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
   succeeded?: boolean
   attended?: boolean
   certificateSent?: boolean
-  createdBy: runtime.Bytes
-  trainingId: runtime.Bytes
+  createdBy: string
+  trainingId: string
 }
 
 export type TrainingContactUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -755,43 +755,43 @@ export type TrainingContactUpdateWithoutContactInput = {
 }
 
 export type TrainingContactUncheckedUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   succeeded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingContactUncheckedUpdateManyWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   succeeded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingContactCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
   succeeded?: boolean
   attended?: boolean
   certificateSent?: boolean
-  contactId: runtime.Bytes
-  trainingId: runtime.Bytes
+  contactId: string
+  trainingId: string
 }
 
 export type TrainingContactUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -803,43 +803,43 @@ export type TrainingContactUpdateWithoutEmployeeInput = {
 }
 
 export type TrainingContactUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   succeeded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingContactUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   succeeded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  trainingId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingContactCreateManyTrainingInput = {
-  id: runtime.Bytes
+  id: string
   clientNumber?: string | null
   certSentDate?: Date | string | null
   createdAt: Date | string
   succeeded?: boolean
   attended?: boolean
   certificateSent?: boolean
-  createdBy: runtime.Bytes
-  contactId: runtime.Bytes
+  createdBy: string
+  contactId: string
 }
 
 export type TrainingContactUpdateWithoutTrainingInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -851,27 +851,27 @@ export type TrainingContactUpdateWithoutTrainingInput = {
 }
 
 export type TrainingContactUncheckedUpdateWithoutTrainingInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   succeeded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingContactUncheckedUpdateManyWithoutTrainingInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   succeeded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   attended?: Prisma.BoolFieldUpdateOperationsInput | boolean
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -922,16 +922,16 @@ export type $TrainingContactPayload<ExtArgs extends runtime.Types.Extensions.Int
     Training: Prisma.$TrainingPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     clientNumber: string | null
     certSentDate: Date | null
     createdAt: Date
     succeeded: boolean
     attended: boolean
     certificateSent: boolean
-    createdBy: runtime.Bytes
-    contactId: runtime.Bytes
-    trainingId: runtime.Bytes
+    createdBy: string
+    contactId: string
+    trainingId: string
   }, ExtArgs["result"]["trainingContact"]>
   composites: {}
 }
@@ -1304,16 +1304,16 @@ export interface Prisma__TrainingContactClient<T, Null = never, ExtArgs extends 
  * Fields of the TrainingContact model
  */
 export interface TrainingContactFieldRefs {
-  readonly id: Prisma.FieldRef<"TrainingContact", 'Bytes'>
+  readonly id: Prisma.FieldRef<"TrainingContact", 'String'>
   readonly clientNumber: Prisma.FieldRef<"TrainingContact", 'String'>
   readonly certSentDate: Prisma.FieldRef<"TrainingContact", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"TrainingContact", 'DateTime'>
   readonly succeeded: Prisma.FieldRef<"TrainingContact", 'Boolean'>
   readonly attended: Prisma.FieldRef<"TrainingContact", 'Boolean'>
   readonly certificateSent: Prisma.FieldRef<"TrainingContact", 'Boolean'>
-  readonly createdBy: Prisma.FieldRef<"TrainingContact", 'Bytes'>
-  readonly contactId: Prisma.FieldRef<"TrainingContact", 'Bytes'>
-  readonly trainingId: Prisma.FieldRef<"TrainingContact", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"TrainingContact", 'String'>
+  readonly contactId: Prisma.FieldRef<"TrainingContact", 'String'>
+  readonly trainingId: Prisma.FieldRef<"TrainingContact", 'String'>
 }
     
 

@@ -25,7 +25,7 @@ export type AggregateCompany = {
 }
 
 export type CompanyMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   number: string | null
   mail: string | null
@@ -48,13 +48,13 @@ export type CompanyMinAggregateOutputType = {
   subContractor: boolean | null
   notes: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
-  companyId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  companyId: string | null
+  targetId: string | null
 }
 
 export type CompanyMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   number: string | null
   mail: string | null
@@ -77,9 +77,9 @@ export type CompanyMaxAggregateOutputType = {
   subContractor: boolean | null
   notes: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
-  companyId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  createdBy: string | null
+  companyId: string | null
+  targetId: string | null
 }
 
 export type CompanyCountAggregateOutputType = {
@@ -274,7 +274,7 @@ export type CompanyGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 export type CompanyGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail: string | null
@@ -297,9 +297,9 @@ export type CompanyGroupByOutputType = {
   subContractor: boolean
   notes: string | null
   createdAt: Date
-  createdBy: runtime.Bytes
-  companyId: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId: string | null
+  targetId: string
   _count: CompanyCountAggregateOutputType | null
   _min: CompanyMinAggregateOutputType | null
   _max: CompanyMaxAggregateOutputType | null
@@ -324,7 +324,7 @@ export type CompanyWhereInput = {
   AND?: Prisma.CompanyWhereInput | Prisma.CompanyWhereInput[]
   OR?: Prisma.CompanyWhereInput[]
   NOT?: Prisma.CompanyWhereInput | Prisma.CompanyWhereInput[]
-  id?: Prisma.BytesFilter<"Company"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Company"> | string
   name?: Prisma.StringFilter<"Company"> | string
   number?: Prisma.StringFilter<"Company"> | string
   mail?: Prisma.StringNullableFilter<"Company"> | string | null
@@ -347,9 +347,9 @@ export type CompanyWhereInput = {
   subContractor?: Prisma.BoolFilter<"Company"> | boolean
   notes?: Prisma.StringNullableFilter<"Company"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Company"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Company"> | runtime.Bytes
-  companyId?: Prisma.BytesNullableFilter<"Company"> | runtime.Bytes | null
-  targetId?: Prisma.BytesFilter<"Company"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Company"> | string
+  companyId?: Prisma.StringNullableFilter<"Company"> | string | null
+  targetId?: Prisma.StringFilter<"Company"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   other_Company?: Prisma.CompanyListRelationFilter
@@ -397,7 +397,7 @@ export type CompanyOrderByWithRelationInput = {
 }
 
 export type CompanyWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.CompanyWhereInput | Prisma.CompanyWhereInput[]
   OR?: Prisma.CompanyWhereInput[]
   NOT?: Prisma.CompanyWhereInput | Prisma.CompanyWhereInput[]
@@ -423,9 +423,9 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   subContractor?: Prisma.BoolFilter<"Company"> | boolean
   notes?: Prisma.StringNullableFilter<"Company"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Company"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Company"> | runtime.Bytes
-  companyId?: Prisma.BytesNullableFilter<"Company"> | runtime.Bytes | null
-  targetId?: Prisma.BytesFilter<"Company"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Company"> | string
+  companyId?: Prisma.StringNullableFilter<"Company"> | string | null
+  targetId?: Prisma.StringFilter<"Company"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   other_Company?: Prisma.CompanyListRelationFilter
@@ -471,7 +471,7 @@ export type CompanyScalarWhereWithAggregatesInput = {
   AND?: Prisma.CompanyScalarWhereWithAggregatesInput | Prisma.CompanyScalarWhereWithAggregatesInput[]
   OR?: Prisma.CompanyScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CompanyScalarWhereWithAggregatesInput | Prisma.CompanyScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Company"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Company"> | string
   name?: Prisma.StringWithAggregatesFilter<"Company"> | string
   number?: Prisma.StringWithAggregatesFilter<"Company"> | string
   mail?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
@@ -494,13 +494,13 @@ export type CompanyScalarWhereWithAggregatesInput = {
   subContractor?: Prisma.BoolWithAggregatesFilter<"Company"> | boolean
   notes?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Company"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"Company"> | runtime.Bytes
-  companyId?: Prisma.BytesNullableWithAggregatesFilter<"Company"> | runtime.Bytes | null
-  targetId?: Prisma.BytesWithAggregatesFilter<"Company"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"Company"> | string
+  companyId?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
+  targetId?: Prisma.StringWithAggregatesFilter<"Company"> | string
 }
 
 export type CompanyCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -533,7 +533,7 @@ export type CompanyCreateInput = {
 }
 
 export type CompanyUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -556,9 +556,9 @@ export type CompanyUncheckedCreateInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  companyId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId?: string | null
+  targetId: string
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -566,7 +566,7 @@ export type CompanyUncheckedCreateInput = {
 }
 
 export type CompanyUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -599,7 +599,7 @@ export type CompanyUpdateInput = {
 }
 
 export type CompanyUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -622,9 +622,9 @@ export type CompanyUncheckedUpdateInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -632,7 +632,7 @@ export type CompanyUncheckedUpdateInput = {
 }
 
 export type CompanyCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -655,13 +655,13 @@ export type CompanyCreateManyInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  companyId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId?: string | null
+  targetId: string
 }
 
 export type CompanyUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -687,7 +687,7 @@ export type CompanyUpdateManyMutationInput = {
 }
 
 export type CompanyUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -710,9 +710,9 @@ export type CompanyUncheckedUpdateManyInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyNullableScalarRelationFilter = {
@@ -876,10 +876,6 @@ export type CompanyUpdateManyWithoutCompanyNestedInput = {
   deleteMany?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
 }
 
-export type NullableBytesFieldUpdateOperationsInput = {
-  set?: runtime.Bytes | null
-}
-
 export type CompanyUncheckedUpdateManyWithoutCompanyNestedInput = {
   create?: Prisma.XOR<Prisma.CompanyCreateWithoutCompanyInput, Prisma.CompanyUncheckedCreateWithoutCompanyInput> | Prisma.CompanyCreateWithoutCompanyInput[] | Prisma.CompanyUncheckedCreateWithoutCompanyInput[]
   connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutCompanyInput | Prisma.CompanyCreateOrConnectWithoutCompanyInput[]
@@ -1021,7 +1017,7 @@ export type CompanyUncheckedUpdateManyWithoutTargetNestedInput = {
 }
 
 export type CompanyCreateWithoutOther_CompanyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1053,7 +1049,7 @@ export type CompanyCreateWithoutOther_CompanyInput = {
 }
 
 export type CompanyUncheckedCreateWithoutOther_CompanyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1076,9 +1072,9 @@ export type CompanyUncheckedCreateWithoutOther_CompanyInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  companyId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId?: string | null
+  targetId: string
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
@@ -1090,7 +1086,7 @@ export type CompanyCreateOrConnectWithoutOther_CompanyInput = {
 }
 
 export type CompanyCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1122,7 +1118,7 @@ export type CompanyCreateWithoutCompanyInput = {
 }
 
 export type CompanyUncheckedCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1145,8 +1141,8 @@ export type CompanyUncheckedCreateWithoutCompanyInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  targetId: string
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -1175,7 +1171,7 @@ export type CompanyUpdateToOneWithWhereWithoutOther_CompanyInput = {
 }
 
 export type CompanyUpdateWithoutOther_CompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1207,7 +1203,7 @@ export type CompanyUpdateWithoutOther_CompanyInput = {
 }
 
 export type CompanyUncheckedUpdateWithoutOther_CompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1230,9 +1226,9 @@ export type CompanyUncheckedUpdateWithoutOther_CompanyInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
@@ -1258,7 +1254,7 @@ export type CompanyScalarWhereInput = {
   AND?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
   OR?: Prisma.CompanyScalarWhereInput[]
   NOT?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Company"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Company"> | string
   name?: Prisma.StringFilter<"Company"> | string
   number?: Prisma.StringFilter<"Company"> | string
   mail?: Prisma.StringNullableFilter<"Company"> | string | null
@@ -1281,13 +1277,13 @@ export type CompanyScalarWhereInput = {
   subContractor?: Prisma.BoolFilter<"Company"> | boolean
   notes?: Prisma.StringNullableFilter<"Company"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Company"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Company"> | runtime.Bytes
-  companyId?: Prisma.BytesNullableFilter<"Company"> | runtime.Bytes | null
-  targetId?: Prisma.BytesFilter<"Company"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Company"> | string
+  companyId?: Prisma.StringNullableFilter<"Company"> | string | null
+  targetId?: Prisma.StringFilter<"Company"> | string
 }
 
 export type CompanyCreateWithoutCompanyAdressInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1319,7 +1315,7 @@ export type CompanyCreateWithoutCompanyAdressInput = {
 }
 
 export type CompanyUncheckedCreateWithoutCompanyAdressInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1342,9 +1338,9 @@ export type CompanyUncheckedCreateWithoutCompanyAdressInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  companyId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId?: string | null
+  targetId: string
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
@@ -1367,7 +1363,7 @@ export type CompanyUpdateToOneWithWhereWithoutCompanyAdressInput = {
 }
 
 export type CompanyUpdateWithoutCompanyAdressInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1399,7 +1395,7 @@ export type CompanyUpdateWithoutCompanyAdressInput = {
 }
 
 export type CompanyUncheckedUpdateWithoutCompanyAdressInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1422,16 +1418,16 @@ export type CompanyUncheckedUpdateWithoutCompanyAdressInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutCompanyContactInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1463,7 +1459,7 @@ export type CompanyCreateWithoutCompanyContactInput = {
 }
 
 export type CompanyUncheckedCreateWithoutCompanyContactInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1486,9 +1482,9 @@ export type CompanyUncheckedCreateWithoutCompanyContactInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  companyId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId?: string | null
+  targetId: string
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
@@ -1511,7 +1507,7 @@ export type CompanyUpdateToOneWithWhereWithoutCompanyContactInput = {
 }
 
 export type CompanyUpdateWithoutCompanyContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1543,7 +1539,7 @@ export type CompanyUpdateWithoutCompanyContactInput = {
 }
 
 export type CompanyUncheckedUpdateWithoutCompanyContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1566,16 +1562,16 @@ export type CompanyUncheckedUpdateWithoutCompanyContactInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1607,7 +1603,7 @@ export type CompanyCreateWithoutEmployeeInput = {
 }
 
 export type CompanyUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1630,8 +1626,8 @@ export type CompanyUncheckedCreateWithoutEmployeeInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  companyId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  companyId?: string | null
+  targetId: string
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -1665,7 +1661,7 @@ export type CompanyUpdateManyWithWhereWithoutEmployeeInput = {
 }
 
 export type CompanyCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1697,7 +1693,7 @@ export type CompanyCreateWithoutProjectInput = {
 }
 
 export type CompanyUncheckedCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1720,9 +1716,9 @@ export type CompanyUncheckedCreateWithoutProjectInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  companyId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  createdBy: string
+  companyId?: string | null
+  targetId: string
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -1745,7 +1741,7 @@ export type CompanyUpdateToOneWithWhereWithoutProjectInput = {
 }
 
 export type CompanyUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1777,7 +1773,7 @@ export type CompanyUpdateWithoutProjectInput = {
 }
 
 export type CompanyUncheckedUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1800,16 +1796,16 @@ export type CompanyUncheckedUpdateWithoutProjectInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1841,7 +1837,7 @@ export type CompanyCreateWithoutTargetInput = {
 }
 
 export type CompanyUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1864,8 +1860,8 @@ export type CompanyUncheckedCreateWithoutTargetInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  companyId?: runtime.Bytes | null
+  createdBy: string
+  companyId?: string | null
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -1899,7 +1895,7 @@ export type CompanyUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type CompanyCreateManyCompanyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -1922,12 +1918,12 @@ export type CompanyCreateManyCompanyInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  targetId: string
 }
 
 export type CompanyUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1959,7 +1955,7 @@ export type CompanyUpdateWithoutCompanyInput = {
 }
 
 export type CompanyUncheckedUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1982,8 +1978,8 @@ export type CompanyUncheckedUpdateWithoutCompanyInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -1991,7 +1987,7 @@ export type CompanyUncheckedUpdateWithoutCompanyInput = {
 }
 
 export type CompanyUncheckedUpdateManyWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2014,12 +2010,12 @@ export type CompanyUncheckedUpdateManyWithoutCompanyInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -2042,12 +2038,12 @@ export type CompanyCreateManyEmployeeInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  companyId?: runtime.Bytes | null
-  targetId: runtime.Bytes
+  companyId?: string | null
+  targetId: string
 }
 
 export type CompanyUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2079,7 +2075,7 @@ export type CompanyUpdateWithoutEmployeeInput = {
 }
 
 export type CompanyUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2102,8 +2098,8 @@ export type CompanyUncheckedUpdateWithoutEmployeeInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  companyId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2111,7 +2107,7 @@ export type CompanyUncheckedUpdateWithoutEmployeeInput = {
 }
 
 export type CompanyUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2134,12 +2130,12 @@ export type CompanyUncheckedUpdateManyWithoutEmployeeInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  companyId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyCreateManyTargetInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   number: string
   mail?: string | null
@@ -2162,12 +2158,12 @@ export type CompanyCreateManyTargetInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  companyId?: runtime.Bytes | null
+  createdBy: string
+  companyId?: string | null
 }
 
 export type CompanyUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2199,7 +2195,7 @@ export type CompanyUpdateWithoutTargetInput = {
 }
 
 export type CompanyUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2222,8 +2218,8 @@ export type CompanyUncheckedUpdateWithoutTargetInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2231,7 +2227,7 @@ export type CompanyUncheckedUpdateWithoutTargetInput = {
 }
 
 export type CompanyUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2254,8 +2250,8 @@ export type CompanyUncheckedUpdateManyWithoutTargetInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -2408,7 +2404,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     Project: Prisma.$ProjectPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     number: string
     mail: string | null
@@ -2431,9 +2427,9 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     subContractor: boolean
     notes: string | null
     createdAt: Date
-    createdBy: runtime.Bytes
-    companyId: runtime.Bytes | null
-    targetId: runtime.Bytes
+    createdBy: string
+    companyId: string | null
+    targetId: string
   }, ExtArgs["result"]["company"]>
   composites: {}
 }
@@ -2810,7 +2806,7 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
  * Fields of the Company model
  */
 export interface CompanyFieldRefs {
-  readonly id: Prisma.FieldRef<"Company", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Company", 'String'>
   readonly name: Prisma.FieldRef<"Company", 'String'>
   readonly number: Prisma.FieldRef<"Company", 'String'>
   readonly mail: Prisma.FieldRef<"Company", 'String'>
@@ -2833,9 +2829,9 @@ export interface CompanyFieldRefs {
   readonly subContractor: Prisma.FieldRef<"Company", 'Boolean'>
   readonly notes: Prisma.FieldRef<"Company", 'String'>
   readonly createdAt: Prisma.FieldRef<"Company", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"Company", 'Bytes'>
-  readonly companyId: Prisma.FieldRef<"Company", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"Company", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"Company", 'String'>
+  readonly companyId: Prisma.FieldRef<"Company", 'String'>
+  readonly targetId: Prisma.FieldRef<"Company", 'String'>
 }
     
 

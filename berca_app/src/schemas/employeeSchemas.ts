@@ -2,10 +2,8 @@ import {z} from 'zod'
 
 const dateSchema = z.preprocess(val => (typeof val === 'string' || val instanceof Date ? new Date(val) : val), z.date())
 
-const bytesSchema = z.instanceof(Uint8Array<ArrayBuffer>)
-
 export const employeeSchemas = z.object({
-  id: bytesSchema,
+  id: z.string(),
 
   firstName: z.string().min(1).max(100),
   lastName: z.string().min(1).max(100),
@@ -39,17 +37,17 @@ export const employeeSchemas = z.object({
 
   passwordCreatedAt: dateSchema,
 
-  createdBy: bytesSchema.nullable(),
-  roleId: bytesSchema.nullable(),
-  functionId: bytesSchema.nullable(),
-  departmentId: bytesSchema.nullable(),
-  titleId: bytesSchema.nullable(),
-  pictureId: bytesSchema.nullable(),
+  createdBy: z.string().nullable(),
+  roleId: z.string().nullable(),
+  functionId: z.string().nullable(),
+  departmentId: z.string().nullable(),
+  titleId: z.string().nullable(),
+  pictureId: z.string().nullable(),
 })
 
-export const signInSchema = employeeSchemas.omit({
-  id: true,
-  roleId: true,
+export const signInSchema = employeeSchemas.pick({
+  username: true,
+  password_hash: true,
 })
 
 export const registerSchema = employeeSchemas

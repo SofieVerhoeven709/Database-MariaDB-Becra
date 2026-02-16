@@ -25,17 +25,17 @@ export type AggregateTarget = {
 }
 
 export type TargetMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
-  targetTypeId: runtime.Bytes | null
+  createdBy: string | null
+  targetTypeId: string | null
 }
 
 export type TargetMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
-  targetTypeId: runtime.Bytes | null
+  createdBy: string | null
+  targetTypeId: string | null
 }
 
 export type TargetCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type TargetGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 export type TargetGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   _count: TargetCountAggregateOutputType | null
   _min: TargetMinAggregateOutputType | null
   _max: TargetMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type TargetWhereInput = {
   AND?: Prisma.TargetWhereInput | Prisma.TargetWhereInput[]
   OR?: Prisma.TargetWhereInput[]
   NOT?: Prisma.TargetWhereInput | Prisma.TargetWhereInput[]
-  id?: Prisma.BytesFilter<"Target"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Target"> | string
   createdAt?: Prisma.DateTimeFilter<"Target"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Target"> | runtime.Bytes
-  targetTypeId?: Prisma.BytesFilter<"Target"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Target"> | string
+  targetTypeId?: Prisma.StringFilter<"Target"> | string
   Certificate?: Prisma.CertificateListRelationFilter
   Company?: Prisma.CompanyListRelationFilter
   Contact?: Prisma.ContactListRelationFilter
@@ -217,16 +217,17 @@ export type TargetOrderByWithRelationInput = {
   VisibilityForRole?: Prisma.VisibilityForRoleOrderByRelationAggregateInput
   WorkOrder?: Prisma.WorkOrderOrderByRelationAggregateInput
   WorkOrderStructure?: Prisma.WorkOrderStructureOrderByRelationAggregateInput
+  _relevance?: Prisma.TargetOrderByRelevanceInput
 }
 
 export type TargetWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.TargetWhereInput | Prisma.TargetWhereInput[]
   OR?: Prisma.TargetWhereInput[]
   NOT?: Prisma.TargetWhereInput | Prisma.TargetWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"Target"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Target"> | runtime.Bytes
-  targetTypeId?: Prisma.BytesFilter<"Target"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Target"> | string
+  targetTypeId?: Prisma.StringFilter<"Target"> | string
   Certificate?: Prisma.CertificateListRelationFilter
   Company?: Prisma.CompanyListRelationFilter
   Contact?: Prisma.ContactListRelationFilter
@@ -261,14 +262,14 @@ export type TargetScalarWhereWithAggregatesInput = {
   AND?: Prisma.TargetScalarWhereWithAggregatesInput | Prisma.TargetScalarWhereWithAggregatesInput[]
   OR?: Prisma.TargetScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TargetScalarWhereWithAggregatesInput | Prisma.TargetScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Target"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Target"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Target"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"Target"> | runtime.Bytes
-  targetTypeId?: Prisma.BytesWithAggregatesFilter<"Target"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"Target"> | string
+  targetTypeId?: Prisma.StringWithAggregatesFilter<"Target"> | string
 }
 
 export type TargetCreateInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -291,10 +292,10 @@ export type TargetCreateInput = {
 }
 
 export type TargetUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -314,7 +315,7 @@ export type TargetUncheckedCreateInput = {
 }
 
 export type TargetUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -337,10 +338,10 @@ export type TargetUpdateInput = {
 }
 
 export type TargetUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -360,22 +361,22 @@ export type TargetUncheckedUpdateInput = {
 }
 
 export type TargetCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
 }
 
 export type TargetUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TargetUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TargetScalarRelationFilter = {
@@ -391,6 +392,12 @@ export type TargetListRelationFilter = {
 
 export type TargetOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type TargetOrderByRelevanceInput = {
+  fields: Prisma.TargetOrderByRelevanceFieldEnum | Prisma.TargetOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type TargetCountOrderByAggregateInput = {
@@ -723,7 +730,7 @@ export type TargetUpdateOneRequiredWithoutWorkOrderStructureNestedInput = {
 }
 
 export type TargetCreateWithoutCertificateInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -745,10 +752,10 @@ export type TargetCreateWithoutCertificateInput = {
 }
 
 export type TargetUncheckedCreateWithoutCertificateInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -783,7 +790,7 @@ export type TargetUpdateToOneWithWhereWithoutCertificateInput = {
 }
 
 export type TargetUpdateWithoutCertificateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -805,10 +812,10 @@ export type TargetUpdateWithoutCertificateInput = {
 }
 
 export type TargetUncheckedUpdateWithoutCertificateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -827,7 +834,7 @@ export type TargetUncheckedUpdateWithoutCertificateInput = {
 }
 
 export type TargetCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -849,10 +856,10 @@ export type TargetCreateWithoutCompanyInput = {
 }
 
 export type TargetUncheckedCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -887,7 +894,7 @@ export type TargetUpdateToOneWithWhereWithoutCompanyInput = {
 }
 
 export type TargetUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -909,10 +916,10 @@ export type TargetUpdateWithoutCompanyInput = {
 }
 
 export type TargetUncheckedUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -931,7 +938,7 @@ export type TargetUncheckedUpdateWithoutCompanyInput = {
 }
 
 export type TargetCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -953,10 +960,10 @@ export type TargetCreateWithoutContactInput = {
 }
 
 export type TargetUncheckedCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -991,7 +998,7 @@ export type TargetUpdateToOneWithWhereWithoutContactInput = {
 }
 
 export type TargetUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -1013,10 +1020,10 @@ export type TargetUpdateWithoutContactInput = {
 }
 
 export type TargetUncheckedUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -1035,7 +1042,7 @@ export type TargetUncheckedUpdateWithoutContactInput = {
 }
 
 export type TargetCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -1057,10 +1064,10 @@ export type TargetCreateWithoutDocumentStructureInput = {
 }
 
 export type TargetUncheckedCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1095,7 +1102,7 @@ export type TargetUpdateToOneWithWhereWithoutDocumentStructureInput = {
 }
 
 export type TargetUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -1117,10 +1124,10 @@ export type TargetUpdateWithoutDocumentStructureInput = {
 }
 
 export type TargetUncheckedUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1139,7 +1146,7 @@ export type TargetUncheckedUpdateWithoutDocumentStructureInput = {
 }
 
 export type TargetCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -1161,9 +1168,9 @@ export type TargetCreateWithoutEmployeeInput = {
 }
 
 export type TargetUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  targetTypeId: runtime.Bytes
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1212,14 +1219,14 @@ export type TargetScalarWhereInput = {
   AND?: Prisma.TargetScalarWhereInput | Prisma.TargetScalarWhereInput[]
   OR?: Prisma.TargetScalarWhereInput[]
   NOT?: Prisma.TargetScalarWhereInput | Prisma.TargetScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Target"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Target"> | string
   createdAt?: Prisma.DateTimeFilter<"Target"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Target"> | runtime.Bytes
-  targetTypeId?: Prisma.BytesFilter<"Target"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Target"> | string
+  targetTypeId?: Prisma.StringFilter<"Target"> | string
 }
 
 export type TargetCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -1241,10 +1248,10 @@ export type TargetCreateWithoutFollowUpInput = {
 }
 
 export type TargetUncheckedCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1279,7 +1286,7 @@ export type TargetUpdateToOneWithWhereWithoutFollowUpInput = {
 }
 
 export type TargetUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -1301,10 +1308,10 @@ export type TargetUpdateWithoutFollowUpInput = {
 }
 
 export type TargetUncheckedUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1323,7 +1330,7 @@ export type TargetUncheckedUpdateWithoutFollowUpInput = {
 }
 
 export type TargetCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -1345,10 +1352,10 @@ export type TargetCreateWithoutFollowUpStructureInput = {
 }
 
 export type TargetUncheckedCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1383,7 +1390,7 @@ export type TargetUpdateToOneWithWhereWithoutFollowUpStructureInput = {
 }
 
 export type TargetUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -1405,10 +1412,10 @@ export type TargetUpdateWithoutFollowUpStructureInput = {
 }
 
 export type TargetUncheckedUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1427,7 +1434,7 @@ export type TargetUncheckedUpdateWithoutFollowUpStructureInput = {
 }
 
 export type TargetCreateWithoutFollowUpTargetInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -1449,10 +1456,10 @@ export type TargetCreateWithoutFollowUpTargetInput = {
 }
 
 export type TargetUncheckedCreateWithoutFollowUpTargetInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1487,7 +1494,7 @@ export type TargetUpdateToOneWithWhereWithoutFollowUpTargetInput = {
 }
 
 export type TargetUpdateWithoutFollowUpTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -1509,10 +1516,10 @@ export type TargetUpdateWithoutFollowUpTargetInput = {
 }
 
 export type TargetUncheckedUpdateWithoutFollowUpTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1531,7 +1538,7 @@ export type TargetUncheckedUpdateWithoutFollowUpTargetInput = {
 }
 
 export type TargetCreateWithoutInvoiceInInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -1553,10 +1560,10 @@ export type TargetCreateWithoutInvoiceInInput = {
 }
 
 export type TargetUncheckedCreateWithoutInvoiceInInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1591,7 +1598,7 @@ export type TargetUpdateToOneWithWhereWithoutInvoiceInInput = {
 }
 
 export type TargetUpdateWithoutInvoiceInInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -1613,10 +1620,10 @@ export type TargetUpdateWithoutInvoiceInInput = {
 }
 
 export type TargetUncheckedUpdateWithoutInvoiceInInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1635,7 +1642,7 @@ export type TargetUncheckedUpdateWithoutInvoiceInInput = {
 }
 
 export type TargetCreateWithoutInvoiceInTargetInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -1657,10 +1664,10 @@ export type TargetCreateWithoutInvoiceInTargetInput = {
 }
 
 export type TargetUncheckedCreateWithoutInvoiceInTargetInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1695,7 +1702,7 @@ export type TargetUpdateToOneWithWhereWithoutInvoiceInTargetInput = {
 }
 
 export type TargetUpdateWithoutInvoiceInTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -1717,10 +1724,10 @@ export type TargetUpdateWithoutInvoiceInTargetInput = {
 }
 
 export type TargetUncheckedUpdateWithoutInvoiceInTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1739,7 +1746,7 @@ export type TargetUncheckedUpdateWithoutInvoiceInTargetInput = {
 }
 
 export type TargetCreateWithoutInvoiceOutInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -1761,10 +1768,10 @@ export type TargetCreateWithoutInvoiceOutInput = {
 }
 
 export type TargetUncheckedCreateWithoutInvoiceOutInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1799,7 +1806,7 @@ export type TargetUpdateToOneWithWhereWithoutInvoiceOutInput = {
 }
 
 export type TargetUpdateWithoutInvoiceOutInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -1821,10 +1828,10 @@ export type TargetUpdateWithoutInvoiceOutInput = {
 }
 
 export type TargetUncheckedUpdateWithoutInvoiceOutInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1843,7 +1850,7 @@ export type TargetUncheckedUpdateWithoutInvoiceOutInput = {
 }
 
 export type TargetCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -1865,10 +1872,10 @@ export type TargetCreateWithoutProjectInput = {
 }
 
 export type TargetUncheckedCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1903,7 +1910,7 @@ export type TargetUpdateToOneWithWhereWithoutProjectInput = {
 }
 
 export type TargetUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -1925,10 +1932,10 @@ export type TargetUpdateWithoutProjectInput = {
 }
 
 export type TargetUncheckedUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1947,7 +1954,7 @@ export type TargetUncheckedUpdateWithoutProjectInput = {
 }
 
 export type TargetCreateWithoutTargetTypeInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -1969,9 +1976,9 @@ export type TargetCreateWithoutTargetTypeInput = {
 }
 
 export type TargetUncheckedCreateWithoutTargetTypeInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2017,7 +2024,7 @@ export type TargetUpdateManyWithWhereWithoutTargetTypeInput = {
 }
 
 export type TargetCreateWithoutTrainingInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -2039,10 +2046,10 @@ export type TargetCreateWithoutTrainingInput = {
 }
 
 export type TargetUncheckedCreateWithoutTrainingInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2077,7 +2084,7 @@ export type TargetUpdateToOneWithWhereWithoutTrainingInput = {
 }
 
 export type TargetUpdateWithoutTrainingInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -2099,10 +2106,10 @@ export type TargetUpdateWithoutTrainingInput = {
 }
 
 export type TargetUncheckedUpdateWithoutTrainingInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2121,7 +2128,7 @@ export type TargetUncheckedUpdateWithoutTrainingInput = {
 }
 
 export type TargetCreateWithoutTrainingStandardInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -2143,10 +2150,10 @@ export type TargetCreateWithoutTrainingStandardInput = {
 }
 
 export type TargetUncheckedCreateWithoutTrainingStandardInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2181,7 +2188,7 @@ export type TargetUpdateToOneWithWhereWithoutTrainingStandardInput = {
 }
 
 export type TargetUpdateWithoutTrainingStandardInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -2203,10 +2210,10 @@ export type TargetUpdateWithoutTrainingStandardInput = {
 }
 
 export type TargetUncheckedUpdateWithoutTrainingStandardInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2225,7 +2232,7 @@ export type TargetUncheckedUpdateWithoutTrainingStandardInput = {
 }
 
 export type TargetCreateWithoutVisibilityForRoleInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -2247,10 +2254,10 @@ export type TargetCreateWithoutVisibilityForRoleInput = {
 }
 
 export type TargetUncheckedCreateWithoutVisibilityForRoleInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2285,7 +2292,7 @@ export type TargetUpdateToOneWithWhereWithoutVisibilityForRoleInput = {
 }
 
 export type TargetUpdateWithoutVisibilityForRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -2307,10 +2314,10 @@ export type TargetUpdateWithoutVisibilityForRoleInput = {
 }
 
 export type TargetUncheckedUpdateWithoutVisibilityForRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2329,7 +2336,7 @@ export type TargetUncheckedUpdateWithoutVisibilityForRoleInput = {
 }
 
 export type TargetCreateWithoutWorkOrderInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -2351,10 +2358,10 @@ export type TargetCreateWithoutWorkOrderInput = {
 }
 
 export type TargetUncheckedCreateWithoutWorkOrderInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2389,7 +2396,7 @@ export type TargetUpdateToOneWithWhereWithoutWorkOrderInput = {
 }
 
 export type TargetUpdateWithoutWorkOrderInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -2411,10 +2418,10 @@ export type TargetUpdateWithoutWorkOrderInput = {
 }
 
 export type TargetUncheckedUpdateWithoutWorkOrderInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2433,7 +2440,7 @@ export type TargetUncheckedUpdateWithoutWorkOrderInput = {
 }
 
 export type TargetCreateWithoutWorkOrderStructureInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
@@ -2455,10 +2462,10 @@ export type TargetCreateWithoutWorkOrderStructureInput = {
 }
 
 export type TargetUncheckedCreateWithoutWorkOrderStructureInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
-  targetTypeId: runtime.Bytes
+  createdBy: string
+  targetTypeId: string
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2493,7 +2500,7 @@ export type TargetUpdateToOneWithWhereWithoutWorkOrderStructureInput = {
 }
 
 export type TargetUpdateWithoutWorkOrderStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -2515,10 +2522,10 @@ export type TargetUpdateWithoutWorkOrderStructureInput = {
 }
 
 export type TargetUncheckedUpdateWithoutWorkOrderStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2537,13 +2544,13 @@ export type TargetUncheckedUpdateWithoutWorkOrderStructureInput = {
 }
 
 export type TargetCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  targetTypeId: runtime.Bytes
+  targetTypeId: string
 }
 
 export type TargetUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -2565,9 +2572,9 @@ export type TargetUpdateWithoutEmployeeInput = {
 }
 
 export type TargetUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2587,19 +2594,19 @@ export type TargetUncheckedUpdateWithoutEmployeeInput = {
 }
 
 export type TargetUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  targetTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TargetCreateManyTargetTypeInput = {
-  id: runtime.Bytes
+  id: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type TargetUpdateWithoutTargetTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
@@ -2621,9 +2628,9 @@ export type TargetUpdateWithoutTargetTypeInput = {
 }
 
 export type TargetUncheckedUpdateWithoutTargetTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2643,9 +2650,9 @@ export type TargetUncheckedUpdateWithoutTargetTypeInput = {
 }
 
 export type TargetUncheckedUpdateManyWithoutTargetTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -2895,10 +2902,10 @@ export type $TargetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     WorkOrderStructure: Prisma.$WorkOrderStructurePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     createdAt: Date
-    createdBy: runtime.Bytes
-    targetTypeId: runtime.Bytes
+    createdBy: string
+    targetTypeId: string
   }, ExtArgs["result"]["target"]>
   composites: {}
 }
@@ -3286,10 +3293,10 @@ export interface Prisma__TargetClient<T, Null = never, ExtArgs extends runtime.T
  * Fields of the Target model
  */
 export interface TargetFieldRefs {
-  readonly id: Prisma.FieldRef<"Target", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Target", 'String'>
   readonly createdAt: Prisma.FieldRef<"Target", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"Target", 'Bytes'>
-  readonly targetTypeId: Prisma.FieldRef<"Target", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"Target", 'String'>
+  readonly targetTypeId: Prisma.FieldRef<"Target", 'String'>
 }
     
 

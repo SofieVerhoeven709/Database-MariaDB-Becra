@@ -25,15 +25,15 @@ export type AggregateTimeRegistryEmployee = {
 }
 
 export type TimeRegistryEmployeeMinAggregateOutputType = {
-  id: runtime.Bytes | null
-  employeeId: runtime.Bytes | null
-  timeRegistryId: runtime.Bytes | null
+  id: string | null
+  employeeId: string | null
+  timeRegistryId: string | null
 }
 
 export type TimeRegistryEmployeeMaxAggregateOutputType = {
-  id: runtime.Bytes | null
-  employeeId: runtime.Bytes | null
-  timeRegistryId: runtime.Bytes | null
+  id: string | null
+  employeeId: string | null
+  timeRegistryId: string | null
 }
 
 export type TimeRegistryEmployeeCountAggregateOutputType = {
@@ -136,9 +136,9 @@ export type TimeRegistryEmployeeGroupByArgs<ExtArgs extends runtime.Types.Extens
 }
 
 export type TimeRegistryEmployeeGroupByOutputType = {
-  id: runtime.Bytes
-  employeeId: runtime.Bytes
-  timeRegistryId: runtime.Bytes
+  id: string
+  employeeId: string
+  timeRegistryId: string
   _count: TimeRegistryEmployeeCountAggregateOutputType | null
   _min: TimeRegistryEmployeeMinAggregateOutputType | null
   _max: TimeRegistryEmployeeMaxAggregateOutputType | null
@@ -163,9 +163,9 @@ export type TimeRegistryEmployeeWhereInput = {
   AND?: Prisma.TimeRegistryEmployeeWhereInput | Prisma.TimeRegistryEmployeeWhereInput[]
   OR?: Prisma.TimeRegistryEmployeeWhereInput[]
   NOT?: Prisma.TimeRegistryEmployeeWhereInput | Prisma.TimeRegistryEmployeeWhereInput[]
-  id?: Prisma.BytesFilter<"TimeRegistryEmployee"> | runtime.Bytes
-  employeeId?: Prisma.BytesFilter<"TimeRegistryEmployee"> | runtime.Bytes
-  timeRegistryId?: Prisma.BytesFilter<"TimeRegistryEmployee"> | runtime.Bytes
+  id?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
+  employeeId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
+  timeRegistryId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TimeRegistry?: Prisma.XOR<Prisma.TimeRegistryScalarRelationFilter, Prisma.TimeRegistryWhereInput>
 }
@@ -176,15 +176,16 @@ export type TimeRegistryEmployeeOrderByWithRelationInput = {
   timeRegistryId?: Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   TimeRegistry?: Prisma.TimeRegistryOrderByWithRelationInput
+  _relevance?: Prisma.TimeRegistryEmployeeOrderByRelevanceInput
 }
 
 export type TimeRegistryEmployeeWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.TimeRegistryEmployeeWhereInput | Prisma.TimeRegistryEmployeeWhereInput[]
   OR?: Prisma.TimeRegistryEmployeeWhereInput[]
   NOT?: Prisma.TimeRegistryEmployeeWhereInput | Prisma.TimeRegistryEmployeeWhereInput[]
-  employeeId?: Prisma.BytesFilter<"TimeRegistryEmployee"> | runtime.Bytes
-  timeRegistryId?: Prisma.BytesFilter<"TimeRegistryEmployee"> | runtime.Bytes
+  employeeId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
+  timeRegistryId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TimeRegistry?: Prisma.XOR<Prisma.TimeRegistryScalarRelationFilter, Prisma.TimeRegistryWhereInput>
 }, "id">
@@ -202,49 +203,49 @@ export type TimeRegistryEmployeeScalarWhereWithAggregatesInput = {
   AND?: Prisma.TimeRegistryEmployeeScalarWhereWithAggregatesInput | Prisma.TimeRegistryEmployeeScalarWhereWithAggregatesInput[]
   OR?: Prisma.TimeRegistryEmployeeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TimeRegistryEmployeeScalarWhereWithAggregatesInput | Prisma.TimeRegistryEmployeeScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"TimeRegistryEmployee"> | runtime.Bytes
-  employeeId?: Prisma.BytesWithAggregatesFilter<"TimeRegistryEmployee"> | runtime.Bytes
-  timeRegistryId?: Prisma.BytesWithAggregatesFilter<"TimeRegistryEmployee"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"TimeRegistryEmployee"> | string
+  employeeId?: Prisma.StringWithAggregatesFilter<"TimeRegistryEmployee"> | string
+  timeRegistryId?: Prisma.StringWithAggregatesFilter<"TimeRegistryEmployee"> | string
 }
 
 export type TimeRegistryEmployeeCreateInput = {
-  id: runtime.Bytes
+  id: string
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryEmployeeInput
   TimeRegistry: Prisma.TimeRegistryCreateNestedOneWithoutTimeRegistryEmployeeInput
 }
 
 export type TimeRegistryEmployeeUncheckedCreateInput = {
-  id: runtime.Bytes
-  employeeId: runtime.Bytes
-  timeRegistryId: runtime.Bytes
+  id: string
+  employeeId: string
+  timeRegistryId: string
 }
 
 export type TimeRegistryEmployeeUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryEmployeeNestedInput
   TimeRegistry?: Prisma.TimeRegistryUpdateOneRequiredWithoutTimeRegistryEmployeeNestedInput
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  employeeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  timeRegistryId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TimeRegistryEmployeeCreateManyInput = {
-  id: runtime.Bytes
-  employeeId: runtime.Bytes
-  timeRegistryId: runtime.Bytes
+  id: string
+  employeeId: string
+  timeRegistryId: string
 }
 
 export type TimeRegistryEmployeeUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  employeeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  timeRegistryId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TimeRegistryEmployeeListRelationFilter = {
@@ -255,6 +256,12 @@ export type TimeRegistryEmployeeListRelationFilter = {
 
 export type TimeRegistryEmployeeOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type TimeRegistryEmployeeOrderByRelevanceInput = {
+  fields: Prisma.TimeRegistryEmployeeOrderByRelevanceFieldEnum | Prisma.TimeRegistryEmployeeOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type TimeRegistryEmployeeCountOrderByAggregateInput = {
@@ -360,13 +367,13 @@ export type TimeRegistryEmployeeUncheckedUpdateManyWithoutTimeRegistryNestedInpu
 }
 
 export type TimeRegistryEmployeeCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   TimeRegistry: Prisma.TimeRegistryCreateNestedOneWithoutTimeRegistryEmployeeInput
 }
 
 export type TimeRegistryEmployeeUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
-  timeRegistryId: runtime.Bytes
+  id: string
+  timeRegistryId: string
 }
 
 export type TimeRegistryEmployeeCreateOrConnectWithoutEmployeeInput = {
@@ -399,19 +406,19 @@ export type TimeRegistryEmployeeScalarWhereInput = {
   AND?: Prisma.TimeRegistryEmployeeScalarWhereInput | Prisma.TimeRegistryEmployeeScalarWhereInput[]
   OR?: Prisma.TimeRegistryEmployeeScalarWhereInput[]
   NOT?: Prisma.TimeRegistryEmployeeScalarWhereInput | Prisma.TimeRegistryEmployeeScalarWhereInput[]
-  id?: Prisma.BytesFilter<"TimeRegistryEmployee"> | runtime.Bytes
-  employeeId?: Prisma.BytesFilter<"TimeRegistryEmployee"> | runtime.Bytes
-  timeRegistryId?: Prisma.BytesFilter<"TimeRegistryEmployee"> | runtime.Bytes
+  id?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
+  employeeId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
+  timeRegistryId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
 }
 
 export type TimeRegistryEmployeeCreateWithoutTimeRegistryInput = {
-  id: runtime.Bytes
+  id: string
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryEmployeeInput
 }
 
 export type TimeRegistryEmployeeUncheckedCreateWithoutTimeRegistryInput = {
-  id: runtime.Bytes
-  employeeId: runtime.Bytes
+  id: string
+  employeeId: string
 }
 
 export type TimeRegistryEmployeeCreateOrConnectWithoutTimeRegistryInput = {
@@ -441,43 +448,43 @@ export type TimeRegistryEmployeeUpdateManyWithWhereWithoutTimeRegistryInput = {
 }
 
 export type TimeRegistryEmployeeCreateManyEmployeeInput = {
-  id: runtime.Bytes
-  timeRegistryId: runtime.Bytes
+  id: string
+  timeRegistryId: string
 }
 
 export type TimeRegistryEmployeeUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   TimeRegistry?: Prisma.TimeRegistryUpdateOneRequiredWithoutTimeRegistryEmployeeNestedInput
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  timeRegistryId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  timeRegistryId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TimeRegistryEmployeeCreateManyTimeRegistryInput = {
-  id: runtime.Bytes
-  employeeId: runtime.Bytes
+  id: string
+  employeeId: string
 }
 
 export type TimeRegistryEmployeeUpdateWithoutTimeRegistryInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryEmployeeNestedInput
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateWithoutTimeRegistryInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  employeeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateManyWithoutTimeRegistryInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  employeeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -511,9 +518,9 @@ export type $TimeRegistryEmployeePayload<ExtArgs extends runtime.Types.Extension
     TimeRegistry: Prisma.$TimeRegistryPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
-    employeeId: runtime.Bytes
-    timeRegistryId: runtime.Bytes
+    id: string
+    employeeId: string
+    timeRegistryId: string
   }, ExtArgs["result"]["timeRegistryEmployee"]>
   composites: {}
 }
@@ -885,9 +892,9 @@ export interface Prisma__TimeRegistryEmployeeClient<T, Null = never, ExtArgs ext
  * Fields of the TimeRegistryEmployee model
  */
 export interface TimeRegistryEmployeeFieldRefs {
-  readonly id: Prisma.FieldRef<"TimeRegistryEmployee", 'Bytes'>
-  readonly employeeId: Prisma.FieldRef<"TimeRegistryEmployee", 'Bytes'>
-  readonly timeRegistryId: Prisma.FieldRef<"TimeRegistryEmployee", 'Bytes'>
+  readonly id: Prisma.FieldRef<"TimeRegistryEmployee", 'String'>
+  readonly employeeId: Prisma.FieldRef<"TimeRegistryEmployee", 'String'>
+  readonly timeRegistryId: Prisma.FieldRef<"TimeRegistryEmployee", 'String'>
 }
     
 

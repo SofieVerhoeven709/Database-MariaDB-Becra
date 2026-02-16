@@ -25,17 +25,17 @@ export type AggregateFunction = {
 }
 
 export type FunctionMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type FunctionMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type FunctionCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type FunctionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 export type FunctionGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: FunctionCountAggregateOutputType | null
   _min: FunctionMinAggregateOutputType | null
   _max: FunctionMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type FunctionWhereInput = {
   AND?: Prisma.FunctionWhereInput | Prisma.FunctionWhereInput[]
   OR?: Prisma.FunctionWhereInput[]
   NOT?: Prisma.FunctionWhereInput | Prisma.FunctionWhereInput[]
-  id?: Prisma.BytesFilter<"Function"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Function"> | string
   name?: Prisma.StringFilter<"Function"> | string
   createdAt?: Prisma.DateTimeFilter<"Function"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Function"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Function"> | string
   Contact?: Prisma.ContactListRelationFilter
   Employee_Employee_functionIdToFunction?: Prisma.EmployeeListRelationFilter
   Employee_Function_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -191,13 +191,13 @@ export type FunctionOrderByWithRelationInput = {
 }
 
 export type FunctionWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.FunctionWhereInput | Prisma.FunctionWhereInput[]
   OR?: Prisma.FunctionWhereInput[]
   NOT?: Prisma.FunctionWhereInput | Prisma.FunctionWhereInput[]
   name?: Prisma.StringFilter<"Function"> | string
   createdAt?: Prisma.DateTimeFilter<"Function"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Function"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Function"> | string
   Contact?: Prisma.ContactListRelationFilter
   Employee_Employee_functionIdToFunction?: Prisma.EmployeeListRelationFilter
   Employee_Function_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -217,14 +217,14 @@ export type FunctionScalarWhereWithAggregatesInput = {
   AND?: Prisma.FunctionScalarWhereWithAggregatesInput | Prisma.FunctionScalarWhereWithAggregatesInput[]
   OR?: Prisma.FunctionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.FunctionScalarWhereWithAggregatesInput | Prisma.FunctionScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Function"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Function"> | string
   name?: Prisma.StringWithAggregatesFilter<"Function"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Function"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"Function"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"Function"> | string
 }
 
 export type FunctionCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactCreateNestedManyWithoutFunctionInput
@@ -233,16 +233,16 @@ export type FunctionCreateInput = {
 }
 
 export type FunctionUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutFunctionInput
   Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedCreateNestedManyWithoutFunction_Employee_functionIdToFunctionInput
 }
 
 export type FunctionUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUpdateManyWithoutFunctionNestedInput
@@ -251,32 +251,32 @@ export type FunctionUpdateInput = {
 }
 
 export type FunctionUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutFunctionNestedInput
   Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedUpdateManyWithoutFunction_Employee_functionIdToFunctionNestedInput
 }
 
 export type FunctionCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type FunctionUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FunctionUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FunctionNullableScalarRelationFilter = {
@@ -396,7 +396,7 @@ export type FunctionUncheckedUpdateManyWithoutEmployee_Function_createdByToEmplo
 }
 
 export type FunctionCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Employee_Employee_functionIdToFunction?: Prisma.EmployeeCreateNestedManyWithoutFunction_Employee_functionIdToFunctionInput
@@ -404,10 +404,10 @@ export type FunctionCreateWithoutContactInput = {
 }
 
 export type FunctionUncheckedCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedCreateNestedManyWithoutFunction_Employee_functionIdToFunctionInput
 }
 
@@ -428,7 +428,7 @@ export type FunctionUpdateToOneWithWhereWithoutContactInput = {
 }
 
 export type FunctionUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee_Employee_functionIdToFunction?: Prisma.EmployeeUpdateManyWithoutFunction_Employee_functionIdToFunctionNestedInput
@@ -436,15 +436,15 @@ export type FunctionUpdateWithoutContactInput = {
 }
 
 export type FunctionUncheckedUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedUpdateManyWithoutFunction_Employee_functionIdToFunctionNestedInput
 }
 
 export type FunctionCreateWithoutEmployee_Employee_functionIdToFunctionInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactCreateNestedManyWithoutFunctionInput
@@ -452,10 +452,10 @@ export type FunctionCreateWithoutEmployee_Employee_functionIdToFunctionInput = {
 }
 
 export type FunctionUncheckedCreateWithoutEmployee_Employee_functionIdToFunctionInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutFunctionInput
 }
 
@@ -465,7 +465,7 @@ export type FunctionCreateOrConnectWithoutEmployee_Employee_functionIdToFunction
 }
 
 export type FunctionCreateWithoutEmployee_Function_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactCreateNestedManyWithoutFunctionInput
@@ -473,7 +473,7 @@ export type FunctionCreateWithoutEmployee_Function_createdByToEmployeeInput = {
 }
 
 export type FunctionUncheckedCreateWithoutEmployee_Function_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutFunctionInput
@@ -502,7 +502,7 @@ export type FunctionUpdateToOneWithWhereWithoutEmployee_Employee_functionIdToFun
 }
 
 export type FunctionUpdateWithoutEmployee_Employee_functionIdToFunctionInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUpdateManyWithoutFunctionNestedInput
@@ -510,10 +510,10 @@ export type FunctionUpdateWithoutEmployee_Employee_functionIdToFunctionInput = {
 }
 
 export type FunctionUncheckedUpdateWithoutEmployee_Employee_functionIdToFunctionInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutFunctionNestedInput
 }
 
@@ -537,20 +537,20 @@ export type FunctionScalarWhereInput = {
   AND?: Prisma.FunctionScalarWhereInput | Prisma.FunctionScalarWhereInput[]
   OR?: Prisma.FunctionScalarWhereInput[]
   NOT?: Prisma.FunctionScalarWhereInput | Prisma.FunctionScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Function"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Function"> | string
   name?: Prisma.StringFilter<"Function"> | string
   createdAt?: Prisma.DateTimeFilter<"Function"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Function"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Function"> | string
 }
 
 export type FunctionCreateManyEmployee_Function_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
 }
 
 export type FunctionUpdateWithoutEmployee_Function_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUpdateManyWithoutFunctionNestedInput
@@ -558,7 +558,7 @@ export type FunctionUpdateWithoutEmployee_Function_createdByToEmployeeInput = {
 }
 
 export type FunctionUncheckedUpdateWithoutEmployee_Function_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutFunctionNestedInput
@@ -566,7 +566,7 @@ export type FunctionUncheckedUpdateWithoutEmployee_Function_createdByToEmployeeI
 }
 
 export type FunctionUncheckedUpdateManyWithoutEmployee_Function_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -647,10 +647,10 @@ export type $FunctionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     Employee_Function_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     createdAt: Date
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["function"]>
   composites: {}
 }
@@ -1023,10 +1023,10 @@ export interface Prisma__FunctionClient<T, Null = never, ExtArgs extends runtime
  * Fields of the Function model
  */
 export interface FunctionFieldRefs {
-  readonly id: Prisma.FieldRef<"Function", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Function", 'String'>
   readonly name: Prisma.FieldRef<"Function", 'String'>
   readonly createdAt: Prisma.FieldRef<"Function", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"Function", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"Function", 'String'>
 }
     
 

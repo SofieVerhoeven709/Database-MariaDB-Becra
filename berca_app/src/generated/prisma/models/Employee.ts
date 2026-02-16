@@ -25,7 +25,7 @@ export type AggregateEmployee = {
 }
 
 export type EmployeeMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   firstName: string | null
   lastName: string | null
   mail: string | null
@@ -47,16 +47,16 @@ export type EmployeeMinAggregateOutputType = {
   newYearCard: boolean | null
   active: boolean | null
   passwordCreatedAt: Date | null
-  createdBy: runtime.Bytes | null
-  roleId: runtime.Bytes | null
-  functionId: runtime.Bytes | null
-  departmentId: runtime.Bytes | null
-  titleId: runtime.Bytes | null
-  pictureId: runtime.Bytes | null
+  createdBy: string | null
+  roleId: string | null
+  functionId: string | null
+  departmentId: string | null
+  titleId: string | null
+  pictureId: string | null
 }
 
 export type EmployeeMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   firstName: string | null
   lastName: string | null
   mail: string | null
@@ -78,12 +78,12 @@ export type EmployeeMaxAggregateOutputType = {
   newYearCard: boolean | null
   active: boolean | null
   passwordCreatedAt: Date | null
-  createdBy: runtime.Bytes | null
-  roleId: runtime.Bytes | null
-  functionId: runtime.Bytes | null
-  departmentId: runtime.Bytes | null
-  titleId: runtime.Bytes | null
-  pictureId: runtime.Bytes | null
+  createdBy: string | null
+  roleId: string | null
+  functionId: string | null
+  departmentId: string | null
+  titleId: string | null
+  pictureId: string | null
 }
 
 export type EmployeeCountAggregateOutputType = {
@@ -286,7 +286,7 @@ export type EmployeeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 export type EmployeeGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail: string | null
@@ -308,12 +308,12 @@ export type EmployeeGroupByOutputType = {
   newYearCard: boolean
   active: boolean
   passwordCreatedAt: Date
-  createdBy: runtime.Bytes | null
-  roleId: runtime.Bytes | null
-  functionId: runtime.Bytes | null
-  departmentId: runtime.Bytes | null
-  titleId: runtime.Bytes | null
-  pictureId: runtime.Bytes | null
+  createdBy: string | null
+  roleId: string | null
+  functionId: string | null
+  departmentId: string | null
+  titleId: string | null
+  pictureId: string | null
   _count: EmployeeCountAggregateOutputType | null
   _min: EmployeeMinAggregateOutputType | null
   _max: EmployeeMaxAggregateOutputType | null
@@ -338,7 +338,7 @@ export type EmployeeWhereInput = {
   AND?: Prisma.EmployeeWhereInput | Prisma.EmployeeWhereInput[]
   OR?: Prisma.EmployeeWhereInput[]
   NOT?: Prisma.EmployeeWhereInput | Prisma.EmployeeWhereInput[]
-  id?: Prisma.BytesFilter<"Employee"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Employee"> | string
   firstName?: Prisma.StringFilter<"Employee"> | string
   lastName?: Prisma.StringFilter<"Employee"> | string
   mail?: Prisma.StringNullableFilter<"Employee"> | string | null
@@ -360,12 +360,12 @@ export type EmployeeWhereInput = {
   newYearCard?: Prisma.BoolFilter<"Employee"> | boolean
   active?: Prisma.BoolFilter<"Employee"> | boolean
   passwordCreatedAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
-  createdBy?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  roleId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  functionId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  departmentId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  titleId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  pictureId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
+  createdBy?: Prisma.StringNullableFilter<"Employee"> | string | null
+  roleId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  functionId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  titleId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  pictureId?: Prisma.StringNullableFilter<"Employee"> | string | null
   Certificate?: Prisma.CertificateListRelationFilter
   CertificateType?: Prisma.CertificateTypeListRelationFilter
   Company?: Prisma.CompanyListRelationFilter
@@ -499,7 +499,7 @@ export type EmployeeOrderByWithRelationInput = {
 }
 
 export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.EmployeeWhereInput | Prisma.EmployeeWhereInput[]
   OR?: Prisma.EmployeeWhereInput[]
   NOT?: Prisma.EmployeeWhereInput | Prisma.EmployeeWhereInput[]
@@ -524,12 +524,12 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   newYearCard?: Prisma.BoolFilter<"Employee"> | boolean
   active?: Prisma.BoolFilter<"Employee"> | boolean
   passwordCreatedAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
-  createdBy?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  roleId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  functionId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  departmentId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  titleId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  pictureId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
+  createdBy?: Prisma.StringNullableFilter<"Employee"> | string | null
+  roleId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  functionId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  titleId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  pictureId?: Prisma.StringNullableFilter<"Employee"> | string | null
   Certificate?: Prisma.CertificateListRelationFilter
   CertificateType?: Prisma.CertificateTypeListRelationFilter
   Company?: Prisma.CompanyListRelationFilter
@@ -619,7 +619,7 @@ export type EmployeeScalarWhereWithAggregatesInput = {
   AND?: Prisma.EmployeeScalarWhereWithAggregatesInput | Prisma.EmployeeScalarWhereWithAggregatesInput[]
   OR?: Prisma.EmployeeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.EmployeeScalarWhereWithAggregatesInput | Prisma.EmployeeScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Employee"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   firstName?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   lastName?: Prisma.StringWithAggregatesFilter<"Employee"> | string
   mail?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
@@ -641,16 +641,16 @@ export type EmployeeScalarWhereWithAggregatesInput = {
   newYearCard?: Prisma.BoolWithAggregatesFilter<"Employee"> | boolean
   active?: Prisma.BoolWithAggregatesFilter<"Employee"> | boolean
   passwordCreatedAt?: Prisma.DateTimeWithAggregatesFilter<"Employee"> | Date | string
-  createdBy?: Prisma.BytesNullableWithAggregatesFilter<"Employee"> | runtime.Bytes | null
-  roleId?: Prisma.BytesNullableWithAggregatesFilter<"Employee"> | runtime.Bytes | null
-  functionId?: Prisma.BytesNullableWithAggregatesFilter<"Employee"> | runtime.Bytes | null
-  departmentId?: Prisma.BytesNullableWithAggregatesFilter<"Employee"> | runtime.Bytes | null
-  titleId?: Prisma.BytesNullableWithAggregatesFilter<"Employee"> | runtime.Bytes | null
-  pictureId?: Prisma.BytesNullableWithAggregatesFilter<"Employee"> | runtime.Bytes | null
+  createdBy?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
+  roleId?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
+  functionId?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
+  departmentId?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
+  titleId?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
+  pictureId?: Prisma.StringNullableWithAggregatesFilter<"Employee"> | string | null
 }
 
 export type EmployeeCreateInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -724,7 +724,7 @@ export type EmployeeCreateInput = {
 }
 
 export type EmployeeUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -746,12 +746,12 @@ export type EmployeeUncheckedCreateInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -798,7 +798,7 @@ export type EmployeeUncheckedCreateInput = {
 }
 
 export type EmployeeUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -872,7 +872,7 @@ export type EmployeeUpdateInput = {
 }
 
 export type EmployeeUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -894,12 +894,12 @@ export type EmployeeUncheckedUpdateInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -946,7 +946,7 @@ export type EmployeeUncheckedUpdateInput = {
 }
 
 export type EmployeeCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -968,16 +968,16 @@ export type EmployeeCreateManyInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
 }
 
 export type EmployeeUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1002,7 +1002,7 @@ export type EmployeeUpdateManyMutationInput = {
 }
 
 export type EmployeeUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1024,12 +1024,12 @@ export type EmployeeUncheckedUpdateManyInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type EmployeeScalarRelationFilter = {
@@ -2008,7 +2008,7 @@ export type EmployeeUpdateOneRequiredWithoutSessionNestedInput = {
 }
 
 export type EmployeeCreateWithoutCertificateInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -2081,7 +2081,7 @@ export type EmployeeCreateWithoutCertificateInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutCertificateInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -2103,12 +2103,12 @@ export type EmployeeUncheckedCreateWithoutCertificateInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutEmployeeInput
@@ -2170,7 +2170,7 @@ export type EmployeeUpdateToOneWithWhereWithoutCertificateInput = {
 }
 
 export type EmployeeUpdateWithoutCertificateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2243,7 +2243,7 @@ export type EmployeeUpdateWithoutCertificateInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutCertificateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2265,12 +2265,12 @@ export type EmployeeUncheckedUpdateWithoutCertificateInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -2316,7 +2316,7 @@ export type EmployeeUncheckedUpdateWithoutCertificateInput = {
 }
 
 export type EmployeeCreateWithoutCertificateTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -2389,7 +2389,7 @@ export type EmployeeCreateWithoutCertificateTypeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutCertificateTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -2411,12 +2411,12 @@ export type EmployeeUncheckedCreateWithoutCertificateTypeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutEmployeeInput
@@ -2478,7 +2478,7 @@ export type EmployeeUpdateToOneWithWhereWithoutCertificateTypeInput = {
 }
 
 export type EmployeeUpdateWithoutCertificateTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2551,7 +2551,7 @@ export type EmployeeUpdateWithoutCertificateTypeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutCertificateTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2573,12 +2573,12 @@ export type EmployeeUncheckedUpdateWithoutCertificateTypeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -2624,7 +2624,7 @@ export type EmployeeUncheckedUpdateWithoutCertificateTypeInput = {
 }
 
 export type EmployeeCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -2697,7 +2697,7 @@ export type EmployeeCreateWithoutCompanyInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -2719,12 +2719,12 @@ export type EmployeeUncheckedCreateWithoutCompanyInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutEmployeeInput
@@ -2786,7 +2786,7 @@ export type EmployeeUpdateToOneWithWhereWithoutCompanyInput = {
 }
 
 export type EmployeeUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2859,7 +2859,7 @@ export type EmployeeUpdateWithoutCompanyInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2881,12 +2881,12 @@ export type EmployeeUncheckedUpdateWithoutCompanyInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -2932,7 +2932,7 @@ export type EmployeeUncheckedUpdateWithoutCompanyInput = {
 }
 
 export type EmployeeCreateWithoutCompanyAdressInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -3005,7 +3005,7 @@ export type EmployeeCreateWithoutCompanyAdressInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutCompanyAdressInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -3027,12 +3027,12 @@ export type EmployeeUncheckedCreateWithoutCompanyAdressInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -3094,7 +3094,7 @@ export type EmployeeUpdateToOneWithWhereWithoutCompanyAdressInput = {
 }
 
 export type EmployeeUpdateWithoutCompanyAdressInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3167,7 +3167,7 @@ export type EmployeeUpdateWithoutCompanyAdressInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutCompanyAdressInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3189,12 +3189,12 @@ export type EmployeeUncheckedUpdateWithoutCompanyAdressInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -3240,7 +3240,7 @@ export type EmployeeUncheckedUpdateWithoutCompanyAdressInput = {
 }
 
 export type EmployeeCreateWithoutCompanyContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -3313,7 +3313,7 @@ export type EmployeeCreateWithoutCompanyContactInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutCompanyContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -3335,12 +3335,12 @@ export type EmployeeUncheckedCreateWithoutCompanyContactInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -3402,7 +3402,7 @@ export type EmployeeUpdateToOneWithWhereWithoutCompanyContactInput = {
 }
 
 export type EmployeeUpdateWithoutCompanyContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3475,7 +3475,7 @@ export type EmployeeUpdateWithoutCompanyContactInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutCompanyContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3497,12 +3497,12 @@ export type EmployeeUncheckedUpdateWithoutCompanyContactInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -3548,7 +3548,7 @@ export type EmployeeUncheckedUpdateWithoutCompanyContactInput = {
 }
 
 export type EmployeeCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -3621,7 +3621,7 @@ export type EmployeeCreateWithoutContactInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -3643,12 +3643,12 @@ export type EmployeeUncheckedCreateWithoutContactInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -3710,7 +3710,7 @@ export type EmployeeUpdateToOneWithWhereWithoutContactInput = {
 }
 
 export type EmployeeUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3783,7 +3783,7 @@ export type EmployeeUpdateWithoutContactInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3805,12 +3805,12 @@ export type EmployeeUncheckedUpdateWithoutContactInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -3856,7 +3856,7 @@ export type EmployeeUncheckedUpdateWithoutContactInput = {
 }
 
 export type EmployeeCreateWithoutDepartment_Department_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -3929,7 +3929,7 @@ export type EmployeeCreateWithoutDepartment_Department_createdByToEmployeeInput 
 }
 
 export type EmployeeUncheckedCreateWithoutDepartment_Department_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -3951,12 +3951,12 @@ export type EmployeeUncheckedCreateWithoutDepartment_Department_createdByToEmplo
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -4007,7 +4007,7 @@ export type EmployeeCreateOrConnectWithoutDepartment_Department_createdByToEmplo
 }
 
 export type EmployeeCreateWithoutDepartment_Employee_departmentIdToDepartmentInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -4080,7 +4080,7 @@ export type EmployeeCreateWithoutDepartment_Employee_departmentIdToDepartmentInp
 }
 
 export type EmployeeUncheckedCreateWithoutDepartment_Employee_departmentIdToDepartmentInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -4102,11 +4102,11 @@ export type EmployeeUncheckedCreateWithoutDepartment_Employee_departmentIdToDepa
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -4174,7 +4174,7 @@ export type EmployeeUpdateToOneWithWhereWithoutDepartment_Department_createdByTo
 }
 
 export type EmployeeUpdateWithoutDepartment_Department_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4247,7 +4247,7 @@ export type EmployeeUpdateWithoutDepartment_Department_createdByToEmployeeInput 
 }
 
 export type EmployeeUncheckedUpdateWithoutDepartment_Department_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4269,12 +4269,12 @@ export type EmployeeUncheckedUpdateWithoutDepartment_Department_createdByToEmplo
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -4339,7 +4339,7 @@ export type EmployeeScalarWhereInput = {
   AND?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
   OR?: Prisma.EmployeeScalarWhereInput[]
   NOT?: Prisma.EmployeeScalarWhereInput | Prisma.EmployeeScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Employee"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Employee"> | string
   firstName?: Prisma.StringFilter<"Employee"> | string
   lastName?: Prisma.StringFilter<"Employee"> | string
   mail?: Prisma.StringNullableFilter<"Employee"> | string | null
@@ -4361,16 +4361,16 @@ export type EmployeeScalarWhereInput = {
   newYearCard?: Prisma.BoolFilter<"Employee"> | boolean
   active?: Prisma.BoolFilter<"Employee"> | boolean
   passwordCreatedAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
-  createdBy?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  roleId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  functionId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  departmentId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  titleId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
-  pictureId?: Prisma.BytesNullableFilter<"Employee"> | runtime.Bytes | null
+  createdBy?: Prisma.StringNullableFilter<"Employee"> | string | null
+  roleId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  functionId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  titleId?: Prisma.StringNullableFilter<"Employee"> | string | null
+  pictureId?: Prisma.StringNullableFilter<"Employee"> | string | null
 }
 
 export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -4443,7 +4443,7 @@ export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_createdByTo
 }
 
 export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -4465,12 +4465,12 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_cr
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -4521,7 +4521,7 @@ export type EmployeeCreateOrConnectWithoutDocumentStructure_DocumentStructure_cr
 }
 
 export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -4594,7 +4594,7 @@ export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_managedById
 }
 
 export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -4616,12 +4616,12 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_ma
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -4672,7 +4672,7 @@ export type EmployeeCreateOrConnectWithoutDocumentStructure_DocumentStructure_ma
 }
 
 export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -4745,7 +4745,7 @@ export type EmployeeCreateWithoutDocumentStructure_DocumentStructure_revisedById
 }
 
 export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -4767,12 +4767,12 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_DocumentStructure_re
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -4823,7 +4823,7 @@ export type EmployeeCreateOrConnectWithoutDocumentStructure_DocumentStructure_re
 }
 
 export type EmployeeCreateWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -4896,7 +4896,7 @@ export type EmployeeCreateWithoutDocumentStructure_Employee_pictureIdToDocumentS
 }
 
 export type EmployeeUncheckedCreateWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -4918,11 +4918,11 @@ export type EmployeeUncheckedCreateWithoutDocumentStructure_Employee_pictureIdTo
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -4990,7 +4990,7 @@ export type EmployeeUpdateToOneWithWhereWithoutDocumentStructure_DocumentStructu
 }
 
 export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5063,7 +5063,7 @@ export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_createdByTo
 }
 
 export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5085,12 +5085,12 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_cr
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -5147,7 +5147,7 @@ export type EmployeeUpdateToOneWithWhereWithoutDocumentStructure_DocumentStructu
 }
 
 export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5220,7 +5220,7 @@ export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_managedById
 }
 
 export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5242,12 +5242,12 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_ma
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -5304,7 +5304,7 @@ export type EmployeeUpdateToOneWithWhereWithoutDocumentStructure_DocumentStructu
 }
 
 export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5377,7 +5377,7 @@ export type EmployeeUpdateWithoutDocumentStructure_DocumentStructure_revisedById
 }
 
 export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5399,12 +5399,12 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_DocumentStructure_re
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -5466,7 +5466,7 @@ export type EmployeeUpdateManyWithWhereWithoutDocumentStructure_Employee_picture
 }
 
 export type EmployeeCreateWithoutEmergencyContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -5539,7 +5539,7 @@ export type EmployeeCreateWithoutEmergencyContactInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutEmergencyContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -5561,12 +5561,12 @@ export type EmployeeUncheckedCreateWithoutEmergencyContactInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -5628,7 +5628,7 @@ export type EmployeeUpdateToOneWithWhereWithoutEmergencyContactInput = {
 }
 
 export type EmployeeUpdateWithoutEmergencyContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5701,7 +5701,7 @@ export type EmployeeUpdateWithoutEmergencyContactInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutEmergencyContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5723,12 +5723,12 @@ export type EmployeeUncheckedUpdateWithoutEmergencyContactInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -5774,7 +5774,7 @@ export type EmployeeUncheckedUpdateWithoutEmergencyContactInput = {
 }
 
 export type EmployeeCreateWithoutOther_EmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -5847,7 +5847,7 @@ export type EmployeeCreateWithoutOther_EmployeeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutOther_EmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -5869,12 +5869,12 @@ export type EmployeeUncheckedCreateWithoutOther_EmployeeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -5925,7 +5925,7 @@ export type EmployeeCreateOrConnectWithoutOther_EmployeeInput = {
 }
 
 export type EmployeeCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -5998,7 +5998,7 @@ export type EmployeeCreateWithoutEmployeeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -6020,11 +6020,11 @@ export type EmployeeUncheckedCreateWithoutEmployeeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -6092,7 +6092,7 @@ export type EmployeeUpdateToOneWithWhereWithoutOther_EmployeeInput = {
 }
 
 export type EmployeeUpdateWithoutOther_EmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6165,7 +6165,7 @@ export type EmployeeUpdateWithoutOther_EmployeeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutOther_EmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6187,12 +6187,12 @@ export type EmployeeUncheckedUpdateWithoutOther_EmployeeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -6254,7 +6254,7 @@ export type EmployeeUpdateManyWithWhereWithoutEmployeeInput = {
 }
 
 export type EmployeeCreateWithoutFollowUp_FollowUp_ownedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -6327,7 +6327,7 @@ export type EmployeeCreateWithoutFollowUp_FollowUp_ownedByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_ownedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -6349,12 +6349,12 @@ export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_ownedByToEmployeeInp
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -6405,7 +6405,7 @@ export type EmployeeCreateOrConnectWithoutFollowUp_FollowUp_ownedByToEmployeeInp
 }
 
 export type EmployeeCreateWithoutFollowUp_FollowUp_executedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -6478,7 +6478,7 @@ export type EmployeeCreateWithoutFollowUp_FollowUp_executedByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_executedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -6500,12 +6500,12 @@ export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_executedByToEmployee
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -6556,7 +6556,7 @@ export type EmployeeCreateOrConnectWithoutFollowUp_FollowUp_executedByToEmployee
 }
 
 export type EmployeeCreateWithoutFollowUp_FollowUp_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -6629,7 +6629,7 @@ export type EmployeeCreateWithoutFollowUp_FollowUp_createdByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -6651,12 +6651,12 @@ export type EmployeeUncheckedCreateWithoutFollowUp_FollowUp_createdByToEmployeeI
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -6718,7 +6718,7 @@ export type EmployeeUpdateToOneWithWhereWithoutFollowUp_FollowUp_ownedByToEmploy
 }
 
 export type EmployeeUpdateWithoutFollowUp_FollowUp_ownedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6791,7 +6791,7 @@ export type EmployeeUpdateWithoutFollowUp_FollowUp_ownedByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_ownedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6813,12 +6813,12 @@ export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_ownedByToEmployeeInp
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -6875,7 +6875,7 @@ export type EmployeeUpdateToOneWithWhereWithoutFollowUp_FollowUp_executedByToEmp
 }
 
 export type EmployeeUpdateWithoutFollowUp_FollowUp_executedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6948,7 +6948,7 @@ export type EmployeeUpdateWithoutFollowUp_FollowUp_executedByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_executedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -6970,12 +6970,12 @@ export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_executedByToEmployee
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -7032,7 +7032,7 @@ export type EmployeeUpdateToOneWithWhereWithoutFollowUp_FollowUp_createdByToEmpl
 }
 
 export type EmployeeUpdateWithoutFollowUp_FollowUp_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7105,7 +7105,7 @@ export type EmployeeUpdateWithoutFollowUp_FollowUp_createdByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7127,12 +7127,12 @@ export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_createdByToEmployeeI
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -7178,7 +7178,7 @@ export type EmployeeUncheckedUpdateWithoutFollowUp_FollowUp_createdByToEmployeeI
 }
 
 export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -7251,7 +7251,7 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_ownedByToEm
 }
 
 export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -7273,12 +7273,12 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_ow
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -7329,7 +7329,7 @@ export type EmployeeCreateOrConnectWithoutFollowUpStructure_FollowUpStructure_ow
 }
 
 export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -7402,7 +7402,7 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_executedByT
 }
 
 export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -7424,12 +7424,12 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_ex
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -7480,7 +7480,7 @@ export type EmployeeCreateOrConnectWithoutFollowUpStructure_FollowUpStructure_ex
 }
 
 export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -7553,7 +7553,7 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_taskForToEm
 }
 
 export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -7575,12 +7575,12 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_ta
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -7631,7 +7631,7 @@ export type EmployeeCreateOrConnectWithoutFollowUpStructure_FollowUpStructure_ta
 }
 
 export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -7704,7 +7704,7 @@ export type EmployeeCreateWithoutFollowUpStructure_FollowUpStructure_createdByTo
 }
 
 export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -7726,12 +7726,12 @@ export type EmployeeUncheckedCreateWithoutFollowUpStructure_FollowUpStructure_cr
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -7793,7 +7793,7 @@ export type EmployeeUpdateToOneWithWhereWithoutFollowUpStructure_FollowUpStructu
 }
 
 export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7866,7 +7866,7 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_ownedByToEm
 }
 
 export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_ownedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7888,12 +7888,12 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_ow
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -7950,7 +7950,7 @@ export type EmployeeUpdateToOneWithWhereWithoutFollowUpStructure_FollowUpStructu
 }
 
 export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8023,7 +8023,7 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_executedByT
 }
 
 export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_executedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8045,12 +8045,12 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_ex
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -8107,7 +8107,7 @@ export type EmployeeUpdateToOneWithWhereWithoutFollowUpStructure_FollowUpStructu
 }
 
 export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8180,7 +8180,7 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_taskForToEm
 }
 
 export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_taskForToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8202,12 +8202,12 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_ta
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -8264,7 +8264,7 @@ export type EmployeeUpdateToOneWithWhereWithoutFollowUpStructure_FollowUpStructu
 }
 
 export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8337,7 +8337,7 @@ export type EmployeeUpdateWithoutFollowUpStructure_FollowUpStructure_createdByTo
 }
 
 export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8359,12 +8359,12 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_cr
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -8410,7 +8410,7 @@ export type EmployeeUncheckedUpdateWithoutFollowUpStructure_FollowUpStructure_cr
 }
 
 export type EmployeeCreateWithoutFollowUpTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -8483,7 +8483,7 @@ export type EmployeeCreateWithoutFollowUpTypeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutFollowUpTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -8505,12 +8505,12 @@ export type EmployeeUncheckedCreateWithoutFollowUpTypeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -8572,7 +8572,7 @@ export type EmployeeUpdateToOneWithWhereWithoutFollowUpTypeInput = {
 }
 
 export type EmployeeUpdateWithoutFollowUpTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8645,7 +8645,7 @@ export type EmployeeUpdateWithoutFollowUpTypeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutFollowUpTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8667,12 +8667,12 @@ export type EmployeeUncheckedUpdateWithoutFollowUpTypeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -8718,7 +8718,7 @@ export type EmployeeUncheckedUpdateWithoutFollowUpTypeInput = {
 }
 
 export type EmployeeCreateWithoutFunction_Employee_functionIdToFunctionInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -8791,7 +8791,7 @@ export type EmployeeCreateWithoutFunction_Employee_functionIdToFunctionInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutFunction_Employee_functionIdToFunctionInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -8813,11 +8813,11 @@ export type EmployeeUncheckedCreateWithoutFunction_Employee_functionIdToFunction
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -8874,7 +8874,7 @@ export type EmployeeCreateManyFunction_Employee_functionIdToFunctionInputEnvelop
 }
 
 export type EmployeeCreateWithoutFunction_Function_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -8947,7 +8947,7 @@ export type EmployeeCreateWithoutFunction_Function_createdByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutFunction_Function_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -8969,12 +8969,12 @@ export type EmployeeUncheckedCreateWithoutFunction_Function_createdByToEmployeeI
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -9052,7 +9052,7 @@ export type EmployeeUpdateToOneWithWhereWithoutFunction_Function_createdByToEmpl
 }
 
 export type EmployeeUpdateWithoutFunction_Function_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9125,7 +9125,7 @@ export type EmployeeUpdateWithoutFunction_Function_createdByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutFunction_Function_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9147,12 +9147,12 @@ export type EmployeeUncheckedUpdateWithoutFunction_Function_createdByToEmployeeI
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -9198,7 +9198,7 @@ export type EmployeeUncheckedUpdateWithoutFunction_Function_createdByToEmployeeI
 }
 
 export type EmployeeCreateWithoutHourTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -9271,7 +9271,7 @@ export type EmployeeCreateWithoutHourTypeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutHourTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -9293,12 +9293,12 @@ export type EmployeeUncheckedCreateWithoutHourTypeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -9360,7 +9360,7 @@ export type EmployeeUpdateToOneWithWhereWithoutHourTypeInput = {
 }
 
 export type EmployeeUpdateWithoutHourTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9433,7 +9433,7 @@ export type EmployeeUpdateWithoutHourTypeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutHourTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9455,12 +9455,12 @@ export type EmployeeUncheckedUpdateWithoutHourTypeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -9506,7 +9506,7 @@ export type EmployeeUncheckedUpdateWithoutHourTypeInput = {
 }
 
 export type EmployeeCreateWithoutInvoiceInInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -9579,7 +9579,7 @@ export type EmployeeCreateWithoutInvoiceInInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutInvoiceInInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -9601,12 +9601,12 @@ export type EmployeeUncheckedCreateWithoutInvoiceInInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -9668,7 +9668,7 @@ export type EmployeeUpdateToOneWithWhereWithoutInvoiceInInput = {
 }
 
 export type EmployeeUpdateWithoutInvoiceInInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9741,7 +9741,7 @@ export type EmployeeUpdateWithoutInvoiceInInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutInvoiceInInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -9763,12 +9763,12 @@ export type EmployeeUncheckedUpdateWithoutInvoiceInInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -9814,7 +9814,7 @@ export type EmployeeUncheckedUpdateWithoutInvoiceInInput = {
 }
 
 export type EmployeeCreateWithoutInvoiceOutInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -9887,7 +9887,7 @@ export type EmployeeCreateWithoutInvoiceOutInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutInvoiceOutInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -9909,12 +9909,12 @@ export type EmployeeUncheckedCreateWithoutInvoiceOutInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -9976,7 +9976,7 @@ export type EmployeeUpdateToOneWithWhereWithoutInvoiceOutInput = {
 }
 
 export type EmployeeUpdateWithoutInvoiceOutInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10049,7 +10049,7 @@ export type EmployeeUpdateWithoutInvoiceOutInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutInvoiceOutInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10071,12 +10071,12 @@ export type EmployeeUncheckedUpdateWithoutInvoiceOutInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -10122,7 +10122,7 @@ export type EmployeeUncheckedUpdateWithoutInvoiceOutInput = {
 }
 
 export type EmployeeCreateWithoutInvoiceTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -10195,7 +10195,7 @@ export type EmployeeCreateWithoutInvoiceTypeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutInvoiceTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -10217,12 +10217,12 @@ export type EmployeeUncheckedCreateWithoutInvoiceTypeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -10284,7 +10284,7 @@ export type EmployeeUpdateToOneWithWhereWithoutInvoiceTypeInput = {
 }
 
 export type EmployeeUpdateWithoutInvoiceTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10357,7 +10357,7 @@ export type EmployeeUpdateWithoutInvoiceTypeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutInvoiceTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10379,12 +10379,12 @@ export type EmployeeUncheckedUpdateWithoutInvoiceTypeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -10430,7 +10430,7 @@ export type EmployeeUncheckedUpdateWithoutInvoiceTypeInput = {
 }
 
 export type EmployeeCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -10503,7 +10503,7 @@ export type EmployeeCreateWithoutProjectInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -10525,12 +10525,12 @@ export type EmployeeUncheckedCreateWithoutProjectInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -10592,7 +10592,7 @@ export type EmployeeUpdateToOneWithWhereWithoutProjectInput = {
 }
 
 export type EmployeeUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10665,7 +10665,7 @@ export type EmployeeUpdateWithoutProjectInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -10687,12 +10687,12 @@ export type EmployeeUncheckedUpdateWithoutProjectInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -10738,7 +10738,7 @@ export type EmployeeUncheckedUpdateWithoutProjectInput = {
 }
 
 export type EmployeeCreateWithoutProjectContact_ProjectContact_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -10811,7 +10811,7 @@ export type EmployeeCreateWithoutProjectContact_ProjectContact_createdByToEmploy
 }
 
 export type EmployeeUncheckedCreateWithoutProjectContact_ProjectContact_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -10833,12 +10833,12 @@ export type EmployeeUncheckedCreateWithoutProjectContact_ProjectContact_createdB
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -10889,7 +10889,7 @@ export type EmployeeCreateOrConnectWithoutProjectContact_ProjectContact_createdB
 }
 
 export type EmployeeCreateWithoutProjectContact_ProjectContact_moddifiedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -10962,7 +10962,7 @@ export type EmployeeCreateWithoutProjectContact_ProjectContact_moddifiedByToEmpl
 }
 
 export type EmployeeUncheckedCreateWithoutProjectContact_ProjectContact_moddifiedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -10984,12 +10984,12 @@ export type EmployeeUncheckedCreateWithoutProjectContact_ProjectContact_moddifie
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -11051,7 +11051,7 @@ export type EmployeeUpdateToOneWithWhereWithoutProjectContact_ProjectContact_cre
 }
 
 export type EmployeeUpdateWithoutProjectContact_ProjectContact_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11124,7 +11124,7 @@ export type EmployeeUpdateWithoutProjectContact_ProjectContact_createdByToEmploy
 }
 
 export type EmployeeUncheckedUpdateWithoutProjectContact_ProjectContact_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11146,12 +11146,12 @@ export type EmployeeUncheckedUpdateWithoutProjectContact_ProjectContact_createdB
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -11208,7 +11208,7 @@ export type EmployeeUpdateToOneWithWhereWithoutProjectContact_ProjectContact_mod
 }
 
 export type EmployeeUpdateWithoutProjectContact_ProjectContact_moddifiedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11281,7 +11281,7 @@ export type EmployeeUpdateWithoutProjectContact_ProjectContact_moddifiedByToEmpl
 }
 
 export type EmployeeUncheckedUpdateWithoutProjectContact_ProjectContact_moddifiedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11303,12 +11303,12 @@ export type EmployeeUncheckedUpdateWithoutProjectContact_ProjectContact_moddifie
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -11354,7 +11354,7 @@ export type EmployeeUncheckedUpdateWithoutProjectContact_ProjectContact_moddifie
 }
 
 export type EmployeeCreateWithoutProjectTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -11427,7 +11427,7 @@ export type EmployeeCreateWithoutProjectTypeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutProjectTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -11449,12 +11449,12 @@ export type EmployeeUncheckedCreateWithoutProjectTypeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -11516,7 +11516,7 @@ export type EmployeeUpdateToOneWithWhereWithoutProjectTypeInput = {
 }
 
 export type EmployeeUpdateWithoutProjectTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11589,7 +11589,7 @@ export type EmployeeUpdateWithoutProjectTypeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutProjectTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -11611,12 +11611,12 @@ export type EmployeeUncheckedUpdateWithoutProjectTypeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -11662,7 +11662,7 @@ export type EmployeeUncheckedUpdateWithoutProjectTypeInput = {
 }
 
 export type EmployeeCreateWithoutRole_Employee_roleIdToRoleInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -11735,7 +11735,7 @@ export type EmployeeCreateWithoutRole_Employee_roleIdToRoleInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutRole_Employee_roleIdToRoleInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -11757,11 +11757,11 @@ export type EmployeeUncheckedCreateWithoutRole_Employee_roleIdToRoleInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -11818,7 +11818,7 @@ export type EmployeeCreateManyRole_Employee_roleIdToRoleInputEnvelope = {
 }
 
 export type EmployeeCreateWithoutRole_Role_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -11891,7 +11891,7 @@ export type EmployeeCreateWithoutRole_Role_createdByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutRole_Role_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -11913,12 +11913,12 @@ export type EmployeeUncheckedCreateWithoutRole_Role_createdByToEmployeeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -11996,7 +11996,7 @@ export type EmployeeUpdateToOneWithWhereWithoutRole_Role_createdByToEmployeeInpu
 }
 
 export type EmployeeUpdateWithoutRole_Role_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12069,7 +12069,7 @@ export type EmployeeUpdateWithoutRole_Role_createdByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutRole_Role_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12091,12 +12091,12 @@ export type EmployeeUncheckedUpdateWithoutRole_Role_createdByToEmployeeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -12142,7 +12142,7 @@ export type EmployeeUncheckedUpdateWithoutRole_Role_createdByToEmployeeInput = {
 }
 
 export type EmployeeCreateWithoutStatusInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -12215,7 +12215,7 @@ export type EmployeeCreateWithoutStatusInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutStatusInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -12237,12 +12237,12 @@ export type EmployeeUncheckedCreateWithoutStatusInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -12304,7 +12304,7 @@ export type EmployeeUpdateToOneWithWhereWithoutStatusInput = {
 }
 
 export type EmployeeUpdateWithoutStatusInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12377,7 +12377,7 @@ export type EmployeeUpdateWithoutStatusInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutStatusInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12399,12 +12399,12 @@ export type EmployeeUncheckedUpdateWithoutStatusInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -12450,7 +12450,7 @@ export type EmployeeUncheckedUpdateWithoutStatusInput = {
 }
 
 export type EmployeeCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -12523,7 +12523,7 @@ export type EmployeeCreateWithoutTargetInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -12545,12 +12545,12 @@ export type EmployeeUncheckedCreateWithoutTargetInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -12612,7 +12612,7 @@ export type EmployeeUpdateToOneWithWhereWithoutTargetInput = {
 }
 
 export type EmployeeUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12685,7 +12685,7 @@ export type EmployeeUpdateWithoutTargetInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12707,12 +12707,12 @@ export type EmployeeUncheckedUpdateWithoutTargetInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -12758,7 +12758,7 @@ export type EmployeeUncheckedUpdateWithoutTargetInput = {
 }
 
 export type EmployeeCreateWithoutTargetTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -12831,7 +12831,7 @@ export type EmployeeCreateWithoutTargetTypeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutTargetTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -12853,12 +12853,12 @@ export type EmployeeUncheckedCreateWithoutTargetTypeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -12920,7 +12920,7 @@ export type EmployeeUpdateToOneWithWhereWithoutTargetTypeInput = {
 }
 
 export type EmployeeUpdateWithoutTargetTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -12993,7 +12993,7 @@ export type EmployeeUpdateWithoutTargetTypeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutTargetTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13015,12 +13015,12 @@ export type EmployeeUncheckedUpdateWithoutTargetTypeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -13066,7 +13066,7 @@ export type EmployeeUncheckedUpdateWithoutTargetTypeInput = {
 }
 
 export type EmployeeCreateWithoutTimeRegistryInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -13139,7 +13139,7 @@ export type EmployeeCreateWithoutTimeRegistryInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutTimeRegistryInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -13161,12 +13161,12 @@ export type EmployeeUncheckedCreateWithoutTimeRegistryInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -13228,7 +13228,7 @@ export type EmployeeUpdateToOneWithWhereWithoutTimeRegistryInput = {
 }
 
 export type EmployeeUpdateWithoutTimeRegistryInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13301,7 +13301,7 @@ export type EmployeeUpdateWithoutTimeRegistryInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutTimeRegistryInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13323,12 +13323,12 @@ export type EmployeeUncheckedUpdateWithoutTimeRegistryInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -13374,7 +13374,7 @@ export type EmployeeUncheckedUpdateWithoutTimeRegistryInput = {
 }
 
 export type EmployeeCreateWithoutTimeRegistryEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -13447,7 +13447,7 @@ export type EmployeeCreateWithoutTimeRegistryEmployeeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutTimeRegistryEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -13469,12 +13469,12 @@ export type EmployeeUncheckedCreateWithoutTimeRegistryEmployeeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -13536,7 +13536,7 @@ export type EmployeeUpdateToOneWithWhereWithoutTimeRegistryEmployeeInput = {
 }
 
 export type EmployeeUpdateWithoutTimeRegistryEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13609,7 +13609,7 @@ export type EmployeeUpdateWithoutTimeRegistryEmployeeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutTimeRegistryEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13631,12 +13631,12 @@ export type EmployeeUncheckedUpdateWithoutTimeRegistryEmployeeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -13682,7 +13682,7 @@ export type EmployeeUncheckedUpdateWithoutTimeRegistryEmployeeInput = {
 }
 
 export type EmployeeCreateWithoutTitle_Employee_titleIdToTitleInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -13755,7 +13755,7 @@ export type EmployeeCreateWithoutTitle_Employee_titleIdToTitleInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutTitle_Employee_titleIdToTitleInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -13777,11 +13777,11 @@ export type EmployeeUncheckedCreateWithoutTitle_Employee_titleIdToTitleInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -13838,7 +13838,7 @@ export type EmployeeCreateManyTitle_Employee_titleIdToTitleInputEnvelope = {
 }
 
 export type EmployeeCreateWithoutTitle_Title_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -13911,7 +13911,7 @@ export type EmployeeCreateWithoutTitle_Title_createdByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutTitle_Title_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -13933,12 +13933,12 @@ export type EmployeeUncheckedCreateWithoutTitle_Title_createdByToEmployeeInput =
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -14016,7 +14016,7 @@ export type EmployeeUpdateToOneWithWhereWithoutTitle_Title_createdByToEmployeeIn
 }
 
 export type EmployeeUpdateWithoutTitle_Title_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14089,7 +14089,7 @@ export type EmployeeUpdateWithoutTitle_Title_createdByToEmployeeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutTitle_Title_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14111,12 +14111,12 @@ export type EmployeeUncheckedUpdateWithoutTitle_Title_createdByToEmployeeInput =
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -14162,7 +14162,7 @@ export type EmployeeUncheckedUpdateWithoutTitle_Title_createdByToEmployeeInput =
 }
 
 export type EmployeeCreateWithoutTrainingInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -14235,7 +14235,7 @@ export type EmployeeCreateWithoutTrainingInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutTrainingInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -14257,12 +14257,12 @@ export type EmployeeUncheckedCreateWithoutTrainingInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -14324,7 +14324,7 @@ export type EmployeeUpdateToOneWithWhereWithoutTrainingInput = {
 }
 
 export type EmployeeUpdateWithoutTrainingInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14397,7 +14397,7 @@ export type EmployeeUpdateWithoutTrainingInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutTrainingInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14419,12 +14419,12 @@ export type EmployeeUncheckedUpdateWithoutTrainingInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -14470,7 +14470,7 @@ export type EmployeeUncheckedUpdateWithoutTrainingInput = {
 }
 
 export type EmployeeCreateWithoutTrainingContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -14543,7 +14543,7 @@ export type EmployeeCreateWithoutTrainingContactInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutTrainingContactInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -14565,12 +14565,12 @@ export type EmployeeUncheckedCreateWithoutTrainingContactInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -14632,7 +14632,7 @@ export type EmployeeUpdateToOneWithWhereWithoutTrainingContactInput = {
 }
 
 export type EmployeeUpdateWithoutTrainingContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14705,7 +14705,7 @@ export type EmployeeUpdateWithoutTrainingContactInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutTrainingContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -14727,12 +14727,12 @@ export type EmployeeUncheckedUpdateWithoutTrainingContactInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -14778,7 +14778,7 @@ export type EmployeeUncheckedUpdateWithoutTrainingContactInput = {
 }
 
 export type EmployeeCreateWithoutTrainingStandardInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -14851,7 +14851,7 @@ export type EmployeeCreateWithoutTrainingStandardInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutTrainingStandardInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -14873,12 +14873,12 @@ export type EmployeeUncheckedCreateWithoutTrainingStandardInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -14940,7 +14940,7 @@ export type EmployeeUpdateToOneWithWhereWithoutTrainingStandardInput = {
 }
 
 export type EmployeeUpdateWithoutTrainingStandardInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15013,7 +15013,7 @@ export type EmployeeUpdateWithoutTrainingStandardInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutTrainingStandardInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15035,12 +15035,12 @@ export type EmployeeUncheckedUpdateWithoutTrainingStandardInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -15086,7 +15086,7 @@ export type EmployeeUncheckedUpdateWithoutTrainingStandardInput = {
 }
 
 export type EmployeeCreateWithoutUrgencyTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -15159,7 +15159,7 @@ export type EmployeeCreateWithoutUrgencyTypeInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutUrgencyTypeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -15181,12 +15181,12 @@ export type EmployeeUncheckedCreateWithoutUrgencyTypeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -15248,7 +15248,7 @@ export type EmployeeUpdateToOneWithWhereWithoutUrgencyTypeInput = {
 }
 
 export type EmployeeUpdateWithoutUrgencyTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15321,7 +15321,7 @@ export type EmployeeUpdateWithoutUrgencyTypeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutUrgencyTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15343,12 +15343,12 @@ export type EmployeeUncheckedUpdateWithoutUrgencyTypeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -15394,7 +15394,7 @@ export type EmployeeUncheckedUpdateWithoutUrgencyTypeInput = {
 }
 
 export type EmployeeCreateWithoutWorkOrderInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -15467,7 +15467,7 @@ export type EmployeeCreateWithoutWorkOrderInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutWorkOrderInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -15489,12 +15489,12 @@ export type EmployeeUncheckedCreateWithoutWorkOrderInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -15556,7 +15556,7 @@ export type EmployeeUpdateToOneWithWhereWithoutWorkOrderInput = {
 }
 
 export type EmployeeUpdateWithoutWorkOrderInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15629,7 +15629,7 @@ export type EmployeeUpdateWithoutWorkOrderInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutWorkOrderInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15651,12 +15651,12 @@ export type EmployeeUncheckedUpdateWithoutWorkOrderInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -15702,7 +15702,7 @@ export type EmployeeUncheckedUpdateWithoutWorkOrderInput = {
 }
 
 export type EmployeeCreateWithoutWorkOrderStructureInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -15775,7 +15775,7 @@ export type EmployeeCreateWithoutWorkOrderStructureInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutWorkOrderStructureInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -15797,12 +15797,12 @@ export type EmployeeUncheckedCreateWithoutWorkOrderStructureInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -15864,7 +15864,7 @@ export type EmployeeUpdateToOneWithWhereWithoutWorkOrderStructureInput = {
 }
 
 export type EmployeeUpdateWithoutWorkOrderStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15937,7 +15937,7 @@ export type EmployeeUpdateWithoutWorkOrderStructureInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutWorkOrderStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -15959,12 +15959,12 @@ export type EmployeeUncheckedUpdateWithoutWorkOrderStructureInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -16010,7 +16010,7 @@ export type EmployeeUncheckedUpdateWithoutWorkOrderStructureInput = {
 }
 
 export type EmployeeCreateWithoutSessionInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -16083,7 +16083,7 @@ export type EmployeeCreateWithoutSessionInput = {
 }
 
 export type EmployeeUncheckedCreateWithoutSessionInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -16105,12 +16105,12 @@ export type EmployeeUncheckedCreateWithoutSessionInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutEmployeeInput
   CertificateType?: Prisma.CertificateTypeUncheckedCreateNestedManyWithoutEmployeeInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutEmployeeInput
@@ -16172,7 +16172,7 @@ export type EmployeeUpdateToOneWithWhereWithoutSessionInput = {
 }
 
 export type EmployeeUpdateWithoutSessionInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16245,7 +16245,7 @@ export type EmployeeUpdateWithoutSessionInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutSessionInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16267,12 +16267,12 @@ export type EmployeeUncheckedUpdateWithoutSessionInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -16318,7 +16318,7 @@ export type EmployeeUncheckedUpdateWithoutSessionInput = {
 }
 
 export type EmployeeCreateManyDepartment_Employee_departmentIdToDepartmentInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -16340,15 +16340,15 @@ export type EmployeeCreateManyDepartment_Employee_departmentIdToDepartmentInput 
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
 }
 
 export type EmployeeUpdateWithoutDepartment_Employee_departmentIdToDepartmentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16421,7 +16421,7 @@ export type EmployeeUpdateWithoutDepartment_Employee_departmentIdToDepartmentInp
 }
 
 export type EmployeeUncheckedUpdateWithoutDepartment_Employee_departmentIdToDepartmentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16443,11 +16443,11 @@ export type EmployeeUncheckedUpdateWithoutDepartment_Employee_departmentIdToDepa
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -16494,7 +16494,7 @@ export type EmployeeUncheckedUpdateWithoutDepartment_Employee_departmentIdToDepa
 }
 
 export type EmployeeUncheckedUpdateManyWithoutDepartment_Employee_departmentIdToDepartmentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16516,15 +16516,15 @@ export type EmployeeUncheckedUpdateManyWithoutDepartment_Employee_departmentIdTo
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type EmployeeCreateManyDocumentStructure_Employee_pictureIdToDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -16546,15 +16546,15 @@ export type EmployeeCreateManyDocumentStructure_Employee_pictureIdToDocumentStru
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
 }
 
 export type EmployeeUpdateWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16627,7 +16627,7 @@ export type EmployeeUpdateWithoutDocumentStructure_Employee_pictureIdToDocumentS
 }
 
 export type EmployeeUncheckedUpdateWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16649,11 +16649,11 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_Employee_pictureIdTo
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -16700,7 +16700,7 @@ export type EmployeeUncheckedUpdateWithoutDocumentStructure_Employee_pictureIdTo
 }
 
 export type EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16722,15 +16722,15 @@ export type EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_picture
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type EmployeeCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -16752,15 +16752,15 @@ export type EmployeeCreateManyEmployeeInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
 }
 
 export type EmployeeUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16833,7 +16833,7 @@ export type EmployeeUpdateWithoutEmployeeInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16855,11 +16855,11 @@ export type EmployeeUncheckedUpdateWithoutEmployeeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -16906,7 +16906,7 @@ export type EmployeeUncheckedUpdateWithoutEmployeeInput = {
 }
 
 export type EmployeeUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -16928,15 +16928,15 @@ export type EmployeeUncheckedUpdateManyWithoutEmployeeInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type EmployeeCreateManyFunction_Employee_functionIdToFunctionInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -16958,15 +16958,15 @@ export type EmployeeCreateManyFunction_Employee_functionIdToFunctionInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
 }
 
 export type EmployeeUpdateWithoutFunction_Employee_functionIdToFunctionInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -17039,7 +17039,7 @@ export type EmployeeUpdateWithoutFunction_Employee_functionIdToFunctionInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutFunction_Employee_functionIdToFunctionInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -17061,11 +17061,11 @@ export type EmployeeUncheckedUpdateWithoutFunction_Employee_functionIdToFunction
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -17112,7 +17112,7 @@ export type EmployeeUncheckedUpdateWithoutFunction_Employee_functionIdToFunction
 }
 
 export type EmployeeUncheckedUpdateManyWithoutFunction_Employee_functionIdToFunctionInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -17134,15 +17134,15 @@ export type EmployeeUncheckedUpdateManyWithoutFunction_Employee_functionIdToFunc
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type EmployeeCreateManyRole_Employee_roleIdToRoleInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -17164,15 +17164,15 @@ export type EmployeeCreateManyRole_Employee_roleIdToRoleInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  titleId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  titleId?: string | null
+  pictureId?: string | null
 }
 
 export type EmployeeUpdateWithoutRole_Employee_roleIdToRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -17245,7 +17245,7 @@ export type EmployeeUpdateWithoutRole_Employee_roleIdToRoleInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutRole_Employee_roleIdToRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -17267,11 +17267,11 @@ export type EmployeeUncheckedUpdateWithoutRole_Employee_roleIdToRoleInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -17318,7 +17318,7 @@ export type EmployeeUncheckedUpdateWithoutRole_Employee_roleIdToRoleInput = {
 }
 
 export type EmployeeUncheckedUpdateManyWithoutRole_Employee_roleIdToRoleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -17340,15 +17340,15 @@ export type EmployeeUncheckedUpdateManyWithoutRole_Employee_roleIdToRoleInput = 
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  titleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type EmployeeCreateManyTitle_Employee_titleIdToTitleInput = {
-  id: runtime.Bytes
+  id: string
   firstName: string
   lastName: string
   mail?: string | null
@@ -17370,15 +17370,15 @@ export type EmployeeCreateManyTitle_Employee_titleIdToTitleInput = {
   newYearCard?: boolean
   active?: boolean
   passwordCreatedAt: Date | string
-  createdBy?: runtime.Bytes | null
-  roleId?: runtime.Bytes | null
-  functionId?: runtime.Bytes | null
-  departmentId?: runtime.Bytes | null
-  pictureId?: runtime.Bytes | null
+  createdBy?: string | null
+  roleId?: string | null
+  functionId?: string | null
+  departmentId?: string | null
+  pictureId?: string | null
 }
 
 export type EmployeeUpdateWithoutTitle_Employee_titleIdToTitleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -17451,7 +17451,7 @@ export type EmployeeUpdateWithoutTitle_Employee_titleIdToTitleInput = {
 }
 
 export type EmployeeUncheckedUpdateWithoutTitle_Employee_titleIdToTitleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -17473,11 +17473,11 @@ export type EmployeeUncheckedUpdateWithoutTitle_Employee_titleIdToTitleInput = {
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutEmployeeNestedInput
   CertificateType?: Prisma.CertificateTypeUncheckedUpdateManyWithoutEmployeeNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutEmployeeNestedInput
@@ -17524,7 +17524,7 @@ export type EmployeeUncheckedUpdateWithoutTitle_Employee_titleIdToTitleInput = {
 }
 
 export type EmployeeUncheckedUpdateManyWithoutTitle_Employee_titleIdToTitleInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -17546,11 +17546,11 @@ export type EmployeeUncheckedUpdateManyWithoutTitle_Employee_titleIdToTitleInput
   newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   passwordCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  roleId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  functionId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  departmentId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
-  pictureId?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -18184,7 +18184,7 @@ export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     WorkOrderStructure: Prisma.$WorkOrderStructurePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     firstName: string
     lastName: string
     mail: string | null
@@ -18206,12 +18206,12 @@ export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     newYearCard: boolean
     active: boolean
     passwordCreatedAt: Date
-    createdBy: runtime.Bytes | null
-    roleId: runtime.Bytes | null
-    functionId: runtime.Bytes | null
-    departmentId: runtime.Bytes | null
-    titleId: runtime.Bytes | null
-    pictureId: runtime.Bytes | null
+    createdBy: string | null
+    roleId: string | null
+    functionId: string | null
+    departmentId: string | null
+    titleId: string | null
+    pictureId: string | null
   }, ExtArgs["result"]["employee"]>
   composites: {}
 }
@@ -18630,7 +18630,7 @@ export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends runtime
  * Fields of the Employee model
  */
 export interface EmployeeFieldRefs {
-  readonly id: Prisma.FieldRef<"Employee", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Employee", 'String'>
   readonly firstName: Prisma.FieldRef<"Employee", 'String'>
   readonly lastName: Prisma.FieldRef<"Employee", 'String'>
   readonly mail: Prisma.FieldRef<"Employee", 'String'>
@@ -18652,12 +18652,12 @@ export interface EmployeeFieldRefs {
   readonly newYearCard: Prisma.FieldRef<"Employee", 'Boolean'>
   readonly active: Prisma.FieldRef<"Employee", 'Boolean'>
   readonly passwordCreatedAt: Prisma.FieldRef<"Employee", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"Employee", 'Bytes'>
-  readonly roleId: Prisma.FieldRef<"Employee", 'Bytes'>
-  readonly functionId: Prisma.FieldRef<"Employee", 'Bytes'>
-  readonly departmentId: Prisma.FieldRef<"Employee", 'Bytes'>
-  readonly titleId: Prisma.FieldRef<"Employee", 'Bytes'>
-  readonly pictureId: Prisma.FieldRef<"Employee", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"Employee", 'String'>
+  readonly roleId: Prisma.FieldRef<"Employee", 'String'>
+  readonly functionId: Prisma.FieldRef<"Employee", 'String'>
+  readonly departmentId: Prisma.FieldRef<"Employee", 'String'>
+  readonly titleId: Prisma.FieldRef<"Employee", 'String'>
+  readonly pictureId: Prisma.FieldRef<"Employee", 'String'>
 }
     
 

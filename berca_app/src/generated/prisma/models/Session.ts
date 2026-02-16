@@ -25,17 +25,17 @@ export type AggregateSession = {
 }
 
 export type SessionMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   activeFrom: Date | null
   activeUntil: Date | null
-  employeeId: runtime.Bytes | null
+  employeeId: string | null
 }
 
 export type SessionMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   activeFrom: Date | null
   activeUntil: Date | null
-  employeeId: runtime.Bytes | null
+  employeeId: string | null
 }
 
 export type SessionCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type SessionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 export type SessionGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   activeFrom: Date
   activeUntil: Date
-  employeeId: runtime.Bytes
+  employeeId: string
   _count: SessionCountAggregateOutputType | null
   _min: SessionMinAggregateOutputType | null
   _max: SessionMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type SessionWhereInput = {
   AND?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
   OR?: Prisma.SessionWhereInput[]
   NOT?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
-  id?: Prisma.BytesFilter<"Session"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Session"> | string
   activeFrom?: Prisma.DateTimeFilter<"Session"> | Date | string
   activeUntil?: Prisma.DateTimeFilter<"Session"> | Date | string
-  employeeId?: Prisma.BytesFilter<"Session"> | runtime.Bytes
+  employeeId?: Prisma.StringFilter<"Session"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
 
@@ -183,16 +183,17 @@ export type SessionOrderByWithRelationInput = {
   activeUntil?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  _relevance?: Prisma.SessionOrderByRelevanceInput
 }
 
 export type SessionWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
   OR?: Prisma.SessionWhereInput[]
   NOT?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
   activeFrom?: Prisma.DateTimeFilter<"Session"> | Date | string
   activeUntil?: Prisma.DateTimeFilter<"Session"> | Date | string
-  employeeId?: Prisma.BytesFilter<"Session"> | runtime.Bytes
+  employeeId?: Prisma.StringFilter<"Session"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
 
@@ -210,58 +211,58 @@ export type SessionScalarWhereWithAggregatesInput = {
   AND?: Prisma.SessionScalarWhereWithAggregatesInput | Prisma.SessionScalarWhereWithAggregatesInput[]
   OR?: Prisma.SessionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SessionScalarWhereWithAggregatesInput | Prisma.SessionScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Session"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Session"> | string
   activeFrom?: Prisma.DateTimeWithAggregatesFilter<"Session"> | Date | string
   activeUntil?: Prisma.DateTimeWithAggregatesFilter<"Session"> | Date | string
-  employeeId?: Prisma.BytesWithAggregatesFilter<"Session"> | runtime.Bytes
+  employeeId?: Prisma.StringWithAggregatesFilter<"Session"> | string
 }
 
 export type SessionCreateInput = {
-  id: runtime.Bytes
+  id: string
   activeFrom?: Date | string
   activeUntil: Date | string
   Employee: Prisma.EmployeeCreateNestedOneWithoutSessionInput
 }
 
 export type SessionUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   activeFrom?: Date | string
   activeUntil: Date | string
-  employeeId: runtime.Bytes
+  employeeId: string
 }
 
 export type SessionUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutSessionNestedInput
 }
 
 export type SessionUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  employeeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SessionCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   activeFrom?: Date | string
   activeUntil: Date | string
-  employeeId: runtime.Bytes
+  employeeId: string
 }
 
 export type SessionUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SessionUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  employeeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SessionListRelationFilter = {
@@ -272,6 +273,12 @@ export type SessionListRelationFilter = {
 
 export type SessionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type SessionOrderByRelevanceInput = {
+  fields: Prisma.SessionOrderByRelevanceFieldEnum | Prisma.SessionOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type SessionCountOrderByAggregateInput = {
@@ -338,13 +345,13 @@ export type SessionUncheckedUpdateManyWithoutEmployeeNestedInput = {
 }
 
 export type SessionCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activeFrom?: Date | string
   activeUntil: Date | string
 }
 
 export type SessionUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activeFrom?: Date | string
   activeUntil: Date | string
 }
@@ -379,32 +386,32 @@ export type SessionScalarWhereInput = {
   AND?: Prisma.SessionScalarWhereInput | Prisma.SessionScalarWhereInput[]
   OR?: Prisma.SessionScalarWhereInput[]
   NOT?: Prisma.SessionScalarWhereInput | Prisma.SessionScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Session"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Session"> | string
   activeFrom?: Prisma.DateTimeFilter<"Session"> | Date | string
   activeUntil?: Prisma.DateTimeFilter<"Session"> | Date | string
-  employeeId?: Prisma.BytesFilter<"Session"> | runtime.Bytes
+  employeeId?: Prisma.StringFilter<"Session"> | string
 }
 
 export type SessionCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activeFrom?: Date | string
   activeUntil: Date | string
 }
 
 export type SessionUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SessionUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SessionUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -439,10 +446,10 @@ export type $SessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     activeFrom: Date
     activeUntil: Date
-    employeeId: runtime.Bytes
+    employeeId: string
   }, ExtArgs["result"]["session"]>
   composites: {}
 }
@@ -813,10 +820,10 @@ export interface Prisma__SessionClient<T, Null = never, ExtArgs extends runtime.
  * Fields of the Session model
  */
 export interface SessionFieldRefs {
-  readonly id: Prisma.FieldRef<"Session", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Session", 'String'>
   readonly activeFrom: Prisma.FieldRef<"Session", 'DateTime'>
   readonly activeUntil: Prisma.FieldRef<"Session", 'DateTime'>
-  readonly employeeId: Prisma.FieldRef<"Session", 'Bytes'>
+  readonly employeeId: Prisma.FieldRef<"Session", 'String'>
 }
     
 

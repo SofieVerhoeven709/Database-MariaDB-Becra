@@ -25,17 +25,17 @@ export type AggregateDepartment = {
 }
 
 export type DepartmentMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type DepartmentMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type DepartmentCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type DepartmentGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 export type DepartmentGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: DepartmentCountAggregateOutputType | null
   _min: DepartmentMinAggregateOutputType | null
   _max: DepartmentMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type DepartmentWhereInput = {
   AND?: Prisma.DepartmentWhereInput | Prisma.DepartmentWhereInput[]
   OR?: Prisma.DepartmentWhereInput[]
   NOT?: Prisma.DepartmentWhereInput | Prisma.DepartmentWhereInput[]
-  id?: Prisma.BytesFilter<"Department"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Department"> | string
   name?: Prisma.StringFilter<"Department"> | string
   createdAt?: Prisma.DateTimeFilter<"Department"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Department"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Department"> | string
   Contact?: Prisma.ContactListRelationFilter
   Employee_Department_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_Employee_departmentIdToDepartment?: Prisma.EmployeeListRelationFilter
@@ -191,13 +191,13 @@ export type DepartmentOrderByWithRelationInput = {
 }
 
 export type DepartmentWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.DepartmentWhereInput | Prisma.DepartmentWhereInput[]
   OR?: Prisma.DepartmentWhereInput[]
   NOT?: Prisma.DepartmentWhereInput | Prisma.DepartmentWhereInput[]
   name?: Prisma.StringFilter<"Department"> | string
   createdAt?: Prisma.DateTimeFilter<"Department"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Department"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Department"> | string
   Contact?: Prisma.ContactListRelationFilter
   Employee_Department_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_Employee_departmentIdToDepartment?: Prisma.EmployeeListRelationFilter
@@ -217,14 +217,14 @@ export type DepartmentScalarWhereWithAggregatesInput = {
   AND?: Prisma.DepartmentScalarWhereWithAggregatesInput | Prisma.DepartmentScalarWhereWithAggregatesInput[]
   OR?: Prisma.DepartmentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DepartmentScalarWhereWithAggregatesInput | Prisma.DepartmentScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"Department"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"Department"> | string
   name?: Prisma.StringWithAggregatesFilter<"Department"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Department"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"Department"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"Department"> | string
 }
 
 export type DepartmentCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactCreateNestedManyWithoutDepartmentInput
@@ -233,16 +233,16 @@ export type DepartmentCreateInput = {
 }
 
 export type DepartmentUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDepartmentInput
   Employee_Employee_departmentIdToDepartment?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDepartment_Employee_departmentIdToDepartmentInput
 }
 
 export type DepartmentUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUpdateManyWithoutDepartmentNestedInput
@@ -251,32 +251,32 @@ export type DepartmentUpdateInput = {
 }
 
 export type DepartmentUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDepartmentNestedInput
   Employee_Employee_departmentIdToDepartment?: Prisma.EmployeeUncheckedUpdateManyWithoutDepartment_Employee_departmentIdToDepartmentNestedInput
 }
 
 export type DepartmentCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type DepartmentUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DepartmentUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DepartmentNullableScalarRelationFilter = {
@@ -396,7 +396,7 @@ export type DepartmentUncheckedUpdateManyWithoutEmployee_Department_createdByToE
 }
 
 export type DepartmentCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Employee_Department_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDepartment_Department_createdByToEmployeeInput
@@ -404,10 +404,10 @@ export type DepartmentCreateWithoutContactInput = {
 }
 
 export type DepartmentUncheckedCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Employee_Employee_departmentIdToDepartment?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDepartment_Employee_departmentIdToDepartmentInput
 }
 
@@ -428,7 +428,7 @@ export type DepartmentUpdateToOneWithWhereWithoutContactInput = {
 }
 
 export type DepartmentUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee_Department_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDepartment_Department_createdByToEmployeeNestedInput
@@ -436,15 +436,15 @@ export type DepartmentUpdateWithoutContactInput = {
 }
 
 export type DepartmentUncheckedUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Employee_Employee_departmentIdToDepartment?: Prisma.EmployeeUncheckedUpdateManyWithoutDepartment_Employee_departmentIdToDepartmentNestedInput
 }
 
 export type DepartmentCreateWithoutEmployee_Department_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactCreateNestedManyWithoutDepartmentInput
@@ -452,7 +452,7 @@ export type DepartmentCreateWithoutEmployee_Department_createdByToEmployeeInput 
 }
 
 export type DepartmentUncheckedCreateWithoutEmployee_Department_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDepartmentInput
@@ -470,7 +470,7 @@ export type DepartmentCreateManyEmployee_Department_createdByToEmployeeInputEnve
 }
 
 export type DepartmentCreateWithoutEmployee_Employee_departmentIdToDepartmentInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Contact?: Prisma.ContactCreateNestedManyWithoutDepartmentInput
@@ -478,10 +478,10 @@ export type DepartmentCreateWithoutEmployee_Employee_departmentIdToDepartmentInp
 }
 
 export type DepartmentUncheckedCreateWithoutEmployee_Employee_departmentIdToDepartmentInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDepartmentInput
 }
 
@@ -510,10 +510,10 @@ export type DepartmentScalarWhereInput = {
   AND?: Prisma.DepartmentScalarWhereInput | Prisma.DepartmentScalarWhereInput[]
   OR?: Prisma.DepartmentScalarWhereInput[]
   NOT?: Prisma.DepartmentScalarWhereInput | Prisma.DepartmentScalarWhereInput[]
-  id?: Prisma.BytesFilter<"Department"> | runtime.Bytes
+  id?: Prisma.StringFilter<"Department"> | string
   name?: Prisma.StringFilter<"Department"> | string
   createdAt?: Prisma.DateTimeFilter<"Department"> | Date | string
-  createdBy?: Prisma.BytesFilter<"Department"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"Department"> | string
 }
 
 export type DepartmentUpsertWithoutEmployee_Employee_departmentIdToDepartmentInput = {
@@ -528,7 +528,7 @@ export type DepartmentUpdateToOneWithWhereWithoutEmployee_Employee_departmentIdT
 }
 
 export type DepartmentUpdateWithoutEmployee_Employee_departmentIdToDepartmentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUpdateManyWithoutDepartmentNestedInput
@@ -536,21 +536,21 @@ export type DepartmentUpdateWithoutEmployee_Employee_departmentIdToDepartmentInp
 }
 
 export type DepartmentUncheckedUpdateWithoutEmployee_Employee_departmentIdToDepartmentInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentCreateManyEmployee_Department_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
 }
 
 export type DepartmentUpdateWithoutEmployee_Department_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUpdateManyWithoutDepartmentNestedInput
@@ -558,7 +558,7 @@ export type DepartmentUpdateWithoutEmployee_Department_createdByToEmployeeInput 
 }
 
 export type DepartmentUncheckedUpdateWithoutEmployee_Department_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDepartmentNestedInput
@@ -566,7 +566,7 @@ export type DepartmentUncheckedUpdateWithoutEmployee_Department_createdByToEmplo
 }
 
 export type DepartmentUncheckedUpdateManyWithoutEmployee_Department_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -647,10 +647,10 @@ export type $DepartmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     Employee_Employee_departmentIdToDepartment: Prisma.$EmployeePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     createdAt: Date
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["department"]>
   composites: {}
 }
@@ -1023,10 +1023,10 @@ export interface Prisma__DepartmentClient<T, Null = never, ExtArgs extends runti
  * Fields of the Department model
  */
 export interface DepartmentFieldRefs {
-  readonly id: Prisma.FieldRef<"Department", 'Bytes'>
+  readonly id: Prisma.FieldRef<"Department", 'String'>
   readonly name: Prisma.FieldRef<"Department", 'String'>
   readonly createdAt: Prisma.FieldRef<"Department", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"Department", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"Department", 'String'>
 }
     
 

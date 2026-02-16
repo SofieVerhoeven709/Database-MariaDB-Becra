@@ -25,17 +25,17 @@ export type AggregateTargetType = {
 }
 
 export type TargetTypeMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type TargetTypeMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type TargetTypeCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type TargetTypeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 export type TargetTypeGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: TargetTypeCountAggregateOutputType | null
   _min: TargetTypeMinAggregateOutputType | null
   _max: TargetTypeMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type TargetTypeWhereInput = {
   AND?: Prisma.TargetTypeWhereInput | Prisma.TargetTypeWhereInput[]
   OR?: Prisma.TargetTypeWhereInput[]
   NOT?: Prisma.TargetTypeWhereInput | Prisma.TargetTypeWhereInput[]
-  id?: Prisma.BytesFilter<"TargetType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"TargetType"> | string
   name?: Prisma.StringFilter<"TargetType"> | string
   createdAt?: Prisma.DateTimeFilter<"TargetType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"TargetType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"TargetType"> | string
   Target?: Prisma.TargetListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
@@ -189,13 +189,13 @@ export type TargetTypeOrderByWithRelationInput = {
 }
 
 export type TargetTypeWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.TargetTypeWhereInput | Prisma.TargetTypeWhereInput[]
   OR?: Prisma.TargetTypeWhereInput[]
   NOT?: Prisma.TargetTypeWhereInput | Prisma.TargetTypeWhereInput[]
   name?: Prisma.StringFilter<"TargetType"> | string
   createdAt?: Prisma.DateTimeFilter<"TargetType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"TargetType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"TargetType"> | string
   Target?: Prisma.TargetListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
@@ -214,14 +214,14 @@ export type TargetTypeScalarWhereWithAggregatesInput = {
   AND?: Prisma.TargetTypeScalarWhereWithAggregatesInput | Prisma.TargetTypeScalarWhereWithAggregatesInput[]
   OR?: Prisma.TargetTypeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TargetTypeScalarWhereWithAggregatesInput | Prisma.TargetTypeScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"TargetType"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"TargetType"> | string
   name?: Prisma.StringWithAggregatesFilter<"TargetType"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TargetType"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"TargetType"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"TargetType"> | string
 }
 
 export type TargetTypeCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Target?: Prisma.TargetCreateNestedManyWithoutTargetTypeInput
@@ -229,15 +229,15 @@ export type TargetTypeCreateInput = {
 }
 
 export type TargetTypeUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Target?: Prisma.TargetUncheckedCreateNestedManyWithoutTargetTypeInput
 }
 
 export type TargetTypeUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Target?: Prisma.TargetUpdateManyWithoutTargetTypeNestedInput
@@ -245,31 +245,31 @@ export type TargetTypeUpdateInput = {
 }
 
 export type TargetTypeUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Target?: Prisma.TargetUncheckedUpdateManyWithoutTargetTypeNestedInput
 }
 
 export type TargetTypeCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type TargetTypeUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TargetTypeUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TargetTypeListRelationFilter = {
@@ -371,14 +371,14 @@ export type TargetTypeUpdateOneRequiredWithoutTargetNestedInput = {
 }
 
 export type TargetTypeCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Target?: Prisma.TargetCreateNestedManyWithoutTargetTypeInput
 }
 
 export type TargetTypeUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Target?: Prisma.TargetUncheckedCreateNestedManyWithoutTargetTypeInput
@@ -414,24 +414,24 @@ export type TargetTypeScalarWhereInput = {
   AND?: Prisma.TargetTypeScalarWhereInput | Prisma.TargetTypeScalarWhereInput[]
   OR?: Prisma.TargetTypeScalarWhereInput[]
   NOT?: Prisma.TargetTypeScalarWhereInput | Prisma.TargetTypeScalarWhereInput[]
-  id?: Prisma.BytesFilter<"TargetType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"TargetType"> | string
   name?: Prisma.StringFilter<"TargetType"> | string
   createdAt?: Prisma.DateTimeFilter<"TargetType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"TargetType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"TargetType"> | string
 }
 
 export type TargetTypeCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetTypeInput
 }
 
 export type TargetTypeUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type TargetTypeCreateOrConnectWithoutTargetInput = {
@@ -451,41 +451,41 @@ export type TargetTypeUpdateToOneWithWhereWithoutTargetInput = {
 }
 
 export type TargetTypeUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetTypeNestedInput
 }
 
 export type TargetTypeUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TargetTypeCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
 }
 
 export type TargetTypeUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Target?: Prisma.TargetUpdateManyWithoutTargetTypeNestedInput
 }
 
 export type TargetTypeUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Target?: Prisma.TargetUncheckedUpdateManyWithoutTargetTypeNestedInput
 }
 
 export type TargetTypeUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -554,10 +554,10 @@ export type $TargetTypePayload<ExtArgs extends runtime.Types.Extensions.Internal
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     createdAt: Date
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["targetType"]>
   composites: {}
 }
@@ -929,10 +929,10 @@ export interface Prisma__TargetTypeClient<T, Null = never, ExtArgs extends runti
  * Fields of the TargetType model
  */
 export interface TargetTypeFieldRefs {
-  readonly id: Prisma.FieldRef<"TargetType", 'Bytes'>
+  readonly id: Prisma.FieldRef<"TargetType", 'String'>
   readonly name: Prisma.FieldRef<"TargetType", 'String'>
   readonly createdAt: Prisma.FieldRef<"TargetType", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"TargetType", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"TargetType", 'String'>
 }
     
 

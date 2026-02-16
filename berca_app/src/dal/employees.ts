@@ -6,7 +6,7 @@ import {hashPassword} from '@/lib/passwordUtils'
 import type {Profile, SessionWithProfile} from '@/models/employees'
 import {profileOmit, sessionWithProfileInclude} from '@/models/employees'
 import {SessionDuration} from '@/constants'
-import {generateBinaryUuid} from '@/lib/utils'
+import {randomUUID} from 'crypto'
 
 export type CreateEmployeeParams = Prisma.EmployeeCreateInput
 
@@ -42,13 +42,10 @@ export async function getEmployeeByUsername(username: string): Promise<Employee 
  * @param employeeId The id of the user for whom to start a new session.
  * @param role The role of the user for whom to start the session.
  */
-export async function startSession(
-  employeeId: Uint8Array<ArrayBuffer>,
-  role: {name: string},
-): Promise<SessionWithProfile> {
+export async function startSession(employeeId: string, role: {name: string}): Promise<SessionWithProfile> {
   return prismaClient.session.create({
     data: {
-      id: generateBinaryUuid(),
+      id: randomUUID(),
       employeeId,
       activeUntil: new Date(Date.now() + SessionDuration[role.name]),
     },
@@ -61,7 +58,7 @@ export async function startSession(
  *
  * @param id The id of the session to retrieve.
  */
-export const getSessionProfile = cache((id: Uint8Array<ArrayBuffer>): Promise<SessionWithProfile | null> => {
+export const getSessionProfile = cache((id: string): Promise<SessionWithProfile | null> => {
   return prismaClient.session.findUnique({
     where: {
       id,
@@ -78,7 +75,7 @@ export const getSessionProfile = cache((id: Uint8Array<ArrayBuffer>): Promise<Se
  *
  * @param id The id of the session to stop.
  */
-export async function stopSession(id: Uint8Array<ArrayBuffer>): Promise<void> {
+export async function stopSession(id: string): Promise<void> {
   await prismaClient.session.update({
     where: {id},
     data: {
@@ -88,7 +85,7 @@ export async function stopSession(id: Uint8Array<ArrayBuffer>): Promise<void> {
 }
 
 export type UpdateEmployeeParams = Prisma.EmployeeUpdateInput & {
-  id: Uint8Array<ArrayBuffer>
+  id: string
 }
 
 /**
@@ -114,7 +111,7 @@ export async function updateEmployee({id, ...data}: UpdateEmployeeParams): Promi
  * @param id The id of the session to extend.
  * @param role The role of the user for whom to start the session.
  */
-export async function extendSession(id: Uint8Array<ArrayBuffer>, role: {name: string}): Promise<SessionWithProfile> {
+export async function extendSession(id: string, role: {name: string}): Promise<SessionWithProfile> {
   return prismaClient.session.update({
     where: {id},
     data: {

@@ -35,7 +35,7 @@ export type FollowUpSumAggregateOutputType = {
 }
 
 export type FollowUpMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   activityDescription: string | null
   aditionalInfo: string | null
   actionAgenda: Date | null
@@ -48,18 +48,18 @@ export type FollowUpMinAggregateOutputType = {
   periodicControl: boolean | null
   recurringActive: boolean | null
   review: boolean | null
-  createdBy: runtime.Bytes | null
-  ownedBy: runtime.Bytes | null
-  statusId: runtime.Bytes | null
-  executedBy: runtime.Bytes | null
-  urgencyTypeId: runtime.Bytes | null
-  documentId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
-  followUpTypeId: runtime.Bytes | null
+  createdBy: string | null
+  ownedBy: string | null
+  statusId: string | null
+  executedBy: string | null
+  urgencyTypeId: string | null
+  documentId: string | null
+  targetId: string | null
+  followUpTypeId: string | null
 }
 
 export type FollowUpMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   activityDescription: string | null
   aditionalInfo: string | null
   actionAgenda: Date | null
@@ -72,14 +72,14 @@ export type FollowUpMaxAggregateOutputType = {
   periodicControl: boolean | null
   recurringActive: boolean | null
   review: boolean | null
-  createdBy: runtime.Bytes | null
-  ownedBy: runtime.Bytes | null
-  statusId: runtime.Bytes | null
-  executedBy: runtime.Bytes | null
-  urgencyTypeId: runtime.Bytes | null
-  documentId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
-  followUpTypeId: runtime.Bytes | null
+  createdBy: string | null
+  ownedBy: string | null
+  statusId: string | null
+  executedBy: string | null
+  urgencyTypeId: string | null
+  documentId: string | null
+  targetId: string | null
+  followUpTypeId: string | null
 }
 
 export type FollowUpCountAggregateOutputType = {
@@ -276,7 +276,7 @@ export type FollowUpGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 export type FollowUpGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   activityDescription: string | null
   aditionalInfo: string | null
   actionAgenda: Date | null
@@ -289,14 +289,14 @@ export type FollowUpGroupByOutputType = {
   periodicControl: boolean
   recurringActive: boolean
   review: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
   _count: FollowUpCountAggregateOutputType | null
   _avg: FollowUpAvgAggregateOutputType | null
   _sum: FollowUpSumAggregateOutputType | null
@@ -323,7 +323,7 @@ export type FollowUpWhereInput = {
   AND?: Prisma.FollowUpWhereInput | Prisma.FollowUpWhereInput[]
   OR?: Prisma.FollowUpWhereInput[]
   NOT?: Prisma.FollowUpWhereInput | Prisma.FollowUpWhereInput[]
-  id?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
+  id?: Prisma.StringFilter<"FollowUp"> | string
   activityDescription?: Prisma.StringNullableFilter<"FollowUp"> | string | null
   aditionalInfo?: Prisma.StringNullableFilter<"FollowUp"> | string | null
   actionAgenda?: Prisma.DateTimeNullableFilter<"FollowUp"> | Date | string | null
@@ -336,14 +336,14 @@ export type FollowUpWhereInput = {
   periodicControl?: Prisma.BoolFilter<"FollowUp"> | boolean
   recurringActive?: Prisma.BoolFilter<"FollowUp"> | boolean
   review?: Prisma.BoolFilter<"FollowUp"> | boolean
-  createdBy?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  ownedBy?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  statusId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  executedBy?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  documentId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"FollowUp"> | string
+  ownedBy?: Prisma.StringFilter<"FollowUp"> | string
+  statusId?: Prisma.StringFilter<"FollowUp"> | string
+  executedBy?: Prisma.StringFilter<"FollowUp"> | string
+  urgencyTypeId?: Prisma.StringFilter<"FollowUp"> | string
+  documentId?: Prisma.StringFilter<"FollowUp"> | string
+  targetId?: Prisma.StringFilter<"FollowUp"> | string
+  followUpTypeId?: Prisma.StringFilter<"FollowUp"> | string
   UrgencyType?: Prisma.XOR<Prisma.UrgencyTypeScalarRelationFilter, Prisma.UrgencyTypeWhereInput>
   Employee_FollowUp_ownedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Status?: Prisma.XOR<Prisma.StatusScalarRelationFilter, Prisma.StatusWhereInput>
@@ -392,7 +392,7 @@ export type FollowUpOrderByWithRelationInput = {
 }
 
 export type FollowUpWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.FollowUpWhereInput | Prisma.FollowUpWhereInput[]
   OR?: Prisma.FollowUpWhereInput[]
   NOT?: Prisma.FollowUpWhereInput | Prisma.FollowUpWhereInput[]
@@ -408,14 +408,14 @@ export type FollowUpWhereUniqueInput = Prisma.AtLeast<{
   periodicControl?: Prisma.BoolFilter<"FollowUp"> | boolean
   recurringActive?: Prisma.BoolFilter<"FollowUp"> | boolean
   review?: Prisma.BoolFilter<"FollowUp"> | boolean
-  createdBy?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  ownedBy?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  statusId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  executedBy?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  documentId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"FollowUp"> | string
+  ownedBy?: Prisma.StringFilter<"FollowUp"> | string
+  statusId?: Prisma.StringFilter<"FollowUp"> | string
+  executedBy?: Prisma.StringFilter<"FollowUp"> | string
+  urgencyTypeId?: Prisma.StringFilter<"FollowUp"> | string
+  documentId?: Prisma.StringFilter<"FollowUp"> | string
+  targetId?: Prisma.StringFilter<"FollowUp"> | string
+  followUpTypeId?: Prisma.StringFilter<"FollowUp"> | string
   UrgencyType?: Prisma.XOR<Prisma.UrgencyTypeScalarRelationFilter, Prisma.UrgencyTypeWhereInput>
   Employee_FollowUp_ownedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Status?: Prisma.XOR<Prisma.StatusScalarRelationFilter, Prisma.StatusWhereInput>
@@ -461,7 +461,7 @@ export type FollowUpScalarWhereWithAggregatesInput = {
   AND?: Prisma.FollowUpScalarWhereWithAggregatesInput | Prisma.FollowUpScalarWhereWithAggregatesInput[]
   OR?: Prisma.FollowUpScalarWhereWithAggregatesInput[]
   NOT?: Prisma.FollowUpScalarWhereWithAggregatesInput | Prisma.FollowUpScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"FollowUp"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
   activityDescription?: Prisma.StringNullableWithAggregatesFilter<"FollowUp"> | string | null
   aditionalInfo?: Prisma.StringNullableWithAggregatesFilter<"FollowUp"> | string | null
   actionAgenda?: Prisma.DateTimeNullableWithAggregatesFilter<"FollowUp"> | Date | string | null
@@ -474,18 +474,18 @@ export type FollowUpScalarWhereWithAggregatesInput = {
   periodicControl?: Prisma.BoolWithAggregatesFilter<"FollowUp"> | boolean
   recurringActive?: Prisma.BoolWithAggregatesFilter<"FollowUp"> | boolean
   review?: Prisma.BoolWithAggregatesFilter<"FollowUp"> | boolean
-  createdBy?: Prisma.BytesWithAggregatesFilter<"FollowUp"> | runtime.Bytes
-  ownedBy?: Prisma.BytesWithAggregatesFilter<"FollowUp"> | runtime.Bytes
-  statusId?: Prisma.BytesWithAggregatesFilter<"FollowUp"> | runtime.Bytes
-  executedBy?: Prisma.BytesWithAggregatesFilter<"FollowUp"> | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesWithAggregatesFilter<"FollowUp"> | runtime.Bytes
-  documentId?: Prisma.BytesWithAggregatesFilter<"FollowUp"> | runtime.Bytes
-  targetId?: Prisma.BytesWithAggregatesFilter<"FollowUp"> | runtime.Bytes
-  followUpTypeId?: Prisma.BytesWithAggregatesFilter<"FollowUp"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
+  ownedBy?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
+  statusId?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
+  executedBy?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
+  urgencyTypeId?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
+  documentId?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
+  targetId?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
+  followUpTypeId?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
 }
 
 export type FollowUpCreateInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -511,7 +511,7 @@ export type FollowUpCreateInput = {
 }
 
 export type FollowUpUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -524,20 +524,20 @@ export type FollowUpUncheckedCreateInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutFollowUpInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutFollowUpInput
 }
 
 export type FollowUpUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -563,7 +563,7 @@ export type FollowUpUpdateInput = {
 }
 
 export type FollowUpUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -576,20 +576,20 @@ export type FollowUpUncheckedUpdateInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutFollowUpNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutFollowUpNestedInput
 }
 
 export type FollowUpCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -602,18 +602,18 @@ export type FollowUpCreateManyInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
 }
 
 export type FollowUpUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -629,7 +629,7 @@ export type FollowUpUpdateManyMutationInput = {
 }
 
 export type FollowUpUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -642,14 +642,14 @@ export type FollowUpUncheckedUpdateManyInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpListRelationFilter = {
@@ -1118,7 +1118,7 @@ export type FollowUpUncheckedUpdateManyWithoutUrgencyTypeNestedInput = {
 }
 
 export type FollowUpCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1143,7 +1143,7 @@ export type FollowUpCreateWithoutDocumentStructureInput = {
 }
 
 export type FollowUpUncheckedCreateWithoutDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1156,13 +1156,13 @@ export type FollowUpUncheckedCreateWithoutDocumentStructureInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  targetId: string
+  followUpTypeId: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutFollowUpInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutFollowUpInput
 }
@@ -1197,7 +1197,7 @@ export type FollowUpScalarWhereInput = {
   AND?: Prisma.FollowUpScalarWhereInput | Prisma.FollowUpScalarWhereInput[]
   OR?: Prisma.FollowUpScalarWhereInput[]
   NOT?: Prisma.FollowUpScalarWhereInput | Prisma.FollowUpScalarWhereInput[]
-  id?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
+  id?: Prisma.StringFilter<"FollowUp"> | string
   activityDescription?: Prisma.StringNullableFilter<"FollowUp"> | string | null
   aditionalInfo?: Prisma.StringNullableFilter<"FollowUp"> | string | null
   actionAgenda?: Prisma.DateTimeNullableFilter<"FollowUp"> | Date | string | null
@@ -1210,18 +1210,18 @@ export type FollowUpScalarWhereInput = {
   periodicControl?: Prisma.BoolFilter<"FollowUp"> | boolean
   recurringActive?: Prisma.BoolFilter<"FollowUp"> | boolean
   review?: Prisma.BoolFilter<"FollowUp"> | boolean
-  createdBy?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  ownedBy?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  statusId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  executedBy?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  documentId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFilter<"FollowUp"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"FollowUp"> | string
+  ownedBy?: Prisma.StringFilter<"FollowUp"> | string
+  statusId?: Prisma.StringFilter<"FollowUp"> | string
+  executedBy?: Prisma.StringFilter<"FollowUp"> | string
+  urgencyTypeId?: Prisma.StringFilter<"FollowUp"> | string
+  documentId?: Prisma.StringFilter<"FollowUp"> | string
+  targetId?: Prisma.StringFilter<"FollowUp"> | string
+  followUpTypeId?: Prisma.StringFilter<"FollowUp"> | string
 }
 
 export type FollowUpCreateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1246,7 +1246,7 @@ export type FollowUpCreateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
 }
 
 export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1259,13 +1259,13 @@ export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_ownedByToEmployeeInp
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutFollowUpInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutFollowUpInput
 }
@@ -1281,7 +1281,7 @@ export type FollowUpCreateManyEmployee_FollowUp_ownedByToEmployeeInputEnvelope =
 }
 
 export type FollowUpCreateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1306,7 +1306,7 @@ export type FollowUpCreateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
 }
 
 export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1319,13 +1319,13 @@ export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_executedByToEmployee
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutFollowUpInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutFollowUpInput
 }
@@ -1341,7 +1341,7 @@ export type FollowUpCreateManyEmployee_FollowUp_executedByToEmployeeInputEnvelop
 }
 
 export type FollowUpCreateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1366,7 +1366,7 @@ export type FollowUpCreateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
 }
 
 export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1379,13 +1379,13 @@ export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_createdByToEmployeeI
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutFollowUpInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutFollowUpInput
 }
@@ -1449,7 +1449,7 @@ export type FollowUpUpdateManyWithWhereWithoutEmployee_FollowUp_createdByToEmplo
 }
 
 export type FollowUpCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1474,7 +1474,7 @@ export type FollowUpCreateWithoutFollowUpStructureInput = {
 }
 
 export type FollowUpUncheckedCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1487,14 +1487,14 @@ export type FollowUpUncheckedCreateWithoutFollowUpStructureInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutFollowUpInput
 }
 
@@ -1515,7 +1515,7 @@ export type FollowUpUpdateToOneWithWhereWithoutFollowUpStructureInput = {
 }
 
 export type FollowUpUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1540,7 +1540,7 @@ export type FollowUpUpdateWithoutFollowUpStructureInput = {
 }
 
 export type FollowUpUncheckedUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1553,19 +1553,19 @@ export type FollowUpUncheckedUpdateWithoutFollowUpStructureInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutFollowUpNestedInput
 }
 
 export type FollowUpCreateWithoutFollowUpTargetInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1590,7 +1590,7 @@ export type FollowUpCreateWithoutFollowUpTargetInput = {
 }
 
 export type FollowUpUncheckedCreateWithoutFollowUpTargetInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1603,14 +1603,14 @@ export type FollowUpUncheckedCreateWithoutFollowUpTargetInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutFollowUpInput
 }
 
@@ -1631,7 +1631,7 @@ export type FollowUpUpdateToOneWithWhereWithoutFollowUpTargetInput = {
 }
 
 export type FollowUpUpdateWithoutFollowUpTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1656,7 +1656,7 @@ export type FollowUpUpdateWithoutFollowUpTargetInput = {
 }
 
 export type FollowUpUncheckedUpdateWithoutFollowUpTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1669,19 +1669,19 @@ export type FollowUpUncheckedUpdateWithoutFollowUpTargetInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutFollowUpNestedInput
 }
 
 export type FollowUpCreateWithoutFollowUpTypeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1706,7 +1706,7 @@ export type FollowUpCreateWithoutFollowUpTypeInput = {
 }
 
 export type FollowUpUncheckedCreateWithoutFollowUpTypeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1719,13 +1719,13 @@ export type FollowUpUncheckedCreateWithoutFollowUpTypeInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutFollowUpInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutFollowUpInput
 }
@@ -1757,7 +1757,7 @@ export type FollowUpUpdateManyWithWhereWithoutFollowUpTypeInput = {
 }
 
 export type FollowUpCreateWithoutStatusInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1782,7 +1782,7 @@ export type FollowUpCreateWithoutStatusInput = {
 }
 
 export type FollowUpUncheckedCreateWithoutStatusInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1795,13 +1795,13 @@ export type FollowUpUncheckedCreateWithoutStatusInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutFollowUpInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutFollowUpInput
 }
@@ -1833,7 +1833,7 @@ export type FollowUpUpdateManyWithWhereWithoutStatusInput = {
 }
 
 export type FollowUpCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1858,7 +1858,7 @@ export type FollowUpCreateWithoutTargetInput = {
 }
 
 export type FollowUpUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1871,13 +1871,13 @@ export type FollowUpUncheckedCreateWithoutTargetInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  followUpTypeId: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutFollowUpInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutFollowUpInput
 }
@@ -1909,7 +1909,7 @@ export type FollowUpUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type FollowUpCreateWithoutUrgencyTypeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1934,7 +1934,7 @@ export type FollowUpCreateWithoutUrgencyTypeInput = {
 }
 
 export type FollowUpUncheckedCreateWithoutUrgencyTypeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1947,13 +1947,13 @@ export type FollowUpUncheckedCreateWithoutUrgencyTypeInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutFollowUpInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutFollowUpInput
 }
@@ -1985,7 +1985,7 @@ export type FollowUpUpdateManyWithWhereWithoutUrgencyTypeInput = {
 }
 
 export type FollowUpCreateManyDocumentStructureInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -1998,17 +1998,17 @@ export type FollowUpCreateManyDocumentStructureInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  targetId: string
+  followUpTypeId: string
 }
 
 export type FollowUpUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2033,7 +2033,7 @@ export type FollowUpUpdateWithoutDocumentStructureInput = {
 }
 
 export type FollowUpUncheckedUpdateWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2046,19 +2046,19 @@ export type FollowUpUncheckedUpdateWithoutDocumentStructureInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutFollowUpNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutFollowUpNestedInput
 }
 
 export type FollowUpUncheckedUpdateManyWithoutDocumentStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2071,17 +2071,17 @@ export type FollowUpUncheckedUpdateManyWithoutDocumentStructureInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpCreateManyEmployee_FollowUp_ownedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -2094,17 +2094,17 @@ export type FollowUpCreateManyEmployee_FollowUp_ownedByToEmployeeInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
 }
 
 export type FollowUpCreateManyEmployee_FollowUp_executedByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -2117,17 +2117,17 @@ export type FollowUpCreateManyEmployee_FollowUp_executedByToEmployeeInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
 }
 
 export type FollowUpCreateManyEmployee_FollowUp_createdByToEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -2140,17 +2140,17 @@ export type FollowUpCreateManyEmployee_FollowUp_createdByToEmployeeInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
 }
 
 export type FollowUpUpdateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2175,7 +2175,7 @@ export type FollowUpUpdateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
 }
 
 export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2188,19 +2188,19 @@ export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_ownedByToEmployeeInp
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutFollowUpNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutFollowUpNestedInput
 }
 
 export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2213,17 +2213,17 @@ export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_ownedByToEmploye
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpUpdateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2248,7 +2248,7 @@ export type FollowUpUpdateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
 }
 
 export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2261,19 +2261,19 @@ export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_executedByToEmployee
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutFollowUpNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutFollowUpNestedInput
 }
 
 export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_executedByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2286,17 +2286,17 @@ export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_executedByToEmpl
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpUpdateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2321,7 +2321,7 @@ export type FollowUpUpdateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
 }
 
 export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2334,19 +2334,19 @@ export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_createdByToEmployeeI
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutFollowUpNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutFollowUpNestedInput
 }
 
 export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_createdByToEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2359,17 +2359,17 @@ export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_createdByToEmplo
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpCreateManyFollowUpTypeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -2382,17 +2382,17 @@ export type FollowUpCreateManyFollowUpTypeInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
 }
 
 export type FollowUpUpdateWithoutFollowUpTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2417,7 +2417,7 @@ export type FollowUpUpdateWithoutFollowUpTypeInput = {
 }
 
 export type FollowUpUncheckedUpdateWithoutFollowUpTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2430,19 +2430,19 @@ export type FollowUpUncheckedUpdateWithoutFollowUpTypeInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutFollowUpNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutFollowUpNestedInput
 }
 
 export type FollowUpUncheckedUpdateManyWithoutFollowUpTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2455,17 +2455,17 @@ export type FollowUpUncheckedUpdateManyWithoutFollowUpTypeInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpCreateManyStatusInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -2478,17 +2478,17 @@ export type FollowUpCreateManyStatusInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
 }
 
 export type FollowUpUpdateWithoutStatusInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2513,7 +2513,7 @@ export type FollowUpUpdateWithoutStatusInput = {
 }
 
 export type FollowUpUncheckedUpdateWithoutStatusInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2526,19 +2526,19 @@ export type FollowUpUncheckedUpdateWithoutStatusInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutFollowUpNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutFollowUpNestedInput
 }
 
 export type FollowUpUncheckedUpdateManyWithoutStatusInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2551,17 +2551,17 @@ export type FollowUpUncheckedUpdateManyWithoutStatusInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpCreateManyTargetInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -2574,17 +2574,17 @@ export type FollowUpCreateManyTargetInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  urgencyTypeId: runtime.Bytes
-  documentId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  urgencyTypeId: string
+  documentId: string
+  followUpTypeId: string
 }
 
 export type FollowUpUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2609,7 +2609,7 @@ export type FollowUpUpdateWithoutTargetInput = {
 }
 
 export type FollowUpUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2622,19 +2622,19 @@ export type FollowUpUncheckedUpdateWithoutTargetInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutFollowUpNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutFollowUpNestedInput
 }
 
 export type FollowUpUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2647,17 +2647,17 @@ export type FollowUpUncheckedUpdateManyWithoutTargetInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  urgencyTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpCreateManyUrgencyTypeInput = {
-  id: runtime.Bytes
+  id: string
   activityDescription?: string | null
   aditionalInfo?: string | null
   actionAgenda?: Date | string | null
@@ -2670,17 +2670,17 @@ export type FollowUpCreateManyUrgencyTypeInput = {
   periodicControl?: boolean
   recurringActive?: boolean
   review?: boolean
-  createdBy: runtime.Bytes
-  ownedBy: runtime.Bytes
-  statusId: runtime.Bytes
-  executedBy: runtime.Bytes
-  documentId: runtime.Bytes
-  targetId: runtime.Bytes
-  followUpTypeId: runtime.Bytes
+  createdBy: string
+  ownedBy: string
+  statusId: string
+  executedBy: string
+  documentId: string
+  targetId: string
+  followUpTypeId: string
 }
 
 export type FollowUpUpdateWithoutUrgencyTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2705,7 +2705,7 @@ export type FollowUpUpdateWithoutUrgencyTypeInput = {
 }
 
 export type FollowUpUncheckedUpdateWithoutUrgencyTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2718,19 +2718,19 @@ export type FollowUpUncheckedUpdateWithoutUrgencyTypeInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutFollowUpNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutFollowUpNestedInput
 }
 
 export type FollowUpUncheckedUpdateManyWithoutUrgencyTypeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2743,13 +2743,13 @@ export type FollowUpUncheckedUpdateManyWithoutUrgencyTypeInput = {
   periodicControl?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   review?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  ownedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  statusId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  executedBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  documentId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpTypeId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  statusId?: Prisma.StringFieldUpdateOperationsInput | string
+  executedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -2883,7 +2883,7 @@ export type $FollowUpPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     FollowUpTarget: Prisma.$FollowUpTargetPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     activityDescription: string | null
     aditionalInfo: string | null
     actionAgenda: Date | null
@@ -2896,14 +2896,14 @@ export type $FollowUpPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     periodicControl: boolean
     recurringActive: boolean
     review: boolean
-    createdBy: runtime.Bytes
-    ownedBy: runtime.Bytes
-    statusId: runtime.Bytes
-    executedBy: runtime.Bytes
-    urgencyTypeId: runtime.Bytes
-    documentId: runtime.Bytes
-    targetId: runtime.Bytes
-    followUpTypeId: runtime.Bytes
+    createdBy: string
+    ownedBy: string
+    statusId: string
+    executedBy: string
+    urgencyTypeId: string
+    documentId: string
+    targetId: string
+    followUpTypeId: string
   }, ExtArgs["result"]["followUp"]>
   composites: {}
 }
@@ -3283,7 +3283,7 @@ export interface Prisma__FollowUpClient<T, Null = never, ExtArgs extends runtime
  * Fields of the FollowUp model
  */
 export interface FollowUpFieldRefs {
-  readonly id: Prisma.FieldRef<"FollowUp", 'Bytes'>
+  readonly id: Prisma.FieldRef<"FollowUp", 'String'>
   readonly activityDescription: Prisma.FieldRef<"FollowUp", 'String'>
   readonly aditionalInfo: Prisma.FieldRef<"FollowUp", 'String'>
   readonly actionAgenda: Prisma.FieldRef<"FollowUp", 'DateTime'>
@@ -3296,14 +3296,14 @@ export interface FollowUpFieldRefs {
   readonly periodicControl: Prisma.FieldRef<"FollowUp", 'Boolean'>
   readonly recurringActive: Prisma.FieldRef<"FollowUp", 'Boolean'>
   readonly review: Prisma.FieldRef<"FollowUp", 'Boolean'>
-  readonly createdBy: Prisma.FieldRef<"FollowUp", 'Bytes'>
-  readonly ownedBy: Prisma.FieldRef<"FollowUp", 'Bytes'>
-  readonly statusId: Prisma.FieldRef<"FollowUp", 'Bytes'>
-  readonly executedBy: Prisma.FieldRef<"FollowUp", 'Bytes'>
-  readonly urgencyTypeId: Prisma.FieldRef<"FollowUp", 'Bytes'>
-  readonly documentId: Prisma.FieldRef<"FollowUp", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"FollowUp", 'Bytes'>
-  readonly followUpTypeId: Prisma.FieldRef<"FollowUp", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"FollowUp", 'String'>
+  readonly ownedBy: Prisma.FieldRef<"FollowUp", 'String'>
+  readonly statusId: Prisma.FieldRef<"FollowUp", 'String'>
+  readonly executedBy: Prisma.FieldRef<"FollowUp", 'String'>
+  readonly urgencyTypeId: Prisma.FieldRef<"FollowUp", 'String'>
+  readonly documentId: Prisma.FieldRef<"FollowUp", 'String'>
+  readonly targetId: Prisma.FieldRef<"FollowUp", 'String'>
+  readonly followUpTypeId: Prisma.FieldRef<"FollowUp", 'String'>
 }
     
 

@@ -25,25 +25,25 @@ export type AggregateCompanyContact = {
 }
 
 export type CompanyContactMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   startedDate: Date | null
   endDate: Date | null
   roleWithCompany: string | null
   createdAt: Date | null
-  contactId: runtime.Bytes | null
-  companyId: runtime.Bytes | null
-  createdBy: runtime.Bytes | null
+  contactId: string | null
+  companyId: string | null
+  createdBy: string | null
 }
 
 export type CompanyContactMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   startedDate: Date | null
   endDate: Date | null
   roleWithCompany: string | null
   createdAt: Date | null
-  contactId: runtime.Bytes | null
-  companyId: runtime.Bytes | null
-  createdBy: runtime.Bytes | null
+  contactId: string | null
+  companyId: string | null
+  createdBy: string | null
 }
 
 export type CompanyContactCountAggregateOutputType = {
@@ -166,14 +166,14 @@ export type CompanyContactGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 export type CompanyContactGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date
   endDate: Date | null
   roleWithCompany: string | null
   createdAt: Date
-  contactId: runtime.Bytes
-  companyId: runtime.Bytes
-  createdBy: runtime.Bytes
+  contactId: string
+  companyId: string
+  createdBy: string
   _count: CompanyContactCountAggregateOutputType | null
   _min: CompanyContactMinAggregateOutputType | null
   _max: CompanyContactMaxAggregateOutputType | null
@@ -198,14 +198,14 @@ export type CompanyContactWhereInput = {
   AND?: Prisma.CompanyContactWhereInput | Prisma.CompanyContactWhereInput[]
   OR?: Prisma.CompanyContactWhereInput[]
   NOT?: Prisma.CompanyContactWhereInput | Prisma.CompanyContactWhereInput[]
-  id?: Prisma.BytesFilter<"CompanyContact"> | runtime.Bytes
+  id?: Prisma.StringFilter<"CompanyContact"> | string
   startedDate?: Prisma.DateTimeFilter<"CompanyContact"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"CompanyContact"> | Date | string | null
   roleWithCompany?: Prisma.StringNullableFilter<"CompanyContact"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CompanyContact"> | Date | string
-  contactId?: Prisma.BytesFilter<"CompanyContact"> | runtime.Bytes
-  companyId?: Prisma.BytesFilter<"CompanyContact"> | runtime.Bytes
-  createdBy?: Prisma.BytesFilter<"CompanyContact"> | runtime.Bytes
+  contactId?: Prisma.StringFilter<"CompanyContact"> | string
+  companyId?: Prisma.StringFilter<"CompanyContact"> | string
+  createdBy?: Prisma.StringFilter<"CompanyContact"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Contact?: Prisma.XOR<Prisma.ContactScalarRelationFilter, Prisma.ContactWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
@@ -227,7 +227,7 @@ export type CompanyContactOrderByWithRelationInput = {
 }
 
 export type CompanyContactWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.CompanyContactWhereInput | Prisma.CompanyContactWhereInput[]
   OR?: Prisma.CompanyContactWhereInput[]
   NOT?: Prisma.CompanyContactWhereInput | Prisma.CompanyContactWhereInput[]
@@ -235,9 +235,9 @@ export type CompanyContactWhereUniqueInput = Prisma.AtLeast<{
   endDate?: Prisma.DateTimeNullableFilter<"CompanyContact"> | Date | string | null
   roleWithCompany?: Prisma.StringNullableFilter<"CompanyContact"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CompanyContact"> | Date | string
-  contactId?: Prisma.BytesFilter<"CompanyContact"> | runtime.Bytes
-  companyId?: Prisma.BytesFilter<"CompanyContact"> | runtime.Bytes
-  createdBy?: Prisma.BytesFilter<"CompanyContact"> | runtime.Bytes
+  contactId?: Prisma.StringFilter<"CompanyContact"> | string
+  companyId?: Prisma.StringFilter<"CompanyContact"> | string
+  createdBy?: Prisma.StringFilter<"CompanyContact"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Contact?: Prisma.XOR<Prisma.ContactScalarRelationFilter, Prisma.ContactWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
@@ -261,18 +261,18 @@ export type CompanyContactScalarWhereWithAggregatesInput = {
   AND?: Prisma.CompanyContactScalarWhereWithAggregatesInput | Prisma.CompanyContactScalarWhereWithAggregatesInput[]
   OR?: Prisma.CompanyContactScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CompanyContactScalarWhereWithAggregatesInput | Prisma.CompanyContactScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"CompanyContact"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"CompanyContact"> | string
   startedDate?: Prisma.DateTimeWithAggregatesFilter<"CompanyContact"> | Date | string
   endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"CompanyContact"> | Date | string | null
   roleWithCompany?: Prisma.StringNullableWithAggregatesFilter<"CompanyContact"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CompanyContact"> | Date | string
-  contactId?: Prisma.BytesWithAggregatesFilter<"CompanyContact"> | runtime.Bytes
-  companyId?: Prisma.BytesWithAggregatesFilter<"CompanyContact"> | runtime.Bytes
-  createdBy?: Prisma.BytesWithAggregatesFilter<"CompanyContact"> | runtime.Bytes
+  contactId?: Prisma.StringWithAggregatesFilter<"CompanyContact"> | string
+  companyId?: Prisma.StringWithAggregatesFilter<"CompanyContact"> | string
+  createdBy?: Prisma.StringWithAggregatesFilter<"CompanyContact"> | string
 }
 
 export type CompanyContactCreateInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
@@ -283,18 +283,18 @@ export type CompanyContactCreateInput = {
 }
 
 export type CompanyContactUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
   createdAt: Date | string
-  contactId: runtime.Bytes
-  companyId: runtime.Bytes
-  createdBy: runtime.Bytes
+  contactId: string
+  companyId: string
+  createdBy: string
 }
 
 export type CompanyContactUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -305,29 +305,29 @@ export type CompanyContactUpdateInput = {
 }
 
 export type CompanyContactUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyContactCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
   createdAt: Date | string
-  contactId: runtime.Bytes
-  companyId: runtime.Bytes
-  createdBy: runtime.Bytes
+  contactId: string
+  companyId: string
+  createdBy: string
 }
 
 export type CompanyContactUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -335,14 +335,14 @@ export type CompanyContactUpdateManyMutationInput = {
 }
 
 export type CompanyContactUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyContactListRelationFilter = {
@@ -525,7 +525,7 @@ export type CompanyContactUncheckedUpdateManyWithoutEmployeeNestedInput = {
 }
 
 export type CompanyContactCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
@@ -535,13 +535,13 @@ export type CompanyContactCreateWithoutCompanyInput = {
 }
 
 export type CompanyContactUncheckedCreateWithoutCompanyInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
   createdAt: Date | string
-  contactId: runtime.Bytes
-  createdBy: runtime.Bytes
+  contactId: string
+  createdBy: string
 }
 
 export type CompanyContactCreateOrConnectWithoutCompanyInput = {
@@ -574,18 +574,18 @@ export type CompanyContactScalarWhereInput = {
   AND?: Prisma.CompanyContactScalarWhereInput | Prisma.CompanyContactScalarWhereInput[]
   OR?: Prisma.CompanyContactScalarWhereInput[]
   NOT?: Prisma.CompanyContactScalarWhereInput | Prisma.CompanyContactScalarWhereInput[]
-  id?: Prisma.BytesFilter<"CompanyContact"> | runtime.Bytes
+  id?: Prisma.StringFilter<"CompanyContact"> | string
   startedDate?: Prisma.DateTimeFilter<"CompanyContact"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"CompanyContact"> | Date | string | null
   roleWithCompany?: Prisma.StringNullableFilter<"CompanyContact"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CompanyContact"> | Date | string
-  contactId?: Prisma.BytesFilter<"CompanyContact"> | runtime.Bytes
-  companyId?: Prisma.BytesFilter<"CompanyContact"> | runtime.Bytes
-  createdBy?: Prisma.BytesFilter<"CompanyContact"> | runtime.Bytes
+  contactId?: Prisma.StringFilter<"CompanyContact"> | string
+  companyId?: Prisma.StringFilter<"CompanyContact"> | string
+  createdBy?: Prisma.StringFilter<"CompanyContact"> | string
 }
 
 export type CompanyContactCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
@@ -595,13 +595,13 @@ export type CompanyContactCreateWithoutContactInput = {
 }
 
 export type CompanyContactUncheckedCreateWithoutContactInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
   createdAt: Date | string
-  companyId: runtime.Bytes
-  createdBy: runtime.Bytes
+  companyId: string
+  createdBy: string
 }
 
 export type CompanyContactCreateOrConnectWithoutContactInput = {
@@ -631,7 +631,7 @@ export type CompanyContactUpdateManyWithWhereWithoutContactInput = {
 }
 
 export type CompanyContactCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
@@ -641,13 +641,13 @@ export type CompanyContactCreateWithoutEmployeeInput = {
 }
 
 export type CompanyContactUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
   createdAt: Date | string
-  contactId: runtime.Bytes
-  companyId: runtime.Bytes
+  contactId: string
+  companyId: string
 }
 
 export type CompanyContactCreateOrConnectWithoutEmployeeInput = {
@@ -677,17 +677,17 @@ export type CompanyContactUpdateManyWithWhereWithoutEmployeeInput = {
 }
 
 export type CompanyContactCreateManyCompanyInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
   createdAt: Date | string
-  contactId: runtime.Bytes
-  createdBy: runtime.Bytes
+  contactId: string
+  createdBy: string
 }
 
 export type CompanyContactUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -697,37 +697,37 @@ export type CompanyContactUpdateWithoutCompanyInput = {
 }
 
 export type CompanyContactUncheckedUpdateWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyContactUncheckedUpdateManyWithoutCompanyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyContactCreateManyContactInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
   createdAt: Date | string
-  companyId: runtime.Bytes
-  createdBy: runtime.Bytes
+  companyId: string
+  createdBy: string
 }
 
 export type CompanyContactUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -737,37 +737,37 @@ export type CompanyContactUpdateWithoutContactInput = {
 }
 
 export type CompanyContactUncheckedUpdateWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyContactUncheckedUpdateManyWithoutContactInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyContactCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   startedDate: Date | string
   endDate?: Date | string | null
   roleWithCompany?: string | null
   createdAt: Date | string
-  contactId: runtime.Bytes
-  companyId: runtime.Bytes
+  contactId: string
+  companyId: string
 }
 
 export type CompanyContactUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -777,23 +777,23 @@ export type CompanyContactUpdateWithoutEmployeeInput = {
 }
 
 export type CompanyContactUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CompanyContactUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   startedDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   roleWithCompany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contactId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  companyId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -840,14 +840,14 @@ export type $CompanyContactPayload<ExtArgs extends runtime.Types.Extensions.Inte
     Company: Prisma.$CompanyPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     startedDate: Date
     endDate: Date | null
     roleWithCompany: string | null
     createdAt: Date
-    contactId: runtime.Bytes
-    companyId: runtime.Bytes
-    createdBy: runtime.Bytes
+    contactId: string
+    companyId: string
+    createdBy: string
   }, ExtArgs["result"]["companyContact"]>
   composites: {}
 }
@@ -1220,14 +1220,14 @@ export interface Prisma__CompanyContactClient<T, Null = never, ExtArgs extends r
  * Fields of the CompanyContact model
  */
 export interface CompanyContactFieldRefs {
-  readonly id: Prisma.FieldRef<"CompanyContact", 'Bytes'>
+  readonly id: Prisma.FieldRef<"CompanyContact", 'String'>
   readonly startedDate: Prisma.FieldRef<"CompanyContact", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"CompanyContact", 'DateTime'>
   readonly roleWithCompany: Prisma.FieldRef<"CompanyContact", 'String'>
   readonly createdAt: Prisma.FieldRef<"CompanyContact", 'DateTime'>
-  readonly contactId: Prisma.FieldRef<"CompanyContact", 'Bytes'>
-  readonly companyId: Prisma.FieldRef<"CompanyContact", 'Bytes'>
-  readonly createdBy: Prisma.FieldRef<"CompanyContact", 'Bytes'>
+  readonly contactId: Prisma.FieldRef<"CompanyContact", 'String'>
+  readonly companyId: Prisma.FieldRef<"CompanyContact", 'String'>
+  readonly createdBy: Prisma.FieldRef<"CompanyContact", 'String'>
 }
     
 

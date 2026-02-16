@@ -25,15 +25,15 @@ export type AggregateFollowUpTarget = {
 }
 
 export type FollowUpTargetMinAggregateOutputType = {
-  id: runtime.Bytes | null
-  followUpId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  id: string | null
+  followUpId: string | null
+  targetId: string | null
 }
 
 export type FollowUpTargetMaxAggregateOutputType = {
-  id: runtime.Bytes | null
-  followUpId: runtime.Bytes | null
-  targetId: runtime.Bytes | null
+  id: string | null
+  followUpId: string | null
+  targetId: string | null
 }
 
 export type FollowUpTargetCountAggregateOutputType = {
@@ -136,9 +136,9 @@ export type FollowUpTargetGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 export type FollowUpTargetGroupByOutputType = {
-  id: runtime.Bytes
-  followUpId: runtime.Bytes
-  targetId: runtime.Bytes
+  id: string
+  followUpId: string
+  targetId: string
   _count: FollowUpTargetCountAggregateOutputType | null
   _min: FollowUpTargetMinAggregateOutputType | null
   _max: FollowUpTargetMaxAggregateOutputType | null
@@ -163,9 +163,9 @@ export type FollowUpTargetWhereInput = {
   AND?: Prisma.FollowUpTargetWhereInput | Prisma.FollowUpTargetWhereInput[]
   OR?: Prisma.FollowUpTargetWhereInput[]
   NOT?: Prisma.FollowUpTargetWhereInput | Prisma.FollowUpTargetWhereInput[]
-  id?: Prisma.BytesFilter<"FollowUpTarget"> | runtime.Bytes
-  followUpId?: Prisma.BytesFilter<"FollowUpTarget"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"FollowUpTarget"> | runtime.Bytes
+  id?: Prisma.StringFilter<"FollowUpTarget"> | string
+  followUpId?: Prisma.StringFilter<"FollowUpTarget"> | string
+  targetId?: Prisma.StringFilter<"FollowUpTarget"> | string
   FollowUp?: Prisma.XOR<Prisma.FollowUpScalarRelationFilter, Prisma.FollowUpWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
 }
@@ -176,15 +176,16 @@ export type FollowUpTargetOrderByWithRelationInput = {
   targetId?: Prisma.SortOrder
   FollowUp?: Prisma.FollowUpOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  _relevance?: Prisma.FollowUpTargetOrderByRelevanceInput
 }
 
 export type FollowUpTargetWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.FollowUpTargetWhereInput | Prisma.FollowUpTargetWhereInput[]
   OR?: Prisma.FollowUpTargetWhereInput[]
   NOT?: Prisma.FollowUpTargetWhereInput | Prisma.FollowUpTargetWhereInput[]
-  followUpId?: Prisma.BytesFilter<"FollowUpTarget"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"FollowUpTarget"> | runtime.Bytes
+  followUpId?: Prisma.StringFilter<"FollowUpTarget"> | string
+  targetId?: Prisma.StringFilter<"FollowUpTarget"> | string
   FollowUp?: Prisma.XOR<Prisma.FollowUpScalarRelationFilter, Prisma.FollowUpWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
 }, "id">
@@ -202,49 +203,49 @@ export type FollowUpTargetScalarWhereWithAggregatesInput = {
   AND?: Prisma.FollowUpTargetScalarWhereWithAggregatesInput | Prisma.FollowUpTargetScalarWhereWithAggregatesInput[]
   OR?: Prisma.FollowUpTargetScalarWhereWithAggregatesInput[]
   NOT?: Prisma.FollowUpTargetScalarWhereWithAggregatesInput | Prisma.FollowUpTargetScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"FollowUpTarget"> | runtime.Bytes
-  followUpId?: Prisma.BytesWithAggregatesFilter<"FollowUpTarget"> | runtime.Bytes
-  targetId?: Prisma.BytesWithAggregatesFilter<"FollowUpTarget"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"FollowUpTarget"> | string
+  followUpId?: Prisma.StringWithAggregatesFilter<"FollowUpTarget"> | string
+  targetId?: Prisma.StringWithAggregatesFilter<"FollowUpTarget"> | string
 }
 
 export type FollowUpTargetCreateInput = {
-  id: runtime.Bytes
+  id: string
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpTargetInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpTargetInput
 }
 
 export type FollowUpTargetUncheckedCreateInput = {
-  id: runtime.Bytes
-  followUpId: runtime.Bytes
-  targetId: runtime.Bytes
+  id: string
+  followUpId: string
+  targetId: string
 }
 
 export type FollowUpTargetUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpTargetNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpTargetNestedInput
 }
 
 export type FollowUpTargetUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpTargetCreateManyInput = {
-  id: runtime.Bytes
-  followUpId: runtime.Bytes
-  targetId: runtime.Bytes
+  id: string
+  followUpId: string
+  targetId: string
 }
 
 export type FollowUpTargetUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpTargetUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpTargetListRelationFilter = {
@@ -255,6 +256,12 @@ export type FollowUpTargetListRelationFilter = {
 
 export type FollowUpTargetOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type FollowUpTargetOrderByRelevanceInput = {
+  fields: Prisma.FollowUpTargetOrderByRelevanceFieldEnum | Prisma.FollowUpTargetOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type FollowUpTargetCountOrderByAggregateInput = {
@@ -360,13 +367,13 @@ export type FollowUpTargetUncheckedUpdateManyWithoutTargetNestedInput = {
 }
 
 export type FollowUpTargetCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
+  id: string
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpTargetInput
 }
 
 export type FollowUpTargetUncheckedCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
-  targetId: runtime.Bytes
+  id: string
+  targetId: string
 }
 
 export type FollowUpTargetCreateOrConnectWithoutFollowUpInput = {
@@ -399,19 +406,19 @@ export type FollowUpTargetScalarWhereInput = {
   AND?: Prisma.FollowUpTargetScalarWhereInput | Prisma.FollowUpTargetScalarWhereInput[]
   OR?: Prisma.FollowUpTargetScalarWhereInput[]
   NOT?: Prisma.FollowUpTargetScalarWhereInput | Prisma.FollowUpTargetScalarWhereInput[]
-  id?: Prisma.BytesFilter<"FollowUpTarget"> | runtime.Bytes
-  followUpId?: Prisma.BytesFilter<"FollowUpTarget"> | runtime.Bytes
-  targetId?: Prisma.BytesFilter<"FollowUpTarget"> | runtime.Bytes
+  id?: Prisma.StringFilter<"FollowUpTarget"> | string
+  followUpId?: Prisma.StringFilter<"FollowUpTarget"> | string
+  targetId?: Prisma.StringFilter<"FollowUpTarget"> | string
 }
 
 export type FollowUpTargetCreateWithoutTargetInput = {
-  id: runtime.Bytes
+  id: string
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpTargetInput
 }
 
 export type FollowUpTargetUncheckedCreateWithoutTargetInput = {
-  id: runtime.Bytes
-  followUpId: runtime.Bytes
+  id: string
+  followUpId: string
 }
 
 export type FollowUpTargetCreateOrConnectWithoutTargetInput = {
@@ -441,43 +448,43 @@ export type FollowUpTargetUpdateManyWithWhereWithoutTargetInput = {
 }
 
 export type FollowUpTargetCreateManyFollowUpInput = {
-  id: runtime.Bytes
-  targetId: runtime.Bytes
+  id: string
+  targetId: string
 }
 
 export type FollowUpTargetUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpTargetNestedInput
 }
 
 export type FollowUpTargetUncheckedUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpTargetUncheckedUpdateManyWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  targetId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpTargetCreateManyTargetInput = {
-  id: runtime.Bytes
-  followUpId: runtime.Bytes
+  id: string
+  followUpId: string
 }
 
 export type FollowUpTargetUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpTargetNestedInput
 }
 
 export type FollowUpTargetUncheckedUpdateWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FollowUpTargetUncheckedUpdateManyWithoutTargetInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
-  followUpId?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -511,9 +518,9 @@ export type $FollowUpTargetPayload<ExtArgs extends runtime.Types.Extensions.Inte
     Target: Prisma.$TargetPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
-    followUpId: runtime.Bytes
-    targetId: runtime.Bytes
+    id: string
+    followUpId: string
+    targetId: string
   }, ExtArgs["result"]["followUpTarget"]>
   composites: {}
 }
@@ -885,9 +892,9 @@ export interface Prisma__FollowUpTargetClient<T, Null = never, ExtArgs extends r
  * Fields of the FollowUpTarget model
  */
 export interface FollowUpTargetFieldRefs {
-  readonly id: Prisma.FieldRef<"FollowUpTarget", 'Bytes'>
-  readonly followUpId: Prisma.FieldRef<"FollowUpTarget", 'Bytes'>
-  readonly targetId: Prisma.FieldRef<"FollowUpTarget", 'Bytes'>
+  readonly id: Prisma.FieldRef<"FollowUpTarget", 'String'>
+  readonly followUpId: Prisma.FieldRef<"FollowUpTarget", 'String'>
+  readonly targetId: Prisma.FieldRef<"FollowUpTarget", 'String'>
 }
     
 

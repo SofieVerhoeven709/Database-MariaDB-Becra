@@ -25,17 +25,17 @@ export type AggregateProjectType = {
 }
 
 export type ProjectTypeMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type ProjectTypeMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type ProjectTypeCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type ProjectTypeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 export type ProjectTypeGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: ProjectTypeCountAggregateOutputType | null
   _min: ProjectTypeMinAggregateOutputType | null
   _max: ProjectTypeMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type ProjectTypeWhereInput = {
   AND?: Prisma.ProjectTypeWhereInput | Prisma.ProjectTypeWhereInput[]
   OR?: Prisma.ProjectTypeWhereInput[]
   NOT?: Prisma.ProjectTypeWhereInput | Prisma.ProjectTypeWhereInput[]
-  id?: Prisma.BytesFilter<"ProjectType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"ProjectType"> | string
   name?: Prisma.StringFilter<"ProjectType"> | string
   createdAt?: Prisma.DateTimeFilter<"ProjectType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"ProjectType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"ProjectType"> | string
   Project?: Prisma.ProjectListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
@@ -189,13 +189,13 @@ export type ProjectTypeOrderByWithRelationInput = {
 }
 
 export type ProjectTypeWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.ProjectTypeWhereInput | Prisma.ProjectTypeWhereInput[]
   OR?: Prisma.ProjectTypeWhereInput[]
   NOT?: Prisma.ProjectTypeWhereInput | Prisma.ProjectTypeWhereInput[]
   name?: Prisma.StringFilter<"ProjectType"> | string
   createdAt?: Prisma.DateTimeFilter<"ProjectType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"ProjectType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"ProjectType"> | string
   Project?: Prisma.ProjectListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
@@ -214,14 +214,14 @@ export type ProjectTypeScalarWhereWithAggregatesInput = {
   AND?: Prisma.ProjectTypeScalarWhereWithAggregatesInput | Prisma.ProjectTypeScalarWhereWithAggregatesInput[]
   OR?: Prisma.ProjectTypeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProjectTypeScalarWhereWithAggregatesInput | Prisma.ProjectTypeScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"ProjectType"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"ProjectType"> | string
   name?: Prisma.StringWithAggregatesFilter<"ProjectType"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProjectType"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"ProjectType"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"ProjectType"> | string
 }
 
 export type ProjectTypeCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Project?: Prisma.ProjectCreateNestedManyWithoutProjectTypeInput
@@ -229,15 +229,15 @@ export type ProjectTypeCreateInput = {
 }
 
 export type ProjectTypeUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectTypeInput
 }
 
 export type ProjectTypeUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Project?: Prisma.ProjectUpdateManyWithoutProjectTypeNestedInput
@@ -245,31 +245,31 @@ export type ProjectTypeUpdateInput = {
 }
 
 export type ProjectTypeUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectTypeNestedInput
 }
 
 export type ProjectTypeCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type ProjectTypeUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ProjectTypeUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectTypeListRelationFilter = {
@@ -371,14 +371,14 @@ export type ProjectTypeUpdateOneRequiredWithoutProjectNestedInput = {
 }
 
 export type ProjectTypeCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Project?: Prisma.ProjectCreateNestedManyWithoutProjectTypeInput
 }
 
 export type ProjectTypeUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectTypeInput
@@ -414,24 +414,24 @@ export type ProjectTypeScalarWhereInput = {
   AND?: Prisma.ProjectTypeScalarWhereInput | Prisma.ProjectTypeScalarWhereInput[]
   OR?: Prisma.ProjectTypeScalarWhereInput[]
   NOT?: Prisma.ProjectTypeScalarWhereInput | Prisma.ProjectTypeScalarWhereInput[]
-  id?: Prisma.BytesFilter<"ProjectType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"ProjectType"> | string
   name?: Prisma.StringFilter<"ProjectType"> | string
   createdAt?: Prisma.DateTimeFilter<"ProjectType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"ProjectType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"ProjectType"> | string
 }
 
 export type ProjectTypeCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectTypeInput
 }
 
 export type ProjectTypeUncheckedCreateWithoutProjectInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type ProjectTypeCreateOrConnectWithoutProjectInput = {
@@ -451,41 +451,41 @@ export type ProjectTypeUpdateToOneWithWhereWithoutProjectInput = {
 }
 
 export type ProjectTypeUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectTypeNestedInput
 }
 
 export type ProjectTypeUncheckedUpdateWithoutProjectInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectTypeCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
 }
 
 export type ProjectTypeUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Project?: Prisma.ProjectUpdateManyWithoutProjectTypeNestedInput
 }
 
 export type ProjectTypeUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectTypeNestedInput
 }
 
 export type ProjectTypeUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -554,10 +554,10 @@ export type $ProjectTypePayload<ExtArgs extends runtime.Types.Extensions.Interna
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     createdAt: Date
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["projectType"]>
   composites: {}
 }
@@ -929,10 +929,10 @@ export interface Prisma__ProjectTypeClient<T, Null = never, ExtArgs extends runt
  * Fields of the ProjectType model
  */
 export interface ProjectTypeFieldRefs {
-  readonly id: Prisma.FieldRef<"ProjectType", 'Bytes'>
+  readonly id: Prisma.FieldRef<"ProjectType", 'String'>
   readonly name: Prisma.FieldRef<"ProjectType", 'String'>
   readonly createdAt: Prisma.FieldRef<"ProjectType", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"ProjectType", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"ProjectType", 'String'>
 }
     
 

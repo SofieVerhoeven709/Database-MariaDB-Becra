@@ -10,10 +10,9 @@ import type {
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {validateSchema} from '@/lib/validateSchema'
 import type {Logger} from 'pino'
-import {getLogger} from '@/lib/logger'
+import {getLogger, logger} from '@/lib/logger'
 import {convertFormData} from '@/lib/convertFormData'
 import type {Role} from '@/generated/prisma/client'
-import {binaryToUuid} from '@/lib/utils'
 
 const emptySchema = z.object({})
 type EmptySchema = ZodType<typeof emptySchema>
@@ -69,6 +68,7 @@ export function protectedFormAction<Schema extends ZodType = EmptySchema, Return
 export function publicFormAction<Schema extends ZodType = EmptySchema, ReturnType = void>(
   options: Omit<ServerFunctionOptions<Schema, ReturnType, false>, 'authenticated' | 'requiredRoles'>,
 ): FormAction<ReturnType> {
+  logger.warn(`sign in attempted publicform.`)
   return formAction<Schema, ReturnType, false>({...options, authenticated: false})
 }
 
@@ -80,6 +80,7 @@ export function publicFormAction<Schema extends ZodType = EmptySchema, ReturnTyp
 function formAction<Schema extends ZodType = EmptySchema, ReturnType = void, Auth extends boolean = true>(
   options: ServerFunctionOptions<Schema, ReturnType, Auth>,
 ): FormAction<ReturnType> {
+  logger.warn(`sign in attempted formaction.`)
   return async (
     _prevState: FormActionResponse<ReturnType>,
     unvalidatedData: FormData,
@@ -137,7 +138,9 @@ export function publicServerFunction<Schema extends ZodType = EmptySchema>(
 function serverFunction<Schema extends ZodType = EmptySchema, Auth extends boolean = true>(
   options: ServerFunctionOptions<Schema, void, Auth>,
 ): ServerFunction<Schema> | ServerFunctionWithoutParams {
+  logger.warn(`sign in attempted serverFunction.`)
   return async (unvalidatedData?: z.infer<Schema>): Promise<void> => {
+    logger.warn(`sign in attempted serverFunction + 1.`)
     await handleServerFunction<Schema, void, Auth>({
       ...options,
       unvalidatedData: unvalidatedData ?? {},
@@ -158,31 +161,29 @@ async function handleServerFunction<Schema extends ZodType, ReturnType, Auth ext
   logger.info(`${functionName} called`)
 
   try {
-    logger.trace(`Checking authentication for ${functionName}.`)
+    logger.warn(`Checking authentication for ${functionName}.`)
     const profile = authenticated ? await getSessionProfileFromCookieOrThrow() : undefined
 
-    logger.trace(`Checking authorization for ${functionName}.`)
+    logger.warn(`Checking authorization for ${functionName}.`)
     if (
       authenticated &&
       options.requiredRoles &&
       !options.requiredRoles.includes(profile!.Role_Employee_roleIdToRole!)
     ) {
-      logger.warn(
-        `Unauthorized user ${binaryToUuid(profile!.id)} tried executing ${functionName ?? 'a server function'}.`,
-      )
+      logger.warn(`Unauthorized user ${profile!.id} tried executing ${functionName ?? 'a server function'}.`)
       return {
         success: false,
       }
     }
 
-    logger.trace(`Validating submitted data for ${functionName}.`)
+    logger.warn(`Validating submitted data for ${functionName}.`)
     const {data, errors} = validateSchema(schema, unvalidatedData)
 
     // Generate the data to send back to the client in case of errors, or in case of success if sendBackOnSuccess is set.
     const submittedData = generateSubmittedData(unvalidatedData)
 
     if (errors) {
-      logger.trace(`Validation of submitted data failed for ${functionName}.`)
+      logger.warn(`Validation of submitted data failed for ${functionName}.`)
       return {
         errors,
         success: false,

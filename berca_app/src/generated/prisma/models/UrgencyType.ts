@@ -25,17 +25,17 @@ export type AggregateUrgencyType = {
 }
 
 export type UrgencyTypeMinAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type UrgencyTypeMaxAggregateOutputType = {
-  id: runtime.Bytes | null
+  id: string | null
   name: string | null
   createdAt: Date | null
-  createdBy: runtime.Bytes | null
+  createdBy: string | null
 }
 
 export type UrgencyTypeCountAggregateOutputType = {
@@ -142,10 +142,10 @@ export type UrgencyTypeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 export type UrgencyTypeGroupByOutputType = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date
-  createdBy: runtime.Bytes
+  createdBy: string
   _count: UrgencyTypeCountAggregateOutputType | null
   _min: UrgencyTypeMinAggregateOutputType | null
   _max: UrgencyTypeMaxAggregateOutputType | null
@@ -170,10 +170,10 @@ export type UrgencyTypeWhereInput = {
   AND?: Prisma.UrgencyTypeWhereInput | Prisma.UrgencyTypeWhereInput[]
   OR?: Prisma.UrgencyTypeWhereInput[]
   NOT?: Prisma.UrgencyTypeWhereInput | Prisma.UrgencyTypeWhereInput[]
-  id?: Prisma.BytesFilter<"UrgencyType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"UrgencyType"> | string
   name?: Prisma.StringFilter<"UrgencyType"> | string
   createdAt?: Prisma.DateTimeFilter<"UrgencyType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"UrgencyType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"UrgencyType"> | string
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -191,13 +191,13 @@ export type UrgencyTypeOrderByWithRelationInput = {
 }
 
 export type UrgencyTypeWhereUniqueInput = Prisma.AtLeast<{
-  id?: runtime.Bytes
+  id?: string
   AND?: Prisma.UrgencyTypeWhereInput | Prisma.UrgencyTypeWhereInput[]
   OR?: Prisma.UrgencyTypeWhereInput[]
   NOT?: Prisma.UrgencyTypeWhereInput | Prisma.UrgencyTypeWhereInput[]
   name?: Prisma.StringFilter<"UrgencyType"> | string
   createdAt?: Prisma.DateTimeFilter<"UrgencyType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"UrgencyType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"UrgencyType"> | string
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -217,14 +217,14 @@ export type UrgencyTypeScalarWhereWithAggregatesInput = {
   AND?: Prisma.UrgencyTypeScalarWhereWithAggregatesInput | Prisma.UrgencyTypeScalarWhereWithAggregatesInput[]
   OR?: Prisma.UrgencyTypeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UrgencyTypeScalarWhereWithAggregatesInput | Prisma.UrgencyTypeScalarWhereWithAggregatesInput[]
-  id?: Prisma.BytesWithAggregatesFilter<"UrgencyType"> | runtime.Bytes
+  id?: Prisma.StringWithAggregatesFilter<"UrgencyType"> | string
   name?: Prisma.StringWithAggregatesFilter<"UrgencyType"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UrgencyType"> | Date | string
-  createdBy?: Prisma.BytesWithAggregatesFilter<"UrgencyType"> | runtime.Bytes
+  createdBy?: Prisma.StringWithAggregatesFilter<"UrgencyType"> | string
 }
 
 export type UrgencyTypeCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutUrgencyTypeInput
@@ -233,16 +233,16 @@ export type UrgencyTypeCreateInput = {
 }
 
 export type UrgencyTypeUncheckedCreateInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutUrgencyTypeInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutUrgencyTypeInput
 }
 
 export type UrgencyTypeUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUp?: Prisma.FollowUpUpdateManyWithoutUrgencyTypeNestedInput
@@ -251,32 +251,32 @@ export type UrgencyTypeUpdateInput = {
 }
 
 export type UrgencyTypeUncheckedUpdateInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutUrgencyTypeNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutUrgencyTypeNestedInput
 }
 
 export type UrgencyTypeCreateManyInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
 }
 
 export type UrgencyTypeUpdateManyMutationInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UrgencyTypeUncheckedUpdateManyInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UrgencyTypeListRelationFilter = {
@@ -392,7 +392,7 @@ export type UrgencyTypeUpdateOneRequiredWithoutFollowUpStructureNestedInput = {
 }
 
 export type UrgencyTypeCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutUrgencyTypeInput
@@ -400,7 +400,7 @@ export type UrgencyTypeCreateWithoutEmployeeInput = {
 }
 
 export type UrgencyTypeUncheckedCreateWithoutEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutUrgencyTypeInput
@@ -437,14 +437,14 @@ export type UrgencyTypeScalarWhereInput = {
   AND?: Prisma.UrgencyTypeScalarWhereInput | Prisma.UrgencyTypeScalarWhereInput[]
   OR?: Prisma.UrgencyTypeScalarWhereInput[]
   NOT?: Prisma.UrgencyTypeScalarWhereInput | Prisma.UrgencyTypeScalarWhereInput[]
-  id?: Prisma.BytesFilter<"UrgencyType"> | runtime.Bytes
+  id?: Prisma.StringFilter<"UrgencyType"> | string
   name?: Prisma.StringFilter<"UrgencyType"> | string
   createdAt?: Prisma.DateTimeFilter<"UrgencyType"> | Date | string
-  createdBy?: Prisma.BytesFilter<"UrgencyType"> | runtime.Bytes
+  createdBy?: Prisma.StringFilter<"UrgencyType"> | string
 }
 
 export type UrgencyTypeCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutUrgencyTypeInput
@@ -452,10 +452,10 @@ export type UrgencyTypeCreateWithoutFollowUpInput = {
 }
 
 export type UrgencyTypeUncheckedCreateWithoutFollowUpInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutUrgencyTypeInput
 }
 
@@ -476,7 +476,7 @@ export type UrgencyTypeUpdateToOneWithWhereWithoutFollowUpInput = {
 }
 
 export type UrgencyTypeUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutUrgencyTypeNestedInput
@@ -484,15 +484,15 @@ export type UrgencyTypeUpdateWithoutFollowUpInput = {
 }
 
 export type UrgencyTypeUncheckedUpdateWithoutFollowUpInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutUrgencyTypeNestedInput
 }
 
 export type UrgencyTypeCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutUrgencyTypeInput
@@ -500,10 +500,10 @@ export type UrgencyTypeCreateWithoutFollowUpStructureInput = {
 }
 
 export type UrgencyTypeUncheckedCreateWithoutFollowUpStructureInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
-  createdBy: runtime.Bytes
+  createdBy: string
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutUrgencyTypeInput
 }
 
@@ -524,7 +524,7 @@ export type UrgencyTypeUpdateToOneWithWhereWithoutFollowUpStructureInput = {
 }
 
 export type UrgencyTypeUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUp?: Prisma.FollowUpUpdateManyWithoutUrgencyTypeNestedInput
@@ -532,21 +532,21 @@ export type UrgencyTypeUpdateWithoutFollowUpStructureInput = {
 }
 
 export type UrgencyTypeUncheckedUpdateWithoutFollowUpStructureInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutUrgencyTypeNestedInput
 }
 
 export type UrgencyTypeCreateManyEmployeeInput = {
-  id: runtime.Bytes
+  id: string
   name: string
   createdAt: Date | string
 }
 
 export type UrgencyTypeUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUp?: Prisma.FollowUpUpdateManyWithoutUrgencyTypeNestedInput
@@ -554,7 +554,7 @@ export type UrgencyTypeUpdateWithoutEmployeeInput = {
 }
 
 export type UrgencyTypeUncheckedUpdateWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutUrgencyTypeNestedInput
@@ -562,7 +562,7 @@ export type UrgencyTypeUncheckedUpdateWithoutEmployeeInput = {
 }
 
 export type UrgencyTypeUncheckedUpdateManyWithoutEmployeeInput = {
-  id?: Prisma.BytesFieldUpdateOperationsInput | runtime.Bytes
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -643,10 +643,10 @@ export type $UrgencyTypePayload<ExtArgs extends runtime.Types.Extensions.Interna
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: runtime.Bytes
+    id: string
     name: string
     createdAt: Date
-    createdBy: runtime.Bytes
+    createdBy: string
   }, ExtArgs["result"]["urgencyType"]>
   composites: {}
 }
@@ -1019,10 +1019,10 @@ export interface Prisma__UrgencyTypeClient<T, Null = never, ExtArgs extends runt
  * Fields of the UrgencyType model
  */
 export interface UrgencyTypeFieldRefs {
-  readonly id: Prisma.FieldRef<"UrgencyType", 'Bytes'>
+  readonly id: Prisma.FieldRef<"UrgencyType", 'String'>
   readonly name: Prisma.FieldRef<"UrgencyType", 'String'>
   readonly createdAt: Prisma.FieldRef<"UrgencyType", 'DateTime'>
-  readonly createdBy: Prisma.FieldRef<"UrgencyType", 'Bytes'>
+  readonly createdBy: Prisma.FieldRef<"UrgencyType", 'String'>
 }
     
 

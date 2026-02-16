@@ -10,7 +10,7 @@ const PUBLIC_KEY_DECODED = Buffer.from(PUBLIC_KEY!, 'base64').toString('utf-8')
 const PRIVATE_KEY_DECODED = Buffer.from(PRIVATE_KEY!, 'base64').toString('utf-8')
 
 export interface TokenBody {
-  id: Uint8Array<ArrayBuffer>
+  id: string
   role: Role
   username: string
   iat: number
@@ -20,7 +20,7 @@ export interface TokenBody {
 }
 
 export interface StatefulJwtTokenBody extends TokenBody {
-  sessionId: Uint8Array<ArrayBuffer>
+  sessionId: string
 }
 
 export const validateJwtToken = (token: string): TokenBody | undefined => {

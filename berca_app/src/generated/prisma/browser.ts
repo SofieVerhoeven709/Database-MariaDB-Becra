@@ -212,3 +212,203 @@ export type WorkOrderStructure = Prisma.WorkOrderStructureModel
  * 
  */
 export type Session = Prisma.SessionModel
+/**
+ * Model Accounting
+ * 
+ */
+export type Accounting = Prisma.AccountingModel
+/**
+ * Model DeliveryNote
+ * 
+ */
+export type DeliveryNote = Prisma.DeliveryNoteModel
+/**
+ * Model DocumentGroup
+ * 
+ */
+export type DocumentGroup = Prisma.DocumentGroupModel
+/**
+ * Model DocumentPlace
+ * 
+ */
+export type DocumentPlace = Prisma.DocumentPlaceModel
+/**
+ * Model Inventory
+ * 
+ */
+export type Inventory = Prisma.InventoryModel
+/**
+ * Model InventoryChange
+ * 
+ */
+export type InventoryChange = Prisma.InventoryChangeModel
+/**
+ * Model InventoryOrder
+ * 
+ */
+export type InventoryOrder = Prisma.InventoryOrderModel
+/**
+ * Model InventoryOrderStructure
+ * 
+ */
+export type InventoryOrderStructure = Prisma.InventoryOrderStructureModel
+/**
+ * Model InventoryPlace
+ * 
+ */
+export type InventoryPlace = Prisma.InventoryPlaceModel
+/**
+ * Model InventoryStructure
+ * 
+ */
+export type InventoryStructure = Prisma.InventoryStructureModel
+/**
+ * Model InvestingCode
+ * 
+ */
+export type InvestingCode = Prisma.InvestingCodeModel
+/**
+ * Model Material
+ * 
+ */
+export type Material = Prisma.MaterialModel
+/**
+ * Model MaterialAssembly
+ * 
+ */
+export type MaterialAssembly = Prisma.MaterialAssemblyModel
+/**
+ * Model MaterialCode
+ * 
+ */
+export type MaterialCode = Prisma.MaterialCodeModel
+/**
+ * Model MaterialDimension
+ * 
+ */
+export type MaterialDimension = Prisma.MaterialDimensionModel
+/**
+ * Model MaterialFamily
+ * 
+ */
+export type MaterialFamily = Prisma.MaterialFamilyModel
+/**
+ * Model MaterialGroup
+ * 
+ */
+export type MaterialGroup = Prisma.MaterialGroupModel
+/**
+ * Model MaterialMovement
+ * 
+ */
+export type MaterialMovement = Prisma.MaterialMovementModel
+/**
+ * Model MaterialOther
+ * 
+ */
+export type MaterialOther = Prisma.MaterialOtherModel
+/**
+ * Model MaterialPerformance
+ * 
+ */
+export type MaterialPerformance = Prisma.MaterialPerformanceModel
+/**
+ * Model MaterialPrice
+ * 
+ */
+export type MaterialPrice = Prisma.MaterialPriceModel
+/**
+ * Model MaterialSerialTracked
+ * 
+ */
+export type MaterialSerialTracked = Prisma.MaterialSerialTrackedModel
+/**
+ * Model MaterialSerialTrackedStructure
+ * 
+ */
+export type MaterialSerialTrackedStructure = Prisma.MaterialSerialTrackedStructureModel
+/**
+ * Model MaterialSpecification
+ * 
+ */
+export type MaterialSpecification = Prisma.MaterialSpecificationModel
+/**
+ * Model MaterialStructure
+ * 
+ */
+export type MaterialStructure = Prisma.MaterialStructureModel
+/**
+ * Model Part
+ * 
+ */
+export type Part = Prisma.PartModel
+/**
+ * Model Phantom
+ * 
+ */
+export type Phantom = Prisma.PhantomModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model Purchase
+ * 
+ */
+export type Purchase = Prisma.PurchaseModel
+/**
+ * Model PurchaseDetail
+ * 
+ */
+export type PurchaseDetail = Prisma.PurchaseDetailModel
+/**
+ * Model PurchaseOrderBecra
+ * 
+ */
+export type PurchaseOrderBecra = Prisma.PurchaseOrderBecraModel
+/**
+ * Model PurchasePriceRequest
+ * 
+ */
+export type PurchasePriceRequest = Prisma.PurchasePriceRequestModel
+/**
+ * Model Sale
+ * 
+ */
+export type Sale = Prisma.SaleModel
+/**
+ * Model SaleOrderDetail
+ * 
+ */
+export type SaleOrderDetail = Prisma.SaleOrderDetailModel
+/**
+ * Model SerialTracked
+ * 
+ */
+export type SerialTracked = Prisma.SerialTrackedModel
+/**
+ * Model TestProcedure
+ * 
+ */
+export type TestProcedure = Prisma.TestProcedureModel
+/**
+ * Model TransactionType
+ * 
+ */
+export type TransactionType = Prisma.TransactionTypeModel
+/**
+ * Model Unit
+ * 
+ */
+export type Unit = Prisma.UnitModel
+/**
+ * Model WarehouseManagement
+ * 
+ */
+export type WarehouseManagement = Prisma.WarehouseManagementModel
+/**
+ * Model WarehousePlace
+ * 
+ */
+export type WarehousePlace = Prisma.WarehousePlaceModel

@@ -1,7 +1,5 @@
-import Link from 'next/link'
-import {Lock, Eye} from 'lucide-react'
+import {Lock} from 'lucide-react'
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card'
-import {Button} from '@/components/ui/button'
 import {LoginForm} from '@/components/custom/loginForm'
 
 export default function Page() {

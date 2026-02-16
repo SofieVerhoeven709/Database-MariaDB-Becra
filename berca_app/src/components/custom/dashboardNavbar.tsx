@@ -12,16 +12,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import type {Employee, Role} from '@/generated/prisma/client'
 
 interface DashboardNavbarProps {
-  username: string
-  role: string
+  employee: EmployeeSafe
+  role: Role
 }
+export type EmployeeSafe = Omit<Employee, 'password_hash'>
 
-export function DashboardNavbar({username, role}: DashboardNavbarProps) {
+export function DashboardNavbar({employee, role}: DashboardNavbarProps) {
   const pathname = usePathname()
 
-  const initials = username
+  const initials = employee.username
     .split(/[\s._-]+/)
     .map(word => word[0])
     .join('')
@@ -53,8 +55,8 @@ export function DashboardNavbar({username, role}: DashboardNavbarProps) {
         <DropdownMenuTrigger asChild>
           <button className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-secondary outline-none">
             <div className="flex flex-col items-end gap-0.5">
-              <span className="text-sm font-medium text-foreground">{username}</span>
-              <span className="text-xs text-muted-foreground capitalize">{role}</span>
+              <span className="text-sm font-medium text-foreground">{employee.username}</span>
+              <span className="text-xs text-muted-foreground capitalize">{role.name}</span>
             </div>
             <Avatar className="h-8 w-8">
               <AvatarFallback className="bg-secondary text-foreground text-xs font-medium">{initials}</AvatarFallback>

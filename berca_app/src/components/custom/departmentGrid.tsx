@@ -1,14 +1,18 @@
 'use client'
 
 import {
-  DollarSign,
+  Clipboard,
   Users,
-  Code,
+  Wrench,
   Megaphone,
-  HeadphonesIcon,
   ShieldCheck,
-  BarChart3,
-  Package,
+  Calculator,
+  BookOpen,
+  ClipboardList,
+  Briefcase,
+  Database,
+  ShoppingCart,
+  TrendingUp,
   type LucideIcon,
 } from 'lucide-react'
 import Link from 'next/link'
@@ -24,14 +28,18 @@ interface Department {
 }
 
 const ICONS: Record<string, LucideIcon> = {
-  DollarSign,
-  Users,
-  Code,
-  Megaphone,
-  HeadphonesIcon,
-  ShieldCheck,
-  BarChart3,
-  Package,
+  Clipboard, // Admin
+  Users, // HR
+  Wrench, // Engineering
+  Megaphone, // PR
+  ShieldCheck, // SHEQ
+  Calculator, // Accounting
+  BookOpen, // Training
+  ClipboardList, // Project
+  Briefcase, // Management
+  Database, // Database
+  ShoppingCart, // Purchasing
+  TrendingUp, // Sales
 }
 
 interface DepartmentGridProps {
@@ -60,7 +68,7 @@ export function DepartmentGrid({role}: DepartmentGridProps) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {departments.map(dept => {
-        const Icon = ICONS[dept.icon] || DollarSign
+        const Icon = ICONS[dept.icon]
         const accentColor = dept.color
         const accentBg = `${accentColor}1F` // ~12% opacity
         const accentBgHover = `${accentColor}2E` // ~18% opacity

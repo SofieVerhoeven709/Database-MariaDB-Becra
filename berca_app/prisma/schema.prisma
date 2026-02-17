@@ -191,6 +191,7 @@ model Department {
   color                                      String?    @db.VarChar(10)
   icon                                       String?    @db.VarChar(255)
   description                                String?    @db.VarChar(255)
+  number                                     Int?
   createdAt                                  DateTime   @db.DateTime(0)
   createdBy                                  String     @db.Char(36)
   Contact                                    Contact[]

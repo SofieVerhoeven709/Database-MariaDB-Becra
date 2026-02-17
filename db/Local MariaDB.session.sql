@@ -26,6 +26,7 @@ CREATE TABLE
             color VARCHAR(10),
             icon VARCHAR(255),
             description VARCHAR(255),
+            number INT,
             createdAt DATETIME NOT NULL
       ) ENGINE = InnoDB;
 

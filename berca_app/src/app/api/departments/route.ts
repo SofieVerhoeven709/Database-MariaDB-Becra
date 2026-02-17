@@ -6,7 +6,10 @@ import {NextResponse} from 'next/server'
 // Helper function to get departments by role
 async function getDepartmentsByRole(role: string) {
   const allDepartments = await prismaClient.department.findMany({
-    select: {id: true, name: true, description: true, icon: true, color: true},
+    select: {id: true, name: true, description: true, icon: true, color: true, number: true},
+    orderBy: {
+      number: 'asc',
+    },
   })
 
   const ROLE_DEPARTMENTS: Record<string, string[]> = {

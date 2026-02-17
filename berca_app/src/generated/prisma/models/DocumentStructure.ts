@@ -751,14 +751,6 @@ export type DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureIn
   connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput = {
   create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutOther_DocumentStructureInput, Prisma.DocumentStructureUncheckedCreateWithoutOther_DocumentStructureInput>
   connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutOther_DocumentStructureInput

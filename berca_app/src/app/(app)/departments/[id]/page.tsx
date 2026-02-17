@@ -1,6 +1,6 @@
 import {redirect} from 'next/navigation'
-import {DepartmentGrid} from '@/components/custom/departmentGrid'
 import {getSessionFromCookie} from '@/lib/sessionUtils'
+import {PerDepartmentGrid} from '@/components/custom/perDepartmentGrid'
 
 export default async function DashboardPage() {
   const session = await getSessionFromCookie()
@@ -10,9 +10,9 @@ export default async function DashboardPage() {
     redirect('/')
   }
 
-  const roleName = employee.Role_Employee_roleIdToRole?.name
+  const roleLevel = employee.Role_Employee_roleIdToRole?.level
 
-  if (!roleName) {
+  if (!roleLevel) {
     redirect('/')
   }
 
@@ -24,7 +24,7 @@ export default async function DashboardPage() {
           <p className="mt-1 text-sm text-muted-foreground">Select a department to manage</p>
         </div>
 
-        <DepartmentGrid role={roleName} />
+        <PerDepartmentGrid role={roleLevel} />
       </div>
     </main>
   )

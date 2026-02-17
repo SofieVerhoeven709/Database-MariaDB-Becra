@@ -99,20 +99,19 @@ const ALL_DEPARTMENTS: Department[] = [
 ]
 
 // Mock: which departments each role can access
-const ROLE_DEPARTMENTS: Record<string, string[]> = {
-  administrator: ALL_DEPARTMENTS.map(d => d.id),
-  manager: ['finance', 'hr', 'marketing', 'analytics', 'operations'],
-  developer: ['engineering', 'analytics', 'security'],
-  support: ['support', 'hr'],
+const ROLE_DEPARTMENTS: Record<number, string[]> = {
+  100: ALL_DEPARTMENTS.map(d => d.id),
+  50: ['finance', 'hr', 'marketing', 'analytics', 'operations'],
+  20: ['engineering', 'analytics', 'security'],
+  10: ['support', 'hr'],
 }
 
 interface DepartmentGridProps {
-  role: string
+  role: number
 }
 
-export function DepartmentGrid({role}: DepartmentGridProps) {
-  const normalizedRole = role.toLowerCase()
-  const allowedIds = ROLE_DEPARTMENTS[normalizedRole] ?? ROLE_DEPARTMENTS['administrator']
+export function PerDepartmentGrid({role}: DepartmentGridProps) {
+  const allowedIds = ROLE_DEPARTMENTS[role] ?? ROLE_DEPARTMENTS[100]
   const departments = ALL_DEPARTMENTS.filter(d => allowedIds.includes(d.id))
 
   return (

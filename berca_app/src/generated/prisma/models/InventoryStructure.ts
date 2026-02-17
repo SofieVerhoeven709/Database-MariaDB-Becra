@@ -20,258 +20,154 @@ export type InventoryStructureModel = runtime.Types.Result.DefaultSelection<Pris
 
 export type AggregateInventoryStructure = {
   _count: InventoryStructureCountAggregateOutputType | null
-  _avg: InventoryStructureAvgAggregateOutputType | null
-  _sum: InventoryStructureSumAggregateOutputType | null
   _min: InventoryStructureMinAggregateOutputType | null
   _max: InventoryStructureMaxAggregateOutputType | null
 }
 
-export type InventoryStructureAvgAggregateOutputType = {
-  purchaseOrderBecra: number | null
-  coordinatesX: runtime.Decimal | null
-  coordinatesY: runtime.Decimal | null
-  coordinatesZ: runtime.Decimal | null
-  minimumStock: number | null
-  maximumStock: number | null
-  quantityInStock: number | null
-  quantity: runtime.Decimal | null
-  unitPrice: runtime.Decimal | null
-}
-
-export type InventoryStructureSumAggregateOutputType = {
-  purchaseOrderBecra: number | null
-  coordinatesX: runtime.Decimal | null
-  coordinatesY: runtime.Decimal | null
-  coordinatesZ: runtime.Decimal | null
-  minimumStock: number | null
-  maximumStock: number | null
-  quantityInStock: number | null
-  quantity: runtime.Decimal | null
-  unitPrice: runtime.Decimal | null
-}
-
 export type InventoryStructureMinAggregateOutputType = {
   id: string | null
+  inventoryPlaceId: string | null
   place: string | null
   shortDescription: string | null
   longDescription: string | null
   beNumber: string | null
-  purchaseOrderBecra: number | null
+  purchaseOrderBecraId: string | null
+  projectId: string | null
   partSupplierNumber: string | null
   partDescription: string | null
-  coordinates: boolean | null
-  coordinatesX: runtime.Decimal | null
-  coordinatesY: runtime.Decimal | null
-  coordinatesZ: runtime.Decimal | null
-  inventoryPlaceId: string | null
-  materialId: string | null
-  forProject: boolean | null
-  projectId: string | null
-  forInventory: boolean | null
-  materialActive: boolean | null
   warehousePlaceId: string | null
+  information: string | null
+  coordinate: boolean | null
+  inventoryId: string | null
+  forInventory: boolean | null
+  forProject: boolean | null
   active: boolean | null
-  additionalInformation: string | null
-  minimumStock: number | null
-  maximumStock: number | null
-  quantityInStock: number | null
-  quantity: runtime.Decimal | null
-  unitPrice: runtime.Decimal | null
-  unitId: string | null
+  materialActive: boolean | null
   valid: boolean | null
-  createdBy: string | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type InventoryStructureMaxAggregateOutputType = {
   id: string | null
+  inventoryPlaceId: string | null
   place: string | null
   shortDescription: string | null
   longDescription: string | null
   beNumber: string | null
-  purchaseOrderBecra: number | null
+  purchaseOrderBecraId: string | null
+  projectId: string | null
   partSupplierNumber: string | null
   partDescription: string | null
-  coordinates: boolean | null
-  coordinatesX: runtime.Decimal | null
-  coordinatesY: runtime.Decimal | null
-  coordinatesZ: runtime.Decimal | null
-  inventoryPlaceId: string | null
-  materialId: string | null
-  forProject: boolean | null
-  projectId: string | null
-  forInventory: boolean | null
-  materialActive: boolean | null
   warehousePlaceId: string | null
+  information: string | null
+  coordinate: boolean | null
+  inventoryId: string | null
+  forInventory: boolean | null
+  forProject: boolean | null
   active: boolean | null
-  additionalInformation: string | null
-  minimumStock: number | null
-  maximumStock: number | null
-  quantityInStock: number | null
-  quantity: runtime.Decimal | null
-  unitPrice: runtime.Decimal | null
-  unitId: string | null
+  materialActive: boolean | null
   valid: boolean | null
-  createdBy: string | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type InventoryStructureCountAggregateOutputType = {
   id: number
+  inventoryPlaceId: number
   place: number
   shortDescription: number
   longDescription: number
   beNumber: number
-  purchaseOrderBecra: number
+  purchaseOrderBecraId: number
+  projectId: number
   partSupplierNumber: number
   partDescription: number
-  coordinates: number
-  coordinatesX: number
-  coordinatesY: number
-  coordinatesZ: number
-  inventoryPlaceId: number
-  materialId: number
-  forProject: number
-  projectId: number
-  forInventory: number
-  materialActive: number
   warehousePlaceId: number
+  information: number
+  coordinate: number
+  inventoryId: number
+  forInventory: number
+  forProject: number
   active: number
-  additionalInformation: number
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: number
-  unitPrice: number
-  unitId: number
+  materialActive: number
   valid: number
-  createdBy: number
   createdAt: number
+  createdBy: number
   _all: number
 }
 
 
-export type InventoryStructureAvgAggregateInputType = {
-  purchaseOrderBecra?: true
-  coordinatesX?: true
-  coordinatesY?: true
-  coordinatesZ?: true
-  minimumStock?: true
-  maximumStock?: true
-  quantityInStock?: true
-  quantity?: true
-  unitPrice?: true
-}
-
-export type InventoryStructureSumAggregateInputType = {
-  purchaseOrderBecra?: true
-  coordinatesX?: true
-  coordinatesY?: true
-  coordinatesZ?: true
-  minimumStock?: true
-  maximumStock?: true
-  quantityInStock?: true
-  quantity?: true
-  unitPrice?: true
-}
-
 export type InventoryStructureMinAggregateInputType = {
   id?: true
+  inventoryPlaceId?: true
   place?: true
   shortDescription?: true
   longDescription?: true
   beNumber?: true
-  purchaseOrderBecra?: true
+  purchaseOrderBecraId?: true
+  projectId?: true
   partSupplierNumber?: true
   partDescription?: true
-  coordinates?: true
-  coordinatesX?: true
-  coordinatesY?: true
-  coordinatesZ?: true
-  inventoryPlaceId?: true
-  materialId?: true
-  forProject?: true
-  projectId?: true
-  forInventory?: true
-  materialActive?: true
   warehousePlaceId?: true
+  information?: true
+  coordinate?: true
+  inventoryId?: true
+  forInventory?: true
+  forProject?: true
   active?: true
-  additionalInformation?: true
-  minimumStock?: true
-  maximumStock?: true
-  quantityInStock?: true
-  quantity?: true
-  unitPrice?: true
-  unitId?: true
+  materialActive?: true
   valid?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type InventoryStructureMaxAggregateInputType = {
   id?: true
+  inventoryPlaceId?: true
   place?: true
   shortDescription?: true
   longDescription?: true
   beNumber?: true
-  purchaseOrderBecra?: true
+  purchaseOrderBecraId?: true
+  projectId?: true
   partSupplierNumber?: true
   partDescription?: true
-  coordinates?: true
-  coordinatesX?: true
-  coordinatesY?: true
-  coordinatesZ?: true
-  inventoryPlaceId?: true
-  materialId?: true
-  forProject?: true
-  projectId?: true
-  forInventory?: true
-  materialActive?: true
   warehousePlaceId?: true
+  information?: true
+  coordinate?: true
+  inventoryId?: true
+  forInventory?: true
+  forProject?: true
   active?: true
-  additionalInformation?: true
-  minimumStock?: true
-  maximumStock?: true
-  quantityInStock?: true
-  quantity?: true
-  unitPrice?: true
-  unitId?: true
+  materialActive?: true
   valid?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type InventoryStructureCountAggregateInputType = {
   id?: true
+  inventoryPlaceId?: true
   place?: true
   shortDescription?: true
   longDescription?: true
   beNumber?: true
-  purchaseOrderBecra?: true
+  purchaseOrderBecraId?: true
+  projectId?: true
   partSupplierNumber?: true
   partDescription?: true
-  coordinates?: true
-  coordinatesX?: true
-  coordinatesY?: true
-  coordinatesZ?: true
-  inventoryPlaceId?: true
-  materialId?: true
-  forProject?: true
-  projectId?: true
-  forInventory?: true
-  materialActive?: true
   warehousePlaceId?: true
+  information?: true
+  coordinate?: true
+  inventoryId?: true
+  forInventory?: true
+  forProject?: true
   active?: true
-  additionalInformation?: true
-  minimumStock?: true
-  maximumStock?: true
-  quantityInStock?: true
-  quantity?: true
-  unitPrice?: true
-  unitId?: true
+  materialActive?: true
   valid?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
   _all?: true
 }
 
@@ -313,18 +209,6 @@ export type InventoryStructureAggregateArgs<ExtArgs extends runtime.Types.Extens
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: InventoryStructureAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: InventoryStructureSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: InventoryStructureMinAggregateInputType
@@ -355,46 +239,33 @@ export type InventoryStructureGroupByArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   _count?: InventoryStructureCountAggregateInputType | true
-  _avg?: InventoryStructureAvgAggregateInputType
-  _sum?: InventoryStructureSumAggregateInputType
   _min?: InventoryStructureMinAggregateInputType
   _max?: InventoryStructureMaxAggregateInputType
 }
 
 export type InventoryStructureGroupByOutputType = {
   id: string
+  inventoryPlaceId: string
   place: string
   shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal
-  coordinatesY: runtime.Decimal
-  coordinatesZ: runtime.Decimal
-  inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
-  projectId: string
+  longDescription: string | null
+  beNumber: string | null
+  purchaseOrderBecraId: string | null
+  projectId: string | null
+  partSupplierNumber: string | null
+  partDescription: string | null
+  warehousePlaceId: string | null
+  information: string | null
+  coordinate: boolean
+  inventoryId: string
   forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
+  forProject: boolean
   active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal
-  unitPrice: runtime.Decimal
-  unitId: string
+  materialActive: boolean
   valid: boolean
-  createdBy: string
   createdAt: Date
+  createdBy: string
   _count: InventoryStructureCountAggregateOutputType | null
-  _avg: InventoryStructureAvgAggregateOutputType | null
-  _sum: InventoryStructureSumAggregateOutputType | null
   _min: InventoryStructureMinAggregateOutputType | null
   _max: InventoryStructureMaxAggregateOutputType | null
 }
@@ -419,81 +290,53 @@ export type InventoryStructureWhereInput = {
   OR?: Prisma.InventoryStructureWhereInput[]
   NOT?: Prisma.InventoryStructureWhereInput | Prisma.InventoryStructureWhereInput[]
   id?: Prisma.StringFilter<"InventoryStructure"> | string
+  inventoryPlaceId?: Prisma.StringFilter<"InventoryStructure"> | string
   place?: Prisma.StringFilter<"InventoryStructure"> | string
   shortDescription?: Prisma.StringFilter<"InventoryStructure"> | string
-  longDescription?: Prisma.StringFilter<"InventoryStructure"> | string
-  beNumber?: Prisma.StringFilter<"InventoryStructure"> | string
-  purchaseOrderBecra?: Prisma.IntNullableFilter<"InventoryStructure"> | number | null
-  partSupplierNumber?: Prisma.StringFilter<"InventoryStructure"> | string
-  partDescription?: Prisma.StringFilter<"InventoryStructure"> | string
-  coordinates?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  coordinatesX?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFilter<"InventoryStructure"> | string
-  materialId?: Prisma.StringFilter<"InventoryStructure"> | string
-  forProject?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  projectId?: Prisma.StringFilter<"InventoryStructure"> | string
+  longDescription?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  beNumber?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  purchaseOrderBecraId?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  projectId?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  partSupplierNumber?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  partDescription?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  warehousePlaceId?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  information?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  coordinate?: Prisma.BoolFilter<"InventoryStructure"> | boolean
+  inventoryId?: Prisma.StringFilter<"InventoryStructure"> | string
   forInventory?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  materialActive?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  warehousePlaceId?: Prisma.StringFilter<"InventoryStructure"> | string
+  forProject?: Prisma.BoolFilter<"InventoryStructure"> | boolean
   active?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  additionalInformation?: Prisma.StringFilter<"InventoryStructure"> | string
-  minimumStock?: Prisma.IntFilter<"InventoryStructure"> | number
-  maximumStock?: Prisma.IntFilter<"InventoryStructure"> | number
-  quantityInStock?: Prisma.IntFilter<"InventoryStructure"> | number
-  quantity?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFilter<"InventoryStructure"> | string
+  materialActive?: Prisma.BoolFilter<"InventoryStructure"> | boolean
   valid?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  createdBy?: Prisma.StringFilter<"InventoryStructure"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryStructure"> | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureListRelationFilter
-  InventoryPlace?: Prisma.XOR<Prisma.InventoryPlaceScalarRelationFilter, Prisma.InventoryPlaceWhereInput>
-  Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
-  Unit?: Prisma.XOR<Prisma.UnitScalarRelationFilter, Prisma.UnitWhereInput>
-  WarehousePlace?: Prisma.XOR<Prisma.WarehousePlaceScalarRelationFilter, Prisma.WarehousePlaceWhereInput>
-  Project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
+  createdBy?: Prisma.StringFilter<"InventoryStructure"> | string
+  Inventory?: Prisma.XOR<Prisma.InventoryScalarRelationFilter, Prisma.InventoryWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
 
 export type InventoryStructureOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  inventoryPlaceId?: Prisma.SortOrder
   place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  purchaseOrderBecra?: Prisma.SortOrderInput | Prisma.SortOrder
-  partSupplierNumber?: Prisma.SortOrder
-  partDescription?: Prisma.SortOrder
-  coordinates?: Prisma.SortOrder
-  coordinatesX?: Prisma.SortOrder
-  coordinatesY?: Prisma.SortOrder
-  coordinatesZ?: Prisma.SortOrder
-  inventoryPlaceId?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
-  forProject?: Prisma.SortOrder
-  projectId?: Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchaseOrderBecraId?: Prisma.SortOrderInput | Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  partSupplierNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  partDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  warehousePlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  information?: Prisma.SortOrderInput | Prisma.SortOrder
+  coordinate?: Prisma.SortOrder
+  inventoryId?: Prisma.SortOrder
   forInventory?: Prisma.SortOrder
-  materialActive?: Prisma.SortOrder
-  warehousePlaceId?: Prisma.SortOrder
+  forProject?: Prisma.SortOrder
   active?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
-  unitId?: Prisma.SortOrder
+  materialActive?: Prisma.SortOrder
   valid?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureOrderByRelationAggregateInput
-  InventoryPlace?: Prisma.InventoryPlaceOrderByWithRelationInput
-  Material?: Prisma.MaterialOrderByWithRelationInput
-  Unit?: Prisma.UnitOrderByWithRelationInput
-  WarehousePlace?: Prisma.WarehousePlaceOrderByWithRelationInput
-  Project?: Prisma.ProjectOrderByWithRelationInput
+  createdBy?: Prisma.SortOrder
+  Inventory?: Prisma.InventoryOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.InventoryStructureOrderByRelevanceInput
 }
@@ -503,80 +346,55 @@ export type InventoryStructureWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.InventoryStructureWhereInput | Prisma.InventoryStructureWhereInput[]
   OR?: Prisma.InventoryStructureWhereInput[]
   NOT?: Prisma.InventoryStructureWhereInput | Prisma.InventoryStructureWhereInput[]
+  inventoryPlaceId?: Prisma.StringFilter<"InventoryStructure"> | string
   place?: Prisma.StringFilter<"InventoryStructure"> | string
   shortDescription?: Prisma.StringFilter<"InventoryStructure"> | string
-  longDescription?: Prisma.StringFilter<"InventoryStructure"> | string
-  beNumber?: Prisma.StringFilter<"InventoryStructure"> | string
-  purchaseOrderBecra?: Prisma.IntNullableFilter<"InventoryStructure"> | number | null
-  partSupplierNumber?: Prisma.StringFilter<"InventoryStructure"> | string
-  partDescription?: Prisma.StringFilter<"InventoryStructure"> | string
-  coordinates?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  coordinatesX?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFilter<"InventoryStructure"> | string
-  materialId?: Prisma.StringFilter<"InventoryStructure"> | string
-  forProject?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  projectId?: Prisma.StringFilter<"InventoryStructure"> | string
+  longDescription?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  beNumber?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  purchaseOrderBecraId?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  projectId?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  partSupplierNumber?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  partDescription?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  warehousePlaceId?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  information?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  coordinate?: Prisma.BoolFilter<"InventoryStructure"> | boolean
+  inventoryId?: Prisma.StringFilter<"InventoryStructure"> | string
   forInventory?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  materialActive?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  warehousePlaceId?: Prisma.StringFilter<"InventoryStructure"> | string
+  forProject?: Prisma.BoolFilter<"InventoryStructure"> | boolean
   active?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  additionalInformation?: Prisma.StringFilter<"InventoryStructure"> | string
-  minimumStock?: Prisma.IntFilter<"InventoryStructure"> | number
-  maximumStock?: Prisma.IntFilter<"InventoryStructure"> | number
-  quantityInStock?: Prisma.IntFilter<"InventoryStructure"> | number
-  quantity?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFilter<"InventoryStructure"> | string
+  materialActive?: Prisma.BoolFilter<"InventoryStructure"> | boolean
   valid?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  createdBy?: Prisma.StringFilter<"InventoryStructure"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryStructure"> | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureListRelationFilter
-  InventoryPlace?: Prisma.XOR<Prisma.InventoryPlaceScalarRelationFilter, Prisma.InventoryPlaceWhereInput>
-  Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
-  Unit?: Prisma.XOR<Prisma.UnitScalarRelationFilter, Prisma.UnitWhereInput>
-  WarehousePlace?: Prisma.XOR<Prisma.WarehousePlaceScalarRelationFilter, Prisma.WarehousePlaceWhereInput>
-  Project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
+  createdBy?: Prisma.StringFilter<"InventoryStructure"> | string
+  Inventory?: Prisma.XOR<Prisma.InventoryScalarRelationFilter, Prisma.InventoryWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
 
 export type InventoryStructureOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  inventoryPlaceId?: Prisma.SortOrder
   place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  purchaseOrderBecra?: Prisma.SortOrderInput | Prisma.SortOrder
-  partSupplierNumber?: Prisma.SortOrder
-  partDescription?: Prisma.SortOrder
-  coordinates?: Prisma.SortOrder
-  coordinatesX?: Prisma.SortOrder
-  coordinatesY?: Prisma.SortOrder
-  coordinatesZ?: Prisma.SortOrder
-  inventoryPlaceId?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
-  forProject?: Prisma.SortOrder
-  projectId?: Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchaseOrderBecraId?: Prisma.SortOrderInput | Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  partSupplierNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  partDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  warehousePlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  information?: Prisma.SortOrderInput | Prisma.SortOrder
+  coordinate?: Prisma.SortOrder
+  inventoryId?: Prisma.SortOrder
   forInventory?: Prisma.SortOrder
-  materialActive?: Prisma.SortOrder
-  warehousePlaceId?: Prisma.SortOrder
+  forProject?: Prisma.SortOrder
   active?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
-  unitId?: Prisma.SortOrder
+  materialActive?: Prisma.SortOrder
   valid?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   _count?: Prisma.InventoryStructureCountOrderByAggregateInput
-  _avg?: Prisma.InventoryStructureAvgOrderByAggregateInput
   _max?: Prisma.InventoryStructureMaxOrderByAggregateInput
   _min?: Prisma.InventoryStructureMinOrderByAggregateInput
-  _sum?: Prisma.InventoryStructureSumOrderByAggregateInput
 }
 
 export type InventoryStructureScalarWhereWithAggregatesInput = {
@@ -584,264 +402,192 @@ export type InventoryStructureScalarWhereWithAggregatesInput = {
   OR?: Prisma.InventoryStructureScalarWhereWithAggregatesInput[]
   NOT?: Prisma.InventoryStructureScalarWhereWithAggregatesInput | Prisma.InventoryStructureScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
+  inventoryPlaceId?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
   place?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
   shortDescription?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
-  longDescription?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
-  beNumber?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
-  purchaseOrderBecra?: Prisma.IntNullableWithAggregatesFilter<"InventoryStructure"> | number | null
-  partSupplierNumber?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
-  partDescription?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
-  coordinates?: Prisma.BoolWithAggregatesFilter<"InventoryStructure"> | boolean
-  coordinatesX?: Prisma.DecimalWithAggregatesFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalWithAggregatesFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalWithAggregatesFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
-  materialId?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
-  forProject?: Prisma.BoolWithAggregatesFilter<"InventoryStructure"> | boolean
-  projectId?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
+  longDescription?: Prisma.StringNullableWithAggregatesFilter<"InventoryStructure"> | string | null
+  beNumber?: Prisma.StringNullableWithAggregatesFilter<"InventoryStructure"> | string | null
+  purchaseOrderBecraId?: Prisma.StringNullableWithAggregatesFilter<"InventoryStructure"> | string | null
+  projectId?: Prisma.StringNullableWithAggregatesFilter<"InventoryStructure"> | string | null
+  partSupplierNumber?: Prisma.StringNullableWithAggregatesFilter<"InventoryStructure"> | string | null
+  partDescription?: Prisma.StringNullableWithAggregatesFilter<"InventoryStructure"> | string | null
+  warehousePlaceId?: Prisma.StringNullableWithAggregatesFilter<"InventoryStructure"> | string | null
+  information?: Prisma.StringNullableWithAggregatesFilter<"InventoryStructure"> | string | null
+  coordinate?: Prisma.BoolWithAggregatesFilter<"InventoryStructure"> | boolean
+  inventoryId?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
   forInventory?: Prisma.BoolWithAggregatesFilter<"InventoryStructure"> | boolean
-  materialActive?: Prisma.BoolWithAggregatesFilter<"InventoryStructure"> | boolean
-  warehousePlaceId?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
+  forProject?: Prisma.BoolWithAggregatesFilter<"InventoryStructure"> | boolean
   active?: Prisma.BoolWithAggregatesFilter<"InventoryStructure"> | boolean
-  additionalInformation?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
-  minimumStock?: Prisma.IntWithAggregatesFilter<"InventoryStructure"> | number
-  maximumStock?: Prisma.IntWithAggregatesFilter<"InventoryStructure"> | number
-  quantityInStock?: Prisma.IntWithAggregatesFilter<"InventoryStructure"> | number
-  quantity?: Prisma.DecimalWithAggregatesFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalWithAggregatesFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
+  materialActive?: Prisma.BoolWithAggregatesFilter<"InventoryStructure"> | boolean
   valid?: Prisma.BoolWithAggregatesFilter<"InventoryStructure"> | boolean
-  createdBy?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"InventoryStructure"> | Date | string
+  createdBy?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
 }
 
 export type InventoryStructureCreateInput = {
   id: string
+  inventoryPlaceId: string
   place: string
   shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject: boolean
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
   forInventory: boolean
-  materialActive: boolean
+  forProject: boolean
   active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  materialActive: boolean
   valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutInventoryStructureInput
-  InventoryPlace: Prisma.InventoryPlaceCreateNestedOneWithoutInventoryStructureInput
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryStructureInput
-  Unit: Prisma.UnitCreateNestedOneWithoutInventoryStructureInput
-  WarehousePlace: Prisma.WarehousePlaceCreateNestedOneWithoutInventoryStructureInput
-  Project: Prisma.ProjectCreateNestedOneWithoutInventoryStructureInput
+  createdAt?: Date | string
+  Inventory: Prisma.InventoryCreateNestedOneWithoutInventoryStructureInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryStructureInput
 }
 
 export type InventoryStructureUncheckedCreateInput = {
   id: string
+  inventoryPlaceId: string
   place: string
   shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
-  projectId: string
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
+  inventoryId: string
   forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
+  forProject: boolean
   active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
+  materialActive: boolean
   valid: boolean
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutInventoryStructureInput
 }
 
 export type InventoryStructureUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutInventoryStructureNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Unit?: Prisma.UnitUpdateOneRequiredWithoutInventoryStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Project?: Prisma.ProjectUpdateOneRequiredWithoutInventoryStructureNestedInput
+  Inventory?: Prisma.InventoryUpdateOneRequiredWithoutInventoryStructureNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryStructureNestedInput
 }
 
 export type InventoryStructureUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
   forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutInventoryStructureNestedInput
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InventoryStructureCreateManyInput = {
   id: string
+  inventoryPlaceId: string
   place: string
   shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
-  projectId: string
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
+  inventoryId: string
   forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
+  forProject: boolean
   active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
+  materialActive: boolean
   valid: boolean
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
 }
 
 export type InventoryStructureUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InventoryStructureUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
   forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InventoryStructureListRelationFilter = {
@@ -854,11 +600,6 @@ export type InventoryStructureOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type InventoryStructureNullableScalarRelationFilter = {
-  is?: Prisma.InventoryStructureWhereInput | null
-  isNot?: Prisma.InventoryStructureWhereInput | null
-}
-
 export type InventoryStructureOrderByRelevanceInput = {
   fields: Prisma.InventoryStructureOrderByRelevanceFieldEnum | Prisma.InventoryStructureOrderByRelevanceFieldEnum[]
   sort: Prisma.SortOrder
@@ -867,125 +608,74 @@ export type InventoryStructureOrderByRelevanceInput = {
 
 export type InventoryStructureCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  inventoryPlaceId?: Prisma.SortOrder
   place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  purchaseOrderBecra?: Prisma.SortOrder
+  purchaseOrderBecraId?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
   partSupplierNumber?: Prisma.SortOrder
   partDescription?: Prisma.SortOrder
-  coordinates?: Prisma.SortOrder
-  coordinatesX?: Prisma.SortOrder
-  coordinatesY?: Prisma.SortOrder
-  coordinatesZ?: Prisma.SortOrder
-  inventoryPlaceId?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
-  forProject?: Prisma.SortOrder
-  projectId?: Prisma.SortOrder
-  forInventory?: Prisma.SortOrder
-  materialActive?: Prisma.SortOrder
   warehousePlaceId?: Prisma.SortOrder
+  information?: Prisma.SortOrder
+  coordinate?: Prisma.SortOrder
+  inventoryId?: Prisma.SortOrder
+  forInventory?: Prisma.SortOrder
+  forProject?: Prisma.SortOrder
   active?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
-  unitId?: Prisma.SortOrder
+  materialActive?: Prisma.SortOrder
   valid?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-}
-
-export type InventoryStructureAvgOrderByAggregateInput = {
-  purchaseOrderBecra?: Prisma.SortOrder
-  coordinatesX?: Prisma.SortOrder
-  coordinatesY?: Prisma.SortOrder
-  coordinatesZ?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type InventoryStructureMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  inventoryPlaceId?: Prisma.SortOrder
   place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  purchaseOrderBecra?: Prisma.SortOrder
+  purchaseOrderBecraId?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
   partSupplierNumber?: Prisma.SortOrder
   partDescription?: Prisma.SortOrder
-  coordinates?: Prisma.SortOrder
-  coordinatesX?: Prisma.SortOrder
-  coordinatesY?: Prisma.SortOrder
-  coordinatesZ?: Prisma.SortOrder
-  inventoryPlaceId?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
-  forProject?: Prisma.SortOrder
-  projectId?: Prisma.SortOrder
-  forInventory?: Prisma.SortOrder
-  materialActive?: Prisma.SortOrder
   warehousePlaceId?: Prisma.SortOrder
+  information?: Prisma.SortOrder
+  coordinate?: Prisma.SortOrder
+  inventoryId?: Prisma.SortOrder
+  forInventory?: Prisma.SortOrder
+  forProject?: Prisma.SortOrder
   active?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
-  unitId?: Prisma.SortOrder
+  materialActive?: Prisma.SortOrder
   valid?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type InventoryStructureMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  inventoryPlaceId?: Prisma.SortOrder
   place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  purchaseOrderBecra?: Prisma.SortOrder
+  purchaseOrderBecraId?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
   partSupplierNumber?: Prisma.SortOrder
   partDescription?: Prisma.SortOrder
-  coordinates?: Prisma.SortOrder
-  coordinatesX?: Prisma.SortOrder
-  coordinatesY?: Prisma.SortOrder
-  coordinatesZ?: Prisma.SortOrder
-  inventoryPlaceId?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
-  forProject?: Prisma.SortOrder
-  projectId?: Prisma.SortOrder
-  forInventory?: Prisma.SortOrder
-  materialActive?: Prisma.SortOrder
   warehousePlaceId?: Prisma.SortOrder
+  information?: Prisma.SortOrder
+  coordinate?: Prisma.SortOrder
+  inventoryId?: Prisma.SortOrder
+  forInventory?: Prisma.SortOrder
+  forProject?: Prisma.SortOrder
   active?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
-  unitId?: Prisma.SortOrder
+  materialActive?: Prisma.SortOrder
   valid?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-}
-
-export type InventoryStructureSumOrderByAggregateInput = {
-  purchaseOrderBecra?: Prisma.SortOrder
-  coordinatesX?: Prisma.SortOrder
-  coordinatesY?: Prisma.SortOrder
-  coordinatesZ?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type InventoryStructureCreateNestedManyWithoutEmployeeInput = {
@@ -1030,296 +720,92 @@ export type InventoryStructureUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
 }
 
-export type InventoryStructureCreateNestedManyWithoutProjectInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutProjectInput, Prisma.InventoryStructureUncheckedCreateWithoutProjectInput> | Prisma.InventoryStructureCreateWithoutProjectInput[] | Prisma.InventoryStructureUncheckedCreateWithoutProjectInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutProjectInput | Prisma.InventoryStructureCreateOrConnectWithoutProjectInput[]
-  createMany?: Prisma.InventoryStructureCreateManyProjectInputEnvelope
+export type InventoryStructureCreateNestedManyWithoutInventoryInput = {
+  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryInput> | Prisma.InventoryStructureCreateWithoutInventoryInput[] | Prisma.InventoryStructureUncheckedCreateWithoutInventoryInput[]
+  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutInventoryInput | Prisma.InventoryStructureCreateOrConnectWithoutInventoryInput[]
+  createMany?: Prisma.InventoryStructureCreateManyInventoryInputEnvelope
   connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
 }
 
-export type InventoryStructureUncheckedCreateNestedManyWithoutProjectInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutProjectInput, Prisma.InventoryStructureUncheckedCreateWithoutProjectInput> | Prisma.InventoryStructureCreateWithoutProjectInput[] | Prisma.InventoryStructureUncheckedCreateWithoutProjectInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutProjectInput | Prisma.InventoryStructureCreateOrConnectWithoutProjectInput[]
-  createMany?: Prisma.InventoryStructureCreateManyProjectInputEnvelope
+export type InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput = {
+  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryInput> | Prisma.InventoryStructureCreateWithoutInventoryInput[] | Prisma.InventoryStructureUncheckedCreateWithoutInventoryInput[]
+  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutInventoryInput | Prisma.InventoryStructureCreateOrConnectWithoutInventoryInput[]
+  createMany?: Prisma.InventoryStructureCreateManyInventoryInputEnvelope
   connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
 }
 
-export type InventoryStructureUpdateManyWithoutProjectNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutProjectInput, Prisma.InventoryStructureUncheckedCreateWithoutProjectInput> | Prisma.InventoryStructureCreateWithoutProjectInput[] | Prisma.InventoryStructureUncheckedCreateWithoutProjectInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutProjectInput | Prisma.InventoryStructureCreateOrConnectWithoutProjectInput[]
-  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutProjectInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutProjectInput[]
-  createMany?: Prisma.InventoryStructureCreateManyProjectInputEnvelope
+export type InventoryStructureUpdateManyWithoutInventoryNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryInput> | Prisma.InventoryStructureCreateWithoutInventoryInput[] | Prisma.InventoryStructureUncheckedCreateWithoutInventoryInput[]
+  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutInventoryInput | Prisma.InventoryStructureCreateOrConnectWithoutInventoryInput[]
+  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutInventoryInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutInventoryInput[]
+  createMany?: Prisma.InventoryStructureCreateManyInventoryInputEnvelope
   set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
   disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
   delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
   connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutProjectInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutProjectInput[]
-  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutProjectInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutProjectInput[]
+  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutInventoryInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutInventoryInput[]
+  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutInventoryInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutInventoryInput[]
   deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
 }
 
-export type InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutProjectInput, Prisma.InventoryStructureUncheckedCreateWithoutProjectInput> | Prisma.InventoryStructureCreateWithoutProjectInput[] | Prisma.InventoryStructureUncheckedCreateWithoutProjectInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutProjectInput | Prisma.InventoryStructureCreateOrConnectWithoutProjectInput[]
-  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutProjectInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutProjectInput[]
-  createMany?: Prisma.InventoryStructureCreateManyProjectInputEnvelope
+export type InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryInput> | Prisma.InventoryStructureCreateWithoutInventoryInput[] | Prisma.InventoryStructureUncheckedCreateWithoutInventoryInput[]
+  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutInventoryInput | Prisma.InventoryStructureCreateOrConnectWithoutInventoryInput[]
+  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutInventoryInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutInventoryInput[]
+  createMany?: Prisma.InventoryStructureCreateManyInventoryInputEnvelope
   set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
   disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
   delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
   connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutProjectInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutProjectInput[]
-  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutProjectInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutProjectInput[]
-  deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
-}
-
-export type InventoryStructureCreateNestedOneWithoutInventoryOrderStructureInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryOrderStructureInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryOrderStructureInput>
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutInventoryOrderStructureInput
-  connect?: Prisma.InventoryStructureWhereUniqueInput
-}
-
-export type InventoryStructureUpdateOneWithoutInventoryOrderStructureNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryOrderStructureInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryOrderStructureInput>
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutInventoryOrderStructureInput
-  upsert?: Prisma.InventoryStructureUpsertWithoutInventoryOrderStructureInput
-  disconnect?: Prisma.InventoryStructureWhereInput | boolean
-  delete?: Prisma.InventoryStructureWhereInput | boolean
-  connect?: Prisma.InventoryStructureWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.InventoryStructureUpdateToOneWithWhereWithoutInventoryOrderStructureInput, Prisma.InventoryStructureUpdateWithoutInventoryOrderStructureInput>, Prisma.InventoryStructureUncheckedUpdateWithoutInventoryOrderStructureInput>
-}
-
-export type InventoryStructureCreateNestedManyWithoutInventoryPlaceInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryPlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryPlaceInput> | Prisma.InventoryStructureCreateWithoutInventoryPlaceInput[] | Prisma.InventoryStructureUncheckedCreateWithoutInventoryPlaceInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutInventoryPlaceInput | Prisma.InventoryStructureCreateOrConnectWithoutInventoryPlaceInput[]
-  createMany?: Prisma.InventoryStructureCreateManyInventoryPlaceInputEnvelope
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-}
-
-export type InventoryStructureUncheckedCreateNestedManyWithoutInventoryPlaceInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryPlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryPlaceInput> | Prisma.InventoryStructureCreateWithoutInventoryPlaceInput[] | Prisma.InventoryStructureUncheckedCreateWithoutInventoryPlaceInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutInventoryPlaceInput | Prisma.InventoryStructureCreateOrConnectWithoutInventoryPlaceInput[]
-  createMany?: Prisma.InventoryStructureCreateManyInventoryPlaceInputEnvelope
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-}
-
-export type InventoryStructureUpdateManyWithoutInventoryPlaceNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryPlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryPlaceInput> | Prisma.InventoryStructureCreateWithoutInventoryPlaceInput[] | Prisma.InventoryStructureUncheckedCreateWithoutInventoryPlaceInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutInventoryPlaceInput | Prisma.InventoryStructureCreateOrConnectWithoutInventoryPlaceInput[]
-  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutInventoryPlaceInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutInventoryPlaceInput[]
-  createMany?: Prisma.InventoryStructureCreateManyInventoryPlaceInputEnvelope
-  set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutInventoryPlaceInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutInventoryPlaceInput[]
-  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutInventoryPlaceInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutInventoryPlaceInput[]
-  deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
-}
-
-export type InventoryStructureUncheckedUpdateManyWithoutInventoryPlaceNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryPlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryPlaceInput> | Prisma.InventoryStructureCreateWithoutInventoryPlaceInput[] | Prisma.InventoryStructureUncheckedCreateWithoutInventoryPlaceInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutInventoryPlaceInput | Prisma.InventoryStructureCreateOrConnectWithoutInventoryPlaceInput[]
-  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutInventoryPlaceInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutInventoryPlaceInput[]
-  createMany?: Prisma.InventoryStructureCreateManyInventoryPlaceInputEnvelope
-  set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutInventoryPlaceInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutInventoryPlaceInput[]
-  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutInventoryPlaceInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutInventoryPlaceInput[]
-  deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
-}
-
-export type InventoryStructureCreateNestedManyWithoutMaterialInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutMaterialInput, Prisma.InventoryStructureUncheckedCreateWithoutMaterialInput> | Prisma.InventoryStructureCreateWithoutMaterialInput[] | Prisma.InventoryStructureUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutMaterialInput | Prisma.InventoryStructureCreateOrConnectWithoutMaterialInput[]
-  createMany?: Prisma.InventoryStructureCreateManyMaterialInputEnvelope
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-}
-
-export type InventoryStructureUncheckedCreateNestedManyWithoutMaterialInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutMaterialInput, Prisma.InventoryStructureUncheckedCreateWithoutMaterialInput> | Prisma.InventoryStructureCreateWithoutMaterialInput[] | Prisma.InventoryStructureUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutMaterialInput | Prisma.InventoryStructureCreateOrConnectWithoutMaterialInput[]
-  createMany?: Prisma.InventoryStructureCreateManyMaterialInputEnvelope
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-}
-
-export type InventoryStructureUpdateManyWithoutMaterialNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutMaterialInput, Prisma.InventoryStructureUncheckedCreateWithoutMaterialInput> | Prisma.InventoryStructureCreateWithoutMaterialInput[] | Prisma.InventoryStructureUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutMaterialInput | Prisma.InventoryStructureCreateOrConnectWithoutMaterialInput[]
-  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutMaterialInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutMaterialInput[]
-  createMany?: Prisma.InventoryStructureCreateManyMaterialInputEnvelope
-  set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutMaterialInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutMaterialInput[]
-  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutMaterialInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutMaterialInput[]
-  deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
-}
-
-export type InventoryStructureUncheckedUpdateManyWithoutMaterialNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutMaterialInput, Prisma.InventoryStructureUncheckedCreateWithoutMaterialInput> | Prisma.InventoryStructureCreateWithoutMaterialInput[] | Prisma.InventoryStructureUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutMaterialInput | Prisma.InventoryStructureCreateOrConnectWithoutMaterialInput[]
-  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutMaterialInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutMaterialInput[]
-  createMany?: Prisma.InventoryStructureCreateManyMaterialInputEnvelope
-  set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutMaterialInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutMaterialInput[]
-  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutMaterialInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutMaterialInput[]
-  deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
-}
-
-export type InventoryStructureCreateNestedManyWithoutUnitInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutUnitInput, Prisma.InventoryStructureUncheckedCreateWithoutUnitInput> | Prisma.InventoryStructureCreateWithoutUnitInput[] | Prisma.InventoryStructureUncheckedCreateWithoutUnitInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutUnitInput | Prisma.InventoryStructureCreateOrConnectWithoutUnitInput[]
-  createMany?: Prisma.InventoryStructureCreateManyUnitInputEnvelope
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-}
-
-export type InventoryStructureUncheckedCreateNestedManyWithoutUnitInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutUnitInput, Prisma.InventoryStructureUncheckedCreateWithoutUnitInput> | Prisma.InventoryStructureCreateWithoutUnitInput[] | Prisma.InventoryStructureUncheckedCreateWithoutUnitInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutUnitInput | Prisma.InventoryStructureCreateOrConnectWithoutUnitInput[]
-  createMany?: Prisma.InventoryStructureCreateManyUnitInputEnvelope
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-}
-
-export type InventoryStructureUpdateManyWithoutUnitNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutUnitInput, Prisma.InventoryStructureUncheckedCreateWithoutUnitInput> | Prisma.InventoryStructureCreateWithoutUnitInput[] | Prisma.InventoryStructureUncheckedCreateWithoutUnitInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutUnitInput | Prisma.InventoryStructureCreateOrConnectWithoutUnitInput[]
-  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutUnitInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutUnitInput[]
-  createMany?: Prisma.InventoryStructureCreateManyUnitInputEnvelope
-  set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutUnitInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutUnitInput[]
-  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutUnitInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutUnitInput[]
-  deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
-}
-
-export type InventoryStructureUncheckedUpdateManyWithoutUnitNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutUnitInput, Prisma.InventoryStructureUncheckedCreateWithoutUnitInput> | Prisma.InventoryStructureCreateWithoutUnitInput[] | Prisma.InventoryStructureUncheckedCreateWithoutUnitInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutUnitInput | Prisma.InventoryStructureCreateOrConnectWithoutUnitInput[]
-  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutUnitInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutUnitInput[]
-  createMany?: Prisma.InventoryStructureCreateManyUnitInputEnvelope
-  set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutUnitInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutUnitInput[]
-  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutUnitInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutUnitInput[]
-  deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
-}
-
-export type InventoryStructureCreateNestedManyWithoutWarehousePlaceInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutWarehousePlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutWarehousePlaceInput> | Prisma.InventoryStructureCreateWithoutWarehousePlaceInput[] | Prisma.InventoryStructureUncheckedCreateWithoutWarehousePlaceInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutWarehousePlaceInput | Prisma.InventoryStructureCreateOrConnectWithoutWarehousePlaceInput[]
-  createMany?: Prisma.InventoryStructureCreateManyWarehousePlaceInputEnvelope
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-}
-
-export type InventoryStructureUncheckedCreateNestedManyWithoutWarehousePlaceInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutWarehousePlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutWarehousePlaceInput> | Prisma.InventoryStructureCreateWithoutWarehousePlaceInput[] | Prisma.InventoryStructureUncheckedCreateWithoutWarehousePlaceInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutWarehousePlaceInput | Prisma.InventoryStructureCreateOrConnectWithoutWarehousePlaceInput[]
-  createMany?: Prisma.InventoryStructureCreateManyWarehousePlaceInputEnvelope
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-}
-
-export type InventoryStructureUpdateManyWithoutWarehousePlaceNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutWarehousePlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutWarehousePlaceInput> | Prisma.InventoryStructureCreateWithoutWarehousePlaceInput[] | Prisma.InventoryStructureUncheckedCreateWithoutWarehousePlaceInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutWarehousePlaceInput | Prisma.InventoryStructureCreateOrConnectWithoutWarehousePlaceInput[]
-  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutWarehousePlaceInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutWarehousePlaceInput[]
-  createMany?: Prisma.InventoryStructureCreateManyWarehousePlaceInputEnvelope
-  set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutWarehousePlaceInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutWarehousePlaceInput[]
-  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutWarehousePlaceInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutWarehousePlaceInput[]
-  deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
-}
-
-export type InventoryStructureUncheckedUpdateManyWithoutWarehousePlaceNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutWarehousePlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutWarehousePlaceInput> | Prisma.InventoryStructureCreateWithoutWarehousePlaceInput[] | Prisma.InventoryStructureUncheckedCreateWithoutWarehousePlaceInput[]
-  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutWarehousePlaceInput | Prisma.InventoryStructureCreateOrConnectWithoutWarehousePlaceInput[]
-  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutWarehousePlaceInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutWarehousePlaceInput[]
-  createMany?: Prisma.InventoryStructureCreateManyWarehousePlaceInputEnvelope
-  set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
-  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutWarehousePlaceInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutWarehousePlaceInput[]
-  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutWarehousePlaceInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutWarehousePlaceInput[]
+  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutInventoryInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutInventoryInput[]
+  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutInventoryInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutInventoryInput[]
   deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
 }
 
 export type InventoryStructureCreateWithoutEmployeeInput = {
   id: string
+  inventoryPlaceId: string
   place: string
   shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject: boolean
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
   forInventory: boolean
-  materialActive: boolean
+  forProject: boolean
   active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  materialActive: boolean
   valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutInventoryStructureInput
-  InventoryPlace: Prisma.InventoryPlaceCreateNestedOneWithoutInventoryStructureInput
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryStructureInput
-  Unit: Prisma.UnitCreateNestedOneWithoutInventoryStructureInput
-  WarehousePlace: Prisma.WarehousePlaceCreateNestedOneWithoutInventoryStructureInput
-  Project: Prisma.ProjectCreateNestedOneWithoutInventoryStructureInput
+  createdAt?: Date | string
+  Inventory: Prisma.InventoryCreateNestedOneWithoutInventoryStructureInput
 }
 
 export type InventoryStructureUncheckedCreateWithoutEmployeeInput = {
   id: string
+  inventoryPlaceId: string
   place: string
   shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
-  projectId: string
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
+  inventoryId: string
   forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
+  forProject: boolean
   active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
+  materialActive: boolean
   valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutInventoryStructureInput
+  createdAt?: Date | string
 }
 
 export type InventoryStructureCreateOrConnectWithoutEmployeeInput = {
@@ -1353,1586 +839,372 @@ export type InventoryStructureScalarWhereInput = {
   OR?: Prisma.InventoryStructureScalarWhereInput[]
   NOT?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
   id?: Prisma.StringFilter<"InventoryStructure"> | string
+  inventoryPlaceId?: Prisma.StringFilter<"InventoryStructure"> | string
   place?: Prisma.StringFilter<"InventoryStructure"> | string
   shortDescription?: Prisma.StringFilter<"InventoryStructure"> | string
-  longDescription?: Prisma.StringFilter<"InventoryStructure"> | string
-  beNumber?: Prisma.StringFilter<"InventoryStructure"> | string
-  purchaseOrderBecra?: Prisma.IntNullableFilter<"InventoryStructure"> | number | null
-  partSupplierNumber?: Prisma.StringFilter<"InventoryStructure"> | string
-  partDescription?: Prisma.StringFilter<"InventoryStructure"> | string
-  coordinates?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  coordinatesX?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFilter<"InventoryStructure"> | string
-  materialId?: Prisma.StringFilter<"InventoryStructure"> | string
-  forProject?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  projectId?: Prisma.StringFilter<"InventoryStructure"> | string
+  longDescription?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  beNumber?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  purchaseOrderBecraId?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  projectId?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  partSupplierNumber?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  partDescription?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  warehousePlaceId?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  information?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+  coordinate?: Prisma.BoolFilter<"InventoryStructure"> | boolean
+  inventoryId?: Prisma.StringFilter<"InventoryStructure"> | string
   forInventory?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  materialActive?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  warehousePlaceId?: Prisma.StringFilter<"InventoryStructure"> | string
+  forProject?: Prisma.BoolFilter<"InventoryStructure"> | boolean
   active?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  additionalInformation?: Prisma.StringFilter<"InventoryStructure"> | string
-  minimumStock?: Prisma.IntFilter<"InventoryStructure"> | number
-  maximumStock?: Prisma.IntFilter<"InventoryStructure"> | number
-  quantityInStock?: Prisma.IntFilter<"InventoryStructure"> | number
-  quantity?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFilter<"InventoryStructure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFilter<"InventoryStructure"> | string
+  materialActive?: Prisma.BoolFilter<"InventoryStructure"> | boolean
   valid?: Prisma.BoolFilter<"InventoryStructure"> | boolean
-  createdBy?: Prisma.StringFilter<"InventoryStructure"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryStructure"> | Date | string
+  createdBy?: Prisma.StringFilter<"InventoryStructure"> | string
 }
 
-export type InventoryStructureCreateWithoutProjectInput = {
+export type InventoryStructureCreateWithoutInventoryInput = {
   id: string
+  inventoryPlaceId: string
   place: string
   shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject: boolean
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
   forInventory: boolean
-  materialActive: boolean
+  forProject: boolean
   active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  materialActive: boolean
   valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutInventoryStructureInput
-  InventoryPlace: Prisma.InventoryPlaceCreateNestedOneWithoutInventoryStructureInput
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryStructureInput
-  Unit: Prisma.UnitCreateNestedOneWithoutInventoryStructureInput
-  WarehousePlace: Prisma.WarehousePlaceCreateNestedOneWithoutInventoryStructureInput
+  createdAt?: Date | string
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryStructureInput
 }
 
-export type InventoryStructureUncheckedCreateWithoutProjectInput = {
+export type InventoryStructureUncheckedCreateWithoutInventoryInput = {
   id: string
+  inventoryPlaceId: string
   place: string
   shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
   forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
+  forProject: boolean
   active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
+  materialActive: boolean
   valid: boolean
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutInventoryStructureInput
 }
 
-export type InventoryStructureCreateOrConnectWithoutProjectInput = {
+export type InventoryStructureCreateOrConnectWithoutInventoryInput = {
   where: Prisma.InventoryStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutProjectInput, Prisma.InventoryStructureUncheckedCreateWithoutProjectInput>
+  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryInput>
 }
 
-export type InventoryStructureCreateManyProjectInputEnvelope = {
-  data: Prisma.InventoryStructureCreateManyProjectInput | Prisma.InventoryStructureCreateManyProjectInput[]
+export type InventoryStructureCreateManyInventoryInputEnvelope = {
+  data: Prisma.InventoryStructureCreateManyInventoryInput | Prisma.InventoryStructureCreateManyInventoryInput[]
   skipDuplicates?: boolean
 }
 
-export type InventoryStructureUpsertWithWhereUniqueWithoutProjectInput = {
+export type InventoryStructureUpsertWithWhereUniqueWithoutInventoryInput = {
   where: Prisma.InventoryStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutProjectInput, Prisma.InventoryStructureUncheckedUpdateWithoutProjectInput>
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutProjectInput, Prisma.InventoryStructureUncheckedCreateWithoutProjectInput>
+  update: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutInventoryInput, Prisma.InventoryStructureUncheckedUpdateWithoutInventoryInput>
+  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryInput>
 }
 
-export type InventoryStructureUpdateWithWhereUniqueWithoutProjectInput = {
+export type InventoryStructureUpdateWithWhereUniqueWithoutInventoryInput = {
   where: Prisma.InventoryStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutProjectInput, Prisma.InventoryStructureUncheckedUpdateWithoutProjectInput>
+  data: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutInventoryInput, Prisma.InventoryStructureUncheckedUpdateWithoutInventoryInput>
 }
 
-export type InventoryStructureUpdateManyWithWhereWithoutProjectInput = {
+export type InventoryStructureUpdateManyWithWhereWithoutInventoryInput = {
   where: Prisma.InventoryStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.InventoryStructureUpdateManyMutationInput, Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectInput>
-}
-
-export type InventoryStructureCreateWithoutInventoryOrderStructureInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject: boolean
-  forInventory: boolean
-  materialActive: boolean
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid: boolean
-  createdAt: Date | string
-  InventoryPlace: Prisma.InventoryPlaceCreateNestedOneWithoutInventoryStructureInput
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryStructureInput
-  Unit: Prisma.UnitCreateNestedOneWithoutInventoryStructureInput
-  WarehousePlace: Prisma.WarehousePlaceCreateNestedOneWithoutInventoryStructureInput
-  Project: Prisma.ProjectCreateNestedOneWithoutInventoryStructureInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryStructureInput
-}
-
-export type InventoryStructureUncheckedCreateWithoutInventoryOrderStructureInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
-  projectId: string
-  forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-}
-
-export type InventoryStructureCreateOrConnectWithoutInventoryOrderStructureInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryOrderStructureInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryOrderStructureInput>
-}
-
-export type InventoryStructureUpsertWithoutInventoryOrderStructureInput = {
-  update: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutInventoryOrderStructureInput, Prisma.InventoryStructureUncheckedUpdateWithoutInventoryOrderStructureInput>
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryOrderStructureInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryOrderStructureInput>
-  where?: Prisma.InventoryStructureWhereInput
-}
-
-export type InventoryStructureUpdateToOneWithWhereWithoutInventoryOrderStructureInput = {
-  where?: Prisma.InventoryStructureWhereInput
-  data: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutInventoryOrderStructureInput, Prisma.InventoryStructureUncheckedUpdateWithoutInventoryOrderStructureInput>
-}
-
-export type InventoryStructureUpdateWithoutInventoryOrderStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryPlace?: Prisma.InventoryPlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Unit?: Prisma.UnitUpdateOneRequiredWithoutInventoryStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Project?: Prisma.ProjectUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryStructureNestedInput
-}
-
-export type InventoryStructureUncheckedUpdateWithoutInventoryOrderStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type InventoryStructureCreateWithoutInventoryPlaceInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject: boolean
-  forInventory: boolean
-  materialActive: boolean
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutInventoryStructureInput
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryStructureInput
-  Unit: Prisma.UnitCreateNestedOneWithoutInventoryStructureInput
-  WarehousePlace: Prisma.WarehousePlaceCreateNestedOneWithoutInventoryStructureInput
-  Project: Prisma.ProjectCreateNestedOneWithoutInventoryStructureInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryStructureInput
-}
-
-export type InventoryStructureUncheckedCreateWithoutInventoryPlaceInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  materialId: string
-  forProject: boolean
-  projectId: string
-  forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutInventoryStructureInput
-}
-
-export type InventoryStructureCreateOrConnectWithoutInventoryPlaceInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryPlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryPlaceInput>
-}
-
-export type InventoryStructureCreateManyInventoryPlaceInputEnvelope = {
-  data: Prisma.InventoryStructureCreateManyInventoryPlaceInput | Prisma.InventoryStructureCreateManyInventoryPlaceInput[]
-  skipDuplicates?: boolean
-}
-
-export type InventoryStructureUpsertWithWhereUniqueWithoutInventoryPlaceInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutInventoryPlaceInput, Prisma.InventoryStructureUncheckedUpdateWithoutInventoryPlaceInput>
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutInventoryPlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutInventoryPlaceInput>
-}
-
-export type InventoryStructureUpdateWithWhereUniqueWithoutInventoryPlaceInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutInventoryPlaceInput, Prisma.InventoryStructureUncheckedUpdateWithoutInventoryPlaceInput>
-}
-
-export type InventoryStructureUpdateManyWithWhereWithoutInventoryPlaceInput = {
-  where: Prisma.InventoryStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.InventoryStructureUpdateManyMutationInput, Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryPlaceInput>
-}
-
-export type InventoryStructureCreateWithoutMaterialInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject: boolean
-  forInventory: boolean
-  materialActive: boolean
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutInventoryStructureInput
-  InventoryPlace: Prisma.InventoryPlaceCreateNestedOneWithoutInventoryStructureInput
-  Unit: Prisma.UnitCreateNestedOneWithoutInventoryStructureInput
-  WarehousePlace: Prisma.WarehousePlaceCreateNestedOneWithoutInventoryStructureInput
-  Project: Prisma.ProjectCreateNestedOneWithoutInventoryStructureInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryStructureInput
-}
-
-export type InventoryStructureUncheckedCreateWithoutMaterialInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  forProject: boolean
-  projectId: string
-  forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutInventoryStructureInput
-}
-
-export type InventoryStructureCreateOrConnectWithoutMaterialInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutMaterialInput, Prisma.InventoryStructureUncheckedCreateWithoutMaterialInput>
-}
-
-export type InventoryStructureCreateManyMaterialInputEnvelope = {
-  data: Prisma.InventoryStructureCreateManyMaterialInput | Prisma.InventoryStructureCreateManyMaterialInput[]
-  skipDuplicates?: boolean
-}
-
-export type InventoryStructureUpsertWithWhereUniqueWithoutMaterialInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutMaterialInput, Prisma.InventoryStructureUncheckedUpdateWithoutMaterialInput>
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutMaterialInput, Prisma.InventoryStructureUncheckedCreateWithoutMaterialInput>
-}
-
-export type InventoryStructureUpdateWithWhereUniqueWithoutMaterialInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutMaterialInput, Prisma.InventoryStructureUncheckedUpdateWithoutMaterialInput>
-}
-
-export type InventoryStructureUpdateManyWithWhereWithoutMaterialInput = {
-  where: Prisma.InventoryStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.InventoryStructureUpdateManyMutationInput, Prisma.InventoryStructureUncheckedUpdateManyWithoutMaterialInput>
-}
-
-export type InventoryStructureCreateWithoutUnitInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject: boolean
-  forInventory: boolean
-  materialActive: boolean
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutInventoryStructureInput
-  InventoryPlace: Prisma.InventoryPlaceCreateNestedOneWithoutInventoryStructureInput
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryStructureInput
-  WarehousePlace: Prisma.WarehousePlaceCreateNestedOneWithoutInventoryStructureInput
-  Project: Prisma.ProjectCreateNestedOneWithoutInventoryStructureInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryStructureInput
-}
-
-export type InventoryStructureUncheckedCreateWithoutUnitInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
-  projectId: string
-  forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutInventoryStructureInput
-}
-
-export type InventoryStructureCreateOrConnectWithoutUnitInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutUnitInput, Prisma.InventoryStructureUncheckedCreateWithoutUnitInput>
-}
-
-export type InventoryStructureCreateManyUnitInputEnvelope = {
-  data: Prisma.InventoryStructureCreateManyUnitInput | Prisma.InventoryStructureCreateManyUnitInput[]
-  skipDuplicates?: boolean
-}
-
-export type InventoryStructureUpsertWithWhereUniqueWithoutUnitInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutUnitInput, Prisma.InventoryStructureUncheckedUpdateWithoutUnitInput>
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutUnitInput, Prisma.InventoryStructureUncheckedCreateWithoutUnitInput>
-}
-
-export type InventoryStructureUpdateWithWhereUniqueWithoutUnitInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutUnitInput, Prisma.InventoryStructureUncheckedUpdateWithoutUnitInput>
-}
-
-export type InventoryStructureUpdateManyWithWhereWithoutUnitInput = {
-  where: Prisma.InventoryStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.InventoryStructureUpdateManyMutationInput, Prisma.InventoryStructureUncheckedUpdateManyWithoutUnitInput>
-}
-
-export type InventoryStructureCreateWithoutWarehousePlaceInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject: boolean
-  forInventory: boolean
-  materialActive: boolean
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutInventoryStructureInput
-  InventoryPlace: Prisma.InventoryPlaceCreateNestedOneWithoutInventoryStructureInput
-  Material: Prisma.MaterialCreateNestedOneWithoutInventoryStructureInput
-  Unit: Prisma.UnitCreateNestedOneWithoutInventoryStructureInput
-  Project: Prisma.ProjectCreateNestedOneWithoutInventoryStructureInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryStructureInput
-}
-
-export type InventoryStructureUncheckedCreateWithoutWarehousePlaceInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
-  projectId: string
-  forInventory: boolean
-  materialActive: boolean
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutInventoryStructureInput
-}
-
-export type InventoryStructureCreateOrConnectWithoutWarehousePlaceInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutWarehousePlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutWarehousePlaceInput>
-}
-
-export type InventoryStructureCreateManyWarehousePlaceInputEnvelope = {
-  data: Prisma.InventoryStructureCreateManyWarehousePlaceInput | Prisma.InventoryStructureCreateManyWarehousePlaceInput[]
-  skipDuplicates?: boolean
-}
-
-export type InventoryStructureUpsertWithWhereUniqueWithoutWarehousePlaceInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutWarehousePlaceInput, Prisma.InventoryStructureUncheckedUpdateWithoutWarehousePlaceInput>
-  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutWarehousePlaceInput, Prisma.InventoryStructureUncheckedCreateWithoutWarehousePlaceInput>
-}
-
-export type InventoryStructureUpdateWithWhereUniqueWithoutWarehousePlaceInput = {
-  where: Prisma.InventoryStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutWarehousePlaceInput, Prisma.InventoryStructureUncheckedUpdateWithoutWarehousePlaceInput>
-}
-
-export type InventoryStructureUpdateManyWithWhereWithoutWarehousePlaceInput = {
-  where: Prisma.InventoryStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.InventoryStructureUpdateManyMutationInput, Prisma.InventoryStructureUncheckedUpdateManyWithoutWarehousePlaceInput>
+  data: Prisma.XOR<Prisma.InventoryStructureUpdateManyMutationInput, Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryInput>
 }
 
 export type InventoryStructureCreateManyEmployeeInput = {
   id: string
+  inventoryPlaceId: string
   place: string
   shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
-  projectId: string
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
+  inventoryId: string
   forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
+  forProject: boolean
   active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
+  materialActive: boolean
   valid: boolean
-  createdAt: Date | string
+  createdAt?: Date | string
 }
 
 export type InventoryStructureUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutInventoryStructureNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Unit?: Prisma.UnitUpdateOneRequiredWithoutInventoryStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Project?: Prisma.ProjectUpdateOneRequiredWithoutInventoryStructureNestedInput
+  Inventory?: Prisma.InventoryUpdateOneRequiredWithoutInventoryStructureNestedInput
 }
 
 export type InventoryStructureUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
   forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutInventoryStructureNestedInput
 }
 
 export type InventoryStructureUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
   forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type InventoryStructureCreateManyProjectInput = {
+export type InventoryStructureCreateManyInventoryInput = {
   id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
   inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
-  forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-}
-
-export type InventoryStructureUpdateWithoutProjectInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutInventoryStructureNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Unit?: Prisma.UnitUpdateOneRequiredWithoutInventoryStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryStructureNestedInput
-}
-
-export type InventoryStructureUncheckedUpdateWithoutProjectInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutInventoryStructureNestedInput
-}
-
-export type InventoryStructureUncheckedUpdateManyWithoutProjectInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type InventoryStructureCreateManyInventoryPlaceInput = {
-  id: string
   place: string
   shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  materialId: string
-  forProject: boolean
-  projectId: string
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
   forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
+  forProject: boolean
   active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
+  materialActive: boolean
   valid: boolean
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
 }
 
-export type InventoryStructureUpdateWithoutInventoryPlaceInput = {
+export type InventoryStructureUpdateWithoutInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutInventoryStructureNestedInput
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Unit?: Prisma.UnitUpdateOneRequiredWithoutInventoryStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Project?: Prisma.ProjectUpdateOneRequiredWithoutInventoryStructureNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryStructureNestedInput
 }
 
-export type InventoryStructureUncheckedUpdateWithoutInventoryPlaceInput = {
+export type InventoryStructureUncheckedUpdateWithoutInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutInventoryStructureNestedInput
-}
-
-export type InventoryStructureUncheckedUpdateManyWithoutInventoryPlaceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type InventoryStructureCreateManyMaterialInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  forProject: boolean
-  projectId: string
-  forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-}
-
-export type InventoryStructureUpdateWithoutMaterialInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutInventoryStructureNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Unit?: Prisma.UnitUpdateOneRequiredWithoutInventoryStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Project?: Prisma.ProjectUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryStructureNestedInput
-}
-
-export type InventoryStructureUncheckedUpdateWithoutMaterialInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutInventoryStructureNestedInput
-}
-
-export type InventoryStructureUncheckedUpdateManyWithoutMaterialInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type InventoryStructureUncheckedUpdateManyWithoutInventoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type InventoryStructureCreateManyUnitInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
-  projectId: string
-  forInventory: boolean
-  materialActive: boolean
-  warehousePlaceId: string
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-}
-
-export type InventoryStructureUpdateWithoutUnitInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutInventoryStructureNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Project?: Prisma.ProjectUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryStructureNestedInput
-}
-
-export type InventoryStructureUncheckedUpdateWithoutUnitInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutInventoryStructureNestedInput
-}
-
-export type InventoryStructureUncheckedUpdateManyWithoutUnitInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  warehousePlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type InventoryStructureCreateManyWarehousePlaceInput = {
-  id: string
-  place: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  purchaseOrderBecra?: number | null
-  partSupplierNumber: string
-  partDescription: string
-  coordinates: boolean
-  coordinatesX: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY: runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ: runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId: string
-  materialId: string
-  forProject: boolean
-  projectId: string
-  forInventory: boolean
-  materialActive: boolean
-  active: boolean
-  additionalInformation: string
-  minimumStock: number
-  maximumStock: number
-  quantityInStock: number
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-}
-
-export type InventoryStructureUpdateWithoutWarehousePlaceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutInventoryStructureNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Unit?: Prisma.UnitUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Project?: Prisma.ProjectUpdateOneRequiredWithoutInventoryStructureNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryStructureNestedInput
-}
-
-export type InventoryStructureUncheckedUpdateWithoutWarehousePlaceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutInventoryStructureNestedInput
-}
-
-export type InventoryStructureUncheckedUpdateManyWithoutWarehousePlaceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseOrderBecra?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  partSupplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  partDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  coordinates?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  coordinatesX?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesY?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  coordinatesZ?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
-  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unitId?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-
-/**
- * Count Type InventoryStructureCountOutputType
- */
-
-export type InventoryStructureCountOutputType = {
-  InventoryOrderStructure: number
-}
-
-export type InventoryStructureCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InventoryOrderStructure?: boolean | InventoryStructureCountOutputTypeCountInventoryOrderStructureArgs
-}
-
-/**
- * InventoryStructureCountOutputType without action
- */
-export type InventoryStructureCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InventoryStructureCountOutputType
-   */
-  select?: Prisma.InventoryStructureCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * InventoryStructureCountOutputType without action
- */
-export type InventoryStructureCountOutputTypeCountInventoryOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InventoryOrderStructureWhereInput
-}
 
 
 export type InventoryStructureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  inventoryPlaceId?: boolean
   place?: boolean
   shortDescription?: boolean
   longDescription?: boolean
   beNumber?: boolean
-  purchaseOrderBecra?: boolean
+  purchaseOrderBecraId?: boolean
+  projectId?: boolean
   partSupplierNumber?: boolean
   partDescription?: boolean
-  coordinates?: boolean
-  coordinatesX?: boolean
-  coordinatesY?: boolean
-  coordinatesZ?: boolean
-  inventoryPlaceId?: boolean
-  materialId?: boolean
-  forProject?: boolean
-  projectId?: boolean
-  forInventory?: boolean
-  materialActive?: boolean
   warehousePlaceId?: boolean
+  information?: boolean
+  coordinate?: boolean
+  inventoryId?: boolean
+  forInventory?: boolean
+  forProject?: boolean
   active?: boolean
-  additionalInformation?: boolean
-  minimumStock?: boolean
-  maximumStock?: boolean
-  quantityInStock?: boolean
-  quantity?: boolean
-  unitPrice?: boolean
-  unitId?: boolean
+  materialActive?: boolean
   valid?: boolean
-  createdBy?: boolean
   createdAt?: boolean
-  InventoryOrderStructure?: boolean | Prisma.InventoryStructure$InventoryOrderStructureArgs<ExtArgs>
-  InventoryPlace?: boolean | Prisma.InventoryPlaceDefaultArgs<ExtArgs>
-  Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
-  Unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
-  WarehousePlace?: boolean | Prisma.WarehousePlaceDefaultArgs<ExtArgs>
-  Project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  createdBy?: boolean
+  Inventory?: boolean | Prisma.InventoryDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.InventoryStructureCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventoryStructure"]>
 
 
 
 export type InventoryStructureSelectScalar = {
   id?: boolean
+  inventoryPlaceId?: boolean
   place?: boolean
   shortDescription?: boolean
   longDescription?: boolean
   beNumber?: boolean
-  purchaseOrderBecra?: boolean
+  purchaseOrderBecraId?: boolean
+  projectId?: boolean
   partSupplierNumber?: boolean
   partDescription?: boolean
-  coordinates?: boolean
-  coordinatesX?: boolean
-  coordinatesY?: boolean
-  coordinatesZ?: boolean
-  inventoryPlaceId?: boolean
-  materialId?: boolean
-  forProject?: boolean
-  projectId?: boolean
-  forInventory?: boolean
-  materialActive?: boolean
   warehousePlaceId?: boolean
+  information?: boolean
+  coordinate?: boolean
+  inventoryId?: boolean
+  forInventory?: boolean
+  forProject?: boolean
   active?: boolean
-  additionalInformation?: boolean
-  minimumStock?: boolean
-  maximumStock?: boolean
-  quantityInStock?: boolean
-  quantity?: boolean
-  unitPrice?: boolean
-  unitId?: boolean
+  materialActive?: boolean
   valid?: boolean
-  createdBy?: boolean
   createdAt?: boolean
+  createdBy?: boolean
 }
 
-export type InventoryStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "place" | "shortDescription" | "longDescription" | "beNumber" | "purchaseOrderBecra" | "partSupplierNumber" | "partDescription" | "coordinates" | "coordinatesX" | "coordinatesY" | "coordinatesZ" | "inventoryPlaceId" | "materialId" | "forProject" | "projectId" | "forInventory" | "materialActive" | "warehousePlaceId" | "active" | "additionalInformation" | "minimumStock" | "maximumStock" | "quantityInStock" | "quantity" | "unitPrice" | "unitId" | "valid" | "createdBy" | "createdAt", ExtArgs["result"]["inventoryStructure"]>
+export type InventoryStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "inventoryPlaceId" | "place" | "shortDescription" | "longDescription" | "beNumber" | "purchaseOrderBecraId" | "projectId" | "partSupplierNumber" | "partDescription" | "warehousePlaceId" | "information" | "coordinate" | "inventoryId" | "forInventory" | "forProject" | "active" | "materialActive" | "valid" | "createdAt" | "createdBy", ExtArgs["result"]["inventoryStructure"]>
 export type InventoryStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InventoryOrderStructure?: boolean | Prisma.InventoryStructure$InventoryOrderStructureArgs<ExtArgs>
-  InventoryPlace?: boolean | Prisma.InventoryPlaceDefaultArgs<ExtArgs>
-  Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
-  Unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
-  WarehousePlace?: boolean | Prisma.WarehousePlaceDefaultArgs<ExtArgs>
-  Project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  Inventory?: boolean | Prisma.InventoryDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.InventoryStructureCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $InventoryStructurePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "InventoryStructure"
   objects: {
-    InventoryOrderStructure: Prisma.$InventoryOrderStructurePayload<ExtArgs>[]
-    InventoryPlace: Prisma.$InventoryPlacePayload<ExtArgs>
-    Material: Prisma.$MaterialPayload<ExtArgs>
-    Unit: Prisma.$UnitPayload<ExtArgs>
-    WarehousePlace: Prisma.$WarehousePlacePayload<ExtArgs>
-    Project: Prisma.$ProjectPayload<ExtArgs>
+    Inventory: Prisma.$InventoryPayload<ExtArgs>
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    inventoryPlaceId: string
     place: string
     shortDescription: string
-    longDescription: string
-    beNumber: string
-    purchaseOrderBecra: number | null
-    partSupplierNumber: string
-    partDescription: string
-    coordinates: boolean
-    coordinatesX: runtime.Decimal
-    coordinatesY: runtime.Decimal
-    coordinatesZ: runtime.Decimal
-    inventoryPlaceId: string
-    materialId: string
-    forProject: boolean
-    projectId: string
+    longDescription: string | null
+    beNumber: string | null
+    purchaseOrderBecraId: string | null
+    projectId: string | null
+    partSupplierNumber: string | null
+    partDescription: string | null
+    warehousePlaceId: string | null
+    information: string | null
+    coordinate: boolean
+    inventoryId: string
     forInventory: boolean
-    materialActive: boolean
-    warehousePlaceId: string
+    forProject: boolean
     active: boolean
-    additionalInformation: string
-    minimumStock: number
-    maximumStock: number
-    quantityInStock: number
-    quantity: runtime.Decimal
-    unitPrice: runtime.Decimal
-    unitId: string
+    materialActive: boolean
     valid: boolean
-    createdBy: string
     createdAt: Date
+    createdBy: string
   }, ExtArgs["result"]["inventoryStructure"]>
   composites: {}
 }
@@ -3273,12 +1545,7 @@ readonly fields: InventoryStructureFieldRefs;
  */
 export interface Prisma__InventoryStructureClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  InventoryOrderStructure<T extends Prisma.InventoryStructure$InventoryOrderStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryStructure$InventoryOrderStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryOrderStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  InventoryPlace<T extends Prisma.InventoryPlaceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryPlaceDefaultArgs<ExtArgs>>): Prisma.Prisma__InventoryPlaceClient<runtime.Types.Result.GetResult<Prisma.$InventoryPlacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  Material<T extends Prisma.MaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  Unit<T extends Prisma.UnitDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UnitDefaultArgs<ExtArgs>>): Prisma.Prisma__UnitClient<runtime.Types.Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  WarehousePlace<T extends Prisma.WarehousePlaceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WarehousePlaceDefaultArgs<ExtArgs>>): Prisma.Prisma__WarehousePlaceClient<runtime.Types.Result.GetResult<Prisma.$WarehousePlacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  Project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Inventory<T extends Prisma.InventoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryDefaultArgs<ExtArgs>>): Prisma.Prisma__InventoryClient<runtime.Types.Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3310,35 +1577,26 @@ export interface Prisma__InventoryStructureClient<T, Null = never, ExtArgs exten
  */
 export interface InventoryStructureFieldRefs {
   readonly id: Prisma.FieldRef<"InventoryStructure", 'String'>
+  readonly inventoryPlaceId: Prisma.FieldRef<"InventoryStructure", 'String'>
   readonly place: Prisma.FieldRef<"InventoryStructure", 'String'>
   readonly shortDescription: Prisma.FieldRef<"InventoryStructure", 'String'>
   readonly longDescription: Prisma.FieldRef<"InventoryStructure", 'String'>
   readonly beNumber: Prisma.FieldRef<"InventoryStructure", 'String'>
-  readonly purchaseOrderBecra: Prisma.FieldRef<"InventoryStructure", 'Int'>
+  readonly purchaseOrderBecraId: Prisma.FieldRef<"InventoryStructure", 'String'>
+  readonly projectId: Prisma.FieldRef<"InventoryStructure", 'String'>
   readonly partSupplierNumber: Prisma.FieldRef<"InventoryStructure", 'String'>
   readonly partDescription: Prisma.FieldRef<"InventoryStructure", 'String'>
-  readonly coordinates: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
-  readonly coordinatesX: Prisma.FieldRef<"InventoryStructure", 'Decimal'>
-  readonly coordinatesY: Prisma.FieldRef<"InventoryStructure", 'Decimal'>
-  readonly coordinatesZ: Prisma.FieldRef<"InventoryStructure", 'Decimal'>
-  readonly inventoryPlaceId: Prisma.FieldRef<"InventoryStructure", 'String'>
-  readonly materialId: Prisma.FieldRef<"InventoryStructure", 'String'>
-  readonly forProject: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
-  readonly projectId: Prisma.FieldRef<"InventoryStructure", 'String'>
-  readonly forInventory: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
-  readonly materialActive: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
   readonly warehousePlaceId: Prisma.FieldRef<"InventoryStructure", 'String'>
+  readonly information: Prisma.FieldRef<"InventoryStructure", 'String'>
+  readonly coordinate: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
+  readonly inventoryId: Prisma.FieldRef<"InventoryStructure", 'String'>
+  readonly forInventory: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
+  readonly forProject: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
   readonly active: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
-  readonly additionalInformation: Prisma.FieldRef<"InventoryStructure", 'String'>
-  readonly minimumStock: Prisma.FieldRef<"InventoryStructure", 'Int'>
-  readonly maximumStock: Prisma.FieldRef<"InventoryStructure", 'Int'>
-  readonly quantityInStock: Prisma.FieldRef<"InventoryStructure", 'Int'>
-  readonly quantity: Prisma.FieldRef<"InventoryStructure", 'Decimal'>
-  readonly unitPrice: Prisma.FieldRef<"InventoryStructure", 'Decimal'>
-  readonly unitId: Prisma.FieldRef<"InventoryStructure", 'String'>
+  readonly materialActive: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
   readonly valid: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
-  readonly createdBy: Prisma.FieldRef<"InventoryStructure", 'String'>
   readonly createdAt: Prisma.FieldRef<"InventoryStructure", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"InventoryStructure", 'String'>
 }
     
 
@@ -3679,30 +1937,6 @@ export type InventoryStructureDeleteManyArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many InventoryStructures to delete.
    */
   limit?: number
-}
-
-/**
- * InventoryStructure.InventoryOrderStructure
- */
-export type InventoryStructure$InventoryOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InventoryOrderStructure
-   */
-  select?: Prisma.InventoryOrderStructureSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the InventoryOrderStructure
-   */
-  omit?: Prisma.InventoryOrderStructureOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InventoryOrderStructureInclude<ExtArgs> | null
-  where?: Prisma.InventoryOrderStructureWhereInput
-  orderBy?: Prisma.InventoryOrderStructureOrderByWithRelationInput | Prisma.InventoryOrderStructureOrderByWithRelationInput[]
-  cursor?: Prisma.InventoryOrderStructureWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.InventoryOrderStructureScalarFieldEnum | Prisma.InventoryOrderStructureScalarFieldEnum[]
 }
 
 /**

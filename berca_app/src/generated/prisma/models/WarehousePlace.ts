@@ -27,50 +27,50 @@ export type AggregateWarehousePlace = {
 }
 
 export type WarehousePlaceAvgAggregateOutputType = {
-  volume: runtime.Decimal | null
+  volume: number | null
 }
 
 export type WarehousePlaceSumAggregateOutputType = {
-  volume: runtime.Decimal | null
+  volume: number | null
 }
 
 export type WarehousePlaceMinAggregateOutputType = {
   id: string | null
   place: string | null
-  shelve: string | null
-  col: string | null
+  shelf: string | null
+  column: string | null
   layer: string | null
   layerPlace: string | null
   information: string | null
-  volume: runtime.Decimal | null
-  createdBy: string | null
+  volume: number | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type WarehousePlaceMaxAggregateOutputType = {
   id: string | null
   place: string | null
-  shelve: string | null
-  col: string | null
+  shelf: string | null
+  column: string | null
   layer: string | null
   layerPlace: string | null
   information: string | null
-  volume: runtime.Decimal | null
-  createdBy: string | null
+  volume: number | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type WarehousePlaceCountAggregateOutputType = {
   id: number
   place: number
-  shelve: number
-  col: number
+  shelf: number
+  column: number
   layer: number
   layerPlace: number
   information: number
   volume: number
-  createdBy: number
   createdAt: number
+  createdBy: number
   _all: number
 }
 
@@ -86,40 +86,40 @@ export type WarehousePlaceSumAggregateInputType = {
 export type WarehousePlaceMinAggregateInputType = {
   id?: true
   place?: true
-  shelve?: true
-  col?: true
+  shelf?: true
+  column?: true
   layer?: true
   layerPlace?: true
   information?: true
   volume?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type WarehousePlaceMaxAggregateInputType = {
   id?: true
   place?: true
-  shelve?: true
-  col?: true
+  shelf?: true
+  column?: true
   layer?: true
   layerPlace?: true
   information?: true
   volume?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type WarehousePlaceCountAggregateInputType = {
   id?: true
   place?: true
-  shelve?: true
-  col?: true
+  shelf?: true
+  column?: true
   layer?: true
   layerPlace?: true
   information?: true
   volume?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
   _all?: true
 }
 
@@ -211,15 +211,15 @@ export type WarehousePlaceGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 
 export type WarehousePlaceGroupByOutputType = {
   id: string
-  place: string
-  shelve: string
-  col: string
-  layer: string
-  layerPlace: string
-  information: string
-  volume: runtime.Decimal
-  createdBy: string
+  place: string | null
+  shelf: string | null
+  column: string | null
+  layer: string | null
+  layerPlace: string | null
+  information: string | null
+  volume: number
   createdAt: Date
+  createdBy: string
   _count: WarehousePlaceCountAggregateOutputType | null
   _avg: WarehousePlaceAvgAggregateOutputType | null
   _sum: WarehousePlaceSumAggregateOutputType | null
@@ -247,33 +247,29 @@ export type WarehousePlaceWhereInput = {
   OR?: Prisma.WarehousePlaceWhereInput[]
   NOT?: Prisma.WarehousePlaceWhereInput | Prisma.WarehousePlaceWhereInput[]
   id?: Prisma.StringFilter<"WarehousePlace"> | string
-  place?: Prisma.StringFilter<"WarehousePlace"> | string
-  shelve?: Prisma.StringFilter<"WarehousePlace"> | string
-  col?: Prisma.StringFilter<"WarehousePlace"> | string
-  layer?: Prisma.StringFilter<"WarehousePlace"> | string
-  layerPlace?: Prisma.StringFilter<"WarehousePlace"> | string
-  information?: Prisma.StringFilter<"WarehousePlace"> | string
-  volume?: Prisma.DecimalFilter<"WarehousePlace"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
+  place?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  shelf?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  column?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  layer?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  layerPlace?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  information?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  volume?: Prisma.IntFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeFilter<"WarehousePlace"> | Date | string
-  InventoryPlace?: Prisma.InventoryPlaceListRelationFilter
-  InventoryStructure?: Prisma.InventoryStructureListRelationFilter
+  createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
 
 export type WarehousePlaceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  place?: Prisma.SortOrder
-  shelve?: Prisma.SortOrder
-  col?: Prisma.SortOrder
-  layer?: Prisma.SortOrder
-  layerPlace?: Prisma.SortOrder
-  information?: Prisma.SortOrder
+  place?: Prisma.SortOrderInput | Prisma.SortOrder
+  shelf?: Prisma.SortOrderInput | Prisma.SortOrder
+  column?: Prisma.SortOrderInput | Prisma.SortOrder
+  layer?: Prisma.SortOrderInput | Prisma.SortOrder
+  layerPlace?: Prisma.SortOrderInput | Prisma.SortOrder
+  information?: Prisma.SortOrderInput | Prisma.SortOrder
   volume?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  InventoryPlace?: Prisma.InventoryPlaceOrderByRelationAggregateInput
-  InventoryStructure?: Prisma.InventoryStructureOrderByRelationAggregateInput
+  createdBy?: Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.WarehousePlaceOrderByRelevanceInput
 }
@@ -283,31 +279,29 @@ export type WarehousePlaceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.WarehousePlaceWhereInput | Prisma.WarehousePlaceWhereInput[]
   OR?: Prisma.WarehousePlaceWhereInput[]
   NOT?: Prisma.WarehousePlaceWhereInput | Prisma.WarehousePlaceWhereInput[]
-  place?: Prisma.StringFilter<"WarehousePlace"> | string
-  shelve?: Prisma.StringFilter<"WarehousePlace"> | string
-  col?: Prisma.StringFilter<"WarehousePlace"> | string
-  layer?: Prisma.StringFilter<"WarehousePlace"> | string
-  layerPlace?: Prisma.StringFilter<"WarehousePlace"> | string
-  information?: Prisma.StringFilter<"WarehousePlace"> | string
-  volume?: Prisma.DecimalFilter<"WarehousePlace"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
+  place?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  shelf?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  column?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  layer?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  layerPlace?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  information?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  volume?: Prisma.IntFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeFilter<"WarehousePlace"> | Date | string
-  InventoryPlace?: Prisma.InventoryPlaceListRelationFilter
-  InventoryStructure?: Prisma.InventoryStructureListRelationFilter
+  createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
 
 export type WarehousePlaceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  place?: Prisma.SortOrder
-  shelve?: Prisma.SortOrder
-  col?: Prisma.SortOrder
-  layer?: Prisma.SortOrder
-  layerPlace?: Prisma.SortOrder
-  information?: Prisma.SortOrder
+  place?: Prisma.SortOrderInput | Prisma.SortOrder
+  shelf?: Prisma.SortOrderInput | Prisma.SortOrder
+  column?: Prisma.SortOrderInput | Prisma.SortOrder
+  layer?: Prisma.SortOrderInput | Prisma.SortOrder
+  layerPlace?: Prisma.SortOrderInput | Prisma.SortOrder
+  information?: Prisma.SortOrderInput | Prisma.SortOrder
   volume?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   _count?: Prisma.WarehousePlaceCountOrderByAggregateInput
   _avg?: Prisma.WarehousePlaceAvgOrderByAggregateInput
   _max?: Prisma.WarehousePlaceMaxOrderByAggregateInput
@@ -320,113 +314,105 @@ export type WarehousePlaceScalarWhereWithAggregatesInput = {
   OR?: Prisma.WarehousePlaceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.WarehousePlaceScalarWhereWithAggregatesInput | Prisma.WarehousePlaceScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
-  place?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
-  shelve?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
-  col?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
-  layer?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
-  layerPlace?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
-  information?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
-  volume?: Prisma.DecimalWithAggregatesFilter<"WarehousePlace"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
+  place?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
+  shelf?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
+  column?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
+  layer?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
+  layerPlace?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
+  information?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
+  volume?: Prisma.IntWithAggregatesFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"WarehousePlace"> | Date | string
+  createdBy?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
 }
 
 export type WarehousePlaceCreateInput = {
   id: string
-  place: string
-  shelve: string
-  col: string
-  layer: string
-  layerPlace: string
-  information: string
-  volume: runtime.Decimal | runtime.DecimalJsLike | number | string
+  place?: string | null
+  shelf?: string | null
+  column?: string | null
+  layer?: string | null
+  layerPlace?: string | null
+  information?: string | null
+  volume: number
   createdAt: Date | string
-  InventoryPlace?: Prisma.InventoryPlaceCreateNestedManyWithoutWarehousePlaceInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutWarehousePlaceInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutWarehousePlaceInput
 }
 
 export type WarehousePlaceUncheckedCreateInput = {
   id: string
-  place: string
-  shelve: string
-  col: string
-  layer: string
-  layerPlace: string
-  information: string
-  volume: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy: string
+  place?: string | null
+  shelf?: string | null
+  column?: string | null
+  layer?: string | null
+  layerPlace?: string | null
+  information?: string | null
+  volume: number
   createdAt: Date | string
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedCreateNestedManyWithoutWarehousePlaceInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutWarehousePlaceInput
+  createdBy: string
 }
 
 export type WarehousePlaceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shelve?: Prisma.StringFieldUpdateOperationsInput | string
-  col?: Prisma.StringFieldUpdateOperationsInput | string
-  layer?: Prisma.StringFieldUpdateOperationsInput | string
-  layerPlace?: Prisma.StringFieldUpdateOperationsInput | string
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  volume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryPlace?: Prisma.InventoryPlaceUpdateManyWithoutWarehousePlaceNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutWarehousePlaceNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutWarehousePlaceNestedInput
 }
 
 export type WarehousePlaceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shelve?: Prisma.StringFieldUpdateOperationsInput | string
-  col?: Prisma.StringFieldUpdateOperationsInput | string
-  layer?: Prisma.StringFieldUpdateOperationsInput | string
-  layerPlace?: Prisma.StringFieldUpdateOperationsInput | string
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  volume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedUpdateManyWithoutWarehousePlaceNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutWarehousePlaceNestedInput
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type WarehousePlaceCreateManyInput = {
   id: string
-  place: string
-  shelve: string
-  col: string
-  layer: string
-  layerPlace: string
-  information: string
-  volume: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy: string
+  place?: string | null
+  shelf?: string | null
+  column?: string | null
+  layer?: string | null
+  layerPlace?: string | null
+  information?: string | null
+  volume: number
   createdAt: Date | string
+  createdBy: string
 }
 
 export type WarehousePlaceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shelve?: Prisma.StringFieldUpdateOperationsInput | string
-  col?: Prisma.StringFieldUpdateOperationsInput | string
-  layer?: Prisma.StringFieldUpdateOperationsInput | string
-  layerPlace?: Prisma.StringFieldUpdateOperationsInput | string
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  volume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type WarehousePlaceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shelve?: Prisma.StringFieldUpdateOperationsInput | string
-  col?: Prisma.StringFieldUpdateOperationsInput | string
-  layer?: Prisma.StringFieldUpdateOperationsInput | string
-  layerPlace?: Prisma.StringFieldUpdateOperationsInput | string
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  volume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type WarehousePlaceListRelationFilter = {
@@ -439,11 +425,6 @@ export type WarehousePlaceOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type WarehousePlaceScalarRelationFilter = {
-  is?: Prisma.WarehousePlaceWhereInput
-  isNot?: Prisma.WarehousePlaceWhereInput
-}
-
 export type WarehousePlaceOrderByRelevanceInput = {
   fields: Prisma.WarehousePlaceOrderByRelevanceFieldEnum | Prisma.WarehousePlaceOrderByRelevanceFieldEnum[]
   sort: Prisma.SortOrder
@@ -453,14 +434,14 @@ export type WarehousePlaceOrderByRelevanceInput = {
 export type WarehousePlaceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   place?: Prisma.SortOrder
-  shelve?: Prisma.SortOrder
-  col?: Prisma.SortOrder
+  shelf?: Prisma.SortOrder
+  column?: Prisma.SortOrder
   layer?: Prisma.SortOrder
   layerPlace?: Prisma.SortOrder
   information?: Prisma.SortOrder
   volume?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type WarehousePlaceAvgOrderByAggregateInput = {
@@ -470,27 +451,27 @@ export type WarehousePlaceAvgOrderByAggregateInput = {
 export type WarehousePlaceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   place?: Prisma.SortOrder
-  shelve?: Prisma.SortOrder
-  col?: Prisma.SortOrder
+  shelf?: Prisma.SortOrder
+  column?: Prisma.SortOrder
   layer?: Prisma.SortOrder
   layerPlace?: Prisma.SortOrder
   information?: Prisma.SortOrder
   volume?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type WarehousePlaceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   place?: Prisma.SortOrder
-  shelve?: Prisma.SortOrder
-  col?: Prisma.SortOrder
+  shelf?: Prisma.SortOrder
+  column?: Prisma.SortOrder
   layer?: Prisma.SortOrder
   layerPlace?: Prisma.SortOrder
   information?: Prisma.SortOrder
   volume?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type WarehousePlaceSumOrderByAggregateInput = {
@@ -539,60 +520,28 @@ export type WarehousePlaceUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.WarehousePlaceScalarWhereInput | Prisma.WarehousePlaceScalarWhereInput[]
 }
 
-export type WarehousePlaceCreateNestedOneWithoutInventoryPlaceInput = {
-  create?: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutInventoryPlaceInput, Prisma.WarehousePlaceUncheckedCreateWithoutInventoryPlaceInput>
-  connectOrCreate?: Prisma.WarehousePlaceCreateOrConnectWithoutInventoryPlaceInput
-  connect?: Prisma.WarehousePlaceWhereUniqueInput
-}
-
-export type WarehousePlaceUpdateOneRequiredWithoutInventoryPlaceNestedInput = {
-  create?: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutInventoryPlaceInput, Prisma.WarehousePlaceUncheckedCreateWithoutInventoryPlaceInput>
-  connectOrCreate?: Prisma.WarehousePlaceCreateOrConnectWithoutInventoryPlaceInput
-  upsert?: Prisma.WarehousePlaceUpsertWithoutInventoryPlaceInput
-  connect?: Prisma.WarehousePlaceWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.WarehousePlaceUpdateToOneWithWhereWithoutInventoryPlaceInput, Prisma.WarehousePlaceUpdateWithoutInventoryPlaceInput>, Prisma.WarehousePlaceUncheckedUpdateWithoutInventoryPlaceInput>
-}
-
-export type WarehousePlaceCreateNestedOneWithoutInventoryStructureInput = {
-  create?: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutInventoryStructureInput, Prisma.WarehousePlaceUncheckedCreateWithoutInventoryStructureInput>
-  connectOrCreate?: Prisma.WarehousePlaceCreateOrConnectWithoutInventoryStructureInput
-  connect?: Prisma.WarehousePlaceWhereUniqueInput
-}
-
-export type WarehousePlaceUpdateOneRequiredWithoutInventoryStructureNestedInput = {
-  create?: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutInventoryStructureInput, Prisma.WarehousePlaceUncheckedCreateWithoutInventoryStructureInput>
-  connectOrCreate?: Prisma.WarehousePlaceCreateOrConnectWithoutInventoryStructureInput
-  upsert?: Prisma.WarehousePlaceUpsertWithoutInventoryStructureInput
-  connect?: Prisma.WarehousePlaceWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.WarehousePlaceUpdateToOneWithWhereWithoutInventoryStructureInput, Prisma.WarehousePlaceUpdateWithoutInventoryStructureInput>, Prisma.WarehousePlaceUncheckedUpdateWithoutInventoryStructureInput>
-}
-
 export type WarehousePlaceCreateWithoutEmployeeInput = {
   id: string
-  place: string
-  shelve: string
-  col: string
-  layer: string
-  layerPlace: string
-  information: string
-  volume: runtime.Decimal | runtime.DecimalJsLike | number | string
+  place?: string | null
+  shelf?: string | null
+  column?: string | null
+  layer?: string | null
+  layerPlace?: string | null
+  information?: string | null
+  volume: number
   createdAt: Date | string
-  InventoryPlace?: Prisma.InventoryPlaceCreateNestedManyWithoutWarehousePlaceInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutWarehousePlaceInput
 }
 
 export type WarehousePlaceUncheckedCreateWithoutEmployeeInput = {
   id: string
-  place: string
-  shelve: string
-  col: string
-  layer: string
-  layerPlace: string
-  information: string
-  volume: runtime.Decimal | runtime.DecimalJsLike | number | string
+  place?: string | null
+  shelf?: string | null
+  column?: string | null
+  layer?: string | null
+  layerPlace?: string | null
+  information?: string | null
+  volume: number
   createdAt: Date | string
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedCreateNestedManyWithoutWarehousePlaceInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutWarehousePlaceInput
 }
 
 export type WarehousePlaceCreateOrConnectWithoutEmployeeInput = {
@@ -626,268 +575,79 @@ export type WarehousePlaceScalarWhereInput = {
   OR?: Prisma.WarehousePlaceScalarWhereInput[]
   NOT?: Prisma.WarehousePlaceScalarWhereInput | Prisma.WarehousePlaceScalarWhereInput[]
   id?: Prisma.StringFilter<"WarehousePlace"> | string
-  place?: Prisma.StringFilter<"WarehousePlace"> | string
-  shelve?: Prisma.StringFilter<"WarehousePlace"> | string
-  col?: Prisma.StringFilter<"WarehousePlace"> | string
-  layer?: Prisma.StringFilter<"WarehousePlace"> | string
-  layerPlace?: Prisma.StringFilter<"WarehousePlace"> | string
-  information?: Prisma.StringFilter<"WarehousePlace"> | string
-  volume?: Prisma.DecimalFilter<"WarehousePlace"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
+  place?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  shelf?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  column?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  layer?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  layerPlace?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  information?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  volume?: Prisma.IntFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeFilter<"WarehousePlace"> | Date | string
-}
-
-export type WarehousePlaceCreateWithoutInventoryPlaceInput = {
-  id: string
-  place: string
-  shelve: string
-  col: string
-  layer: string
-  layerPlace: string
-  information: string
-  volume: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt: Date | string
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutWarehousePlaceInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutWarehousePlaceInput
-}
-
-export type WarehousePlaceUncheckedCreateWithoutInventoryPlaceInput = {
-  id: string
-  place: string
-  shelve: string
-  col: string
-  layer: string
-  layerPlace: string
-  information: string
-  volume: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy: string
-  createdAt: Date | string
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutWarehousePlaceInput
-}
-
-export type WarehousePlaceCreateOrConnectWithoutInventoryPlaceInput = {
-  where: Prisma.WarehousePlaceWhereUniqueInput
-  create: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutInventoryPlaceInput, Prisma.WarehousePlaceUncheckedCreateWithoutInventoryPlaceInput>
-}
-
-export type WarehousePlaceUpsertWithoutInventoryPlaceInput = {
-  update: Prisma.XOR<Prisma.WarehousePlaceUpdateWithoutInventoryPlaceInput, Prisma.WarehousePlaceUncheckedUpdateWithoutInventoryPlaceInput>
-  create: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutInventoryPlaceInput, Prisma.WarehousePlaceUncheckedCreateWithoutInventoryPlaceInput>
-  where?: Prisma.WarehousePlaceWhereInput
-}
-
-export type WarehousePlaceUpdateToOneWithWhereWithoutInventoryPlaceInput = {
-  where?: Prisma.WarehousePlaceWhereInput
-  data: Prisma.XOR<Prisma.WarehousePlaceUpdateWithoutInventoryPlaceInput, Prisma.WarehousePlaceUncheckedUpdateWithoutInventoryPlaceInput>
-}
-
-export type WarehousePlaceUpdateWithoutInventoryPlaceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shelve?: Prisma.StringFieldUpdateOperationsInput | string
-  col?: Prisma.StringFieldUpdateOperationsInput | string
-  layer?: Prisma.StringFieldUpdateOperationsInput | string
-  layerPlace?: Prisma.StringFieldUpdateOperationsInput | string
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  volume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutWarehousePlaceNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutWarehousePlaceNestedInput
-}
-
-export type WarehousePlaceUncheckedUpdateWithoutInventoryPlaceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shelve?: Prisma.StringFieldUpdateOperationsInput | string
-  col?: Prisma.StringFieldUpdateOperationsInput | string
-  layer?: Prisma.StringFieldUpdateOperationsInput | string
-  layerPlace?: Prisma.StringFieldUpdateOperationsInput | string
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  volume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutWarehousePlaceNestedInput
-}
-
-export type WarehousePlaceCreateWithoutInventoryStructureInput = {
-  id: string
-  place: string
-  shelve: string
-  col: string
-  layer: string
-  layerPlace: string
-  information: string
-  volume: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt: Date | string
-  InventoryPlace?: Prisma.InventoryPlaceCreateNestedManyWithoutWarehousePlaceInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutWarehousePlaceInput
-}
-
-export type WarehousePlaceUncheckedCreateWithoutInventoryStructureInput = {
-  id: string
-  place: string
-  shelve: string
-  col: string
-  layer: string
-  layerPlace: string
-  information: string
-  volume: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy: string
-  createdAt: Date | string
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedCreateNestedManyWithoutWarehousePlaceInput
-}
-
-export type WarehousePlaceCreateOrConnectWithoutInventoryStructureInput = {
-  where: Prisma.WarehousePlaceWhereUniqueInput
-  create: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutInventoryStructureInput, Prisma.WarehousePlaceUncheckedCreateWithoutInventoryStructureInput>
-}
-
-export type WarehousePlaceUpsertWithoutInventoryStructureInput = {
-  update: Prisma.XOR<Prisma.WarehousePlaceUpdateWithoutInventoryStructureInput, Prisma.WarehousePlaceUncheckedUpdateWithoutInventoryStructureInput>
-  create: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutInventoryStructureInput, Prisma.WarehousePlaceUncheckedCreateWithoutInventoryStructureInput>
-  where?: Prisma.WarehousePlaceWhereInput
-}
-
-export type WarehousePlaceUpdateToOneWithWhereWithoutInventoryStructureInput = {
-  where?: Prisma.WarehousePlaceWhereInput
-  data: Prisma.XOR<Prisma.WarehousePlaceUpdateWithoutInventoryStructureInput, Prisma.WarehousePlaceUncheckedUpdateWithoutInventoryStructureInput>
-}
-
-export type WarehousePlaceUpdateWithoutInventoryStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shelve?: Prisma.StringFieldUpdateOperationsInput | string
-  col?: Prisma.StringFieldUpdateOperationsInput | string
-  layer?: Prisma.StringFieldUpdateOperationsInput | string
-  layerPlace?: Prisma.StringFieldUpdateOperationsInput | string
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  volume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryPlace?: Prisma.InventoryPlaceUpdateManyWithoutWarehousePlaceNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutWarehousePlaceNestedInput
-}
-
-export type WarehousePlaceUncheckedUpdateWithoutInventoryStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shelve?: Prisma.StringFieldUpdateOperationsInput | string
-  col?: Prisma.StringFieldUpdateOperationsInput | string
-  layer?: Prisma.StringFieldUpdateOperationsInput | string
-  layerPlace?: Prisma.StringFieldUpdateOperationsInput | string
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  volume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedUpdateManyWithoutWarehousePlaceNestedInput
+  createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
 }
 
 export type WarehousePlaceCreateManyEmployeeInput = {
   id: string
-  place: string
-  shelve: string
-  col: string
-  layer: string
-  layerPlace: string
-  information: string
-  volume: runtime.Decimal | runtime.DecimalJsLike | number | string
+  place?: string | null
+  shelf?: string | null
+  column?: string | null
+  layer?: string | null
+  layerPlace?: string | null
+  information?: string | null
+  volume: number
   createdAt: Date | string
 }
 
 export type WarehousePlaceUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shelve?: Prisma.StringFieldUpdateOperationsInput | string
-  col?: Prisma.StringFieldUpdateOperationsInput | string
-  layer?: Prisma.StringFieldUpdateOperationsInput | string
-  layerPlace?: Prisma.StringFieldUpdateOperationsInput | string
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  volume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryPlace?: Prisma.InventoryPlaceUpdateManyWithoutWarehousePlaceNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutWarehousePlaceNestedInput
 }
 
 export type WarehousePlaceUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shelve?: Prisma.StringFieldUpdateOperationsInput | string
-  col?: Prisma.StringFieldUpdateOperationsInput | string
-  layer?: Prisma.StringFieldUpdateOperationsInput | string
-  layerPlace?: Prisma.StringFieldUpdateOperationsInput | string
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  volume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedUpdateManyWithoutWarehousePlaceNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutWarehousePlaceNestedInput
 }
 
 export type WarehousePlaceUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  place?: Prisma.StringFieldUpdateOperationsInput | string
-  shelve?: Prisma.StringFieldUpdateOperationsInput | string
-  col?: Prisma.StringFieldUpdateOperationsInput | string
-  layer?: Prisma.StringFieldUpdateOperationsInput | string
-  layerPlace?: Prisma.StringFieldUpdateOperationsInput | string
-  information?: Prisma.StringFieldUpdateOperationsInput | string
-  volume?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-
-/**
- * Count Type WarehousePlaceCountOutputType
- */
-
-export type WarehousePlaceCountOutputType = {
-  InventoryPlace: number
-  InventoryStructure: number
-}
-
-export type WarehousePlaceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InventoryPlace?: boolean | WarehousePlaceCountOutputTypeCountInventoryPlaceArgs
-  InventoryStructure?: boolean | WarehousePlaceCountOutputTypeCountInventoryStructureArgs
-}
-
-/**
- * WarehousePlaceCountOutputType without action
- */
-export type WarehousePlaceCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the WarehousePlaceCountOutputType
-   */
-  select?: Prisma.WarehousePlaceCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * WarehousePlaceCountOutputType without action
- */
-export type WarehousePlaceCountOutputTypeCountInventoryPlaceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InventoryPlaceWhereInput
-}
-
-/**
- * WarehousePlaceCountOutputType without action
- */
-export type WarehousePlaceCountOutputTypeCountInventoryStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InventoryStructureWhereInput
-}
 
 
 export type WarehousePlaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   place?: boolean
-  shelve?: boolean
-  col?: boolean
+  shelf?: boolean
+  column?: boolean
   layer?: boolean
   layerPlace?: boolean
   information?: boolean
   volume?: boolean
-  createdBy?: boolean
   createdAt?: boolean
-  InventoryPlace?: boolean | Prisma.WarehousePlace$InventoryPlaceArgs<ExtArgs>
-  InventoryStructure?: boolean | Prisma.WarehousePlace$InventoryStructureArgs<ExtArgs>
+  createdBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.WarehousePlaceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["warehousePlace"]>
 
 
@@ -895,42 +655,37 @@ export type WarehousePlaceSelect<ExtArgs extends runtime.Types.Extensions.Intern
 export type WarehousePlaceSelectScalar = {
   id?: boolean
   place?: boolean
-  shelve?: boolean
-  col?: boolean
+  shelf?: boolean
+  column?: boolean
   layer?: boolean
   layerPlace?: boolean
   information?: boolean
   volume?: boolean
-  createdBy?: boolean
   createdAt?: boolean
+  createdBy?: boolean
 }
 
-export type WarehousePlaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "place" | "shelve" | "col" | "layer" | "layerPlace" | "information" | "volume" | "createdBy" | "createdAt", ExtArgs["result"]["warehousePlace"]>
+export type WarehousePlaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "place" | "shelf" | "column" | "layer" | "layerPlace" | "information" | "volume" | "createdAt" | "createdBy", ExtArgs["result"]["warehousePlace"]>
 export type WarehousePlaceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InventoryPlace?: boolean | Prisma.WarehousePlace$InventoryPlaceArgs<ExtArgs>
-  InventoryStructure?: boolean | Prisma.WarehousePlace$InventoryStructureArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.WarehousePlaceCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $WarehousePlacePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "WarehousePlace"
   objects: {
-    InventoryPlace: Prisma.$InventoryPlacePayload<ExtArgs>[]
-    InventoryStructure: Prisma.$InventoryStructurePayload<ExtArgs>[]
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    place: string
-    shelve: string
-    col: string
-    layer: string
-    layerPlace: string
-    information: string
-    volume: runtime.Decimal
-    createdBy: string
+    place: string | null
+    shelf: string | null
+    column: string | null
+    layer: string | null
+    layerPlace: string | null
+    information: string | null
+    volume: number
     createdAt: Date
+    createdBy: string
   }, ExtArgs["result"]["warehousePlace"]>
   composites: {}
 }
@@ -1271,8 +1026,6 @@ readonly fields: WarehousePlaceFieldRefs;
  */
 export interface Prisma__WarehousePlaceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  InventoryPlace<T extends Prisma.WarehousePlace$InventoryPlaceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WarehousePlace$InventoryPlaceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryPlacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  InventoryStructure<T extends Prisma.WarehousePlace$InventoryStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WarehousePlace$InventoryStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1305,14 +1058,14 @@ export interface Prisma__WarehousePlaceClient<T, Null = never, ExtArgs extends r
 export interface WarehousePlaceFieldRefs {
   readonly id: Prisma.FieldRef<"WarehousePlace", 'String'>
   readonly place: Prisma.FieldRef<"WarehousePlace", 'String'>
-  readonly shelve: Prisma.FieldRef<"WarehousePlace", 'String'>
-  readonly col: Prisma.FieldRef<"WarehousePlace", 'String'>
+  readonly shelf: Prisma.FieldRef<"WarehousePlace", 'String'>
+  readonly column: Prisma.FieldRef<"WarehousePlace", 'String'>
   readonly layer: Prisma.FieldRef<"WarehousePlace", 'String'>
   readonly layerPlace: Prisma.FieldRef<"WarehousePlace", 'String'>
   readonly information: Prisma.FieldRef<"WarehousePlace", 'String'>
-  readonly volume: Prisma.FieldRef<"WarehousePlace", 'Decimal'>
-  readonly createdBy: Prisma.FieldRef<"WarehousePlace", 'String'>
+  readonly volume: Prisma.FieldRef<"WarehousePlace", 'Int'>
   readonly createdAt: Prisma.FieldRef<"WarehousePlace", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"WarehousePlace", 'String'>
 }
     
 
@@ -1653,54 +1406,6 @@ export type WarehousePlaceDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many WarehousePlaces to delete.
    */
   limit?: number
-}
-
-/**
- * WarehousePlace.InventoryPlace
- */
-export type WarehousePlace$InventoryPlaceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InventoryPlace
-   */
-  select?: Prisma.InventoryPlaceSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the InventoryPlace
-   */
-  omit?: Prisma.InventoryPlaceOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InventoryPlaceInclude<ExtArgs> | null
-  where?: Prisma.InventoryPlaceWhereInput
-  orderBy?: Prisma.InventoryPlaceOrderByWithRelationInput | Prisma.InventoryPlaceOrderByWithRelationInput[]
-  cursor?: Prisma.InventoryPlaceWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.InventoryPlaceScalarFieldEnum | Prisma.InventoryPlaceScalarFieldEnum[]
-}
-
-/**
- * WarehousePlace.InventoryStructure
- */
-export type WarehousePlace$InventoryStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InventoryStructure
-   */
-  select?: Prisma.InventoryStructureSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the InventoryStructure
-   */
-  omit?: Prisma.InventoryStructureOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InventoryStructureInclude<ExtArgs> | null
-  where?: Prisma.InventoryStructureWhereInput
-  orderBy?: Prisma.InventoryStructureOrderByWithRelationInput | Prisma.InventoryStructureOrderByWithRelationInput[]
-  cursor?: Prisma.InventoryStructureWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.InventoryStructureScalarFieldEnum | Prisma.InventoryStructureScalarFieldEnum[]
 }
 
 /**

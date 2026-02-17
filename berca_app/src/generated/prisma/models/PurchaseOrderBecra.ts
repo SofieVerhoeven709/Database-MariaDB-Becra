@@ -26,28 +26,46 @@ export type AggregatePurchaseOrderBecra = {
 
 export type PurchaseOrderBecraMinAggregateOutputType = {
   id: string | null
+  description: string | null
+  date: Date | null
+  createdBy: string | null
 }
 
 export type PurchaseOrderBecraMaxAggregateOutputType = {
   id: string | null
+  description: string | null
+  date: Date | null
+  createdBy: string | null
 }
 
 export type PurchaseOrderBecraCountAggregateOutputType = {
   id: number
+  description: number
+  date: number
+  createdBy: number
   _all: number
 }
 
 
 export type PurchaseOrderBecraMinAggregateInputType = {
   id?: true
+  description?: true
+  date?: true
+  createdBy?: true
 }
 
 export type PurchaseOrderBecraMaxAggregateInputType = {
   id?: true
+  description?: true
+  date?: true
+  createdBy?: true
 }
 
 export type PurchaseOrderBecraCountAggregateInputType = {
   id?: true
+  description?: true
+  date?: true
+  createdBy?: true
   _all?: true
 }
 
@@ -125,6 +143,9 @@ export type PurchaseOrderBecraGroupByArgs<ExtArgs extends runtime.Types.Extensio
 
 export type PurchaseOrderBecraGroupByOutputType = {
   id: string
+  description: string | null
+  date: Date | null
+  createdBy: string
   _count: PurchaseOrderBecraCountAggregateOutputType | null
   _min: PurchaseOrderBecraMinAggregateOutputType | null
   _max: PurchaseOrderBecraMaxAggregateOutputType | null
@@ -150,12 +171,18 @@ export type PurchaseOrderBecraWhereInput = {
   OR?: Prisma.PurchaseOrderBecraWhereInput[]
   NOT?: Prisma.PurchaseOrderBecraWhereInput | Prisma.PurchaseOrderBecraWhereInput[]
   id?: Prisma.StringFilter<"PurchaseOrderBecra"> | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureListRelationFilter
+  description?: Prisma.StringNullableFilter<"PurchaseOrderBecra"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"PurchaseOrderBecra"> | Date | string | null
+  createdBy?: Prisma.StringFilter<"PurchaseOrderBecra"> | string
+  Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
 
 export type PurchaseOrderBecraOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureOrderByRelationAggregateInput
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  date?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.PurchaseOrderBecraOrderByRelevanceInput
 }
 
@@ -164,11 +191,17 @@ export type PurchaseOrderBecraWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PurchaseOrderBecraWhereInput | Prisma.PurchaseOrderBecraWhereInput[]
   OR?: Prisma.PurchaseOrderBecraWhereInput[]
   NOT?: Prisma.PurchaseOrderBecraWhereInput | Prisma.PurchaseOrderBecraWhereInput[]
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureListRelationFilter
+  description?: Prisma.StringNullableFilter<"PurchaseOrderBecra"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"PurchaseOrderBecra"> | Date | string | null
+  createdBy?: Prisma.StringFilter<"PurchaseOrderBecra"> | string
+  Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
 
 export type PurchaseOrderBecraOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  date?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   _count?: Prisma.PurchaseOrderBecraCountOrderByAggregateInput
   _max?: Prisma.PurchaseOrderBecraMaxOrderByAggregateInput
   _min?: Prisma.PurchaseOrderBecraMinOrderByAggregateInput
@@ -179,43 +212,67 @@ export type PurchaseOrderBecraScalarWhereWithAggregatesInput = {
   OR?: Prisma.PurchaseOrderBecraScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PurchaseOrderBecraScalarWhereWithAggregatesInput | Prisma.PurchaseOrderBecraScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"PurchaseOrderBecra"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"PurchaseOrderBecra"> | string | null
+  date?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseOrderBecra"> | Date | string | null
+  createdBy?: Prisma.StringWithAggregatesFilter<"PurchaseOrderBecra"> | string
 }
 
 export type PurchaseOrderBecraCreateInput = {
   id: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutPurchaseOrderBecraInput
+  description?: string | null
+  date?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseOrderBecraInput
 }
 
 export type PurchaseOrderBecraUncheckedCreateInput = {
   id: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutPurchaseOrderBecraInput
+  description?: string | null
+  date?: Date | string | null
+  createdBy: string
 }
 
 export type PurchaseOrderBecraUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutPurchaseOrderBecraNestedInput
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseOrderBecraNestedInput
 }
 
 export type PurchaseOrderBecraUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutPurchaseOrderBecraNestedInput
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PurchaseOrderBecraCreateManyInput = {
   id: string
+  description?: string | null
+  date?: Date | string | null
+  createdBy: string
 }
 
 export type PurchaseOrderBecraUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PurchaseOrderBecraUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type PurchaseOrderBecraNullableScalarRelationFilter = {
-  is?: Prisma.PurchaseOrderBecraWhereInput | null
-  isNot?: Prisma.PurchaseOrderBecraWhereInput | null
+export type PurchaseOrderBecraListRelationFilter = {
+  every?: Prisma.PurchaseOrderBecraWhereInput
+  some?: Prisma.PurchaseOrderBecraWhereInput
+  none?: Prisma.PurchaseOrderBecraWhereInput
+}
+
+export type PurchaseOrderBecraOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type PurchaseOrderBecraOrderByRelevanceInput = {
@@ -226,120 +283,173 @@ export type PurchaseOrderBecraOrderByRelevanceInput = {
 
 export type PurchaseOrderBecraCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  date?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type PurchaseOrderBecraMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  date?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type PurchaseOrderBecraMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  date?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
-export type PurchaseOrderBecraCreateNestedOneWithoutInventoryOrderStructureInput = {
-  create?: Prisma.XOR<Prisma.PurchaseOrderBecraCreateWithoutInventoryOrderStructureInput, Prisma.PurchaseOrderBecraUncheckedCreateWithoutInventoryOrderStructureInput>
-  connectOrCreate?: Prisma.PurchaseOrderBecraCreateOrConnectWithoutInventoryOrderStructureInput
-  connect?: Prisma.PurchaseOrderBecraWhereUniqueInput
+export type PurchaseOrderBecraCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderBecraCreateWithoutEmployeeInput, Prisma.PurchaseOrderBecraUncheckedCreateWithoutEmployeeInput> | Prisma.PurchaseOrderBecraCreateWithoutEmployeeInput[] | Prisma.PurchaseOrderBecraUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.PurchaseOrderBecraCreateOrConnectWithoutEmployeeInput | Prisma.PurchaseOrderBecraCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.PurchaseOrderBecraCreateManyEmployeeInputEnvelope
+  connect?: Prisma.PurchaseOrderBecraWhereUniqueInput | Prisma.PurchaseOrderBecraWhereUniqueInput[]
 }
 
-export type PurchaseOrderBecraUpdateOneWithoutInventoryOrderStructureNestedInput = {
-  create?: Prisma.XOR<Prisma.PurchaseOrderBecraCreateWithoutInventoryOrderStructureInput, Prisma.PurchaseOrderBecraUncheckedCreateWithoutInventoryOrderStructureInput>
-  connectOrCreate?: Prisma.PurchaseOrderBecraCreateOrConnectWithoutInventoryOrderStructureInput
-  upsert?: Prisma.PurchaseOrderBecraUpsertWithoutInventoryOrderStructureInput
-  disconnect?: Prisma.PurchaseOrderBecraWhereInput | boolean
-  delete?: Prisma.PurchaseOrderBecraWhereInput | boolean
-  connect?: Prisma.PurchaseOrderBecraWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PurchaseOrderBecraUpdateToOneWithWhereWithoutInventoryOrderStructureInput, Prisma.PurchaseOrderBecraUpdateWithoutInventoryOrderStructureInput>, Prisma.PurchaseOrderBecraUncheckedUpdateWithoutInventoryOrderStructureInput>
+export type PurchaseOrderBecraUncheckedCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderBecraCreateWithoutEmployeeInput, Prisma.PurchaseOrderBecraUncheckedCreateWithoutEmployeeInput> | Prisma.PurchaseOrderBecraCreateWithoutEmployeeInput[] | Prisma.PurchaseOrderBecraUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.PurchaseOrderBecraCreateOrConnectWithoutEmployeeInput | Prisma.PurchaseOrderBecraCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.PurchaseOrderBecraCreateManyEmployeeInputEnvelope
+  connect?: Prisma.PurchaseOrderBecraWhereUniqueInput | Prisma.PurchaseOrderBecraWhereUniqueInput[]
 }
 
-export type PurchaseOrderBecraCreateWithoutInventoryOrderStructureInput = {
+export type PurchaseOrderBecraUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderBecraCreateWithoutEmployeeInput, Prisma.PurchaseOrderBecraUncheckedCreateWithoutEmployeeInput> | Prisma.PurchaseOrderBecraCreateWithoutEmployeeInput[] | Prisma.PurchaseOrderBecraUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.PurchaseOrderBecraCreateOrConnectWithoutEmployeeInput | Prisma.PurchaseOrderBecraCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.PurchaseOrderBecraUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.PurchaseOrderBecraUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.PurchaseOrderBecraCreateManyEmployeeInputEnvelope
+  set?: Prisma.PurchaseOrderBecraWhereUniqueInput | Prisma.PurchaseOrderBecraWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseOrderBecraWhereUniqueInput | Prisma.PurchaseOrderBecraWhereUniqueInput[]
+  delete?: Prisma.PurchaseOrderBecraWhereUniqueInput | Prisma.PurchaseOrderBecraWhereUniqueInput[]
+  connect?: Prisma.PurchaseOrderBecraWhereUniqueInput | Prisma.PurchaseOrderBecraWhereUniqueInput[]
+  update?: Prisma.PurchaseOrderBecraUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.PurchaseOrderBecraUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.PurchaseOrderBecraUpdateManyWithWhereWithoutEmployeeInput | Prisma.PurchaseOrderBecraUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.PurchaseOrderBecraScalarWhereInput | Prisma.PurchaseOrderBecraScalarWhereInput[]
+}
+
+export type PurchaseOrderBecraUncheckedUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderBecraCreateWithoutEmployeeInput, Prisma.PurchaseOrderBecraUncheckedCreateWithoutEmployeeInput> | Prisma.PurchaseOrderBecraCreateWithoutEmployeeInput[] | Prisma.PurchaseOrderBecraUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.PurchaseOrderBecraCreateOrConnectWithoutEmployeeInput | Prisma.PurchaseOrderBecraCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.PurchaseOrderBecraUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.PurchaseOrderBecraUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.PurchaseOrderBecraCreateManyEmployeeInputEnvelope
+  set?: Prisma.PurchaseOrderBecraWhereUniqueInput | Prisma.PurchaseOrderBecraWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseOrderBecraWhereUniqueInput | Prisma.PurchaseOrderBecraWhereUniqueInput[]
+  delete?: Prisma.PurchaseOrderBecraWhereUniqueInput | Prisma.PurchaseOrderBecraWhereUniqueInput[]
+  connect?: Prisma.PurchaseOrderBecraWhereUniqueInput | Prisma.PurchaseOrderBecraWhereUniqueInput[]
+  update?: Prisma.PurchaseOrderBecraUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.PurchaseOrderBecraUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.PurchaseOrderBecraUpdateManyWithWhereWithoutEmployeeInput | Prisma.PurchaseOrderBecraUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.PurchaseOrderBecraScalarWhereInput | Prisma.PurchaseOrderBecraScalarWhereInput[]
+}
+
+export type PurchaseOrderBecraCreateWithoutEmployeeInput = {
   id: string
+  description?: string | null
+  date?: Date | string | null
 }
 
-export type PurchaseOrderBecraUncheckedCreateWithoutInventoryOrderStructureInput = {
+export type PurchaseOrderBecraUncheckedCreateWithoutEmployeeInput = {
   id: string
+  description?: string | null
+  date?: Date | string | null
 }
 
-export type PurchaseOrderBecraCreateOrConnectWithoutInventoryOrderStructureInput = {
+export type PurchaseOrderBecraCreateOrConnectWithoutEmployeeInput = {
   where: Prisma.PurchaseOrderBecraWhereUniqueInput
-  create: Prisma.XOR<Prisma.PurchaseOrderBecraCreateWithoutInventoryOrderStructureInput, Prisma.PurchaseOrderBecraUncheckedCreateWithoutInventoryOrderStructureInput>
+  create: Prisma.XOR<Prisma.PurchaseOrderBecraCreateWithoutEmployeeInput, Prisma.PurchaseOrderBecraUncheckedCreateWithoutEmployeeInput>
 }
 
-export type PurchaseOrderBecraUpsertWithoutInventoryOrderStructureInput = {
-  update: Prisma.XOR<Prisma.PurchaseOrderBecraUpdateWithoutInventoryOrderStructureInput, Prisma.PurchaseOrderBecraUncheckedUpdateWithoutInventoryOrderStructureInput>
-  create: Prisma.XOR<Prisma.PurchaseOrderBecraCreateWithoutInventoryOrderStructureInput, Prisma.PurchaseOrderBecraUncheckedCreateWithoutInventoryOrderStructureInput>
-  where?: Prisma.PurchaseOrderBecraWhereInput
+export type PurchaseOrderBecraCreateManyEmployeeInputEnvelope = {
+  data: Prisma.PurchaseOrderBecraCreateManyEmployeeInput | Prisma.PurchaseOrderBecraCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
 }
 
-export type PurchaseOrderBecraUpdateToOneWithWhereWithoutInventoryOrderStructureInput = {
-  where?: Prisma.PurchaseOrderBecraWhereInput
-  data: Prisma.XOR<Prisma.PurchaseOrderBecraUpdateWithoutInventoryOrderStructureInput, Prisma.PurchaseOrderBecraUncheckedUpdateWithoutInventoryOrderStructureInput>
+export type PurchaseOrderBecraUpsertWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.PurchaseOrderBecraWhereUniqueInput
+  update: Prisma.XOR<Prisma.PurchaseOrderBecraUpdateWithoutEmployeeInput, Prisma.PurchaseOrderBecraUncheckedUpdateWithoutEmployeeInput>
+  create: Prisma.XOR<Prisma.PurchaseOrderBecraCreateWithoutEmployeeInput, Prisma.PurchaseOrderBecraUncheckedCreateWithoutEmployeeInput>
 }
 
-export type PurchaseOrderBecraUpdateWithoutInventoryOrderStructureInput = {
+export type PurchaseOrderBecraUpdateWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.PurchaseOrderBecraWhereUniqueInput
+  data: Prisma.XOR<Prisma.PurchaseOrderBecraUpdateWithoutEmployeeInput, Prisma.PurchaseOrderBecraUncheckedUpdateWithoutEmployeeInput>
+}
+
+export type PurchaseOrderBecraUpdateManyWithWhereWithoutEmployeeInput = {
+  where: Prisma.PurchaseOrderBecraScalarWhereInput
+  data: Prisma.XOR<Prisma.PurchaseOrderBecraUpdateManyMutationInput, Prisma.PurchaseOrderBecraUncheckedUpdateManyWithoutEmployeeInput>
+}
+
+export type PurchaseOrderBecraScalarWhereInput = {
+  AND?: Prisma.PurchaseOrderBecraScalarWhereInput | Prisma.PurchaseOrderBecraScalarWhereInput[]
+  OR?: Prisma.PurchaseOrderBecraScalarWhereInput[]
+  NOT?: Prisma.PurchaseOrderBecraScalarWhereInput | Prisma.PurchaseOrderBecraScalarWhereInput[]
+  id?: Prisma.StringFilter<"PurchaseOrderBecra"> | string
+  description?: Prisma.StringNullableFilter<"PurchaseOrderBecra"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"PurchaseOrderBecra"> | Date | string | null
+  createdBy?: Prisma.StringFilter<"PurchaseOrderBecra"> | string
+}
+
+export type PurchaseOrderBecraCreateManyEmployeeInput = {
+  id: string
+  description?: string | null
+  date?: Date | string | null
+}
+
+export type PurchaseOrderBecraUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
-export type PurchaseOrderBecraUncheckedUpdateWithoutInventoryOrderStructureInput = {
+export type PurchaseOrderBecraUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
-
-/**
- * Count Type PurchaseOrderBecraCountOutputType
- */
-
-export type PurchaseOrderBecraCountOutputType = {
-  InventoryOrderStructure: number
+export type PurchaseOrderBecraUncheckedUpdateManyWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
-export type PurchaseOrderBecraCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InventoryOrderStructure?: boolean | PurchaseOrderBecraCountOutputTypeCountInventoryOrderStructureArgs
-}
-
-/**
- * PurchaseOrderBecraCountOutputType without action
- */
-export type PurchaseOrderBecraCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PurchaseOrderBecraCountOutputType
-   */
-  select?: Prisma.PurchaseOrderBecraCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * PurchaseOrderBecraCountOutputType without action
- */
-export type PurchaseOrderBecraCountOutputTypeCountInventoryOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InventoryOrderStructureWhereInput
-}
 
 
 export type PurchaseOrderBecraSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  InventoryOrderStructure?: boolean | Prisma.PurchaseOrderBecra$InventoryOrderStructureArgs<ExtArgs>
-  _count?: boolean | Prisma.PurchaseOrderBecraCountOutputTypeDefaultArgs<ExtArgs>
+  description?: boolean
+  date?: boolean
+  createdBy?: boolean
+  Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseOrderBecra"]>
 
 
 
 export type PurchaseOrderBecraSelectScalar = {
   id?: boolean
+  description?: boolean
+  date?: boolean
+  createdBy?: boolean
 }
 
-export type PurchaseOrderBecraOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id", ExtArgs["result"]["purchaseOrderBecra"]>
+export type PurchaseOrderBecraOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "date" | "createdBy", ExtArgs["result"]["purchaseOrderBecra"]>
 export type PurchaseOrderBecraInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InventoryOrderStructure?: boolean | Prisma.PurchaseOrderBecra$InventoryOrderStructureArgs<ExtArgs>
-  _count?: boolean | Prisma.PurchaseOrderBecraCountOutputTypeDefaultArgs<ExtArgs>
+  Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }
 
 export type $PurchaseOrderBecraPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PurchaseOrderBecra"
   objects: {
-    InventoryOrderStructure: Prisma.$InventoryOrderStructurePayload<ExtArgs>[]
+    Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    description: string | null
+    date: Date | null
+    createdBy: string
   }, ExtArgs["result"]["purchaseOrderBecra"]>
   composites: {}
 }
@@ -680,7 +790,7 @@ readonly fields: PurchaseOrderBecraFieldRefs;
  */
 export interface Prisma__PurchaseOrderBecraClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  InventoryOrderStructure<T extends Prisma.PurchaseOrderBecra$InventoryOrderStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseOrderBecra$InventoryOrderStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryOrderStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -711,6 +821,9 @@ export interface Prisma__PurchaseOrderBecraClient<T, Null = never, ExtArgs exten
  */
 export interface PurchaseOrderBecraFieldRefs {
   readonly id: Prisma.FieldRef<"PurchaseOrderBecra", 'String'>
+  readonly description: Prisma.FieldRef<"PurchaseOrderBecra", 'String'>
+  readonly date: Prisma.FieldRef<"PurchaseOrderBecra", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"PurchaseOrderBecra", 'String'>
 }
     
 
@@ -1051,30 +1164,6 @@ export type PurchaseOrderBecraDeleteManyArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many PurchaseOrderBecras to delete.
    */
   limit?: number
-}
-
-/**
- * PurchaseOrderBecra.InventoryOrderStructure
- */
-export type PurchaseOrderBecra$InventoryOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InventoryOrderStructure
-   */
-  select?: Prisma.InventoryOrderStructureSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the InventoryOrderStructure
-   */
-  omit?: Prisma.InventoryOrderStructureOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InventoryOrderStructureInclude<ExtArgs> | null
-  where?: Prisma.InventoryOrderStructureWhereInput
-  orderBy?: Prisma.InventoryOrderStructureOrderByWithRelationInput | Prisma.InventoryOrderStructureOrderByWithRelationInput[]
-  cursor?: Prisma.InventoryOrderStructureWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.InventoryOrderStructureScalarFieldEnum | Prisma.InventoryOrderStructureScalarFieldEnum[]
 }
 
 /**

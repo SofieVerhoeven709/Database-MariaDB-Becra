@@ -149,10 +149,10 @@ export type DocumentGroupGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type DocumentGroupGroupByOutputType = {
   id: string
-  groupA: string
-  groupB: string
-  groupC: string
-  groupD: string
+  groupA: string | null
+  groupB: string | null
+  groupC: string | null
+  groupD: string | null
   _count: DocumentGroupCountAggregateOutputType | null
   _min: DocumentGroupMinAggregateOutputType | null
   _max: DocumentGroupMaxAggregateOutputType | null
@@ -178,18 +178,18 @@ export type DocumentGroupWhereInput = {
   OR?: Prisma.DocumentGroupWhereInput[]
   NOT?: Prisma.DocumentGroupWhereInput | Prisma.DocumentGroupWhereInput[]
   id?: Prisma.StringFilter<"DocumentGroup"> | string
-  groupA?: Prisma.StringFilter<"DocumentGroup"> | string
-  groupB?: Prisma.StringFilter<"DocumentGroup"> | string
-  groupC?: Prisma.StringFilter<"DocumentGroup"> | string
-  groupD?: Prisma.StringFilter<"DocumentGroup"> | string
+  groupA?: Prisma.StringNullableFilter<"DocumentGroup"> | string | null
+  groupB?: Prisma.StringNullableFilter<"DocumentGroup"> | string | null
+  groupC?: Prisma.StringNullableFilter<"DocumentGroup"> | string | null
+  groupD?: Prisma.StringNullableFilter<"DocumentGroup"> | string | null
 }
 
 export type DocumentGroupOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  groupA?: Prisma.SortOrder
-  groupB?: Prisma.SortOrder
-  groupC?: Prisma.SortOrder
-  groupD?: Prisma.SortOrder
+  groupA?: Prisma.SortOrderInput | Prisma.SortOrder
+  groupB?: Prisma.SortOrderInput | Prisma.SortOrder
+  groupC?: Prisma.SortOrderInput | Prisma.SortOrder
+  groupD?: Prisma.SortOrderInput | Prisma.SortOrder
   _relevance?: Prisma.DocumentGroupOrderByRelevanceInput
 }
 
@@ -198,18 +198,18 @@ export type DocumentGroupWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.DocumentGroupWhereInput | Prisma.DocumentGroupWhereInput[]
   OR?: Prisma.DocumentGroupWhereInput[]
   NOT?: Prisma.DocumentGroupWhereInput | Prisma.DocumentGroupWhereInput[]
-  groupA?: Prisma.StringFilter<"DocumentGroup"> | string
-  groupB?: Prisma.StringFilter<"DocumentGroup"> | string
-  groupC?: Prisma.StringFilter<"DocumentGroup"> | string
-  groupD?: Prisma.StringFilter<"DocumentGroup"> | string
+  groupA?: Prisma.StringNullableFilter<"DocumentGroup"> | string | null
+  groupB?: Prisma.StringNullableFilter<"DocumentGroup"> | string | null
+  groupC?: Prisma.StringNullableFilter<"DocumentGroup"> | string | null
+  groupD?: Prisma.StringNullableFilter<"DocumentGroup"> | string | null
 }, "id">
 
 export type DocumentGroupOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  groupA?: Prisma.SortOrder
-  groupB?: Prisma.SortOrder
-  groupC?: Prisma.SortOrder
-  groupD?: Prisma.SortOrder
+  groupA?: Prisma.SortOrderInput | Prisma.SortOrder
+  groupB?: Prisma.SortOrderInput | Prisma.SortOrder
+  groupC?: Prisma.SortOrderInput | Prisma.SortOrder
+  groupD?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.DocumentGroupCountOrderByAggregateInput
   _max?: Prisma.DocumentGroupMaxOrderByAggregateInput
   _min?: Prisma.DocumentGroupMinOrderByAggregateInput
@@ -220,66 +220,66 @@ export type DocumentGroupScalarWhereWithAggregatesInput = {
   OR?: Prisma.DocumentGroupScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DocumentGroupScalarWhereWithAggregatesInput | Prisma.DocumentGroupScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"DocumentGroup"> | string
-  groupA?: Prisma.StringWithAggregatesFilter<"DocumentGroup"> | string
-  groupB?: Prisma.StringWithAggregatesFilter<"DocumentGroup"> | string
-  groupC?: Prisma.StringWithAggregatesFilter<"DocumentGroup"> | string
-  groupD?: Prisma.StringWithAggregatesFilter<"DocumentGroup"> | string
+  groupA?: Prisma.StringNullableWithAggregatesFilter<"DocumentGroup"> | string | null
+  groupB?: Prisma.StringNullableWithAggregatesFilter<"DocumentGroup"> | string | null
+  groupC?: Prisma.StringNullableWithAggregatesFilter<"DocumentGroup"> | string | null
+  groupD?: Prisma.StringNullableWithAggregatesFilter<"DocumentGroup"> | string | null
 }
 
 export type DocumentGroupCreateInput = {
   id: string
-  groupA: string
-  groupB: string
-  groupC: string
-  groupD: string
+  groupA?: string | null
+  groupB?: string | null
+  groupC?: string | null
+  groupD?: string | null
 }
 
 export type DocumentGroupUncheckedCreateInput = {
   id: string
-  groupA: string
-  groupB: string
-  groupC: string
-  groupD: string
+  groupA?: string | null
+  groupB?: string | null
+  groupC?: string | null
+  groupD?: string | null
 }
 
 export type DocumentGroupUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  groupA?: Prisma.StringFieldUpdateOperationsInput | string
-  groupB?: Prisma.StringFieldUpdateOperationsInput | string
-  groupC?: Prisma.StringFieldUpdateOperationsInput | string
-  groupD?: Prisma.StringFieldUpdateOperationsInput | string
+  groupA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentGroupUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  groupA?: Prisma.StringFieldUpdateOperationsInput | string
-  groupB?: Prisma.StringFieldUpdateOperationsInput | string
-  groupC?: Prisma.StringFieldUpdateOperationsInput | string
-  groupD?: Prisma.StringFieldUpdateOperationsInput | string
+  groupA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentGroupCreateManyInput = {
   id: string
-  groupA: string
-  groupB: string
-  groupC: string
-  groupD: string
+  groupA?: string | null
+  groupB?: string | null
+  groupC?: string | null
+  groupD?: string | null
 }
 
 export type DocumentGroupUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  groupA?: Prisma.StringFieldUpdateOperationsInput | string
-  groupB?: Prisma.StringFieldUpdateOperationsInput | string
-  groupC?: Prisma.StringFieldUpdateOperationsInput | string
-  groupD?: Prisma.StringFieldUpdateOperationsInput | string
+  groupA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentGroupUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  groupA?: Prisma.StringFieldUpdateOperationsInput | string
-  groupB?: Prisma.StringFieldUpdateOperationsInput | string
-  groupC?: Prisma.StringFieldUpdateOperationsInput | string
-  groupD?: Prisma.StringFieldUpdateOperationsInput | string
+  groupA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentGroupOrderByRelevanceInput = {
@@ -339,10 +339,10 @@ export type $DocumentGroupPayload<ExtArgs extends runtime.Types.Extensions.Inter
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    groupA: string
-    groupB: string
-    groupC: string
-    groupD: string
+    groupA: string | null
+    groupB: string | null
+    groupC: string | null
+    groupD: string | null
   }, ExtArgs["result"]["documentGroup"]>
   composites: {}
 }

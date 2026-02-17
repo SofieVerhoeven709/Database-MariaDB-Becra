@@ -9,17 +9,18 @@ datasource db {
 }
 
 model Certificate {
-  id                String             @id @db.Char(36)
-  description       String?            @db.Text
-  descriptionShort  String?            @db.Text
-  createdAt         DateTime           @db.DateTime(0)
-  createdBy         String             @db.Char(36)
-  certificateTypeId String             @db.Char(36)
-  targetId          String             @db.Char(36)
-  Employee          Employee           @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Certificate_ibfk_1")
-  CertificateType   CertificateType    @relation(fields: [certificateTypeId], references: [id], onUpdate: Restrict, map: "Certificate_ibfk_2")
-  Target            Target             @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Certificate_ibfk_3")
-  TrainingStandard  TrainingStandard[]
+  id                             String                           @id @db.Char(36)
+  description                    String?                          @db.Text
+  descriptionShort               String?                          @db.Text
+  createdAt                      DateTime                         @db.DateTime(0)
+  createdBy                      String                           @db.Char(36)
+  certificateTypeId              String                           @db.Char(36)
+  targetId                       String                           @db.Char(36)
+  Employee                       Employee                         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Certificate_ibfk_1")
+  CertificateType                CertificateType                  @relation(fields: [certificateTypeId], references: [id], onUpdate: Restrict, map: "Certificate_ibfk_2")
+  Target                         Target                           @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Certificate_ibfk_3")
+  MaterialSerialTrackedStructure MaterialSerialTrackedStructure[]
+  TrainingStandard               TrainingStandard[]
 
   @@index([certificateTypeId], map: "certificateTypeId")
   @@index([createdBy], map: "createdBy")
@@ -38,42 +39,42 @@ model CertificateType {
 }
 
 model Company {
-  id                     String                  @id @db.Char(36)
-  name                   String                  @db.VarChar(100)
-  number                 String                  @db.VarChar(100)
-  mail                   String?                 @db.VarChar(100)
-  businessPhone          String?                 @db.VarChar(100)
-  website                String?                 @db.VarChar(100)
-  vatNumber              String?                 @db.VarChar(100)
-  bankNumber             String?                 @db.VarChar(100)
-  iban                   String?                 @db.VarChar(100)
-  bic                    String?                 @db.VarChar(100)
-  becraCustomerNumber    String?                 @db.VarChar(100)
-  becraWebsiteLogin      String?                 @db.VarChar(100)
-  supplier               Boolean                 @default(false)
-  prefferedSupplier      Boolean                 @default(false)
-  companyActive          Boolean                 @default(true)
-  newsLetter             Boolean                 @default(false)
-  customer               Boolean                 @default(false)
-  potentialCustomer      Boolean                 @default(false)
-  headQuarters           Boolean                 @default(false)
-  potentialSubContractor Boolean                 @default(false)
-  subContractor          Boolean                 @default(false)
-  notes                  String?                 @db.Text
-  createdAt              DateTime                @db.DateTime(0)
-  createdBy              String                  @db.Char(36)
-  companyId              String?                 @db.Char(36)
-  targetId               String                  @db.Char(36)
-  Employee               Employee                @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_1")
-  Company                Company?                @relation("CompanyToCompany", fields: [companyId], references: [id], onUpdate: Restrict, map: "Company_ibfk_2")
-  other_Company          Company[]               @relation("CompanyToCompany")
-  Target                 Target                  @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Company_ibfk_3")
+  id                     String                 @id @db.Char(36)
+  name                   String                 @db.VarChar(100)
+  number                 String                 @db.VarChar(100)
+  mail                   String?                @db.VarChar(100)
+  businessPhone          String?                @db.VarChar(100)
+  website                String?                @db.VarChar(100)
+  vatNumber              String?                @db.VarChar(100)
+  bankNumber             String?                @db.VarChar(100)
+  iban                   String?                @db.VarChar(100)
+  bic                    String?                @db.VarChar(100)
+  becraCustomerNumber    String?                @db.VarChar(100)
+  becraWebsiteLogin      String?                @db.VarChar(100)
+  supplier               Boolean                @default(false)
+  prefferedSupplier      Boolean                @default(false)
+  companyActive          Boolean                @default(true)
+  newsLetter             Boolean                @default(false)
+  customer               Boolean                @default(false)
+  potentialCustomer      Boolean                @default(false)
+  headQuarters           Boolean                @default(false)
+  potentialSubContractor Boolean                @default(false)
+  subContractor          Boolean                @default(false)
+  notes                  String?                @db.Text
+  createdAt              DateTime               @db.DateTime(0)
+  createdBy              String                 @db.Char(36)
+  companyId              String?                @db.Char(36)
+  targetId               String                 @db.Char(36)
+  Employee               Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_1")
+  Company                Company?               @relation("CompanyToCompany", fields: [companyId], references: [id], onUpdate: Restrict, map: "Company_ibfk_2")
+  other_Company          Company[]              @relation("CompanyToCompany")
+  Target                 Target                 @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Company_ibfk_3")
   CompanyAdress          CompanyAdress[]
   CompanyContact         CompanyContact[]
-  DeliveryNote           DeliveryNote[]
-  InventoryOrder         InventoryOrder[]
-  MaterialSerialTracked  MaterialSerialTracked[]
+  DeliveryNoteSupplier   DeliveryNoteSupplier[]
+  MaterialSerialTrack    MaterialSerialTrack[]
   Project                Project[]
+  Purchase               Purchase[]
 
   @@index([companyId], map: "companyId")
   @@index([createdBy], map: "createdBy")
@@ -169,6 +170,21 @@ model Contact {
   @@index([titleId], map: "titleId")
 }
 
+model DeliveryNoteSupplier {
+  id                           String                         @id @db.Char(36)
+  companyId                    String?                        @db.Char(36)
+  supplierNN                   String?                        @db.VarChar(255)
+  information                  String?                        @db.VarChar(255)
+  createdAt                    DateTime                       @db.DateTime(0)
+  createdBy                    String                         @db.Char(36)
+  Company                      Company?                       @relation(fields: [companyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "DeliveryNoteSupplier_ibfk_1")
+  Employee                     Employee                       @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "DeliveryNoteSupplier_ibfk_2")
+  SupplierDeliveryNoteFollowUp SupplierDeliveryNoteFollowUp[]
+
+  @@index([companyId], map: "companyId")
+  @@index([createdBy], map: "createdBy")
+}
+
 model Department {
   id                                         String     @id @db.Char(36)
   name                                       String     @db.VarChar(100)
@@ -184,40 +200,56 @@ model Department {
   @@index([createdBy], map: "fk_department_createdBy")
 }
 
+model DocumentGroup {
+  id     String  @id @db.Char(36)
+  groupA String? @db.VarChar(255)
+  groupB String? @db.VarChar(255)
+  groupC String? @db.VarChar(255)
+  groupD String? @db.VarChar(255)
+}
+
+model DocumentPlace {
+  id            String          @id @db.Char(36)
+  placeA        String?         @db.VarChar(255)
+  placeB        String?         @db.VarChar(255)
+  placeC        String?         @db.VarChar(255)
+  placeD        String?         @db.VarChar(255)
+  QuoteSupplier QuoteSupplier[]
+}
+
 model DocumentStructure {
-  id                                               String                           @id @db.Char(36)
-  documentNumber                                   String                           @db.VarChar(100)
-  description                                      String?                          @db.Text
-  descriptionShort                                 String                           @db.VarChar(100)
-  createdAt                                        DateTime                         @db.DateTime(0)
-  expiryDate                                       DateTime?                        @db.DateTime(0)
-  revisionNumber                                   Int?
-  revisionDetail                                   String?                          @db.Text
-  valid                                            Boolean                          @default(true)
-  process                                          Boolean                          @default(false)
-  aditionalInfo                                    String?                          @db.Text
-  referenceDocId                                   String?                          @db.Char(36)
-  roleId                                           String?                          @db.Char(36)
-  createdBy                                        String                           @db.Char(36)
-  revisedById                                      String                           @db.Char(36)
-  managedById                                      String                           @db.Char(36)
-  targetId                                         String                           @db.Char(36)
-  Contact                                          Contact[]
-  DeliveryNote                                     DeliveryNote[]
-  DocumentStructure                                DocumentStructure?               @relation("DocumentStructureToDocumentStructure", fields: [referenceDocId], references: [id], onUpdate: Restrict, map: "DocumentStructure_ibfk_1")
-  other_DocumentStructure                          DocumentStructure[]              @relation("DocumentStructureToDocumentStructure")
-  Role                                             Role?                            @relation(fields: [roleId], references: [id], onUpdate: Restrict, map: "DocumentStructure_ibfk_2")
-  Employee_DocumentStructure_createdByToEmployee   Employee                         @relation("DocumentStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_documentStructure_createdBy")
-  Employee_DocumentStructure_managedByIdToEmployee Employee                         @relation("DocumentStructure_managedByIdToEmployee", fields: [managedById], references: [id], onUpdate: Restrict, map: "fk_documentStructure_managedBy")
-  Employee_DocumentStructure_revisedByIdToEmployee Employee                         @relation("DocumentStructure_revisedByIdToEmployee", fields: [revisedById], references: [id], onUpdate: Restrict, map: "fk_documentStructure_revisedBy")
-  Target                                           Target                           @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_documentStructure_target")
-  Employee_Employee_pictureIdToDocumentStructure   Employee[]                       @relation("Employee_pictureIdToDocumentStructure")
-  FollowUp                                         FollowUp[]
-  FollowUpStructure                                FollowUpStructure[]
-  InventoryOrderStructure                          InventoryOrderStructure[]
-  MaterialSerialTrackedStructure                   MaterialSerialTrackedStructure[]
-  MaterialStructure                                MaterialStructure[]
-  TrainingDocument                                 TrainingDocument[]
+  id                                                                                              String                           @id @db.Char(36)
+  documentNumber                                                                                  String                           @db.VarChar(100)
+  description                                                                                     String?                          @db.Text
+  descriptionShort                                                                                String                           @db.VarChar(100)
+  createdAt                                                                                       DateTime                         @db.DateTime(0)
+  expiryDate                                                                                      DateTime?                        @db.DateTime(0)
+  revisionNumber                                                                                  Int?
+  revisionDetail                                                                                  String?                          @db.Text
+  valid                                                                                           Boolean                          @default(true)
+  process                                                                                         Boolean                          @default(false)
+  aditionalInfo                                                                                   String?                          @db.Text
+  referenceDocId                                                                                  String?                          @db.Char(36)
+  roleId                                                                                          String?                          @db.Char(36)
+  createdBy                                                                                       String                           @db.Char(36)
+  revisedById                                                                                     String                           @db.Char(36)
+  managedById                                                                                     String                           @db.Char(36)
+  targetId                                                                                        String                           @db.Char(36)
+  Contact                                                                                         Contact[]
+  DocumentStructure                                                                               DocumentStructure?               @relation("DocumentStructureToDocumentStructure", fields: [referenceDocId], references: [id], onUpdate: Restrict, map: "DocumentStructure_ibfk_1")
+  other_DocumentStructure                                                                         DocumentStructure[]              @relation("DocumentStructureToDocumentStructure")
+  Role                                                                                            Role?                            @relation(fields: [roleId], references: [id], onUpdate: Restrict, map: "DocumentStructure_ibfk_2")
+  Employee_DocumentStructure_createdByToEmployee                                                  Employee                         @relation("DocumentStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_documentStructure_createdBy")
+  Employee_DocumentStructure_managedByIdToEmployee                                                Employee                         @relation("DocumentStructure_managedByIdToEmployee", fields: [managedById], references: [id], onUpdate: Restrict, map: "fk_documentStructure_managedBy")
+  Employee_DocumentStructure_revisedByIdToEmployee                                                Employee                         @relation("DocumentStructure_revisedByIdToEmployee", fields: [revisedById], references: [id], onUpdate: Restrict, map: "fk_documentStructure_revisedBy")
+  Target                                                                                          Target                           @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_documentStructure_target")
+  Employee_Employee_pictureIdToDocumentStructure                                                  Employee[]                       @relation("Employee_pictureIdToDocumentStructure")
+  FollowUp                                                                                        FollowUp[]
+  FollowUpStructure                                                                               FollowUpStructure[]
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure MaterialSerialTrackedStructure[] @relation("MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure")
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure     MaterialSerialTrackedStructure[] @relation("MaterialSerialTrackedStructure_documentIdToDocumentStructure")
+  MaterialStructure                                                                               MaterialStructure[]
+  TrainingDocument                                                                                TrainingDocument[]
 
   @@index([createdBy], map: "fk_documentStructure_createdBy")
   @@index([managedById], map: "fk_documentStructure_managedBy")
@@ -268,14 +300,13 @@ model Employee {
   departmentId                                              String?                          @db.Char(36)
   titleId                                                   String?                          @db.Char(36)
   pictureId                                                 String?                          @db.Char(36)
-  Accounting                                                Accounting[]
   Certificate                                               Certificate[]
   CertificateType                                           CertificateType[]
   Company                                                   Company[]
   CompanyAdress                                             CompanyAdress[]
   CompanyContact                                            CompanyContact[]
   Contact                                                   Contact[]
-  DeliveryNote                                              DeliveryNote[]
+  DeliveryNoteSupplier                                      DeliveryNoteSupplier[]
   Department_Department_createdByToEmployee                 Department[]                     @relation("Department_createdByToEmployee")
   DocumentStructure_DocumentStructure_createdByToEmployee   DocumentStructure[]              @relation("DocumentStructure_createdByToEmployee")
   DocumentStructure_DocumentStructure_managedByIdToEmployee DocumentStructure[]              @relation("DocumentStructure_managedByIdToEmployee")
@@ -287,7 +318,7 @@ model Employee {
   Function_Employee_functionIdToFunction                    Function?                        @relation("Employee_functionIdToFunction", fields: [functionId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_3")
   Department_Employee_departmentIdToDepartment              Department?                      @relation("Employee_departmentIdToDepartment", fields: [departmentId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_4")
   Title_Employee_titleIdToTitle                             Title?                           @relation("Employee_titleIdToTitle", fields: [titleId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_5")
-  DocumentStructure_Employee_pictureIdToDocumentStructure   DocumentStructure?               @relation("Employee_pictureIdToDocumentStructure", fields: [pictureId], references: [id], onUpdate: Restrict, map: "Employee_ibfk_6")
+  DocumentStructure_Employee_pictureIdToDocumentStructure   DocumentStructure?               @relation("Employee_pictureIdToDocumentStructure", fields: [pictureId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_6")
   FollowUp_FollowUp_ownedByToEmployee                       FollowUp[]                       @relation("FollowUp_ownedByToEmployee")
   FollowUp_FollowUp_executedByToEmployee                    FollowUp[]                       @relation("FollowUp_executedByToEmployee")
   FollowUp_FollowUp_createdByToEmployee                     FollowUp[]                       @relation("FollowUp_createdByToEmployee")
@@ -301,10 +332,7 @@ model Employee {
   Inventory                                                 Inventory[]
   InventoryChange                                           InventoryChange[]
   InventoryOrder                                            InventoryOrder[]
-  InventoryOrderStructure                                   InventoryOrderStructure[]
-  InventoryPlace                                            InventoryPlace[]
   InventoryStructure                                        InventoryStructure[]
-  InvestingCode                                             InvestingCode[]
   InvoiceIn                                                 InvoiceIn[]
   InvoiceOut                                                InvoiceOut[]
   InvoiceType                                               InvoiceType[]
@@ -313,14 +341,13 @@ model Employee {
   MaterialCode                                              MaterialCode[]
   MaterialDimension                                         MaterialDimension[]
   MaterialFamily                                            MaterialFamily[]
-  MaterialGroup                                             MaterialGroup[]
   MaterialMovement                                          MaterialMovement[]
   MaterialOther                                             MaterialOther[]
   MaterialPerformance                                       MaterialPerformance[]
   MaterialPrice                                             MaterialPrice[]
-  MaterialSerialTracked                                     MaterialSerialTracked[]
+  MaterialSerialTrack                                       MaterialSerialTrack[]
   MaterialSerialTrackedStructure                            MaterialSerialTrackedStructure[]
-  MaterialSpecification                                     MaterialSpecification[]
+  MaterialSpec                                              MaterialSpec[]
   MaterialStructure                                         MaterialStructure[]
   Part                                                      Part[]
   Phantom                                                   Phantom[]
@@ -329,14 +356,15 @@ model Employee {
   ProjectContact_ProjectContact_createdByToEmployee         ProjectContact[]                 @relation("ProjectContact_createdByToEmployee")
   ProjectContact_ProjectContact_moddifiedByToEmployee       ProjectContact[]                 @relation("ProjectContact_moddifiedByToEmployee")
   ProjectType                                               ProjectType[]
+  Purchase                                                  Purchase[]
   PurchaseDetail                                            PurchaseDetail[]
-  PurchasePriceRequest                                      PurchasePriceRequest[]
+  PurchaseOrderBecra                                        PurchaseOrderBecra[]
+  QouteBecra                                                QouteBecra[]
+  QuoteSupplier                                             QuoteSupplier[]
   Role_Role_createdByToEmployee                             Role[]                           @relation("Role_createdByToEmployee")
-  Sale                                                      Sale[]
-  SaleOrderDetail                                           SaleOrderDetail[]
-  SerialTracked                                             SerialTracked[]
   Session                                                   Session[]
   Status                                                    Status[]
+  SupplierDeliveryNoteFollowUp                              SupplierDeliveryNoteFollowUp[]
   Target                                                    Target[]
   TargetType                                                TargetType[]
   TestProcedure                                             TestProcedure[]
@@ -496,6 +524,100 @@ model HourType {
   @@index([createdBy], map: "createdBy")
 }
 
+model Inventory {
+  id                                      String               @id @db.Char(36)
+  materialId                              String               @db.Char(36)
+  beNumber                                String               @unique(map: "uq_inventory_beNumber") @db.VarChar(255)
+  place                                   String               @db.VarChar(255)
+  shortDescription                        String               @db.VarChar(255)
+  longDescription                         String               @db.Text
+  serieNumber                             String               @db.VarChar(255)
+  quantityInStock                         Int
+  minQuantityInStock                      Int
+  maxQuantityInStock                      Int
+  information                             String               @db.Text
+  valid                                   Boolean
+  noValidDate                             DateTime             @db.DateTime(0)
+  createdAt                               DateTime             @default(now()) @db.Timestamp(0)
+  createdBy                               String               @db.Char(36)
+  Material_Inventory_materialIdToMaterial Material             @relation("Inventory_materialIdToMaterial", fields: [materialId], references: [id], onUpdate: Restrict, map: "Inventory_ibfk_1")
+  Material_Inventory_beNumberToMaterial   Material             @relation("Inventory_beNumberToMaterial", fields: [beNumber], references: [beNumber], onUpdate: Restrict, map: "Inventory_ibfk_2")
+  Employee                                Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Inventory_ibfk_3")
+  InventoryChange                         InventoryChange[]
+  InventoryOrder                          InventoryOrder[]
+  InventoryStructure                      InventoryStructure[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([materialId], map: "materialId")
+}
+
+model InventoryChange {
+  id                    String    @id @db.Char(36)
+  inventoryId           String    @db.Char(36)
+  beNumber              String?   @db.VarChar(255)
+  serialTrackedId       String?   @db.Char(36)
+  shortDescription      String?   @db.VarChar(255)
+  longDescription       String?   @db.Text
+  additionalInformation String?   @db.Text
+  fromLocation          String?   @db.VarChar(255)
+  toLocation            String?   @db.VarChar(255)
+  inventoryOldValue     Int?
+  inventoryNewValue     Int?
+  changeDescription     String    @db.Text
+  createdAt             DateTime  @default(now()) @db.Timestamp(0)
+  createdBy             String    @db.Char(36)
+  Inventory             Inventory @relation(fields: [inventoryId], references: [id], onUpdate: Restrict, map: "InventoryChange_ibfk_1")
+  Employee              Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryChange_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([inventoryId], map: "inventoryId")
+}
+
+model InventoryOrder {
+  id               String    @id @db.Char(36)
+  inventoryId      String    @db.Char(36)
+  orderNumber      String    @db.VarChar(255)
+  orderDate        DateTime  @db.DateTime(0)
+  shortDescription String    @db.VarChar(255)
+  longDescription  String?   @db.Text
+  createdAt        DateTime  @default(now()) @db.Timestamp(0)
+  createdBy        String    @db.Char(36)
+  Inventory        Inventory @relation(fields: [inventoryId], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_1")
+  Employee         Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([inventoryId], map: "inventoryId")
+}
+
+model InventoryStructure {
+  id                   String    @id @db.Char(36)
+  inventoryPlaceId     String    @db.Char(36)
+  place                String    @db.VarChar(255)
+  shortDescription     String    @db.VarChar(255)
+  longDescription      String?   @db.Text
+  beNumber             String?   @db.VarChar(255)
+  purchaseOrderBecraId String?   @db.Char(36)
+  projectId            String?   @db.Char(36)
+  partSupplierNumber   String?   @db.VarChar(255)
+  partDescription      String?   @db.VarChar(255)
+  warehousePlaceId     String?   @db.Char(36)
+  information          String?   @db.Text
+  coordinate           Boolean
+  inventoryId          String    @db.Char(36)
+  forInventory         Boolean
+  forProject           Boolean
+  active               Boolean
+  materialActive       Boolean
+  valid                Boolean
+  createdAt            DateTime  @default(now()) @db.Timestamp(0)
+  createdBy            String    @db.Char(36)
+  Inventory            Inventory @relation(fields: [inventoryId], references: [id], onUpdate: Restrict, map: "InventoryStructure_ibfk_1")
+  Employee             Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryStructure_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([inventoryId], map: "inventoryId")
+}
+
 model InvoiceIn {
   id                    String            @id @db.Char(36)
   invoiceNumber         String?           @db.VarChar(100)
@@ -546,39 +668,37 @@ model InvoiceInTarget {
 }
 
 model InvoiceOut {
-  id                   String      @id @db.Char(36)
-  invoiceNumber        String?     @db.VarChar(100)
-  invoiceDate          DateTime    @db.DateTime(0)
-  expireDate           DateTime    @db.DateTime(0)
-  payDate              DateTime?   @db.DateTime(0)
-  invoiceReference     String?     @db.VarChar(100)
-  invoiceInAttachement String?     @db.VarChar(100)
-  deliveryNote         String?     @db.Text
-  purchaseOrder        String?     @db.Text
-  transactionNumber    String?     @db.VarChar(100)
-  deliveryInvoiceInfo  String?     @db.Text
-  aditionalInfo        String?     @db.Text
-  info                 String?     @db.Text
-  deliveryInvoiceCode  String?     @db.VarChar(100)
-  vatMargin            Float       @db.Float
-  amountWithoutVat     Float       @db.Float
-  sentDate             DateTime?   @db.DateTime(0)
-  createdAt            DateTime    @db.DateTime(0)
-  materialCost         Boolean     @default(false)
-  completed            Boolean     @default(false)
-  createdBy            String      @db.Char(36)
-  invoiceTypeId        String      @db.Char(36)
-  workOrderId          String      @db.Char(36)
-  targetId             String      @db.Char(36)
-  InvoiceType          InvoiceType @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_1")
-  Employee             Employee    @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_2")
-  WorkOrder            WorkOrder   @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_3")
-  Target               Target      @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_4")
+  id                   String             @id @db.Char(36)
+  invoiceNumber        String?            @db.VarChar(100)
+  invoiceDate          DateTime           @db.DateTime(0)
+  expireDate           DateTime           @db.DateTime(0)
+  payDate              DateTime?          @db.DateTime(0)
+  invoiceReference     String?            @db.VarChar(100)
+  invoiceInAttachement String?            @db.VarChar(100)
+  deliveryNote         String?            @db.Text
+  purchaseOrder        String?            @db.Text
+  transactionNumber    String?            @db.VarChar(100)
+  deliveryInvoiceInfo  String?            @db.Text
+  aditionalInfo        String?            @db.Text
+  info                 String?            @db.Text
+  deliveryInvoiceCode  String?            @db.VarChar(100)
+  vatMargin            Float              @db.Float
+  amountWithoutVat     Float              @db.Float
+  sentDate             DateTime?          @db.DateTime(0)
+  createdAt            DateTime           @db.DateTime(0)
+  materialCost         Boolean            @default(false)
+  completed            Boolean            @default(false)
+  createdBy            String             @db.Char(36)
+  invoiceTypeId        String             @db.Char(36)
+  targetId             String             @db.Char(36)
+  InvoiceType          InvoiceType        @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_1")
+  Employee             Employee           @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_2")
+  Target               Target             @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_3")
+  WorkOrderInvoice     WorkOrderInvoice[]
 
   @@index([createdBy], map: "createdBy")
   @@index([invoiceTypeId], map: "invoiceTypeId")
   @@index([targetId], map: "targetId")
-  @@index([workOrderId], map: "workOrderId")
 }
 
 model InvoiceType {
@@ -593,36 +713,386 @@ model InvoiceType {
   @@index([createdBy], map: "createdBy")
 }
 
+model Material {
+  id                                                       String               @id @db.Char(36)
+  beNumber                                                 String               @unique(map: "uq_material_beNumber") @db.VarChar(255)
+  name                                                     String?              @db.VarChar(255)
+  brandOrderNr                                             Int
+  shortDescription                                         String               @db.VarChar(255)
+  longDescription                                          String?              @db.Text
+  preferedSupplier                                         String?              @db.VarChar(255)
+  brandName                                                String?              @db.VarChar(255)
+  documentationPlace                                       String?              @db.VarChar(255)
+  bePartDoc                                                Int?
+  rejected                                                 Boolean?             @default(false)
+  materialGroupId                                          String               @db.Char(36)
+  unitId                                                   String               @db.Char(36)
+  createdBy                                                String               @db.Char(36)
+  Inventory_Inventory_materialIdToMaterial                 Inventory[]          @relation("Inventory_materialIdToMaterial")
+  Inventory_Inventory_beNumberToMaterial                   Inventory?           @relation("Inventory_beNumberToMaterial")
+  MaterialGroup                                            MaterialGroup        @relation(fields: [materialGroupId], references: [id], onUpdate: Restrict, map: "Material_ibfk_1")
+  Unit                                                     Unit                 @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "Material_ibfk_2")
+  Employee                                                 Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")
+  MaterialMovement                                         MaterialMovement[]
+  MaterialOther                                            MaterialOther[]
+  MaterialStructure_MaterialStructure_materialIdToMaterial MaterialStructure[]  @relation("MaterialStructure_materialIdToMaterial")
+  MaterialStructure_MaterialStructure_beNumberToMaterial   MaterialStructure[]  @relation("MaterialStructure_beNumberToMaterial")
+  Product                                                  Product[]
+  WorkOrderStructure                                       WorkOrderStructure[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([materialGroupId], map: "materialGroupId")
+  @@index([unitId], map: "unitId")
+}
+
+model MaterialAssembly {
+  id               String   @id @db.Char(36)
+  name             String?  @db.VarChar(255)
+  shortDescription String?  @db.VarChar(255)
+  longDescription  String?  @db.Text
+  createdAt        DateTime @db.DateTime(0)
+  createdBy        String   @db.Char(36)
+  Employee         Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialAssembly_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model MaterialCode {
+  id               String   @id @db.Char(36)
+  name             String?  @db.VarChar(255)
+  shortDescription String?  @db.VarChar(255)
+  longDescription  String?  @db.Text
+  createdBy        String   @db.Char(36)
+  createdAt        DateTime @db.DateTime(0)
+  Employee         Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialCode_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model MaterialDimension {
+  id               String         @id @db.Char(36)
+  name             String?        @db.VarChar(255)
+  shortDescription String?        @db.VarChar(255)
+  longDescription  String?        @db.Text
+  createdAt        DateTime?      @db.DateTime(0)
+  createdBy        String?        @db.Char(36)
+  Employee         Employee?      @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialDimension_ibfk_1")
+  MaterialSpec     MaterialSpec[]
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model MaterialFamily {
+  id                  String                @id @db.Char(36)
+  name                String?               @db.VarChar(255)
+  shortDescription    String?               @db.Text
+  longDescription     String?               @db.Text
+  createdAt           DateTime              @db.DateTime(0)
+  createdBy           String                @db.Char(36)
+  Employee            Employee              @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialFamily_ibfk_1")
+  MaterialPerformance MaterialPerformance[]
+  MaterialSpec        MaterialSpec[]
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model MaterialGroup {
+  id                             String                           @id @db.Char(36)
+  groupA                         String                           @db.VarChar(255)
+  groupB                         String?                          @db.VarChar(255)
+  groupC                         String?                          @db.VarChar(255)
+  groupD                         String?                          @db.VarChar(255)
+  Material                       Material[]
+  MaterialSerialTrack            MaterialSerialTrack[]
+  MaterialSerialTrackedStructure MaterialSerialTrackedStructure[]
+  Purchase                       Purchase[]
+}
+
+model MaterialMovement {
+  id                  String               @id @db.Char(36)
+  beNumberId          String               @db.VarChar(255)
+  shortDescription    String?              @db.VarChar(255)
+  longDescription     String?              @db.Text
+  serieId             String?              @db.Char(36)
+  transactionType     String?              @db.VarChar(255)
+  brandName           String?              @db.VarChar(255)
+  brandNameNr         String?              @db.VarChar(255)
+  toLocation          String?              @db.VarChar(255)
+  fromLocation        String?              @db.VarChar(255)
+  updatedAt           DateTime?            @db.DateTime(0)
+  rejected            Boolean?             @default(false)
+  additionalInfo      String?              @db.VarChar(255)
+  createdBy           String?              @db.Char(36)
+  Material            Material             @relation(fields: [beNumberId], references: [beNumber], onUpdate: Restrict, map: "MaterialMovement_ibfk_1")
+  MaterialSerialTrack MaterialSerialTrack? @relation(fields: [serieId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialMovement_ibfk_2")
+  Employee            Employee?            @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialMovement_ibfk_3")
+
+  @@index([beNumberId], map: "beNumberId")
+  @@index([createdBy], map: "createdBy")
+  @@index([serieId], map: "serieId")
+}
+
+model MaterialOther {
+  id               String    @id @db.Char(36)
+  name             String?   @db.VarChar(255)
+  materialId       String?   @db.Char(36)
+  shortDescription String?   @db.VarChar(255)
+  longDescription  String?   @db.Text
+  createdAt        DateTime  @db.DateTime(0)
+  createdBy        String    @db.Char(36)
+  Material         Material? @relation(fields: [materialId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialOther_ibfk_1")
+  Employee         Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialOther_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([materialId], map: "materialId")
+}
+
+model MaterialPerformance {
+  id               String          @id @db.Char(36)
+  name             String?         @db.VarChar(255)
+  materialSpecId   String?         @db.Char(36)
+  shortDescription String?         @db.VarChar(255)
+  longDescription  String?         @db.Text
+  materialFamilyId String?         @db.Char(36)
+  createdAt        DateTime        @db.DateTime(0)
+  createdBy        String?         @db.Char(36)
+  MaterialSpec     MaterialSpec?   @relation(fields: [materialSpecId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialPerformance_ibfk_1")
+  MaterialFamily   MaterialFamily? @relation(fields: [materialFamilyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialPerformance_ibfk_2")
+  Employee         Employee?       @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialPerformance_ibfk_3")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([materialFamilyId], map: "materialFamilyId")
+  @@index([materialSpecId], map: "materialSpecId")
+}
+
+model MaterialPrice {
+  id               String    @id @db.Char(36)
+  beNumber         String?   @db.VarChar(255)
+  orderNr          String?   @db.VarChar(255)
+  quoteBecra       String?   @db.Char(36)
+  supllierOrderNr  String?   @db.VarChar(255)
+  brandOrderNr     String?   @db.VarChar(255)
+  shortDescription String?   @db.VarChar(255)
+  longDescription  String?   @db.Text
+  brandName        String?   @db.VarChar(255)
+  updatedAt        DateTime? @db.DateTime(0)
+  rejected         Boolean?
+  additionalInfo   String?   @db.VarChar(255)
+  unitPrice        Int?
+  quantityPrice    Int?
+  createdBy        String    @db.Char(36)
+  Employee         Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model MaterialSerialTrack {
+  id                             String                           @id @db.Char(36)
+  beNumber                       String?                          @db.VarChar(255)
+  brandName                      String?                          @db.VarChar(255)
+  management                     String?                          @db.VarChar(255)
+  brandOrderNumber               String?                          @db.VarChar(255)
+  companyId                      String?                          @db.Char(36)
+  orderNumber                    String?                          @db.VarChar(255)
+  shortDescription               String?                          @db.VarChar(255)
+  longDescription                String?                          @db.Text
+  transactionType                String?                          @db.VarChar(255)
+  materialGroupId                String?                          @db.Char(36)
+  fromLocation                   String?                          @db.VarChar(255)
+  toLocation                     String?                          @db.VarChar(255)
+  updatedAt                      DateTime?                        @db.DateTime(0)
+  preferedSupplier               String?                          @db.VarChar(255)
+  rejected                       Boolean?                         @default(false)
+  additionalInfo                 String?                          @db.VarChar(255)
+  projectId                      String?                          @db.Char(36)
+  becraCode                      String?                          @db.VarChar(255)
+  createdBy                      String?                          @db.Char(36)
+  MaterialMovement               MaterialMovement[]
+  Company                        Company?                         @relation(fields: [companyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrack_ibfk_1")
+  MaterialGroup                  MaterialGroup?                   @relation(fields: [materialGroupId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrack_ibfk_2")
+  Project                        Project?                         @relation(fields: [projectId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrack_ibfk_3")
+  Employee                       Employee?                        @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrack_ibfk_4")
+  MaterialSerialTrackedStructure MaterialSerialTrackedStructure[]
+
+  @@index([companyId], map: "companyId")
+  @@index([createdBy], map: "createdBy")
+  @@index([materialGroupId], map: "materialGroupId")
+  @@index([projectId], map: "projectId")
+}
+
+model MaterialSerialTrackedStructure {
+  id                                                                                 String              @id @db.Char(36)
+  serialTrackedId                                                                    String              @db.Char(36)
+  certificateId                                                                      String?             @db.Char(36)
+  materialSpecId                                                                     String?             @db.Char(36)
+  referenceDocId                                                                     String?             @db.Char(36)
+  materialGroupId                                                                    String?             @db.Char(36)
+  documentId                                                                         String?             @db.Char(36)
+  shortDescription                                                                   String?             @db.VarChar(255)
+  longDescription                                                                    String?             @db.Text
+  management                                                                         String?             @db.VarChar(255)
+  date                                                                               DateTime?           @db.DateTime(0)
+  expiredDate                                                                        DateTime?           @db.DateTime(0)
+  documentationPlace                                                                 String?             @db.VarChar(255)
+  docRevision                                                                        Int?
+  valid                                                                              Boolean?
+  additionalInfo                                                                     String?             @db.VarChar(255)
+  beNumber                                                                           String?             @db.VarChar(255)
+  beParentPart                                                                       String?             @db.VarChar(255)
+  serialCode                                                                         String?             @db.VarChar(255)
+  tag                                                                                String?             @db.VarChar(255)
+  preferedSupplier                                                                   String?             @db.VarChar(255)
+  brandName                                                                          String?             @db.VarChar(255)
+  brandOrderNr                                                                       String?             @db.VarChar(255)
+  unit                                                                               String?             @db.VarChar(255)
+  unitQuantity                                                                       String?             @db.VarChar(255)
+  unitPieces                                                                         Int?
+  unitWeightKg                                                                       Int?
+  quantityRequired                                                                   Int?
+  quantityReserved                                                                   Int?
+  quantityIssued                                                                     Int?
+  rejected                                                                           Boolean?            @default(false)
+  updatedAt                                                                          DateTime?           @db.DateTime(0)
+  createdBy                                                                          String?             @db.Char(36)
+  MaterialSerialTrack                                                                MaterialSerialTrack @relation(fields: [serialTrackedId], references: [id], onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_1")
+  Certificate                                                                        Certificate?        @relation(fields: [certificateId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_2")
+  MaterialSpec                                                                       MaterialSpec?       @relation(fields: [materialSpecId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_3")
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure DocumentStructure?  @relation("MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure", fields: [referenceDocId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_4")
+  MaterialGroup                                                                      MaterialGroup?      @relation(fields: [materialGroupId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_5")
+  DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure     DocumentStructure?  @relation("MaterialSerialTrackedStructure_documentIdToDocumentStructure", fields: [documentId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_6")
+  Employee                                                                           Employee?           @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_7")
+
+  @@index([certificateId], map: "certificateId")
+  @@index([createdBy], map: "createdBy")
+  @@index([documentId], map: "documentId")
+  @@index([materialGroupId], map: "materialGroupId")
+  @@index([materialSpecId], map: "materialSpecId")
+  @@index([referenceDocId], map: "referenceDocId")
+  @@index([serialTrackedId], map: "serialTrackedId")
+}
+
+model MaterialSpec {
+  id                             String                           @id @db.Char(36)
+  materialFamilyId               String?                          @db.Char(36)
+  name                           String?                          @db.VarChar(255)
+  materialDimensionId            String?                          @db.Char(36)
+  shortDescription               String?                          @db.VarChar(255)
+  longDescription                String?                          @db.Text
+  createdAt                      DateTime?                        @db.DateTime(0)
+  createdBy                      String?                          @db.Char(36)
+  MaterialPerformance            MaterialPerformance[]
+  MaterialSerialTrackedStructure MaterialSerialTrackedStructure[]
+  MaterialFamily                 MaterialFamily?                  @relation(fields: [materialFamilyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_1")
+  MaterialDimension              MaterialDimension?               @relation(fields: [materialDimensionId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_2")
+  Employee                       Employee?                        @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_3")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([materialDimensionId], map: "materialDimensionId")
+  @@index([materialFamilyId], map: "materialFamilyId")
+}
+
+model MaterialStructure {
+  id                                              String             @id @db.Char(36)
+  materialId                                      String             @db.Char(36)
+  beNumber                                        String             @db.VarChar(255)
+  shortDescription                                String?            @db.VarChar(255)
+  longDescription                                 String?            @db.Text
+  management                                      String?            @db.VarChar(255)
+  date                                            DateTime?          @db.DateTime(0)
+  expiredDate                                     DateTime?          @db.DateTime(0)
+  docRevision                                     Int?
+  valid                                           Boolean?           @default(true)
+  additionalInfo                                  String?            @db.VarChar(255)
+  referenceDocId                                  String?            @db.Char(36)
+  createdBy                                       String?            @db.Char(36)
+  Material_MaterialStructure_materialIdToMaterial Material           @relation("MaterialStructure_materialIdToMaterial", fields: [materialId], references: [id], onUpdate: Restrict, map: "MaterialStructure_ibfk_1")
+  Material_MaterialStructure_beNumberToMaterial   Material           @relation("MaterialStructure_beNumberToMaterial", fields: [beNumber], references: [beNumber], onUpdate: Restrict, map: "MaterialStructure_ibfk_2")
+  DocumentStructure                               DocumentStructure? @relation(fields: [referenceDocId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialStructure_ibfk_3")
+  Employee                                        Employee?          @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialStructure_ibfk_4")
+
+  @@index([beNumber], map: "beNumber")
+  @@index([createdBy], map: "createdBy")
+  @@index([materialId], map: "materialId")
+  @@index([referenceDocId], map: "referenceDocId")
+}
+
+model Part {
+  id               String    @id @db.Char(36)
+  name             String?   @db.VarChar(255)
+  part             String?   @db.VarChar(255)
+  abbreviation     String?   @db.VarChar(255)
+  devision         String?   @db.VarChar(255)
+  shortDescription String?   @db.VarChar(255)
+  longDescription  String?   @db.Text
+  additionalInfo   String?   @db.VarChar(255)
+  date             DateTime? @db.Timestamp(0)
+  createdBy        String    @db.Char(36)
+  Employee         Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Part_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model Phantom {
+  id          String    @id @db.Char(36)
+  description String?   @db.VarChar(255)
+  date        DateTime? @db.Timestamp(0)
+  valid       Boolean?
+  createdBy   String    @db.Char(36)
+  Employee    Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Phantom_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model Product {
+  id                  String    @id @db.Char(36)
+  materialId          String?   @db.Char(36)
+  shortDescription    String?   @db.VarChar(255)
+  description         String?   @db.VarChar(255)
+  costPrice           Int?
+  profit              Int?
+  sellingUnitQuantity Int?
+  sellingPrice        Int?
+  status              String?   @db.VarChar(255)
+  updatedAt           DateTime? @db.Timestamp(0)
+  createdBy           String    @db.Char(36)
+  Material            Material? @relation(fields: [materialId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Product_ibfk_1")
+  Employee            Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Product_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([materialId], map: "materialId")
+}
+
 model Project {
-  id                      String                    @id @db.Char(36)
-  projectNumber           String                    @db.VarChar(100)
-  description             String?                   @db.Text
-  extraInfo               String?                   @db.Text
-  startDate               DateTime?                 @db.DateTime(0)
-  endDate                 DateTime?                 @db.DateTime(0)
-  closingDate             DateTime?                 @db.DateTime(0)
-  engineeringStartDate    DateTime?                 @db.DateTime(0)
-  createdAt               DateTime                  @db.DateTime(0)
-  isMainProject           Boolean                   @default(true)
-  isIntern                Boolean                   @default(false)
-  isOpen                  Boolean                   @default(true)
-  isClosed                Boolean                   @default(false)
-  createdBy               String                    @db.Char(36)
-  companyId               String                    @db.Char(36)
-  projectTypeId           String                    @db.Char(36)
-  parentProjectId         String?                   @db.Char(36)
-  targetId                String                    @db.Char(36)
-  InventoryOrderStructure InventoryOrderStructure[]
-  InventoryStructure      InventoryStructure[]
-  MaterialSerialTracked   MaterialSerialTracked[]
-  Employee                Employee                  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Project_ibfk_1")
-  Company                 Company                   @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "Project_ibfk_2")
-  ProjectType             ProjectType               @relation(fields: [projectTypeId], references: [id], onUpdate: Restrict, map: "Project_ibfk_3")
-  Project                 Project?                  @relation("ProjectToProject", fields: [parentProjectId], references: [id], onUpdate: Restrict, map: "Project_ibfk_4")
-  other_Project           Project[]                 @relation("ProjectToProject")
-  Target                  Target                    @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Project_ibfk_5")
-  ProjectContact          ProjectContact[]
-  WorkOrder               WorkOrder[]
+  id                   String                @id @db.Char(36)
+  projectNumber        String                @db.VarChar(100)
+  description          String?               @db.Text
+  extraInfo            String?               @db.Text
+  startDate            DateTime?             @db.DateTime(0)
+  endDate              DateTime?             @db.DateTime(0)
+  closingDate          DateTime?             @db.DateTime(0)
+  engineeringStartDate DateTime?             @db.DateTime(0)
+  createdAt            DateTime              @db.DateTime(0)
+  isMainProject        Boolean               @default(true)
+  isIntern             Boolean               @default(false)
+  isOpen               Boolean               @default(true)
+  isClosed             Boolean               @default(false)
+  createdBy            String                @db.Char(36)
+  companyId            String                @db.Char(36)
+  projectTypeId        String                @db.Char(36)
+  parentProjectId      String?               @db.Char(36)
+  targetId             String                @db.Char(36)
+  MaterialSerialTrack  MaterialSerialTrack[]
+  Employee             Employee              @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Project_ibfk_1")
+  Company              Company               @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "Project_ibfk_2")
+  ProjectType          ProjectType           @relation(fields: [projectTypeId], references: [id], onUpdate: Restrict, map: "Project_ibfk_3")
+  Project              Project?              @relation("ProjectToProject", fields: [parentProjectId], references: [id], onUpdate: Restrict, map: "Project_ibfk_4")
+  other_Project        Project[]             @relation("ProjectToProject")
+  Target               Target                @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Project_ibfk_5")
+  ProjectContact       ProjectContact[]
+  Purchase             Purchase[]
+  PurchaseDetail       PurchaseDetail[]
+  QuoteSupplier        QuoteSupplier[]
+  WorkOrder            WorkOrder[]
 
   @@index([companyId], map: "companyId")
   @@index([createdBy], map: "createdBy")
@@ -664,6 +1134,98 @@ model ProjectType {
   @@index([createdBy], map: "createdBy")
 }
 
+model Purchase {
+  id               String           @id @db.Char(36)
+  projectId        String?          @db.Char(36)
+  purchaseDate     DateTime?        @db.DateTime(0)
+  materialGroupId  String?          @db.Char(36)
+  orderNumber      String?          @db.VarChar(255)
+  companyId        String?          @db.Char(36)
+  brandName        String?          @db.VarChar(255)
+  brandOrderNumber String?          @db.VarChar(255)
+  status           String?          @db.VarChar(255)
+  shortDescription String?          @db.VarChar(255)
+  description      String?          @db.VarChar(255)
+  preferedSupplier String?          @db.VarChar(255)
+  additionalInfo   String?          @db.VarChar(255)
+  updatedAt        DateTime?        @db.DateTime(0)
+  createdBy        String           @db.Char(36)
+  Project          Project?         @relation(fields: [projectId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Purchase_ibfk_1")
+  MaterialGroup    MaterialGroup?   @relation(fields: [materialGroupId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Purchase_ibfk_2")
+  Company          Company?         @relation(fields: [companyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Purchase_ibfk_3")
+  Employee         Employee         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Purchase_ibfk_4")
+  PurchaseDetail   PurchaseDetail[]
+
+  @@index([companyId], map: "companyId")
+  @@index([createdBy], map: "createdBy")
+  @@index([materialGroupId], map: "materialGroupId")
+  @@index([projectId], map: "projectId")
+}
+
+model PurchaseDetail {
+  id             String    @id @db.Char(36)
+  projectId      String?   @db.Char(36)
+  purchaseId     String?   @db.Char(36)
+  beNumber       String?   @db.VarChar(255)
+  unitPrice      Int?
+  quantity       Int?
+  totalCost      Int?
+  status         String?   @db.VarChar(255)
+  additionalInfo String?   @db.VarChar(255)
+  updatedAt      DateTime? @db.DateTime(0)
+  createdBy      String    @db.Char(36)
+  Project        Project?  @relation(fields: [projectId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "PurchaseDetail_ibfk_1")
+  Purchase       Purchase? @relation(fields: [purchaseId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "PurchaseDetail_ibfk_2")
+  Employee       Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseDetail_ibfk_3")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([projectId], map: "projectId")
+  @@index([purchaseId], map: "purchaseId")
+}
+
+model PurchaseOrderBecra {
+  id          String    @id @db.Char(36)
+  description String?   @db.Text
+  date        DateTime? @db.DateTime(0)
+  createdBy   String    @db.Char(36)
+  Employee    Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseOrderBecra_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model QouteBecra {
+  id          String    @id @db.Char(36)
+  description String?   @db.Text
+  validDate   Boolean
+  date        DateTime? @db.DateTime(0)
+  createdBy   String    @db.Char(36)
+  Employee    Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "QouteBecra_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model QuoteSupplier {
+  id                String         @id @db.Char(36)
+  description       String?        @db.Text
+  projectId         String?        @db.Char(36)
+  rejected          Boolean
+  additionalInfo    String?        @db.VarChar(255)
+  link              String?        @db.VarChar(255)
+  documentPlaceId   String?        @db.Char(36)
+  payementCondition String?        @db.VarChar(255)
+  acceptedForPOB    Boolean?
+  validUntill       DateTime?      @db.DateTime(0)
+  deliveryTimeDays  Int?
+  createdBy         String         @db.Char(36)
+  Project           Project?       @relation(fields: [projectId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "QuoteSupplier_ibfk_1")
+  DocumentPlace     DocumentPlace? @relation(fields: [documentPlaceId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "QuoteSupplier_ibfk_2")
+  Employee          Employee       @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "QuoteSupplier_ibfk_3")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([documentPlaceId], map: "documentPlaceId")
+  @@index([projectId], map: "projectId")
+}
+
 model Role {
   id                                String              @id @db.Char(36)
   name                              String              @db.VarChar(100)
@@ -678,6 +1240,16 @@ model Role {
   @@index([createdBy], map: "fk_role_createdBy")
 }
 
+model Session {
+  id          String   @id @db.Char(36)
+  activeFrom  DateTime @default(now()) @db.DateTime(0)
+  activeUntil DateTime @db.DateTime(0)
+  employeeId  String   @db.Char(36)
+  Employee    Employee @relation(fields: [employeeId], references: [id], onUpdate: Restrict, map: "Session_ibfk_1")
+
+  @@index([employeeId], map: "employeeId")
+}
+
 model Status {
   id                String              @id @db.Char(36)
   name              String              @db.VarChar(100)
@@ -688,6 +1260,23 @@ model Status {
   Employee          Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Status_ibfk_1")
 
   @@index([createdBy], map: "createdBy")
+}
+
+model SupplierDeliveryNoteFollowUp {
+  id                     String               @id @db.Char(36)
+  deliveryNoteSupplierId String               @db.Char(36)
+  workOrderStructureId   String               @db.Char(36)
+  quantityDelivered      Int?
+  information            String?              @db.VarChar(255)
+  deliveryDate           DateTime?            @db.DateTime(0)
+  createdBy              String               @db.Char(36)
+  DeliveryNoteSupplier   DeliveryNoteSupplier @relation(fields: [deliveryNoteSupplierId], references: [id], onUpdate: Restrict, map: "SupplierDeliveryNoteFollowUp_ibfk_1")
+  WorkOrderStructure     WorkOrderStructure   @relation(fields: [workOrderStructureId], references: [id], onUpdate: Restrict, map: "SupplierDeliveryNoteFollowUp_ibfk_2")
+  Employee               Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "SupplierDeliveryNoteFollowUp_ibfk_3")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deliveryNoteSupplierId], map: "deliveryNoteSupplierId")
+  @@index([workOrderStructureId], map: "workOrderStructureId")
 }
 
 model Target {
@@ -725,6 +1314,18 @@ model TargetType {
   createdBy String   @db.Char(36)
   Target    Target[]
   Employee  Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "TargetType_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
+model TestProcedure {
+  id               String   @id @db.Char(36)
+  name             String?  @db.VarChar(255)
+  shortDescription String?  @db.VarChar(255)
+  longDescription  String?  @db.Text
+  createdAt        DateTime @db.DateTime(0)
+  createdBy        String   @db.Char(36)
+  Employee         Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "TestProcedure_ibfk_1")
 
   @@index([createdBy], map: "createdBy")
 }
@@ -779,21 +1380,20 @@ model Title {
 }
 
 model Training {
-  id                 String               @id @db.Char(36)
-  trainingNumber     String?              @db.VarChar(100)
-  trainingDate       DateTime             @db.DateTime(0)
-  createdAt          DateTime             @db.DateTime(0)
-  closed             Boolean              @default(true)
-  createdBy          String               @db.Char(36)
-  workOrderId        String               @db.Char(36)
-  trainingStandardId String               @db.Char(36)
-  targetId           String               @db.Char(36)
-  WorkOrder          WorkOrder            @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "Training_ibfk_1")
-  Employee           Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Training_ibfk_2")
-  TrainingStandard   TrainingStandard     @relation(fields: [trainingStandardId], references: [id], onUpdate: Restrict, map: "Training_ibfk_3")
-  Target             Target               @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Training_ibfk_4")
+  id                 String            @id @db.Char(36)
+  trainingNumber     String?           @db.VarChar(100)
+  trainingDate       DateTime          @db.DateTime(0)
+  createdAt          DateTime          @db.DateTime(0)
+  closed             Boolean           @default(true)
+  createdBy          String            @db.Char(36)
+  workOrderId        String            @db.Char(36)
+  trainingStandardId String            @db.Char(36)
+  targetId           String            @db.Char(36)
+  WorkOrder          WorkOrder         @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "Training_ibfk_1")
+  Employee           Employee          @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Training_ibfk_2")
+  TrainingStandard   TrainingStandard  @relation(fields: [trainingStandardId], references: [id], onUpdate: Restrict, map: "Training_ibfk_3")
+  Target             Target            @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Training_ibfk_4")
   TrainingContact    TrainingContact[]
-  WorkOrderStructure WorkOrderStructure[]
 
   @@index([createdBy], map: "createdBy")
   @@index([targetId], map: "targetId")
@@ -854,6 +1454,22 @@ model TrainingStandard {
   @@index([targetId], map: "targetId")
 }
 
+model Unit {
+  id               String     @id @db.Char(36)
+  name             String     @db.VarChar(255)
+  quantity         Int
+  abbreviation     String     @db.VarChar(255)
+  shortDescription String?    @db.VarChar(255)
+  longDescription  String?    @db.Text
+  valid            Boolean
+  createdBy        String     @db.Char(36)
+  createdAt        DateTime   @db.Timestamp(0)
+  Material         Material[]
+  Employee         Employee   @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Unit_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
 model UrgencyType {
   id                String              @id @db.Char(36)
   name              String              @db.VarChar(100)
@@ -878,6 +1494,22 @@ model VisibilityForRole {
   @@index([targetId], map: "targetId")
 }
 
+model WarehousePlace {
+  id          String   @id @db.Char(36)
+  place       String?  @db.VarChar(255)
+  shelf       String?  @db.VarChar(255)
+  column      String?  @db.VarChar(255)
+  layer       String?  @db.VarChar(255)
+  layerPlace  String?  @db.VarChar(255)
+  information String?  @db.VarChar(255)
+  volume      Int
+  createdAt   DateTime @db.DateTime(0)
+  createdBy   String   @db.Char(36)
+  Employee    Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_1")
+
+  @@index([createdBy], map: "createdBy")
+}
+
 model WorkOrder {
   id                  String               @id @db.Char(36)
   workOrderNumber     String?              @db.VarChar(100)
@@ -892,12 +1524,12 @@ model WorkOrder {
   createdBy           String               @db.Char(36)
   projectId           String               @db.Char(36)
   targetId            String               @db.Char(36)
-  InvoiceOut          InvoiceOut[]
   TimeRegistry        TimeRegistry[]
   Training            Training[]
   Employee            Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WorkOrder_ibfk_1")
   Project             Project              @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "WorkOrder_ibfk_2")
   Target              Target               @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "WorkOrder_ibfk_3")
+  WorkOrderInvoice    WorkOrderInvoice[]
   WorkOrderStructure  WorkOrderStructure[]
 
   @@index([createdBy], map: "createdBy")
@@ -905,812 +1537,38 @@ model WorkOrder {
   @@index([targetId], map: "targetId")
 }
 
+model WorkOrderInvoice {
+  id           String     @id @db.Char(36)
+  invoiceOutId String     @db.Char(36)
+  workOrderId  String     @db.Char(36)
+  InvoiceOut   InvoiceOut @relation(fields: [invoiceOutId], references: [id], onUpdate: Restrict, map: "WorkOrderInvoice_ibfk_1")
+  WorkOrder    WorkOrder  @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "WorkOrderInvoice_ibfk_2")
+
+  @@index([invoiceOutId], map: "invoiceOutId")
+  @@index([workOrderId], map: "workOrderId")
+}
+
 model WorkOrderStructure {
-  id              String    @id @db.Char(36)
-  clientNumber    String?   @db.VarChar(100)
-  tag             String?   @db.VarChar(100)
-  quantity        Int?
-  aditionalInfo   String?   @db.Text
-  shortDesciption String?   @db.VarChar(100)
-  longDescription String?   @db.Text
-  createdAt       DateTime  @db.DateTime(0)
-  createdBy       String    @db.Char(36)
-  workOrderId     String    @db.Char(36)
-  materialId      String    @db.Char(36)
-  targetId        String    @db.Char(36)
-  WorkOrder       WorkOrder @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_1")
-  Employee        Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_2")
-  Training        Training  @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_3")
-  Target          Target    @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_4")
+  id                           String                         @id @db.Char(36)
+  clientNumber                 String?                        @db.VarChar(100)
+  tag                          String?                        @db.VarChar(100)
+  quantity                     Int?
+  aditionalInfo                String?                        @db.Text
+  shortDesciption              String?                        @db.VarChar(100)
+  longDescription              String?                        @db.Text
+  createdAt                    DateTime                       @db.DateTime(0)
+  createdBy                    String                         @db.Char(36)
+  workOrderId                  String                         @db.Char(36)
+  materialId                   String                         @db.Char(36)
+  targetId                     String                         @db.Char(36)
+  SupplierDeliveryNoteFollowUp SupplierDeliveryNoteFollowUp[]
+  WorkOrder                    WorkOrder                      @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_1")
+  Employee                     Employee                       @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_2")
+  Material                     Material                       @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_3")
+  Target                       Target                         @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "WorkOrderStructure_ibfk_4")
 
   @@index([createdBy], map: "createdBy")
   @@index([materialId], map: "materialId")
   @@index([targetId], map: "targetId")
   @@index([workOrderId], map: "workOrderId")
-}
-
-model Session {
-  id          String   @id @db.Char(36)
-  activeFrom  DateTime @default(now()) @db.DateTime(0)
-  activeUntil DateTime @db.DateTime(0)
-  employeeId  String   @db.Char(36)
-  Employee    Employee @relation(fields: [employeeId], references: [id], onUpdate: Restrict, map: "Session_ibfk_1")
-
-  @@index([employeeId], map: "employeeId")
-}
-
-model Accounting {
-  id                String           @id @db.Char(36)
-  transactionTypeId String?          @db.Char(36)
-  beNumber          String           @db.VarChar(255)
-  costPrice         Decimal          @db.Decimal(10, 2)
-  sellingPrice      Decimal          @db.Decimal(10, 2)
-  shortDescription  String           @db.VarChar(255)
-  longDescription   String           @db.VarChar(255)
-  createdBy         String           @db.Char(36)
-  createdAt         DateTime         @db.DateTime(0)
-  TransactionType   TransactionType? @relation(fields: [transactionTypeId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Accounting_ibfk_1")
-  Employee          Employee         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Accounting_ibfk_2")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([transactionTypeId], map: "transactionTypeId")
-}
-
-model DeliveryNote {
-  id                    String             @id @db.Char(36)
-  companyId             String?            @db.Char(36)
-  referenceDocId        String?            @db.Char(36)
-  additionalInformation String             @db.VarChar(255)
-  beNumber              String             @db.VarChar(255)
-  createdAt             DateTime?          @db.DateTime(0)
-  createdBy             String             @db.Char(36)
-  Company               Company?           @relation(fields: [companyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "DeliveryNote_ibfk_1")
-  DocumentStructure     DocumentStructure? @relation(fields: [referenceDocId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "DeliveryNote_ibfk_2")
-  Employee              Employee           @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "DeliveryNote_ibfk_3")
-
-  @@index([companyId], map: "companyId")
-  @@index([createdBy], map: "createdBy")
-  @@index([referenceDocId], map: "referenceDocId")
-}
-
-model DocumentGroup {
-  id     String @id @db.Char(36)
-  groupA String @db.VarChar(255)
-  groupB String @db.VarChar(255)
-  groupC String @db.VarChar(255)
-  groupD String @db.VarChar(255)
-}
-
-model DocumentPlace {
-  id                             String                           @id @db.Char(36)
-  placeA                         String                           @db.VarChar(255)
-  placeB                         String                           @db.VarChar(255)
-  placeC                         String                           @db.VarChar(255)
-  placeD                         String                           @db.VarChar(255)
-  MaterialSerialTrackedStructure MaterialSerialTrackedStructure[]
-}
-
-model Inventory {
-  id               String            @id @db.Char(36)
-  place            String            @db.VarChar(255)
-  beNumber         Int
-  longDescription  String            @db.VarChar(255)
-  shortDescription String            @db.VarChar(255)
-  serialNumber     String            @db.VarChar(255)
-  quantityInStock  Int
-  minimumStock     Int
-  maximumStock     Int
-  information      String            @db.VarChar(255)
-  valid            Boolean
-  createdAt        DateTime          @db.DateTime(0)
-  createdBy        String            @db.Char(36)
-  Employee         Employee          @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Inventory_ibfk_1")
-  InventoryChange  InventoryChange[]
-  InventoryOrder   InventoryOrder[]
-  InventoryPlace   InventoryPlace[]
-
-  @@index([createdBy], map: "createdBy")
-}
-
-model InventoryChange {
-  id                    String    @id @db.Char(36)
-  inventoryId           String    @db.Char(36)
-  shortDescription      String    @db.VarChar(255)
-  longDescription       String    @db.VarChar(255)
-  additionalInformation String    @db.VarChar(255)
-  transactionDate       DateTime  @db.DateTime(0)
-  fromLocation          String    @db.VarChar(255)
-  toLocation            String    @db.VarChar(255)
-  inventoryQuantityOld  Int
-  transactionType       String    @db.VarChar(255)
-  quantityInStock       Int
-  createdBy             String    @db.Char(36)
-  createdAt             DateTime  @db.DateTime(0)
-  Inventory             Inventory @relation(fields: [inventoryId], references: [id], onUpdate: Restrict, map: "InventoryChange_ibfk_1")
-  Employee              Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryChange_ibfk_2")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([inventoryId], map: "inventoryId")
-}
-
-model InventoryOrder {
-  id                      String                    @id @db.Char(36)
-  storePlace              String                    @db.VarChar(255)
-  companyId               String                    @db.Char(36)
-  inventoryId             String?                   @db.Char(36)
-  shortDescription        String                    @db.VarChar(255)
-  longDescription         String                    @db.VarChar(255)
-  additionalInformation   String                    @db.VarChar(255)
-  valid                   Boolean
-  createdBy               String                    @db.Char(36)
-  createdAt               DateTime                  @db.DateTime(0)
-  Inventory               Inventory?                @relation(fields: [inventoryId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InventoryOrder_ibfk_1")
-  Company                 Company                   @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_2")
-  Employee                Employee                  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryOrder_ibfk_3")
-  InventoryOrderStructure InventoryOrderStructure[]
-
-  @@index([companyId], map: "companyId")
-  @@index([createdBy], map: "createdBy")
-  @@index([inventoryId], map: "inventoryId")
-}
-
-model InventoryOrderStructure {
-  id                    String              @id @db.Char(36)
-  inventoryStructureId  String?             @db.Char(36)
-  inventoryOrderId      String?             @db.Char(36)
-  beNumber              String              @db.VarChar(255)
-  beNumberParentPart    String              @db.VarChar(255)
-  serialCode            String              @db.VarChar(255)
-  inventoryPlaceId      String?             @db.Char(36)
-  projectId             String?             @db.Char(36)
-  quoteSupplier         String              @db.VarChar(255)
-  partSupplierNumber    String              @db.VarChar(255)
-  partDescription       String              @db.VarChar(255)
-  quantityRequired      Decimal             @db.Decimal(10, 2)
-  quantityReserved      Decimal             @db.Decimal(10, 2)
-  quantityIssued        Decimal             @db.Decimal(10, 2)
-  unitId                String?             @db.Char(36)
-  unitPieces            Decimal             @db.Decimal(10, 2)
-  unitPrice             Decimal             @db.Decimal(10, 2)
-  docId                 String?             @db.Char(36)
-  pobId                 String?             @db.Char(36)
-  active                Boolean
-  forInventory          Boolean
-  forProject            Boolean
-  priceTotal            Decimal             @db.Decimal(10, 2)
-  additionalInformation String              @db.VarChar(255)
-  createdBy             String              @db.Char(36)
-  createdAt             DateTime            @db.DateTime(0)
-  InventoryStructure    InventoryStructure? @relation(fields: [inventoryStructureId], references: [id], onUpdate: Restrict, map: "InventoryOrderStructure_ibfk_1")
-  InventoryOrder        InventoryOrder?     @relation(fields: [inventoryOrderId], references: [id], onUpdate: Restrict, map: "InventoryOrderStructure_ibfk_2")
-  InventoryPlace        InventoryPlace?     @relation(fields: [inventoryPlaceId], references: [id], onUpdate: Restrict, map: "InventoryOrderStructure_ibfk_3")
-  Unit                  Unit?               @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "InventoryOrderStructure_ibfk_4")
-  DocumentStructure     DocumentStructure?  @relation(fields: [docId], references: [id], onUpdate: Restrict, map: "InventoryOrderStructure_ibfk_5")
-  PurchaseOrderBecra    PurchaseOrderBecra? @relation(fields: [pobId], references: [id], onUpdate: Restrict, map: "InventoryOrderStructure_ibfk_6")
-  Project               Project?            @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "InventoryOrderStructure_ibfk_7")
-  Employee              Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryOrderStructure_ibfk_8")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([docId], map: "docId")
-  @@index([inventoryOrderId], map: "inventoryOrderId")
-  @@index([inventoryPlaceId], map: "inventoryPlaceId")
-  @@index([inventoryStructureId], map: "inventoryStructureId")
-  @@index([pobId], map: "pobId")
-  @@index([projectId], map: "projectId")
-  @@index([unitId], map: "unitId")
-}
-
-model InventoryPlace {
-  id                      String                    @id @db.Char(36)
-  abbreviation            String                    @db.VarChar(255)
-  shortDescription        String                    @db.VarChar(255)
-  longDescription         String                    @db.VarChar(255)
-  additionalInformation   String                    @db.VarChar(255)
-  quantityInStock         Int
-  coordinates             Boolean
-  coordinatesX            Decimal                   @db.Decimal(10, 2)
-  coordinatesY            Decimal                   @db.Decimal(10, 2)
-  coordinatesZ            Decimal                   @db.Decimal(10, 2)
-  placeName               String                    @db.VarChar(255)
-  placeNameA              String                    @db.VarChar(255)
-  placeNameB              String                    @db.VarChar(255)
-  placeNameC              String                    @db.VarChar(255)
-  serialTrackedId         String                    @db.Char(36)
-  inventoryId             String                    @db.Char(36)
-  warehousePlaceId        String                    @db.Char(36)
-  createdBy               String                    @db.Char(36)
-  createdAt               DateTime                  @db.DateTime(0)
-  InventoryOrderStructure InventoryOrderStructure[]
-  Inventory               Inventory                 @relation(fields: [inventoryId], references: [id], onUpdate: Restrict, map: "InventoryPlace_ibfk_1")
-  WarehousePlace          WarehousePlace            @relation(fields: [warehousePlaceId], references: [id], onUpdate: Restrict, map: "InventoryPlace_ibfk_2")
-  SerialTracked           SerialTracked             @relation(fields: [serialTrackedId], references: [id], onUpdate: Restrict, map: "InventoryPlace_ibfk_3")
-  Employee                Employee                  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryPlace_ibfk_4")
-  InventoryStructure      InventoryStructure[]
-
-  @@index([createdBy], map: "createdBy")
-  @@index([inventoryId], map: "inventoryId")
-  @@index([serialTrackedId], map: "serialTrackedId")
-  @@index([warehousePlaceId], map: "warehousePlaceId")
-}
-
-model InventoryStructure {
-  id                      String                    @id @db.Char(36)
-  place                   String                    @db.VarChar(255)
-  shortDescription        String                    @db.VarChar(255)
-  longDescription         String                    @db.VarChar(255)
-  beNumber                String                    @db.VarChar(255)
-  purchaseOrderBecra      Int?
-  partSupplierNumber      String                    @db.VarChar(255)
-  partDescription         String                    @db.VarChar(255)
-  coordinates             Boolean
-  coordinatesX            Decimal                   @db.Decimal(10, 2)
-  coordinatesY            Decimal                   @db.Decimal(10, 2)
-  coordinatesZ            Decimal                   @db.Decimal(10, 2)
-  inventoryPlaceId        String                    @db.Char(36)
-  materialId              String                    @db.Char(36)
-  forProject              Boolean
-  projectId               String                    @db.Char(36)
-  forInventory            Boolean
-  materialActive          Boolean
-  warehousePlaceId        String                    @db.Char(36)
-  active                  Boolean
-  additionalInformation   String                    @db.VarChar(255)
-  minimumStock            Int
-  maximumStock            Int
-  quantityInStock         Int
-  quantity                Decimal                   @db.Decimal(10, 2)
-  unitPrice               Decimal                   @db.Decimal(10, 2)
-  unitId                  String                    @db.Char(36)
-  valid                   Boolean
-  createdBy               String                    @db.Char(36)
-  createdAt               DateTime                  @db.DateTime(0)
-  InventoryOrderStructure InventoryOrderStructure[]
-  InventoryPlace          InventoryPlace            @relation(fields: [inventoryPlaceId], references: [id], onUpdate: Restrict, map: "InventoryStructure_ibfk_1")
-  Material                Material                  @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "InventoryStructure_ibfk_2")
-  Unit                    Unit                      @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "InventoryStructure_ibfk_3")
-  WarehousePlace          WarehousePlace            @relation(fields: [warehousePlaceId], references: [id], onUpdate: Restrict, map: "InventoryStructure_ibfk_4")
-  Project                 Project                   @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "InventoryStructure_ibfk_5")
-  Employee                Employee                  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InventoryStructure_ibfk_6")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([inventoryPlaceId], map: "inventoryPlaceId")
-  @@index([materialId], map: "materialId")
-  @@index([projectId], map: "projectId")
-  @@index([unitId], map: "unitId")
-  @@index([warehousePlaceId], map: "warehousePlaceId")
-}
-
-model InvestingCode {
-  id               String    @id @db.Char(36)
-  code             String    @db.VarChar(255)
-  shortDescription String    @db.VarChar(255)
-  longDescription  String    @db.VarChar(255)
-  date             DateTime  @db.Date
-  valid            Boolean
-  createdBy        String    @db.Char(36)
-  createdAt        DateTime? @db.DateTime(0)
-  Employee         Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvestingCode_ibfk_1")
-
-  @@index([createdBy], map: "createdBy")
-}
-
-model Material {
-  id                    String                  @id @db.Char(36)
-  name                  String                  @db.VarChar(255)
-  brandOrder_number     String                  @db.VarChar(255)
-  shortDescription      String                  @db.VarChar(255)
-  longDescription       String                  @db.VarChar(255)
-  preferedSupplier      String                  @db.VarChar(255)
-  supplierInformation   String                  @db.VarChar(255)
-  brandName             String                  @db.VarChar(255)
-  documentationPlace    String                  @db.VarChar(255)
-  bePartDoc             String                  @db.VarChar(255)
-  reject                Boolean
-  unitId                String                  @db.Char(36)
-  createdBy             String                  @db.Char(36)
-  createdAt             DateTime                @db.DateTime(0)
-  InventoryStructure    InventoryStructure[]
-  Unit                  Unit                    @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "Material_ibfk_1")
-  Employee              Employee                @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_2")
-  MaterialAssembly      MaterialAssembly[]
-  MaterialCode          MaterialCode[]
-  MaterialDimension     MaterialDimension[]
-  MaterialOther         MaterialOther[]
-  MaterialSerialTracked MaterialSerialTracked[]
-  SerialTracked         SerialTracked[]
-
-  @@index([createdBy], map: "createdBy")
-  @@index([unitId], map: "unitId")
-}
-
-model MaterialAssembly {
-  id         String    @id @db.Char(36)
-  materialId String?   @db.Char(36)
-  createdBy  String    @db.Char(36)
-  createdAt  DateTime  @db.DateTime(0)
-  Material   Material? @relation(fields: [materialId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialAssembly_ibfk_1")
-  Employee   Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialAssembly_ibfk_2")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([materialId], map: "materialId")
-}
-
-model MaterialCode {
-  id               String    @id @db.Char(36)
-  materialId       String?   @db.Char(36)
-  code             String    @db.VarChar(255)
-  shortDescription String    @db.VarChar(255)
-  longDescription  String    @db.VarChar(255)
-  createdBy        String    @db.Char(36)
-  createdAt        DateTime  @db.DateTime(0)
-  Material         Material? @relation(fields: [materialId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialCode_ibfk_1")
-  Employee         Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialCode_ibfk_2")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([materialId], map: "materialId")
-}
-
-model MaterialDimension {
-  id                    String                  @id @db.Char(36)
-  materialId            String                  @db.Char(36)
-  shortDescription      String                  @db.VarChar(255)
-  longDescription       String                  @db.VarChar(255)
-  createdBy             String                  @db.Char(36)
-  createdAt             DateTime                @db.DateTime(0)
-  Material              Material                @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "MaterialDimension_ibfk_1")
-  Employee              Employee                @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialDimension_ibfk_2")
-  MaterialSpecification MaterialSpecification[]
-
-  @@index([createdBy], map: "createdBy")
-  @@index([materialId], map: "materialId")
-}
-
-model MaterialFamily {
-  id                             String                           @id @db.Char(36)
-  name                           String                           @db.VarChar(255)
-  shortDescription               String                           @db.VarChar(255)
-  longDescription                String                           @db.VarChar(255)
-  createdBy                      String                           @db.Char(36)
-  createdAt                      DateTime                         @db.DateTime(0)
-  Employee                       Employee                         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialFamily_ibfk_1")
-  MaterialPerformance            MaterialPerformance[]
-  MaterialSerialTrackedStructure MaterialSerialTrackedStructure[]
-  MaterialSpecification          MaterialSpecification[]
-
-  @@index([createdBy], map: "createdBy")
-}
-
-model MaterialGroup {
-  id                    String                  @id @db.Char(36)
-  groupA                String                  @db.VarChar(255)
-  groupB                String?                 @db.VarChar(255)
-  groupC                String?                 @db.VarChar(255)
-  groupD                String?                 @db.VarChar(255)
-  createdBy             String                  @db.Char(36)
-  createdAt             DateTime                @db.DateTime(0)
-  Employee              Employee                @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialGroup_ibfk_1")
-  MaterialSerialTracked MaterialSerialTracked[]
-  WarehouseManagement   WarehouseManagement[]
-
-  @@index([createdBy], map: "createdBy")
-}
-
-model MaterialMovement {
-  id                    String           @id @db.Char(36)
-  beNumber              String           @db.VarChar(255)
-  shortDescription      String           @db.VarChar(255)
-  longDescription       String           @db.VarChar(255)
-  serieId               String           @db.VarChar(255)
-  transactionTypeId     String?          @db.Char(36)
-  fromLocation          String           @db.VarChar(255)
-  toLocation            String           @db.VarChar(255)
-  updatedAt             DateTime?        @default(now()) @db.DateTime(0)
-  additionalInformation String           @db.VarChar(255)
-  brandName             String           @db.VarChar(255)
-  rejected              Boolean
-  brandNameNumber       String           @db.VarChar(255)
-  createdAt             DateTime         @db.DateTime(0)
-  createdBy             String           @db.Char(36)
-  TransactionType       TransactionType? @relation(fields: [transactionTypeId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialMovement_ibfk_1")
-  Employee              Employee         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialMovement_ibfk_2")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([transactionTypeId], map: "transactionTypeId")
-}
-
-model MaterialOther {
-  id               String    @id @db.Char(36)
-  materialId       String?   @db.Char(36)
-  shortDescription String    @db.VarChar(255)
-  longDescription  String    @db.VarChar(255)
-  createdBy        String    @db.Char(36)
-  createdAt        DateTime  @db.DateTime(0)
-  Material         Material? @relation(fields: [materialId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialOther_ibfk_1")
-  Employee         Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialOther_ibfk_2")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([materialId], map: "materialId")
-}
-
-model MaterialPerformance {
-  id                      String                @id @db.Char(36)
-  materialSpecificationId String                @db.Char(36)
-  materialFamilyId        String                @db.Char(36)
-  shortDescription        String                @db.VarChar(255)
-  longDescription         String                @db.VarChar(255)
-  createdBy               String                @db.Char(36)
-  createdAt               DateTime              @db.DateTime(0)
-  MaterialFamily          MaterialFamily        @relation(fields: [materialFamilyId], references: [id], onUpdate: Restrict, map: "MaterialPerformance_ibfk_1")
-  MaterialSpecification   MaterialSpecification @relation(fields: [materialSpecificationId], references: [id], onUpdate: Restrict, map: "MaterialPerformance_ibfk_2")
-  Employee                Employee              @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialPerformance_ibfk_3")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([materialFamilyId], map: "materialFamilyId")
-  @@index([materialSpecificationId], map: "materialSpecificationId")
-}
-
-model MaterialPrice {
-  id                    String   @id @db.Char(36)
-  orderNumber           String   @db.VarChar(255)
-  beNumber              String   @db.VarChar(255)
-  quoteId               String   @db.VarChar(255)
-  supplierOrderNumber   String   @db.VarChar(255)
-  brandOrderNumber      String   @db.VarChar(255)
-  shortDescription      String   @db.VarChar(255)
-  longDescription       String   @db.VarChar(255)
-  additionalInformation String   @db.VarChar(255)
-  brandName             String   @db.VarChar(255)
-  rejected              Boolean
-  unitPrice             Decimal  @db.Decimal(10, 2)
-  quantityPrice         Decimal  @db.Decimal(10, 2)
-  createdBy             String   @db.Char(36)
-  createdAt             DateTime @db.DateTime(0)
-  Employee              Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_1")
-
-  @@index([createdBy], map: "createdBy")
-}
-
-model MaterialSerialTracked {
-  id                             String                           @id @db.Char(36)
-  beNumber                       String                           @db.VarChar(255)
-  brandName                      String                           @db.VarChar(255)
-  manager                        String                           @db.VarChar(255)
-  shortDescription               String                           @db.VarChar(255)
-  longDescription                String                           @db.VarChar(255)
-  brandOrderNumber               String                           @db.VarChar(255)
-  companyId                      String                           @db.Char(36)
-  transactionTypeId              String                           @db.Char(36)
-  fromLocation                   String                           @db.VarChar(255)
-  toLocation                     String                           @db.VarChar(255)
-  additionalInformation          String                           @db.VarChar(255)
-  preferedSupplier               String                           @db.VarChar(255)
-  rejected                       Boolean
-  updatedAt                      DateTime?                        @default(now()) @db.DateTime(0)
-  projectId                      String?                          @db.Char(36)
-  becraCode                      String                           @db.VarChar(255)
-  materialGroupId                String?                          @db.Char(36)
-  materialId                     String?                          @db.Char(36)
-  createdBy                      String                           @db.Char(36)
-  createdAt                      DateTime                         @db.DateTime(0)
-  MaterialGroup                  MaterialGroup?                   @relation(fields: [materialGroupId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTracked_ibfk_1")
-  Material                       Material?                        @relation(fields: [materialId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTracked_ibfk_2")
-  Company                        Company                          @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "MaterialSerialTracked_ibfk_3")
-  Project                        Project?                         @relation(fields: [projectId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTracked_ibfk_4")
-  Employee                       Employee                         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialSerialTracked_ibfk_5")
-  MaterialSerialTrackedStructure MaterialSerialTrackedStructure[]
-
-  @@index([companyId], map: "companyId")
-  @@index([createdBy], map: "createdBy")
-  @@index([materialGroupId], map: "materialGroupId")
-  @@index([materialId], map: "materialId")
-  @@index([projectId], map: "projectId")
-}
-
-model MaterialSerialTrackedStructure {
-  id                      String                 @id @db.Char(36)
-  materialSerialTrackedId String?                @db.Char(36)
-  becraCode               String                 @db.VarChar(255)
-  certificateId           String?                @db.Char(36)
-  materialSpecificationId String?                @db.Char(36)
-  shortDescription        String                 @db.VarChar(255)
-  longDescription         String                 @db.VarChar(255)
-  manager                 String                 @db.VarChar(255)
-  date                    DateTime?              @default(now()) @db.DateTime(0)
-  expiredDate             DateTime               @db.DateTime(0)
-  docRevision             String                 @db.VarChar(255)
-  documentPlaceId         String?                @db.Char(36)
-  valid                   Boolean
-  referenceDocId          String?                @db.Char(36)
-  additionalInformation   String                 @db.VarChar(255)
-  beNumber                String                 @db.VarChar(255)
-  serialCode              String                 @db.VarChar(255)
-  tag                     String                 @db.VarChar(255)
-  brandName               String                 @db.VarChar(255)
-  brandOrderNumber        String                 @db.VarChar(255)
-  materialFamilyId        String?                @db.Char(36)
-  documentId              String?                @db.Char(36)
-  unitId                  String?                @db.Char(36)
-  unitPieces              Int
-  rejected                Boolean
-  createdAt               DateTime               @db.DateTime(0)
-  createdBy               String                 @db.Char(36)
-  MaterialSerialTracked   MaterialSerialTracked? @relation(fields: [materialSerialTrackedId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_1")
-  MaterialSpecification   MaterialSpecification? @relation(fields: [materialSpecificationId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_2")
-  MaterialFamily          MaterialFamily?        @relation(fields: [materialFamilyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_3")
-  Unit                    Unit?                  @relation(fields: [unitId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_4")
-  DocumentPlace           DocumentPlace?         @relation(fields: [documentPlaceId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_5")
-  DocumentStructure       DocumentStructure?     @relation(fields: [documentId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_6")
-  Employee                Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialSerialTrackedStructure_ibfk_7")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([documentId], map: "documentId")
-  @@index([documentPlaceId], map: "documentPlaceId")
-  @@index([materialFamilyId], map: "materialFamilyId")
-  @@index([materialSerialTrackedId], map: "materialSerialTrackedId")
-  @@index([materialSpecificationId], map: "materialSpecificationId")
-  @@index([unitId], map: "unitId")
-}
-
-model MaterialSpecification {
-  id                             String                           @id @db.Char(36)
-  name                           String                           @db.VarChar(255)
-  materialDimensionId            String                           @db.Char(36)
-  materialFamilyId               String                           @db.Char(36)
-  shortDescription               String                           @db.VarChar(255)
-  longDescription                String                           @db.VarChar(255)
-  createdBy                      String                           @db.Char(36)
-  createdAt                      DateTime                         @db.DateTime(0)
-  MaterialPerformance            MaterialPerformance[]
-  MaterialSerialTrackedStructure MaterialSerialTrackedStructure[]
-  MaterialDimension              MaterialDimension                @relation(fields: [materialDimensionId], references: [id], onUpdate: Restrict, map: "MaterialSpecification_ibfk_1")
-  MaterialFamily                 MaterialFamily                   @relation(fields: [materialFamilyId], references: [id], onUpdate: Restrict, map: "MaterialSpecification_ibfk_2")
-  Employee                       Employee                         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialSpecification_ibfk_3")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([materialDimensionId], map: "materialDimensionId")
-  @@index([materialFamilyId], map: "materialFamilyId")
-}
-
-model MaterialStructure {
-  id                    String            @id @db.Char(36)
-  shortDescription      String            @db.VarChar(255)
-  longDescription       String            @db.VarChar(255)
-  beNumber              String            @db.VarChar(255)
-  expiredDate           DateTime          @db.DateTime(0)
-  docRevision           String            @db.VarChar(255)
-  additionalInformation String            @db.VarChar(255)
-  valid                 Boolean
-  management            String            @db.VarChar(255)
-  referenceDocId        String            @db.Char(36)
-  createdBy             String            @db.Char(36)
-  createdAt             DateTime          @db.DateTime(0)
-  DocumentStructure     DocumentStructure @relation(fields: [referenceDocId], references: [id], onUpdate: Restrict, map: "MaterialStructure_ibfk_1")
-  Employee              Employee          @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialStructure_ibfk_2")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([referenceDocId], map: "referenceDocId")
-}
-
-model Part {
-  id               String   @id @db.Char(36)
-  name             String   @db.VarChar(255)
-  abbreviation     String   @db.VarChar(255)
-  devision         String   @db.VarChar(255)
-  shortDescription String   @db.VarChar(255)
-  longDescription  String   @db.VarChar(255)
-  beNumber         String?  @db.VarChar(255)
-  brandName        String   @db.VarChar(255)
-  reject           Boolean
-  createdBy        String   @db.Char(36)
-  createdAt        DateTime @db.DateTime(0)
-  Employee         Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Part_ibfk_1")
-
-  @@index([createdBy], map: "createdBy")
-}
-
-model Phantom {
-  id          String   @id @db.Char(36)
-  description String   @db.VarChar(255)
-  date        DateTime @db.Date
-  valid       Boolean
-  createdBy   String   @db.Char(36)
-  createdAt   DateTime @db.DateTime(0)
-  Employee    Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Phantom_ibfk_1")
-
-  @@index([createdBy], map: "createdBy")
-}
-
-model Product {
-  id                  String            @id @db.Char(36)
-  shortDescription    String            @db.VarChar(255)
-  longDescription     String            @db.VarChar(255)
-  costPrice           Decimal           @db.Decimal(10, 2)
-  profit              Decimal           @db.Decimal(10, 2)
-  sellingUnitQuantity Int
-  sellingPrice        Decimal           @db.Decimal(10, 2)
-  status              String            @db.VarChar(255)
-  createdBy           String            @db.Char(36)
-  createdAt           DateTime          @db.DateTime(0)
-  Employee            Employee          @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Product_ibfk_1")
-  PurchaseDetail      PurchaseDetail[]
-  SaleOrderDetail     SaleOrderDetail[]
-
-  @@index([createdBy], map: "createdBy")
-}
-
-model Purchase {
-  id             String           @id @db.Char(36)
-  PurchaseDetail PurchaseDetail[]
-}
-
-model PurchaseDetail {
-  id                    String                 @id @db.Char(36)
-  purchaseId            String?                @db.Char(36)
-  productId             String?                @db.Char(36)
-  quantity              Int
-  beNumber              String                 @db.VarChar(255)
-  price                 Decimal                @db.Decimal(10, 2)
-  totalCost             Decimal                @db.Decimal(10, 2)
-  status                String                 @db.VarChar(255)
-  additionalInformation String                 @db.VarChar(255)
-  createdBy             String                 @db.Char(36)
-  createdAt             DateTime               @db.DateTime(0)
-  Purchase              Purchase?              @relation(fields: [purchaseId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "PurchaseDetail_ibfk_1")
-  Product               Product?               @relation(fields: [productId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "PurchaseDetail_ibfk_2")
-  Employee              Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseDetail_ibfk_3")
-  PurchasePriceRequest  PurchasePriceRequest[]
-
-  @@index([createdBy], map: "createdBy")
-  @@index([productId], map: "productId")
-  @@index([purchaseId], map: "purchaseId")
-}
-
-model PurchaseOrderBecra {
-  id                      String                    @id @db.Char(36)
-  InventoryOrderStructure InventoryOrderStructure[]
-}
-
-model PurchasePriceRequest {
-  id                String          @id @db.Char(36)
-  orderNumber       String          @db.VarChar(255)
-  brandOrderNumber  String          @db.VarChar(255)
-  shortDescription  String          @db.VarChar(255)
-  longDescription   String?         @db.Text
-  brandName         String          @db.VarChar(255)
-  startDate         DateTime        @db.Date
-  endDate           DateTime        @db.Date
-  addMaterialActive Boolean
-  ready             Boolean
-  active            Boolean
-  purchaseDetailId  String?         @db.Char(36)
-  preferredSupplier String          @db.VarChar(255)
-  createdBy         String          @db.Char(36)
-  createdAt         DateTime        @db.DateTime(0)
-  PurchaseDetail    PurchaseDetail? @relation(fields: [purchaseDetailId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "PurchasePriceRequest_ibfk_1")
-  Employee          Employee        @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchasePriceRequest_ibfk_2")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([purchaseDetailId], map: "purchaseDetailId")
-}
-
-model Sale {
-  id                  String            @id @db.Char(36)
-  statusPaymentMethod String            @db.VarChar(255)
-  customerName        String            @db.VarChar(255)
-  createdBy           String            @db.Char(36)
-  createdAt           DateTime          @db.DateTime(0)
-  Employee            Employee          @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Sale_ibfk_1")
-  SaleOrderDetail     SaleOrderDetail[]
-
-  @@index([createdBy], map: "createdBy")
-}
-
-model SaleOrderDetail {
-  id        String   @id @db.Char(36)
-  saleId    String?  @db.Char(36)
-  productId String?  @db.Char(36)
-  quantity  Int
-  price     Decimal  @db.Decimal(10, 2)
-  createdBy String   @db.Char(36)
-  createdAt DateTime @db.DateTime(0)
-  Sale      Sale?    @relation(fields: [saleId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "SaleOrderDetail_ibfk_1")
-  Product   Product? @relation(fields: [productId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "SaleOrderDetail_ibfk_2")
-  Employee  Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "SaleOrderDetail_ibfk_3")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([productId], map: "productId")
-  @@index([saleId], map: "saleId")
-}
-
-model SerialTracked {
-  id             String           @id @db.Char(36)
-  serialNumber   String           @db.VarChar(255)
-  material_id    String           @db.Char(36)
-  createdBy      String           @db.Char(36)
-  createdAt      DateTime         @db.DateTime(0)
-  InventoryPlace InventoryPlace[]
-  Material       Material         @relation(fields: [material_id], references: [id], onUpdate: Restrict, map: "SerialTracked_ibfk_1")
-  Employee       Employee         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "SerialTracked_ibfk_2")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([material_id], map: "material_id")
-}
-
-model TestProcedure {
-  id               String   @id @db.Char(36)
-  name             String   @db.VarChar(255)
-  shortDescription String   @db.VarChar(255)
-  longDescription  String   @db.VarChar(255)
-  createdBy        String   @db.Char(36)
-  createdAt        DateTime @db.DateTime(0)
-  Employee         Employee @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "TestProcedure_ibfk_1")
-
-  @@index([createdBy], map: "createdBy")
-}
-
-model TransactionType {
-  id               String             @id @db.Char(36)
-  Accounting       Accounting[]
-  MaterialMovement MaterialMovement[]
-}
-
-model Unit {
-  id                             String                           @id @db.Char(36)
-  name                           String                           @db.VarChar(255)
-  quantity                       Decimal                          @db.Decimal(10, 2)
-  abbreviation                   String                           @db.VarChar(50)
-  shortDescription               String                           @db.VarChar(255)
-  longDescription                String                           @db.VarChar(255)
-  valid                          Boolean
-  createdBy                      String                           @db.Char(36)
-  createdAt                      DateTime                         @db.DateTime(0)
-  InventoryOrderStructure        InventoryOrderStructure[]
-  InventoryStructure             InventoryStructure[]
-  Material                       Material[]
-  MaterialSerialTrackedStructure MaterialSerialTrackedStructure[]
-  Employee                       Employee                         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Unit_ibfk_1")
-  WarehouseManagement            WarehouseManagement[]
-
-  @@index([createdBy], map: "createdBy")
-}
-
-model WarehouseManagement {
-  id                    String         @id @db.Char(36)
-  beNumber              String         @db.VarChar(255)
-  orderNumber           String         @db.VarChar(255)
-  quantityInStock       Int
-  brandOrderNumber      String         @db.VarChar(255)
-  shortDescription      String         @db.VarChar(255)
-  longDescription       String         @db.VarChar(255)
-  materialGroupId       String?        @db.Char(36)
-  preferedSupplier      String         @db.VarChar(255)
-  unitId                String?        @db.Char(36)
-  rejected              Boolean
-  additionalInformation String         @db.VarChar(255)
-  documentationPlace    String         @db.VarChar(255)
-  createdBy             String         @db.Char(36)
-  createdAt             DateTime       @db.DateTime(0)
-  MaterialGroup         MaterialGroup? @relation(fields: [materialGroupId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "WarehouseManagement_ibfk_1")
-  Unit                  Unit?          @relation(fields: [unitId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "WarehouseManagement_ibfk_2")
-
-  @@index([materialGroupId], map: "materialGroupId")
-  @@index([unitId], map: "unitId")
-}
-
-model WarehousePlace {
-  id                 String               @id @db.Char(36)
-  place              String               @db.VarChar(255)
-  shelve             String               @db.VarChar(255)
-  col                String               @db.VarChar(255)
-  layer              String               @db.VarChar(255)
-  layerPlace         String               @db.VarChar(255)
-  information        String               @db.VarChar(255)
-  volume             Decimal              @db.Decimal(10, 2)
-  createdBy          String               @db.Char(36)
-  createdAt          DateTime             @db.DateTime(0)
-  InventoryPlace     InventoryPlace[]
-  InventoryStructure InventoryStructure[]
-  Employee           Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_1")
-
-  @@index([createdBy], map: "createdBy")
 }

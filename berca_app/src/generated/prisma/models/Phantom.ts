@@ -30,7 +30,6 @@ export type PhantomMinAggregateOutputType = {
   date: Date | null
   valid: boolean | null
   createdBy: string | null
-  createdAt: Date | null
 }
 
 export type PhantomMaxAggregateOutputType = {
@@ -39,7 +38,6 @@ export type PhantomMaxAggregateOutputType = {
   date: Date | null
   valid: boolean | null
   createdBy: string | null
-  createdAt: Date | null
 }
 
 export type PhantomCountAggregateOutputType = {
@@ -48,7 +46,6 @@ export type PhantomCountAggregateOutputType = {
   date: number
   valid: number
   createdBy: number
-  createdAt: number
   _all: number
 }
 
@@ -59,7 +56,6 @@ export type PhantomMinAggregateInputType = {
   date?: true
   valid?: true
   createdBy?: true
-  createdAt?: true
 }
 
 export type PhantomMaxAggregateInputType = {
@@ -68,7 +64,6 @@ export type PhantomMaxAggregateInputType = {
   date?: true
   valid?: true
   createdBy?: true
-  createdAt?: true
 }
 
 export type PhantomCountAggregateInputType = {
@@ -77,7 +72,6 @@ export type PhantomCountAggregateInputType = {
   date?: true
   valid?: true
   createdBy?: true
-  createdAt?: true
   _all?: true
 }
 
@@ -155,11 +149,10 @@ export type PhantomGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type PhantomGroupByOutputType = {
   id: string
-  description: string
-  date: Date
-  valid: boolean
+  description: string | null
+  date: Date | null
+  valid: boolean | null
   createdBy: string
-  createdAt: Date
   _count: PhantomCountAggregateOutputType | null
   _min: PhantomMinAggregateOutputType | null
   _max: PhantomMaxAggregateOutputType | null
@@ -185,21 +178,19 @@ export type PhantomWhereInput = {
   OR?: Prisma.PhantomWhereInput[]
   NOT?: Prisma.PhantomWhereInput | Prisma.PhantomWhereInput[]
   id?: Prisma.StringFilter<"Phantom"> | string
-  description?: Prisma.StringFilter<"Phantom"> | string
-  date?: Prisma.DateTimeFilter<"Phantom"> | Date | string
-  valid?: Prisma.BoolFilter<"Phantom"> | boolean
+  description?: Prisma.StringNullableFilter<"Phantom"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"Phantom"> | Date | string | null
+  valid?: Prisma.BoolNullableFilter<"Phantom"> | boolean | null
   createdBy?: Prisma.StringFilter<"Phantom"> | string
-  createdAt?: Prisma.DateTimeFilter<"Phantom"> | Date | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
 
 export type PhantomOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  valid?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  date?: Prisma.SortOrderInput | Prisma.SortOrder
+  valid?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.PhantomOrderByRelevanceInput
 }
@@ -209,21 +200,19 @@ export type PhantomWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PhantomWhereInput | Prisma.PhantomWhereInput[]
   OR?: Prisma.PhantomWhereInput[]
   NOT?: Prisma.PhantomWhereInput | Prisma.PhantomWhereInput[]
-  description?: Prisma.StringFilter<"Phantom"> | string
-  date?: Prisma.DateTimeFilter<"Phantom"> | Date | string
-  valid?: Prisma.BoolFilter<"Phantom"> | boolean
+  description?: Prisma.StringNullableFilter<"Phantom"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"Phantom"> | Date | string | null
+  valid?: Prisma.BoolNullableFilter<"Phantom"> | boolean | null
   createdBy?: Prisma.StringFilter<"Phantom"> | string
-  createdAt?: Prisma.DateTimeFilter<"Phantom"> | Date | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
 
 export type PhantomOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  valid?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  date?: Prisma.SortOrderInput | Prisma.SortOrder
+  valid?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   _count?: Prisma.PhantomCountOrderByAggregateInput
   _max?: Prisma.PhantomMaxOrderByAggregateInput
   _min?: Prisma.PhantomMinOrderByAggregateInput
@@ -234,73 +223,65 @@ export type PhantomScalarWhereWithAggregatesInput = {
   OR?: Prisma.PhantomScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PhantomScalarWhereWithAggregatesInput | Prisma.PhantomScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Phantom"> | string
-  description?: Prisma.StringWithAggregatesFilter<"Phantom"> | string
-  date?: Prisma.DateTimeWithAggregatesFilter<"Phantom"> | Date | string
-  valid?: Prisma.BoolWithAggregatesFilter<"Phantom"> | boolean
+  description?: Prisma.StringNullableWithAggregatesFilter<"Phantom"> | string | null
+  date?: Prisma.DateTimeNullableWithAggregatesFilter<"Phantom"> | Date | string | null
+  valid?: Prisma.BoolNullableWithAggregatesFilter<"Phantom"> | boolean | null
   createdBy?: Prisma.StringWithAggregatesFilter<"Phantom"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Phantom"> | Date | string
 }
 
 export type PhantomCreateInput = {
   id: string
-  description: string
-  date: Date | string
-  valid: boolean
-  createdAt: Date | string
+  description?: string | null
+  date?: Date | string | null
+  valid?: boolean | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutPhantomInput
 }
 
 export type PhantomUncheckedCreateInput = {
   id: string
-  description: string
-  date: Date | string
-  valid: boolean
+  description?: string | null
+  date?: Date | string | null
+  valid?: boolean | null
   createdBy: string
-  createdAt: Date | string
 }
 
 export type PhantomUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPhantomNestedInput
 }
 
 export type PhantomUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PhantomCreateManyInput = {
   id: string
-  description: string
-  date: Date | string
-  valid: boolean
+  description?: string | null
+  date?: Date | string | null
+  valid?: boolean | null
   createdBy: string
-  createdAt: Date | string
 }
 
 export type PhantomUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type PhantomUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PhantomListRelationFilter = {
@@ -325,7 +306,6 @@ export type PhantomCountOrderByAggregateInput = {
   date?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type PhantomMaxOrderByAggregateInput = {
@@ -334,7 +314,6 @@ export type PhantomMaxOrderByAggregateInput = {
   date?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type PhantomMinOrderByAggregateInput = {
@@ -343,7 +322,6 @@ export type PhantomMinOrderByAggregateInput = {
   date?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type PhantomCreateNestedManyWithoutEmployeeInput = {
@@ -390,18 +368,16 @@ export type PhantomUncheckedUpdateManyWithoutEmployeeNestedInput = {
 
 export type PhantomCreateWithoutEmployeeInput = {
   id: string
-  description: string
-  date: Date | string
-  valid: boolean
-  createdAt: Date | string
+  description?: string | null
+  date?: Date | string | null
+  valid?: boolean | null
 }
 
 export type PhantomUncheckedCreateWithoutEmployeeInput = {
   id: string
-  description: string
-  date: Date | string
-  valid: boolean
-  createdAt: Date | string
+  description?: string | null
+  date?: Date | string | null
+  valid?: boolean | null
 }
 
 export type PhantomCreateOrConnectWithoutEmployeeInput = {
@@ -435,43 +411,38 @@ export type PhantomScalarWhereInput = {
   OR?: Prisma.PhantomScalarWhereInput[]
   NOT?: Prisma.PhantomScalarWhereInput | Prisma.PhantomScalarWhereInput[]
   id?: Prisma.StringFilter<"Phantom"> | string
-  description?: Prisma.StringFilter<"Phantom"> | string
-  date?: Prisma.DateTimeFilter<"Phantom"> | Date | string
-  valid?: Prisma.BoolFilter<"Phantom"> | boolean
+  description?: Prisma.StringNullableFilter<"Phantom"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"Phantom"> | Date | string | null
+  valid?: Prisma.BoolNullableFilter<"Phantom"> | boolean | null
   createdBy?: Prisma.StringFilter<"Phantom"> | string
-  createdAt?: Prisma.DateTimeFilter<"Phantom"> | Date | string
 }
 
 export type PhantomCreateManyEmployeeInput = {
   id: string
-  description: string
-  date: Date | string
-  valid: boolean
-  createdAt: Date | string
+  description?: string | null
+  date?: Date | string | null
+  valid?: boolean | null
 }
 
 export type PhantomUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type PhantomUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type PhantomUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 
@@ -482,7 +453,6 @@ export type PhantomSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   date?: boolean
   valid?: boolean
   createdBy?: boolean
-  createdAt?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["phantom"]>
 
@@ -494,10 +464,9 @@ export type PhantomSelectScalar = {
   date?: boolean
   valid?: boolean
   createdBy?: boolean
-  createdAt?: boolean
 }
 
-export type PhantomOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "date" | "valid" | "createdBy" | "createdAt", ExtArgs["result"]["phantom"]>
+export type PhantomOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "date" | "valid" | "createdBy", ExtArgs["result"]["phantom"]>
 export type PhantomInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }
@@ -509,11 +478,10 @@ export type $PhantomPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    description: string
-    date: Date
-    valid: boolean
+    description: string | null
+    date: Date | null
+    valid: boolean | null
     createdBy: string
-    createdAt: Date
   }, ExtArgs["result"]["phantom"]>
   composites: {}
 }
@@ -889,7 +857,6 @@ export interface PhantomFieldRefs {
   readonly date: Prisma.FieldRef<"Phantom", 'DateTime'>
   readonly valid: Prisma.FieldRef<"Phantom", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"Phantom", 'String'>
-  readonly createdAt: Prisma.FieldRef<"Phantom", 'DateTime'>
 }
     
 

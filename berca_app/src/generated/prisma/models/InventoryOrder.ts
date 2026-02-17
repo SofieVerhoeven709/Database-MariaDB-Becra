@@ -26,82 +26,70 @@ export type AggregateInventoryOrder = {
 
 export type InventoryOrderMinAggregateOutputType = {
   id: string | null
-  storePlace: string | null
-  companyId: string | null
   inventoryId: string | null
+  orderNumber: string | null
+  orderDate: Date | null
   shortDescription: string | null
   longDescription: string | null
-  additionalInformation: string | null
-  valid: boolean | null
-  createdBy: string | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type InventoryOrderMaxAggregateOutputType = {
   id: string | null
-  storePlace: string | null
-  companyId: string | null
   inventoryId: string | null
+  orderNumber: string | null
+  orderDate: Date | null
   shortDescription: string | null
   longDescription: string | null
-  additionalInformation: string | null
-  valid: boolean | null
-  createdBy: string | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type InventoryOrderCountAggregateOutputType = {
   id: number
-  storePlace: number
-  companyId: number
   inventoryId: number
+  orderNumber: number
+  orderDate: number
   shortDescription: number
   longDescription: number
-  additionalInformation: number
-  valid: number
-  createdBy: number
   createdAt: number
+  createdBy: number
   _all: number
 }
 
 
 export type InventoryOrderMinAggregateInputType = {
   id?: true
-  storePlace?: true
-  companyId?: true
   inventoryId?: true
+  orderNumber?: true
+  orderDate?: true
   shortDescription?: true
   longDescription?: true
-  additionalInformation?: true
-  valid?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type InventoryOrderMaxAggregateInputType = {
   id?: true
-  storePlace?: true
-  companyId?: true
   inventoryId?: true
+  orderNumber?: true
+  orderDate?: true
   shortDescription?: true
   longDescription?: true
-  additionalInformation?: true
-  valid?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type InventoryOrderCountAggregateInputType = {
   id?: true
-  storePlace?: true
-  companyId?: true
   inventoryId?: true
+  orderNumber?: true
+  orderDate?: true
   shortDescription?: true
   longDescription?: true
-  additionalInformation?: true
-  valid?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
   _all?: true
 }
 
@@ -179,15 +167,13 @@ export type InventoryOrderGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 
 export type InventoryOrderGroupByOutputType = {
   id: string
-  storePlace: string
-  companyId: string
-  inventoryId: string | null
+  inventoryId: string
+  orderNumber: string
+  orderDate: Date
   shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
-  createdBy: string
+  longDescription: string | null
   createdAt: Date
+  createdBy: string
   _count: InventoryOrderCountAggregateOutputType | null
   _min: InventoryOrderMinAggregateOutputType | null
   _max: InventoryOrderMaxAggregateOutputType | null
@@ -213,36 +199,28 @@ export type InventoryOrderWhereInput = {
   OR?: Prisma.InventoryOrderWhereInput[]
   NOT?: Prisma.InventoryOrderWhereInput | Prisma.InventoryOrderWhereInput[]
   id?: Prisma.StringFilter<"InventoryOrder"> | string
-  storePlace?: Prisma.StringFilter<"InventoryOrder"> | string
-  companyId?: Prisma.StringFilter<"InventoryOrder"> | string
-  inventoryId?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
+  inventoryId?: Prisma.StringFilter<"InventoryOrder"> | string
+  orderNumber?: Prisma.StringFilter<"InventoryOrder"> | string
+  orderDate?: Prisma.DateTimeFilter<"InventoryOrder"> | Date | string
   shortDescription?: Prisma.StringFilter<"InventoryOrder"> | string
-  longDescription?: Prisma.StringFilter<"InventoryOrder"> | string
-  additionalInformation?: Prisma.StringFilter<"InventoryOrder"> | string
-  valid?: Prisma.BoolFilter<"InventoryOrder"> | boolean
-  createdBy?: Prisma.StringFilter<"InventoryOrder"> | string
+  longDescription?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
   createdAt?: Prisma.DateTimeFilter<"InventoryOrder"> | Date | string
-  Inventory?: Prisma.XOR<Prisma.InventoryNullableScalarRelationFilter, Prisma.InventoryWhereInput> | null
-  Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
+  createdBy?: Prisma.StringFilter<"InventoryOrder"> | string
+  Inventory?: Prisma.XOR<Prisma.InventoryScalarRelationFilter, Prisma.InventoryWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureListRelationFilter
 }
 
 export type InventoryOrderOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  storePlace?: Prisma.SortOrder
-  companyId?: Prisma.SortOrder
-  inventoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  inventoryId?: Prisma.SortOrder
+  orderNumber?: Prisma.SortOrder
+  orderDate?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  valid?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   Inventory?: Prisma.InventoryOrderByWithRelationInput
-  Company?: Prisma.CompanyOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureOrderByRelationAggregateInput
   _relevance?: Prisma.InventoryOrderOrderByRelevanceInput
 }
 
@@ -251,32 +229,26 @@ export type InventoryOrderWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.InventoryOrderWhereInput | Prisma.InventoryOrderWhereInput[]
   OR?: Prisma.InventoryOrderWhereInput[]
   NOT?: Prisma.InventoryOrderWhereInput | Prisma.InventoryOrderWhereInput[]
-  storePlace?: Prisma.StringFilter<"InventoryOrder"> | string
-  companyId?: Prisma.StringFilter<"InventoryOrder"> | string
-  inventoryId?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
+  inventoryId?: Prisma.StringFilter<"InventoryOrder"> | string
+  orderNumber?: Prisma.StringFilter<"InventoryOrder"> | string
+  orderDate?: Prisma.DateTimeFilter<"InventoryOrder"> | Date | string
   shortDescription?: Prisma.StringFilter<"InventoryOrder"> | string
-  longDescription?: Prisma.StringFilter<"InventoryOrder"> | string
-  additionalInformation?: Prisma.StringFilter<"InventoryOrder"> | string
-  valid?: Prisma.BoolFilter<"InventoryOrder"> | boolean
-  createdBy?: Prisma.StringFilter<"InventoryOrder"> | string
+  longDescription?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
   createdAt?: Prisma.DateTimeFilter<"InventoryOrder"> | Date | string
-  Inventory?: Prisma.XOR<Prisma.InventoryNullableScalarRelationFilter, Prisma.InventoryWhereInput> | null
-  Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
+  createdBy?: Prisma.StringFilter<"InventoryOrder"> | string
+  Inventory?: Prisma.XOR<Prisma.InventoryScalarRelationFilter, Prisma.InventoryWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureListRelationFilter
 }, "id">
 
 export type InventoryOrderOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  storePlace?: Prisma.SortOrder
-  companyId?: Prisma.SortOrder
-  inventoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  inventoryId?: Prisma.SortOrder
+  orderNumber?: Prisma.SortOrder
+  orderDate?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  valid?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   _count?: Prisma.InventoryOrderCountOrderByAggregateInput
   _max?: Prisma.InventoryOrderMaxOrderByAggregateInput
   _min?: Prisma.InventoryOrderMinOrderByAggregateInput
@@ -287,107 +259,88 @@ export type InventoryOrderScalarWhereWithAggregatesInput = {
   OR?: Prisma.InventoryOrderScalarWhereWithAggregatesInput[]
   NOT?: Prisma.InventoryOrderScalarWhereWithAggregatesInput | Prisma.InventoryOrderScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"InventoryOrder"> | string
-  storePlace?: Prisma.StringWithAggregatesFilter<"InventoryOrder"> | string
-  companyId?: Prisma.StringWithAggregatesFilter<"InventoryOrder"> | string
-  inventoryId?: Prisma.StringNullableWithAggregatesFilter<"InventoryOrder"> | string | null
+  inventoryId?: Prisma.StringWithAggregatesFilter<"InventoryOrder"> | string
+  orderNumber?: Prisma.StringWithAggregatesFilter<"InventoryOrder"> | string
+  orderDate?: Prisma.DateTimeWithAggregatesFilter<"InventoryOrder"> | Date | string
   shortDescription?: Prisma.StringWithAggregatesFilter<"InventoryOrder"> | string
-  longDescription?: Prisma.StringWithAggregatesFilter<"InventoryOrder"> | string
-  additionalInformation?: Prisma.StringWithAggregatesFilter<"InventoryOrder"> | string
-  valid?: Prisma.BoolWithAggregatesFilter<"InventoryOrder"> | boolean
-  createdBy?: Prisma.StringWithAggregatesFilter<"InventoryOrder"> | string
+  longDescription?: Prisma.StringNullableWithAggregatesFilter<"InventoryOrder"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"InventoryOrder"> | Date | string
+  createdBy?: Prisma.StringWithAggregatesFilter<"InventoryOrder"> | string
 }
 
 export type InventoryOrderCreateInput = {
   id: string
-  storePlace: string
+  orderNumber: string
+  orderDate: Date | string
   shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
-  createdAt: Date | string
-  Inventory?: Prisma.InventoryCreateNestedOneWithoutInventoryOrderInput
-  Company: Prisma.CompanyCreateNestedOneWithoutInventoryOrderInput
+  longDescription?: string | null
+  createdAt?: Date | string
+  Inventory: Prisma.InventoryCreateNestedOneWithoutInventoryOrderInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutInventoryOrderInput
 }
 
 export type InventoryOrderUncheckedCreateInput = {
   id: string
-  storePlace: string
-  companyId: string
-  inventoryId?: string | null
+  inventoryId: string
+  orderNumber: string
+  orderDate: Date | string
   shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
+  longDescription?: string | null
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutInventoryOrderInput
 }
 
 export type InventoryOrderUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Inventory?: Prisma.InventoryUpdateOneWithoutInventoryOrderNestedInput
-  Company?: Prisma.CompanyUpdateOneRequiredWithoutInventoryOrderNestedInput
+  Inventory?: Prisma.InventoryUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutInventoryOrderNestedInput
 }
 
 export type InventoryOrderUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutInventoryOrderNestedInput
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InventoryOrderCreateManyInput = {
   id: string
-  storePlace: string
-  companyId: string
-  inventoryId?: string | null
+  inventoryId: string
+  orderNumber: string
+  orderDate: Date | string
   shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
+  longDescription?: string | null
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
 }
 
 export type InventoryOrderUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InventoryOrderUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InventoryOrderListRelationFilter = {
@@ -408,88 +361,35 @@ export type InventoryOrderOrderByRelevanceInput = {
 
 export type InventoryOrderCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  storePlace?: Prisma.SortOrder
-  companyId?: Prisma.SortOrder
   inventoryId?: Prisma.SortOrder
+  orderNumber?: Prisma.SortOrder
+  orderDate?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  valid?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type InventoryOrderMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  storePlace?: Prisma.SortOrder
-  companyId?: Prisma.SortOrder
   inventoryId?: Prisma.SortOrder
+  orderNumber?: Prisma.SortOrder
+  orderDate?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  valid?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type InventoryOrderMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  storePlace?: Prisma.SortOrder
-  companyId?: Prisma.SortOrder
   inventoryId?: Prisma.SortOrder
+  orderNumber?: Prisma.SortOrder
+  orderDate?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  valid?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-}
-
-export type InventoryOrderNullableScalarRelationFilter = {
-  is?: Prisma.InventoryOrderWhereInput | null
-  isNot?: Prisma.InventoryOrderWhereInput | null
-}
-
-export type InventoryOrderCreateNestedManyWithoutCompanyInput = {
-  create?: Prisma.XOR<Prisma.InventoryOrderCreateWithoutCompanyInput, Prisma.InventoryOrderUncheckedCreateWithoutCompanyInput> | Prisma.InventoryOrderCreateWithoutCompanyInput[] | Prisma.InventoryOrderUncheckedCreateWithoutCompanyInput[]
-  connectOrCreate?: Prisma.InventoryOrderCreateOrConnectWithoutCompanyInput | Prisma.InventoryOrderCreateOrConnectWithoutCompanyInput[]
-  createMany?: Prisma.InventoryOrderCreateManyCompanyInputEnvelope
-  connect?: Prisma.InventoryOrderWhereUniqueInput | Prisma.InventoryOrderWhereUniqueInput[]
-}
-
-export type InventoryOrderUncheckedCreateNestedManyWithoutCompanyInput = {
-  create?: Prisma.XOR<Prisma.InventoryOrderCreateWithoutCompanyInput, Prisma.InventoryOrderUncheckedCreateWithoutCompanyInput> | Prisma.InventoryOrderCreateWithoutCompanyInput[] | Prisma.InventoryOrderUncheckedCreateWithoutCompanyInput[]
-  connectOrCreate?: Prisma.InventoryOrderCreateOrConnectWithoutCompanyInput | Prisma.InventoryOrderCreateOrConnectWithoutCompanyInput[]
-  createMany?: Prisma.InventoryOrderCreateManyCompanyInputEnvelope
-  connect?: Prisma.InventoryOrderWhereUniqueInput | Prisma.InventoryOrderWhereUniqueInput[]
-}
-
-export type InventoryOrderUpdateManyWithoutCompanyNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryOrderCreateWithoutCompanyInput, Prisma.InventoryOrderUncheckedCreateWithoutCompanyInput> | Prisma.InventoryOrderCreateWithoutCompanyInput[] | Prisma.InventoryOrderUncheckedCreateWithoutCompanyInput[]
-  connectOrCreate?: Prisma.InventoryOrderCreateOrConnectWithoutCompanyInput | Prisma.InventoryOrderCreateOrConnectWithoutCompanyInput[]
-  upsert?: Prisma.InventoryOrderUpsertWithWhereUniqueWithoutCompanyInput | Prisma.InventoryOrderUpsertWithWhereUniqueWithoutCompanyInput[]
-  createMany?: Prisma.InventoryOrderCreateManyCompanyInputEnvelope
-  set?: Prisma.InventoryOrderWhereUniqueInput | Prisma.InventoryOrderWhereUniqueInput[]
-  disconnect?: Prisma.InventoryOrderWhereUniqueInput | Prisma.InventoryOrderWhereUniqueInput[]
-  delete?: Prisma.InventoryOrderWhereUniqueInput | Prisma.InventoryOrderWhereUniqueInput[]
-  connect?: Prisma.InventoryOrderWhereUniqueInput | Prisma.InventoryOrderWhereUniqueInput[]
-  update?: Prisma.InventoryOrderUpdateWithWhereUniqueWithoutCompanyInput | Prisma.InventoryOrderUpdateWithWhereUniqueWithoutCompanyInput[]
-  updateMany?: Prisma.InventoryOrderUpdateManyWithWhereWithoutCompanyInput | Prisma.InventoryOrderUpdateManyWithWhereWithoutCompanyInput[]
-  deleteMany?: Prisma.InventoryOrderScalarWhereInput | Prisma.InventoryOrderScalarWhereInput[]
-}
-
-export type InventoryOrderUncheckedUpdateManyWithoutCompanyNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryOrderCreateWithoutCompanyInput, Prisma.InventoryOrderUncheckedCreateWithoutCompanyInput> | Prisma.InventoryOrderCreateWithoutCompanyInput[] | Prisma.InventoryOrderUncheckedCreateWithoutCompanyInput[]
-  connectOrCreate?: Prisma.InventoryOrderCreateOrConnectWithoutCompanyInput | Prisma.InventoryOrderCreateOrConnectWithoutCompanyInput[]
-  upsert?: Prisma.InventoryOrderUpsertWithWhereUniqueWithoutCompanyInput | Prisma.InventoryOrderUpsertWithWhereUniqueWithoutCompanyInput[]
-  createMany?: Prisma.InventoryOrderCreateManyCompanyInputEnvelope
-  set?: Prisma.InventoryOrderWhereUniqueInput | Prisma.InventoryOrderWhereUniqueInput[]
-  disconnect?: Prisma.InventoryOrderWhereUniqueInput | Prisma.InventoryOrderWhereUniqueInput[]
-  delete?: Prisma.InventoryOrderWhereUniqueInput | Prisma.InventoryOrderWhereUniqueInput[]
-  connect?: Prisma.InventoryOrderWhereUniqueInput | Prisma.InventoryOrderWhereUniqueInput[]
-  update?: Prisma.InventoryOrderUpdateWithWhereUniqueWithoutCompanyInput | Prisma.InventoryOrderUpdateWithWhereUniqueWithoutCompanyInput[]
-  updateMany?: Prisma.InventoryOrderUpdateManyWithWhereWithoutCompanyInput | Prisma.InventoryOrderUpdateManyWithWhereWithoutCompanyInput[]
-  deleteMany?: Prisma.InventoryOrderScalarWhereInput | Prisma.InventoryOrderScalarWhereInput[]
+  createdBy?: Prisma.SortOrder
 }
 
 export type InventoryOrderCreateNestedManyWithoutEmployeeInput = {
@@ -576,114 +476,24 @@ export type InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput = {
   deleteMany?: Prisma.InventoryOrderScalarWhereInput | Prisma.InventoryOrderScalarWhereInput[]
 }
 
-export type InventoryOrderCreateNestedOneWithoutInventoryOrderStructureInput = {
-  create?: Prisma.XOR<Prisma.InventoryOrderCreateWithoutInventoryOrderStructureInput, Prisma.InventoryOrderUncheckedCreateWithoutInventoryOrderStructureInput>
-  connectOrCreate?: Prisma.InventoryOrderCreateOrConnectWithoutInventoryOrderStructureInput
-  connect?: Prisma.InventoryOrderWhereUniqueInput
-}
-
-export type InventoryOrderUpdateOneWithoutInventoryOrderStructureNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryOrderCreateWithoutInventoryOrderStructureInput, Prisma.InventoryOrderUncheckedCreateWithoutInventoryOrderStructureInput>
-  connectOrCreate?: Prisma.InventoryOrderCreateOrConnectWithoutInventoryOrderStructureInput
-  upsert?: Prisma.InventoryOrderUpsertWithoutInventoryOrderStructureInput
-  disconnect?: Prisma.InventoryOrderWhereInput | boolean
-  delete?: Prisma.InventoryOrderWhereInput | boolean
-  connect?: Prisma.InventoryOrderWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.InventoryOrderUpdateToOneWithWhereWithoutInventoryOrderStructureInput, Prisma.InventoryOrderUpdateWithoutInventoryOrderStructureInput>, Prisma.InventoryOrderUncheckedUpdateWithoutInventoryOrderStructureInput>
-}
-
-export type InventoryOrderCreateWithoutCompanyInput = {
-  id: string
-  storePlace: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
-  createdAt: Date | string
-  Inventory?: Prisma.InventoryCreateNestedOneWithoutInventoryOrderInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutInventoryOrderInput
-}
-
-export type InventoryOrderUncheckedCreateWithoutCompanyInput = {
-  id: string
-  storePlace: string
-  inventoryId?: string | null
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutInventoryOrderInput
-}
-
-export type InventoryOrderCreateOrConnectWithoutCompanyInput = {
-  where: Prisma.InventoryOrderWhereUniqueInput
-  create: Prisma.XOR<Prisma.InventoryOrderCreateWithoutCompanyInput, Prisma.InventoryOrderUncheckedCreateWithoutCompanyInput>
-}
-
-export type InventoryOrderCreateManyCompanyInputEnvelope = {
-  data: Prisma.InventoryOrderCreateManyCompanyInput | Prisma.InventoryOrderCreateManyCompanyInput[]
-  skipDuplicates?: boolean
-}
-
-export type InventoryOrderUpsertWithWhereUniqueWithoutCompanyInput = {
-  where: Prisma.InventoryOrderWhereUniqueInput
-  update: Prisma.XOR<Prisma.InventoryOrderUpdateWithoutCompanyInput, Prisma.InventoryOrderUncheckedUpdateWithoutCompanyInput>
-  create: Prisma.XOR<Prisma.InventoryOrderCreateWithoutCompanyInput, Prisma.InventoryOrderUncheckedCreateWithoutCompanyInput>
-}
-
-export type InventoryOrderUpdateWithWhereUniqueWithoutCompanyInput = {
-  where: Prisma.InventoryOrderWhereUniqueInput
-  data: Prisma.XOR<Prisma.InventoryOrderUpdateWithoutCompanyInput, Prisma.InventoryOrderUncheckedUpdateWithoutCompanyInput>
-}
-
-export type InventoryOrderUpdateManyWithWhereWithoutCompanyInput = {
-  where: Prisma.InventoryOrderScalarWhereInput
-  data: Prisma.XOR<Prisma.InventoryOrderUpdateManyMutationInput, Prisma.InventoryOrderUncheckedUpdateManyWithoutCompanyInput>
-}
-
-export type InventoryOrderScalarWhereInput = {
-  AND?: Prisma.InventoryOrderScalarWhereInput | Prisma.InventoryOrderScalarWhereInput[]
-  OR?: Prisma.InventoryOrderScalarWhereInput[]
-  NOT?: Prisma.InventoryOrderScalarWhereInput | Prisma.InventoryOrderScalarWhereInput[]
-  id?: Prisma.StringFilter<"InventoryOrder"> | string
-  storePlace?: Prisma.StringFilter<"InventoryOrder"> | string
-  companyId?: Prisma.StringFilter<"InventoryOrder"> | string
-  inventoryId?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
-  shortDescription?: Prisma.StringFilter<"InventoryOrder"> | string
-  longDescription?: Prisma.StringFilter<"InventoryOrder"> | string
-  additionalInformation?: Prisma.StringFilter<"InventoryOrder"> | string
-  valid?: Prisma.BoolFilter<"InventoryOrder"> | boolean
-  createdBy?: Prisma.StringFilter<"InventoryOrder"> | string
-  createdAt?: Prisma.DateTimeFilter<"InventoryOrder"> | Date | string
-}
-
 export type InventoryOrderCreateWithoutEmployeeInput = {
   id: string
-  storePlace: string
+  orderNumber: string
+  orderDate: Date | string
   shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
-  createdAt: Date | string
-  Inventory?: Prisma.InventoryCreateNestedOneWithoutInventoryOrderInput
-  Company: Prisma.CompanyCreateNestedOneWithoutInventoryOrderInput
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutInventoryOrderInput
+  longDescription?: string | null
+  createdAt?: Date | string
+  Inventory: Prisma.InventoryCreateNestedOneWithoutInventoryOrderInput
 }
 
 export type InventoryOrderUncheckedCreateWithoutEmployeeInput = {
   id: string
-  storePlace: string
-  companyId: string
-  inventoryId?: string | null
+  inventoryId: string
+  orderNumber: string
+  orderDate: Date | string
   shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutInventoryOrderInput
+  longDescription?: string | null
+  createdAt?: Date | string
 }
 
 export type InventoryOrderCreateOrConnectWithoutEmployeeInput = {
@@ -712,30 +522,38 @@ export type InventoryOrderUpdateManyWithWhereWithoutEmployeeInput = {
   data: Prisma.XOR<Prisma.InventoryOrderUpdateManyMutationInput, Prisma.InventoryOrderUncheckedUpdateManyWithoutEmployeeInput>
 }
 
+export type InventoryOrderScalarWhereInput = {
+  AND?: Prisma.InventoryOrderScalarWhereInput | Prisma.InventoryOrderScalarWhereInput[]
+  OR?: Prisma.InventoryOrderScalarWhereInput[]
+  NOT?: Prisma.InventoryOrderScalarWhereInput | Prisma.InventoryOrderScalarWhereInput[]
+  id?: Prisma.StringFilter<"InventoryOrder"> | string
+  inventoryId?: Prisma.StringFilter<"InventoryOrder"> | string
+  orderNumber?: Prisma.StringFilter<"InventoryOrder"> | string
+  orderDate?: Prisma.DateTimeFilter<"InventoryOrder"> | Date | string
+  shortDescription?: Prisma.StringFilter<"InventoryOrder"> | string
+  longDescription?: Prisma.StringNullableFilter<"InventoryOrder"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"InventoryOrder"> | Date | string
+  createdBy?: Prisma.StringFilter<"InventoryOrder"> | string
+}
+
 export type InventoryOrderCreateWithoutInventoryInput = {
   id: string
-  storePlace: string
+  orderNumber: string
+  orderDate: Date | string
   shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
-  createdAt: Date | string
-  Company: Prisma.CompanyCreateNestedOneWithoutInventoryOrderInput
+  longDescription?: string | null
+  createdAt?: Date | string
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutInventoryOrderInput
 }
 
 export type InventoryOrderUncheckedCreateWithoutInventoryInput = {
   id: string
-  storePlace: string
-  companyId: string
+  orderNumber: string
+  orderDate: Date | string
   shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
+  longDescription?: string | null
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutInventoryOrderInput
 }
 
 export type InventoryOrderCreateOrConnectWithoutInventoryInput = {
@@ -764,316 +582,135 @@ export type InventoryOrderUpdateManyWithWhereWithoutInventoryInput = {
   data: Prisma.XOR<Prisma.InventoryOrderUpdateManyMutationInput, Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryInput>
 }
 
-export type InventoryOrderCreateWithoutInventoryOrderStructureInput = {
-  id: string
-  storePlace: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
-  createdAt: Date | string
-  Inventory?: Prisma.InventoryCreateNestedOneWithoutInventoryOrderInput
-  Company: Prisma.CompanyCreateNestedOneWithoutInventoryOrderInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryOrderInput
-}
-
-export type InventoryOrderUncheckedCreateWithoutInventoryOrderStructureInput = {
-  id: string
-  storePlace: string
-  companyId: string
-  inventoryId?: string | null
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-}
-
-export type InventoryOrderCreateOrConnectWithoutInventoryOrderStructureInput = {
-  where: Prisma.InventoryOrderWhereUniqueInput
-  create: Prisma.XOR<Prisma.InventoryOrderCreateWithoutInventoryOrderStructureInput, Prisma.InventoryOrderUncheckedCreateWithoutInventoryOrderStructureInput>
-}
-
-export type InventoryOrderUpsertWithoutInventoryOrderStructureInput = {
-  update: Prisma.XOR<Prisma.InventoryOrderUpdateWithoutInventoryOrderStructureInput, Prisma.InventoryOrderUncheckedUpdateWithoutInventoryOrderStructureInput>
-  create: Prisma.XOR<Prisma.InventoryOrderCreateWithoutInventoryOrderStructureInput, Prisma.InventoryOrderUncheckedCreateWithoutInventoryOrderStructureInput>
-  where?: Prisma.InventoryOrderWhereInput
-}
-
-export type InventoryOrderUpdateToOneWithWhereWithoutInventoryOrderStructureInput = {
-  where?: Prisma.InventoryOrderWhereInput
-  data: Prisma.XOR<Prisma.InventoryOrderUpdateWithoutInventoryOrderStructureInput, Prisma.InventoryOrderUncheckedUpdateWithoutInventoryOrderStructureInput>
-}
-
-export type InventoryOrderUpdateWithoutInventoryOrderStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Inventory?: Prisma.InventoryUpdateOneWithoutInventoryOrderNestedInput
-  Company?: Prisma.CompanyUpdateOneRequiredWithoutInventoryOrderNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
-}
-
-export type InventoryOrderUncheckedUpdateWithoutInventoryOrderStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type InventoryOrderCreateManyCompanyInput = {
-  id: string
-  storePlace: string
-  inventoryId?: string | null
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-}
-
-export type InventoryOrderUpdateWithoutCompanyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Inventory?: Prisma.InventoryUpdateOneWithoutInventoryOrderNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutInventoryOrderNestedInput
-}
-
-export type InventoryOrderUncheckedUpdateWithoutCompanyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutInventoryOrderNestedInput
-}
-
-export type InventoryOrderUncheckedUpdateManyWithoutCompanyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
 export type InventoryOrderCreateManyEmployeeInput = {
   id: string
-  storePlace: string
-  companyId: string
-  inventoryId?: string | null
+  inventoryId: string
+  orderNumber: string
+  orderDate: Date | string
   shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
-  createdAt: Date | string
+  longDescription?: string | null
+  createdAt?: Date | string
 }
 
 export type InventoryOrderUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Inventory?: Prisma.InventoryUpdateOneWithoutInventoryOrderNestedInput
-  Company?: Prisma.CompanyUpdateOneRequiredWithoutInventoryOrderNestedInput
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutInventoryOrderNestedInput
+  Inventory?: Prisma.InventoryUpdateOneRequiredWithoutInventoryOrderNestedInput
 }
 
 export type InventoryOrderUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutInventoryOrderNestedInput
 }
 
 export type InventoryOrderUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InventoryOrderCreateManyInventoryInput = {
   id: string
-  storePlace: string
-  companyId: string
+  orderNumber: string
+  orderDate: Date | string
   shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  valid: boolean
+  longDescription?: string | null
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
 }
 
 export type InventoryOrderUpdateWithoutInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Company?: Prisma.CompanyUpdateOneRequiredWithoutInventoryOrderNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryOrderNestedInput
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutInventoryOrderNestedInput
 }
 
 export type InventoryOrderUncheckedUpdateWithoutInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutInventoryOrderNestedInput
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InventoryOrderUncheckedUpdateManyWithoutInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  storePlace?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-
-/**
- * Count Type InventoryOrderCountOutputType
- */
-
-export type InventoryOrderCountOutputType = {
-  InventoryOrderStructure: number
-}
-
-export type InventoryOrderCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InventoryOrderStructure?: boolean | InventoryOrderCountOutputTypeCountInventoryOrderStructureArgs
-}
-
-/**
- * InventoryOrderCountOutputType without action
- */
-export type InventoryOrderCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InventoryOrderCountOutputType
-   */
-  select?: Prisma.InventoryOrderCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * InventoryOrderCountOutputType without action
- */
-export type InventoryOrderCountOutputTypeCountInventoryOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InventoryOrderStructureWhereInput
-}
 
 
 export type InventoryOrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  storePlace?: boolean
-  companyId?: boolean
   inventoryId?: boolean
+  orderNumber?: boolean
+  orderDate?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  additionalInformation?: boolean
-  valid?: boolean
-  createdBy?: boolean
   createdAt?: boolean
-  Inventory?: boolean | Prisma.InventoryOrder$InventoryArgs<ExtArgs>
-  Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
+  createdBy?: boolean
+  Inventory?: boolean | Prisma.InventoryDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  InventoryOrderStructure?: boolean | Prisma.InventoryOrder$InventoryOrderStructureArgs<ExtArgs>
-  _count?: boolean | Prisma.InventoryOrderCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventoryOrder"]>
 
 
 
 export type InventoryOrderSelectScalar = {
   id?: boolean
-  storePlace?: boolean
-  companyId?: boolean
   inventoryId?: boolean
+  orderNumber?: boolean
+  orderDate?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  additionalInformation?: boolean
-  valid?: boolean
-  createdBy?: boolean
   createdAt?: boolean
+  createdBy?: boolean
 }
 
-export type InventoryOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storePlace" | "companyId" | "inventoryId" | "shortDescription" | "longDescription" | "additionalInformation" | "valid" | "createdBy" | "createdAt", ExtArgs["result"]["inventoryOrder"]>
+export type InventoryOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "inventoryId" | "orderNumber" | "orderDate" | "shortDescription" | "longDescription" | "createdAt" | "createdBy", ExtArgs["result"]["inventoryOrder"]>
 export type InventoryOrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Inventory?: boolean | Prisma.InventoryOrder$InventoryArgs<ExtArgs>
-  Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
+  Inventory?: boolean | Prisma.InventoryDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  InventoryOrderStructure?: boolean | Prisma.InventoryOrder$InventoryOrderStructureArgs<ExtArgs>
-  _count?: boolean | Prisma.InventoryOrderCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $InventoryOrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "InventoryOrder"
   objects: {
-    Inventory: Prisma.$InventoryPayload<ExtArgs> | null
-    Company: Prisma.$CompanyPayload<ExtArgs>
+    Inventory: Prisma.$InventoryPayload<ExtArgs>
     Employee: Prisma.$EmployeePayload<ExtArgs>
-    InventoryOrderStructure: Prisma.$InventoryOrderStructurePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    storePlace: string
-    companyId: string
-    inventoryId: string | null
+    inventoryId: string
+    orderNumber: string
+    orderDate: Date
     shortDescription: string
-    longDescription: string
-    additionalInformation: string
-    valid: boolean
-    createdBy: string
+    longDescription: string | null
     createdAt: Date
+    createdBy: string
   }, ExtArgs["result"]["inventoryOrder"]>
   composites: {}
 }
@@ -1414,10 +1051,8 @@ readonly fields: InventoryOrderFieldRefs;
  */
 export interface Prisma__InventoryOrderClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  Inventory<T extends Prisma.InventoryOrder$InventoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryOrder$InventoryArgs<ExtArgs>>): Prisma.Prisma__InventoryClient<runtime.Types.Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  Company<T extends Prisma.CompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Inventory<T extends Prisma.InventoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryDefaultArgs<ExtArgs>>): Prisma.Prisma__InventoryClient<runtime.Types.Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  InventoryOrderStructure<T extends Prisma.InventoryOrder$InventoryOrderStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryOrder$InventoryOrderStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryOrderStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1448,15 +1083,13 @@ export interface Prisma__InventoryOrderClient<T, Null = never, ExtArgs extends r
  */
 export interface InventoryOrderFieldRefs {
   readonly id: Prisma.FieldRef<"InventoryOrder", 'String'>
-  readonly storePlace: Prisma.FieldRef<"InventoryOrder", 'String'>
-  readonly companyId: Prisma.FieldRef<"InventoryOrder", 'String'>
   readonly inventoryId: Prisma.FieldRef<"InventoryOrder", 'String'>
+  readonly orderNumber: Prisma.FieldRef<"InventoryOrder", 'String'>
+  readonly orderDate: Prisma.FieldRef<"InventoryOrder", 'DateTime'>
   readonly shortDescription: Prisma.FieldRef<"InventoryOrder", 'String'>
   readonly longDescription: Prisma.FieldRef<"InventoryOrder", 'String'>
-  readonly additionalInformation: Prisma.FieldRef<"InventoryOrder", 'String'>
-  readonly valid: Prisma.FieldRef<"InventoryOrder", 'Boolean'>
-  readonly createdBy: Prisma.FieldRef<"InventoryOrder", 'String'>
   readonly createdAt: Prisma.FieldRef<"InventoryOrder", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"InventoryOrder", 'String'>
 }
     
 
@@ -1797,49 +1430,6 @@ export type InventoryOrderDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many InventoryOrders to delete.
    */
   limit?: number
-}
-
-/**
- * InventoryOrder.Inventory
- */
-export type InventoryOrder$InventoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Inventory
-   */
-  select?: Prisma.InventorySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Inventory
-   */
-  omit?: Prisma.InventoryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InventoryInclude<ExtArgs> | null
-  where?: Prisma.InventoryWhereInput
-}
-
-/**
- * InventoryOrder.InventoryOrderStructure
- */
-export type InventoryOrder$InventoryOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InventoryOrderStructure
-   */
-  select?: Prisma.InventoryOrderStructureSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the InventoryOrderStructure
-   */
-  omit?: Prisma.InventoryOrderStructureOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InventoryOrderStructureInclude<ExtArgs> | null
-  where?: Prisma.InventoryOrderStructureWhereInput
-  orderBy?: Prisma.InventoryOrderStructureOrderByWithRelationInput | Prisma.InventoryOrderStructureOrderByWithRelationInput[]
-  cursor?: Prisma.InventoryOrderStructureWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.InventoryOrderStructureScalarFieldEnum | Prisma.InventoryOrderStructureScalarFieldEnum[]
 }
 
 /**

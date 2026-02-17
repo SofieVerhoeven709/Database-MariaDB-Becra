@@ -27,17 +27,17 @@ export type AggregateUnit = {
 }
 
 export type UnitAvgAggregateOutputType = {
-  quantity: runtime.Decimal | null
+  quantity: number | null
 }
 
 export type UnitSumAggregateOutputType = {
-  quantity: runtime.Decimal | null
+  quantity: number | null
 }
 
 export type UnitMinAggregateOutputType = {
   id: string | null
   name: string | null
-  quantity: runtime.Decimal | null
+  quantity: number | null
   abbreviation: string | null
   shortDescription: string | null
   longDescription: string | null
@@ -49,7 +49,7 @@ export type UnitMinAggregateOutputType = {
 export type UnitMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  quantity: runtime.Decimal | null
+  quantity: number | null
   abbreviation: string | null
   shortDescription: string | null
   longDescription: string | null
@@ -206,10 +206,10 @@ export type UnitGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UnitGroupByOutputType = {
   id: string
   name: string
-  quantity: runtime.Decimal
+  quantity: number
   abbreviation: string
-  shortDescription: string
-  longDescription: string
+  shortDescription: string | null
+  longDescription: string | null
   valid: boolean
   createdBy: string
   createdAt: Date
@@ -241,19 +241,15 @@ export type UnitWhereInput = {
   NOT?: Prisma.UnitWhereInput | Prisma.UnitWhereInput[]
   id?: Prisma.StringFilter<"Unit"> | string
   name?: Prisma.StringFilter<"Unit"> | string
-  quantity?: Prisma.DecimalFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFilter<"Unit"> | number
   abbreviation?: Prisma.StringFilter<"Unit"> | string
-  shortDescription?: Prisma.StringFilter<"Unit"> | string
-  longDescription?: Prisma.StringFilter<"Unit"> | string
+  shortDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
   valid?: Prisma.BoolFilter<"Unit"> | boolean
   createdBy?: Prisma.StringFilter<"Unit"> | string
   createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureListRelationFilter
-  InventoryStructure?: Prisma.InventoryStructureListRelationFilter
   Material?: Prisma.MaterialListRelationFilter
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  WarehouseManagement?: Prisma.WarehouseManagementListRelationFilter
 }
 
 export type UnitOrderByWithRelationInput = {
@@ -261,17 +257,13 @@ export type UnitOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   valid?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureOrderByRelationAggregateInput
-  InventoryStructure?: Prisma.InventoryStructureOrderByRelationAggregateInput
   Material?: Prisma.MaterialOrderByRelationAggregateInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureOrderByRelationAggregateInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
-  WarehouseManagement?: Prisma.WarehouseManagementOrderByRelationAggregateInput
   _relevance?: Prisma.UnitOrderByRelevanceInput
 }
 
@@ -281,19 +273,15 @@ export type UnitWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UnitWhereInput[]
   NOT?: Prisma.UnitWhereInput | Prisma.UnitWhereInput[]
   name?: Prisma.StringFilter<"Unit"> | string
-  quantity?: Prisma.DecimalFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFilter<"Unit"> | number
   abbreviation?: Prisma.StringFilter<"Unit"> | string
-  shortDescription?: Prisma.StringFilter<"Unit"> | string
-  longDescription?: Prisma.StringFilter<"Unit"> | string
+  shortDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
   valid?: Prisma.BoolFilter<"Unit"> | boolean
   createdBy?: Prisma.StringFilter<"Unit"> | string
   createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureListRelationFilter
-  InventoryStructure?: Prisma.InventoryStructureListRelationFilter
   Material?: Prisma.MaterialListRelationFilter
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  WarehouseManagement?: Prisma.WarehouseManagementListRelationFilter
 }, "id">
 
 export type UnitOrderByWithAggregationInput = {
@@ -301,8 +289,8 @@ export type UnitOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   valid?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -319,10 +307,10 @@ export type UnitScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UnitScalarWhereWithAggregatesInput | Prisma.UnitScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Unit"> | string
   name?: Prisma.StringWithAggregatesFilter<"Unit"> | string
-  quantity?: Prisma.DecimalWithAggregatesFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntWithAggregatesFilter<"Unit"> | number
   abbreviation?: Prisma.StringWithAggregatesFilter<"Unit"> | string
-  shortDescription?: Prisma.StringWithAggregatesFilter<"Unit"> | string
-  longDescription?: Prisma.StringWithAggregatesFilter<"Unit"> | string
+  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
+  longDescription?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
   valid?: Prisma.BoolWithAggregatesFilter<"Unit"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"Unit"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Unit"> | Date | string
@@ -331,78 +319,62 @@ export type UnitScalarWhereWithAggregatesInput = {
 export type UnitCreateInput = {
   id: string
   name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity: number
   abbreviation: string
-  shortDescription: string
-  longDescription: string
+  shortDescription?: string | null
+  longDescription?: string | null
   valid: boolean
   createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutUnitInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutUnitInput
   Material?: Prisma.MaterialCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutUnitInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementCreateNestedManyWithoutUnitInput
 }
 
 export type UnitUncheckedCreateInput = {
   id: string
   name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity: number
   abbreviation: string
-  shortDescription: string
-  longDescription: string
+  shortDescription?: string | null
+  longDescription?: string | null
   valid: boolean
   createdBy: string
   createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutUnitInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutUnitInput
   Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedCreateNestedManyWithoutUnitInput
 }
 
 export type UnitUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutUnitNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutUnitNestedInput
   Material?: Prisma.MaterialUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutUnitNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUpdateManyWithoutUnitNestedInput
 }
 
 export type UnitUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutUnitNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutUnitNestedInput
   Material?: Prisma.MaterialUncheckedUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedUpdateManyWithoutUnitNestedInput
 }
 
 export type UnitCreateManyInput = {
   id: string
   name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity: number
   abbreviation: string
-  shortDescription: string
-  longDescription: string
+  shortDescription?: string | null
+  longDescription?: string | null
   valid: boolean
   createdBy: string
   createdAt: Date | string
@@ -411,10 +383,10 @@ export type UnitCreateManyInput = {
 export type UnitUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -422,10 +394,10 @@ export type UnitUpdateManyMutationInput = {
 export type UnitUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -439,11 +411,6 @@ export type UnitListRelationFilter = {
 
 export type UnitOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type UnitNullableScalarRelationFilter = {
-  is?: Prisma.UnitWhereInput | null
-  isNot?: Prisma.UnitWhereInput | null
 }
 
 export type UnitScalarRelationFilter = {
@@ -543,36 +510,6 @@ export type UnitUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
 }
 
-export type UnitCreateNestedOneWithoutInventoryOrderStructureInput = {
-  create?: Prisma.XOR<Prisma.UnitCreateWithoutInventoryOrderStructureInput, Prisma.UnitUncheckedCreateWithoutInventoryOrderStructureInput>
-  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutInventoryOrderStructureInput
-  connect?: Prisma.UnitWhereUniqueInput
-}
-
-export type UnitUpdateOneWithoutInventoryOrderStructureNestedInput = {
-  create?: Prisma.XOR<Prisma.UnitCreateWithoutInventoryOrderStructureInput, Prisma.UnitUncheckedCreateWithoutInventoryOrderStructureInput>
-  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutInventoryOrderStructureInput
-  upsert?: Prisma.UnitUpsertWithoutInventoryOrderStructureInput
-  disconnect?: Prisma.UnitWhereInput | boolean
-  delete?: Prisma.UnitWhereInput | boolean
-  connect?: Prisma.UnitWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UnitUpdateToOneWithWhereWithoutInventoryOrderStructureInput, Prisma.UnitUpdateWithoutInventoryOrderStructureInput>, Prisma.UnitUncheckedUpdateWithoutInventoryOrderStructureInput>
-}
-
-export type UnitCreateNestedOneWithoutInventoryStructureInput = {
-  create?: Prisma.XOR<Prisma.UnitCreateWithoutInventoryStructureInput, Prisma.UnitUncheckedCreateWithoutInventoryStructureInput>
-  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutInventoryStructureInput
-  connect?: Prisma.UnitWhereUniqueInput
-}
-
-export type UnitUpdateOneRequiredWithoutInventoryStructureNestedInput = {
-  create?: Prisma.XOR<Prisma.UnitCreateWithoutInventoryStructureInput, Prisma.UnitUncheckedCreateWithoutInventoryStructureInput>
-  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutInventoryStructureInput
-  upsert?: Prisma.UnitUpsertWithoutInventoryStructureInput
-  connect?: Prisma.UnitWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UnitUpdateToOneWithWhereWithoutInventoryStructureInput, Prisma.UnitUpdateWithoutInventoryStructureInput>, Prisma.UnitUncheckedUpdateWithoutInventoryStructureInput>
-}
-
 export type UnitCreateNestedOneWithoutMaterialInput = {
   create?: Prisma.XOR<Prisma.UnitCreateWithoutMaterialInput, Prisma.UnitUncheckedCreateWithoutMaterialInput>
   connectOrCreate?: Prisma.UnitCreateOrConnectWithoutMaterialInput
@@ -587,68 +524,28 @@ export type UnitUpdateOneRequiredWithoutMaterialNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UnitUpdateToOneWithWhereWithoutMaterialInput, Prisma.UnitUpdateWithoutMaterialInput>, Prisma.UnitUncheckedUpdateWithoutMaterialInput>
 }
 
-export type UnitCreateNestedOneWithoutMaterialSerialTrackedStructureInput = {
-  create?: Prisma.XOR<Prisma.UnitCreateWithoutMaterialSerialTrackedStructureInput, Prisma.UnitUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
-  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutMaterialSerialTrackedStructureInput
-  connect?: Prisma.UnitWhereUniqueInput
-}
-
-export type UnitUpdateOneWithoutMaterialSerialTrackedStructureNestedInput = {
-  create?: Prisma.XOR<Prisma.UnitCreateWithoutMaterialSerialTrackedStructureInput, Prisma.UnitUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
-  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutMaterialSerialTrackedStructureInput
-  upsert?: Prisma.UnitUpsertWithoutMaterialSerialTrackedStructureInput
-  disconnect?: Prisma.UnitWhereInput | boolean
-  delete?: Prisma.UnitWhereInput | boolean
-  connect?: Prisma.UnitWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UnitUpdateToOneWithWhereWithoutMaterialSerialTrackedStructureInput, Prisma.UnitUpdateWithoutMaterialSerialTrackedStructureInput>, Prisma.UnitUncheckedUpdateWithoutMaterialSerialTrackedStructureInput>
-}
-
-export type UnitCreateNestedOneWithoutWarehouseManagementInput = {
-  create?: Prisma.XOR<Prisma.UnitCreateWithoutWarehouseManagementInput, Prisma.UnitUncheckedCreateWithoutWarehouseManagementInput>
-  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutWarehouseManagementInput
-  connect?: Prisma.UnitWhereUniqueInput
-}
-
-export type UnitUpdateOneWithoutWarehouseManagementNestedInput = {
-  create?: Prisma.XOR<Prisma.UnitCreateWithoutWarehouseManagementInput, Prisma.UnitUncheckedCreateWithoutWarehouseManagementInput>
-  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutWarehouseManagementInput
-  upsert?: Prisma.UnitUpsertWithoutWarehouseManagementInput
-  disconnect?: Prisma.UnitWhereInput | boolean
-  delete?: Prisma.UnitWhereInput | boolean
-  connect?: Prisma.UnitWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UnitUpdateToOneWithWhereWithoutWarehouseManagementInput, Prisma.UnitUpdateWithoutWarehouseManagementInput>, Prisma.UnitUncheckedUpdateWithoutWarehouseManagementInput>
-}
-
 export type UnitCreateWithoutEmployeeInput = {
   id: string
   name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity: number
   abbreviation: string
-  shortDescription: string
-  longDescription: string
+  shortDescription?: string | null
+  longDescription?: string | null
   valid: boolean
   createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutUnitInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutUnitInput
   Material?: Prisma.MaterialCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementCreateNestedManyWithoutUnitInput
 }
 
 export type UnitUncheckedCreateWithoutEmployeeInput = {
   id: string
   name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity: number
   abbreviation: string
-  shortDescription: string
-  longDescription: string
+  shortDescription?: string | null
+  longDescription?: string | null
   valid: boolean
   createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutUnitInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutUnitInput
   Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedCreateNestedManyWithoutUnitInput
 }
 
 export type UnitCreateOrConnectWithoutEmployeeInput = {
@@ -683,205 +580,37 @@ export type UnitScalarWhereInput = {
   NOT?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
   id?: Prisma.StringFilter<"Unit"> | string
   name?: Prisma.StringFilter<"Unit"> | string
-  quantity?: Prisma.DecimalFilter<"Unit"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFilter<"Unit"> | number
   abbreviation?: Prisma.StringFilter<"Unit"> | string
-  shortDescription?: Prisma.StringFilter<"Unit"> | string
-  longDescription?: Prisma.StringFilter<"Unit"> | string
+  shortDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
   valid?: Prisma.BoolFilter<"Unit"> | boolean
   createdBy?: Prisma.StringFilter<"Unit"> | string
   createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
 }
 
-export type UnitCreateWithoutInventoryOrderStructureInput = {
-  id: string
-  name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation: string
-  shortDescription: string
-  longDescription: string
-  valid: boolean
-  createdAt: Date | string
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutUnitInput
-  Material?: Prisma.MaterialCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutUnitInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementCreateNestedManyWithoutUnitInput
-}
-
-export type UnitUncheckedCreateWithoutInventoryOrderStructureInput = {
-  id: string
-  name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation: string
-  shortDescription: string
-  longDescription: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutUnitInput
-  Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedCreateNestedManyWithoutUnitInput
-}
-
-export type UnitCreateOrConnectWithoutInventoryOrderStructureInput = {
-  where: Prisma.UnitWhereUniqueInput
-  create: Prisma.XOR<Prisma.UnitCreateWithoutInventoryOrderStructureInput, Prisma.UnitUncheckedCreateWithoutInventoryOrderStructureInput>
-}
-
-export type UnitUpsertWithoutInventoryOrderStructureInput = {
-  update: Prisma.XOR<Prisma.UnitUpdateWithoutInventoryOrderStructureInput, Prisma.UnitUncheckedUpdateWithoutInventoryOrderStructureInput>
-  create: Prisma.XOR<Prisma.UnitCreateWithoutInventoryOrderStructureInput, Prisma.UnitUncheckedCreateWithoutInventoryOrderStructureInput>
-  where?: Prisma.UnitWhereInput
-}
-
-export type UnitUpdateToOneWithWhereWithoutInventoryOrderStructureInput = {
-  where?: Prisma.UnitWhereInput
-  data: Prisma.XOR<Prisma.UnitUpdateWithoutInventoryOrderStructureInput, Prisma.UnitUncheckedUpdateWithoutInventoryOrderStructureInput>
-}
-
-export type UnitUpdateWithoutInventoryOrderStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutUnitNestedInput
-  Material?: Prisma.MaterialUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutUnitNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUpdateManyWithoutUnitNestedInput
-}
-
-export type UnitUncheckedUpdateWithoutInventoryOrderStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutUnitNestedInput
-  Material?: Prisma.MaterialUncheckedUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedUpdateManyWithoutUnitNestedInput
-}
-
-export type UnitCreateWithoutInventoryStructureInput = {
-  id: string
-  name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation: string
-  shortDescription: string
-  longDescription: string
-  valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutUnitInput
-  Material?: Prisma.MaterialCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutUnitInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementCreateNestedManyWithoutUnitInput
-}
-
-export type UnitUncheckedCreateWithoutInventoryStructureInput = {
-  id: string
-  name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation: string
-  shortDescription: string
-  longDescription: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutUnitInput
-  Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedCreateNestedManyWithoutUnitInput
-}
-
-export type UnitCreateOrConnectWithoutInventoryStructureInput = {
-  where: Prisma.UnitWhereUniqueInput
-  create: Prisma.XOR<Prisma.UnitCreateWithoutInventoryStructureInput, Prisma.UnitUncheckedCreateWithoutInventoryStructureInput>
-}
-
-export type UnitUpsertWithoutInventoryStructureInput = {
-  update: Prisma.XOR<Prisma.UnitUpdateWithoutInventoryStructureInput, Prisma.UnitUncheckedUpdateWithoutInventoryStructureInput>
-  create: Prisma.XOR<Prisma.UnitCreateWithoutInventoryStructureInput, Prisma.UnitUncheckedCreateWithoutInventoryStructureInput>
-  where?: Prisma.UnitWhereInput
-}
-
-export type UnitUpdateToOneWithWhereWithoutInventoryStructureInput = {
-  where?: Prisma.UnitWhereInput
-  data: Prisma.XOR<Prisma.UnitUpdateWithoutInventoryStructureInput, Prisma.UnitUncheckedUpdateWithoutInventoryStructureInput>
-}
-
-export type UnitUpdateWithoutInventoryStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutUnitNestedInput
-  Material?: Prisma.MaterialUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutUnitNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUpdateManyWithoutUnitNestedInput
-}
-
-export type UnitUncheckedUpdateWithoutInventoryStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutUnitNestedInput
-  Material?: Prisma.MaterialUncheckedUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedUpdateManyWithoutUnitNestedInput
-}
-
 export type UnitCreateWithoutMaterialInput = {
   id: string
   name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity: number
   abbreviation: string
-  shortDescription: string
-  longDescription: string
+  shortDescription?: string | null
+  longDescription?: string | null
   valid: boolean
   createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutUnitInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutUnitInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementCreateNestedManyWithoutUnitInput
 }
 
 export type UnitUncheckedCreateWithoutMaterialInput = {
   id: string
   name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity: number
   abbreviation: string
-  shortDescription: string
-  longDescription: string
+  shortDescription?: string | null
+  longDescription?: string | null
   valid: boolean
   createdBy: string
   createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutUnitInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedCreateNestedManyWithoutUnitInput
 }
 
 export type UnitCreateOrConnectWithoutMaterialInput = {
@@ -903,202 +632,34 @@ export type UnitUpdateToOneWithWhereWithoutMaterialInput = {
 export type UnitUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutUnitNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutUnitNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUpdateManyWithoutUnitNestedInput
 }
 
 export type UnitUncheckedUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutUnitNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedUpdateManyWithoutUnitNestedInput
-}
-
-export type UnitCreateWithoutMaterialSerialTrackedStructureInput = {
-  id: string
-  name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation: string
-  shortDescription: string
-  longDescription: string
-  valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutUnitInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutUnitInput
-  Material?: Prisma.MaterialCreateNestedManyWithoutUnitInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementCreateNestedManyWithoutUnitInput
-}
-
-export type UnitUncheckedCreateWithoutMaterialSerialTrackedStructureInput = {
-  id: string
-  name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation: string
-  shortDescription: string
-  longDescription: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutUnitInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutUnitInput
-  Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutUnitInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedCreateNestedManyWithoutUnitInput
-}
-
-export type UnitCreateOrConnectWithoutMaterialSerialTrackedStructureInput = {
-  where: Prisma.UnitWhereUniqueInput
-  create: Prisma.XOR<Prisma.UnitCreateWithoutMaterialSerialTrackedStructureInput, Prisma.UnitUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
-}
-
-export type UnitUpsertWithoutMaterialSerialTrackedStructureInput = {
-  update: Prisma.XOR<Prisma.UnitUpdateWithoutMaterialSerialTrackedStructureInput, Prisma.UnitUncheckedUpdateWithoutMaterialSerialTrackedStructureInput>
-  create: Prisma.XOR<Prisma.UnitCreateWithoutMaterialSerialTrackedStructureInput, Prisma.UnitUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
-  where?: Prisma.UnitWhereInput
-}
-
-export type UnitUpdateToOneWithWhereWithoutMaterialSerialTrackedStructureInput = {
-  where?: Prisma.UnitWhereInput
-  data: Prisma.XOR<Prisma.UnitUpdateWithoutMaterialSerialTrackedStructureInput, Prisma.UnitUncheckedUpdateWithoutMaterialSerialTrackedStructureInput>
-}
-
-export type UnitUpdateWithoutMaterialSerialTrackedStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutUnitNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutUnitNestedInput
-  Material?: Prisma.MaterialUpdateManyWithoutUnitNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUpdateManyWithoutUnitNestedInput
-}
-
-export type UnitUncheckedUpdateWithoutMaterialSerialTrackedStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutUnitNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutUnitNestedInput
-  Material?: Prisma.MaterialUncheckedUpdateManyWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedUpdateManyWithoutUnitNestedInput
-}
-
-export type UnitCreateWithoutWarehouseManagementInput = {
-  id: string
-  name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation: string
-  shortDescription: string
-  longDescription: string
-  valid: boolean
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutUnitInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutUnitInput
-  Material?: Prisma.MaterialCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutUnitInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutUnitInput
-}
-
-export type UnitUncheckedCreateWithoutWarehouseManagementInput = {
-  id: string
-  name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation: string
-  shortDescription: string
-  longDescription: string
-  valid: boolean
-  createdBy: string
-  createdAt: Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutUnitInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutUnitInput
-  Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutUnitInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutUnitInput
-}
-
-export type UnitCreateOrConnectWithoutWarehouseManagementInput = {
-  where: Prisma.UnitWhereUniqueInput
-  create: Prisma.XOR<Prisma.UnitCreateWithoutWarehouseManagementInput, Prisma.UnitUncheckedCreateWithoutWarehouseManagementInput>
-}
-
-export type UnitUpsertWithoutWarehouseManagementInput = {
-  update: Prisma.XOR<Prisma.UnitUpdateWithoutWarehouseManagementInput, Prisma.UnitUncheckedUpdateWithoutWarehouseManagementInput>
-  create: Prisma.XOR<Prisma.UnitCreateWithoutWarehouseManagementInput, Prisma.UnitUncheckedCreateWithoutWarehouseManagementInput>
-  where?: Prisma.UnitWhereInput
-}
-
-export type UnitUpdateToOneWithWhereWithoutWarehouseManagementInput = {
-  where?: Prisma.UnitWhereInput
-  data: Prisma.XOR<Prisma.UnitUpdateWithoutWarehouseManagementInput, Prisma.UnitUncheckedUpdateWithoutWarehouseManagementInput>
-}
-
-export type UnitUpdateWithoutWarehouseManagementInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutUnitNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutUnitNestedInput
-  Material?: Prisma.MaterialUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutUnitNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUnitNestedInput
-}
-
-export type UnitUncheckedUpdateWithoutWarehouseManagementInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutUnitNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutUnitNestedInput
-  Material?: Prisma.MaterialUncheckedUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutUnitNestedInput
 }
 
 export type UnitCreateManyEmployeeInput = {
   id: string
   name: string
-  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity: number
   abbreviation: string
-  shortDescription: string
-  longDescription: string
+  shortDescription?: string | null
+  longDescription?: string | null
   valid: boolean
   createdAt: Date | string
 }
@@ -1106,42 +667,34 @@ export type UnitCreateManyEmployeeInput = {
 export type UnitUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutUnitNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutUnitNestedInput
   Material?: Prisma.MaterialUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUpdateManyWithoutUnitNestedInput
 }
 
 export type UnitUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutUnitNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutUnitNestedInput
   Material?: Prisma.MaterialUncheckedUpdateManyWithoutUnitNestedInput
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutUnitNestedInput
-  WarehouseManagement?: Prisma.WarehouseManagementUncheckedUpdateManyWithoutUnitNestedInput
 }
 
 export type UnitUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1152,19 +705,11 @@ export type UnitUncheckedUpdateManyWithoutEmployeeInput = {
  */
 
 export type UnitCountOutputType = {
-  InventoryOrderStructure: number
-  InventoryStructure: number
   Material: number
-  MaterialSerialTrackedStructure: number
-  WarehouseManagement: number
 }
 
 export type UnitCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InventoryOrderStructure?: boolean | UnitCountOutputTypeCountInventoryOrderStructureArgs
-  InventoryStructure?: boolean | UnitCountOutputTypeCountInventoryStructureArgs
   Material?: boolean | UnitCountOutputTypeCountMaterialArgs
-  MaterialSerialTrackedStructure?: boolean | UnitCountOutputTypeCountMaterialSerialTrackedStructureArgs
-  WarehouseManagement?: boolean | UnitCountOutputTypeCountWarehouseManagementArgs
 }
 
 /**
@@ -1180,36 +725,8 @@ export type UnitCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UnitCountOutputType without action
  */
-export type UnitCountOutputTypeCountInventoryOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InventoryOrderStructureWhereInput
-}
-
-/**
- * UnitCountOutputType without action
- */
-export type UnitCountOutputTypeCountInventoryStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InventoryStructureWhereInput
-}
-
-/**
- * UnitCountOutputType without action
- */
 export type UnitCountOutputTypeCountMaterialArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.MaterialWhereInput
-}
-
-/**
- * UnitCountOutputType without action
- */
-export type UnitCountOutputTypeCountMaterialSerialTrackedStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.MaterialSerialTrackedStructureWhereInput
-}
-
-/**
- * UnitCountOutputType without action
- */
-export type UnitCountOutputTypeCountWarehouseManagementArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.WarehouseManagementWhereInput
 }
 
 
@@ -1223,12 +740,8 @@ export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   valid?: boolean
   createdBy?: boolean
   createdAt?: boolean
-  InventoryOrderStructure?: boolean | Prisma.Unit$InventoryOrderStructureArgs<ExtArgs>
-  InventoryStructure?: boolean | Prisma.Unit$InventoryStructureArgs<ExtArgs>
   Material?: boolean | Prisma.Unit$MaterialArgs<ExtArgs>
-  MaterialSerialTrackedStructure?: boolean | Prisma.Unit$MaterialSerialTrackedStructureArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  WarehouseManagement?: boolean | Prisma.Unit$WarehouseManagementArgs<ExtArgs>
   _count?: boolean | Prisma.UnitCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["unit"]>
 
@@ -1248,32 +761,24 @@ export type UnitSelectScalar = {
 
 export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "quantity" | "abbreviation" | "shortDescription" | "longDescription" | "valid" | "createdBy" | "createdAt", ExtArgs["result"]["unit"]>
 export type UnitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InventoryOrderStructure?: boolean | Prisma.Unit$InventoryOrderStructureArgs<ExtArgs>
-  InventoryStructure?: boolean | Prisma.Unit$InventoryStructureArgs<ExtArgs>
   Material?: boolean | Prisma.Unit$MaterialArgs<ExtArgs>
-  MaterialSerialTrackedStructure?: boolean | Prisma.Unit$MaterialSerialTrackedStructureArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  WarehouseManagement?: boolean | Prisma.Unit$WarehouseManagementArgs<ExtArgs>
   _count?: boolean | Prisma.UnitCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $UnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Unit"
   objects: {
-    InventoryOrderStructure: Prisma.$InventoryOrderStructurePayload<ExtArgs>[]
-    InventoryStructure: Prisma.$InventoryStructurePayload<ExtArgs>[]
     Material: Prisma.$MaterialPayload<ExtArgs>[]
-    MaterialSerialTrackedStructure: Prisma.$MaterialSerialTrackedStructurePayload<ExtArgs>[]
     Employee: Prisma.$EmployeePayload<ExtArgs>
-    WarehouseManagement: Prisma.$WarehouseManagementPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    quantity: runtime.Decimal
+    quantity: number
     abbreviation: string
-    shortDescription: string
-    longDescription: string
+    shortDescription: string | null
+    longDescription: string | null
     valid: boolean
     createdBy: string
     createdAt: Date
@@ -1617,12 +1122,8 @@ readonly fields: UnitFieldRefs;
  */
 export interface Prisma__UnitClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  InventoryOrderStructure<T extends Prisma.Unit$InventoryOrderStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$InventoryOrderStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryOrderStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  InventoryStructure<T extends Prisma.Unit$InventoryStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$InventoryStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Material<T extends Prisma.Unit$MaterialArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$MaterialArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  MaterialSerialTrackedStructure<T extends Prisma.Unit$MaterialSerialTrackedStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$MaterialSerialTrackedStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackedStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  WarehouseManagement<T extends Prisma.Unit$WarehouseManagementArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$WarehouseManagementArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WarehouseManagementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1654,7 +1155,7 @@ export interface Prisma__UnitClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface UnitFieldRefs {
   readonly id: Prisma.FieldRef<"Unit", 'String'>
   readonly name: Prisma.FieldRef<"Unit", 'String'>
-  readonly quantity: Prisma.FieldRef<"Unit", 'Decimal'>
+  readonly quantity: Prisma.FieldRef<"Unit", 'Int'>
   readonly abbreviation: Prisma.FieldRef<"Unit", 'String'>
   readonly shortDescription: Prisma.FieldRef<"Unit", 'String'>
   readonly longDescription: Prisma.FieldRef<"Unit", 'String'>
@@ -2004,54 +1505,6 @@ export type UnitDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Unit.InventoryOrderStructure
- */
-export type Unit$InventoryOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InventoryOrderStructure
-   */
-  select?: Prisma.InventoryOrderStructureSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the InventoryOrderStructure
-   */
-  omit?: Prisma.InventoryOrderStructureOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InventoryOrderStructureInclude<ExtArgs> | null
-  where?: Prisma.InventoryOrderStructureWhereInput
-  orderBy?: Prisma.InventoryOrderStructureOrderByWithRelationInput | Prisma.InventoryOrderStructureOrderByWithRelationInput[]
-  cursor?: Prisma.InventoryOrderStructureWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.InventoryOrderStructureScalarFieldEnum | Prisma.InventoryOrderStructureScalarFieldEnum[]
-}
-
-/**
- * Unit.InventoryStructure
- */
-export type Unit$InventoryStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InventoryStructure
-   */
-  select?: Prisma.InventoryStructureSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the InventoryStructure
-   */
-  omit?: Prisma.InventoryStructureOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InventoryStructureInclude<ExtArgs> | null
-  where?: Prisma.InventoryStructureWhereInput
-  orderBy?: Prisma.InventoryStructureOrderByWithRelationInput | Prisma.InventoryStructureOrderByWithRelationInput[]
-  cursor?: Prisma.InventoryStructureWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.InventoryStructureScalarFieldEnum | Prisma.InventoryStructureScalarFieldEnum[]
-}
-
-/**
  * Unit.Material
  */
 export type Unit$MaterialArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2073,54 +1526,6 @@ export type Unit$MaterialArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.MaterialScalarFieldEnum | Prisma.MaterialScalarFieldEnum[]
-}
-
-/**
- * Unit.MaterialSerialTrackedStructure
- */
-export type Unit$MaterialSerialTrackedStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the MaterialSerialTrackedStructure
-   */
-  select?: Prisma.MaterialSerialTrackedStructureSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the MaterialSerialTrackedStructure
-   */
-  omit?: Prisma.MaterialSerialTrackedStructureOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MaterialSerialTrackedStructureInclude<ExtArgs> | null
-  where?: Prisma.MaterialSerialTrackedStructureWhereInput
-  orderBy?: Prisma.MaterialSerialTrackedStructureOrderByWithRelationInput | Prisma.MaterialSerialTrackedStructureOrderByWithRelationInput[]
-  cursor?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.MaterialSerialTrackedStructureScalarFieldEnum | Prisma.MaterialSerialTrackedStructureScalarFieldEnum[]
-}
-
-/**
- * Unit.WarehouseManagement
- */
-export type Unit$WarehouseManagementArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the WarehouseManagement
-   */
-  select?: Prisma.WarehouseManagementSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the WarehouseManagement
-   */
-  omit?: Prisma.WarehouseManagementOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.WarehouseManagementInclude<ExtArgs> | null
-  where?: Prisma.WarehouseManagementWhereInput
-  orderBy?: Prisma.WarehouseManagementOrderByWithRelationInput | Prisma.WarehouseManagementOrderByWithRelationInput[]
-  cursor?: Prisma.WarehouseManagementWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.WarehouseManagementScalarFieldEnum | Prisma.WarehouseManagementScalarFieldEnum[]
 }
 
 /**

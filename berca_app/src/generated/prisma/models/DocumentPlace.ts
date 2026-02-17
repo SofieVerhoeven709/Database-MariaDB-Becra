@@ -149,10 +149,10 @@ export type DocumentPlaceGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type DocumentPlaceGroupByOutputType = {
   id: string
-  placeA: string
-  placeB: string
-  placeC: string
-  placeD: string
+  placeA: string | null
+  placeB: string | null
+  placeC: string | null
+  placeD: string | null
   _count: DocumentPlaceCountAggregateOutputType | null
   _min: DocumentPlaceMinAggregateOutputType | null
   _max: DocumentPlaceMaxAggregateOutputType | null
@@ -178,20 +178,20 @@ export type DocumentPlaceWhereInput = {
   OR?: Prisma.DocumentPlaceWhereInput[]
   NOT?: Prisma.DocumentPlaceWhereInput | Prisma.DocumentPlaceWhereInput[]
   id?: Prisma.StringFilter<"DocumentPlace"> | string
-  placeA?: Prisma.StringFilter<"DocumentPlace"> | string
-  placeB?: Prisma.StringFilter<"DocumentPlace"> | string
-  placeC?: Prisma.StringFilter<"DocumentPlace"> | string
-  placeD?: Prisma.StringFilter<"DocumentPlace"> | string
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
+  placeA?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
+  placeB?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
+  placeC?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
+  placeD?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
+  QuoteSupplier?: Prisma.QuoteSupplierListRelationFilter
 }
 
 export type DocumentPlaceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  placeA?: Prisma.SortOrder
-  placeB?: Prisma.SortOrder
-  placeC?: Prisma.SortOrder
-  placeD?: Prisma.SortOrder
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureOrderByRelationAggregateInput
+  placeA?: Prisma.SortOrderInput | Prisma.SortOrder
+  placeB?: Prisma.SortOrderInput | Prisma.SortOrder
+  placeC?: Prisma.SortOrderInput | Prisma.SortOrder
+  placeD?: Prisma.SortOrderInput | Prisma.SortOrder
+  QuoteSupplier?: Prisma.QuoteSupplierOrderByRelationAggregateInput
   _relevance?: Prisma.DocumentPlaceOrderByRelevanceInput
 }
 
@@ -200,19 +200,19 @@ export type DocumentPlaceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.DocumentPlaceWhereInput | Prisma.DocumentPlaceWhereInput[]
   OR?: Prisma.DocumentPlaceWhereInput[]
   NOT?: Prisma.DocumentPlaceWhereInput | Prisma.DocumentPlaceWhereInput[]
-  placeA?: Prisma.StringFilter<"DocumentPlace"> | string
-  placeB?: Prisma.StringFilter<"DocumentPlace"> | string
-  placeC?: Prisma.StringFilter<"DocumentPlace"> | string
-  placeD?: Prisma.StringFilter<"DocumentPlace"> | string
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
+  placeA?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
+  placeB?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
+  placeC?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
+  placeD?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
+  QuoteSupplier?: Prisma.QuoteSupplierListRelationFilter
 }, "id">
 
 export type DocumentPlaceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  placeA?: Prisma.SortOrder
-  placeB?: Prisma.SortOrder
-  placeC?: Prisma.SortOrder
-  placeD?: Prisma.SortOrder
+  placeA?: Prisma.SortOrderInput | Prisma.SortOrder
+  placeB?: Prisma.SortOrderInput | Prisma.SortOrder
+  placeC?: Prisma.SortOrderInput | Prisma.SortOrder
+  placeD?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.DocumentPlaceCountOrderByAggregateInput
   _max?: Prisma.DocumentPlaceMaxOrderByAggregateInput
   _min?: Prisma.DocumentPlaceMinOrderByAggregateInput
@@ -223,70 +223,70 @@ export type DocumentPlaceScalarWhereWithAggregatesInput = {
   OR?: Prisma.DocumentPlaceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DocumentPlaceScalarWhereWithAggregatesInput | Prisma.DocumentPlaceScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"DocumentPlace"> | string
-  placeA?: Prisma.StringWithAggregatesFilter<"DocumentPlace"> | string
-  placeB?: Prisma.StringWithAggregatesFilter<"DocumentPlace"> | string
-  placeC?: Prisma.StringWithAggregatesFilter<"DocumentPlace"> | string
-  placeD?: Prisma.StringWithAggregatesFilter<"DocumentPlace"> | string
+  placeA?: Prisma.StringNullableWithAggregatesFilter<"DocumentPlace"> | string | null
+  placeB?: Prisma.StringNullableWithAggregatesFilter<"DocumentPlace"> | string | null
+  placeC?: Prisma.StringNullableWithAggregatesFilter<"DocumentPlace"> | string | null
+  placeD?: Prisma.StringNullableWithAggregatesFilter<"DocumentPlace"> | string | null
 }
 
 export type DocumentPlaceCreateInput = {
   id: string
-  placeA: string
-  placeB: string
-  placeC: string
-  placeD: string
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentPlaceInput
+  placeA?: string | null
+  placeB?: string | null
+  placeC?: string | null
+  placeD?: string | null
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutDocumentPlaceInput
 }
 
 export type DocumentPlaceUncheckedCreateInput = {
   id: string
-  placeA: string
-  placeB: string
-  placeC: string
-  placeD: string
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentPlaceInput
+  placeA?: string | null
+  placeB?: string | null
+  placeC?: string | null
+  placeD?: string | null
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutDocumentPlaceInput
 }
 
 export type DocumentPlaceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.StringFieldUpdateOperationsInput | string
-  placeB?: Prisma.StringFieldUpdateOperationsInput | string
-  placeC?: Prisma.StringFieldUpdateOperationsInput | string
-  placeD?: Prisma.StringFieldUpdateOperationsInput | string
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentPlaceNestedInput
+  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutDocumentPlaceNestedInput
 }
 
 export type DocumentPlaceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.StringFieldUpdateOperationsInput | string
-  placeB?: Prisma.StringFieldUpdateOperationsInput | string
-  placeC?: Prisma.StringFieldUpdateOperationsInput | string
-  placeD?: Prisma.StringFieldUpdateOperationsInput | string
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentPlaceNestedInput
+  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutDocumentPlaceNestedInput
 }
 
 export type DocumentPlaceCreateManyInput = {
   id: string
-  placeA: string
-  placeB: string
-  placeC: string
-  placeD: string
+  placeA?: string | null
+  placeB?: string | null
+  placeC?: string | null
+  placeD?: string | null
 }
 
 export type DocumentPlaceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.StringFieldUpdateOperationsInput | string
-  placeB?: Prisma.StringFieldUpdateOperationsInput | string
-  placeC?: Prisma.StringFieldUpdateOperationsInput | string
-  placeD?: Prisma.StringFieldUpdateOperationsInput | string
+  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentPlaceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.StringFieldUpdateOperationsInput | string
-  placeB?: Prisma.StringFieldUpdateOperationsInput | string
-  placeC?: Prisma.StringFieldUpdateOperationsInput | string
-  placeD?: Prisma.StringFieldUpdateOperationsInput | string
+  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentPlaceOrderByRelevanceInput = {
@@ -324,68 +324,68 @@ export type DocumentPlaceNullableScalarRelationFilter = {
   isNot?: Prisma.DocumentPlaceWhereInput | null
 }
 
-export type DocumentPlaceCreateNestedOneWithoutMaterialSerialTrackedStructureInput = {
-  create?: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutMaterialSerialTrackedStructureInput, Prisma.DocumentPlaceUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
-  connectOrCreate?: Prisma.DocumentPlaceCreateOrConnectWithoutMaterialSerialTrackedStructureInput
+export type DocumentPlaceCreateNestedOneWithoutQuoteSupplierInput = {
+  create?: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedCreateWithoutQuoteSupplierInput>
+  connectOrCreate?: Prisma.DocumentPlaceCreateOrConnectWithoutQuoteSupplierInput
   connect?: Prisma.DocumentPlaceWhereUniqueInput
 }
 
-export type DocumentPlaceUpdateOneWithoutMaterialSerialTrackedStructureNestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutMaterialSerialTrackedStructureInput, Prisma.DocumentPlaceUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
-  connectOrCreate?: Prisma.DocumentPlaceCreateOrConnectWithoutMaterialSerialTrackedStructureInput
-  upsert?: Prisma.DocumentPlaceUpsertWithoutMaterialSerialTrackedStructureInput
+export type DocumentPlaceUpdateOneWithoutQuoteSupplierNestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedCreateWithoutQuoteSupplierInput>
+  connectOrCreate?: Prisma.DocumentPlaceCreateOrConnectWithoutQuoteSupplierInput
+  upsert?: Prisma.DocumentPlaceUpsertWithoutQuoteSupplierInput
   disconnect?: Prisma.DocumentPlaceWhereInput | boolean
   delete?: Prisma.DocumentPlaceWhereInput | boolean
   connect?: Prisma.DocumentPlaceWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentPlaceUpdateToOneWithWhereWithoutMaterialSerialTrackedStructureInput, Prisma.DocumentPlaceUpdateWithoutMaterialSerialTrackedStructureInput>, Prisma.DocumentPlaceUncheckedUpdateWithoutMaterialSerialTrackedStructureInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentPlaceUpdateToOneWithWhereWithoutQuoteSupplierInput, Prisma.DocumentPlaceUpdateWithoutQuoteSupplierInput>, Prisma.DocumentPlaceUncheckedUpdateWithoutQuoteSupplierInput>
 }
 
-export type DocumentPlaceCreateWithoutMaterialSerialTrackedStructureInput = {
+export type DocumentPlaceCreateWithoutQuoteSupplierInput = {
   id: string
-  placeA: string
-  placeB: string
-  placeC: string
-  placeD: string
+  placeA?: string | null
+  placeB?: string | null
+  placeC?: string | null
+  placeD?: string | null
 }
 
-export type DocumentPlaceUncheckedCreateWithoutMaterialSerialTrackedStructureInput = {
+export type DocumentPlaceUncheckedCreateWithoutQuoteSupplierInput = {
   id: string
-  placeA: string
-  placeB: string
-  placeC: string
-  placeD: string
+  placeA?: string | null
+  placeB?: string | null
+  placeC?: string | null
+  placeD?: string | null
 }
 
-export type DocumentPlaceCreateOrConnectWithoutMaterialSerialTrackedStructureInput = {
+export type DocumentPlaceCreateOrConnectWithoutQuoteSupplierInput = {
   where: Prisma.DocumentPlaceWhereUniqueInput
-  create: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutMaterialSerialTrackedStructureInput, Prisma.DocumentPlaceUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
+  create: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedCreateWithoutQuoteSupplierInput>
 }
 
-export type DocumentPlaceUpsertWithoutMaterialSerialTrackedStructureInput = {
-  update: Prisma.XOR<Prisma.DocumentPlaceUpdateWithoutMaterialSerialTrackedStructureInput, Prisma.DocumentPlaceUncheckedUpdateWithoutMaterialSerialTrackedStructureInput>
-  create: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutMaterialSerialTrackedStructureInput, Prisma.DocumentPlaceUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
+export type DocumentPlaceUpsertWithoutQuoteSupplierInput = {
+  update: Prisma.XOR<Prisma.DocumentPlaceUpdateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedUpdateWithoutQuoteSupplierInput>
+  create: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedCreateWithoutQuoteSupplierInput>
   where?: Prisma.DocumentPlaceWhereInput
 }
 
-export type DocumentPlaceUpdateToOneWithWhereWithoutMaterialSerialTrackedStructureInput = {
+export type DocumentPlaceUpdateToOneWithWhereWithoutQuoteSupplierInput = {
   where?: Prisma.DocumentPlaceWhereInput
-  data: Prisma.XOR<Prisma.DocumentPlaceUpdateWithoutMaterialSerialTrackedStructureInput, Prisma.DocumentPlaceUncheckedUpdateWithoutMaterialSerialTrackedStructureInput>
+  data: Prisma.XOR<Prisma.DocumentPlaceUpdateWithoutQuoteSupplierInput, Prisma.DocumentPlaceUncheckedUpdateWithoutQuoteSupplierInput>
 }
 
-export type DocumentPlaceUpdateWithoutMaterialSerialTrackedStructureInput = {
+export type DocumentPlaceUpdateWithoutQuoteSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.StringFieldUpdateOperationsInput | string
-  placeB?: Prisma.StringFieldUpdateOperationsInput | string
-  placeC?: Prisma.StringFieldUpdateOperationsInput | string
-  placeD?: Prisma.StringFieldUpdateOperationsInput | string
+  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type DocumentPlaceUncheckedUpdateWithoutMaterialSerialTrackedStructureInput = {
+export type DocumentPlaceUncheckedUpdateWithoutQuoteSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.StringFieldUpdateOperationsInput | string
-  placeB?: Prisma.StringFieldUpdateOperationsInput | string
-  placeC?: Prisma.StringFieldUpdateOperationsInput | string
-  placeD?: Prisma.StringFieldUpdateOperationsInput | string
+  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -394,11 +394,11 @@ export type DocumentPlaceUncheckedUpdateWithoutMaterialSerialTrackedStructureInp
  */
 
 export type DocumentPlaceCountOutputType = {
-  MaterialSerialTrackedStructure: number
+  QuoteSupplier: number
 }
 
 export type DocumentPlaceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  MaterialSerialTrackedStructure?: boolean | DocumentPlaceCountOutputTypeCountMaterialSerialTrackedStructureArgs
+  QuoteSupplier?: boolean | DocumentPlaceCountOutputTypeCountQuoteSupplierArgs
 }
 
 /**
@@ -414,8 +414,8 @@ export type DocumentPlaceCountOutputTypeDefaultArgs<ExtArgs extends runtime.Type
 /**
  * DocumentPlaceCountOutputType without action
  */
-export type DocumentPlaceCountOutputTypeCountMaterialSerialTrackedStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.MaterialSerialTrackedStructureWhereInput
+export type DocumentPlaceCountOutputTypeCountQuoteSupplierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuoteSupplierWhereInput
 }
 
 
@@ -425,7 +425,7 @@ export type DocumentPlaceSelect<ExtArgs extends runtime.Types.Extensions.Interna
   placeB?: boolean
   placeC?: boolean
   placeD?: boolean
-  MaterialSerialTrackedStructure?: boolean | Prisma.DocumentPlace$MaterialSerialTrackedStructureArgs<ExtArgs>
+  QuoteSupplier?: boolean | Prisma.DocumentPlace$QuoteSupplierArgs<ExtArgs>
   _count?: boolean | Prisma.DocumentPlaceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["documentPlace"]>
 
@@ -441,21 +441,21 @@ export type DocumentPlaceSelectScalar = {
 
 export type DocumentPlaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "placeA" | "placeB" | "placeC" | "placeD", ExtArgs["result"]["documentPlace"]>
 export type DocumentPlaceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  MaterialSerialTrackedStructure?: boolean | Prisma.DocumentPlace$MaterialSerialTrackedStructureArgs<ExtArgs>
+  QuoteSupplier?: boolean | Prisma.DocumentPlace$QuoteSupplierArgs<ExtArgs>
   _count?: boolean | Prisma.DocumentPlaceCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $DocumentPlacePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DocumentPlace"
   objects: {
-    MaterialSerialTrackedStructure: Prisma.$MaterialSerialTrackedStructurePayload<ExtArgs>[]
+    QuoteSupplier: Prisma.$QuoteSupplierPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    placeA: string
-    placeB: string
-    placeC: string
-    placeD: string
+    placeA: string | null
+    placeB: string | null
+    placeC: string | null
+    placeD: string | null
   }, ExtArgs["result"]["documentPlace"]>
   composites: {}
 }
@@ -796,7 +796,7 @@ readonly fields: DocumentPlaceFieldRefs;
  */
 export interface Prisma__DocumentPlaceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  MaterialSerialTrackedStructure<T extends Prisma.DocumentPlace$MaterialSerialTrackedStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentPlace$MaterialSerialTrackedStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackedStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  QuoteSupplier<T extends Prisma.DocumentPlace$QuoteSupplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentPlace$QuoteSupplierArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteSupplierPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1174,27 +1174,27 @@ export type DocumentPlaceDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
- * DocumentPlace.MaterialSerialTrackedStructure
+ * DocumentPlace.QuoteSupplier
  */
-export type DocumentPlace$MaterialSerialTrackedStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DocumentPlace$QuoteSupplierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the MaterialSerialTrackedStructure
+   * Select specific fields to fetch from the QuoteSupplier
    */
-  select?: Prisma.MaterialSerialTrackedStructureSelect<ExtArgs> | null
+  select?: Prisma.QuoteSupplierSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the MaterialSerialTrackedStructure
+   * Omit specific fields from the QuoteSupplier
    */
-  omit?: Prisma.MaterialSerialTrackedStructureOmit<ExtArgs> | null
+  omit?: Prisma.QuoteSupplierOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.MaterialSerialTrackedStructureInclude<ExtArgs> | null
-  where?: Prisma.MaterialSerialTrackedStructureWhereInput
-  orderBy?: Prisma.MaterialSerialTrackedStructureOrderByWithRelationInput | Prisma.MaterialSerialTrackedStructureOrderByWithRelationInput[]
-  cursor?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
+  include?: Prisma.QuoteSupplierInclude<ExtArgs> | null
+  where?: Prisma.QuoteSupplierWhereInput
+  orderBy?: Prisma.QuoteSupplierOrderByWithRelationInput | Prisma.QuoteSupplierOrderByWithRelationInput[]
+  cursor?: Prisma.QuoteSupplierWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.MaterialSerialTrackedStructureScalarFieldEnum | Prisma.MaterialSerialTrackedStructureScalarFieldEnum[]
+  distinct?: Prisma.QuoteSupplierScalarFieldEnum | Prisma.QuoteSupplierScalarFieldEnum[]
 }
 
 /**

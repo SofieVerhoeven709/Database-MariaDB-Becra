@@ -59,7 +59,6 @@ export type InvoiceOutMinAggregateOutputType = {
   completed: boolean | null
   createdBy: string | null
   invoiceTypeId: string | null
-  workOrderId: string | null
   targetId: string | null
 }
 
@@ -86,7 +85,6 @@ export type InvoiceOutMaxAggregateOutputType = {
   completed: boolean | null
   createdBy: string | null
   invoiceTypeId: string | null
-  workOrderId: string | null
   targetId: string | null
 }
 
@@ -113,7 +111,6 @@ export type InvoiceOutCountAggregateOutputType = {
   completed: number
   createdBy: number
   invoiceTypeId: number
-  workOrderId: number
   targetId: number
   _all: number
 }
@@ -152,7 +149,6 @@ export type InvoiceOutMinAggregateInputType = {
   completed?: true
   createdBy?: true
   invoiceTypeId?: true
-  workOrderId?: true
   targetId?: true
 }
 
@@ -179,7 +175,6 @@ export type InvoiceOutMaxAggregateInputType = {
   completed?: true
   createdBy?: true
   invoiceTypeId?: true
-  workOrderId?: true
   targetId?: true
 }
 
@@ -206,7 +201,6 @@ export type InvoiceOutCountAggregateInputType = {
   completed?: true
   createdBy?: true
   invoiceTypeId?: true
-  workOrderId?: true
   targetId?: true
   _all?: true
 }
@@ -320,7 +314,6 @@ export type InvoiceOutGroupByOutputType = {
   completed: boolean
   createdBy: string
   invoiceTypeId: string
-  workOrderId: string
   targetId: string
   _count: InvoiceOutCountAggregateOutputType | null
   _avg: InvoiceOutAvgAggregateOutputType | null
@@ -370,12 +363,11 @@ export type InvoiceOutWhereInput = {
   completed?: Prisma.BoolFilter<"InvoiceOut"> | boolean
   createdBy?: Prisma.StringFilter<"InvoiceOut"> | string
   invoiceTypeId?: Prisma.StringFilter<"InvoiceOut"> | string
-  workOrderId?: Prisma.StringFilter<"InvoiceOut"> | string
   targetId?: Prisma.StringFilter<"InvoiceOut"> | string
   InvoiceType?: Prisma.XOR<Prisma.InvoiceTypeScalarRelationFilter, Prisma.InvoiceTypeWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceListRelationFilter
 }
 
 export type InvoiceOutOrderByWithRelationInput = {
@@ -401,12 +393,11 @@ export type InvoiceOutOrderByWithRelationInput = {
   completed?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   invoiceTypeId?: Prisma.SortOrder
-  workOrderId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
   InvoiceType?: Prisma.InvoiceTypeOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
-  WorkOrder?: Prisma.WorkOrderOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceOrderByRelationAggregateInput
   _relevance?: Prisma.InvoiceOutOrderByRelevanceInput
 }
 
@@ -436,12 +427,11 @@ export type InvoiceOutWhereUniqueInput = Prisma.AtLeast<{
   completed?: Prisma.BoolFilter<"InvoiceOut"> | boolean
   createdBy?: Prisma.StringFilter<"InvoiceOut"> | string
   invoiceTypeId?: Prisma.StringFilter<"InvoiceOut"> | string
-  workOrderId?: Prisma.StringFilter<"InvoiceOut"> | string
   targetId?: Prisma.StringFilter<"InvoiceOut"> | string
   InvoiceType?: Prisma.XOR<Prisma.InvoiceTypeScalarRelationFilter, Prisma.InvoiceTypeWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceListRelationFilter
 }, "id">
 
 export type InvoiceOutOrderByWithAggregationInput = {
@@ -467,7 +457,6 @@ export type InvoiceOutOrderByWithAggregationInput = {
   completed?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   invoiceTypeId?: Prisma.SortOrder
-  workOrderId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
   _count?: Prisma.InvoiceOutCountOrderByAggregateInput
   _avg?: Prisma.InvoiceOutAvgOrderByAggregateInput
@@ -502,7 +491,6 @@ export type InvoiceOutScalarWhereWithAggregatesInput = {
   completed?: Prisma.BoolWithAggregatesFilter<"InvoiceOut"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"InvoiceOut"> | string
   invoiceTypeId?: Prisma.StringWithAggregatesFilter<"InvoiceOut"> | string
-  workOrderId?: Prisma.StringWithAggregatesFilter<"InvoiceOut"> | string
   targetId?: Prisma.StringWithAggregatesFilter<"InvoiceOut"> | string
 }
 
@@ -529,8 +517,8 @@ export type InvoiceOutCreateInput = {
   completed?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
-  WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
 
 export type InvoiceOutUncheckedCreateInput = {
@@ -556,8 +544,8 @@ export type InvoiceOutUncheckedCreateInput = {
   completed?: boolean
   createdBy: string
   invoiceTypeId: string
-  workOrderId: string
   targetId: string
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedCreateNestedManyWithoutInvoiceOutInput
 }
 
 export type InvoiceOutUpdateInput = {
@@ -583,8 +571,8 @@ export type InvoiceOutUpdateInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
 
 export type InvoiceOutUncheckedUpdateInput = {
@@ -610,8 +598,8 @@ export type InvoiceOutUncheckedUpdateInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedUpdateManyWithoutInvoiceOutNestedInput
 }
 
 export type InvoiceOutCreateManyInput = {
@@ -637,7 +625,6 @@ export type InvoiceOutCreateManyInput = {
   completed?: boolean
   createdBy: string
   invoiceTypeId: string
-  workOrderId: string
   targetId: string
 }
 
@@ -687,7 +674,6 @@ export type InvoiceOutUncheckedUpdateManyInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -730,7 +716,6 @@ export type InvoiceOutCountOrderByAggregateInput = {
   completed?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   invoiceTypeId?: Prisma.SortOrder
-  workOrderId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
 }
 
@@ -762,7 +747,6 @@ export type InvoiceOutMaxOrderByAggregateInput = {
   completed?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   invoiceTypeId?: Prisma.SortOrder
-  workOrderId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
 }
 
@@ -789,13 +773,17 @@ export type InvoiceOutMinOrderByAggregateInput = {
   completed?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   invoiceTypeId?: Prisma.SortOrder
-  workOrderId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
 }
 
 export type InvoiceOutSumOrderByAggregateInput = {
   vatMargin?: Prisma.SortOrder
   amountWithoutVat?: Prisma.SortOrder
+}
+
+export type InvoiceOutScalarRelationFilter = {
+  is?: Prisma.InvoiceOutWhereInput
+  isNot?: Prisma.InvoiceOutWhereInput
 }
 
 export type InvoiceOutCreateNestedManyWithoutEmployeeInput = {
@@ -924,46 +912,18 @@ export type InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput = {
   deleteMany?: Prisma.InvoiceOutScalarWhereInput | Prisma.InvoiceOutScalarWhereInput[]
 }
 
-export type InvoiceOutCreateNestedManyWithoutWorkOrderInput = {
-  create?: Prisma.XOR<Prisma.InvoiceOutCreateWithoutWorkOrderInput, Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInput> | Prisma.InvoiceOutCreateWithoutWorkOrderInput[] | Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInput[]
-  connectOrCreate?: Prisma.InvoiceOutCreateOrConnectWithoutWorkOrderInput | Prisma.InvoiceOutCreateOrConnectWithoutWorkOrderInput[]
-  createMany?: Prisma.InvoiceOutCreateManyWorkOrderInputEnvelope
-  connect?: Prisma.InvoiceOutWhereUniqueInput | Prisma.InvoiceOutWhereUniqueInput[]
+export type InvoiceOutCreateNestedOneWithoutWorkOrderInvoiceInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutCreateWithoutWorkOrderInvoiceInput, Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInvoiceInput>
+  connectOrCreate?: Prisma.InvoiceOutCreateOrConnectWithoutWorkOrderInvoiceInput
+  connect?: Prisma.InvoiceOutWhereUniqueInput
 }
 
-export type InvoiceOutUncheckedCreateNestedManyWithoutWorkOrderInput = {
-  create?: Prisma.XOR<Prisma.InvoiceOutCreateWithoutWorkOrderInput, Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInput> | Prisma.InvoiceOutCreateWithoutWorkOrderInput[] | Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInput[]
-  connectOrCreate?: Prisma.InvoiceOutCreateOrConnectWithoutWorkOrderInput | Prisma.InvoiceOutCreateOrConnectWithoutWorkOrderInput[]
-  createMany?: Prisma.InvoiceOutCreateManyWorkOrderInputEnvelope
-  connect?: Prisma.InvoiceOutWhereUniqueInput | Prisma.InvoiceOutWhereUniqueInput[]
-}
-
-export type InvoiceOutUpdateManyWithoutWorkOrderNestedInput = {
-  create?: Prisma.XOR<Prisma.InvoiceOutCreateWithoutWorkOrderInput, Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInput> | Prisma.InvoiceOutCreateWithoutWorkOrderInput[] | Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInput[]
-  connectOrCreate?: Prisma.InvoiceOutCreateOrConnectWithoutWorkOrderInput | Prisma.InvoiceOutCreateOrConnectWithoutWorkOrderInput[]
-  upsert?: Prisma.InvoiceOutUpsertWithWhereUniqueWithoutWorkOrderInput | Prisma.InvoiceOutUpsertWithWhereUniqueWithoutWorkOrderInput[]
-  createMany?: Prisma.InvoiceOutCreateManyWorkOrderInputEnvelope
-  set?: Prisma.InvoiceOutWhereUniqueInput | Prisma.InvoiceOutWhereUniqueInput[]
-  disconnect?: Prisma.InvoiceOutWhereUniqueInput | Prisma.InvoiceOutWhereUniqueInput[]
-  delete?: Prisma.InvoiceOutWhereUniqueInput | Prisma.InvoiceOutWhereUniqueInput[]
-  connect?: Prisma.InvoiceOutWhereUniqueInput | Prisma.InvoiceOutWhereUniqueInput[]
-  update?: Prisma.InvoiceOutUpdateWithWhereUniqueWithoutWorkOrderInput | Prisma.InvoiceOutUpdateWithWhereUniqueWithoutWorkOrderInput[]
-  updateMany?: Prisma.InvoiceOutUpdateManyWithWhereWithoutWorkOrderInput | Prisma.InvoiceOutUpdateManyWithWhereWithoutWorkOrderInput[]
-  deleteMany?: Prisma.InvoiceOutScalarWhereInput | Prisma.InvoiceOutScalarWhereInput[]
-}
-
-export type InvoiceOutUncheckedUpdateManyWithoutWorkOrderNestedInput = {
-  create?: Prisma.XOR<Prisma.InvoiceOutCreateWithoutWorkOrderInput, Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInput> | Prisma.InvoiceOutCreateWithoutWorkOrderInput[] | Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInput[]
-  connectOrCreate?: Prisma.InvoiceOutCreateOrConnectWithoutWorkOrderInput | Prisma.InvoiceOutCreateOrConnectWithoutWorkOrderInput[]
-  upsert?: Prisma.InvoiceOutUpsertWithWhereUniqueWithoutWorkOrderInput | Prisma.InvoiceOutUpsertWithWhereUniqueWithoutWorkOrderInput[]
-  createMany?: Prisma.InvoiceOutCreateManyWorkOrderInputEnvelope
-  set?: Prisma.InvoiceOutWhereUniqueInput | Prisma.InvoiceOutWhereUniqueInput[]
-  disconnect?: Prisma.InvoiceOutWhereUniqueInput | Prisma.InvoiceOutWhereUniqueInput[]
-  delete?: Prisma.InvoiceOutWhereUniqueInput | Prisma.InvoiceOutWhereUniqueInput[]
-  connect?: Prisma.InvoiceOutWhereUniqueInput | Prisma.InvoiceOutWhereUniqueInput[]
-  update?: Prisma.InvoiceOutUpdateWithWhereUniqueWithoutWorkOrderInput | Prisma.InvoiceOutUpdateWithWhereUniqueWithoutWorkOrderInput[]
-  updateMany?: Prisma.InvoiceOutUpdateManyWithWhereWithoutWorkOrderInput | Prisma.InvoiceOutUpdateManyWithWhereWithoutWorkOrderInput[]
-  deleteMany?: Prisma.InvoiceOutScalarWhereInput | Prisma.InvoiceOutScalarWhereInput[]
+export type InvoiceOutUpdateOneRequiredWithoutWorkOrderInvoiceNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutCreateWithoutWorkOrderInvoiceInput, Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInvoiceInput>
+  connectOrCreate?: Prisma.InvoiceOutCreateOrConnectWithoutWorkOrderInvoiceInput
+  upsert?: Prisma.InvoiceOutUpsertWithoutWorkOrderInvoiceInput
+  connect?: Prisma.InvoiceOutWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InvoiceOutUpdateToOneWithWhereWithoutWorkOrderInvoiceInput, Prisma.InvoiceOutUpdateWithoutWorkOrderInvoiceInput>, Prisma.InvoiceOutUncheckedUpdateWithoutWorkOrderInvoiceInput>
 }
 
 export type InvoiceOutCreateWithoutEmployeeInput = {
@@ -988,8 +948,8 @@ export type InvoiceOutCreateWithoutEmployeeInput = {
   materialCost?: boolean
   completed?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
-  WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
 
 export type InvoiceOutUncheckedCreateWithoutEmployeeInput = {
@@ -1014,8 +974,8 @@ export type InvoiceOutUncheckedCreateWithoutEmployeeInput = {
   materialCost?: boolean
   completed?: boolean
   invoiceTypeId: string
-  workOrderId: string
   targetId: string
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedCreateNestedManyWithoutInvoiceOutInput
 }
 
 export type InvoiceOutCreateOrConnectWithoutEmployeeInput = {
@@ -1070,7 +1030,6 @@ export type InvoiceOutScalarWhereInput = {
   completed?: Prisma.BoolFilter<"InvoiceOut"> | boolean
   createdBy?: Prisma.StringFilter<"InvoiceOut"> | string
   invoiceTypeId?: Prisma.StringFilter<"InvoiceOut"> | string
-  workOrderId?: Prisma.StringFilter<"InvoiceOut"> | string
   targetId?: Prisma.StringFilter<"InvoiceOut"> | string
 }
 
@@ -1096,8 +1055,8 @@ export type InvoiceOutCreateWithoutInvoiceTypeInput = {
   materialCost?: boolean
   completed?: boolean
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
-  WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutInvoiceOutInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
 
 export type InvoiceOutUncheckedCreateWithoutInvoiceTypeInput = {
@@ -1122,8 +1081,8 @@ export type InvoiceOutUncheckedCreateWithoutInvoiceTypeInput = {
   materialCost?: boolean
   completed?: boolean
   createdBy: string
-  workOrderId: string
   targetId: string
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedCreateNestedManyWithoutInvoiceOutInput
 }
 
 export type InvoiceOutCreateOrConnectWithoutInvoiceTypeInput = {
@@ -1175,7 +1134,7 @@ export type InvoiceOutCreateWithoutTargetInput = {
   completed?: boolean
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceOutInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutInput
-  WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutInvoiceOutInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceCreateNestedManyWithoutInvoiceOutInput
 }
 
 export type InvoiceOutUncheckedCreateWithoutTargetInput = {
@@ -1201,7 +1160,7 @@ export type InvoiceOutUncheckedCreateWithoutTargetInput = {
   completed?: boolean
   createdBy: string
   invoiceTypeId: string
-  workOrderId: string
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedCreateNestedManyWithoutInvoiceOutInput
 }
 
 export type InvoiceOutCreateOrConnectWithoutTargetInput = {
@@ -1230,7 +1189,7 @@ export type InvoiceOutUpdateManyWithWhereWithoutTargetInput = {
   data: Prisma.XOR<Prisma.InvoiceOutUpdateManyMutationInput, Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetInput>
 }
 
-export type InvoiceOutCreateWithoutWorkOrderInput = {
+export type InvoiceOutCreateWithoutWorkOrderInvoiceInput = {
   id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
@@ -1256,7 +1215,7 @@ export type InvoiceOutCreateWithoutWorkOrderInput = {
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceOutInput
 }
 
-export type InvoiceOutUncheckedCreateWithoutWorkOrderInput = {
+export type InvoiceOutUncheckedCreateWithoutWorkOrderInvoiceInput = {
   id: string
   invoiceNumber?: string | null
   invoiceDate: Date | string
@@ -1282,30 +1241,72 @@ export type InvoiceOutUncheckedCreateWithoutWorkOrderInput = {
   targetId: string
 }
 
-export type InvoiceOutCreateOrConnectWithoutWorkOrderInput = {
+export type InvoiceOutCreateOrConnectWithoutWorkOrderInvoiceInput = {
   where: Prisma.InvoiceOutWhereUniqueInput
-  create: Prisma.XOR<Prisma.InvoiceOutCreateWithoutWorkOrderInput, Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInput>
+  create: Prisma.XOR<Prisma.InvoiceOutCreateWithoutWorkOrderInvoiceInput, Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInvoiceInput>
 }
 
-export type InvoiceOutCreateManyWorkOrderInputEnvelope = {
-  data: Prisma.InvoiceOutCreateManyWorkOrderInput | Prisma.InvoiceOutCreateManyWorkOrderInput[]
-  skipDuplicates?: boolean
+export type InvoiceOutUpsertWithoutWorkOrderInvoiceInput = {
+  update: Prisma.XOR<Prisma.InvoiceOutUpdateWithoutWorkOrderInvoiceInput, Prisma.InvoiceOutUncheckedUpdateWithoutWorkOrderInvoiceInput>
+  create: Prisma.XOR<Prisma.InvoiceOutCreateWithoutWorkOrderInvoiceInput, Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInvoiceInput>
+  where?: Prisma.InvoiceOutWhereInput
 }
 
-export type InvoiceOutUpsertWithWhereUniqueWithoutWorkOrderInput = {
-  where: Prisma.InvoiceOutWhereUniqueInput
-  update: Prisma.XOR<Prisma.InvoiceOutUpdateWithoutWorkOrderInput, Prisma.InvoiceOutUncheckedUpdateWithoutWorkOrderInput>
-  create: Prisma.XOR<Prisma.InvoiceOutCreateWithoutWorkOrderInput, Prisma.InvoiceOutUncheckedCreateWithoutWorkOrderInput>
+export type InvoiceOutUpdateToOneWithWhereWithoutWorkOrderInvoiceInput = {
+  where?: Prisma.InvoiceOutWhereInput
+  data: Prisma.XOR<Prisma.InvoiceOutUpdateWithoutWorkOrderInvoiceInput, Prisma.InvoiceOutUncheckedUpdateWithoutWorkOrderInvoiceInput>
 }
 
-export type InvoiceOutUpdateWithWhereUniqueWithoutWorkOrderInput = {
-  where: Prisma.InvoiceOutWhereUniqueInput
-  data: Prisma.XOR<Prisma.InvoiceOutUpdateWithoutWorkOrderInput, Prisma.InvoiceOutUncheckedUpdateWithoutWorkOrderInput>
+export type InvoiceOutUpdateWithoutWorkOrderInvoiceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountWithoutVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  sentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  materialCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
 }
 
-export type InvoiceOutUpdateManyWithWhereWithoutWorkOrderInput = {
-  where: Prisma.InvoiceOutScalarWhereInput
-  data: Prisma.XOR<Prisma.InvoiceOutUpdateManyMutationInput, Prisma.InvoiceOutUncheckedUpdateManyWithoutWorkOrderInput>
+export type InvoiceOutUncheckedUpdateWithoutWorkOrderInvoiceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountWithoutVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  sentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  materialCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InvoiceOutCreateManyEmployeeInput = {
@@ -1330,7 +1331,6 @@ export type InvoiceOutCreateManyEmployeeInput = {
   materialCost?: boolean
   completed?: boolean
   invoiceTypeId: string
-  workOrderId: string
   targetId: string
 }
 
@@ -1356,8 +1356,8 @@ export type InvoiceOutUpdateWithoutEmployeeInput = {
   materialCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
 
 export type InvoiceOutUncheckedUpdateWithoutEmployeeInput = {
@@ -1382,8 +1382,8 @@ export type InvoiceOutUncheckedUpdateWithoutEmployeeInput = {
   materialCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedUpdateManyWithoutInvoiceOutNestedInput
 }
 
 export type InvoiceOutUncheckedUpdateManyWithoutEmployeeInput = {
@@ -1408,7 +1408,6 @@ export type InvoiceOutUncheckedUpdateManyWithoutEmployeeInput = {
   materialCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -1434,7 +1433,6 @@ export type InvoiceOutCreateManyInvoiceTypeInput = {
   materialCost?: boolean
   completed?: boolean
   createdBy: string
-  workOrderId: string
   targetId: string
 }
 
@@ -1460,8 +1458,8 @@ export type InvoiceOutUpdateWithoutInvoiceTypeInput = {
   materialCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutInvoiceOutNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
 
 export type InvoiceOutUncheckedUpdateWithoutInvoiceTypeInput = {
@@ -1486,8 +1484,8 @@ export type InvoiceOutUncheckedUpdateWithoutInvoiceTypeInput = {
   materialCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedUpdateManyWithoutInvoiceOutNestedInput
 }
 
 export type InvoiceOutUncheckedUpdateManyWithoutInvoiceTypeInput = {
@@ -1512,7 +1510,6 @@ export type InvoiceOutUncheckedUpdateManyWithoutInvoiceTypeInput = {
   materialCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -1539,7 +1536,6 @@ export type InvoiceOutCreateManyTargetInput = {
   completed?: boolean
   createdBy: string
   invoiceTypeId: string
-  workOrderId: string
 }
 
 export type InvoiceOutUpdateWithoutTargetInput = {
@@ -1565,7 +1561,7 @@ export type InvoiceOutUpdateWithoutTargetInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutInvoiceOutNestedInput
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUpdateManyWithoutInvoiceOutNestedInput
 }
 
 export type InvoiceOutUncheckedUpdateWithoutTargetInput = {
@@ -1591,7 +1587,7 @@ export type InvoiceOutUncheckedUpdateWithoutTargetInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  WorkOrderInvoice?: Prisma.WorkOrderInvoiceUncheckedUpdateManyWithoutInvoiceOutNestedInput
 }
 
 export type InvoiceOutUncheckedUpdateManyWithoutTargetInput = {
@@ -1617,113 +1613,37 @@ export type InvoiceOutUncheckedUpdateManyWithoutTargetInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type InvoiceOutCreateManyWorkOrderInput = {
-  id: string
-  invoiceNumber?: string | null
-  invoiceDate: Date | string
-  expireDate: Date | string
-  payDate?: Date | string | null
-  invoiceReference?: string | null
-  invoiceInAttachement?: string | null
-  deliveryNote?: string | null
-  purchaseOrder?: string | null
-  transactionNumber?: string | null
-  deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
-  info?: string | null
-  deliveryInvoiceCode?: string | null
-  vatMargin: number
-  amountWithoutVat: number
-  sentDate?: Date | string | null
-  createdAt: Date | string
-  materialCost?: boolean
-  completed?: boolean
-  createdBy: string
-  invoiceTypeId: string
-  targetId: string
+
+/**
+ * Count Type InvoiceOutCountOutputType
+ */
+
+export type InvoiceOutCountOutputType = {
+  WorkOrderInvoice: number
 }
 
-export type InvoiceOutUpdateWithoutWorkOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
-  amountWithoutVat?: Prisma.FloatFieldUpdateOperationsInput | number
-  sentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  materialCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutNestedInput
-  Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceOutNestedInput
+export type InvoiceOutCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  WorkOrderInvoice?: boolean | InvoiceOutCountOutputTypeCountWorkOrderInvoiceArgs
 }
 
-export type InvoiceOutUncheckedUpdateWithoutWorkOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
-  amountWithoutVat?: Prisma.FloatFieldUpdateOperationsInput | number
-  sentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  materialCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+/**
+ * InvoiceOutCountOutputType without action
+ */
+export type InvoiceOutCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvoiceOutCountOutputType
+   */
+  select?: Prisma.InvoiceOutCountOutputTypeSelect<ExtArgs> | null
 }
 
-export type InvoiceOutUncheckedUpdateManyWithoutWorkOrderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
-  amountWithoutVat?: Prisma.FloatFieldUpdateOperationsInput | number
-  sentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  materialCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+/**
+ * InvoiceOutCountOutputType without action
+ */
+export type InvoiceOutCountOutputTypeCountWorkOrderInvoiceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkOrderInvoiceWhereInput
 }
-
 
 
 export type InvoiceOutSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1749,12 +1669,12 @@ export type InvoiceOutSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   completed?: boolean
   createdBy?: boolean
   invoiceTypeId?: boolean
-  workOrderId?: boolean
   targetId?: boolean
   InvoiceType?: boolean | Prisma.InvoiceTypeDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  WorkOrderInvoice?: boolean | Prisma.InvoiceOut$WorkOrderInvoiceArgs<ExtArgs>
+  _count?: boolean | Prisma.InvoiceOutCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["invoiceOut"]>
 
 
@@ -1782,16 +1702,16 @@ export type InvoiceOutSelectScalar = {
   completed?: boolean
   createdBy?: boolean
   invoiceTypeId?: boolean
-  workOrderId?: boolean
   targetId?: boolean
 }
 
-export type InvoiceOutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "invoiceDate" | "expireDate" | "payDate" | "invoiceReference" | "invoiceInAttachement" | "deliveryNote" | "purchaseOrder" | "transactionNumber" | "deliveryInvoiceInfo" | "aditionalInfo" | "info" | "deliveryInvoiceCode" | "vatMargin" | "amountWithoutVat" | "sentDate" | "createdAt" | "materialCost" | "completed" | "createdBy" | "invoiceTypeId" | "workOrderId" | "targetId", ExtArgs["result"]["invoiceOut"]>
+export type InvoiceOutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "invoiceDate" | "expireDate" | "payDate" | "invoiceReference" | "invoiceInAttachement" | "deliveryNote" | "purchaseOrder" | "transactionNumber" | "deliveryInvoiceInfo" | "aditionalInfo" | "info" | "deliveryInvoiceCode" | "vatMargin" | "amountWithoutVat" | "sentDate" | "createdAt" | "materialCost" | "completed" | "createdBy" | "invoiceTypeId" | "targetId", ExtArgs["result"]["invoiceOut"]>
 export type InvoiceOutInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   InvoiceType?: boolean | Prisma.InvoiceTypeDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  WorkOrderInvoice?: boolean | Prisma.InvoiceOut$WorkOrderInvoiceArgs<ExtArgs>
+  _count?: boolean | Prisma.InvoiceOutCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $InvoiceOutPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1799,8 +1719,8 @@ export type $InvoiceOutPayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     InvoiceType: Prisma.$InvoiceTypePayload<ExtArgs>
     Employee: Prisma.$EmployeePayload<ExtArgs>
-    WorkOrder: Prisma.$WorkOrderPayload<ExtArgs>
     Target: Prisma.$TargetPayload<ExtArgs>
+    WorkOrderInvoice: Prisma.$WorkOrderInvoicePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1825,7 +1745,6 @@ export type $InvoiceOutPayload<ExtArgs extends runtime.Types.Extensions.Internal
     completed: boolean
     createdBy: string
     invoiceTypeId: string
-    workOrderId: string
     targetId: string
   }, ExtArgs["result"]["invoiceOut"]>
   composites: {}
@@ -2169,8 +2088,8 @@ export interface Prisma__InvoiceOutClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   InvoiceType<T extends Prisma.InvoiceTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__InvoiceTypeClient<runtime.Types.Result.GetResult<Prisma.$InvoiceTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  WorkOrder<T extends Prisma.WorkOrderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WorkOrderDefaultArgs<ExtArgs>>): Prisma.Prisma__WorkOrderClient<runtime.Types.Result.GetResult<Prisma.$WorkOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  WorkOrderInvoice<T extends Prisma.InvoiceOut$WorkOrderInvoiceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceOut$WorkOrderInvoiceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkOrderInvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2222,7 +2141,6 @@ export interface InvoiceOutFieldRefs {
   readonly completed: Prisma.FieldRef<"InvoiceOut", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"InvoiceOut", 'String'>
   readonly invoiceTypeId: Prisma.FieldRef<"InvoiceOut", 'String'>
-  readonly workOrderId: Prisma.FieldRef<"InvoiceOut", 'String'>
   readonly targetId: Prisma.FieldRef<"InvoiceOut", 'String'>
 }
     
@@ -2564,6 +2482,30 @@ export type InvoiceOutDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many InvoiceOuts to delete.
    */
   limit?: number
+}
+
+/**
+ * InvoiceOut.WorkOrderInvoice
+ */
+export type InvoiceOut$WorkOrderInvoiceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkOrderInvoice
+   */
+  select?: Prisma.WorkOrderInvoiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorkOrderInvoice
+   */
+  omit?: Prisma.WorkOrderInvoiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkOrderInvoiceInclude<ExtArgs> | null
+  where?: Prisma.WorkOrderInvoiceWhereInput
+  orderBy?: Prisma.WorkOrderInvoiceOrderByWithRelationInput | Prisma.WorkOrderInvoiceOrderByWithRelationInput[]
+  cursor?: Prisma.WorkOrderInvoiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WorkOrderInvoiceScalarFieldEnum | Prisma.WorkOrderInvoiceScalarFieldEnum[]
 }
 
 /**

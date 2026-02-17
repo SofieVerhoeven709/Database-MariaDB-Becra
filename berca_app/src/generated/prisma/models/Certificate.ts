@@ -201,6 +201,7 @@ export type CertificateWhereInput = {
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   CertificateType?: Prisma.XOR<Prisma.CertificateTypeScalarRelationFilter, Prisma.CertificateTypeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
   TrainingStandard?: Prisma.TrainingStandardListRelationFilter
 }
 
@@ -215,6 +216,7 @@ export type CertificateOrderByWithRelationInput = {
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   CertificateType?: Prisma.CertificateTypeOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureOrderByRelationAggregateInput
   TrainingStandard?: Prisma.TrainingStandardOrderByRelationAggregateInput
   _relevance?: Prisma.CertificateOrderByRelevanceInput
 }
@@ -233,6 +235,7 @@ export type CertificateWhereUniqueInput = Prisma.AtLeast<{
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   CertificateType?: Prisma.XOR<Prisma.CertificateTypeScalarRelationFilter, Prisma.CertificateTypeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
   TrainingStandard?: Prisma.TrainingStandardListRelationFilter
 }, "id">
 
@@ -270,6 +273,7 @@ export type CertificateCreateInput = {
   Employee: Prisma.EmployeeCreateNestedOneWithoutCertificateInput
   CertificateType: Prisma.CertificateTypeCreateNestedOneWithoutCertificateInput
   Target: Prisma.TargetCreateNestedOneWithoutCertificateInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutCertificateInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutCertificateInput
 }
 
@@ -281,6 +285,7 @@ export type CertificateUncheckedCreateInput = {
   createdBy: string
   certificateTypeId: string
   targetId: string
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutCertificateInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutCertificateInput
 }
 
@@ -292,6 +297,7 @@ export type CertificateUpdateInput = {
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCertificateNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateOneRequiredWithoutCertificateNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCertificateNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutCertificateNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutCertificateNestedInput
 }
 
@@ -303,6 +309,7 @@ export type CertificateUncheckedUpdateInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   certificateTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutCertificateNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutCertificateNestedInput
 }
 
@@ -377,6 +384,11 @@ export type CertificateListRelationFilter = {
 
 export type CertificateOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type CertificateNullableScalarRelationFilter = {
+  is?: Prisma.CertificateWhereInput | null
+  isNot?: Prisma.CertificateWhereInput | null
 }
 
 export type CertificateScalarRelationFilter = {
@@ -480,6 +492,22 @@ export type CertificateUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.CertificateScalarWhereInput | Prisma.CertificateScalarWhereInput[]
 }
 
+export type CertificateCreateNestedOneWithoutMaterialSerialTrackedStructureInput = {
+  create?: Prisma.XOR<Prisma.CertificateCreateWithoutMaterialSerialTrackedStructureInput, Prisma.CertificateUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
+  connectOrCreate?: Prisma.CertificateCreateOrConnectWithoutMaterialSerialTrackedStructureInput
+  connect?: Prisma.CertificateWhereUniqueInput
+}
+
+export type CertificateUpdateOneWithoutMaterialSerialTrackedStructureNestedInput = {
+  create?: Prisma.XOR<Prisma.CertificateCreateWithoutMaterialSerialTrackedStructureInput, Prisma.CertificateUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
+  connectOrCreate?: Prisma.CertificateCreateOrConnectWithoutMaterialSerialTrackedStructureInput
+  upsert?: Prisma.CertificateUpsertWithoutMaterialSerialTrackedStructureInput
+  disconnect?: Prisma.CertificateWhereInput | boolean
+  delete?: Prisma.CertificateWhereInput | boolean
+  connect?: Prisma.CertificateWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CertificateUpdateToOneWithWhereWithoutMaterialSerialTrackedStructureInput, Prisma.CertificateUpdateWithoutMaterialSerialTrackedStructureInput>, Prisma.CertificateUncheckedUpdateWithoutMaterialSerialTrackedStructureInput>
+}
+
 export type CertificateCreateNestedManyWithoutTargetInput = {
   create?: Prisma.XOR<Prisma.CertificateCreateWithoutTargetInput, Prisma.CertificateUncheckedCreateWithoutTargetInput> | Prisma.CertificateCreateWithoutTargetInput[] | Prisma.CertificateUncheckedCreateWithoutTargetInput[]
   connectOrCreate?: Prisma.CertificateCreateOrConnectWithoutTargetInput | Prisma.CertificateCreateOrConnectWithoutTargetInput[]
@@ -543,6 +571,7 @@ export type CertificateCreateWithoutCertificateTypeInput = {
   createdAt: Date | string
   Employee: Prisma.EmployeeCreateNestedOneWithoutCertificateInput
   Target: Prisma.TargetCreateNestedOneWithoutCertificateInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutCertificateInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutCertificateInput
 }
 
@@ -553,6 +582,7 @@ export type CertificateUncheckedCreateWithoutCertificateTypeInput = {
   createdAt: Date | string
   createdBy: string
   targetId: string
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutCertificateInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutCertificateInput
 }
 
@@ -602,6 +632,7 @@ export type CertificateCreateWithoutEmployeeInput = {
   createdAt: Date | string
   CertificateType: Prisma.CertificateTypeCreateNestedOneWithoutCertificateInput
   Target: Prisma.TargetCreateNestedOneWithoutCertificateInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutCertificateInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutCertificateInput
 }
 
@@ -612,6 +643,7 @@ export type CertificateUncheckedCreateWithoutEmployeeInput = {
   createdAt: Date | string
   certificateTypeId: string
   targetId: string
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutCertificateInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutCertificateInput
 }
 
@@ -641,6 +673,66 @@ export type CertificateUpdateManyWithWhereWithoutEmployeeInput = {
   data: Prisma.XOR<Prisma.CertificateUpdateManyMutationInput, Prisma.CertificateUncheckedUpdateManyWithoutEmployeeInput>
 }
 
+export type CertificateCreateWithoutMaterialSerialTrackedStructureInput = {
+  id: string
+  description?: string | null
+  descriptionShort?: string | null
+  createdAt: Date | string
+  Employee: Prisma.EmployeeCreateNestedOneWithoutCertificateInput
+  CertificateType: Prisma.CertificateTypeCreateNestedOneWithoutCertificateInput
+  Target: Prisma.TargetCreateNestedOneWithoutCertificateInput
+  TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutCertificateInput
+}
+
+export type CertificateUncheckedCreateWithoutMaterialSerialTrackedStructureInput = {
+  id: string
+  description?: string | null
+  descriptionShort?: string | null
+  createdAt: Date | string
+  createdBy: string
+  certificateTypeId: string
+  targetId: string
+  TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutCertificateInput
+}
+
+export type CertificateCreateOrConnectWithoutMaterialSerialTrackedStructureInput = {
+  where: Prisma.CertificateWhereUniqueInput
+  create: Prisma.XOR<Prisma.CertificateCreateWithoutMaterialSerialTrackedStructureInput, Prisma.CertificateUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
+}
+
+export type CertificateUpsertWithoutMaterialSerialTrackedStructureInput = {
+  update: Prisma.XOR<Prisma.CertificateUpdateWithoutMaterialSerialTrackedStructureInput, Prisma.CertificateUncheckedUpdateWithoutMaterialSerialTrackedStructureInput>
+  create: Prisma.XOR<Prisma.CertificateCreateWithoutMaterialSerialTrackedStructureInput, Prisma.CertificateUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
+  where?: Prisma.CertificateWhereInput
+}
+
+export type CertificateUpdateToOneWithWhereWithoutMaterialSerialTrackedStructureInput = {
+  where?: Prisma.CertificateWhereInput
+  data: Prisma.XOR<Prisma.CertificateUpdateWithoutMaterialSerialTrackedStructureInput, Prisma.CertificateUncheckedUpdateWithoutMaterialSerialTrackedStructureInput>
+}
+
+export type CertificateUpdateWithoutMaterialSerialTrackedStructureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCertificateNestedInput
+  CertificateType?: Prisma.CertificateTypeUpdateOneRequiredWithoutCertificateNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutCertificateNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutCertificateNestedInput
+}
+
+export type CertificateUncheckedUpdateWithoutMaterialSerialTrackedStructureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  certificateTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutCertificateNestedInput
+}
+
 export type CertificateCreateWithoutTargetInput = {
   id: string
   description?: string | null
@@ -648,6 +740,7 @@ export type CertificateCreateWithoutTargetInput = {
   createdAt: Date | string
   Employee: Prisma.EmployeeCreateNestedOneWithoutCertificateInput
   CertificateType: Prisma.CertificateTypeCreateNestedOneWithoutCertificateInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutCertificateInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutCertificateInput
 }
 
@@ -658,6 +751,7 @@ export type CertificateUncheckedCreateWithoutTargetInput = {
   createdAt: Date | string
   createdBy: string
   certificateTypeId: string
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutCertificateInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutCertificateInput
 }
 
@@ -695,6 +789,7 @@ export type CertificateCreateWithoutTrainingStandardInput = {
   Employee: Prisma.EmployeeCreateNestedOneWithoutCertificateInput
   CertificateType: Prisma.CertificateTypeCreateNestedOneWithoutCertificateInput
   Target: Prisma.TargetCreateNestedOneWithoutCertificateInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutCertificateInput
 }
 
 export type CertificateUncheckedCreateWithoutTrainingStandardInput = {
@@ -705,6 +800,7 @@ export type CertificateUncheckedCreateWithoutTrainingStandardInput = {
   createdBy: string
   certificateTypeId: string
   targetId: string
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutCertificateInput
 }
 
 export type CertificateCreateOrConnectWithoutTrainingStandardInput = {
@@ -731,6 +827,7 @@ export type CertificateUpdateWithoutTrainingStandardInput = {
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCertificateNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateOneRequiredWithoutCertificateNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCertificateNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutCertificateNestedInput
 }
 
 export type CertificateUncheckedUpdateWithoutTrainingStandardInput = {
@@ -741,6 +838,7 @@ export type CertificateUncheckedUpdateWithoutTrainingStandardInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   certificateTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutCertificateNestedInput
 }
 
 export type CertificateCreateManyCertificateTypeInput = {
@@ -759,6 +857,7 @@ export type CertificateUpdateWithoutCertificateTypeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCertificateNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCertificateNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutCertificateNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutCertificateNestedInput
 }
 
@@ -769,6 +868,7 @@ export type CertificateUncheckedUpdateWithoutCertificateTypeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutCertificateNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutCertificateNestedInput
 }
 
@@ -797,6 +897,7 @@ export type CertificateUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   CertificateType?: Prisma.CertificateTypeUpdateOneRequiredWithoutCertificateNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCertificateNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutCertificateNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutCertificateNestedInput
 }
 
@@ -807,6 +908,7 @@ export type CertificateUncheckedUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificateTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutCertificateNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutCertificateNestedInput
 }
 
@@ -835,6 +937,7 @@ export type CertificateUpdateWithoutTargetInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCertificateNestedInput
   CertificateType?: Prisma.CertificateTypeUpdateOneRequiredWithoutCertificateNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutCertificateNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutCertificateNestedInput
 }
 
@@ -845,6 +948,7 @@ export type CertificateUncheckedUpdateWithoutTargetInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   certificateTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutCertificateNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutCertificateNestedInput
 }
 
@@ -863,10 +967,12 @@ export type CertificateUncheckedUpdateManyWithoutTargetInput = {
  */
 
 export type CertificateCountOutputType = {
+  MaterialSerialTrackedStructure: number
   TrainingStandard: number
 }
 
 export type CertificateCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  MaterialSerialTrackedStructure?: boolean | CertificateCountOutputTypeCountMaterialSerialTrackedStructureArgs
   TrainingStandard?: boolean | CertificateCountOutputTypeCountTrainingStandardArgs
 }
 
@@ -878,6 +984,13 @@ export type CertificateCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.
    * Select specific fields to fetch from the CertificateCountOutputType
    */
   select?: Prisma.CertificateCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CertificateCountOutputType without action
+ */
+export type CertificateCountOutputTypeCountMaterialSerialTrackedStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaterialSerialTrackedStructureWhereInput
 }
 
 /**
@@ -899,6 +1012,7 @@ export type CertificateSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   CertificateType?: boolean | Prisma.CertificateTypeDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  MaterialSerialTrackedStructure?: boolean | Prisma.Certificate$MaterialSerialTrackedStructureArgs<ExtArgs>
   TrainingStandard?: boolean | Prisma.Certificate$TrainingStandardArgs<ExtArgs>
   _count?: boolean | Prisma.CertificateCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["certificate"]>
@@ -920,6 +1034,7 @@ export type CertificateInclude<ExtArgs extends runtime.Types.Extensions.Internal
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   CertificateType?: boolean | Prisma.CertificateTypeDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  MaterialSerialTrackedStructure?: boolean | Prisma.Certificate$MaterialSerialTrackedStructureArgs<ExtArgs>
   TrainingStandard?: boolean | Prisma.Certificate$TrainingStandardArgs<ExtArgs>
   _count?: boolean | Prisma.CertificateCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -930,6 +1045,7 @@ export type $CertificatePayload<ExtArgs extends runtime.Types.Extensions.Interna
     Employee: Prisma.$EmployeePayload<ExtArgs>
     CertificateType: Prisma.$CertificateTypePayload<ExtArgs>
     Target: Prisma.$TargetPayload<ExtArgs>
+    MaterialSerialTrackedStructure: Prisma.$MaterialSerialTrackedStructurePayload<ExtArgs>[]
     TrainingStandard: Prisma.$TrainingStandardPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1283,6 +1399,7 @@ export interface Prisma__CertificateClient<T, Null = never, ExtArgs extends runt
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   CertificateType<T extends Prisma.CertificateTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CertificateTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__CertificateTypeClient<runtime.Types.Result.GetResult<Prisma.$CertificateTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  MaterialSerialTrackedStructure<T extends Prisma.Certificate$MaterialSerialTrackedStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Certificate$MaterialSerialTrackedStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackedStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   TrainingStandard<T extends Prisma.Certificate$TrainingStandardArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Certificate$TrainingStandardArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingStandardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1660,6 +1777,30 @@ export type CertificateDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many Certificates to delete.
    */
   limit?: number
+}
+
+/**
+ * Certificate.MaterialSerialTrackedStructure
+ */
+export type Certificate$MaterialSerialTrackedStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaterialSerialTrackedStructure
+   */
+  select?: Prisma.MaterialSerialTrackedStructureSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaterialSerialTrackedStructure
+   */
+  omit?: Prisma.MaterialSerialTrackedStructureOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaterialSerialTrackedStructureInclude<ExtArgs> | null
+  where?: Prisma.MaterialSerialTrackedStructureWhereInput
+  orderBy?: Prisma.MaterialSerialTrackedStructureOrderByWithRelationInput | Prisma.MaterialSerialTrackedStructureOrderByWithRelationInput[]
+  cursor?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaterialSerialTrackedStructureScalarFieldEnum | Prisma.MaterialSerialTrackedStructureScalarFieldEnum[]
 }
 
 /**

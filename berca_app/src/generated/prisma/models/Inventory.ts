@@ -27,63 +27,67 @@ export type AggregateInventory = {
 }
 
 export type InventoryAvgAggregateOutputType = {
-  beNumber: number | null
   quantityInStock: number | null
-  minimumStock: number | null
-  maximumStock: number | null
+  minQuantityInStock: number | null
+  maxQuantityInStock: number | null
 }
 
 export type InventorySumAggregateOutputType = {
-  beNumber: number | null
   quantityInStock: number | null
-  minimumStock: number | null
-  maximumStock: number | null
+  minQuantityInStock: number | null
+  maxQuantityInStock: number | null
 }
 
 export type InventoryMinAggregateOutputType = {
   id: string | null
+  materialId: string | null
+  beNumber: string | null
   place: string | null
-  beNumber: number | null
-  longDescription: string | null
   shortDescription: string | null
-  serialNumber: string | null
+  longDescription: string | null
+  serieNumber: string | null
   quantityInStock: number | null
-  minimumStock: number | null
-  maximumStock: number | null
+  minQuantityInStock: number | null
+  maxQuantityInStock: number | null
   information: string | null
   valid: boolean | null
+  noValidDate: Date | null
   createdAt: Date | null
   createdBy: string | null
 }
 
 export type InventoryMaxAggregateOutputType = {
   id: string | null
+  materialId: string | null
+  beNumber: string | null
   place: string | null
-  beNumber: number | null
-  longDescription: string | null
   shortDescription: string | null
-  serialNumber: string | null
+  longDescription: string | null
+  serieNumber: string | null
   quantityInStock: number | null
-  minimumStock: number | null
-  maximumStock: number | null
+  minQuantityInStock: number | null
+  maxQuantityInStock: number | null
   information: string | null
   valid: boolean | null
+  noValidDate: Date | null
   createdAt: Date | null
   createdBy: string | null
 }
 
 export type InventoryCountAggregateOutputType = {
   id: number
-  place: number
+  materialId: number
   beNumber: number
-  longDescription: number
+  place: number
   shortDescription: number
-  serialNumber: number
+  longDescription: number
+  serieNumber: number
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: number
   valid: number
+  noValidDate: number
   createdAt: number
   createdBy: number
   _all: number
@@ -91,63 +95,67 @@ export type InventoryCountAggregateOutputType = {
 
 
 export type InventoryAvgAggregateInputType = {
-  beNumber?: true
   quantityInStock?: true
-  minimumStock?: true
-  maximumStock?: true
+  minQuantityInStock?: true
+  maxQuantityInStock?: true
 }
 
 export type InventorySumAggregateInputType = {
-  beNumber?: true
   quantityInStock?: true
-  minimumStock?: true
-  maximumStock?: true
+  minQuantityInStock?: true
+  maxQuantityInStock?: true
 }
 
 export type InventoryMinAggregateInputType = {
   id?: true
-  place?: true
+  materialId?: true
   beNumber?: true
-  longDescription?: true
+  place?: true
   shortDescription?: true
-  serialNumber?: true
+  longDescription?: true
+  serieNumber?: true
   quantityInStock?: true
-  minimumStock?: true
-  maximumStock?: true
+  minQuantityInStock?: true
+  maxQuantityInStock?: true
   information?: true
   valid?: true
+  noValidDate?: true
   createdAt?: true
   createdBy?: true
 }
 
 export type InventoryMaxAggregateInputType = {
   id?: true
-  place?: true
+  materialId?: true
   beNumber?: true
-  longDescription?: true
+  place?: true
   shortDescription?: true
-  serialNumber?: true
+  longDescription?: true
+  serieNumber?: true
   quantityInStock?: true
-  minimumStock?: true
-  maximumStock?: true
+  minQuantityInStock?: true
+  maxQuantityInStock?: true
   information?: true
   valid?: true
+  noValidDate?: true
   createdAt?: true
   createdBy?: true
 }
 
 export type InventoryCountAggregateInputType = {
   id?: true
-  place?: true
+  materialId?: true
   beNumber?: true
-  longDescription?: true
+  place?: true
   shortDescription?: true
-  serialNumber?: true
+  longDescription?: true
+  serieNumber?: true
   quantityInStock?: true
-  minimumStock?: true
-  maximumStock?: true
+  minQuantityInStock?: true
+  maxQuantityInStock?: true
   information?: true
   valid?: true
+  noValidDate?: true
   createdAt?: true
   createdBy?: true
   _all?: true
@@ -241,16 +249,18 @@ export type InventoryGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type InventoryGroupByOutputType = {
   id: string
+  materialId: string
+  beNumber: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
+  noValidDate: Date
   createdAt: Date
   createdBy: string
   _count: InventoryCountAggregateOutputType | null
@@ -280,80 +290,94 @@ export type InventoryWhereInput = {
   OR?: Prisma.InventoryWhereInput[]
   NOT?: Prisma.InventoryWhereInput | Prisma.InventoryWhereInput[]
   id?: Prisma.StringFilter<"Inventory"> | string
+  materialId?: Prisma.StringFilter<"Inventory"> | string
+  beNumber?: Prisma.StringFilter<"Inventory"> | string
   place?: Prisma.StringFilter<"Inventory"> | string
-  beNumber?: Prisma.IntFilter<"Inventory"> | number
-  longDescription?: Prisma.StringFilter<"Inventory"> | string
   shortDescription?: Prisma.StringFilter<"Inventory"> | string
-  serialNumber?: Prisma.StringFilter<"Inventory"> | string
+  longDescription?: Prisma.StringFilter<"Inventory"> | string
+  serieNumber?: Prisma.StringFilter<"Inventory"> | string
   quantityInStock?: Prisma.IntFilter<"Inventory"> | number
-  minimumStock?: Prisma.IntFilter<"Inventory"> | number
-  maximumStock?: Prisma.IntFilter<"Inventory"> | number
+  minQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
+  maxQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
   information?: Prisma.StringFilter<"Inventory"> | string
   valid?: Prisma.BoolFilter<"Inventory"> | boolean
+  noValidDate?: Prisma.DateTimeFilter<"Inventory"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
   createdBy?: Prisma.StringFilter<"Inventory"> | string
+  Material_Inventory_materialIdToMaterial?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
+  Material_Inventory_beNumberToMaterial?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   InventoryChange?: Prisma.InventoryChangeListRelationFilter
   InventoryOrder?: Prisma.InventoryOrderListRelationFilter
-  InventoryPlace?: Prisma.InventoryPlaceListRelationFilter
+  InventoryStructure?: Prisma.InventoryStructureListRelationFilter
 }
 
 export type InventoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  place?: Prisma.SortOrder
+  materialId?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
+  place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  serialNumber?: Prisma.SortOrder
+  longDescription?: Prisma.SortOrder
+  serieNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
+  minQuantityInStock?: Prisma.SortOrder
+  maxQuantityInStock?: Prisma.SortOrder
   information?: Prisma.SortOrder
   valid?: Prisma.SortOrder
+  noValidDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  Material_Inventory_materialIdToMaterial?: Prisma.MaterialOrderByWithRelationInput
+  Material_Inventory_beNumberToMaterial?: Prisma.MaterialOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   InventoryChange?: Prisma.InventoryChangeOrderByRelationAggregateInput
   InventoryOrder?: Prisma.InventoryOrderOrderByRelationAggregateInput
-  InventoryPlace?: Prisma.InventoryPlaceOrderByRelationAggregateInput
+  InventoryStructure?: Prisma.InventoryStructureOrderByRelationAggregateInput
   _relevance?: Prisma.InventoryOrderByRelevanceInput
 }
 
 export type InventoryWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  beNumber?: string
   AND?: Prisma.InventoryWhereInput | Prisma.InventoryWhereInput[]
   OR?: Prisma.InventoryWhereInput[]
   NOT?: Prisma.InventoryWhereInput | Prisma.InventoryWhereInput[]
+  materialId?: Prisma.StringFilter<"Inventory"> | string
   place?: Prisma.StringFilter<"Inventory"> | string
-  beNumber?: Prisma.IntFilter<"Inventory"> | number
-  longDescription?: Prisma.StringFilter<"Inventory"> | string
   shortDescription?: Prisma.StringFilter<"Inventory"> | string
-  serialNumber?: Prisma.StringFilter<"Inventory"> | string
+  longDescription?: Prisma.StringFilter<"Inventory"> | string
+  serieNumber?: Prisma.StringFilter<"Inventory"> | string
   quantityInStock?: Prisma.IntFilter<"Inventory"> | number
-  minimumStock?: Prisma.IntFilter<"Inventory"> | number
-  maximumStock?: Prisma.IntFilter<"Inventory"> | number
+  minQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
+  maxQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
   information?: Prisma.StringFilter<"Inventory"> | string
   valid?: Prisma.BoolFilter<"Inventory"> | boolean
+  noValidDate?: Prisma.DateTimeFilter<"Inventory"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
   createdBy?: Prisma.StringFilter<"Inventory"> | string
+  Material_Inventory_materialIdToMaterial?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
+  Material_Inventory_beNumberToMaterial?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   InventoryChange?: Prisma.InventoryChangeListRelationFilter
   InventoryOrder?: Prisma.InventoryOrderListRelationFilter
-  InventoryPlace?: Prisma.InventoryPlaceListRelationFilter
-}, "id">
+  InventoryStructure?: Prisma.InventoryStructureListRelationFilter
+}, "id" | "beNumber">
 
 export type InventoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  place?: Prisma.SortOrder
+  materialId?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
+  place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  serialNumber?: Prisma.SortOrder
+  longDescription?: Prisma.SortOrder
+  serieNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
+  minQuantityInStock?: Prisma.SortOrder
+  maxQuantityInStock?: Prisma.SortOrder
   information?: Prisma.SortOrder
   valid?: Prisma.SortOrder
+  noValidDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   _count?: Prisma.InventoryCountOrderByAggregateInput
@@ -368,16 +392,18 @@ export type InventoryScalarWhereWithAggregatesInput = {
   OR?: Prisma.InventoryScalarWhereWithAggregatesInput[]
   NOT?: Prisma.InventoryScalarWhereWithAggregatesInput | Prisma.InventoryScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
+  materialId?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
+  beNumber?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
   place?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
-  beNumber?: Prisma.IntWithAggregatesFilter<"Inventory"> | number
-  longDescription?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
   shortDescription?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
-  serialNumber?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
+  longDescription?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
+  serieNumber?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
   quantityInStock?: Prisma.IntWithAggregatesFilter<"Inventory"> | number
-  minimumStock?: Prisma.IntWithAggregatesFilter<"Inventory"> | number
-  maximumStock?: Prisma.IntWithAggregatesFilter<"Inventory"> | number
+  minQuantityInStock?: Prisma.IntWithAggregatesFilter<"Inventory"> | number
+  maxQuantityInStock?: Prisma.IntWithAggregatesFilter<"Inventory"> | number
   information?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
   valid?: Prisma.BoolWithAggregatesFilter<"Inventory"> | boolean
+  noValidDate?: Prisma.DateTimeWithAggregatesFilter<"Inventory"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Inventory"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
 }
@@ -385,122 +411,134 @@ export type InventoryScalarWhereWithAggregatesInput = {
 export type InventoryCreateInput = {
   id: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
+  Material_Inventory_materialIdToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_materialIdToMaterialInput
+  Material_Inventory_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_beNumberToMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
   InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
   InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
-  InventoryPlace?: Prisma.InventoryPlaceCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryUncheckedCreateInput = {
   id: string
+  materialId: string
+  beNumber: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
   createdBy: string
   InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
   InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Material_Inventory_materialIdToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_materialIdToMaterialNestedInput
+  Material_Inventory_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_beNumberToMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
   InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
   InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
 }
 
 export type InventoryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
   InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
 export type InventoryCreateManyInput = {
   id: string
+  materialId: string
+  beNumber: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
   createdBy: string
 }
 
 export type InventoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InventoryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -523,64 +561,68 @@ export type InventoryOrderByRelevanceInput = {
 
 export type InventoryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  place?: Prisma.SortOrder
+  materialId?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
+  place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  serialNumber?: Prisma.SortOrder
+  longDescription?: Prisma.SortOrder
+  serieNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
+  minQuantityInStock?: Prisma.SortOrder
+  maxQuantityInStock?: Prisma.SortOrder
   information?: Prisma.SortOrder
   valid?: Prisma.SortOrder
+  noValidDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
 }
 
 export type InventoryAvgOrderByAggregateInput = {
-  beNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
+  minQuantityInStock?: Prisma.SortOrder
+  maxQuantityInStock?: Prisma.SortOrder
 }
 
 export type InventoryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  place?: Prisma.SortOrder
+  materialId?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
+  place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  serialNumber?: Prisma.SortOrder
+  longDescription?: Prisma.SortOrder
+  serieNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
+  minQuantityInStock?: Prisma.SortOrder
+  maxQuantityInStock?: Prisma.SortOrder
   information?: Prisma.SortOrder
   valid?: Prisma.SortOrder
+  noValidDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
 }
 
 export type InventoryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  place?: Prisma.SortOrder
+  materialId?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
+  place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
-  serialNumber?: Prisma.SortOrder
+  longDescription?: Prisma.SortOrder
+  serieNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
+  minQuantityInStock?: Prisma.SortOrder
+  maxQuantityInStock?: Prisma.SortOrder
   information?: Prisma.SortOrder
   valid?: Prisma.SortOrder
+  noValidDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
 }
 
 export type InventorySumOrderByAggregateInput = {
-  beNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
-  minimumStock?: Prisma.SortOrder
-  maximumStock?: Prisma.SortOrder
+  minQuantityInStock?: Prisma.SortOrder
+  maxQuantityInStock?: Prisma.SortOrder
 }
 
 export type InventoryScalarRelationFilter = {
@@ -635,6 +677,14 @@ export type InventoryUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.InventoryScalarWhereInput | Prisma.InventoryScalarWhereInput[]
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type InventoryCreateNestedOneWithoutInventoryChangeInput = {
   create?: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryChangeInput, Prisma.InventoryUncheckedCreateWithoutInventoryChangeInput>
   connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutInventoryChangeInput
@@ -655,64 +705,140 @@ export type InventoryCreateNestedOneWithoutInventoryOrderInput = {
   connect?: Prisma.InventoryWhereUniqueInput
 }
 
-export type InventoryUpdateOneWithoutInventoryOrderNestedInput = {
+export type InventoryUpdateOneRequiredWithoutInventoryOrderNestedInput = {
   create?: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryOrderInput, Prisma.InventoryUncheckedCreateWithoutInventoryOrderInput>
   connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutInventoryOrderInput
   upsert?: Prisma.InventoryUpsertWithoutInventoryOrderInput
-  disconnect?: Prisma.InventoryWhereInput | boolean
-  delete?: Prisma.InventoryWhereInput | boolean
   connect?: Prisma.InventoryWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.InventoryUpdateToOneWithWhereWithoutInventoryOrderInput, Prisma.InventoryUpdateWithoutInventoryOrderInput>, Prisma.InventoryUncheckedUpdateWithoutInventoryOrderInput>
 }
 
-export type InventoryCreateNestedOneWithoutInventoryPlaceInput = {
-  create?: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryPlaceInput, Prisma.InventoryUncheckedCreateWithoutInventoryPlaceInput>
-  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutInventoryPlaceInput
+export type InventoryCreateNestedOneWithoutInventoryStructureInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryStructureInput, Prisma.InventoryUncheckedCreateWithoutInventoryStructureInput>
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutInventoryStructureInput
   connect?: Prisma.InventoryWhereUniqueInput
 }
 
-export type InventoryUpdateOneRequiredWithoutInventoryPlaceNestedInput = {
-  create?: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryPlaceInput, Prisma.InventoryUncheckedCreateWithoutInventoryPlaceInput>
-  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutInventoryPlaceInput
-  upsert?: Prisma.InventoryUpsertWithoutInventoryPlaceInput
+export type InventoryUpdateOneRequiredWithoutInventoryStructureNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryStructureInput, Prisma.InventoryUncheckedCreateWithoutInventoryStructureInput>
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutInventoryStructureInput
+  upsert?: Prisma.InventoryUpsertWithoutInventoryStructureInput
   connect?: Prisma.InventoryWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.InventoryUpdateToOneWithWhereWithoutInventoryPlaceInput, Prisma.InventoryUpdateWithoutInventoryPlaceInput>, Prisma.InventoryUncheckedUpdateWithoutInventoryPlaceInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InventoryUpdateToOneWithWhereWithoutInventoryStructureInput, Prisma.InventoryUpdateWithoutInventoryStructureInput>, Prisma.InventoryUncheckedUpdateWithoutInventoryStructureInput>
+}
+
+export type InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMaterialInput> | Prisma.InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput[] | Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_materialIdToMaterialInput | Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  createMany?: Prisma.InventoryCreateManyMaterial_Inventory_materialIdToMaterialInputEnvelope
+  connect?: Prisma.InventoryWhereUniqueInput | Prisma.InventoryWhereUniqueInput[]
+}
+
+export type InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_beNumberToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_beNumberToMaterialInput>
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_beNumberToMaterialInput
+  connect?: Prisma.InventoryWhereUniqueInput
+}
+
+export type InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMaterialInput> | Prisma.InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput[] | Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_materialIdToMaterialInput | Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  createMany?: Prisma.InventoryCreateManyMaterial_Inventory_materialIdToMaterialInputEnvelope
+  connect?: Prisma.InventoryWhereUniqueInput | Prisma.InventoryWhereUniqueInput[]
+}
+
+export type InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_beNumberToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_beNumberToMaterialInput>
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_beNumberToMaterialInput
+  connect?: Prisma.InventoryWhereUniqueInput
+}
+
+export type InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMaterialInput> | Prisma.InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput[] | Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_materialIdToMaterialInput | Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  upsert?: Prisma.InventoryUpsertWithWhereUniqueWithoutMaterial_Inventory_materialIdToMaterialInput | Prisma.InventoryUpsertWithWhereUniqueWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  createMany?: Prisma.InventoryCreateManyMaterial_Inventory_materialIdToMaterialInputEnvelope
+  set?: Prisma.InventoryWhereUniqueInput | Prisma.InventoryWhereUniqueInput[]
+  disconnect?: Prisma.InventoryWhereUniqueInput | Prisma.InventoryWhereUniqueInput[]
+  delete?: Prisma.InventoryWhereUniqueInput | Prisma.InventoryWhereUniqueInput[]
+  connect?: Prisma.InventoryWhereUniqueInput | Prisma.InventoryWhereUniqueInput[]
+  update?: Prisma.InventoryUpdateWithWhereUniqueWithoutMaterial_Inventory_materialIdToMaterialInput | Prisma.InventoryUpdateWithWhereUniqueWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  updateMany?: Prisma.InventoryUpdateManyWithWhereWithoutMaterial_Inventory_materialIdToMaterialInput | Prisma.InventoryUpdateManyWithWhereWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  deleteMany?: Prisma.InventoryScalarWhereInput | Prisma.InventoryScalarWhereInput[]
+}
+
+export type InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_beNumberToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_beNumberToMaterialInput>
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_beNumberToMaterialInput
+  upsert?: Prisma.InventoryUpsertWithoutMaterial_Inventory_beNumberToMaterialInput
+  disconnect?: Prisma.InventoryWhereInput | boolean
+  delete?: Prisma.InventoryWhereInput | boolean
+  connect?: Prisma.InventoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InventoryUpdateToOneWithWhereWithoutMaterial_Inventory_beNumberToMaterialInput, Prisma.InventoryUpdateWithoutMaterial_Inventory_beNumberToMaterialInput>, Prisma.InventoryUncheckedUpdateWithoutMaterial_Inventory_beNumberToMaterialInput>
+}
+
+export type InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMaterialInput> | Prisma.InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput[] | Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_materialIdToMaterialInput | Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  upsert?: Prisma.InventoryUpsertWithWhereUniqueWithoutMaterial_Inventory_materialIdToMaterialInput | Prisma.InventoryUpsertWithWhereUniqueWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  createMany?: Prisma.InventoryCreateManyMaterial_Inventory_materialIdToMaterialInputEnvelope
+  set?: Prisma.InventoryWhereUniqueInput | Prisma.InventoryWhereUniqueInput[]
+  disconnect?: Prisma.InventoryWhereUniqueInput | Prisma.InventoryWhereUniqueInput[]
+  delete?: Prisma.InventoryWhereUniqueInput | Prisma.InventoryWhereUniqueInput[]
+  connect?: Prisma.InventoryWhereUniqueInput | Prisma.InventoryWhereUniqueInput[]
+  update?: Prisma.InventoryUpdateWithWhereUniqueWithoutMaterial_Inventory_materialIdToMaterialInput | Prisma.InventoryUpdateWithWhereUniqueWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  updateMany?: Prisma.InventoryUpdateManyWithWhereWithoutMaterial_Inventory_materialIdToMaterialInput | Prisma.InventoryUpdateManyWithWhereWithoutMaterial_Inventory_materialIdToMaterialInput[]
+  deleteMany?: Prisma.InventoryScalarWhereInput | Prisma.InventoryScalarWhereInput[]
+}
+
+export type InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_beNumberToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_beNumberToMaterialInput>
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutMaterial_Inventory_beNumberToMaterialInput
+  upsert?: Prisma.InventoryUpsertWithoutMaterial_Inventory_beNumberToMaterialInput
+  disconnect?: Prisma.InventoryWhereInput | boolean
+  delete?: Prisma.InventoryWhereInput | boolean
+  connect?: Prisma.InventoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InventoryUpdateToOneWithWhereWithoutMaterial_Inventory_beNumberToMaterialInput, Prisma.InventoryUpdateWithoutMaterial_Inventory_beNumberToMaterialInput>, Prisma.InventoryUncheckedUpdateWithoutMaterial_Inventory_beNumberToMaterialInput>
 }
 
 export type InventoryCreateWithoutEmployeeInput = {
   id: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
+  Material_Inventory_materialIdToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_materialIdToMaterialInput
+  Material_Inventory_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_beNumberToMaterialInput
   InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
   InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
-  InventoryPlace?: Prisma.InventoryPlaceCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryUncheckedCreateWithoutEmployeeInput = {
   id: string
+  materialId: string
+  beNumber: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
   InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
   InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryCreateOrConnectWithoutEmployeeInput = {
@@ -746,16 +872,18 @@ export type InventoryScalarWhereInput = {
   OR?: Prisma.InventoryScalarWhereInput[]
   NOT?: Prisma.InventoryScalarWhereInput | Prisma.InventoryScalarWhereInput[]
   id?: Prisma.StringFilter<"Inventory"> | string
+  materialId?: Prisma.StringFilter<"Inventory"> | string
+  beNumber?: Prisma.StringFilter<"Inventory"> | string
   place?: Prisma.StringFilter<"Inventory"> | string
-  beNumber?: Prisma.IntFilter<"Inventory"> | number
-  longDescription?: Prisma.StringFilter<"Inventory"> | string
   shortDescription?: Prisma.StringFilter<"Inventory"> | string
-  serialNumber?: Prisma.StringFilter<"Inventory"> | string
+  longDescription?: Prisma.StringFilter<"Inventory"> | string
+  serieNumber?: Prisma.StringFilter<"Inventory"> | string
   quantityInStock?: Prisma.IntFilter<"Inventory"> | number
-  minimumStock?: Prisma.IntFilter<"Inventory"> | number
-  maximumStock?: Prisma.IntFilter<"Inventory"> | number
+  minQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
+  maxQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
   information?: Prisma.StringFilter<"Inventory"> | string
   valid?: Prisma.BoolFilter<"Inventory"> | boolean
+  noValidDate?: Prisma.DateTimeFilter<"Inventory"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
   createdBy?: Prisma.StringFilter<"Inventory"> | string
 }
@@ -763,37 +891,41 @@ export type InventoryScalarWhereInput = {
 export type InventoryCreateWithoutInventoryChangeInput = {
   id: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
+  Material_Inventory_materialIdToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_materialIdToMaterialInput
+  Material_Inventory_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_beNumberToMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
   InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
-  InventoryPlace?: Prisma.InventoryPlaceCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryUncheckedCreateWithoutInventoryChangeInput = {
   id: string
+  materialId: string
+  beNumber: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
   createdBy: string
   InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryCreateOrConnectWithoutInventoryChangeInput = {
@@ -815,73 +947,81 @@ export type InventoryUpdateToOneWithWhereWithoutInventoryChangeInput = {
 export type InventoryUpdateWithoutInventoryChangeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Material_Inventory_materialIdToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_materialIdToMaterialNestedInput
+  Material_Inventory_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_beNumberToMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
   InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
 }
 
 export type InventoryUncheckedUpdateWithoutInventoryChangeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
 export type InventoryCreateWithoutInventoryOrderInput = {
   id: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
+  Material_Inventory_materialIdToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_materialIdToMaterialInput
+  Material_Inventory_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_beNumberToMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
   InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
-  InventoryPlace?: Prisma.InventoryPlaceCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryUncheckedCreateWithoutInventoryOrderInput = {
   id: string
+  materialId: string
+  beNumber: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
   createdBy: string
   InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryCreateOrConnectWithoutInventoryOrderInput = {
@@ -903,191 +1043,447 @@ export type InventoryUpdateToOneWithWhereWithoutInventoryOrderInput = {
 export type InventoryUpdateWithoutInventoryOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Material_Inventory_materialIdToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_materialIdToMaterialNestedInput
+  Material_Inventory_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_beNumberToMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
   InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
 }
 
 export type InventoryUncheckedUpdateWithoutInventoryOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
-export type InventoryCreateWithoutInventoryPlaceInput = {
+export type InventoryCreateWithoutInventoryStructureInput = {
   id: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
+  Material_Inventory_materialIdToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_materialIdToMaterialInput
+  Material_Inventory_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_beNumberToMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
   InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
   InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
 }
 
-export type InventoryUncheckedCreateWithoutInventoryPlaceInput = {
+export type InventoryUncheckedCreateWithoutInventoryStructureInput = {
   id: string
+  materialId: string
+  beNumber: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
   createdBy: string
   InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
   InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
 }
 
-export type InventoryCreateOrConnectWithoutInventoryPlaceInput = {
+export type InventoryCreateOrConnectWithoutInventoryStructureInput = {
   where: Prisma.InventoryWhereUniqueInput
-  create: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryPlaceInput, Prisma.InventoryUncheckedCreateWithoutInventoryPlaceInput>
+  create: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryStructureInput, Prisma.InventoryUncheckedCreateWithoutInventoryStructureInput>
 }
 
-export type InventoryUpsertWithoutInventoryPlaceInput = {
-  update: Prisma.XOR<Prisma.InventoryUpdateWithoutInventoryPlaceInput, Prisma.InventoryUncheckedUpdateWithoutInventoryPlaceInput>
-  create: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryPlaceInput, Prisma.InventoryUncheckedCreateWithoutInventoryPlaceInput>
+export type InventoryUpsertWithoutInventoryStructureInput = {
+  update: Prisma.XOR<Prisma.InventoryUpdateWithoutInventoryStructureInput, Prisma.InventoryUncheckedUpdateWithoutInventoryStructureInput>
+  create: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryStructureInput, Prisma.InventoryUncheckedCreateWithoutInventoryStructureInput>
   where?: Prisma.InventoryWhereInput
 }
 
-export type InventoryUpdateToOneWithWhereWithoutInventoryPlaceInput = {
+export type InventoryUpdateToOneWithWhereWithoutInventoryStructureInput = {
   where?: Prisma.InventoryWhereInput
-  data: Prisma.XOR<Prisma.InventoryUpdateWithoutInventoryPlaceInput, Prisma.InventoryUncheckedUpdateWithoutInventoryPlaceInput>
+  data: Prisma.XOR<Prisma.InventoryUpdateWithoutInventoryStructureInput, Prisma.InventoryUncheckedUpdateWithoutInventoryStructureInput>
 }
 
-export type InventoryUpdateWithoutInventoryPlaceInput = {
+export type InventoryUpdateWithoutInventoryStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Material_Inventory_materialIdToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_materialIdToMaterialNestedInput
+  Material_Inventory_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_beNumberToMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
   InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
   InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
 }
 
-export type InventoryUncheckedUpdateWithoutInventoryPlaceInput = {
+export type InventoryUncheckedUpdateWithoutInventoryStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
   InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
-export type InventoryCreateManyEmployeeInput = {
+export type InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput = {
   id: string
   place: string
-  beNumber: number
-  longDescription: string
   shortDescription: string
-  serialNumber: string
+  longDescription: string
+  serieNumber: string
   quantityInStock: number
-  minimumStock: number
-  maximumStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
   information: string
   valid: boolean
-  createdAt: Date | string
+  noValidDate: Date | string
+  createdAt?: Date | string
+  Material_Inventory_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_beNumberToMaterialInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
+  InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
+}
+
+export type InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMaterialInput = {
+  id: string
+  beNumber: string
+  place: string
+  shortDescription: string
+  longDescription: string
+  serieNumber: string
+  quantityInStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
+  information: string
+  valid: boolean
+  noValidDate: Date | string
+  createdAt?: Date | string
+  createdBy: string
+  InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
+}
+
+export type InventoryCreateOrConnectWithoutMaterial_Inventory_materialIdToMaterialInput = {
+  where: Prisma.InventoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMaterialInput>
+}
+
+export type InventoryCreateManyMaterial_Inventory_materialIdToMaterialInputEnvelope = {
+  data: Prisma.InventoryCreateManyMaterial_Inventory_materialIdToMaterialInput | Prisma.InventoryCreateManyMaterial_Inventory_materialIdToMaterialInput[]
+  skipDuplicates?: boolean
+}
+
+export type InventoryCreateWithoutMaterial_Inventory_beNumberToMaterialInput = {
+  id: string
+  place: string
+  shortDescription: string
+  longDescription: string
+  serieNumber: string
+  quantityInStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
+  information: string
+  valid: boolean
+  noValidDate: Date | string
+  createdAt?: Date | string
+  Material_Inventory_materialIdToMaterial: Prisma.MaterialCreateNestedOneWithoutInventory_Inventory_materialIdToMaterialInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryInput
+  InventoryChange?: Prisma.InventoryChangeCreateNestedManyWithoutInventoryInput
+  InventoryOrder?: Prisma.InventoryOrderCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutInventoryInput
+}
+
+export type InventoryUncheckedCreateWithoutMaterial_Inventory_beNumberToMaterialInput = {
+  id: string
+  materialId: string
+  place: string
+  shortDescription: string
+  longDescription: string
+  serieNumber: string
+  quantityInStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
+  information: string
+  valid: boolean
+  noValidDate: Date | string
+  createdAt?: Date | string
+  createdBy: string
+  InventoryChange?: Prisma.InventoryChangeUncheckedCreateNestedManyWithoutInventoryInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedCreateNestedManyWithoutInventoryInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutInventoryInput
+}
+
+export type InventoryCreateOrConnectWithoutMaterial_Inventory_beNumberToMaterialInput = {
+  where: Prisma.InventoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_beNumberToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_beNumberToMaterialInput>
+}
+
+export type InventoryUpsertWithWhereUniqueWithoutMaterial_Inventory_materialIdToMaterialInput = {
+  where: Prisma.InventoryWhereUniqueInput
+  update: Prisma.XOR<Prisma.InventoryUpdateWithoutMaterial_Inventory_materialIdToMaterialInput, Prisma.InventoryUncheckedUpdateWithoutMaterial_Inventory_materialIdToMaterialInput>
+  create: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMaterialInput>
+}
+
+export type InventoryUpdateWithWhereUniqueWithoutMaterial_Inventory_materialIdToMaterialInput = {
+  where: Prisma.InventoryWhereUniqueInput
+  data: Prisma.XOR<Prisma.InventoryUpdateWithoutMaterial_Inventory_materialIdToMaterialInput, Prisma.InventoryUncheckedUpdateWithoutMaterial_Inventory_materialIdToMaterialInput>
+}
+
+export type InventoryUpdateManyWithWhereWithoutMaterial_Inventory_materialIdToMaterialInput = {
+  where: Prisma.InventoryScalarWhereInput
+  data: Prisma.XOR<Prisma.InventoryUpdateManyMutationInput, Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialInput>
+}
+
+export type InventoryUpsertWithoutMaterial_Inventory_beNumberToMaterialInput = {
+  update: Prisma.XOR<Prisma.InventoryUpdateWithoutMaterial_Inventory_beNumberToMaterialInput, Prisma.InventoryUncheckedUpdateWithoutMaterial_Inventory_beNumberToMaterialInput>
+  create: Prisma.XOR<Prisma.InventoryCreateWithoutMaterial_Inventory_beNumberToMaterialInput, Prisma.InventoryUncheckedCreateWithoutMaterial_Inventory_beNumberToMaterialInput>
+  where?: Prisma.InventoryWhereInput
+}
+
+export type InventoryUpdateToOneWithWhereWithoutMaterial_Inventory_beNumberToMaterialInput = {
+  where?: Prisma.InventoryWhereInput
+  data: Prisma.XOR<Prisma.InventoryUpdateWithoutMaterial_Inventory_beNumberToMaterialInput, Prisma.InventoryUncheckedUpdateWithoutMaterial_Inventory_beNumberToMaterialInput>
+}
+
+export type InventoryUpdateWithoutMaterial_Inventory_beNumberToMaterialInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  information?: Prisma.StringFieldUpdateOperationsInput | string
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Material_Inventory_materialIdToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_materialIdToMaterialNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
+  InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
+}
+
+export type InventoryUncheckedUpdateWithoutMaterial_Inventory_beNumberToMaterialInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  information?: Prisma.StringFieldUpdateOperationsInput | string
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
+}
+
+export type InventoryCreateManyEmployeeInput = {
+  id: string
+  materialId: string
+  beNumber: string
+  place: string
+  shortDescription: string
+  longDescription: string
+  serieNumber: string
+  quantityInStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
+  information: string
+  valid: boolean
+  noValidDate: Date | string
+  createdAt?: Date | string
 }
 
 export type InventoryUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Material_Inventory_materialIdToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_materialIdToMaterialNestedInput
+  Material_Inventory_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_beNumberToMaterialNestedInput
   InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
   InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
 }
 
 export type InventoryUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
   InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
-  InventoryPlace?: Prisma.InventoryPlaceUncheckedUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
 export type InventoryUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
   place?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  minimumStock?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   information?: Prisma.StringFieldUpdateOperationsInput | string
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type InventoryCreateManyMaterial_Inventory_materialIdToMaterialInput = {
+  id: string
+  beNumber: string
+  place: string
+  shortDescription: string
+  longDescription: string
+  serieNumber: string
+  quantityInStock: number
+  minQuantityInStock: number
+  maxQuantityInStock: number
+  information: string
+  valid: boolean
+  noValidDate: Date | string
+  createdAt?: Date | string
+  createdBy: string
+}
+
+export type InventoryUpdateWithoutMaterial_Inventory_materialIdToMaterialInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  information?: Prisma.StringFieldUpdateOperationsInput | string
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Material_Inventory_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutInventory_Inventory_beNumberToMaterialNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryNestedInput
+  InventoryChange?: Prisma.InventoryChangeUpdateManyWithoutInventoryNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutInventoryNestedInput
+}
+
+export type InventoryUncheckedUpdateWithoutMaterial_Inventory_materialIdToMaterialInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  information?: Prisma.StringFieldUpdateOperationsInput | string
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  InventoryChange?: Prisma.InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput
+  InventoryOrder?: Prisma.InventoryOrderUncheckedUpdateManyWithoutInventoryNestedInput
+  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutInventoryNestedInput
+}
+
+export type InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  information?: Prisma.StringFieldUpdateOperationsInput | string
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  noValidDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -1098,13 +1494,13 @@ export type InventoryUncheckedUpdateManyWithoutEmployeeInput = {
 export type InventoryCountOutputType = {
   InventoryChange: number
   InventoryOrder: number
-  InventoryPlace: number
+  InventoryStructure: number
 }
 
 export type InventoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   InventoryChange?: boolean | InventoryCountOutputTypeCountInventoryChangeArgs
   InventoryOrder?: boolean | InventoryCountOutputTypeCountInventoryOrderArgs
-  InventoryPlace?: boolean | InventoryCountOutputTypeCountInventoryPlaceArgs
+  InventoryStructure?: boolean | InventoryCountOutputTypeCountInventoryStructureArgs
 }
 
 /**
@@ -1134,29 +1530,33 @@ export type InventoryCountOutputTypeCountInventoryOrderArgs<ExtArgs extends runt
 /**
  * InventoryCountOutputType without action
  */
-export type InventoryCountOutputTypeCountInventoryPlaceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InventoryPlaceWhereInput
+export type InventoryCountOutputTypeCountInventoryStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InventoryStructureWhereInput
 }
 
 
 export type InventorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  place?: boolean
+  materialId?: boolean
   beNumber?: boolean
-  longDescription?: boolean
+  place?: boolean
   shortDescription?: boolean
-  serialNumber?: boolean
+  longDescription?: boolean
+  serieNumber?: boolean
   quantityInStock?: boolean
-  minimumStock?: boolean
-  maximumStock?: boolean
+  minQuantityInStock?: boolean
+  maxQuantityInStock?: boolean
   information?: boolean
   valid?: boolean
+  noValidDate?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  Material_Inventory_materialIdToMaterial?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
+  Material_Inventory_beNumberToMaterial?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   InventoryChange?: boolean | Prisma.Inventory$InventoryChangeArgs<ExtArgs>
   InventoryOrder?: boolean | Prisma.Inventory$InventoryOrderArgs<ExtArgs>
-  InventoryPlace?: boolean | Prisma.Inventory$InventoryPlaceArgs<ExtArgs>
+  InventoryStructure?: boolean | Prisma.Inventory$InventoryStructureArgs<ExtArgs>
   _count?: boolean | Prisma.InventoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventory"]>
 
@@ -1164,49 +1564,57 @@ export type InventorySelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type InventorySelectScalar = {
   id?: boolean
-  place?: boolean
+  materialId?: boolean
   beNumber?: boolean
-  longDescription?: boolean
+  place?: boolean
   shortDescription?: boolean
-  serialNumber?: boolean
+  longDescription?: boolean
+  serieNumber?: boolean
   quantityInStock?: boolean
-  minimumStock?: boolean
-  maximumStock?: boolean
+  minQuantityInStock?: boolean
+  maxQuantityInStock?: boolean
   information?: boolean
   valid?: boolean
+  noValidDate?: boolean
   createdAt?: boolean
   createdBy?: boolean
 }
 
-export type InventoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "place" | "beNumber" | "longDescription" | "shortDescription" | "serialNumber" | "quantityInStock" | "minimumStock" | "maximumStock" | "information" | "valid" | "createdAt" | "createdBy", ExtArgs["result"]["inventory"]>
+export type InventoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "beNumber" | "place" | "shortDescription" | "longDescription" | "serieNumber" | "quantityInStock" | "minQuantityInStock" | "maxQuantityInStock" | "information" | "valid" | "noValidDate" | "createdAt" | "createdBy", ExtArgs["result"]["inventory"]>
 export type InventoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Material_Inventory_materialIdToMaterial?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
+  Material_Inventory_beNumberToMaterial?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   InventoryChange?: boolean | Prisma.Inventory$InventoryChangeArgs<ExtArgs>
   InventoryOrder?: boolean | Prisma.Inventory$InventoryOrderArgs<ExtArgs>
-  InventoryPlace?: boolean | Prisma.Inventory$InventoryPlaceArgs<ExtArgs>
+  InventoryStructure?: boolean | Prisma.Inventory$InventoryStructureArgs<ExtArgs>
   _count?: boolean | Prisma.InventoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $InventoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Inventory"
   objects: {
+    Material_Inventory_materialIdToMaterial: Prisma.$MaterialPayload<ExtArgs>
+    Material_Inventory_beNumberToMaterial: Prisma.$MaterialPayload<ExtArgs>
     Employee: Prisma.$EmployeePayload<ExtArgs>
     InventoryChange: Prisma.$InventoryChangePayload<ExtArgs>[]
     InventoryOrder: Prisma.$InventoryOrderPayload<ExtArgs>[]
-    InventoryPlace: Prisma.$InventoryPlacePayload<ExtArgs>[]
+    InventoryStructure: Prisma.$InventoryStructurePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    materialId: string
+    beNumber: string
     place: string
-    beNumber: number
-    longDescription: string
     shortDescription: string
-    serialNumber: string
+    longDescription: string
+    serieNumber: string
     quantityInStock: number
-    minimumStock: number
-    maximumStock: number
+    minQuantityInStock: number
+    maxQuantityInStock: number
     information: string
     valid: boolean
+    noValidDate: Date
     createdAt: Date
     createdBy: string
   }, ExtArgs["result"]["inventory"]>
@@ -1549,10 +1957,12 @@ readonly fields: InventoryFieldRefs;
  */
 export interface Prisma__InventoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Material_Inventory_materialIdToMaterial<T extends Prisma.MaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Material_Inventory_beNumberToMaterial<T extends Prisma.MaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   InventoryChange<T extends Prisma.Inventory$InventoryChangeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Inventory$InventoryChangeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryChangePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   InventoryOrder<T extends Prisma.Inventory$InventoryOrderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Inventory$InventoryOrderArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  InventoryPlace<T extends Prisma.Inventory$InventoryPlaceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Inventory$InventoryPlaceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryPlacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  InventoryStructure<T extends Prisma.Inventory$InventoryStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Inventory$InventoryStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1583,16 +1993,18 @@ export interface Prisma__InventoryClient<T, Null = never, ExtArgs extends runtim
  */
 export interface InventoryFieldRefs {
   readonly id: Prisma.FieldRef<"Inventory", 'String'>
+  readonly materialId: Prisma.FieldRef<"Inventory", 'String'>
+  readonly beNumber: Prisma.FieldRef<"Inventory", 'String'>
   readonly place: Prisma.FieldRef<"Inventory", 'String'>
-  readonly beNumber: Prisma.FieldRef<"Inventory", 'Int'>
-  readonly longDescription: Prisma.FieldRef<"Inventory", 'String'>
   readonly shortDescription: Prisma.FieldRef<"Inventory", 'String'>
-  readonly serialNumber: Prisma.FieldRef<"Inventory", 'String'>
+  readonly longDescription: Prisma.FieldRef<"Inventory", 'String'>
+  readonly serieNumber: Prisma.FieldRef<"Inventory", 'String'>
   readonly quantityInStock: Prisma.FieldRef<"Inventory", 'Int'>
-  readonly minimumStock: Prisma.FieldRef<"Inventory", 'Int'>
-  readonly maximumStock: Prisma.FieldRef<"Inventory", 'Int'>
+  readonly minQuantityInStock: Prisma.FieldRef<"Inventory", 'Int'>
+  readonly maxQuantityInStock: Prisma.FieldRef<"Inventory", 'Int'>
   readonly information: Prisma.FieldRef<"Inventory", 'String'>
   readonly valid: Prisma.FieldRef<"Inventory", 'Boolean'>
+  readonly noValidDate: Prisma.FieldRef<"Inventory", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Inventory", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Inventory", 'String'>
 }
@@ -1986,27 +2398,27 @@ export type Inventory$InventoryOrderArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * Inventory.InventoryPlace
+ * Inventory.InventoryStructure
  */
-export type Inventory$InventoryPlaceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Inventory$InventoryStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the InventoryPlace
+   * Select specific fields to fetch from the InventoryStructure
    */
-  select?: Prisma.InventoryPlaceSelect<ExtArgs> | null
+  select?: Prisma.InventoryStructureSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the InventoryPlace
+   * Omit specific fields from the InventoryStructure
    */
-  omit?: Prisma.InventoryPlaceOmit<ExtArgs> | null
+  omit?: Prisma.InventoryStructureOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.InventoryPlaceInclude<ExtArgs> | null
-  where?: Prisma.InventoryPlaceWhereInput
-  orderBy?: Prisma.InventoryPlaceOrderByWithRelationInput | Prisma.InventoryPlaceOrderByWithRelationInput[]
-  cursor?: Prisma.InventoryPlaceWhereUniqueInput
+  include?: Prisma.InventoryStructureInclude<ExtArgs> | null
+  where?: Prisma.InventoryStructureWhereInput
+  orderBy?: Prisma.InventoryStructureOrderByWithRelationInput | Prisma.InventoryStructureOrderByWithRelationInput[]
+  cursor?: Prisma.InventoryStructureWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.InventoryPlaceScalarFieldEnum | Prisma.InventoryPlaceScalarFieldEnum[]
+  distinct?: Prisma.InventoryStructureScalarFieldEnum | Prisma.InventoryStructureScalarFieldEnum[]
 }
 
 /**

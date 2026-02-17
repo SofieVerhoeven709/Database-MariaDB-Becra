@@ -27,113 +27,113 @@ export type AggregatePurchaseDetail = {
 }
 
 export type PurchaseDetailAvgAggregateOutputType = {
+  unitPrice: number | null
   quantity: number | null
-  price: runtime.Decimal | null
-  totalCost: runtime.Decimal | null
+  totalCost: number | null
 }
 
 export type PurchaseDetailSumAggregateOutputType = {
+  unitPrice: number | null
   quantity: number | null
-  price: runtime.Decimal | null
-  totalCost: runtime.Decimal | null
+  totalCost: number | null
 }
 
 export type PurchaseDetailMinAggregateOutputType = {
   id: string | null
+  projectId: string | null
   purchaseId: string | null
-  productId: string | null
-  quantity: number | null
   beNumber: string | null
-  price: runtime.Decimal | null
-  totalCost: runtime.Decimal | null
+  unitPrice: number | null
+  quantity: number | null
+  totalCost: number | null
   status: string | null
-  additionalInformation: string | null
+  additionalInfo: string | null
+  updatedAt: Date | null
   createdBy: string | null
-  createdAt: Date | null
 }
 
 export type PurchaseDetailMaxAggregateOutputType = {
   id: string | null
+  projectId: string | null
   purchaseId: string | null
-  productId: string | null
-  quantity: number | null
   beNumber: string | null
-  price: runtime.Decimal | null
-  totalCost: runtime.Decimal | null
+  unitPrice: number | null
+  quantity: number | null
+  totalCost: number | null
   status: string | null
-  additionalInformation: string | null
+  additionalInfo: string | null
+  updatedAt: Date | null
   createdBy: string | null
-  createdAt: Date | null
 }
 
 export type PurchaseDetailCountAggregateOutputType = {
   id: number
+  projectId: number
   purchaseId: number
-  productId: number
-  quantity: number
   beNumber: number
-  price: number
+  unitPrice: number
+  quantity: number
   totalCost: number
   status: number
-  additionalInformation: number
+  additionalInfo: number
+  updatedAt: number
   createdBy: number
-  createdAt: number
   _all: number
 }
 
 
 export type PurchaseDetailAvgAggregateInputType = {
+  unitPrice?: true
   quantity?: true
-  price?: true
   totalCost?: true
 }
 
 export type PurchaseDetailSumAggregateInputType = {
+  unitPrice?: true
   quantity?: true
-  price?: true
   totalCost?: true
 }
 
 export type PurchaseDetailMinAggregateInputType = {
   id?: true
+  projectId?: true
   purchaseId?: true
-  productId?: true
-  quantity?: true
   beNumber?: true
-  price?: true
+  unitPrice?: true
+  quantity?: true
   totalCost?: true
   status?: true
-  additionalInformation?: true
+  additionalInfo?: true
+  updatedAt?: true
   createdBy?: true
-  createdAt?: true
 }
 
 export type PurchaseDetailMaxAggregateInputType = {
   id?: true
+  projectId?: true
   purchaseId?: true
-  productId?: true
-  quantity?: true
   beNumber?: true
-  price?: true
+  unitPrice?: true
+  quantity?: true
   totalCost?: true
   status?: true
-  additionalInformation?: true
+  additionalInfo?: true
+  updatedAt?: true
   createdBy?: true
-  createdAt?: true
 }
 
 export type PurchaseDetailCountAggregateInputType = {
   id?: true
+  projectId?: true
   purchaseId?: true
-  productId?: true
-  quantity?: true
   beNumber?: true
-  price?: true
+  unitPrice?: true
+  quantity?: true
   totalCost?: true
   status?: true
-  additionalInformation?: true
+  additionalInfo?: true
+  updatedAt?: true
   createdBy?: true
-  createdAt?: true
   _all?: true
 }
 
@@ -225,16 +225,16 @@ export type PurchaseDetailGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 
 export type PurchaseDetailGroupByOutputType = {
   id: string
+  projectId: string | null
   purchaseId: string | null
-  productId: string | null
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal
-  totalCost: runtime.Decimal
-  status: string
-  additionalInformation: string
+  beNumber: string | null
+  unitPrice: number | null
+  quantity: number | null
+  totalCost: number | null
+  status: string | null
+  additionalInfo: string | null
+  updatedAt: Date | null
   createdBy: string
-  createdAt: Date
   _count: PurchaseDetailCountAggregateOutputType | null
   _avg: PurchaseDetailAvgAggregateOutputType | null
   _sum: PurchaseDetailSumAggregateOutputType | null
@@ -262,38 +262,36 @@ export type PurchaseDetailWhereInput = {
   OR?: Prisma.PurchaseDetailWhereInput[]
   NOT?: Prisma.PurchaseDetailWhereInput | Prisma.PurchaseDetailWhereInput[]
   id?: Prisma.StringFilter<"PurchaseDetail"> | string
+  projectId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   purchaseId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
-  productId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
-  quantity?: Prisma.IntFilter<"PurchaseDetail"> | number
-  beNumber?: Prisma.StringFilter<"PurchaseDetail"> | string
-  price?: Prisma.DecimalFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFilter<"PurchaseDetail"> | string
-  additionalInformation?: Prisma.StringFilter<"PurchaseDetail"> | string
+  beNumber?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  unitPrice?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
+  quantity?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
+  totalCost?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
+  status?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  updatedAt?: Prisma.DateTimeNullableFilter<"PurchaseDetail"> | Date | string | null
   createdBy?: Prisma.StringFilter<"PurchaseDetail"> | string
-  createdAt?: Prisma.DateTimeFilter<"PurchaseDetail"> | Date | string
+  Project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
   Purchase?: Prisma.XOR<Prisma.PurchaseNullableScalarRelationFilter, Prisma.PurchaseWhereInput> | null
-  Product?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestListRelationFilter
 }
 
 export type PurchaseDetailOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
   purchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
-  productId?: Prisma.SortOrderInput | Prisma.SortOrder
-  quantity?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  price?: Prisma.SortOrder
-  totalCost?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  quantity?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalCost?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  Project?: Prisma.ProjectOrderByWithRelationInput
   Purchase?: Prisma.PurchaseOrderByWithRelationInput
-  Product?: Prisma.ProductOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestOrderByRelationAggregateInput
   _relevance?: Prisma.PurchaseDetailOrderByRelevanceInput
 }
 
@@ -302,34 +300,33 @@ export type PurchaseDetailWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PurchaseDetailWhereInput | Prisma.PurchaseDetailWhereInput[]
   OR?: Prisma.PurchaseDetailWhereInput[]
   NOT?: Prisma.PurchaseDetailWhereInput | Prisma.PurchaseDetailWhereInput[]
+  projectId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   purchaseId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
-  productId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
-  quantity?: Prisma.IntFilter<"PurchaseDetail"> | number
-  beNumber?: Prisma.StringFilter<"PurchaseDetail"> | string
-  price?: Prisma.DecimalFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFilter<"PurchaseDetail"> | string
-  additionalInformation?: Prisma.StringFilter<"PurchaseDetail"> | string
+  beNumber?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  unitPrice?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
+  quantity?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
+  totalCost?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
+  status?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  updatedAt?: Prisma.DateTimeNullableFilter<"PurchaseDetail"> | Date | string | null
   createdBy?: Prisma.StringFilter<"PurchaseDetail"> | string
-  createdAt?: Prisma.DateTimeFilter<"PurchaseDetail"> | Date | string
+  Project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
   Purchase?: Prisma.XOR<Prisma.PurchaseNullableScalarRelationFilter, Prisma.PurchaseWhereInput> | null
-  Product?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestListRelationFilter
 }, "id">
 
 export type PurchaseDetailOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
   purchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
-  productId?: Prisma.SortOrderInput | Prisma.SortOrder
-  quantity?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  price?: Prisma.SortOrder
-  totalCost?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  quantity?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalCost?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   _count?: Prisma.PurchaseDetailCountOrderByAggregateInput
   _avg?: Prisma.PurchaseDetailAvgOrderByAggregateInput
   _max?: Prisma.PurchaseDetailMaxOrderByAggregateInput
@@ -342,115 +339,111 @@ export type PurchaseDetailScalarWhereWithAggregatesInput = {
   OR?: Prisma.PurchaseDetailScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PurchaseDetailScalarWhereWithAggregatesInput | Prisma.PurchaseDetailScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"PurchaseDetail"> | string
+  projectId?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
   purchaseId?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
-  productId?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
-  quantity?: Prisma.IntWithAggregatesFilter<"PurchaseDetail"> | number
-  beNumber?: Prisma.StringWithAggregatesFilter<"PurchaseDetail"> | string
-  price?: Prisma.DecimalWithAggregatesFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalWithAggregatesFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringWithAggregatesFilter<"PurchaseDetail"> | string
-  additionalInformation?: Prisma.StringWithAggregatesFilter<"PurchaseDetail"> | string
+  beNumber?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
+  unitPrice?: Prisma.IntNullableWithAggregatesFilter<"PurchaseDetail"> | number | null
+  quantity?: Prisma.IntNullableWithAggregatesFilter<"PurchaseDetail"> | number | null
+  totalCost?: Prisma.IntNullableWithAggregatesFilter<"PurchaseDetail"> | number | null
+  status?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
+  additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseDetail"> | Date | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"PurchaseDetail"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"PurchaseDetail"> | Date | string
 }
 
 export type PurchaseDetailCreateInput = {
   id: string
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
-  createdAt: Date | string
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  Project?: Prisma.ProjectCreateNestedOneWithoutPurchaseDetailInput
   Purchase?: Prisma.PurchaseCreateNestedOneWithoutPurchaseDetailInput
-  Product?: Prisma.ProductCreateNestedOneWithoutPurchaseDetailInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseDetailInput
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestCreateNestedManyWithoutPurchaseDetailInput
 }
 
 export type PurchaseDetailUncheckedCreateInput = {
   id: string
+  projectId?: string | null
   purchaseId?: string | null
-  productId?: string | null
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
   createdBy: string
-  createdAt: Date | string
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUncheckedCreateNestedManyWithoutPurchaseDetailInput
 }
 
 export type PurchaseDetailUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Project?: Prisma.ProjectUpdateOneWithoutPurchaseDetailNestedInput
   Purchase?: Prisma.PurchaseUpdateOneWithoutPurchaseDetailNestedInput
-  Product?: Prisma.ProductUpdateOneWithoutPurchaseDetailNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseDetailNestedInput
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUpdateManyWithoutPurchaseDetailNestedInput
 }
 
 export type PurchaseDetailUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUncheckedUpdateManyWithoutPurchaseDetailNestedInput
 }
 
 export type PurchaseDetailCreateManyInput = {
   id: string
+  projectId?: string | null
   purchaseId?: string | null
-  productId?: string | null
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
   createdBy: string
-  createdAt: Date | string
 }
 
 export type PurchaseDetailUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PurchaseDetailUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PurchaseDetailListRelationFilter = {
@@ -471,61 +464,56 @@ export type PurchaseDetailOrderByRelevanceInput = {
 
 export type PurchaseDetailCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
   purchaseId?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  quantity?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type PurchaseDetailAvgOrderByAggregateInput = {
+  unitPrice?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  price?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
 }
 
 export type PurchaseDetailMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
   purchaseId?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  quantity?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type PurchaseDetailMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
   purchaseId?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
+  quantity?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type PurchaseDetailSumOrderByAggregateInput = {
+  unitPrice?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  price?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
-}
-
-export type PurchaseDetailNullableScalarRelationFilter = {
-  is?: Prisma.PurchaseDetailWhereInput | null
-  isNot?: Prisma.PurchaseDetailWhereInput | null
 }
 
 export type PurchaseDetailCreateNestedManyWithoutEmployeeInput = {
@@ -570,45 +558,45 @@ export type PurchaseDetailUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.PurchaseDetailScalarWhereInput | Prisma.PurchaseDetailScalarWhereInput[]
 }
 
-export type PurchaseDetailCreateNestedManyWithoutProductInput = {
-  create?: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProductInput, Prisma.PurchaseDetailUncheckedCreateWithoutProductInput> | Prisma.PurchaseDetailCreateWithoutProductInput[] | Prisma.PurchaseDetailUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.PurchaseDetailCreateOrConnectWithoutProductInput | Prisma.PurchaseDetailCreateOrConnectWithoutProductInput[]
-  createMany?: Prisma.PurchaseDetailCreateManyProductInputEnvelope
+export type PurchaseDetailCreateNestedManyWithoutProjectInput = {
+  create?: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProjectInput, Prisma.PurchaseDetailUncheckedCreateWithoutProjectInput> | Prisma.PurchaseDetailCreateWithoutProjectInput[] | Prisma.PurchaseDetailUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.PurchaseDetailCreateOrConnectWithoutProjectInput | Prisma.PurchaseDetailCreateOrConnectWithoutProjectInput[]
+  createMany?: Prisma.PurchaseDetailCreateManyProjectInputEnvelope
   connect?: Prisma.PurchaseDetailWhereUniqueInput | Prisma.PurchaseDetailWhereUniqueInput[]
 }
 
-export type PurchaseDetailUncheckedCreateNestedManyWithoutProductInput = {
-  create?: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProductInput, Prisma.PurchaseDetailUncheckedCreateWithoutProductInput> | Prisma.PurchaseDetailCreateWithoutProductInput[] | Prisma.PurchaseDetailUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.PurchaseDetailCreateOrConnectWithoutProductInput | Prisma.PurchaseDetailCreateOrConnectWithoutProductInput[]
-  createMany?: Prisma.PurchaseDetailCreateManyProductInputEnvelope
+export type PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput = {
+  create?: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProjectInput, Prisma.PurchaseDetailUncheckedCreateWithoutProjectInput> | Prisma.PurchaseDetailCreateWithoutProjectInput[] | Prisma.PurchaseDetailUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.PurchaseDetailCreateOrConnectWithoutProjectInput | Prisma.PurchaseDetailCreateOrConnectWithoutProjectInput[]
+  createMany?: Prisma.PurchaseDetailCreateManyProjectInputEnvelope
   connect?: Prisma.PurchaseDetailWhereUniqueInput | Prisma.PurchaseDetailWhereUniqueInput[]
 }
 
-export type PurchaseDetailUpdateManyWithoutProductNestedInput = {
-  create?: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProductInput, Prisma.PurchaseDetailUncheckedCreateWithoutProductInput> | Prisma.PurchaseDetailCreateWithoutProductInput[] | Prisma.PurchaseDetailUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.PurchaseDetailCreateOrConnectWithoutProductInput | Prisma.PurchaseDetailCreateOrConnectWithoutProductInput[]
-  upsert?: Prisma.PurchaseDetailUpsertWithWhereUniqueWithoutProductInput | Prisma.PurchaseDetailUpsertWithWhereUniqueWithoutProductInput[]
-  createMany?: Prisma.PurchaseDetailCreateManyProductInputEnvelope
+export type PurchaseDetailUpdateManyWithoutProjectNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProjectInput, Prisma.PurchaseDetailUncheckedCreateWithoutProjectInput> | Prisma.PurchaseDetailCreateWithoutProjectInput[] | Prisma.PurchaseDetailUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.PurchaseDetailCreateOrConnectWithoutProjectInput | Prisma.PurchaseDetailCreateOrConnectWithoutProjectInput[]
+  upsert?: Prisma.PurchaseDetailUpsertWithWhereUniqueWithoutProjectInput | Prisma.PurchaseDetailUpsertWithWhereUniqueWithoutProjectInput[]
+  createMany?: Prisma.PurchaseDetailCreateManyProjectInputEnvelope
   set?: Prisma.PurchaseDetailWhereUniqueInput | Prisma.PurchaseDetailWhereUniqueInput[]
   disconnect?: Prisma.PurchaseDetailWhereUniqueInput | Prisma.PurchaseDetailWhereUniqueInput[]
   delete?: Prisma.PurchaseDetailWhereUniqueInput | Prisma.PurchaseDetailWhereUniqueInput[]
   connect?: Prisma.PurchaseDetailWhereUniqueInput | Prisma.PurchaseDetailWhereUniqueInput[]
-  update?: Prisma.PurchaseDetailUpdateWithWhereUniqueWithoutProductInput | Prisma.PurchaseDetailUpdateWithWhereUniqueWithoutProductInput[]
-  updateMany?: Prisma.PurchaseDetailUpdateManyWithWhereWithoutProductInput | Prisma.PurchaseDetailUpdateManyWithWhereWithoutProductInput[]
+  update?: Prisma.PurchaseDetailUpdateWithWhereUniqueWithoutProjectInput | Prisma.PurchaseDetailUpdateWithWhereUniqueWithoutProjectInput[]
+  updateMany?: Prisma.PurchaseDetailUpdateManyWithWhereWithoutProjectInput | Prisma.PurchaseDetailUpdateManyWithWhereWithoutProjectInput[]
   deleteMany?: Prisma.PurchaseDetailScalarWhereInput | Prisma.PurchaseDetailScalarWhereInput[]
 }
 
-export type PurchaseDetailUncheckedUpdateManyWithoutProductNestedInput = {
-  create?: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProductInput, Prisma.PurchaseDetailUncheckedCreateWithoutProductInput> | Prisma.PurchaseDetailCreateWithoutProductInput[] | Prisma.PurchaseDetailUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.PurchaseDetailCreateOrConnectWithoutProductInput | Prisma.PurchaseDetailCreateOrConnectWithoutProductInput[]
-  upsert?: Prisma.PurchaseDetailUpsertWithWhereUniqueWithoutProductInput | Prisma.PurchaseDetailUpsertWithWhereUniqueWithoutProductInput[]
-  createMany?: Prisma.PurchaseDetailCreateManyProductInputEnvelope
+export type PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProjectInput, Prisma.PurchaseDetailUncheckedCreateWithoutProjectInput> | Prisma.PurchaseDetailCreateWithoutProjectInput[] | Prisma.PurchaseDetailUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.PurchaseDetailCreateOrConnectWithoutProjectInput | Prisma.PurchaseDetailCreateOrConnectWithoutProjectInput[]
+  upsert?: Prisma.PurchaseDetailUpsertWithWhereUniqueWithoutProjectInput | Prisma.PurchaseDetailUpsertWithWhereUniqueWithoutProjectInput[]
+  createMany?: Prisma.PurchaseDetailCreateManyProjectInputEnvelope
   set?: Prisma.PurchaseDetailWhereUniqueInput | Prisma.PurchaseDetailWhereUniqueInput[]
   disconnect?: Prisma.PurchaseDetailWhereUniqueInput | Prisma.PurchaseDetailWhereUniqueInput[]
   delete?: Prisma.PurchaseDetailWhereUniqueInput | Prisma.PurchaseDetailWhereUniqueInput[]
   connect?: Prisma.PurchaseDetailWhereUniqueInput | Prisma.PurchaseDetailWhereUniqueInput[]
-  update?: Prisma.PurchaseDetailUpdateWithWhereUniqueWithoutProductInput | Prisma.PurchaseDetailUpdateWithWhereUniqueWithoutProductInput[]
-  updateMany?: Prisma.PurchaseDetailUpdateManyWithWhereWithoutProductInput | Prisma.PurchaseDetailUpdateManyWithWhereWithoutProductInput[]
+  update?: Prisma.PurchaseDetailUpdateWithWhereUniqueWithoutProjectInput | Prisma.PurchaseDetailUpdateWithWhereUniqueWithoutProjectInput[]
+  updateMany?: Prisma.PurchaseDetailUpdateManyWithWhereWithoutProjectInput | Prisma.PurchaseDetailUpdateManyWithWhereWithoutProjectInput[]
   deleteMany?: Prisma.PurchaseDetailScalarWhereInput | Prisma.PurchaseDetailScalarWhereInput[]
 }
 
@@ -654,48 +642,30 @@ export type PurchaseDetailUncheckedUpdateManyWithoutPurchaseNestedInput = {
   deleteMany?: Prisma.PurchaseDetailScalarWhereInput | Prisma.PurchaseDetailScalarWhereInput[]
 }
 
-export type PurchaseDetailCreateNestedOneWithoutPurchasePriceRequestInput = {
-  create?: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutPurchasePriceRequestInput, Prisma.PurchaseDetailUncheckedCreateWithoutPurchasePriceRequestInput>
-  connectOrCreate?: Prisma.PurchaseDetailCreateOrConnectWithoutPurchasePriceRequestInput
-  connect?: Prisma.PurchaseDetailWhereUniqueInput
-}
-
-export type PurchaseDetailUpdateOneWithoutPurchasePriceRequestNestedInput = {
-  create?: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutPurchasePriceRequestInput, Prisma.PurchaseDetailUncheckedCreateWithoutPurchasePriceRequestInput>
-  connectOrCreate?: Prisma.PurchaseDetailCreateOrConnectWithoutPurchasePriceRequestInput
-  upsert?: Prisma.PurchaseDetailUpsertWithoutPurchasePriceRequestInput
-  disconnect?: Prisma.PurchaseDetailWhereInput | boolean
-  delete?: Prisma.PurchaseDetailWhereInput | boolean
-  connect?: Prisma.PurchaseDetailWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PurchaseDetailUpdateToOneWithWhereWithoutPurchasePriceRequestInput, Prisma.PurchaseDetailUpdateWithoutPurchasePriceRequestInput>, Prisma.PurchaseDetailUncheckedUpdateWithoutPurchasePriceRequestInput>
-}
-
 export type PurchaseDetailCreateWithoutEmployeeInput = {
   id: string
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
-  createdAt: Date | string
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  Project?: Prisma.ProjectCreateNestedOneWithoutPurchaseDetailInput
   Purchase?: Prisma.PurchaseCreateNestedOneWithoutPurchaseDetailInput
-  Product?: Prisma.ProductCreateNestedOneWithoutPurchaseDetailInput
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestCreateNestedManyWithoutPurchaseDetailInput
 }
 
 export type PurchaseDetailUncheckedCreateWithoutEmployeeInput = {
   id: string
+  projectId?: string | null
   purchaseId?: string | null
-  productId?: string | null
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
-  createdAt: Date | string
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUncheckedCreateNestedManyWithoutPurchaseDetailInput
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
 }
 
 export type PurchaseDetailCreateOrConnectWithoutEmployeeInput = {
@@ -729,98 +699,94 @@ export type PurchaseDetailScalarWhereInput = {
   OR?: Prisma.PurchaseDetailScalarWhereInput[]
   NOT?: Prisma.PurchaseDetailScalarWhereInput | Prisma.PurchaseDetailScalarWhereInput[]
   id?: Prisma.StringFilter<"PurchaseDetail"> | string
+  projectId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   purchaseId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
-  productId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
-  quantity?: Prisma.IntFilter<"PurchaseDetail"> | number
-  beNumber?: Prisma.StringFilter<"PurchaseDetail"> | string
-  price?: Prisma.DecimalFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFilter<"PurchaseDetail"> | string
-  additionalInformation?: Prisma.StringFilter<"PurchaseDetail"> | string
+  beNumber?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  unitPrice?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
+  quantity?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
+  totalCost?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
+  status?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
+  updatedAt?: Prisma.DateTimeNullableFilter<"PurchaseDetail"> | Date | string | null
   createdBy?: Prisma.StringFilter<"PurchaseDetail"> | string
-  createdAt?: Prisma.DateTimeFilter<"PurchaseDetail"> | Date | string
 }
 
-export type PurchaseDetailCreateWithoutProductInput = {
+export type PurchaseDetailCreateWithoutProjectInput = {
   id: string
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
-  createdAt: Date | string
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
   Purchase?: Prisma.PurchaseCreateNestedOneWithoutPurchaseDetailInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseDetailInput
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestCreateNestedManyWithoutPurchaseDetailInput
 }
 
-export type PurchaseDetailUncheckedCreateWithoutProductInput = {
+export type PurchaseDetailUncheckedCreateWithoutProjectInput = {
   id: string
   purchaseId?: string | null
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
   createdBy: string
-  createdAt: Date | string
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUncheckedCreateNestedManyWithoutPurchaseDetailInput
 }
 
-export type PurchaseDetailCreateOrConnectWithoutProductInput = {
+export type PurchaseDetailCreateOrConnectWithoutProjectInput = {
   where: Prisma.PurchaseDetailWhereUniqueInput
-  create: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProductInput, Prisma.PurchaseDetailUncheckedCreateWithoutProductInput>
+  create: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProjectInput, Prisma.PurchaseDetailUncheckedCreateWithoutProjectInput>
 }
 
-export type PurchaseDetailCreateManyProductInputEnvelope = {
-  data: Prisma.PurchaseDetailCreateManyProductInput | Prisma.PurchaseDetailCreateManyProductInput[]
+export type PurchaseDetailCreateManyProjectInputEnvelope = {
+  data: Prisma.PurchaseDetailCreateManyProjectInput | Prisma.PurchaseDetailCreateManyProjectInput[]
   skipDuplicates?: boolean
 }
 
-export type PurchaseDetailUpsertWithWhereUniqueWithoutProductInput = {
+export type PurchaseDetailUpsertWithWhereUniqueWithoutProjectInput = {
   where: Prisma.PurchaseDetailWhereUniqueInput
-  update: Prisma.XOR<Prisma.PurchaseDetailUpdateWithoutProductInput, Prisma.PurchaseDetailUncheckedUpdateWithoutProductInput>
-  create: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProductInput, Prisma.PurchaseDetailUncheckedCreateWithoutProductInput>
+  update: Prisma.XOR<Prisma.PurchaseDetailUpdateWithoutProjectInput, Prisma.PurchaseDetailUncheckedUpdateWithoutProjectInput>
+  create: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutProjectInput, Prisma.PurchaseDetailUncheckedCreateWithoutProjectInput>
 }
 
-export type PurchaseDetailUpdateWithWhereUniqueWithoutProductInput = {
+export type PurchaseDetailUpdateWithWhereUniqueWithoutProjectInput = {
   where: Prisma.PurchaseDetailWhereUniqueInput
-  data: Prisma.XOR<Prisma.PurchaseDetailUpdateWithoutProductInput, Prisma.PurchaseDetailUncheckedUpdateWithoutProductInput>
+  data: Prisma.XOR<Prisma.PurchaseDetailUpdateWithoutProjectInput, Prisma.PurchaseDetailUncheckedUpdateWithoutProjectInput>
 }
 
-export type PurchaseDetailUpdateManyWithWhereWithoutProductInput = {
+export type PurchaseDetailUpdateManyWithWhereWithoutProjectInput = {
   where: Prisma.PurchaseDetailScalarWhereInput
-  data: Prisma.XOR<Prisma.PurchaseDetailUpdateManyMutationInput, Prisma.PurchaseDetailUncheckedUpdateManyWithoutProductInput>
+  data: Prisma.XOR<Prisma.PurchaseDetailUpdateManyMutationInput, Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectInput>
 }
 
 export type PurchaseDetailCreateWithoutPurchaseInput = {
   id: string
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
-  createdAt: Date | string
-  Product?: Prisma.ProductCreateNestedOneWithoutPurchaseDetailInput
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  Project?: Prisma.ProjectCreateNestedOneWithoutPurchaseDetailInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseDetailInput
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestCreateNestedManyWithoutPurchaseDetailInput
 }
 
 export type PurchaseDetailUncheckedCreateWithoutPurchaseInput = {
   id: string
-  productId?: string | null
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
+  projectId?: string | null
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
   createdBy: string
-  createdAt: Date | string
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUncheckedCreateNestedManyWithoutPurchaseDetailInput
 }
 
 export type PurchaseDetailCreateOrConnectWithoutPurchaseInput = {
@@ -849,335 +815,223 @@ export type PurchaseDetailUpdateManyWithWhereWithoutPurchaseInput = {
   data: Prisma.XOR<Prisma.PurchaseDetailUpdateManyMutationInput, Prisma.PurchaseDetailUncheckedUpdateManyWithoutPurchaseInput>
 }
 
-export type PurchaseDetailCreateWithoutPurchasePriceRequestInput = {
-  id: string
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
-  createdAt: Date | string
-  Purchase?: Prisma.PurchaseCreateNestedOneWithoutPurchaseDetailInput
-  Product?: Prisma.ProductCreateNestedOneWithoutPurchaseDetailInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseDetailInput
-}
-
-export type PurchaseDetailUncheckedCreateWithoutPurchasePriceRequestInput = {
-  id: string
-  purchaseId?: string | null
-  productId?: string | null
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
-  createdBy: string
-  createdAt: Date | string
-}
-
-export type PurchaseDetailCreateOrConnectWithoutPurchasePriceRequestInput = {
-  where: Prisma.PurchaseDetailWhereUniqueInput
-  create: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutPurchasePriceRequestInput, Prisma.PurchaseDetailUncheckedCreateWithoutPurchasePriceRequestInput>
-}
-
-export type PurchaseDetailUpsertWithoutPurchasePriceRequestInput = {
-  update: Prisma.XOR<Prisma.PurchaseDetailUpdateWithoutPurchasePriceRequestInput, Prisma.PurchaseDetailUncheckedUpdateWithoutPurchasePriceRequestInput>
-  create: Prisma.XOR<Prisma.PurchaseDetailCreateWithoutPurchasePriceRequestInput, Prisma.PurchaseDetailUncheckedCreateWithoutPurchasePriceRequestInput>
-  where?: Prisma.PurchaseDetailWhereInput
-}
-
-export type PurchaseDetailUpdateToOneWithWhereWithoutPurchasePriceRequestInput = {
-  where?: Prisma.PurchaseDetailWhereInput
-  data: Prisma.XOR<Prisma.PurchaseDetailUpdateWithoutPurchasePriceRequestInput, Prisma.PurchaseDetailUncheckedUpdateWithoutPurchasePriceRequestInput>
-}
-
-export type PurchaseDetailUpdateWithoutPurchasePriceRequestInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Purchase?: Prisma.PurchaseUpdateOneWithoutPurchaseDetailNestedInput
-  Product?: Prisma.ProductUpdateOneWithoutPurchaseDetailNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseDetailNestedInput
-}
-
-export type PurchaseDetailUncheckedUpdateWithoutPurchasePriceRequestInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
 export type PurchaseDetailCreateManyEmployeeInput = {
   id: string
+  projectId?: string | null
   purchaseId?: string | null
-  productId?: string | null
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
-  createdAt: Date | string
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
 }
 
 export type PurchaseDetailUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Project?: Prisma.ProjectUpdateOneWithoutPurchaseDetailNestedInput
   Purchase?: Prisma.PurchaseUpdateOneWithoutPurchaseDetailNestedInput
-  Product?: Prisma.ProductUpdateOneWithoutPurchaseDetailNestedInput
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUpdateManyWithoutPurchaseDetailNestedInput
 }
 
 export type PurchaseDetailUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUncheckedUpdateManyWithoutPurchaseDetailNestedInput
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PurchaseDetailUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
-export type PurchaseDetailCreateManyProductInput = {
+export type PurchaseDetailCreateManyProjectInput = {
   id: string
   purchaseId?: string | null
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
   createdBy: string
-  createdAt: Date | string
 }
 
-export type PurchaseDetailUpdateWithoutProductInput = {
+export type PurchaseDetailUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Purchase?: Prisma.PurchaseUpdateOneWithoutPurchaseDetailNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseDetailNestedInput
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUpdateManyWithoutPurchaseDetailNestedInput
 }
 
-export type PurchaseDetailUncheckedUpdateWithoutProductInput = {
+export type PurchaseDetailUncheckedUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUncheckedUpdateManyWithoutPurchaseDetailNestedInput
 }
 
-export type PurchaseDetailUncheckedUpdateManyWithoutProductInput = {
+export type PurchaseDetailUncheckedUpdateManyWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PurchaseDetailCreateManyPurchaseInput = {
   id: string
-  productId?: string | null
-  quantity: number
-  beNumber: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status: string
-  additionalInformation: string
+  projectId?: string | null
+  beNumber?: string | null
+  unitPrice?: number | null
+  quantity?: number | null
+  totalCost?: number | null
+  status?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
   createdBy: string
-  createdAt: Date | string
 }
 
 export type PurchaseDetailUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Product?: Prisma.ProductUpdateOneWithoutPurchaseDetailNestedInput
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Project?: Prisma.ProjectUpdateOneWithoutPurchaseDetailNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseDetailNestedInput
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUpdateManyWithoutPurchaseDetailNestedInput
 }
 
 export type PurchaseDetailUncheckedUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  PurchasePriceRequest?: Prisma.PurchasePriceRequestUncheckedUpdateManyWithoutPurchaseDetailNestedInput
 }
 
 export type PurchaseDetailUncheckedUpdateManyWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-
-/**
- * Count Type PurchaseDetailCountOutputType
- */
-
-export type PurchaseDetailCountOutputType = {
-  PurchasePriceRequest: number
-}
-
-export type PurchaseDetailCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  PurchasePriceRequest?: boolean | PurchaseDetailCountOutputTypeCountPurchasePriceRequestArgs
-}
-
-/**
- * PurchaseDetailCountOutputType without action
- */
-export type PurchaseDetailCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PurchaseDetailCountOutputType
-   */
-  select?: Prisma.PurchaseDetailCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * PurchaseDetailCountOutputType without action
- */
-export type PurchaseDetailCountOutputTypeCountPurchasePriceRequestArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PurchasePriceRequestWhereInput
-}
 
 
 export type PurchaseDetailSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  projectId?: boolean
   purchaseId?: boolean
-  productId?: boolean
-  quantity?: boolean
   beNumber?: boolean
-  price?: boolean
+  unitPrice?: boolean
+  quantity?: boolean
   totalCost?: boolean
   status?: boolean
-  additionalInformation?: boolean
+  additionalInfo?: boolean
+  updatedAt?: boolean
   createdBy?: boolean
-  createdAt?: boolean
+  Project?: boolean | Prisma.PurchaseDetail$ProjectArgs<ExtArgs>
   Purchase?: boolean | Prisma.PurchaseDetail$PurchaseArgs<ExtArgs>
-  Product?: boolean | Prisma.PurchaseDetail$ProductArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  PurchasePriceRequest?: boolean | Prisma.PurchaseDetail$PurchasePriceRequestArgs<ExtArgs>
-  _count?: boolean | Prisma.PurchaseDetailCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseDetail"]>
 
 
 
 export type PurchaseDetailSelectScalar = {
   id?: boolean
+  projectId?: boolean
   purchaseId?: boolean
-  productId?: boolean
-  quantity?: boolean
   beNumber?: boolean
-  price?: boolean
+  unitPrice?: boolean
+  quantity?: boolean
   totalCost?: boolean
   status?: boolean
-  additionalInformation?: boolean
+  additionalInfo?: boolean
+  updatedAt?: boolean
   createdBy?: boolean
-  createdAt?: boolean
 }
 
-export type PurchaseDetailOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseId" | "productId" | "quantity" | "beNumber" | "price" | "totalCost" | "status" | "additionalInformation" | "createdBy" | "createdAt", ExtArgs["result"]["purchaseDetail"]>
+export type PurchaseDetailOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "purchaseId" | "beNumber" | "unitPrice" | "quantity" | "totalCost" | "status" | "additionalInfo" | "updatedAt" | "createdBy", ExtArgs["result"]["purchaseDetail"]>
 export type PurchaseDetailInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Project?: boolean | Prisma.PurchaseDetail$ProjectArgs<ExtArgs>
   Purchase?: boolean | Prisma.PurchaseDetail$PurchaseArgs<ExtArgs>
-  Product?: boolean | Prisma.PurchaseDetail$ProductArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  PurchasePriceRequest?: boolean | Prisma.PurchaseDetail$PurchasePriceRequestArgs<ExtArgs>
-  _count?: boolean | Prisma.PurchaseDetailCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $PurchaseDetailPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PurchaseDetail"
   objects: {
+    Project: Prisma.$ProjectPayload<ExtArgs> | null
     Purchase: Prisma.$PurchasePayload<ExtArgs> | null
-    Product: Prisma.$ProductPayload<ExtArgs> | null
     Employee: Prisma.$EmployeePayload<ExtArgs>
-    PurchasePriceRequest: Prisma.$PurchasePriceRequestPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    projectId: string | null
     purchaseId: string | null
-    productId: string | null
-    quantity: number
-    beNumber: string
-    price: runtime.Decimal
-    totalCost: runtime.Decimal
-    status: string
-    additionalInformation: string
+    beNumber: string | null
+    unitPrice: number | null
+    quantity: number | null
+    totalCost: number | null
+    status: string | null
+    additionalInfo: string | null
+    updatedAt: Date | null
     createdBy: string
-    createdAt: Date
   }, ExtArgs["result"]["purchaseDetail"]>
   composites: {}
 }
@@ -1518,10 +1372,9 @@ readonly fields: PurchaseDetailFieldRefs;
  */
 export interface Prisma__PurchaseDetailClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Project<T extends Prisma.PurchaseDetail$ProjectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseDetail$ProjectArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Purchase<T extends Prisma.PurchaseDetail$PurchaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseDetail$PurchaseArgs<ExtArgs>>): Prisma.Prisma__PurchaseClient<runtime.Types.Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  Product<T extends Prisma.PurchaseDetail$ProductArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseDetail$ProductArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  PurchasePriceRequest<T extends Prisma.PurchaseDetail$PurchasePriceRequestArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseDetail$PurchasePriceRequestArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchasePriceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1552,16 +1405,16 @@ export interface Prisma__PurchaseDetailClient<T, Null = never, ExtArgs extends r
  */
 export interface PurchaseDetailFieldRefs {
   readonly id: Prisma.FieldRef<"PurchaseDetail", 'String'>
+  readonly projectId: Prisma.FieldRef<"PurchaseDetail", 'String'>
   readonly purchaseId: Prisma.FieldRef<"PurchaseDetail", 'String'>
-  readonly productId: Prisma.FieldRef<"PurchaseDetail", 'String'>
-  readonly quantity: Prisma.FieldRef<"PurchaseDetail", 'Int'>
   readonly beNumber: Prisma.FieldRef<"PurchaseDetail", 'String'>
-  readonly price: Prisma.FieldRef<"PurchaseDetail", 'Decimal'>
-  readonly totalCost: Prisma.FieldRef<"PurchaseDetail", 'Decimal'>
+  readonly unitPrice: Prisma.FieldRef<"PurchaseDetail", 'Int'>
+  readonly quantity: Prisma.FieldRef<"PurchaseDetail", 'Int'>
+  readonly totalCost: Prisma.FieldRef<"PurchaseDetail", 'Int'>
   readonly status: Prisma.FieldRef<"PurchaseDetail", 'String'>
-  readonly additionalInformation: Prisma.FieldRef<"PurchaseDetail", 'String'>
+  readonly additionalInfo: Prisma.FieldRef<"PurchaseDetail", 'String'>
+  readonly updatedAt: Prisma.FieldRef<"PurchaseDetail", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"PurchaseDetail", 'String'>
-  readonly createdAt: Prisma.FieldRef<"PurchaseDetail", 'DateTime'>
 }
     
 
@@ -1905,6 +1758,25 @@ export type PurchaseDetailDeleteManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
+ * PurchaseDetail.Project
+ */
+export type PurchaseDetail$ProjectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Project
+   */
+  select?: Prisma.ProjectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Project
+   */
+  omit?: Prisma.ProjectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectInclude<ExtArgs> | null
+  where?: Prisma.ProjectWhereInput
+}
+
+/**
  * PurchaseDetail.Purchase
  */
 export type PurchaseDetail$PurchaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1921,49 +1793,6 @@ export type PurchaseDetail$PurchaseArgs<ExtArgs extends runtime.Types.Extensions
    */
   include?: Prisma.PurchaseInclude<ExtArgs> | null
   where?: Prisma.PurchaseWhereInput
-}
-
-/**
- * PurchaseDetail.Product
- */
-export type PurchaseDetail$ProductArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Product
-   */
-  select?: Prisma.ProductSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Product
-   */
-  omit?: Prisma.ProductOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
-  where?: Prisma.ProductWhereInput
-}
-
-/**
- * PurchaseDetail.PurchasePriceRequest
- */
-export type PurchaseDetail$PurchasePriceRequestArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PurchasePriceRequest
-   */
-  select?: Prisma.PurchasePriceRequestSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PurchasePriceRequest
-   */
-  omit?: Prisma.PurchasePriceRequestOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PurchasePriceRequestInclude<ExtArgs> | null
-  where?: Prisma.PurchasePriceRequestWhereInput
-  orderBy?: Prisma.PurchasePriceRequestOrderByWithRelationInput | Prisma.PurchasePriceRequestOrderByWithRelationInput[]
-  cursor?: Prisma.PurchasePriceRequestWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PurchasePriceRequestScalarFieldEnum | Prisma.PurchasePriceRequestScalarFieldEnum[]
 }
 
 /**

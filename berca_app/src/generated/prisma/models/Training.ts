@@ -219,7 +219,6 @@ export type TrainingWhereInput = {
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   TrainingContact?: Prisma.TrainingContactListRelationFilter
-  WorkOrderStructure?: Prisma.WorkOrderStructureListRelationFilter
 }
 
 export type TrainingOrderByWithRelationInput = {
@@ -237,7 +236,6 @@ export type TrainingOrderByWithRelationInput = {
   TrainingStandard?: Prisma.TrainingStandardOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
   TrainingContact?: Prisma.TrainingContactOrderByRelationAggregateInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureOrderByRelationAggregateInput
   _relevance?: Prisma.TrainingOrderByRelevanceInput
 }
 
@@ -259,7 +257,6 @@ export type TrainingWhereUniqueInput = Prisma.AtLeast<{
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   TrainingContact?: Prisma.TrainingContactListRelationFilter
-  WorkOrderStructure?: Prisma.WorkOrderStructureListRelationFilter
 }, "id">
 
 export type TrainingOrderByWithAggregationInput = {
@@ -303,7 +300,6 @@ export type TrainingCreateInput = {
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingUncheckedCreateInput = {
@@ -317,7 +313,6 @@ export type TrainingUncheckedCreateInput = {
   trainingStandardId: string
   targetId: string
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingUpdateInput = {
@@ -331,7 +326,6 @@ export type TrainingUpdateInput = {
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateInput = {
@@ -345,7 +339,6 @@ export type TrainingUncheckedUpdateInput = {
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingCreateManyInput = {
@@ -619,20 +612,6 @@ export type TrainingUncheckedUpdateManyWithoutWorkOrderNestedInput = {
   deleteMany?: Prisma.TrainingScalarWhereInput | Prisma.TrainingScalarWhereInput[]
 }
 
-export type TrainingCreateNestedOneWithoutWorkOrderStructureInput = {
-  create?: Prisma.XOR<Prisma.TrainingCreateWithoutWorkOrderStructureInput, Prisma.TrainingUncheckedCreateWithoutWorkOrderStructureInput>
-  connectOrCreate?: Prisma.TrainingCreateOrConnectWithoutWorkOrderStructureInput
-  connect?: Prisma.TrainingWhereUniqueInput
-}
-
-export type TrainingUpdateOneRequiredWithoutWorkOrderStructureNestedInput = {
-  create?: Prisma.XOR<Prisma.TrainingCreateWithoutWorkOrderStructureInput, Prisma.TrainingUncheckedCreateWithoutWorkOrderStructureInput>
-  connectOrCreate?: Prisma.TrainingCreateOrConnectWithoutWorkOrderStructureInput
-  upsert?: Prisma.TrainingUpsertWithoutWorkOrderStructureInput
-  connect?: Prisma.TrainingWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TrainingUpdateToOneWithWhereWithoutWorkOrderStructureInput, Prisma.TrainingUpdateWithoutWorkOrderStructureInput>, Prisma.TrainingUncheckedUpdateWithoutWorkOrderStructureInput>
-}
-
 export type TrainingCreateWithoutEmployeeInput = {
   id: string
   trainingNumber?: string | null
@@ -643,7 +622,6 @@ export type TrainingCreateWithoutEmployeeInput = {
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingUncheckedCreateWithoutEmployeeInput = {
@@ -656,7 +634,6 @@ export type TrainingUncheckedCreateWithoutEmployeeInput = {
   trainingStandardId: string
   targetId: string
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingCreateOrConnectWithoutEmployeeInput = {
@@ -710,7 +687,6 @@ export type TrainingCreateWithoutTargetInput = {
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingUncheckedCreateWithoutTargetInput = {
@@ -723,7 +699,6 @@ export type TrainingUncheckedCreateWithoutTargetInput = {
   workOrderId: string
   trainingStandardId: string
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingCreateOrConnectWithoutTargetInput = {
@@ -762,7 +737,6 @@ export type TrainingCreateWithoutTrainingContactInput = {
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingUncheckedCreateWithoutTrainingContactInput = {
@@ -775,7 +749,6 @@ export type TrainingUncheckedCreateWithoutTrainingContactInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingCreateOrConnectWithoutTrainingContactInput = {
@@ -804,7 +777,6 @@ export type TrainingUpdateWithoutTrainingContactInput = {
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateWithoutTrainingContactInput = {
@@ -817,7 +789,6 @@ export type TrainingUncheckedUpdateWithoutTrainingContactInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingCreateWithoutTrainingStandardInput = {
@@ -830,7 +801,6 @@ export type TrainingCreateWithoutTrainingStandardInput = {
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingUncheckedCreateWithoutTrainingStandardInput = {
@@ -843,7 +813,6 @@ export type TrainingUncheckedCreateWithoutTrainingStandardInput = {
   workOrderId: string
   targetId: string
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingCreateOrConnectWithoutTrainingStandardInput = {
@@ -882,7 +851,6 @@ export type TrainingCreateWithoutWorkOrderInput = {
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingUncheckedCreateWithoutWorkOrderInput = {
@@ -895,7 +863,6 @@ export type TrainingUncheckedCreateWithoutWorkOrderInput = {
   trainingStandardId: string
   targetId: string
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingCreateOrConnectWithoutWorkOrderInput = {
@@ -924,74 +891,6 @@ export type TrainingUpdateManyWithWhereWithoutWorkOrderInput = {
   data: Prisma.XOR<Prisma.TrainingUpdateManyMutationInput, Prisma.TrainingUncheckedUpdateManyWithoutWorkOrderInput>
 }
 
-export type TrainingCreateWithoutWorkOrderStructureInput = {
-  id: string
-  trainingNumber?: string | null
-  trainingDate: Date | string
-  createdAt: Date | string
-  closed?: boolean
-  WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
-  TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
-  Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
-  TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
-}
-
-export type TrainingUncheckedCreateWithoutWorkOrderStructureInput = {
-  id: string
-  trainingNumber?: string | null
-  trainingDate: Date | string
-  createdAt: Date | string
-  closed?: boolean
-  createdBy: string
-  workOrderId: string
-  trainingStandardId: string
-  targetId: string
-  TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
-}
-
-export type TrainingCreateOrConnectWithoutWorkOrderStructureInput = {
-  where: Prisma.TrainingWhereUniqueInput
-  create: Prisma.XOR<Prisma.TrainingCreateWithoutWorkOrderStructureInput, Prisma.TrainingUncheckedCreateWithoutWorkOrderStructureInput>
-}
-
-export type TrainingUpsertWithoutWorkOrderStructureInput = {
-  update: Prisma.XOR<Prisma.TrainingUpdateWithoutWorkOrderStructureInput, Prisma.TrainingUncheckedUpdateWithoutWorkOrderStructureInput>
-  create: Prisma.XOR<Prisma.TrainingCreateWithoutWorkOrderStructureInput, Prisma.TrainingUncheckedCreateWithoutWorkOrderStructureInput>
-  where?: Prisma.TrainingWhereInput
-}
-
-export type TrainingUpdateToOneWithWhereWithoutWorkOrderStructureInput = {
-  where?: Prisma.TrainingWhereInput
-  data: Prisma.XOR<Prisma.TrainingUpdateWithoutWorkOrderStructureInput, Prisma.TrainingUncheckedUpdateWithoutWorkOrderStructureInput>
-}
-
-export type TrainingUpdateWithoutWorkOrderStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
-  TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
-  Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
-  TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
-}
-
-export type TrainingUncheckedUpdateWithoutWorkOrderStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
-  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
-}
-
 export type TrainingCreateManyEmployeeInput = {
   id: string
   trainingNumber?: string | null
@@ -1013,7 +912,6 @@ export type TrainingUpdateWithoutEmployeeInput = {
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateWithoutEmployeeInput = {
@@ -1026,7 +924,6 @@ export type TrainingUncheckedUpdateWithoutEmployeeInput = {
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateManyWithoutEmployeeInput = {
@@ -1061,7 +958,6 @@ export type TrainingUpdateWithoutTargetInput = {
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateWithoutTargetInput = {
@@ -1074,7 +970,6 @@ export type TrainingUncheckedUpdateWithoutTargetInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateManyWithoutTargetInput = {
@@ -1109,7 +1004,6 @@ export type TrainingUpdateWithoutTrainingStandardInput = {
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateWithoutTrainingStandardInput = {
@@ -1122,7 +1016,6 @@ export type TrainingUncheckedUpdateWithoutTrainingStandardInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateManyWithoutTrainingStandardInput = {
@@ -1157,7 +1050,6 @@ export type TrainingUpdateWithoutWorkOrderInput = {
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateWithoutWorkOrderInput = {
@@ -1170,7 +1062,6 @@ export type TrainingUncheckedUpdateWithoutWorkOrderInput = {
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
-  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingUncheckedUpdateManyWithoutWorkOrderInput = {
@@ -1191,12 +1082,10 @@ export type TrainingUncheckedUpdateManyWithoutWorkOrderInput = {
 
 export type TrainingCountOutputType = {
   TrainingContact: number
-  WorkOrderStructure: number
 }
 
 export type TrainingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   TrainingContact?: boolean | TrainingCountOutputTypeCountTrainingContactArgs
-  WorkOrderStructure?: boolean | TrainingCountOutputTypeCountWorkOrderStructureArgs
 }
 
 /**
@@ -1216,13 +1105,6 @@ export type TrainingCountOutputTypeCountTrainingContactArgs<ExtArgs extends runt
   where?: Prisma.TrainingContactWhereInput
 }
 
-/**
- * TrainingCountOutputType without action
- */
-export type TrainingCountOutputTypeCountWorkOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.WorkOrderStructureWhereInput
-}
-
 
 export type TrainingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1239,7 +1121,6 @@ export type TrainingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   TrainingStandard?: boolean | Prisma.TrainingStandardDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   TrainingContact?: boolean | Prisma.Training$TrainingContactArgs<ExtArgs>
-  WorkOrderStructure?: boolean | Prisma.Training$WorkOrderStructureArgs<ExtArgs>
   _count?: boolean | Prisma.TrainingCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["training"]>
 
@@ -1264,7 +1145,6 @@ export type TrainingInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   TrainingStandard?: boolean | Prisma.TrainingStandardDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   TrainingContact?: boolean | Prisma.Training$TrainingContactArgs<ExtArgs>
-  WorkOrderStructure?: boolean | Prisma.Training$WorkOrderStructureArgs<ExtArgs>
   _count?: boolean | Prisma.TrainingCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1276,7 +1156,6 @@ export type $TrainingPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     TrainingStandard: Prisma.$TrainingStandardPayload<ExtArgs>
     Target: Prisma.$TargetPayload<ExtArgs>
     TrainingContact: Prisma.$TrainingContactPayload<ExtArgs>[]
-    WorkOrderStructure: Prisma.$WorkOrderStructurePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1633,7 +1512,6 @@ export interface Prisma__TrainingClient<T, Null = never, ExtArgs extends runtime
   TrainingStandard<T extends Prisma.TrainingStandardDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingStandardDefaultArgs<ExtArgs>>): Prisma.Prisma__TrainingStandardClient<runtime.Types.Result.GetResult<Prisma.$TrainingStandardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   TrainingContact<T extends Prisma.Training$TrainingContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Training$TrainingContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  WorkOrderStructure<T extends Prisma.Training$WorkOrderStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Training$WorkOrderStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkOrderStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2036,30 +1914,6 @@ export type Training$TrainingContactArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.TrainingContactScalarFieldEnum | Prisma.TrainingContactScalarFieldEnum[]
-}
-
-/**
- * Training.WorkOrderStructure
- */
-export type Training$WorkOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the WorkOrderStructure
-   */
-  select?: Prisma.WorkOrderStructureSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the WorkOrderStructure
-   */
-  omit?: Prisma.WorkOrderStructureOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.WorkOrderStructureInclude<ExtArgs> | null
-  where?: Prisma.WorkOrderStructureWhereInput
-  orderBy?: Prisma.WorkOrderStructureOrderByWithRelationInput | Prisma.WorkOrderStructureOrderByWithRelationInput[]
-  cursor?: Prisma.WorkOrderStructureWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.WorkOrderStructureScalarFieldEnum | Prisma.WorkOrderStructureScalarFieldEnum[]
 }
 
 /**

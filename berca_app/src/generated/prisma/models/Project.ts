@@ -286,9 +286,7 @@ export type ProjectWhereInput = {
   projectTypeId?: Prisma.StringFilter<"Project"> | string
   parentProjectId?: Prisma.StringNullableFilter<"Project"> | string | null
   targetId?: Prisma.StringFilter<"Project"> | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureListRelationFilter
-  InventoryStructure?: Prisma.InventoryStructureListRelationFilter
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedListRelationFilter
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   ProjectType?: Prisma.XOR<Prisma.ProjectTypeScalarRelationFilter, Prisma.ProjectTypeWhereInput>
@@ -296,6 +294,9 @@ export type ProjectWhereInput = {
   other_Project?: Prisma.ProjectListRelationFilter
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   ProjectContact?: Prisma.ProjectContactListRelationFilter
+  Purchase?: Prisma.PurchaseListRelationFilter
+  PurchaseDetail?: Prisma.PurchaseDetailListRelationFilter
+  QuoteSupplier?: Prisma.QuoteSupplierListRelationFilter
   WorkOrder?: Prisma.WorkOrderListRelationFilter
 }
 
@@ -318,9 +319,7 @@ export type ProjectOrderByWithRelationInput = {
   projectTypeId?: Prisma.SortOrder
   parentProjectId?: Prisma.SortOrderInput | Prisma.SortOrder
   targetId?: Prisma.SortOrder
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureOrderByRelationAggregateInput
-  InventoryStructure?: Prisma.InventoryStructureOrderByRelationAggregateInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedOrderByRelationAggregateInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackOrderByRelationAggregateInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Company?: Prisma.CompanyOrderByWithRelationInput
   ProjectType?: Prisma.ProjectTypeOrderByWithRelationInput
@@ -328,6 +327,9 @@ export type ProjectOrderByWithRelationInput = {
   other_Project?: Prisma.ProjectOrderByRelationAggregateInput
   Target?: Prisma.TargetOrderByWithRelationInput
   ProjectContact?: Prisma.ProjectContactOrderByRelationAggregateInput
+  Purchase?: Prisma.PurchaseOrderByRelationAggregateInput
+  PurchaseDetail?: Prisma.PurchaseDetailOrderByRelationAggregateInput
+  QuoteSupplier?: Prisma.QuoteSupplierOrderByRelationAggregateInput
   WorkOrder?: Prisma.WorkOrderOrderByRelationAggregateInput
   _relevance?: Prisma.ProjectOrderByRelevanceInput
 }
@@ -354,9 +356,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   projectTypeId?: Prisma.StringFilter<"Project"> | string
   parentProjectId?: Prisma.StringNullableFilter<"Project"> | string | null
   targetId?: Prisma.StringFilter<"Project"> | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureListRelationFilter
-  InventoryStructure?: Prisma.InventoryStructureListRelationFilter
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedListRelationFilter
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   ProjectType?: Prisma.XOR<Prisma.ProjectTypeScalarRelationFilter, Prisma.ProjectTypeWhereInput>
@@ -364,6 +364,9 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   other_Project?: Prisma.ProjectListRelationFilter
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   ProjectContact?: Prisma.ProjectContactListRelationFilter
+  Purchase?: Prisma.PurchaseListRelationFilter
+  PurchaseDetail?: Prisma.PurchaseDetailListRelationFilter
+  QuoteSupplier?: Prisma.QuoteSupplierListRelationFilter
   WorkOrder?: Prisma.WorkOrderListRelationFilter
 }, "id">
 
@@ -429,9 +432,7 @@ export type ProjectCreateInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
   ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
@@ -439,6 +440,9 @@ export type ProjectCreateInput = {
   other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
   Target: Prisma.TargetCreateNestedOneWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
 }
 
@@ -461,11 +465,12 @@ export type ProjectUncheckedCreateInput = {
   projectTypeId: string
   parentProjectId?: string | null
   targetId: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -483,9 +488,7 @@ export type ProjectUpdateInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
   ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
@@ -493,6 +496,9 @@ export type ProjectUpdateInput = {
   other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
 }
 
@@ -515,11 +521,12 @@ export type ProjectUncheckedUpdateInput = {
   projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -754,6 +761,22 @@ export type ProjectUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
 }
 
+export type ProjectCreateNestedOneWithoutMaterialSerialTrackInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutMaterialSerialTrackInput, Prisma.ProjectUncheckedCreateWithoutMaterialSerialTrackInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutMaterialSerialTrackInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneWithoutMaterialSerialTrackNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutMaterialSerialTrackInput, Prisma.ProjectUncheckedCreateWithoutMaterialSerialTrackInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutMaterialSerialTrackInput
+  upsert?: Prisma.ProjectUpsertWithoutMaterialSerialTrackInput
+  disconnect?: Prisma.ProjectWhereInput | boolean
+  delete?: Prisma.ProjectWhereInput | boolean
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutMaterialSerialTrackInput, Prisma.ProjectUpdateWithoutMaterialSerialTrackInput>, Prisma.ProjectUncheckedUpdateWithoutMaterialSerialTrackInput>
+}
+
 export type ProjectCreateNestedOneWithoutOther_ProjectInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutOther_ProjectInput, Prisma.ProjectUncheckedCreateWithoutOther_ProjectInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutOther_ProjectInput
@@ -868,6 +891,54 @@ export type ProjectUncheckedUpdateManyWithoutProjectTypeNestedInput = {
   deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
 }
 
+export type ProjectCreateNestedOneWithoutPurchaseInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutPurchaseInput, Prisma.ProjectUncheckedCreateWithoutPurchaseInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutPurchaseInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneWithoutPurchaseNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutPurchaseInput, Prisma.ProjectUncheckedCreateWithoutPurchaseInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutPurchaseInput
+  upsert?: Prisma.ProjectUpsertWithoutPurchaseInput
+  disconnect?: Prisma.ProjectWhereInput | boolean
+  delete?: Prisma.ProjectWhereInput | boolean
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutPurchaseInput, Prisma.ProjectUpdateWithoutPurchaseInput>, Prisma.ProjectUncheckedUpdateWithoutPurchaseInput>
+}
+
+export type ProjectCreateNestedOneWithoutPurchaseDetailInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutPurchaseDetailInput, Prisma.ProjectUncheckedCreateWithoutPurchaseDetailInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutPurchaseDetailInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneWithoutPurchaseDetailNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutPurchaseDetailInput, Prisma.ProjectUncheckedCreateWithoutPurchaseDetailInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutPurchaseDetailInput
+  upsert?: Prisma.ProjectUpsertWithoutPurchaseDetailInput
+  disconnect?: Prisma.ProjectWhereInput | boolean
+  delete?: Prisma.ProjectWhereInput | boolean
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutPurchaseDetailInput, Prisma.ProjectUpdateWithoutPurchaseDetailInput>, Prisma.ProjectUncheckedUpdateWithoutPurchaseDetailInput>
+}
+
+export type ProjectCreateNestedOneWithoutQuoteSupplierInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutQuoteSupplierInput, Prisma.ProjectUncheckedCreateWithoutQuoteSupplierInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutQuoteSupplierInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneWithoutQuoteSupplierNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutQuoteSupplierInput, Prisma.ProjectUncheckedCreateWithoutQuoteSupplierInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutQuoteSupplierInput
+  upsert?: Prisma.ProjectUpsertWithoutQuoteSupplierInput
+  disconnect?: Prisma.ProjectWhereInput | boolean
+  delete?: Prisma.ProjectWhereInput | boolean
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutQuoteSupplierInput, Prisma.ProjectUpdateWithoutQuoteSupplierInput>, Prisma.ProjectUncheckedUpdateWithoutQuoteSupplierInput>
+}
+
 export type ProjectCreateNestedManyWithoutTargetInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutTargetInput, Prisma.ProjectUncheckedCreateWithoutTargetInput> | Prisma.ProjectCreateWithoutTargetInput[] | Prisma.ProjectUncheckedCreateWithoutTargetInput[]
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTargetInput | Prisma.ProjectCreateOrConnectWithoutTargetInput[]
@@ -924,52 +995,6 @@ export type ProjectUpdateOneRequiredWithoutWorkOrderNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutWorkOrderInput, Prisma.ProjectUpdateWithoutWorkOrderInput>, Prisma.ProjectUncheckedUpdateWithoutWorkOrderInput>
 }
 
-export type ProjectCreateNestedOneWithoutInventoryOrderStructureInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutInventoryOrderStructureInput, Prisma.ProjectUncheckedCreateWithoutInventoryOrderStructureInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutInventoryOrderStructureInput
-  connect?: Prisma.ProjectWhereUniqueInput
-}
-
-export type ProjectUpdateOneWithoutInventoryOrderStructureNestedInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutInventoryOrderStructureInput, Prisma.ProjectUncheckedCreateWithoutInventoryOrderStructureInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutInventoryOrderStructureInput
-  upsert?: Prisma.ProjectUpsertWithoutInventoryOrderStructureInput
-  disconnect?: Prisma.ProjectWhereInput | boolean
-  delete?: Prisma.ProjectWhereInput | boolean
-  connect?: Prisma.ProjectWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutInventoryOrderStructureInput, Prisma.ProjectUpdateWithoutInventoryOrderStructureInput>, Prisma.ProjectUncheckedUpdateWithoutInventoryOrderStructureInput>
-}
-
-export type ProjectCreateNestedOneWithoutInventoryStructureInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutInventoryStructureInput, Prisma.ProjectUncheckedCreateWithoutInventoryStructureInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutInventoryStructureInput
-  connect?: Prisma.ProjectWhereUniqueInput
-}
-
-export type ProjectUpdateOneRequiredWithoutInventoryStructureNestedInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutInventoryStructureInput, Prisma.ProjectUncheckedCreateWithoutInventoryStructureInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutInventoryStructureInput
-  upsert?: Prisma.ProjectUpsertWithoutInventoryStructureInput
-  connect?: Prisma.ProjectWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutInventoryStructureInput, Prisma.ProjectUpdateWithoutInventoryStructureInput>, Prisma.ProjectUncheckedUpdateWithoutInventoryStructureInput>
-}
-
-export type ProjectCreateNestedOneWithoutMaterialSerialTrackedInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutMaterialSerialTrackedInput, Prisma.ProjectUncheckedCreateWithoutMaterialSerialTrackedInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutMaterialSerialTrackedInput
-  connect?: Prisma.ProjectWhereUniqueInput
-}
-
-export type ProjectUpdateOneWithoutMaterialSerialTrackedNestedInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutMaterialSerialTrackedInput, Prisma.ProjectUncheckedCreateWithoutMaterialSerialTrackedInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutMaterialSerialTrackedInput
-  upsert?: Prisma.ProjectUpsertWithoutMaterialSerialTrackedInput
-  disconnect?: Prisma.ProjectWhereInput | boolean
-  delete?: Prisma.ProjectWhereInput | boolean
-  connect?: Prisma.ProjectWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutMaterialSerialTrackedInput, Prisma.ProjectUpdateWithoutMaterialSerialTrackedInput>, Prisma.ProjectUncheckedUpdateWithoutMaterialSerialTrackedInput>
-}
-
 export type ProjectCreateWithoutCompanyInput = {
   id: string
   projectNumber: string
@@ -984,15 +1009,16 @@ export type ProjectCreateWithoutCompanyInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
   Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
   other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
   Target: Prisma.TargetCreateNestedOneWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
 }
 
@@ -1014,11 +1040,12 @@ export type ProjectUncheckedCreateWithoutCompanyInput = {
   projectTypeId: string
   parentProjectId?: string | null
   targetId: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -1086,15 +1113,16 @@ export type ProjectCreateWithoutEmployeeInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
   ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
   Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
   other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
   Target: Prisma.TargetCreateNestedOneWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
 }
 
@@ -1116,11 +1144,12 @@ export type ProjectUncheckedCreateWithoutEmployeeInput = {
   projectTypeId: string
   parentProjectId?: string | null
   targetId: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -1150,6 +1179,130 @@ export type ProjectUpdateManyWithWhereWithoutEmployeeInput = {
   data: Prisma.XOR<Prisma.ProjectUpdateManyMutationInput, Prisma.ProjectUncheckedUpdateManyWithoutEmployeeInput>
 }
 
+export type ProjectCreateWithoutMaterialSerialTrackInput = {
+  id: string
+  projectNumber: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
+  Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
+  ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
+  Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
+  other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
+  Target: Prisma.TargetCreateNestedOneWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutMaterialSerialTrackInput = {
+  id: string
+  projectNumber: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
+  other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutMaterialSerialTrackInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutMaterialSerialTrackInput, Prisma.ProjectUncheckedCreateWithoutMaterialSerialTrackInput>
+}
+
+export type ProjectUpsertWithoutMaterialSerialTrackInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutMaterialSerialTrackInput, Prisma.ProjectUncheckedUpdateWithoutMaterialSerialTrackInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutMaterialSerialTrackInput, Prisma.ProjectUncheckedCreateWithoutMaterialSerialTrackInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutMaterialSerialTrackInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutMaterialSerialTrackInput, Prisma.ProjectUncheckedUpdateWithoutMaterialSerialTrackInput>
+}
+
+export type ProjectUpdateWithoutMaterialSerialTrackInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
+  Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
+  ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
+  Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
+  other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutMaterialSerialTrackInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
+}
+
 export type ProjectCreateWithoutOther_ProjectInput = {
   id: string
   projectNumber: string
@@ -1164,15 +1317,16 @@ export type ProjectCreateWithoutOther_ProjectInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
   ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
   Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
   Target: Prisma.TargetCreateNestedOneWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
 }
 
@@ -1195,10 +1349,11 @@ export type ProjectUncheckedCreateWithoutOther_ProjectInput = {
   projectTypeId: string
   parentProjectId?: string | null
   targetId: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -1221,15 +1376,16 @@ export type ProjectCreateWithoutProjectInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
   ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
   other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
   Target: Prisma.TargetCreateNestedOneWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
 }
 
@@ -1251,11 +1407,12 @@ export type ProjectUncheckedCreateWithoutProjectInput = {
   companyId: string
   projectTypeId: string
   targetId: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -1294,15 +1451,16 @@ export type ProjectUpdateWithoutOther_ProjectInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
   ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
   Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
 }
 
@@ -1325,10 +1483,11 @@ export type ProjectUncheckedUpdateWithoutOther_ProjectInput = {
   projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -1362,15 +1521,16 @@ export type ProjectCreateWithoutProjectContactInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
   ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
   Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
   other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
   Target: Prisma.TargetCreateNestedOneWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
 }
 
@@ -1393,10 +1553,11 @@ export type ProjectUncheckedCreateWithoutProjectContactInput = {
   projectTypeId: string
   parentProjectId?: string | null
   targetId: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -1430,15 +1591,16 @@ export type ProjectUpdateWithoutProjectContactInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
   ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
   Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
   other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
 }
 
@@ -1461,10 +1623,11 @@ export type ProjectUncheckedUpdateWithoutProjectContactInput = {
   projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -1482,15 +1645,16 @@ export type ProjectCreateWithoutProjectTypeInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
   Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
   other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
   Target: Prisma.TargetCreateNestedOneWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
 }
 
@@ -1512,11 +1676,12 @@ export type ProjectUncheckedCreateWithoutProjectTypeInput = {
   companyId: string
   parentProjectId?: string | null
   targetId: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -1546,6 +1711,378 @@ export type ProjectUpdateManyWithWhereWithoutProjectTypeInput = {
   data: Prisma.XOR<Prisma.ProjectUpdateManyMutationInput, Prisma.ProjectUncheckedUpdateManyWithoutProjectTypeInput>
 }
 
+export type ProjectCreateWithoutPurchaseInput = {
+  id: string
+  projectNumber: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
+  Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
+  ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
+  Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
+  other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
+  Target: Prisma.TargetCreateNestedOneWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutPurchaseInput = {
+  id: string
+  projectNumber: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
+  other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutPurchaseInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutPurchaseInput, Prisma.ProjectUncheckedCreateWithoutPurchaseInput>
+}
+
+export type ProjectUpsertWithoutPurchaseInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutPurchaseInput, Prisma.ProjectUncheckedUpdateWithoutPurchaseInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutPurchaseInput, Prisma.ProjectUncheckedCreateWithoutPurchaseInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutPurchaseInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutPurchaseInput, Prisma.ProjectUncheckedUpdateWithoutPurchaseInput>
+}
+
+export type ProjectUpdateWithoutPurchaseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
+  Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
+  ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
+  Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
+  other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutPurchaseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
+  other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutPurchaseDetailInput = {
+  id: string
+  projectNumber: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
+  Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
+  ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
+  Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
+  other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
+  Target: Prisma.TargetCreateNestedOneWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutPurchaseDetailInput = {
+  id: string
+  projectNumber: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
+  other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutPurchaseDetailInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutPurchaseDetailInput, Prisma.ProjectUncheckedCreateWithoutPurchaseDetailInput>
+}
+
+export type ProjectUpsertWithoutPurchaseDetailInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutPurchaseDetailInput, Prisma.ProjectUncheckedUpdateWithoutPurchaseDetailInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutPurchaseDetailInput, Prisma.ProjectUncheckedCreateWithoutPurchaseDetailInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutPurchaseDetailInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutPurchaseDetailInput, Prisma.ProjectUncheckedUpdateWithoutPurchaseDetailInput>
+}
+
+export type ProjectUpdateWithoutPurchaseDetailInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
+  Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
+  ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
+  Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
+  other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutPurchaseDetailInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
+  other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutQuoteSupplierInput = {
+  id: string
+  projectNumber: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
+  Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
+  ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
+  Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
+  other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
+  Target: Prisma.TargetCreateNestedOneWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutQuoteSupplierInput = {
+  id: string
+  projectNumber: string
+  description?: string | null
+  extraInfo?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  closingDate?: Date | string | null
+  engineeringStartDate?: Date | string | null
+  createdAt: Date | string
+  isMainProject?: boolean
+  isIntern?: boolean
+  isOpen?: boolean
+  isClosed?: boolean
+  createdBy: string
+  companyId: string
+  projectTypeId: string
+  parentProjectId?: string | null
+  targetId: string
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
+  other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
+  ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutQuoteSupplierInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutQuoteSupplierInput, Prisma.ProjectUncheckedCreateWithoutQuoteSupplierInput>
+}
+
+export type ProjectUpsertWithoutQuoteSupplierInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutQuoteSupplierInput, Prisma.ProjectUncheckedUpdateWithoutQuoteSupplierInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutQuoteSupplierInput, Prisma.ProjectUncheckedCreateWithoutQuoteSupplierInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutQuoteSupplierInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutQuoteSupplierInput, Prisma.ProjectUncheckedUpdateWithoutQuoteSupplierInput>
+}
+
+export type ProjectUpdateWithoutQuoteSupplierInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
+  Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
+  ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
+  Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
+  other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutQuoteSupplierInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
+  other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
+  ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
+}
+
 export type ProjectCreateWithoutTargetInput = {
   id: string
   projectNumber: string
@@ -1560,15 +2097,16 @@ export type ProjectCreateWithoutTargetInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
   ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
   Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
   other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
 }
 
@@ -1590,11 +2128,12 @@ export type ProjectUncheckedCreateWithoutTargetInput = {
   companyId: string
   projectTypeId: string
   parentProjectId?: string | null
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
   WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -1638,9 +2177,7 @@ export type ProjectCreateWithoutWorkOrderInput = {
   isIntern?: boolean
   isOpen?: boolean
   isClosed?: boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutProjectInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
   Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
   ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
@@ -1648,6 +2185,9 @@ export type ProjectCreateWithoutWorkOrderInput = {
   other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
   Target: Prisma.TargetCreateNestedOneWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutWorkOrderInput = {
@@ -1669,11 +2209,12 @@ export type ProjectUncheckedCreateWithoutWorkOrderInput = {
   projectTypeId: string
   parentProjectId?: string | null
   targetId: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedCreateNestedManyWithoutProjectInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutProjectInput
   other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
   ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutProjectInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutProjectInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutWorkOrderInput = {
@@ -1706,9 +2247,7 @@ export type ProjectUpdateWithoutWorkOrderInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
   ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
@@ -1716,6 +2255,9 @@ export type ProjectUpdateWithoutWorkOrderInput = {
   other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutWorkOrderInput = {
@@ -1737,371 +2279,12 @@ export type ProjectUncheckedUpdateWithoutWorkOrderInput = {
   projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
-}
-
-export type ProjectCreateWithoutInventoryOrderStructureInput = {
-  id: string
-  projectNumber: string
-  description?: string | null
-  extraInfo?: string | null
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  closingDate?: Date | string | null
-  engineeringStartDate?: Date | string | null
-  createdAt: Date | string
-  isMainProject?: boolean
-  isIntern?: boolean
-  isOpen?: boolean
-  isClosed?: boolean
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedCreateNestedManyWithoutProjectInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
-  Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
-  ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
-  Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
-  other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
-  Target: Prisma.TargetCreateNestedOneWithoutProjectInput
-  ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
-  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
-}
-
-export type ProjectUncheckedCreateWithoutInventoryOrderStructureInput = {
-  id: string
-  projectNumber: string
-  description?: string | null
-  extraInfo?: string | null
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  closingDate?: Date | string | null
-  engineeringStartDate?: Date | string | null
-  createdAt: Date | string
-  isMainProject?: boolean
-  isIntern?: boolean
-  isOpen?: boolean
-  isClosed?: boolean
-  createdBy: string
-  companyId: string
-  projectTypeId: string
-  parentProjectId?: string | null
-  targetId: string
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedCreateNestedManyWithoutProjectInput
-  other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
-  ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
-  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
-}
-
-export type ProjectCreateOrConnectWithoutInventoryOrderStructureInput = {
-  where: Prisma.ProjectWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutInventoryOrderStructureInput, Prisma.ProjectUncheckedCreateWithoutInventoryOrderStructureInput>
-}
-
-export type ProjectUpsertWithoutInventoryOrderStructureInput = {
-  update: Prisma.XOR<Prisma.ProjectUpdateWithoutInventoryOrderStructureInput, Prisma.ProjectUncheckedUpdateWithoutInventoryOrderStructureInput>
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutInventoryOrderStructureInput, Prisma.ProjectUncheckedCreateWithoutInventoryOrderStructureInput>
-  where?: Prisma.ProjectWhereInput
-}
-
-export type ProjectUpdateToOneWithWhereWithoutInventoryOrderStructureInput = {
-  where?: Prisma.ProjectWhereInput
-  data: Prisma.XOR<Prisma.ProjectUpdateWithoutInventoryOrderStructureInput, Prisma.ProjectUncheckedUpdateWithoutInventoryOrderStructureInput>
-}
-
-export type ProjectUpdateWithoutInventoryOrderStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUpdateManyWithoutProjectNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
-  Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
-  ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
-  Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
-  other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
-  Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
-  ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
-  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
-}
-
-export type ProjectUncheckedUpdateWithoutInventoryOrderStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedUpdateManyWithoutProjectNestedInput
-  other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
-  ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
-  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
-}
-
-export type ProjectCreateWithoutInventoryStructureInput = {
-  id: string
-  projectNumber: string
-  description?: string | null
-  extraInfo?: string | null
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  closingDate?: Date | string | null
-  engineeringStartDate?: Date | string | null
-  createdAt: Date | string
-  isMainProject?: boolean
-  isIntern?: boolean
-  isOpen?: boolean
-  isClosed?: boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedCreateNestedManyWithoutProjectInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
-  Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
-  ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
-  Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
-  other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
-  Target: Prisma.TargetCreateNestedOneWithoutProjectInput
-  ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
-  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
-}
-
-export type ProjectUncheckedCreateWithoutInventoryStructureInput = {
-  id: string
-  projectNumber: string
-  description?: string | null
-  extraInfo?: string | null
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  closingDate?: Date | string | null
-  engineeringStartDate?: Date | string | null
-  createdAt: Date | string
-  isMainProject?: boolean
-  isIntern?: boolean
-  isOpen?: boolean
-  isClosed?: boolean
-  createdBy: string
-  companyId: string
-  projectTypeId: string
-  parentProjectId?: string | null
-  targetId: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutProjectInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedCreateNestedManyWithoutProjectInput
-  other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
-  ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
-  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
-}
-
-export type ProjectCreateOrConnectWithoutInventoryStructureInput = {
-  where: Prisma.ProjectWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutInventoryStructureInput, Prisma.ProjectUncheckedCreateWithoutInventoryStructureInput>
-}
-
-export type ProjectUpsertWithoutInventoryStructureInput = {
-  update: Prisma.XOR<Prisma.ProjectUpdateWithoutInventoryStructureInput, Prisma.ProjectUncheckedUpdateWithoutInventoryStructureInput>
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutInventoryStructureInput, Prisma.ProjectUncheckedCreateWithoutInventoryStructureInput>
-  where?: Prisma.ProjectWhereInput
-}
-
-export type ProjectUpdateToOneWithWhereWithoutInventoryStructureInput = {
-  where?: Prisma.ProjectWhereInput
-  data: Prisma.XOR<Prisma.ProjectUpdateWithoutInventoryStructureInput, Prisma.ProjectUncheckedUpdateWithoutInventoryStructureInput>
-}
-
-export type ProjectUpdateWithoutInventoryStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUpdateManyWithoutProjectNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
-  Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
-  ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
-  Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
-  other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
-  Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
-  ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
-  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
-}
-
-export type ProjectUncheckedUpdateWithoutInventoryStructureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedUpdateManyWithoutProjectNestedInput
-  other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
-  ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
-  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
-}
-
-export type ProjectCreateWithoutMaterialSerialTrackedInput = {
-  id: string
-  projectNumber: string
-  description?: string | null
-  extraInfo?: string | null
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  closingDate?: Date | string | null
-  engineeringStartDate?: Date | string | null
-  createdAt: Date | string
-  isMainProject?: boolean
-  isIntern?: boolean
-  isOpen?: boolean
-  isClosed?: boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureCreateNestedManyWithoutProjectInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutProjectInput
-  Company: Prisma.CompanyCreateNestedOneWithoutProjectInput
-  ProjectType: Prisma.ProjectTypeCreateNestedOneWithoutProjectInput
-  Project?: Prisma.ProjectCreateNestedOneWithoutOther_ProjectInput
-  other_Project?: Prisma.ProjectCreateNestedManyWithoutProjectInput
-  Target: Prisma.TargetCreateNestedOneWithoutProjectInput
-  ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
-  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutProjectInput
-}
-
-export type ProjectUncheckedCreateWithoutMaterialSerialTrackedInput = {
-  id: string
-  projectNumber: string
-  description?: string | null
-  extraInfo?: string | null
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  closingDate?: Date | string | null
-  engineeringStartDate?: Date | string | null
-  createdAt: Date | string
-  isMainProject?: boolean
-  isIntern?: boolean
-  isOpen?: boolean
-  isClosed?: boolean
-  createdBy: string
-  companyId: string
-  projectTypeId: string
-  parentProjectId?: string | null
-  targetId: string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedCreateNestedManyWithoutProjectInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedCreateNestedManyWithoutProjectInput
-  other_Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutProjectInput
-  ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
-  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutProjectInput
-}
-
-export type ProjectCreateOrConnectWithoutMaterialSerialTrackedInput = {
-  where: Prisma.ProjectWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutMaterialSerialTrackedInput, Prisma.ProjectUncheckedCreateWithoutMaterialSerialTrackedInput>
-}
-
-export type ProjectUpsertWithoutMaterialSerialTrackedInput = {
-  update: Prisma.XOR<Prisma.ProjectUpdateWithoutMaterialSerialTrackedInput, Prisma.ProjectUncheckedUpdateWithoutMaterialSerialTrackedInput>
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutMaterialSerialTrackedInput, Prisma.ProjectUncheckedCreateWithoutMaterialSerialTrackedInput>
-  where?: Prisma.ProjectWhereInput
-}
-
-export type ProjectUpdateToOneWithWhereWithoutMaterialSerialTrackedInput = {
-  where?: Prisma.ProjectWhereInput
-  data: Prisma.XOR<Prisma.ProjectUpdateWithoutMaterialSerialTrackedInput, Prisma.ProjectUncheckedUpdateWithoutMaterialSerialTrackedInput>
-}
-
-export type ProjectUpdateWithoutMaterialSerialTrackedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutProjectNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
-  Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
-  ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
-  Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
-  other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
-  Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
-  ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
-  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
-}
-
-export type ProjectUncheckedUpdateWithoutMaterialSerialTrackedInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  closingDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  engineeringStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isMainProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
-  projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput
-  other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
-  ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
-  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyCompanyInput = {
@@ -2138,15 +2321,16 @@ export type ProjectUpdateWithoutCompanyInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
   Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
   other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
 }
 
@@ -2168,11 +2352,12 @@ export type ProjectUncheckedUpdateWithoutCompanyInput = {
   projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2230,15 +2415,16 @@ export type ProjectUpdateWithoutEmployeeInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
   ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
   Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
   other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
 }
 
@@ -2260,11 +2446,12 @@ export type ProjectUncheckedUpdateWithoutEmployeeInput = {
   projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2322,15 +2509,16 @@ export type ProjectUpdateWithoutProjectInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
   ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
 }
 
@@ -2352,11 +2540,12 @@ export type ProjectUncheckedUpdateWithoutProjectInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2414,15 +2603,16 @@ export type ProjectUpdateWithoutProjectTypeInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
   Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
   other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
 }
 
@@ -2444,11 +2634,12 @@ export type ProjectUncheckedUpdateWithoutProjectTypeInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2506,15 +2697,16 @@ export type ProjectUpdateWithoutTargetInput = {
   isIntern?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutProjectNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutProjectNestedInput
   ProjectType?: Prisma.ProjectTypeUpdateOneRequiredWithoutProjectNestedInput
   Project?: Prisma.ProjectUpdateOneWithoutOther_ProjectNestedInput
   other_Project?: Prisma.ProjectUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateManyWithoutProjectNestedInput
 }
 
@@ -2536,11 +2728,12 @@ export type ProjectUncheckedUpdateWithoutTargetInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   projectTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   parentProjectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  InventoryOrderStructure?: Prisma.InventoryOrderStructureUncheckedUpdateManyWithoutProjectNestedInput
-  InventoryStructure?: Prisma.InventoryStructureUncheckedUpdateManyWithoutProjectNestedInput
-  MaterialSerialTracked?: Prisma.MaterialSerialTrackedUncheckedUpdateManyWithoutProjectNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutProjectNestedInput
   other_Project?: Prisma.ProjectUncheckedUpdateManyWithoutProjectNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutProjectNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutProjectNestedInput
+  QuoteSupplier?: Prisma.QuoteSupplierUncheckedUpdateManyWithoutProjectNestedInput
   WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2570,20 +2763,22 @@ export type ProjectUncheckedUpdateManyWithoutTargetInput = {
  */
 
 export type ProjectCountOutputType = {
-  InventoryOrderStructure: number
-  InventoryStructure: number
-  MaterialSerialTracked: number
+  MaterialSerialTrack: number
   other_Project: number
   ProjectContact: number
+  Purchase: number
+  PurchaseDetail: number
+  QuoteSupplier: number
   WorkOrder: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InventoryOrderStructure?: boolean | ProjectCountOutputTypeCountInventoryOrderStructureArgs
-  InventoryStructure?: boolean | ProjectCountOutputTypeCountInventoryStructureArgs
-  MaterialSerialTracked?: boolean | ProjectCountOutputTypeCountMaterialSerialTrackedArgs
+  MaterialSerialTrack?: boolean | ProjectCountOutputTypeCountMaterialSerialTrackArgs
   other_Project?: boolean | ProjectCountOutputTypeCountOther_ProjectArgs
   ProjectContact?: boolean | ProjectCountOutputTypeCountProjectContactArgs
+  Purchase?: boolean | ProjectCountOutputTypeCountPurchaseArgs
+  PurchaseDetail?: boolean | ProjectCountOutputTypeCountPurchaseDetailArgs
+  QuoteSupplier?: boolean | ProjectCountOutputTypeCountQuoteSupplierArgs
   WorkOrder?: boolean | ProjectCountOutputTypeCountWorkOrderArgs
 }
 
@@ -2600,22 +2795,8 @@ export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
 /**
  * ProjectCountOutputType without action
  */
-export type ProjectCountOutputTypeCountInventoryOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InventoryOrderStructureWhereInput
-}
-
-/**
- * ProjectCountOutputType without action
- */
-export type ProjectCountOutputTypeCountInventoryStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InventoryStructureWhereInput
-}
-
-/**
- * ProjectCountOutputType without action
- */
-export type ProjectCountOutputTypeCountMaterialSerialTrackedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.MaterialSerialTrackedWhereInput
+export type ProjectCountOutputTypeCountMaterialSerialTrackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaterialSerialTrackWhereInput
 }
 
 /**
@@ -2630,6 +2811,27 @@ export type ProjectCountOutputTypeCountOther_ProjectArgs<ExtArgs extends runtime
  */
 export type ProjectCountOutputTypeCountProjectContactArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ProjectContactWhereInput
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountPurchaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseWhereInput
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountPurchaseDetailArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseDetailWhereInput
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountQuoteSupplierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuoteSupplierWhereInput
 }
 
 /**
@@ -2659,9 +2861,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   projectTypeId?: boolean
   parentProjectId?: boolean
   targetId?: boolean
-  InventoryOrderStructure?: boolean | Prisma.Project$InventoryOrderStructureArgs<ExtArgs>
-  InventoryStructure?: boolean | Prisma.Project$InventoryStructureArgs<ExtArgs>
-  MaterialSerialTracked?: boolean | Prisma.Project$MaterialSerialTrackedArgs<ExtArgs>
+  MaterialSerialTrack?: boolean | Prisma.Project$MaterialSerialTrackArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   ProjectType?: boolean | Prisma.ProjectTypeDefaultArgs<ExtArgs>
@@ -2669,6 +2869,9 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   other_Project?: boolean | Prisma.Project$other_ProjectArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   ProjectContact?: boolean | Prisma.Project$ProjectContactArgs<ExtArgs>
+  Purchase?: boolean | Prisma.Project$PurchaseArgs<ExtArgs>
+  PurchaseDetail?: boolean | Prisma.Project$PurchaseDetailArgs<ExtArgs>
+  QuoteSupplier?: boolean | Prisma.Project$QuoteSupplierArgs<ExtArgs>
   WorkOrder?: boolean | Prisma.Project$WorkOrderArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
@@ -2698,9 +2901,7 @@ export type ProjectSelectScalar = {
 
 export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectNumber" | "description" | "extraInfo" | "startDate" | "endDate" | "closingDate" | "engineeringStartDate" | "createdAt" | "isMainProject" | "isIntern" | "isOpen" | "isClosed" | "createdBy" | "companyId" | "projectTypeId" | "parentProjectId" | "targetId", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InventoryOrderStructure?: boolean | Prisma.Project$InventoryOrderStructureArgs<ExtArgs>
-  InventoryStructure?: boolean | Prisma.Project$InventoryStructureArgs<ExtArgs>
-  MaterialSerialTracked?: boolean | Prisma.Project$MaterialSerialTrackedArgs<ExtArgs>
+  MaterialSerialTrack?: boolean | Prisma.Project$MaterialSerialTrackArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   ProjectType?: boolean | Prisma.ProjectTypeDefaultArgs<ExtArgs>
@@ -2708,6 +2909,9 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   other_Project?: boolean | Prisma.Project$other_ProjectArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   ProjectContact?: boolean | Prisma.Project$ProjectContactArgs<ExtArgs>
+  Purchase?: boolean | Prisma.Project$PurchaseArgs<ExtArgs>
+  PurchaseDetail?: boolean | Prisma.Project$PurchaseDetailArgs<ExtArgs>
+  QuoteSupplier?: boolean | Prisma.Project$QuoteSupplierArgs<ExtArgs>
   WorkOrder?: boolean | Prisma.Project$WorkOrderArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -2715,9 +2919,7 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Project"
   objects: {
-    InventoryOrderStructure: Prisma.$InventoryOrderStructurePayload<ExtArgs>[]
-    InventoryStructure: Prisma.$InventoryStructurePayload<ExtArgs>[]
-    MaterialSerialTracked: Prisma.$MaterialSerialTrackedPayload<ExtArgs>[]
+    MaterialSerialTrack: Prisma.$MaterialSerialTrackPayload<ExtArgs>[]
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Company: Prisma.$CompanyPayload<ExtArgs>
     ProjectType: Prisma.$ProjectTypePayload<ExtArgs>
@@ -2725,6 +2927,9 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     other_Project: Prisma.$ProjectPayload<ExtArgs>[]
     Target: Prisma.$TargetPayload<ExtArgs>
     ProjectContact: Prisma.$ProjectContactPayload<ExtArgs>[]
+    Purchase: Prisma.$PurchasePayload<ExtArgs>[]
+    PurchaseDetail: Prisma.$PurchaseDetailPayload<ExtArgs>[]
+    QuoteSupplier: Prisma.$QuoteSupplierPayload<ExtArgs>[]
     WorkOrder: Prisma.$WorkOrderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -3086,9 +3291,7 @@ readonly fields: ProjectFieldRefs;
  */
 export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  InventoryOrderStructure<T extends Prisma.Project$InventoryOrderStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$InventoryOrderStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryOrderStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  InventoryStructure<T extends Prisma.Project$InventoryStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$InventoryStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  MaterialSerialTracked<T extends Prisma.Project$MaterialSerialTrackedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$MaterialSerialTrackedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  MaterialSerialTrack<T extends Prisma.Project$MaterialSerialTrackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$MaterialSerialTrackArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Company<T extends Prisma.CompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   ProjectType<T extends Prisma.ProjectTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectTypeClient<runtime.Types.Result.GetResult<Prisma.$ProjectTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -3096,6 +3299,9 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
   other_Project<T extends Prisma.Project$other_ProjectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$other_ProjectArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   ProjectContact<T extends Prisma.Project$ProjectContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$ProjectContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Purchase<T extends Prisma.Project$PurchaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$PurchaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  PurchaseDetail<T extends Prisma.Project$PurchaseDetailArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$PurchaseDetailArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseDetailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  QuoteSupplier<T extends Prisma.Project$QuoteSupplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$QuoteSupplierArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteSupplierPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   WorkOrder<T extends Prisma.Project$WorkOrderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$WorkOrderArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3487,75 +3693,27 @@ export type ProjectDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Project.InventoryOrderStructure
+ * Project.MaterialSerialTrack
  */
-export type Project$InventoryOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Project$MaterialSerialTrackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the InventoryOrderStructure
+   * Select specific fields to fetch from the MaterialSerialTrack
    */
-  select?: Prisma.InventoryOrderStructureSelect<ExtArgs> | null
+  select?: Prisma.MaterialSerialTrackSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the InventoryOrderStructure
+   * Omit specific fields from the MaterialSerialTrack
    */
-  omit?: Prisma.InventoryOrderStructureOmit<ExtArgs> | null
+  omit?: Prisma.MaterialSerialTrackOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.InventoryOrderStructureInclude<ExtArgs> | null
-  where?: Prisma.InventoryOrderStructureWhereInput
-  orderBy?: Prisma.InventoryOrderStructureOrderByWithRelationInput | Prisma.InventoryOrderStructureOrderByWithRelationInput[]
-  cursor?: Prisma.InventoryOrderStructureWhereUniqueInput
+  include?: Prisma.MaterialSerialTrackInclude<ExtArgs> | null
+  where?: Prisma.MaterialSerialTrackWhereInput
+  orderBy?: Prisma.MaterialSerialTrackOrderByWithRelationInput | Prisma.MaterialSerialTrackOrderByWithRelationInput[]
+  cursor?: Prisma.MaterialSerialTrackWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.InventoryOrderStructureScalarFieldEnum | Prisma.InventoryOrderStructureScalarFieldEnum[]
-}
-
-/**
- * Project.InventoryStructure
- */
-export type Project$InventoryStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InventoryStructure
-   */
-  select?: Prisma.InventoryStructureSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the InventoryStructure
-   */
-  omit?: Prisma.InventoryStructureOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InventoryStructureInclude<ExtArgs> | null
-  where?: Prisma.InventoryStructureWhereInput
-  orderBy?: Prisma.InventoryStructureOrderByWithRelationInput | Prisma.InventoryStructureOrderByWithRelationInput[]
-  cursor?: Prisma.InventoryStructureWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.InventoryStructureScalarFieldEnum | Prisma.InventoryStructureScalarFieldEnum[]
-}
-
-/**
- * Project.MaterialSerialTracked
- */
-export type Project$MaterialSerialTrackedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the MaterialSerialTracked
-   */
-  select?: Prisma.MaterialSerialTrackedSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the MaterialSerialTracked
-   */
-  omit?: Prisma.MaterialSerialTrackedOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MaterialSerialTrackedInclude<ExtArgs> | null
-  where?: Prisma.MaterialSerialTrackedWhereInput
-  orderBy?: Prisma.MaterialSerialTrackedOrderByWithRelationInput | Prisma.MaterialSerialTrackedOrderByWithRelationInput[]
-  cursor?: Prisma.MaterialSerialTrackedWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.MaterialSerialTrackedScalarFieldEnum | Prisma.MaterialSerialTrackedScalarFieldEnum[]
+  distinct?: Prisma.MaterialSerialTrackScalarFieldEnum | Prisma.MaterialSerialTrackScalarFieldEnum[]
 }
 
 /**
@@ -3623,6 +3781,78 @@ export type Project$ProjectContactArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.ProjectContactScalarFieldEnum | Prisma.ProjectContactScalarFieldEnum[]
+}
+
+/**
+ * Project.Purchase
+ */
+export type Project$PurchaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Purchase
+   */
+  select?: Prisma.PurchaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Purchase
+   */
+  omit?: Prisma.PurchaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseInclude<ExtArgs> | null
+  where?: Prisma.PurchaseWhereInput
+  orderBy?: Prisma.PurchaseOrderByWithRelationInput | Prisma.PurchaseOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseScalarFieldEnum | Prisma.PurchaseScalarFieldEnum[]
+}
+
+/**
+ * Project.PurchaseDetail
+ */
+export type Project$PurchaseDetailArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseDetail
+   */
+  select?: Prisma.PurchaseDetailSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseDetail
+   */
+  omit?: Prisma.PurchaseDetailOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseDetailInclude<ExtArgs> | null
+  where?: Prisma.PurchaseDetailWhereInput
+  orderBy?: Prisma.PurchaseDetailOrderByWithRelationInput | Prisma.PurchaseDetailOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseDetailWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseDetailScalarFieldEnum | Prisma.PurchaseDetailScalarFieldEnum[]
+}
+
+/**
+ * Project.QuoteSupplier
+ */
+export type Project$QuoteSupplierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the QuoteSupplier
+   */
+  select?: Prisma.QuoteSupplierSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the QuoteSupplier
+   */
+  omit?: Prisma.QuoteSupplierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuoteSupplierInclude<ExtArgs> | null
+  where?: Prisma.QuoteSupplierWhereInput
+  orderBy?: Prisma.QuoteSupplierOrderByWithRelationInput | Prisma.QuoteSupplierOrderByWithRelationInput[]
+  cursor?: Prisma.QuoteSupplierWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuoteSupplierScalarFieldEnum | Prisma.QuoteSupplierScalarFieldEnum[]
 }
 
 /**

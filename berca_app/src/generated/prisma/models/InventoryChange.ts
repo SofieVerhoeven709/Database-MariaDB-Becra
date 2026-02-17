@@ -27,121 +27,127 @@ export type AggregateInventoryChange = {
 }
 
 export type InventoryChangeAvgAggregateOutputType = {
-  inventoryQuantityOld: number | null
-  quantityInStock: number | null
+  inventoryOldValue: number | null
+  inventoryNewValue: number | null
 }
 
 export type InventoryChangeSumAggregateOutputType = {
-  inventoryQuantityOld: number | null
-  quantityInStock: number | null
+  inventoryOldValue: number | null
+  inventoryNewValue: number | null
 }
 
 export type InventoryChangeMinAggregateOutputType = {
   id: string | null
   inventoryId: string | null
+  beNumber: string | null
+  serialTrackedId: string | null
   shortDescription: string | null
   longDescription: string | null
   additionalInformation: string | null
-  transactionDate: Date | null
   fromLocation: string | null
   toLocation: string | null
-  inventoryQuantityOld: number | null
-  transactionType: string | null
-  quantityInStock: number | null
-  createdBy: string | null
+  inventoryOldValue: number | null
+  inventoryNewValue: number | null
+  changeDescription: string | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type InventoryChangeMaxAggregateOutputType = {
   id: string | null
   inventoryId: string | null
+  beNumber: string | null
+  serialTrackedId: string | null
   shortDescription: string | null
   longDescription: string | null
   additionalInformation: string | null
-  transactionDate: Date | null
   fromLocation: string | null
   toLocation: string | null
-  inventoryQuantityOld: number | null
-  transactionType: string | null
-  quantityInStock: number | null
-  createdBy: string | null
+  inventoryOldValue: number | null
+  inventoryNewValue: number | null
+  changeDescription: string | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type InventoryChangeCountAggregateOutputType = {
   id: number
   inventoryId: number
+  beNumber: number
+  serialTrackedId: number
   shortDescription: number
   longDescription: number
   additionalInformation: number
-  transactionDate: number
   fromLocation: number
   toLocation: number
-  inventoryQuantityOld: number
-  transactionType: number
-  quantityInStock: number
-  createdBy: number
+  inventoryOldValue: number
+  inventoryNewValue: number
+  changeDescription: number
   createdAt: number
+  createdBy: number
   _all: number
 }
 
 
 export type InventoryChangeAvgAggregateInputType = {
-  inventoryQuantityOld?: true
-  quantityInStock?: true
+  inventoryOldValue?: true
+  inventoryNewValue?: true
 }
 
 export type InventoryChangeSumAggregateInputType = {
-  inventoryQuantityOld?: true
-  quantityInStock?: true
+  inventoryOldValue?: true
+  inventoryNewValue?: true
 }
 
 export type InventoryChangeMinAggregateInputType = {
   id?: true
   inventoryId?: true
+  beNumber?: true
+  serialTrackedId?: true
   shortDescription?: true
   longDescription?: true
   additionalInformation?: true
-  transactionDate?: true
   fromLocation?: true
   toLocation?: true
-  inventoryQuantityOld?: true
-  transactionType?: true
-  quantityInStock?: true
-  createdBy?: true
+  inventoryOldValue?: true
+  inventoryNewValue?: true
+  changeDescription?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type InventoryChangeMaxAggregateInputType = {
   id?: true
   inventoryId?: true
+  beNumber?: true
+  serialTrackedId?: true
   shortDescription?: true
   longDescription?: true
   additionalInformation?: true
-  transactionDate?: true
   fromLocation?: true
   toLocation?: true
-  inventoryQuantityOld?: true
-  transactionType?: true
-  quantityInStock?: true
-  createdBy?: true
+  inventoryOldValue?: true
+  inventoryNewValue?: true
+  changeDescription?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type InventoryChangeCountAggregateInputType = {
   id?: true
   inventoryId?: true
+  beNumber?: true
+  serialTrackedId?: true
   shortDescription?: true
   longDescription?: true
   additionalInformation?: true
-  transactionDate?: true
   fromLocation?: true
   toLocation?: true
-  inventoryQuantityOld?: true
-  transactionType?: true
-  quantityInStock?: true
-  createdBy?: true
+  inventoryOldValue?: true
+  inventoryNewValue?: true
+  changeDescription?: true
   createdAt?: true
+  createdBy?: true
   _all?: true
 }
 
@@ -234,17 +240,18 @@ export type InventoryChangeGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 export type InventoryChangeGroupByOutputType = {
   id: string
   inventoryId: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  transactionDate: Date
-  fromLocation: string
-  toLocation: string
-  inventoryQuantityOld: number
-  transactionType: string
-  quantityInStock: number
-  createdBy: string
+  beNumber: string | null
+  serialTrackedId: string | null
+  shortDescription: string | null
+  longDescription: string | null
+  additionalInformation: string | null
+  fromLocation: string | null
+  toLocation: string | null
+  inventoryOldValue: number | null
+  inventoryNewValue: number | null
+  changeDescription: string
   createdAt: Date
+  createdBy: string
   _count: InventoryChangeCountAggregateOutputType | null
   _avg: InventoryChangeAvgAggregateOutputType | null
   _sum: InventoryChangeSumAggregateOutputType | null
@@ -273,17 +280,18 @@ export type InventoryChangeWhereInput = {
   NOT?: Prisma.InventoryChangeWhereInput | Prisma.InventoryChangeWhereInput[]
   id?: Prisma.StringFilter<"InventoryChange"> | string
   inventoryId?: Prisma.StringFilter<"InventoryChange"> | string
-  shortDescription?: Prisma.StringFilter<"InventoryChange"> | string
-  longDescription?: Prisma.StringFilter<"InventoryChange"> | string
-  additionalInformation?: Prisma.StringFilter<"InventoryChange"> | string
-  transactionDate?: Prisma.DateTimeFilter<"InventoryChange"> | Date | string
-  fromLocation?: Prisma.StringFilter<"InventoryChange"> | string
-  toLocation?: Prisma.StringFilter<"InventoryChange"> | string
-  inventoryQuantityOld?: Prisma.IntFilter<"InventoryChange"> | number
-  transactionType?: Prisma.StringFilter<"InventoryChange"> | string
-  quantityInStock?: Prisma.IntFilter<"InventoryChange"> | number
-  createdBy?: Prisma.StringFilter<"InventoryChange"> | string
+  beNumber?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  serialTrackedId?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  additionalInformation?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  fromLocation?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  toLocation?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  inventoryOldValue?: Prisma.IntNullableFilter<"InventoryChange"> | number | null
+  inventoryNewValue?: Prisma.IntNullableFilter<"InventoryChange"> | number | null
+  changeDescription?: Prisma.StringFilter<"InventoryChange"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryChange"> | Date | string
+  createdBy?: Prisma.StringFilter<"InventoryChange"> | string
   Inventory?: Prisma.XOR<Prisma.InventoryScalarRelationFilter, Prisma.InventoryWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
@@ -291,17 +299,18 @@ export type InventoryChangeWhereInput = {
 export type InventoryChangeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   inventoryId?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  transactionDate?: Prisma.SortOrder
-  fromLocation?: Prisma.SortOrder
-  toLocation?: Prisma.SortOrder
-  inventoryQuantityOld?: Prisma.SortOrder
-  transactionType?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  serialTrackedId?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInformation?: Prisma.SortOrderInput | Prisma.SortOrder
+  fromLocation?: Prisma.SortOrderInput | Prisma.SortOrder
+  toLocation?: Prisma.SortOrderInput | Prisma.SortOrder
+  inventoryOldValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  inventoryNewValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  changeDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   Inventory?: Prisma.InventoryOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.InventoryChangeOrderByRelevanceInput
@@ -313,17 +322,18 @@ export type InventoryChangeWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.InventoryChangeWhereInput[]
   NOT?: Prisma.InventoryChangeWhereInput | Prisma.InventoryChangeWhereInput[]
   inventoryId?: Prisma.StringFilter<"InventoryChange"> | string
-  shortDescription?: Prisma.StringFilter<"InventoryChange"> | string
-  longDescription?: Prisma.StringFilter<"InventoryChange"> | string
-  additionalInformation?: Prisma.StringFilter<"InventoryChange"> | string
-  transactionDate?: Prisma.DateTimeFilter<"InventoryChange"> | Date | string
-  fromLocation?: Prisma.StringFilter<"InventoryChange"> | string
-  toLocation?: Prisma.StringFilter<"InventoryChange"> | string
-  inventoryQuantityOld?: Prisma.IntFilter<"InventoryChange"> | number
-  transactionType?: Prisma.StringFilter<"InventoryChange"> | string
-  quantityInStock?: Prisma.IntFilter<"InventoryChange"> | number
-  createdBy?: Prisma.StringFilter<"InventoryChange"> | string
+  beNumber?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  serialTrackedId?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  additionalInformation?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  fromLocation?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  toLocation?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  inventoryOldValue?: Prisma.IntNullableFilter<"InventoryChange"> | number | null
+  inventoryNewValue?: Prisma.IntNullableFilter<"InventoryChange"> | number | null
+  changeDescription?: Prisma.StringFilter<"InventoryChange"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryChange"> | Date | string
+  createdBy?: Prisma.StringFilter<"InventoryChange"> | string
   Inventory?: Prisma.XOR<Prisma.InventoryScalarRelationFilter, Prisma.InventoryWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
@@ -331,17 +341,18 @@ export type InventoryChangeWhereUniqueInput = Prisma.AtLeast<{
 export type InventoryChangeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   inventoryId?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  transactionDate?: Prisma.SortOrder
-  fromLocation?: Prisma.SortOrder
-  toLocation?: Prisma.SortOrder
-  inventoryQuantityOld?: Prisma.SortOrder
-  transactionType?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  serialTrackedId?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInformation?: Prisma.SortOrderInput | Prisma.SortOrder
+  fromLocation?: Prisma.SortOrderInput | Prisma.SortOrder
+  toLocation?: Prisma.SortOrderInput | Prisma.SortOrder
+  inventoryOldValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  inventoryNewValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  changeDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   _count?: Prisma.InventoryChangeCountOrderByAggregateInput
   _avg?: Prisma.InventoryChangeAvgOrderByAggregateInput
   _max?: Prisma.InventoryChangeMaxOrderByAggregateInput
@@ -355,31 +366,33 @@ export type InventoryChangeScalarWhereWithAggregatesInput = {
   NOT?: Prisma.InventoryChangeScalarWhereWithAggregatesInput | Prisma.InventoryChangeScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"InventoryChange"> | string
   inventoryId?: Prisma.StringWithAggregatesFilter<"InventoryChange"> | string
-  shortDescription?: Prisma.StringWithAggregatesFilter<"InventoryChange"> | string
-  longDescription?: Prisma.StringWithAggregatesFilter<"InventoryChange"> | string
-  additionalInformation?: Prisma.StringWithAggregatesFilter<"InventoryChange"> | string
-  transactionDate?: Prisma.DateTimeWithAggregatesFilter<"InventoryChange"> | Date | string
-  fromLocation?: Prisma.StringWithAggregatesFilter<"InventoryChange"> | string
-  toLocation?: Prisma.StringWithAggregatesFilter<"InventoryChange"> | string
-  inventoryQuantityOld?: Prisma.IntWithAggregatesFilter<"InventoryChange"> | number
-  transactionType?: Prisma.StringWithAggregatesFilter<"InventoryChange"> | string
-  quantityInStock?: Prisma.IntWithAggregatesFilter<"InventoryChange"> | number
-  createdBy?: Prisma.StringWithAggregatesFilter<"InventoryChange"> | string
+  beNumber?: Prisma.StringNullableWithAggregatesFilter<"InventoryChange"> | string | null
+  serialTrackedId?: Prisma.StringNullableWithAggregatesFilter<"InventoryChange"> | string | null
+  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"InventoryChange"> | string | null
+  longDescription?: Prisma.StringNullableWithAggregatesFilter<"InventoryChange"> | string | null
+  additionalInformation?: Prisma.StringNullableWithAggregatesFilter<"InventoryChange"> | string | null
+  fromLocation?: Prisma.StringNullableWithAggregatesFilter<"InventoryChange"> | string | null
+  toLocation?: Prisma.StringNullableWithAggregatesFilter<"InventoryChange"> | string | null
+  inventoryOldValue?: Prisma.IntNullableWithAggregatesFilter<"InventoryChange"> | number | null
+  inventoryNewValue?: Prisma.IntNullableWithAggregatesFilter<"InventoryChange"> | number | null
+  changeDescription?: Prisma.StringWithAggregatesFilter<"InventoryChange"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"InventoryChange"> | Date | string
+  createdBy?: Prisma.StringWithAggregatesFilter<"InventoryChange"> | string
 }
 
 export type InventoryChangeCreateInput = {
   id: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  transactionDate: Date | string
-  fromLocation: string
-  toLocation: string
-  inventoryQuantityOld: number
-  transactionType: string
-  quantityInStock: number
-  createdAt: Date | string
+  beNumber?: string | null
+  serialTrackedId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInformation?: string | null
+  fromLocation?: string | null
+  toLocation?: string | null
+  inventoryOldValue?: number | null
+  inventoryNewValue?: number | null
+  changeDescription: string
+  createdAt?: Date | string
   Inventory: Prisma.InventoryCreateNestedOneWithoutInventoryChangeInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryChangeInput
 }
@@ -387,30 +400,32 @@ export type InventoryChangeCreateInput = {
 export type InventoryChangeUncheckedCreateInput = {
   id: string
   inventoryId: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  transactionDate: Date | string
-  fromLocation: string
-  toLocation: string
-  inventoryQuantityOld: number
-  transactionType: string
-  quantityInStock: number
+  beNumber?: string | null
+  serialTrackedId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInformation?: string | null
+  fromLocation?: string | null
+  toLocation?: string | null
+  inventoryOldValue?: number | null
+  inventoryNewValue?: number | null
+  changeDescription: string
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
 }
 
 export type InventoryChangeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryQuantityOld?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionType?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInformation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryOldValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inventoryNewValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  changeDescription?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Inventory?: Prisma.InventoryUpdateOneRequiredWithoutInventoryChangeNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryChangeNestedInput
@@ -419,63 +434,67 @@ export type InventoryChangeUpdateInput = {
 export type InventoryChangeUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryQuantityOld?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionType?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInformation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryOldValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inventoryNewValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  changeDescription?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InventoryChangeCreateManyInput = {
   id: string
   inventoryId: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  transactionDate: Date | string
-  fromLocation: string
-  toLocation: string
-  inventoryQuantityOld: number
-  transactionType: string
-  quantityInStock: number
+  beNumber?: string | null
+  serialTrackedId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInformation?: string | null
+  fromLocation?: string | null
+  toLocation?: string | null
+  inventoryOldValue?: number | null
+  inventoryNewValue?: number | null
+  changeDescription: string
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
 }
 
 export type InventoryChangeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryQuantityOld?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionType?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInformation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryOldValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inventoryNewValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  changeDescription?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InventoryChangeUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryQuantityOld?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionType?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInformation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryOldValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inventoryNewValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  changeDescription?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InventoryChangeListRelationFilter = {
@@ -497,59 +516,62 @@ export type InventoryChangeOrderByRelevanceInput = {
 export type InventoryChangeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   inventoryId?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrder
+  serialTrackedId?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   additionalInformation?: Prisma.SortOrder
-  transactionDate?: Prisma.SortOrder
   fromLocation?: Prisma.SortOrder
   toLocation?: Prisma.SortOrder
-  inventoryQuantityOld?: Prisma.SortOrder
-  transactionType?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
+  inventoryOldValue?: Prisma.SortOrder
+  inventoryNewValue?: Prisma.SortOrder
+  changeDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type InventoryChangeAvgOrderByAggregateInput = {
-  inventoryQuantityOld?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
+  inventoryOldValue?: Prisma.SortOrder
+  inventoryNewValue?: Prisma.SortOrder
 }
 
 export type InventoryChangeMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   inventoryId?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrder
+  serialTrackedId?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   additionalInformation?: Prisma.SortOrder
-  transactionDate?: Prisma.SortOrder
   fromLocation?: Prisma.SortOrder
   toLocation?: Prisma.SortOrder
-  inventoryQuantityOld?: Prisma.SortOrder
-  transactionType?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
+  inventoryOldValue?: Prisma.SortOrder
+  inventoryNewValue?: Prisma.SortOrder
+  changeDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type InventoryChangeMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   inventoryId?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrder
+  serialTrackedId?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   additionalInformation?: Prisma.SortOrder
-  transactionDate?: Prisma.SortOrder
   fromLocation?: Prisma.SortOrder
   toLocation?: Prisma.SortOrder
-  inventoryQuantityOld?: Prisma.SortOrder
-  transactionType?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
+  inventoryOldValue?: Prisma.SortOrder
+  inventoryNewValue?: Prisma.SortOrder
+  changeDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type InventoryChangeSumOrderByAggregateInput = {
-  inventoryQuantityOld?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
+  inventoryOldValue?: Prisma.SortOrder
+  inventoryNewValue?: Prisma.SortOrder
 }
 
 export type InventoryChangeCreateNestedManyWithoutEmployeeInput = {
@@ -638,32 +660,34 @@ export type InventoryChangeUncheckedUpdateManyWithoutInventoryNestedInput = {
 
 export type InventoryChangeCreateWithoutEmployeeInput = {
   id: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  transactionDate: Date | string
-  fromLocation: string
-  toLocation: string
-  inventoryQuantityOld: number
-  transactionType: string
-  quantityInStock: number
-  createdAt: Date | string
+  beNumber?: string | null
+  serialTrackedId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInformation?: string | null
+  fromLocation?: string | null
+  toLocation?: string | null
+  inventoryOldValue?: number | null
+  inventoryNewValue?: number | null
+  changeDescription: string
+  createdAt?: Date | string
   Inventory: Prisma.InventoryCreateNestedOneWithoutInventoryChangeInput
 }
 
 export type InventoryChangeUncheckedCreateWithoutEmployeeInput = {
   id: string
   inventoryId: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  transactionDate: Date | string
-  fromLocation: string
-  toLocation: string
-  inventoryQuantityOld: number
-  transactionType: string
-  quantityInStock: number
-  createdAt: Date | string
+  beNumber?: string | null
+  serialTrackedId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInformation?: string | null
+  fromLocation?: string | null
+  toLocation?: string | null
+  inventoryOldValue?: number | null
+  inventoryNewValue?: number | null
+  changeDescription: string
+  createdAt?: Date | string
 }
 
 export type InventoryChangeCreateOrConnectWithoutEmployeeInput = {
@@ -698,47 +722,50 @@ export type InventoryChangeScalarWhereInput = {
   NOT?: Prisma.InventoryChangeScalarWhereInput | Prisma.InventoryChangeScalarWhereInput[]
   id?: Prisma.StringFilter<"InventoryChange"> | string
   inventoryId?: Prisma.StringFilter<"InventoryChange"> | string
-  shortDescription?: Prisma.StringFilter<"InventoryChange"> | string
-  longDescription?: Prisma.StringFilter<"InventoryChange"> | string
-  additionalInformation?: Prisma.StringFilter<"InventoryChange"> | string
-  transactionDate?: Prisma.DateTimeFilter<"InventoryChange"> | Date | string
-  fromLocation?: Prisma.StringFilter<"InventoryChange"> | string
-  toLocation?: Prisma.StringFilter<"InventoryChange"> | string
-  inventoryQuantityOld?: Prisma.IntFilter<"InventoryChange"> | number
-  transactionType?: Prisma.StringFilter<"InventoryChange"> | string
-  quantityInStock?: Prisma.IntFilter<"InventoryChange"> | number
-  createdBy?: Prisma.StringFilter<"InventoryChange"> | string
+  beNumber?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  serialTrackedId?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  additionalInformation?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  fromLocation?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  toLocation?: Prisma.StringNullableFilter<"InventoryChange"> | string | null
+  inventoryOldValue?: Prisma.IntNullableFilter<"InventoryChange"> | number | null
+  inventoryNewValue?: Prisma.IntNullableFilter<"InventoryChange"> | number | null
+  changeDescription?: Prisma.StringFilter<"InventoryChange"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryChange"> | Date | string
+  createdBy?: Prisma.StringFilter<"InventoryChange"> | string
 }
 
 export type InventoryChangeCreateWithoutInventoryInput = {
   id: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  transactionDate: Date | string
-  fromLocation: string
-  toLocation: string
-  inventoryQuantityOld: number
-  transactionType: string
-  quantityInStock: number
-  createdAt: Date | string
+  beNumber?: string | null
+  serialTrackedId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInformation?: string | null
+  fromLocation?: string | null
+  toLocation?: string | null
+  inventoryOldValue?: number | null
+  inventoryNewValue?: number | null
+  changeDescription: string
+  createdAt?: Date | string
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryChangeInput
 }
 
 export type InventoryChangeUncheckedCreateWithoutInventoryInput = {
   id: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  transactionDate: Date | string
-  fromLocation: string
-  toLocation: string
-  inventoryQuantityOld: number
-  transactionType: string
-  quantityInStock: number
+  beNumber?: string | null
+  serialTrackedId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInformation?: string | null
+  fromLocation?: string | null
+  toLocation?: string | null
+  inventoryOldValue?: number | null
+  inventoryNewValue?: number | null
+  changeDescription: string
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
 }
 
 export type InventoryChangeCreateOrConnectWithoutInventoryInput = {
@@ -770,29 +797,31 @@ export type InventoryChangeUpdateManyWithWhereWithoutInventoryInput = {
 export type InventoryChangeCreateManyEmployeeInput = {
   id: string
   inventoryId: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  transactionDate: Date | string
-  fromLocation: string
-  toLocation: string
-  inventoryQuantityOld: number
-  transactionType: string
-  quantityInStock: number
-  createdAt: Date | string
+  beNumber?: string | null
+  serialTrackedId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInformation?: string | null
+  fromLocation?: string | null
+  toLocation?: string | null
+  inventoryOldValue?: number | null
+  inventoryNewValue?: number | null
+  changeDescription: string
+  createdAt?: Date | string
 }
 
 export type InventoryChangeUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryQuantityOld?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionType?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInformation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryOldValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inventoryNewValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  changeDescription?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Inventory?: Prisma.InventoryUpdateOneRequiredWithoutInventoryChangeNestedInput
 }
@@ -800,91 +829,97 @@ export type InventoryChangeUpdateWithoutEmployeeInput = {
 export type InventoryChangeUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryQuantityOld?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionType?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInformation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryOldValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inventoryNewValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  changeDescription?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InventoryChangeUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryQuantityOld?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionType?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInformation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryOldValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inventoryNewValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  changeDescription?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InventoryChangeCreateManyInventoryInput = {
   id: string
-  shortDescription: string
-  longDescription: string
-  additionalInformation: string
-  transactionDate: Date | string
-  fromLocation: string
-  toLocation: string
-  inventoryQuantityOld: number
-  transactionType: string
-  quantityInStock: number
+  beNumber?: string | null
+  serialTrackedId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInformation?: string | null
+  fromLocation?: string | null
+  toLocation?: string | null
+  inventoryOldValue?: number | null
+  inventoryNewValue?: number | null
+  changeDescription: string
+  createdAt?: Date | string
   createdBy: string
-  createdAt: Date | string
 }
 
 export type InventoryChangeUpdateWithoutInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryQuantityOld?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionType?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInformation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryOldValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inventoryNewValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  changeDescription?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryChangeNestedInput
 }
 
 export type InventoryChangeUncheckedUpdateWithoutInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryQuantityOld?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionType?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInformation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryOldValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inventoryNewValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  changeDescription?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type InventoryChangeUncheckedUpdateManyWithoutInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  inventoryQuantityOld?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionType?: Prisma.StringFieldUpdateOperationsInput | string
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInformation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryOldValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inventoryNewValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  changeDescription?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -892,17 +927,18 @@ export type InventoryChangeUncheckedUpdateManyWithoutInventoryInput = {
 export type InventoryChangeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   inventoryId?: boolean
+  beNumber?: boolean
+  serialTrackedId?: boolean
   shortDescription?: boolean
   longDescription?: boolean
   additionalInformation?: boolean
-  transactionDate?: boolean
   fromLocation?: boolean
   toLocation?: boolean
-  inventoryQuantityOld?: boolean
-  transactionType?: boolean
-  quantityInStock?: boolean
-  createdBy?: boolean
+  inventoryOldValue?: boolean
+  inventoryNewValue?: boolean
+  changeDescription?: boolean
   createdAt?: boolean
+  createdBy?: boolean
   Inventory?: boolean | Prisma.InventoryDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventoryChange"]>
@@ -912,20 +948,21 @@ export type InventoryChangeSelect<ExtArgs extends runtime.Types.Extensions.Inter
 export type InventoryChangeSelectScalar = {
   id?: boolean
   inventoryId?: boolean
+  beNumber?: boolean
+  serialTrackedId?: boolean
   shortDescription?: boolean
   longDescription?: boolean
   additionalInformation?: boolean
-  transactionDate?: boolean
   fromLocation?: boolean
   toLocation?: boolean
-  inventoryQuantityOld?: boolean
-  transactionType?: boolean
-  quantityInStock?: boolean
-  createdBy?: boolean
+  inventoryOldValue?: boolean
+  inventoryNewValue?: boolean
+  changeDescription?: boolean
   createdAt?: boolean
+  createdBy?: boolean
 }
 
-export type InventoryChangeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "inventoryId" | "shortDescription" | "longDescription" | "additionalInformation" | "transactionDate" | "fromLocation" | "toLocation" | "inventoryQuantityOld" | "transactionType" | "quantityInStock" | "createdBy" | "createdAt", ExtArgs["result"]["inventoryChange"]>
+export type InventoryChangeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "inventoryId" | "beNumber" | "serialTrackedId" | "shortDescription" | "longDescription" | "additionalInformation" | "fromLocation" | "toLocation" | "inventoryOldValue" | "inventoryNewValue" | "changeDescription" | "createdAt" | "createdBy", ExtArgs["result"]["inventoryChange"]>
 export type InventoryChangeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Inventory?: boolean | Prisma.InventoryDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -940,17 +977,18 @@ export type $InventoryChangePayload<ExtArgs extends runtime.Types.Extensions.Int
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     inventoryId: string
-    shortDescription: string
-    longDescription: string
-    additionalInformation: string
-    transactionDate: Date
-    fromLocation: string
-    toLocation: string
-    inventoryQuantityOld: number
-    transactionType: string
-    quantityInStock: number
-    createdBy: string
+    beNumber: string | null
+    serialTrackedId: string | null
+    shortDescription: string | null
+    longDescription: string | null
+    additionalInformation: string | null
+    fromLocation: string | null
+    toLocation: string | null
+    inventoryOldValue: number | null
+    inventoryNewValue: number | null
+    changeDescription: string
     createdAt: Date
+    createdBy: string
   }, ExtArgs["result"]["inventoryChange"]>
   composites: {}
 }
@@ -1324,17 +1362,18 @@ export interface Prisma__InventoryChangeClient<T, Null = never, ExtArgs extends 
 export interface InventoryChangeFieldRefs {
   readonly id: Prisma.FieldRef<"InventoryChange", 'String'>
   readonly inventoryId: Prisma.FieldRef<"InventoryChange", 'String'>
+  readonly beNumber: Prisma.FieldRef<"InventoryChange", 'String'>
+  readonly serialTrackedId: Prisma.FieldRef<"InventoryChange", 'String'>
   readonly shortDescription: Prisma.FieldRef<"InventoryChange", 'String'>
   readonly longDescription: Prisma.FieldRef<"InventoryChange", 'String'>
   readonly additionalInformation: Prisma.FieldRef<"InventoryChange", 'String'>
-  readonly transactionDate: Prisma.FieldRef<"InventoryChange", 'DateTime'>
   readonly fromLocation: Prisma.FieldRef<"InventoryChange", 'String'>
   readonly toLocation: Prisma.FieldRef<"InventoryChange", 'String'>
-  readonly inventoryQuantityOld: Prisma.FieldRef<"InventoryChange", 'Int'>
-  readonly transactionType: Prisma.FieldRef<"InventoryChange", 'String'>
-  readonly quantityInStock: Prisma.FieldRef<"InventoryChange", 'Int'>
-  readonly createdBy: Prisma.FieldRef<"InventoryChange", 'String'>
+  readonly inventoryOldValue: Prisma.FieldRef<"InventoryChange", 'Int'>
+  readonly inventoryNewValue: Prisma.FieldRef<"InventoryChange", 'Int'>
+  readonly changeDescription: Prisma.FieldRef<"InventoryChange", 'String'>
   readonly createdAt: Prisma.FieldRef<"InventoryChange", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"InventoryChange", 'String'>
 }
     
 

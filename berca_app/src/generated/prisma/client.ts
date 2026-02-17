@@ -75,10 +75,25 @@ export type CompanyContact = Prisma.CompanyContactModel
  */
 export type Contact = Prisma.ContactModel
 /**
+ * Model DeliveryNoteSupplier
+ * 
+ */
+export type DeliveryNoteSupplier = Prisma.DeliveryNoteSupplierModel
+/**
  * Model Department
  * 
  */
 export type Department = Prisma.DepartmentModel
+/**
+ * Model DocumentGroup
+ * 
+ */
+export type DocumentGroup = Prisma.DocumentGroupModel
+/**
+ * Model DocumentPlace
+ * 
+ */
+export type DocumentPlace = Prisma.DocumentPlaceModel
 /**
  * Model DocumentStructure
  * 
@@ -125,6 +140,26 @@ export type Function = Prisma.FunctionModel
  */
 export type HourType = Prisma.HourTypeModel
 /**
+ * Model Inventory
+ * 
+ */
+export type Inventory = Prisma.InventoryModel
+/**
+ * Model InventoryChange
+ * 
+ */
+export type InventoryChange = Prisma.InventoryChangeModel
+/**
+ * Model InventoryOrder
+ * 
+ */
+export type InventoryOrder = Prisma.InventoryOrderModel
+/**
+ * Model InventoryStructure
+ * 
+ */
+export type InventoryStructure = Prisma.InventoryStructureModel
+/**
  * Model InvoiceIn
  * 
  */
@@ -144,156 +179,6 @@ export type InvoiceOut = Prisma.InvoiceOutModel
  * 
  */
 export type InvoiceType = Prisma.InvoiceTypeModel
-/**
- * Model Project
- * 
- */
-export type Project = Prisma.ProjectModel
-/**
- * Model ProjectContact
- * 
- */
-export type ProjectContact = Prisma.ProjectContactModel
-/**
- * Model ProjectType
- * 
- */
-export type ProjectType = Prisma.ProjectTypeModel
-/**
- * Model Role
- * 
- */
-export type Role = Prisma.RoleModel
-/**
- * Model Status
- * 
- */
-export type Status = Prisma.StatusModel
-/**
- * Model Target
- * 
- */
-export type Target = Prisma.TargetModel
-/**
- * Model TargetType
- * 
- */
-export type TargetType = Prisma.TargetTypeModel
-/**
- * Model TimeRegistry
- * 
- */
-export type TimeRegistry = Prisma.TimeRegistryModel
-/**
- * Model TimeRegistryEmployee
- * 
- */
-export type TimeRegistryEmployee = Prisma.TimeRegistryEmployeeModel
-/**
- * Model Title
- * 
- */
-export type Title = Prisma.TitleModel
-/**
- * Model Training
- * 
- */
-export type Training = Prisma.TrainingModel
-/**
- * Model TrainingContact
- * 
- */
-export type TrainingContact = Prisma.TrainingContactModel
-/**
- * Model TrainingDocument
- * 
- */
-export type TrainingDocument = Prisma.TrainingDocumentModel
-/**
- * Model TrainingStandard
- * 
- */
-export type TrainingStandard = Prisma.TrainingStandardModel
-/**
- * Model UrgencyType
- * 
- */
-export type UrgencyType = Prisma.UrgencyTypeModel
-/**
- * Model VisibilityForRole
- * 
- */
-export type VisibilityForRole = Prisma.VisibilityForRoleModel
-/**
- * Model WorkOrder
- * 
- */
-export type WorkOrder = Prisma.WorkOrderModel
-/**
- * Model WorkOrderStructure
- * 
- */
-export type WorkOrderStructure = Prisma.WorkOrderStructureModel
-/**
- * Model Session
- * 
- */
-export type Session = Prisma.SessionModel
-/**
- * Model Accounting
- * 
- */
-export type Accounting = Prisma.AccountingModel
-/**
- * Model DeliveryNote
- * 
- */
-export type DeliveryNote = Prisma.DeliveryNoteModel
-/**
- * Model DocumentGroup
- * 
- */
-export type DocumentGroup = Prisma.DocumentGroupModel
-/**
- * Model DocumentPlace
- * 
- */
-export type DocumentPlace = Prisma.DocumentPlaceModel
-/**
- * Model Inventory
- * 
- */
-export type Inventory = Prisma.InventoryModel
-/**
- * Model InventoryChange
- * 
- */
-export type InventoryChange = Prisma.InventoryChangeModel
-/**
- * Model InventoryOrder
- * 
- */
-export type InventoryOrder = Prisma.InventoryOrderModel
-/**
- * Model InventoryOrderStructure
- * 
- */
-export type InventoryOrderStructure = Prisma.InventoryOrderStructureModel
-/**
- * Model InventoryPlace
- * 
- */
-export type InventoryPlace = Prisma.InventoryPlaceModel
-/**
- * Model InventoryStructure
- * 
- */
-export type InventoryStructure = Prisma.InventoryStructureModel
-/**
- * Model InvestingCode
- * 
- */
-export type InvestingCode = Prisma.InvestingCodeModel
 /**
  * Model Material
  * 
@@ -345,20 +230,20 @@ export type MaterialPerformance = Prisma.MaterialPerformanceModel
  */
 export type MaterialPrice = Prisma.MaterialPriceModel
 /**
- * Model MaterialSerialTracked
+ * Model MaterialSerialTrack
  * 
  */
-export type MaterialSerialTracked = Prisma.MaterialSerialTrackedModel
+export type MaterialSerialTrack = Prisma.MaterialSerialTrackModel
 /**
  * Model MaterialSerialTrackedStructure
  * 
  */
 export type MaterialSerialTrackedStructure = Prisma.MaterialSerialTrackedStructureModel
 /**
- * Model MaterialSpecification
+ * Model MaterialSpec
  * 
  */
-export type MaterialSpecification = Prisma.MaterialSpecificationModel
+export type MaterialSpec = Prisma.MaterialSpecModel
 /**
  * Model MaterialStructure
  * 
@@ -380,6 +265,21 @@ export type Phantom = Prisma.PhantomModel
  */
 export type Product = Prisma.ProductModel
 /**
+ * Model Project
+ * 
+ */
+export type Project = Prisma.ProjectModel
+/**
+ * Model ProjectContact
+ * 
+ */
+export type ProjectContact = Prisma.ProjectContactModel
+/**
+ * Model ProjectType
+ * 
+ */
+export type ProjectType = Prisma.ProjectTypeModel
+/**
  * Model Purchase
  * 
  */
@@ -395,47 +295,117 @@ export type PurchaseDetail = Prisma.PurchaseDetailModel
  */
 export type PurchaseOrderBecra = Prisma.PurchaseOrderBecraModel
 /**
- * Model PurchasePriceRequest
+ * Model QouteBecra
  * 
  */
-export type PurchasePriceRequest = Prisma.PurchasePriceRequestModel
+export type QouteBecra = Prisma.QouteBecraModel
 /**
- * Model Sale
+ * Model QuoteSupplier
  * 
  */
-export type Sale = Prisma.SaleModel
+export type QuoteSupplier = Prisma.QuoteSupplierModel
 /**
- * Model SaleOrderDetail
+ * Model Role
  * 
  */
-export type SaleOrderDetail = Prisma.SaleOrderDetailModel
+export type Role = Prisma.RoleModel
 /**
- * Model SerialTracked
+ * Model Session
  * 
  */
-export type SerialTracked = Prisma.SerialTrackedModel
+export type Session = Prisma.SessionModel
+/**
+ * Model Status
+ * 
+ */
+export type Status = Prisma.StatusModel
+/**
+ * Model SupplierDeliveryNoteFollowUp
+ * 
+ */
+export type SupplierDeliveryNoteFollowUp = Prisma.SupplierDeliveryNoteFollowUpModel
+/**
+ * Model Target
+ * 
+ */
+export type Target = Prisma.TargetModel
+/**
+ * Model TargetType
+ * 
+ */
+export type TargetType = Prisma.TargetTypeModel
 /**
  * Model TestProcedure
  * 
  */
 export type TestProcedure = Prisma.TestProcedureModel
 /**
- * Model TransactionType
+ * Model TimeRegistry
  * 
  */
-export type TransactionType = Prisma.TransactionTypeModel
+export type TimeRegistry = Prisma.TimeRegistryModel
+/**
+ * Model TimeRegistryEmployee
+ * 
+ */
+export type TimeRegistryEmployee = Prisma.TimeRegistryEmployeeModel
+/**
+ * Model Title
+ * 
+ */
+export type Title = Prisma.TitleModel
+/**
+ * Model Training
+ * 
+ */
+export type Training = Prisma.TrainingModel
+/**
+ * Model TrainingContact
+ * 
+ */
+export type TrainingContact = Prisma.TrainingContactModel
+/**
+ * Model TrainingDocument
+ * 
+ */
+export type TrainingDocument = Prisma.TrainingDocumentModel
+/**
+ * Model TrainingStandard
+ * 
+ */
+export type TrainingStandard = Prisma.TrainingStandardModel
 /**
  * Model Unit
  * 
  */
 export type Unit = Prisma.UnitModel
 /**
- * Model WarehouseManagement
+ * Model UrgencyType
  * 
  */
-export type WarehouseManagement = Prisma.WarehouseManagementModel
+export type UrgencyType = Prisma.UrgencyTypeModel
+/**
+ * Model VisibilityForRole
+ * 
+ */
+export type VisibilityForRole = Prisma.VisibilityForRoleModel
 /**
  * Model WarehousePlace
  * 
  */
 export type WarehousePlace = Prisma.WarehousePlaceModel
+/**
+ * Model WorkOrder
+ * 
+ */
+export type WorkOrder = Prisma.WorkOrderModel
+/**
+ * Model WorkOrderInvoice
+ * 
+ */
+export type WorkOrderInvoice = Prisma.WorkOrderInvoiceModel
+/**
+ * Model WorkOrderStructure
+ * 
+ */
+export type WorkOrderStructure = Prisma.WorkOrderStructureModel

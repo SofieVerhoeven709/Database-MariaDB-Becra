@@ -26,55 +26,52 @@ export type AggregateMaterialMovement = {
 
 export type MaterialMovementMinAggregateOutputType = {
   id: string | null
-  beNumber: string | null
+  beNumberId: string | null
   shortDescription: string | null
   longDescription: string | null
   serieId: string | null
-  transactionTypeId: string | null
-  fromLocation: string | null
-  toLocation: string | null
-  updatedAt: Date | null
-  additionalInformation: string | null
+  transactionType: string | null
   brandName: string | null
+  brandNameNr: string | null
+  toLocation: string | null
+  fromLocation: string | null
+  updatedAt: Date | null
   rejected: boolean | null
-  brandNameNumber: string | null
-  createdAt: Date | null
+  additionalInfo: string | null
   createdBy: string | null
 }
 
 export type MaterialMovementMaxAggregateOutputType = {
   id: string | null
-  beNumber: string | null
+  beNumberId: string | null
   shortDescription: string | null
   longDescription: string | null
   serieId: string | null
-  transactionTypeId: string | null
-  fromLocation: string | null
-  toLocation: string | null
-  updatedAt: Date | null
-  additionalInformation: string | null
+  transactionType: string | null
   brandName: string | null
+  brandNameNr: string | null
+  toLocation: string | null
+  fromLocation: string | null
+  updatedAt: Date | null
   rejected: boolean | null
-  brandNameNumber: string | null
-  createdAt: Date | null
+  additionalInfo: string | null
   createdBy: string | null
 }
 
 export type MaterialMovementCountAggregateOutputType = {
   id: number
-  beNumber: number
+  beNumberId: number
   shortDescription: number
   longDescription: number
   serieId: number
-  transactionTypeId: number
-  fromLocation: number
-  toLocation: number
-  updatedAt: number
-  additionalInformation: number
+  transactionType: number
   brandName: number
+  brandNameNr: number
+  toLocation: number
+  fromLocation: number
+  updatedAt: number
   rejected: number
-  brandNameNumber: number
-  createdAt: number
+  additionalInfo: number
   createdBy: number
   _all: number
 }
@@ -82,55 +79,52 @@ export type MaterialMovementCountAggregateOutputType = {
 
 export type MaterialMovementMinAggregateInputType = {
   id?: true
-  beNumber?: true
+  beNumberId?: true
   shortDescription?: true
   longDescription?: true
   serieId?: true
-  transactionTypeId?: true
-  fromLocation?: true
-  toLocation?: true
-  updatedAt?: true
-  additionalInformation?: true
+  transactionType?: true
   brandName?: true
+  brandNameNr?: true
+  toLocation?: true
+  fromLocation?: true
+  updatedAt?: true
   rejected?: true
-  brandNameNumber?: true
-  createdAt?: true
+  additionalInfo?: true
   createdBy?: true
 }
 
 export type MaterialMovementMaxAggregateInputType = {
   id?: true
-  beNumber?: true
+  beNumberId?: true
   shortDescription?: true
   longDescription?: true
   serieId?: true
-  transactionTypeId?: true
-  fromLocation?: true
-  toLocation?: true
-  updatedAt?: true
-  additionalInformation?: true
+  transactionType?: true
   brandName?: true
+  brandNameNr?: true
+  toLocation?: true
+  fromLocation?: true
+  updatedAt?: true
   rejected?: true
-  brandNameNumber?: true
-  createdAt?: true
+  additionalInfo?: true
   createdBy?: true
 }
 
 export type MaterialMovementCountAggregateInputType = {
   id?: true
-  beNumber?: true
+  beNumberId?: true
   shortDescription?: true
   longDescription?: true
   serieId?: true
-  transactionTypeId?: true
-  fromLocation?: true
-  toLocation?: true
-  updatedAt?: true
-  additionalInformation?: true
+  transactionType?: true
   brandName?: true
+  brandNameNr?: true
+  toLocation?: true
+  fromLocation?: true
+  updatedAt?: true
   rejected?: true
-  brandNameNumber?: true
-  createdAt?: true
+  additionalInfo?: true
   createdBy?: true
   _all?: true
 }
@@ -209,20 +203,19 @@ export type MaterialMovementGroupByArgs<ExtArgs extends runtime.Types.Extensions
 
 export type MaterialMovementGroupByOutputType = {
   id: string
-  beNumber: string
-  shortDescription: string
-  longDescription: string
-  serieId: string
-  transactionTypeId: string | null
-  fromLocation: string
-  toLocation: string
+  beNumberId: string
+  shortDescription: string | null
+  longDescription: string | null
+  serieId: string | null
+  transactionType: string | null
+  brandName: string | null
+  brandNameNr: string | null
+  toLocation: string | null
+  fromLocation: string | null
   updatedAt: Date | null
-  additionalInformation: string
-  brandName: string
-  rejected: boolean
-  brandNameNumber: string
-  createdAt: Date
-  createdBy: string
+  rejected: boolean | null
+  additionalInfo: string | null
+  createdBy: string | null
   _count: MaterialMovementCountAggregateOutputType | null
   _min: MaterialMovementMinAggregateOutputType | null
   _max: MaterialMovementMaxAggregateOutputType | null
@@ -248,41 +241,41 @@ export type MaterialMovementWhereInput = {
   OR?: Prisma.MaterialMovementWhereInput[]
   NOT?: Prisma.MaterialMovementWhereInput | Prisma.MaterialMovementWhereInput[]
   id?: Prisma.StringFilter<"MaterialMovement"> | string
-  beNumber?: Prisma.StringFilter<"MaterialMovement"> | string
-  shortDescription?: Prisma.StringFilter<"MaterialMovement"> | string
-  longDescription?: Prisma.StringFilter<"MaterialMovement"> | string
-  serieId?: Prisma.StringFilter<"MaterialMovement"> | string
-  transactionTypeId?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
-  fromLocation?: Prisma.StringFilter<"MaterialMovement"> | string
-  toLocation?: Prisma.StringFilter<"MaterialMovement"> | string
+  beNumberId?: Prisma.StringFilter<"MaterialMovement"> | string
+  shortDescription?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  serieId?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  transactionType?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  brandName?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  brandNameNr?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  toLocation?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  fromLocation?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"MaterialMovement"> | Date | string | null
-  additionalInformation?: Prisma.StringFilter<"MaterialMovement"> | string
-  brandName?: Prisma.StringFilter<"MaterialMovement"> | string
-  rejected?: Prisma.BoolFilter<"MaterialMovement"> | boolean
-  brandNameNumber?: Prisma.StringFilter<"MaterialMovement"> | string
-  createdAt?: Prisma.DateTimeFilter<"MaterialMovement"> | Date | string
-  createdBy?: Prisma.StringFilter<"MaterialMovement"> | string
-  TransactionType?: Prisma.XOR<Prisma.TransactionTypeNullableScalarRelationFilter, Prisma.TransactionTypeWhereInput> | null
-  Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  rejected?: Prisma.BoolNullableFilter<"MaterialMovement"> | boolean | null
+  additionalInfo?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  createdBy?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
+  MaterialSerialTrack?: Prisma.XOR<Prisma.MaterialSerialTrackNullableScalarRelationFilter, Prisma.MaterialSerialTrackWhereInput> | null
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type MaterialMovementOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  serieId?: Prisma.SortOrder
-  transactionTypeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  fromLocation?: Prisma.SortOrder
-  toLocation?: Prisma.SortOrder
+  beNumberId?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  serieId?: Prisma.SortOrderInput | Prisma.SortOrder
+  transactionType?: Prisma.SortOrderInput | Prisma.SortOrder
+  brandName?: Prisma.SortOrderInput | Prisma.SortOrder
+  brandNameNr?: Prisma.SortOrderInput | Prisma.SortOrder
+  toLocation?: Prisma.SortOrderInput | Prisma.SortOrder
+  fromLocation?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  brandName?: Prisma.SortOrder
-  rejected?: Prisma.SortOrder
-  brandNameNumber?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
-  TransactionType?: Prisma.TransactionTypeOrderByWithRelationInput
+  rejected?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  Material?: Prisma.MaterialOrderByWithRelationInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.MaterialMovementOrderByRelevanceInput
 }
@@ -292,40 +285,39 @@ export type MaterialMovementWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.MaterialMovementWhereInput | Prisma.MaterialMovementWhereInput[]
   OR?: Prisma.MaterialMovementWhereInput[]
   NOT?: Prisma.MaterialMovementWhereInput | Prisma.MaterialMovementWhereInput[]
-  beNumber?: Prisma.StringFilter<"MaterialMovement"> | string
-  shortDescription?: Prisma.StringFilter<"MaterialMovement"> | string
-  longDescription?: Prisma.StringFilter<"MaterialMovement"> | string
-  serieId?: Prisma.StringFilter<"MaterialMovement"> | string
-  transactionTypeId?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
-  fromLocation?: Prisma.StringFilter<"MaterialMovement"> | string
-  toLocation?: Prisma.StringFilter<"MaterialMovement"> | string
+  beNumberId?: Prisma.StringFilter<"MaterialMovement"> | string
+  shortDescription?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  serieId?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  transactionType?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  brandName?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  brandNameNr?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  toLocation?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  fromLocation?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"MaterialMovement"> | Date | string | null
-  additionalInformation?: Prisma.StringFilter<"MaterialMovement"> | string
-  brandName?: Prisma.StringFilter<"MaterialMovement"> | string
-  rejected?: Prisma.BoolFilter<"MaterialMovement"> | boolean
-  brandNameNumber?: Prisma.StringFilter<"MaterialMovement"> | string
-  createdAt?: Prisma.DateTimeFilter<"MaterialMovement"> | Date | string
-  createdBy?: Prisma.StringFilter<"MaterialMovement"> | string
-  TransactionType?: Prisma.XOR<Prisma.TransactionTypeNullableScalarRelationFilter, Prisma.TransactionTypeWhereInput> | null
-  Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  rejected?: Prisma.BoolNullableFilter<"MaterialMovement"> | boolean | null
+  additionalInfo?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  createdBy?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
+  MaterialSerialTrack?: Prisma.XOR<Prisma.MaterialSerialTrackNullableScalarRelationFilter, Prisma.MaterialSerialTrackWhereInput> | null
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type MaterialMovementOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  serieId?: Prisma.SortOrder
-  transactionTypeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  fromLocation?: Prisma.SortOrder
-  toLocation?: Prisma.SortOrder
+  beNumberId?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  serieId?: Prisma.SortOrderInput | Prisma.SortOrder
+  transactionType?: Prisma.SortOrderInput | Prisma.SortOrder
+  brandName?: Prisma.SortOrderInput | Prisma.SortOrder
+  brandNameNr?: Prisma.SortOrderInput | Prisma.SortOrder
+  toLocation?: Prisma.SortOrderInput | Prisma.SortOrder
+  fromLocation?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  brandName?: Prisma.SortOrder
-  rejected?: Prisma.SortOrder
-  brandNameNumber?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
+  rejected?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MaterialMovementCountOrderByAggregateInput
   _max?: Prisma.MaterialMovementMaxOrderByAggregateInput
   _min?: Prisma.MaterialMovementMinOrderByAggregateInput
@@ -336,144 +328,135 @@ export type MaterialMovementScalarWhereWithAggregatesInput = {
   OR?: Prisma.MaterialMovementScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MaterialMovementScalarWhereWithAggregatesInput | Prisma.MaterialMovementScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
-  beNumber?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
-  shortDescription?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
-  longDescription?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
-  serieId?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
-  transactionTypeId?: Prisma.StringNullableWithAggregatesFilter<"MaterialMovement"> | string | null
-  fromLocation?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
-  toLocation?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
+  beNumberId?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
+  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"MaterialMovement"> | string | null
+  longDescription?: Prisma.StringNullableWithAggregatesFilter<"MaterialMovement"> | string | null
+  serieId?: Prisma.StringNullableWithAggregatesFilter<"MaterialMovement"> | string | null
+  transactionType?: Prisma.StringNullableWithAggregatesFilter<"MaterialMovement"> | string | null
+  brandName?: Prisma.StringNullableWithAggregatesFilter<"MaterialMovement"> | string | null
+  brandNameNr?: Prisma.StringNullableWithAggregatesFilter<"MaterialMovement"> | string | null
+  toLocation?: Prisma.StringNullableWithAggregatesFilter<"MaterialMovement"> | string | null
+  fromLocation?: Prisma.StringNullableWithAggregatesFilter<"MaterialMovement"> | string | null
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"MaterialMovement"> | Date | string | null
-  additionalInformation?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
-  brandName?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
-  rejected?: Prisma.BoolWithAggregatesFilter<"MaterialMovement"> | boolean
-  brandNameNumber?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"MaterialMovement"> | Date | string
-  createdBy?: Prisma.StringWithAggregatesFilter<"MaterialMovement"> | string
+  rejected?: Prisma.BoolNullableWithAggregatesFilter<"MaterialMovement"> | boolean | null
+  additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"MaterialMovement"> | string | null
+  createdBy?: Prisma.StringNullableWithAggregatesFilter<"MaterialMovement"> | string | null
 }
 
 export type MaterialMovementCreateInput = {
   id: string
-  beNumber: string
-  shortDescription: string
-  longDescription: string
-  serieId: string
-  fromLocation: string
-  toLocation: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
   updatedAt?: Date | string | null
-  additionalInformation: string
-  brandName: string
-  rejected: boolean
-  brandNameNumber: string
-  createdAt: Date | string
-  TransactionType?: Prisma.TransactionTypeCreateNestedOneWithoutMaterialMovementInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialMovementInput
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  Material: Prisma.MaterialCreateNestedOneWithoutMaterialMovementInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialMovementInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialMovementInput
 }
 
 export type MaterialMovementUncheckedCreateInput = {
   id: string
-  beNumber: string
-  shortDescription: string
-  longDescription: string
-  serieId: string
-  transactionTypeId?: string | null
-  fromLocation: string
-  toLocation: string
+  beNumberId: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  serieId?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
   updatedAt?: Date | string | null
-  additionalInformation: string
-  brandName: string
-  rejected: boolean
-  brandNameNumber: string
-  createdAt: Date | string
-  createdBy: string
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  createdBy?: string | null
 }
 
 export type MaterialMovementUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieId?: Prisma.StringFieldUpdateOperationsInput | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  brandNameNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  TransactionType?: Prisma.TransactionTypeUpdateOneWithoutMaterialMovementNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialMovementNestedInput
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Material?: Prisma.MaterialUpdateOneRequiredWithoutMaterialMovementNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneWithoutMaterialMovementNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialMovementNestedInput
 }
 
 export type MaterialMovementUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieId?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumberId?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serieId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  brandNameNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialMovementCreateManyInput = {
   id: string
-  beNumber: string
-  shortDescription: string
-  longDescription: string
-  serieId: string
-  transactionTypeId?: string | null
-  fromLocation: string
-  toLocation: string
+  beNumberId: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  serieId?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
   updatedAt?: Date | string | null
-  additionalInformation: string
-  brandName: string
-  rejected: boolean
-  brandNameNumber: string
-  createdAt: Date | string
-  createdBy: string
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  createdBy?: string | null
 }
 
 export type MaterialMovementUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieId?: Prisma.StringFieldUpdateOperationsInput | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  brandNameNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialMovementUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieId?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumberId?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serieId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  brandNameNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialMovementListRelationFilter = {
@@ -494,55 +477,52 @@ export type MaterialMovementOrderByRelevanceInput = {
 
 export type MaterialMovementCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
+  beNumberId?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   serieId?: Prisma.SortOrder
-  transactionTypeId?: Prisma.SortOrder
-  fromLocation?: Prisma.SortOrder
-  toLocation?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
+  transactionType?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
+  brandNameNr?: Prisma.SortOrder
+  toLocation?: Prisma.SortOrder
+  fromLocation?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   rejected?: Prisma.SortOrder
-  brandNameNumber?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
 }
 
 export type MaterialMovementMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
+  beNumberId?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   serieId?: Prisma.SortOrder
-  transactionTypeId?: Prisma.SortOrder
-  fromLocation?: Prisma.SortOrder
-  toLocation?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
+  transactionType?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
+  brandNameNr?: Prisma.SortOrder
+  toLocation?: Prisma.SortOrder
+  fromLocation?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   rejected?: Prisma.SortOrder
-  brandNameNumber?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
 }
 
 export type MaterialMovementMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
+  beNumberId?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   serieId?: Prisma.SortOrder
-  transactionTypeId?: Prisma.SortOrder
-  fromLocation?: Prisma.SortOrder
-  toLocation?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
+  transactionType?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
+  brandNameNr?: Prisma.SortOrder
+  toLocation?: Prisma.SortOrder
+  fromLocation?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   rejected?: Prisma.SortOrder
-  brandNameNumber?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
 }
 
@@ -588,80 +568,120 @@ export type MaterialMovementUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.MaterialMovementScalarWhereInput | Prisma.MaterialMovementScalarWhereInput[]
 }
 
-export type MaterialMovementCreateNestedManyWithoutTransactionTypeInput = {
-  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutTransactionTypeInput, Prisma.MaterialMovementUncheckedCreateWithoutTransactionTypeInput> | Prisma.MaterialMovementCreateWithoutTransactionTypeInput[] | Prisma.MaterialMovementUncheckedCreateWithoutTransactionTypeInput[]
-  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutTransactionTypeInput | Prisma.MaterialMovementCreateOrConnectWithoutTransactionTypeInput[]
-  createMany?: Prisma.MaterialMovementCreateManyTransactionTypeInputEnvelope
+export type MaterialMovementCreateNestedManyWithoutMaterialInput = {
+  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialInput> | Prisma.MaterialMovementCreateWithoutMaterialInput[] | Prisma.MaterialMovementUncheckedCreateWithoutMaterialInput[]
+  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutMaterialInput | Prisma.MaterialMovementCreateOrConnectWithoutMaterialInput[]
+  createMany?: Prisma.MaterialMovementCreateManyMaterialInputEnvelope
   connect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
 }
 
-export type MaterialMovementUncheckedCreateNestedManyWithoutTransactionTypeInput = {
-  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutTransactionTypeInput, Prisma.MaterialMovementUncheckedCreateWithoutTransactionTypeInput> | Prisma.MaterialMovementCreateWithoutTransactionTypeInput[] | Prisma.MaterialMovementUncheckedCreateWithoutTransactionTypeInput[]
-  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutTransactionTypeInput | Prisma.MaterialMovementCreateOrConnectWithoutTransactionTypeInput[]
-  createMany?: Prisma.MaterialMovementCreateManyTransactionTypeInputEnvelope
+export type MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput = {
+  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialInput> | Prisma.MaterialMovementCreateWithoutMaterialInput[] | Prisma.MaterialMovementUncheckedCreateWithoutMaterialInput[]
+  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutMaterialInput | Prisma.MaterialMovementCreateOrConnectWithoutMaterialInput[]
+  createMany?: Prisma.MaterialMovementCreateManyMaterialInputEnvelope
   connect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
 }
 
-export type MaterialMovementUpdateManyWithoutTransactionTypeNestedInput = {
-  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutTransactionTypeInput, Prisma.MaterialMovementUncheckedCreateWithoutTransactionTypeInput> | Prisma.MaterialMovementCreateWithoutTransactionTypeInput[] | Prisma.MaterialMovementUncheckedCreateWithoutTransactionTypeInput[]
-  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutTransactionTypeInput | Prisma.MaterialMovementCreateOrConnectWithoutTransactionTypeInput[]
-  upsert?: Prisma.MaterialMovementUpsertWithWhereUniqueWithoutTransactionTypeInput | Prisma.MaterialMovementUpsertWithWhereUniqueWithoutTransactionTypeInput[]
-  createMany?: Prisma.MaterialMovementCreateManyTransactionTypeInputEnvelope
+export type MaterialMovementUpdateManyWithoutMaterialNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialInput> | Prisma.MaterialMovementCreateWithoutMaterialInput[] | Prisma.MaterialMovementUncheckedCreateWithoutMaterialInput[]
+  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutMaterialInput | Prisma.MaterialMovementCreateOrConnectWithoutMaterialInput[]
+  upsert?: Prisma.MaterialMovementUpsertWithWhereUniqueWithoutMaterialInput | Prisma.MaterialMovementUpsertWithWhereUniqueWithoutMaterialInput[]
+  createMany?: Prisma.MaterialMovementCreateManyMaterialInputEnvelope
   set?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
   disconnect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
   delete?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
   connect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
-  update?: Prisma.MaterialMovementUpdateWithWhereUniqueWithoutTransactionTypeInput | Prisma.MaterialMovementUpdateWithWhereUniqueWithoutTransactionTypeInput[]
-  updateMany?: Prisma.MaterialMovementUpdateManyWithWhereWithoutTransactionTypeInput | Prisma.MaterialMovementUpdateManyWithWhereWithoutTransactionTypeInput[]
+  update?: Prisma.MaterialMovementUpdateWithWhereUniqueWithoutMaterialInput | Prisma.MaterialMovementUpdateWithWhereUniqueWithoutMaterialInput[]
+  updateMany?: Prisma.MaterialMovementUpdateManyWithWhereWithoutMaterialInput | Prisma.MaterialMovementUpdateManyWithWhereWithoutMaterialInput[]
   deleteMany?: Prisma.MaterialMovementScalarWhereInput | Prisma.MaterialMovementScalarWhereInput[]
 }
 
-export type MaterialMovementUncheckedUpdateManyWithoutTransactionTypeNestedInput = {
-  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutTransactionTypeInput, Prisma.MaterialMovementUncheckedCreateWithoutTransactionTypeInput> | Prisma.MaterialMovementCreateWithoutTransactionTypeInput[] | Prisma.MaterialMovementUncheckedCreateWithoutTransactionTypeInput[]
-  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutTransactionTypeInput | Prisma.MaterialMovementCreateOrConnectWithoutTransactionTypeInput[]
-  upsert?: Prisma.MaterialMovementUpsertWithWhereUniqueWithoutTransactionTypeInput | Prisma.MaterialMovementUpsertWithWhereUniqueWithoutTransactionTypeInput[]
-  createMany?: Prisma.MaterialMovementCreateManyTransactionTypeInputEnvelope
+export type MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialInput> | Prisma.MaterialMovementCreateWithoutMaterialInput[] | Prisma.MaterialMovementUncheckedCreateWithoutMaterialInput[]
+  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutMaterialInput | Prisma.MaterialMovementCreateOrConnectWithoutMaterialInput[]
+  upsert?: Prisma.MaterialMovementUpsertWithWhereUniqueWithoutMaterialInput | Prisma.MaterialMovementUpsertWithWhereUniqueWithoutMaterialInput[]
+  createMany?: Prisma.MaterialMovementCreateManyMaterialInputEnvelope
   set?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
   disconnect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
   delete?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
   connect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
-  update?: Prisma.MaterialMovementUpdateWithWhereUniqueWithoutTransactionTypeInput | Prisma.MaterialMovementUpdateWithWhereUniqueWithoutTransactionTypeInput[]
-  updateMany?: Prisma.MaterialMovementUpdateManyWithWhereWithoutTransactionTypeInput | Prisma.MaterialMovementUpdateManyWithWhereWithoutTransactionTypeInput[]
+  update?: Prisma.MaterialMovementUpdateWithWhereUniqueWithoutMaterialInput | Prisma.MaterialMovementUpdateWithWhereUniqueWithoutMaterialInput[]
+  updateMany?: Prisma.MaterialMovementUpdateManyWithWhereWithoutMaterialInput | Prisma.MaterialMovementUpdateManyWithWhereWithoutMaterialInput[]
+  deleteMany?: Prisma.MaterialMovementScalarWhereInput | Prisma.MaterialMovementScalarWhereInput[]
+}
+
+export type MaterialMovementCreateNestedManyWithoutMaterialSerialTrackInput = {
+  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialSerialTrackInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialSerialTrackInput> | Prisma.MaterialMovementCreateWithoutMaterialSerialTrackInput[] | Prisma.MaterialMovementUncheckedCreateWithoutMaterialSerialTrackInput[]
+  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutMaterialSerialTrackInput | Prisma.MaterialMovementCreateOrConnectWithoutMaterialSerialTrackInput[]
+  createMany?: Prisma.MaterialMovementCreateManyMaterialSerialTrackInputEnvelope
+  connect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
+}
+
+export type MaterialMovementUncheckedCreateNestedManyWithoutMaterialSerialTrackInput = {
+  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialSerialTrackInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialSerialTrackInput> | Prisma.MaterialMovementCreateWithoutMaterialSerialTrackInput[] | Prisma.MaterialMovementUncheckedCreateWithoutMaterialSerialTrackInput[]
+  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutMaterialSerialTrackInput | Prisma.MaterialMovementCreateOrConnectWithoutMaterialSerialTrackInput[]
+  createMany?: Prisma.MaterialMovementCreateManyMaterialSerialTrackInputEnvelope
+  connect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
+}
+
+export type MaterialMovementUpdateManyWithoutMaterialSerialTrackNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialSerialTrackInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialSerialTrackInput> | Prisma.MaterialMovementCreateWithoutMaterialSerialTrackInput[] | Prisma.MaterialMovementUncheckedCreateWithoutMaterialSerialTrackInput[]
+  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutMaterialSerialTrackInput | Prisma.MaterialMovementCreateOrConnectWithoutMaterialSerialTrackInput[]
+  upsert?: Prisma.MaterialMovementUpsertWithWhereUniqueWithoutMaterialSerialTrackInput | Prisma.MaterialMovementUpsertWithWhereUniqueWithoutMaterialSerialTrackInput[]
+  createMany?: Prisma.MaterialMovementCreateManyMaterialSerialTrackInputEnvelope
+  set?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
+  disconnect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
+  delete?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
+  connect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
+  update?: Prisma.MaterialMovementUpdateWithWhereUniqueWithoutMaterialSerialTrackInput | Prisma.MaterialMovementUpdateWithWhereUniqueWithoutMaterialSerialTrackInput[]
+  updateMany?: Prisma.MaterialMovementUpdateManyWithWhereWithoutMaterialSerialTrackInput | Prisma.MaterialMovementUpdateManyWithWhereWithoutMaterialSerialTrackInput[]
+  deleteMany?: Prisma.MaterialMovementScalarWhereInput | Prisma.MaterialMovementScalarWhereInput[]
+}
+
+export type MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialSerialTrackInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialSerialTrackInput> | Prisma.MaterialMovementCreateWithoutMaterialSerialTrackInput[] | Prisma.MaterialMovementUncheckedCreateWithoutMaterialSerialTrackInput[]
+  connectOrCreate?: Prisma.MaterialMovementCreateOrConnectWithoutMaterialSerialTrackInput | Prisma.MaterialMovementCreateOrConnectWithoutMaterialSerialTrackInput[]
+  upsert?: Prisma.MaterialMovementUpsertWithWhereUniqueWithoutMaterialSerialTrackInput | Prisma.MaterialMovementUpsertWithWhereUniqueWithoutMaterialSerialTrackInput[]
+  createMany?: Prisma.MaterialMovementCreateManyMaterialSerialTrackInputEnvelope
+  set?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
+  disconnect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
+  delete?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
+  connect?: Prisma.MaterialMovementWhereUniqueInput | Prisma.MaterialMovementWhereUniqueInput[]
+  update?: Prisma.MaterialMovementUpdateWithWhereUniqueWithoutMaterialSerialTrackInput | Prisma.MaterialMovementUpdateWithWhereUniqueWithoutMaterialSerialTrackInput[]
+  updateMany?: Prisma.MaterialMovementUpdateManyWithWhereWithoutMaterialSerialTrackInput | Prisma.MaterialMovementUpdateManyWithWhereWithoutMaterialSerialTrackInput[]
   deleteMany?: Prisma.MaterialMovementScalarWhereInput | Prisma.MaterialMovementScalarWhereInput[]
 }
 
 export type MaterialMovementCreateWithoutEmployeeInput = {
   id: string
-  beNumber: string
-  shortDescription: string
-  longDescription: string
-  serieId: string
-  fromLocation: string
-  toLocation: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
   updatedAt?: Date | string | null
-  additionalInformation: string
-  brandName: string
-  rejected: boolean
-  brandNameNumber: string
-  createdAt: Date | string
-  TransactionType?: Prisma.TransactionTypeCreateNestedOneWithoutMaterialMovementInput
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  Material: Prisma.MaterialCreateNestedOneWithoutMaterialMovementInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialMovementInput
 }
 
 export type MaterialMovementUncheckedCreateWithoutEmployeeInput = {
   id: string
-  beNumber: string
-  shortDescription: string
-  longDescription: string
-  serieId: string
-  transactionTypeId?: string | null
-  fromLocation: string
-  toLocation: string
+  beNumberId: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  serieId?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
   updatedAt?: Date | string | null
-  additionalInformation: string
-  brandName: string
-  rejected: boolean
-  brandNameNumber: string
-  createdAt: Date | string
+  rejected?: boolean | null
+  additionalInfo?: string | null
 }
 
 export type MaterialMovementCreateOrConnectWithoutEmployeeInput = {
@@ -695,288 +715,399 @@ export type MaterialMovementScalarWhereInput = {
   OR?: Prisma.MaterialMovementScalarWhereInput[]
   NOT?: Prisma.MaterialMovementScalarWhereInput | Prisma.MaterialMovementScalarWhereInput[]
   id?: Prisma.StringFilter<"MaterialMovement"> | string
-  beNumber?: Prisma.StringFilter<"MaterialMovement"> | string
-  shortDescription?: Prisma.StringFilter<"MaterialMovement"> | string
-  longDescription?: Prisma.StringFilter<"MaterialMovement"> | string
-  serieId?: Prisma.StringFilter<"MaterialMovement"> | string
-  transactionTypeId?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
-  fromLocation?: Prisma.StringFilter<"MaterialMovement"> | string
-  toLocation?: Prisma.StringFilter<"MaterialMovement"> | string
+  beNumberId?: Prisma.StringFilter<"MaterialMovement"> | string
+  shortDescription?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  serieId?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  transactionType?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  brandName?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  brandNameNr?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  toLocation?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  fromLocation?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"MaterialMovement"> | Date | string | null
-  additionalInformation?: Prisma.StringFilter<"MaterialMovement"> | string
-  brandName?: Prisma.StringFilter<"MaterialMovement"> | string
-  rejected?: Prisma.BoolFilter<"MaterialMovement"> | boolean
-  brandNameNumber?: Prisma.StringFilter<"MaterialMovement"> | string
-  createdAt?: Prisma.DateTimeFilter<"MaterialMovement"> | Date | string
-  createdBy?: Prisma.StringFilter<"MaterialMovement"> | string
+  rejected?: Prisma.BoolNullableFilter<"MaterialMovement"> | boolean | null
+  additionalInfo?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
+  createdBy?: Prisma.StringNullableFilter<"MaterialMovement"> | string | null
 }
 
-export type MaterialMovementCreateWithoutTransactionTypeInput = {
+export type MaterialMovementCreateWithoutMaterialInput = {
   id: string
-  beNumber: string
-  shortDescription: string
-  longDescription: string
-  serieId: string
-  fromLocation: string
-  toLocation: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
   updatedAt?: Date | string | null
-  additionalInformation: string
-  brandName: string
-  rejected: boolean
-  brandNameNumber: string
-  createdAt: Date | string
-  Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialMovementInput
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialMovementInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialMovementInput
 }
 
-export type MaterialMovementUncheckedCreateWithoutTransactionTypeInput = {
+export type MaterialMovementUncheckedCreateWithoutMaterialInput = {
   id: string
-  beNumber: string
-  shortDescription: string
-  longDescription: string
-  serieId: string
-  fromLocation: string
-  toLocation: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  serieId?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
   updatedAt?: Date | string | null
-  additionalInformation: string
-  brandName: string
-  rejected: boolean
-  brandNameNumber: string
-  createdAt: Date | string
-  createdBy: string
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  createdBy?: string | null
 }
 
-export type MaterialMovementCreateOrConnectWithoutTransactionTypeInput = {
+export type MaterialMovementCreateOrConnectWithoutMaterialInput = {
   where: Prisma.MaterialMovementWhereUniqueInput
-  create: Prisma.XOR<Prisma.MaterialMovementCreateWithoutTransactionTypeInput, Prisma.MaterialMovementUncheckedCreateWithoutTransactionTypeInput>
+  create: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialInput>
 }
 
-export type MaterialMovementCreateManyTransactionTypeInputEnvelope = {
-  data: Prisma.MaterialMovementCreateManyTransactionTypeInput | Prisma.MaterialMovementCreateManyTransactionTypeInput[]
+export type MaterialMovementCreateManyMaterialInputEnvelope = {
+  data: Prisma.MaterialMovementCreateManyMaterialInput | Prisma.MaterialMovementCreateManyMaterialInput[]
   skipDuplicates?: boolean
 }
 
-export type MaterialMovementUpsertWithWhereUniqueWithoutTransactionTypeInput = {
+export type MaterialMovementUpsertWithWhereUniqueWithoutMaterialInput = {
   where: Prisma.MaterialMovementWhereUniqueInput
-  update: Prisma.XOR<Prisma.MaterialMovementUpdateWithoutTransactionTypeInput, Prisma.MaterialMovementUncheckedUpdateWithoutTransactionTypeInput>
-  create: Prisma.XOR<Prisma.MaterialMovementCreateWithoutTransactionTypeInput, Prisma.MaterialMovementUncheckedCreateWithoutTransactionTypeInput>
+  update: Prisma.XOR<Prisma.MaterialMovementUpdateWithoutMaterialInput, Prisma.MaterialMovementUncheckedUpdateWithoutMaterialInput>
+  create: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialInput>
 }
 
-export type MaterialMovementUpdateWithWhereUniqueWithoutTransactionTypeInput = {
+export type MaterialMovementUpdateWithWhereUniqueWithoutMaterialInput = {
   where: Prisma.MaterialMovementWhereUniqueInput
-  data: Prisma.XOR<Prisma.MaterialMovementUpdateWithoutTransactionTypeInput, Prisma.MaterialMovementUncheckedUpdateWithoutTransactionTypeInput>
+  data: Prisma.XOR<Prisma.MaterialMovementUpdateWithoutMaterialInput, Prisma.MaterialMovementUncheckedUpdateWithoutMaterialInput>
 }
 
-export type MaterialMovementUpdateManyWithWhereWithoutTransactionTypeInput = {
+export type MaterialMovementUpdateManyWithWhereWithoutMaterialInput = {
   where: Prisma.MaterialMovementScalarWhereInput
-  data: Prisma.XOR<Prisma.MaterialMovementUpdateManyMutationInput, Prisma.MaterialMovementUncheckedUpdateManyWithoutTransactionTypeInput>
+  data: Prisma.XOR<Prisma.MaterialMovementUpdateManyMutationInput, Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialInput>
+}
+
+export type MaterialMovementCreateWithoutMaterialSerialTrackInput = {
+  id: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
+  updatedAt?: Date | string | null
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  Material: Prisma.MaterialCreateNestedOneWithoutMaterialMovementInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialMovementInput
+}
+
+export type MaterialMovementUncheckedCreateWithoutMaterialSerialTrackInput = {
+  id: string
+  beNumberId: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
+  updatedAt?: Date | string | null
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  createdBy?: string | null
+}
+
+export type MaterialMovementCreateOrConnectWithoutMaterialSerialTrackInput = {
+  where: Prisma.MaterialMovementWhereUniqueInput
+  create: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialSerialTrackInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialSerialTrackInput>
+}
+
+export type MaterialMovementCreateManyMaterialSerialTrackInputEnvelope = {
+  data: Prisma.MaterialMovementCreateManyMaterialSerialTrackInput | Prisma.MaterialMovementCreateManyMaterialSerialTrackInput[]
+  skipDuplicates?: boolean
+}
+
+export type MaterialMovementUpsertWithWhereUniqueWithoutMaterialSerialTrackInput = {
+  where: Prisma.MaterialMovementWhereUniqueInput
+  update: Prisma.XOR<Prisma.MaterialMovementUpdateWithoutMaterialSerialTrackInput, Prisma.MaterialMovementUncheckedUpdateWithoutMaterialSerialTrackInput>
+  create: Prisma.XOR<Prisma.MaterialMovementCreateWithoutMaterialSerialTrackInput, Prisma.MaterialMovementUncheckedCreateWithoutMaterialSerialTrackInput>
+}
+
+export type MaterialMovementUpdateWithWhereUniqueWithoutMaterialSerialTrackInput = {
+  where: Prisma.MaterialMovementWhereUniqueInput
+  data: Prisma.XOR<Prisma.MaterialMovementUpdateWithoutMaterialSerialTrackInput, Prisma.MaterialMovementUncheckedUpdateWithoutMaterialSerialTrackInput>
+}
+
+export type MaterialMovementUpdateManyWithWhereWithoutMaterialSerialTrackInput = {
+  where: Prisma.MaterialMovementScalarWhereInput
+  data: Prisma.XOR<Prisma.MaterialMovementUpdateManyMutationInput, Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackInput>
 }
 
 export type MaterialMovementCreateManyEmployeeInput = {
   id: string
-  beNumber: string
-  shortDescription: string
-  longDescription: string
-  serieId: string
-  transactionTypeId?: string | null
-  fromLocation: string
-  toLocation: string
+  beNumberId: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  serieId?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
   updatedAt?: Date | string | null
-  additionalInformation: string
-  brandName: string
-  rejected: boolean
-  brandNameNumber: string
-  createdAt: Date | string
+  rejected?: boolean | null
+  additionalInfo?: string | null
 }
 
 export type MaterialMovementUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieId?: Prisma.StringFieldUpdateOperationsInput | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  brandNameNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  TransactionType?: Prisma.TransactionTypeUpdateOneWithoutMaterialMovementNestedInput
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Material?: Prisma.MaterialUpdateOneRequiredWithoutMaterialMovementNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneWithoutMaterialMovementNestedInput
 }
 
 export type MaterialMovementUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieId?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumberId?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serieId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  brandNameNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialMovementUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieId?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumberId?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serieId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  brandNameNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type MaterialMovementCreateManyTransactionTypeInput = {
+export type MaterialMovementCreateManyMaterialInput = {
   id: string
-  beNumber: string
-  shortDescription: string
-  longDescription: string
-  serieId: string
-  fromLocation: string
-  toLocation: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  serieId?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
   updatedAt?: Date | string | null
-  additionalInformation: string
-  brandName: string
-  rejected: boolean
-  brandNameNumber: string
-  createdAt: Date | string
-  createdBy: string
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  createdBy?: string | null
 }
 
-export type MaterialMovementUpdateWithoutTransactionTypeInput = {
+export type MaterialMovementUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieId?: Prisma.StringFieldUpdateOperationsInput | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  brandNameNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialMovementNestedInput
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneWithoutMaterialMovementNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialMovementNestedInput
 }
 
-export type MaterialMovementUncheckedUpdateWithoutTransactionTypeInput = {
+export type MaterialMovementUncheckedUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieId?: Prisma.StringFieldUpdateOperationsInput | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serieId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  brandNameNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type MaterialMovementUncheckedUpdateManyWithoutTransactionTypeInput = {
+export type MaterialMovementUncheckedUpdateManyWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieId?: Prisma.StringFieldUpdateOperationsInput | string
-  fromLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  toLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serieId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  rejected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  brandNameNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MaterialMovementCreateManyMaterialSerialTrackInput = {
+  id: string
+  beNumberId: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  transactionType?: string | null
+  brandName?: string | null
+  brandNameNr?: string | null
+  toLocation?: string | null
+  fromLocation?: string | null
+  updatedAt?: Date | string | null
+  rejected?: boolean | null
+  additionalInfo?: string | null
+  createdBy?: string | null
+}
+
+export type MaterialMovementUpdateWithoutMaterialSerialTrackInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Material?: Prisma.MaterialUpdateOneRequiredWithoutMaterialMovementNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialMovementNestedInput
+}
+
+export type MaterialMovementUncheckedUpdateWithoutMaterialSerialTrackInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumberId?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MaterialMovementUncheckedUpdateManyWithoutMaterialSerialTrackInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumberId?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandNameNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  toLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fromLocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
 
 export type MaterialMovementSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  beNumber?: boolean
+  beNumberId?: boolean
   shortDescription?: boolean
   longDescription?: boolean
   serieId?: boolean
-  transactionTypeId?: boolean
-  fromLocation?: boolean
-  toLocation?: boolean
-  updatedAt?: boolean
-  additionalInformation?: boolean
+  transactionType?: boolean
   brandName?: boolean
+  brandNameNr?: boolean
+  toLocation?: boolean
+  fromLocation?: boolean
+  updatedAt?: boolean
   rejected?: boolean
-  brandNameNumber?: boolean
-  createdAt?: boolean
+  additionalInfo?: boolean
   createdBy?: boolean
-  TransactionType?: boolean | Prisma.MaterialMovement$TransactionTypeArgs<ExtArgs>
-  Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
+  MaterialSerialTrack?: boolean | Prisma.MaterialMovement$MaterialSerialTrackArgs<ExtArgs>
+  Employee?: boolean | Prisma.MaterialMovement$EmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["materialMovement"]>
 
 
 
 export type MaterialMovementSelectScalar = {
   id?: boolean
-  beNumber?: boolean
+  beNumberId?: boolean
   shortDescription?: boolean
   longDescription?: boolean
   serieId?: boolean
-  transactionTypeId?: boolean
-  fromLocation?: boolean
-  toLocation?: boolean
-  updatedAt?: boolean
-  additionalInformation?: boolean
+  transactionType?: boolean
   brandName?: boolean
+  brandNameNr?: boolean
+  toLocation?: boolean
+  fromLocation?: boolean
+  updatedAt?: boolean
   rejected?: boolean
-  brandNameNumber?: boolean
-  createdAt?: boolean
+  additionalInfo?: boolean
   createdBy?: boolean
 }
 
-export type MaterialMovementOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "beNumber" | "shortDescription" | "longDescription" | "serieId" | "transactionTypeId" | "fromLocation" | "toLocation" | "updatedAt" | "additionalInformation" | "brandName" | "rejected" | "brandNameNumber" | "createdAt" | "createdBy", ExtArgs["result"]["materialMovement"]>
+export type MaterialMovementOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "beNumberId" | "shortDescription" | "longDescription" | "serieId" | "transactionType" | "brandName" | "brandNameNr" | "toLocation" | "fromLocation" | "updatedAt" | "rejected" | "additionalInfo" | "createdBy", ExtArgs["result"]["materialMovement"]>
 export type MaterialMovementInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  TransactionType?: boolean | Prisma.MaterialMovement$TransactionTypeArgs<ExtArgs>
-  Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
+  MaterialSerialTrack?: boolean | Prisma.MaterialMovement$MaterialSerialTrackArgs<ExtArgs>
+  Employee?: boolean | Prisma.MaterialMovement$EmployeeArgs<ExtArgs>
 }
 
 export type $MaterialMovementPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MaterialMovement"
   objects: {
-    TransactionType: Prisma.$TransactionTypePayload<ExtArgs> | null
-    Employee: Prisma.$EmployeePayload<ExtArgs>
+    Material: Prisma.$MaterialPayload<ExtArgs>
+    MaterialSerialTrack: Prisma.$MaterialSerialTrackPayload<ExtArgs> | null
+    Employee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    beNumber: string
-    shortDescription: string
-    longDescription: string
-    serieId: string
-    transactionTypeId: string | null
-    fromLocation: string
-    toLocation: string
+    beNumberId: string
+    shortDescription: string | null
+    longDescription: string | null
+    serieId: string | null
+    transactionType: string | null
+    brandName: string | null
+    brandNameNr: string | null
+    toLocation: string | null
+    fromLocation: string | null
     updatedAt: Date | null
-    additionalInformation: string
-    brandName: string
-    rejected: boolean
-    brandNameNumber: string
-    createdAt: Date
-    createdBy: string
+    rejected: boolean | null
+    additionalInfo: string | null
+    createdBy: string | null
   }, ExtArgs["result"]["materialMovement"]>
   composites: {}
 }
@@ -1317,8 +1448,9 @@ readonly fields: MaterialMovementFieldRefs;
  */
 export interface Prisma__MaterialMovementClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  TransactionType<T extends Prisma.MaterialMovement$TransactionTypeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialMovement$TransactionTypeArgs<ExtArgs>>): Prisma.Prisma__TransactionTypeClient<runtime.Types.Result.GetResult<Prisma.$TransactionTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Material<T extends Prisma.MaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  MaterialSerialTrack<T extends Prisma.MaterialMovement$MaterialSerialTrackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialMovement$MaterialSerialTrackArgs<ExtArgs>>): Prisma.Prisma__MaterialSerialTrackClient<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Employee<T extends Prisma.MaterialMovement$EmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialMovement$EmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1349,19 +1481,18 @@ export interface Prisma__MaterialMovementClient<T, Null = never, ExtArgs extends
  */
 export interface MaterialMovementFieldRefs {
   readonly id: Prisma.FieldRef<"MaterialMovement", 'String'>
-  readonly beNumber: Prisma.FieldRef<"MaterialMovement", 'String'>
+  readonly beNumberId: Prisma.FieldRef<"MaterialMovement", 'String'>
   readonly shortDescription: Prisma.FieldRef<"MaterialMovement", 'String'>
   readonly longDescription: Prisma.FieldRef<"MaterialMovement", 'String'>
   readonly serieId: Prisma.FieldRef<"MaterialMovement", 'String'>
-  readonly transactionTypeId: Prisma.FieldRef<"MaterialMovement", 'String'>
-  readonly fromLocation: Prisma.FieldRef<"MaterialMovement", 'String'>
-  readonly toLocation: Prisma.FieldRef<"MaterialMovement", 'String'>
-  readonly updatedAt: Prisma.FieldRef<"MaterialMovement", 'DateTime'>
-  readonly additionalInformation: Prisma.FieldRef<"MaterialMovement", 'String'>
+  readonly transactionType: Prisma.FieldRef<"MaterialMovement", 'String'>
   readonly brandName: Prisma.FieldRef<"MaterialMovement", 'String'>
+  readonly brandNameNr: Prisma.FieldRef<"MaterialMovement", 'String'>
+  readonly toLocation: Prisma.FieldRef<"MaterialMovement", 'String'>
+  readonly fromLocation: Prisma.FieldRef<"MaterialMovement", 'String'>
+  readonly updatedAt: Prisma.FieldRef<"MaterialMovement", 'DateTime'>
   readonly rejected: Prisma.FieldRef<"MaterialMovement", 'Boolean'>
-  readonly brandNameNumber: Prisma.FieldRef<"MaterialMovement", 'String'>
-  readonly createdAt: Prisma.FieldRef<"MaterialMovement", 'DateTime'>
+  readonly additionalInfo: Prisma.FieldRef<"MaterialMovement", 'String'>
   readonly createdBy: Prisma.FieldRef<"MaterialMovement", 'String'>
 }
     
@@ -1706,22 +1837,41 @@ export type MaterialMovementDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
- * MaterialMovement.TransactionType
+ * MaterialMovement.MaterialSerialTrack
  */
-export type MaterialMovement$TransactionTypeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type MaterialMovement$MaterialSerialTrackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the TransactionType
+   * Select specific fields to fetch from the MaterialSerialTrack
    */
-  select?: Prisma.TransactionTypeSelect<ExtArgs> | null
+  select?: Prisma.MaterialSerialTrackSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the TransactionType
+   * Omit specific fields from the MaterialSerialTrack
    */
-  omit?: Prisma.TransactionTypeOmit<ExtArgs> | null
+  omit?: Prisma.MaterialSerialTrackOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.TransactionTypeInclude<ExtArgs> | null
-  where?: Prisma.TransactionTypeWhereInput
+  include?: Prisma.MaterialSerialTrackInclude<ExtArgs> | null
+  where?: Prisma.MaterialSerialTrackWhereInput
+}
+
+/**
+ * MaterialMovement.Employee
+ */
+export type MaterialMovement$EmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

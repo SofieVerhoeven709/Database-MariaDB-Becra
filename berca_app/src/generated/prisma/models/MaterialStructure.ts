@@ -20,100 +20,124 @@ export type MaterialStructureModel = runtime.Types.Result.DefaultSelection<Prism
 
 export type AggregateMaterialStructure = {
   _count: MaterialStructureCountAggregateOutputType | null
+  _avg: MaterialStructureAvgAggregateOutputType | null
+  _sum: MaterialStructureSumAggregateOutputType | null
   _min: MaterialStructureMinAggregateOutputType | null
   _max: MaterialStructureMaxAggregateOutputType | null
 }
 
+export type MaterialStructureAvgAggregateOutputType = {
+  docRevision: number | null
+}
+
+export type MaterialStructureSumAggregateOutputType = {
+  docRevision: number | null
+}
+
 export type MaterialStructureMinAggregateOutputType = {
   id: string | null
+  materialId: string | null
+  beNumber: string | null
   shortDescription: string | null
   longDescription: string | null
-  beNumber: string | null
-  expiredDate: Date | null
-  docRevision: string | null
-  additionalInformation: string | null
-  valid: boolean | null
   management: string | null
+  date: Date | null
+  expiredDate: Date | null
+  docRevision: number | null
+  valid: boolean | null
+  additionalInfo: string | null
   referenceDocId: string | null
   createdBy: string | null
-  createdAt: Date | null
 }
 
 export type MaterialStructureMaxAggregateOutputType = {
   id: string | null
+  materialId: string | null
+  beNumber: string | null
   shortDescription: string | null
   longDescription: string | null
-  beNumber: string | null
-  expiredDate: Date | null
-  docRevision: string | null
-  additionalInformation: string | null
-  valid: boolean | null
   management: string | null
+  date: Date | null
+  expiredDate: Date | null
+  docRevision: number | null
+  valid: boolean | null
+  additionalInfo: string | null
   referenceDocId: string | null
   createdBy: string | null
-  createdAt: Date | null
 }
 
 export type MaterialStructureCountAggregateOutputType = {
   id: number
+  materialId: number
+  beNumber: number
   shortDescription: number
   longDescription: number
-  beNumber: number
+  management: number
+  date: number
   expiredDate: number
   docRevision: number
-  additionalInformation: number
   valid: number
-  management: number
+  additionalInfo: number
   referenceDocId: number
   createdBy: number
-  createdAt: number
   _all: number
 }
 
 
+export type MaterialStructureAvgAggregateInputType = {
+  docRevision?: true
+}
+
+export type MaterialStructureSumAggregateInputType = {
+  docRevision?: true
+}
+
 export type MaterialStructureMinAggregateInputType = {
   id?: true
+  materialId?: true
+  beNumber?: true
   shortDescription?: true
   longDescription?: true
-  beNumber?: true
+  management?: true
+  date?: true
   expiredDate?: true
   docRevision?: true
-  additionalInformation?: true
   valid?: true
-  management?: true
+  additionalInfo?: true
   referenceDocId?: true
   createdBy?: true
-  createdAt?: true
 }
 
 export type MaterialStructureMaxAggregateInputType = {
   id?: true
+  materialId?: true
+  beNumber?: true
   shortDescription?: true
   longDescription?: true
-  beNumber?: true
+  management?: true
+  date?: true
   expiredDate?: true
   docRevision?: true
-  additionalInformation?: true
   valid?: true
-  management?: true
+  additionalInfo?: true
   referenceDocId?: true
   createdBy?: true
-  createdAt?: true
 }
 
 export type MaterialStructureCountAggregateInputType = {
   id?: true
+  materialId?: true
+  beNumber?: true
   shortDescription?: true
   longDescription?: true
-  beNumber?: true
+  management?: true
+  date?: true
   expiredDate?: true
   docRevision?: true
-  additionalInformation?: true
   valid?: true
-  management?: true
+  additionalInfo?: true
   referenceDocId?: true
   createdBy?: true
-  createdAt?: true
   _all?: true
 }
 
@@ -155,6 +179,18 @@ export type MaterialStructureAggregateArgs<ExtArgs extends runtime.Types.Extensi
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: MaterialStructureAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: MaterialStructureSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: MaterialStructureMinAggregateInputType
@@ -185,24 +221,29 @@ export type MaterialStructureGroupByArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   _count?: MaterialStructureCountAggregateInputType | true
+  _avg?: MaterialStructureAvgAggregateInputType
+  _sum?: MaterialStructureSumAggregateInputType
   _min?: MaterialStructureMinAggregateInputType
   _max?: MaterialStructureMaxAggregateInputType
 }
 
 export type MaterialStructureGroupByOutputType = {
   id: string
-  shortDescription: string
-  longDescription: string
+  materialId: string
   beNumber: string
-  expiredDate: Date
-  docRevision: string
-  additionalInformation: string
-  valid: boolean
-  management: string
-  referenceDocId: string
-  createdBy: string
-  createdAt: Date
+  shortDescription: string | null
+  longDescription: string | null
+  management: string | null
+  date: Date | null
+  expiredDate: Date | null
+  docRevision: number | null
+  valid: boolean | null
+  additionalInfo: string | null
+  referenceDocId: string | null
+  createdBy: string | null
   _count: MaterialStructureCountAggregateOutputType | null
+  _avg: MaterialStructureAvgAggregateOutputType | null
+  _sum: MaterialStructureSumAggregateOutputType | null
   _min: MaterialStructureMinAggregateOutputType | null
   _max: MaterialStructureMaxAggregateOutputType | null
 }
@@ -227,34 +268,40 @@ export type MaterialStructureWhereInput = {
   OR?: Prisma.MaterialStructureWhereInput[]
   NOT?: Prisma.MaterialStructureWhereInput | Prisma.MaterialStructureWhereInput[]
   id?: Prisma.StringFilter<"MaterialStructure"> | string
-  shortDescription?: Prisma.StringFilter<"MaterialStructure"> | string
-  longDescription?: Prisma.StringFilter<"MaterialStructure"> | string
+  materialId?: Prisma.StringFilter<"MaterialStructure"> | string
   beNumber?: Prisma.StringFilter<"MaterialStructure"> | string
-  expiredDate?: Prisma.DateTimeFilter<"MaterialStructure"> | Date | string
-  docRevision?: Prisma.StringFilter<"MaterialStructure"> | string
-  additionalInformation?: Prisma.StringFilter<"MaterialStructure"> | string
-  valid?: Prisma.BoolFilter<"MaterialStructure"> | boolean
-  management?: Prisma.StringFilter<"MaterialStructure"> | string
-  referenceDocId?: Prisma.StringFilter<"MaterialStructure"> | string
-  createdBy?: Prisma.StringFilter<"MaterialStructure"> | string
-  createdAt?: Prisma.DateTimeFilter<"MaterialStructure"> | Date | string
-  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureScalarRelationFilter, Prisma.DocumentStructureWhereInput>
-  Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  shortDescription?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  management?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"MaterialStructure"> | Date | string | null
+  expiredDate?: Prisma.DateTimeNullableFilter<"MaterialStructure"> | Date | string | null
+  docRevision?: Prisma.IntNullableFilter<"MaterialStructure"> | number | null
+  valid?: Prisma.BoolNullableFilter<"MaterialStructure"> | boolean | null
+  additionalInfo?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  referenceDocId?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  createdBy?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  Material_MaterialStructure_materialIdToMaterial?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
+  Material_MaterialStructure_beNumberToMaterial?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
+  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type MaterialStructureOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
+  materialId?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  expiredDate?: Prisma.SortOrder
-  docRevision?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  valid?: Prisma.SortOrder
-  management?: Prisma.SortOrder
-  referenceDocId?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  management?: Prisma.SortOrderInput | Prisma.SortOrder
+  date?: Prisma.SortOrderInput | Prisma.SortOrder
+  expiredDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  docRevision?: Prisma.SortOrderInput | Prisma.SortOrder
+  valid?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  referenceDocId?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  Material_MaterialStructure_materialIdToMaterial?: Prisma.MaterialOrderByWithRelationInput
+  Material_MaterialStructure_beNumberToMaterial?: Prisma.MaterialOrderByWithRelationInput
   DocumentStructure?: Prisma.DocumentStructureOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.MaterialStructureOrderByRelevanceInput
@@ -265,37 +312,43 @@ export type MaterialStructureWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.MaterialStructureWhereInput | Prisma.MaterialStructureWhereInput[]
   OR?: Prisma.MaterialStructureWhereInput[]
   NOT?: Prisma.MaterialStructureWhereInput | Prisma.MaterialStructureWhereInput[]
-  shortDescription?: Prisma.StringFilter<"MaterialStructure"> | string
-  longDescription?: Prisma.StringFilter<"MaterialStructure"> | string
+  materialId?: Prisma.StringFilter<"MaterialStructure"> | string
   beNumber?: Prisma.StringFilter<"MaterialStructure"> | string
-  expiredDate?: Prisma.DateTimeFilter<"MaterialStructure"> | Date | string
-  docRevision?: Prisma.StringFilter<"MaterialStructure"> | string
-  additionalInformation?: Prisma.StringFilter<"MaterialStructure"> | string
-  valid?: Prisma.BoolFilter<"MaterialStructure"> | boolean
-  management?: Prisma.StringFilter<"MaterialStructure"> | string
-  referenceDocId?: Prisma.StringFilter<"MaterialStructure"> | string
-  createdBy?: Prisma.StringFilter<"MaterialStructure"> | string
-  createdAt?: Prisma.DateTimeFilter<"MaterialStructure"> | Date | string
-  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureScalarRelationFilter, Prisma.DocumentStructureWhereInput>
-  Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  shortDescription?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  management?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"MaterialStructure"> | Date | string | null
+  expiredDate?: Prisma.DateTimeNullableFilter<"MaterialStructure"> | Date | string | null
+  docRevision?: Prisma.IntNullableFilter<"MaterialStructure"> | number | null
+  valid?: Prisma.BoolNullableFilter<"MaterialStructure"> | boolean | null
+  additionalInfo?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  referenceDocId?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  createdBy?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  Material_MaterialStructure_materialIdToMaterial?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
+  Material_MaterialStructure_beNumberToMaterial?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
+  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type MaterialStructureOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
+  materialId?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
-  expiredDate?: Prisma.SortOrder
-  docRevision?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
-  valid?: Prisma.SortOrder
-  management?: Prisma.SortOrder
-  referenceDocId?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  management?: Prisma.SortOrderInput | Prisma.SortOrder
+  date?: Prisma.SortOrderInput | Prisma.SortOrder
+  expiredDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  docRevision?: Prisma.SortOrderInput | Prisma.SortOrder
+  valid?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  referenceDocId?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MaterialStructureCountOrderByAggregateInput
+  _avg?: Prisma.MaterialStructureAvgOrderByAggregateInput
   _max?: Prisma.MaterialStructureMaxOrderByAggregateInput
   _min?: Prisma.MaterialStructureMinOrderByAggregateInput
+  _sum?: Prisma.MaterialStructureSumOrderByAggregateInput
 }
 
 export type MaterialStructureScalarWhereWithAggregatesInput = {
@@ -303,120 +356,126 @@ export type MaterialStructureScalarWhereWithAggregatesInput = {
   OR?: Prisma.MaterialStructureScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MaterialStructureScalarWhereWithAggregatesInput | Prisma.MaterialStructureScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"MaterialStructure"> | string
-  shortDescription?: Prisma.StringWithAggregatesFilter<"MaterialStructure"> | string
-  longDescription?: Prisma.StringWithAggregatesFilter<"MaterialStructure"> | string
+  materialId?: Prisma.StringWithAggregatesFilter<"MaterialStructure"> | string
   beNumber?: Prisma.StringWithAggregatesFilter<"MaterialStructure"> | string
-  expiredDate?: Prisma.DateTimeWithAggregatesFilter<"MaterialStructure"> | Date | string
-  docRevision?: Prisma.StringWithAggregatesFilter<"MaterialStructure"> | string
-  additionalInformation?: Prisma.StringWithAggregatesFilter<"MaterialStructure"> | string
-  valid?: Prisma.BoolWithAggregatesFilter<"MaterialStructure"> | boolean
-  management?: Prisma.StringWithAggregatesFilter<"MaterialStructure"> | string
-  referenceDocId?: Prisma.StringWithAggregatesFilter<"MaterialStructure"> | string
-  createdBy?: Prisma.StringWithAggregatesFilter<"MaterialStructure"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"MaterialStructure"> | Date | string
+  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"MaterialStructure"> | string | null
+  longDescription?: Prisma.StringNullableWithAggregatesFilter<"MaterialStructure"> | string | null
+  management?: Prisma.StringNullableWithAggregatesFilter<"MaterialStructure"> | string | null
+  date?: Prisma.DateTimeNullableWithAggregatesFilter<"MaterialStructure"> | Date | string | null
+  expiredDate?: Prisma.DateTimeNullableWithAggregatesFilter<"MaterialStructure"> | Date | string | null
+  docRevision?: Prisma.IntNullableWithAggregatesFilter<"MaterialStructure"> | number | null
+  valid?: Prisma.BoolNullableWithAggregatesFilter<"MaterialStructure"> | boolean | null
+  additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"MaterialStructure"> | string | null
+  referenceDocId?: Prisma.StringNullableWithAggregatesFilter<"MaterialStructure"> | string | null
+  createdBy?: Prisma.StringNullableWithAggregatesFilter<"MaterialStructure"> | string | null
 }
 
 export type MaterialStructureCreateInput = {
   id: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  expiredDate: Date | string
-  docRevision: string
-  additionalInformation: string
-  valid: boolean
-  management: string
-  createdAt: Date | string
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutMaterialStructureInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialStructureInput
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  Material_MaterialStructure_materialIdToMaterial: Prisma.MaterialCreateNestedOneWithoutMaterialStructure_MaterialStructure_materialIdToMaterialInput
+  Material_MaterialStructure_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutMaterialStructure_MaterialStructure_beNumberToMaterialInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialStructureInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialStructureInput
 }
 
 export type MaterialStructureUncheckedCreateInput = {
   id: string
-  shortDescription: string
-  longDescription: string
+  materialId: string
   beNumber: string
-  expiredDate: Date | string
-  docRevision: string
-  additionalInformation: string
-  valid: boolean
-  management: string
-  referenceDocId: string
-  createdBy: string
-  createdAt: Date | string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  referenceDocId?: string | null
+  createdBy?: string | null
 }
 
 export type MaterialStructureUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  expiredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  docRevision?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  management?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutMaterialStructureNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialStructureNestedInput
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Material_MaterialStructure_materialIdToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutMaterialStructure_MaterialStructure_materialIdToMaterialNestedInput
+  Material_MaterialStructure_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutMaterialStructure_MaterialStructure_beNumberToMaterialNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialStructureNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialStructureNestedInput
 }
 
 export type MaterialStructureUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  expiredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  docRevision?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  management?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialStructureCreateManyInput = {
   id: string
-  shortDescription: string
-  longDescription: string
+  materialId: string
   beNumber: string
-  expiredDate: Date | string
-  docRevision: string
-  additionalInformation: string
-  valid: boolean
-  management: string
-  referenceDocId: string
-  createdBy: string
-  createdAt: Date | string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  referenceDocId?: string | null
+  createdBy?: string | null
 }
 
 export type MaterialStructureUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  expiredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  docRevision?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  management?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialStructureUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  expiredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  docRevision?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  management?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialStructureListRelationFilter = {
@@ -437,47 +496,58 @@ export type MaterialStructureOrderByRelevanceInput = {
 
 export type MaterialStructureCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  materialId?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
+  management?: Prisma.SortOrder
+  date?: Prisma.SortOrder
   expiredDate?: Prisma.SortOrder
   docRevision?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
   valid?: Prisma.SortOrder
-  management?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+}
+
+export type MaterialStructureAvgOrderByAggregateInput = {
+  docRevision?: Prisma.SortOrder
 }
 
 export type MaterialStructureMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  materialId?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
+  management?: Prisma.SortOrder
+  date?: Prisma.SortOrder
   expiredDate?: Prisma.SortOrder
   docRevision?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
   valid?: Prisma.SortOrder
-  management?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type MaterialStructureMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  materialId?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
+  management?: Prisma.SortOrder
+  date?: Prisma.SortOrder
   expiredDate?: Prisma.SortOrder
   docRevision?: Prisma.SortOrder
-  additionalInformation?: Prisma.SortOrder
   valid?: Prisma.SortOrder
-  management?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+}
+
+export type MaterialStructureSumOrderByAggregateInput = {
+  docRevision?: Prisma.SortOrder
 }
 
 export type MaterialStructureCreateNestedManyWithoutDocumentStructureInput = {
@@ -564,32 +634,118 @@ export type MaterialStructureUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.MaterialStructureScalarWhereInput | Prisma.MaterialStructureScalarWhereInput[]
 }
 
+export type MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput = {
+  create?: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput> | Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput[] | Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  connectOrCreate?: Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_materialIdToMaterialInput | Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  createMany?: Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_materialIdToMaterialInputEnvelope
+  connect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+}
+
+export type MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_beNumberToMaterialInput = {
+  create?: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput> | Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput[] | Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  connectOrCreate?: Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_beNumberToMaterialInput | Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  createMany?: Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_beNumberToMaterialInputEnvelope
+  connect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+}
+
+export type MaterialStructureUncheckedCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput = {
+  create?: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput> | Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput[] | Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  connectOrCreate?: Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_materialIdToMaterialInput | Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  createMany?: Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_materialIdToMaterialInputEnvelope
+  connect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+}
+
+export type MaterialStructureUncheckedCreateNestedManyWithoutMaterial_MaterialStructure_beNumberToMaterialInput = {
+  create?: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput> | Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput[] | Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  connectOrCreate?: Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_beNumberToMaterialInput | Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  createMany?: Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_beNumberToMaterialInputEnvelope
+  connect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+}
+
+export type MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput> | Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput[] | Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  connectOrCreate?: Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_materialIdToMaterialInput | Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  upsert?: Prisma.MaterialStructureUpsertWithWhereUniqueWithoutMaterial_MaterialStructure_materialIdToMaterialInput | Prisma.MaterialStructureUpsertWithWhereUniqueWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  createMany?: Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_materialIdToMaterialInputEnvelope
+  set?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  disconnect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  delete?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  connect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  update?: Prisma.MaterialStructureUpdateWithWhereUniqueWithoutMaterial_MaterialStructure_materialIdToMaterialInput | Prisma.MaterialStructureUpdateWithWhereUniqueWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  updateMany?: Prisma.MaterialStructureUpdateManyWithWhereWithoutMaterial_MaterialStructure_materialIdToMaterialInput | Prisma.MaterialStructureUpdateManyWithWhereWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  deleteMany?: Prisma.MaterialStructureScalarWhereInput | Prisma.MaterialStructureScalarWhereInput[]
+}
+
+export type MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_beNumberToMaterialNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput> | Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput[] | Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  connectOrCreate?: Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_beNumberToMaterialInput | Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  upsert?: Prisma.MaterialStructureUpsertWithWhereUniqueWithoutMaterial_MaterialStructure_beNumberToMaterialInput | Prisma.MaterialStructureUpsertWithWhereUniqueWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  createMany?: Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_beNumberToMaterialInputEnvelope
+  set?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  disconnect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  delete?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  connect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  update?: Prisma.MaterialStructureUpdateWithWhereUniqueWithoutMaterial_MaterialStructure_beNumberToMaterialInput | Prisma.MaterialStructureUpdateWithWhereUniqueWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  updateMany?: Prisma.MaterialStructureUpdateManyWithWhereWithoutMaterial_MaterialStructure_beNumberToMaterialInput | Prisma.MaterialStructureUpdateManyWithWhereWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  deleteMany?: Prisma.MaterialStructureScalarWhereInput | Prisma.MaterialStructureScalarWhereInput[]
+}
+
+export type MaterialStructureUncheckedUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput> | Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput[] | Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  connectOrCreate?: Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_materialIdToMaterialInput | Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  upsert?: Prisma.MaterialStructureUpsertWithWhereUniqueWithoutMaterial_MaterialStructure_materialIdToMaterialInput | Prisma.MaterialStructureUpsertWithWhereUniqueWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  createMany?: Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_materialIdToMaterialInputEnvelope
+  set?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  disconnect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  delete?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  connect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  update?: Prisma.MaterialStructureUpdateWithWhereUniqueWithoutMaterial_MaterialStructure_materialIdToMaterialInput | Prisma.MaterialStructureUpdateWithWhereUniqueWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  updateMany?: Prisma.MaterialStructureUpdateManyWithWhereWithoutMaterial_MaterialStructure_materialIdToMaterialInput | Prisma.MaterialStructureUpdateManyWithWhereWithoutMaterial_MaterialStructure_materialIdToMaterialInput[]
+  deleteMany?: Prisma.MaterialStructureScalarWhereInput | Prisma.MaterialStructureScalarWhereInput[]
+}
+
+export type MaterialStructureUncheckedUpdateManyWithoutMaterial_MaterialStructure_beNumberToMaterialNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput> | Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput[] | Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  connectOrCreate?: Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_beNumberToMaterialInput | Prisma.MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  upsert?: Prisma.MaterialStructureUpsertWithWhereUniqueWithoutMaterial_MaterialStructure_beNumberToMaterialInput | Prisma.MaterialStructureUpsertWithWhereUniqueWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  createMany?: Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_beNumberToMaterialInputEnvelope
+  set?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  disconnect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  delete?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  connect?: Prisma.MaterialStructureWhereUniqueInput | Prisma.MaterialStructureWhereUniqueInput[]
+  update?: Prisma.MaterialStructureUpdateWithWhereUniqueWithoutMaterial_MaterialStructure_beNumberToMaterialInput | Prisma.MaterialStructureUpdateWithWhereUniqueWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  updateMany?: Prisma.MaterialStructureUpdateManyWithWhereWithoutMaterial_MaterialStructure_beNumberToMaterialInput | Prisma.MaterialStructureUpdateManyWithWhereWithoutMaterial_MaterialStructure_beNumberToMaterialInput[]
+  deleteMany?: Prisma.MaterialStructureScalarWhereInput | Prisma.MaterialStructureScalarWhereInput[]
+}
+
 export type MaterialStructureCreateWithoutDocumentStructureInput = {
   id: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  expiredDate: Date | string
-  docRevision: string
-  additionalInformation: string
-  valid: boolean
-  management: string
-  createdAt: Date | string
-  Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialStructureInput
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  Material_MaterialStructure_materialIdToMaterial: Prisma.MaterialCreateNestedOneWithoutMaterialStructure_MaterialStructure_materialIdToMaterialInput
+  Material_MaterialStructure_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutMaterialStructure_MaterialStructure_beNumberToMaterialInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialStructureInput
 }
 
 export type MaterialStructureUncheckedCreateWithoutDocumentStructureInput = {
   id: string
-  shortDescription: string
-  longDescription: string
+  materialId: string
   beNumber: string
-  expiredDate: Date | string
-  docRevision: string
-  additionalInformation: string
-  valid: boolean
-  management: string
-  createdBy: string
-  createdAt: Date | string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  createdBy?: string | null
 }
 
 export type MaterialStructureCreateOrConnectWithoutDocumentStructureInput = {
@@ -623,45 +779,48 @@ export type MaterialStructureScalarWhereInput = {
   OR?: Prisma.MaterialStructureScalarWhereInput[]
   NOT?: Prisma.MaterialStructureScalarWhereInput | Prisma.MaterialStructureScalarWhereInput[]
   id?: Prisma.StringFilter<"MaterialStructure"> | string
-  shortDescription?: Prisma.StringFilter<"MaterialStructure"> | string
-  longDescription?: Prisma.StringFilter<"MaterialStructure"> | string
+  materialId?: Prisma.StringFilter<"MaterialStructure"> | string
   beNumber?: Prisma.StringFilter<"MaterialStructure"> | string
-  expiredDate?: Prisma.DateTimeFilter<"MaterialStructure"> | Date | string
-  docRevision?: Prisma.StringFilter<"MaterialStructure"> | string
-  additionalInformation?: Prisma.StringFilter<"MaterialStructure"> | string
-  valid?: Prisma.BoolFilter<"MaterialStructure"> | boolean
-  management?: Prisma.StringFilter<"MaterialStructure"> | string
-  referenceDocId?: Prisma.StringFilter<"MaterialStructure"> | string
-  createdBy?: Prisma.StringFilter<"MaterialStructure"> | string
-  createdAt?: Prisma.DateTimeFilter<"MaterialStructure"> | Date | string
+  shortDescription?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  management?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"MaterialStructure"> | Date | string | null
+  expiredDate?: Prisma.DateTimeNullableFilter<"MaterialStructure"> | Date | string | null
+  docRevision?: Prisma.IntNullableFilter<"MaterialStructure"> | number | null
+  valid?: Prisma.BoolNullableFilter<"MaterialStructure"> | boolean | null
+  additionalInfo?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  referenceDocId?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
+  createdBy?: Prisma.StringNullableFilter<"MaterialStructure"> | string | null
 }
 
 export type MaterialStructureCreateWithoutEmployeeInput = {
   id: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string
-  expiredDate: Date | string
-  docRevision: string
-  additionalInformation: string
-  valid: boolean
-  management: string
-  createdAt: Date | string
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutMaterialStructureInput
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  Material_MaterialStructure_materialIdToMaterial: Prisma.MaterialCreateNestedOneWithoutMaterialStructure_MaterialStructure_materialIdToMaterialInput
+  Material_MaterialStructure_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutMaterialStructure_MaterialStructure_beNumberToMaterialInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialStructureInput
 }
 
 export type MaterialStructureUncheckedCreateWithoutEmployeeInput = {
   id: string
-  shortDescription: string
-  longDescription: string
+  materialId: string
   beNumber: string
-  expiredDate: Date | string
-  docRevision: string
-  additionalInformation: string
-  valid: boolean
-  management: string
-  referenceDocId: string
-  createdAt: Date | string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  referenceDocId?: string | null
 }
 
 export type MaterialStructureCreateOrConnectWithoutEmployeeInput = {
@@ -690,179 +849,428 @@ export type MaterialStructureUpdateManyWithWhereWithoutEmployeeInput = {
   data: Prisma.XOR<Prisma.MaterialStructureUpdateManyMutationInput, Prisma.MaterialStructureUncheckedUpdateManyWithoutEmployeeInput>
 }
 
+export type MaterialStructureCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput = {
+  id: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  Material_MaterialStructure_beNumberToMaterial: Prisma.MaterialCreateNestedOneWithoutMaterialStructure_MaterialStructure_beNumberToMaterialInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialStructureInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialStructureInput
+}
+
+export type MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput = {
+  id: string
+  beNumber: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  referenceDocId?: string | null
+  createdBy?: string | null
+}
+
+export type MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_materialIdToMaterialInput = {
+  where: Prisma.MaterialStructureWhereUniqueInput
+  create: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput>
+}
+
+export type MaterialStructureCreateManyMaterial_MaterialStructure_materialIdToMaterialInputEnvelope = {
+  data: Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_materialIdToMaterialInput | Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_materialIdToMaterialInput[]
+  skipDuplicates?: boolean
+}
+
+export type MaterialStructureCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput = {
+  id: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  Material_MaterialStructure_materialIdToMaterial: Prisma.MaterialCreateNestedOneWithoutMaterialStructure_MaterialStructure_materialIdToMaterialInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialStructureInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialStructureInput
+}
+
+export type MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput = {
+  id: string
+  materialId: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  referenceDocId?: string | null
+  createdBy?: string | null
+}
+
+export type MaterialStructureCreateOrConnectWithoutMaterial_MaterialStructure_beNumberToMaterialInput = {
+  where: Prisma.MaterialStructureWhereUniqueInput
+  create: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput>
+}
+
+export type MaterialStructureCreateManyMaterial_MaterialStructure_beNumberToMaterialInputEnvelope = {
+  data: Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_beNumberToMaterialInput | Prisma.MaterialStructureCreateManyMaterial_MaterialStructure_beNumberToMaterialInput[]
+  skipDuplicates?: boolean
+}
+
+export type MaterialStructureUpsertWithWhereUniqueWithoutMaterial_MaterialStructure_materialIdToMaterialInput = {
+  where: Prisma.MaterialStructureWhereUniqueInput
+  update: Prisma.XOR<Prisma.MaterialStructureUpdateWithoutMaterial_MaterialStructure_materialIdToMaterialInput, Prisma.MaterialStructureUncheckedUpdateWithoutMaterial_MaterialStructure_materialIdToMaterialInput>
+  create: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_materialIdToMaterialInput>
+}
+
+export type MaterialStructureUpdateWithWhereUniqueWithoutMaterial_MaterialStructure_materialIdToMaterialInput = {
+  where: Prisma.MaterialStructureWhereUniqueInput
+  data: Prisma.XOR<Prisma.MaterialStructureUpdateWithoutMaterial_MaterialStructure_materialIdToMaterialInput, Prisma.MaterialStructureUncheckedUpdateWithoutMaterial_MaterialStructure_materialIdToMaterialInput>
+}
+
+export type MaterialStructureUpdateManyWithWhereWithoutMaterial_MaterialStructure_materialIdToMaterialInput = {
+  where: Prisma.MaterialStructureScalarWhereInput
+  data: Prisma.XOR<Prisma.MaterialStructureUpdateManyMutationInput, Prisma.MaterialStructureUncheckedUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput>
+}
+
+export type MaterialStructureUpsertWithWhereUniqueWithoutMaterial_MaterialStructure_beNumberToMaterialInput = {
+  where: Prisma.MaterialStructureWhereUniqueInput
+  update: Prisma.XOR<Prisma.MaterialStructureUpdateWithoutMaterial_MaterialStructure_beNumberToMaterialInput, Prisma.MaterialStructureUncheckedUpdateWithoutMaterial_MaterialStructure_beNumberToMaterialInput>
+  create: Prisma.XOR<Prisma.MaterialStructureCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput, Prisma.MaterialStructureUncheckedCreateWithoutMaterial_MaterialStructure_beNumberToMaterialInput>
+}
+
+export type MaterialStructureUpdateWithWhereUniqueWithoutMaterial_MaterialStructure_beNumberToMaterialInput = {
+  where: Prisma.MaterialStructureWhereUniqueInput
+  data: Prisma.XOR<Prisma.MaterialStructureUpdateWithoutMaterial_MaterialStructure_beNumberToMaterialInput, Prisma.MaterialStructureUncheckedUpdateWithoutMaterial_MaterialStructure_beNumberToMaterialInput>
+}
+
+export type MaterialStructureUpdateManyWithWhereWithoutMaterial_MaterialStructure_beNumberToMaterialInput = {
+  where: Prisma.MaterialStructureScalarWhereInput
+  data: Prisma.XOR<Prisma.MaterialStructureUpdateManyMutationInput, Prisma.MaterialStructureUncheckedUpdateManyWithoutMaterial_MaterialStructure_beNumberToMaterialInput>
+}
+
 export type MaterialStructureCreateManyDocumentStructureInput = {
   id: string
-  shortDescription: string
-  longDescription: string
+  materialId: string
   beNumber: string
-  expiredDate: Date | string
-  docRevision: string
-  additionalInformation: string
-  valid: boolean
-  management: string
-  createdBy: string
-  createdAt: Date | string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  createdBy?: string | null
 }
 
 export type MaterialStructureUpdateWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  expiredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  docRevision?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  management?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialStructureNestedInput
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Material_MaterialStructure_materialIdToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutMaterialStructure_MaterialStructure_materialIdToMaterialNestedInput
+  Material_MaterialStructure_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutMaterialStructure_MaterialStructure_beNumberToMaterialNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialStructureNestedInput
 }
 
 export type MaterialStructureUncheckedUpdateWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  expiredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  docRevision?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  management?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialStructureUncheckedUpdateManyWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  expiredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  docRevision?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  management?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialStructureCreateManyEmployeeInput = {
   id: string
-  shortDescription: string
-  longDescription: string
+  materialId: string
   beNumber: string
-  expiredDate: Date | string
-  docRevision: string
-  additionalInformation: string
-  valid: boolean
-  management: string
-  referenceDocId: string
-  createdAt: Date | string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  referenceDocId?: string | null
 }
 
 export type MaterialStructureUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  expiredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  docRevision?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  management?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutMaterialStructureNestedInput
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Material_MaterialStructure_materialIdToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutMaterialStructure_MaterialStructure_materialIdToMaterialNestedInput
+  Material_MaterialStructure_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutMaterialStructure_MaterialStructure_beNumberToMaterialNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialStructureNestedInput
 }
 
 export type MaterialStructureUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  expiredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  docRevision?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  management?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialStructureUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  expiredDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  docRevision?: Prisma.StringFieldUpdateOperationsInput | string
-  additionalInformation?: Prisma.StringFieldUpdateOperationsInput | string
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  management?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MaterialStructureCreateManyMaterial_MaterialStructure_materialIdToMaterialInput = {
+  id: string
+  beNumber: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  referenceDocId?: string | null
+  createdBy?: string | null
+}
+
+export type MaterialStructureCreateManyMaterial_MaterialStructure_beNumberToMaterialInput = {
+  id: string
+  materialId: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  referenceDocId?: string | null
+  createdBy?: string | null
+}
+
+export type MaterialStructureUpdateWithoutMaterial_MaterialStructure_materialIdToMaterialInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Material_MaterialStructure_beNumberToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutMaterialStructure_MaterialStructure_beNumberToMaterialNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialStructureNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialStructureNestedInput
+}
+
+export type MaterialStructureUncheckedUpdateWithoutMaterial_MaterialStructure_materialIdToMaterialInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MaterialStructureUncheckedUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MaterialStructureUpdateWithoutMaterial_MaterialStructure_beNumberToMaterialInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Material_MaterialStructure_materialIdToMaterial?: Prisma.MaterialUpdateOneRequiredWithoutMaterialStructure_MaterialStructure_materialIdToMaterialNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialStructureNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialStructureNestedInput
+}
+
+export type MaterialStructureUncheckedUpdateWithoutMaterial_MaterialStructure_beNumberToMaterialInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MaterialStructureUncheckedUpdateManyWithoutMaterial_MaterialStructure_beNumberToMaterialInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
 
 export type MaterialStructureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  materialId?: boolean
+  beNumber?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  beNumber?: boolean
+  management?: boolean
+  date?: boolean
   expiredDate?: boolean
   docRevision?: boolean
-  additionalInformation?: boolean
   valid?: boolean
-  management?: boolean
+  additionalInfo?: boolean
   referenceDocId?: boolean
   createdBy?: boolean
-  createdAt?: boolean
-  DocumentStructure?: boolean | Prisma.DocumentStructureDefaultArgs<ExtArgs>
-  Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Material_MaterialStructure_materialIdToMaterial?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
+  Material_MaterialStructure_beNumberToMaterial?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
+  DocumentStructure?: boolean | Prisma.MaterialStructure$DocumentStructureArgs<ExtArgs>
+  Employee?: boolean | Prisma.MaterialStructure$EmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["materialStructure"]>
 
 
 
 export type MaterialStructureSelectScalar = {
   id?: boolean
+  materialId?: boolean
+  beNumber?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  beNumber?: boolean
+  management?: boolean
+  date?: boolean
   expiredDate?: boolean
   docRevision?: boolean
-  additionalInformation?: boolean
   valid?: boolean
-  management?: boolean
+  additionalInfo?: boolean
   referenceDocId?: boolean
   createdBy?: boolean
-  createdAt?: boolean
 }
 
-export type MaterialStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shortDescription" | "longDescription" | "beNumber" | "expiredDate" | "docRevision" | "additionalInformation" | "valid" | "management" | "referenceDocId" | "createdBy" | "createdAt", ExtArgs["result"]["materialStructure"]>
+export type MaterialStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "beNumber" | "shortDescription" | "longDescription" | "management" | "date" | "expiredDate" | "docRevision" | "valid" | "additionalInfo" | "referenceDocId" | "createdBy", ExtArgs["result"]["materialStructure"]>
 export type MaterialStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  DocumentStructure?: boolean | Prisma.DocumentStructureDefaultArgs<ExtArgs>
-  Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Material_MaterialStructure_materialIdToMaterial?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
+  Material_MaterialStructure_beNumberToMaterial?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
+  DocumentStructure?: boolean | Prisma.MaterialStructure$DocumentStructureArgs<ExtArgs>
+  Employee?: boolean | Prisma.MaterialStructure$EmployeeArgs<ExtArgs>
 }
 
 export type $MaterialStructurePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MaterialStructure"
   objects: {
-    DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs>
-    Employee: Prisma.$EmployeePayload<ExtArgs>
+    Material_MaterialStructure_materialIdToMaterial: Prisma.$MaterialPayload<ExtArgs>
+    Material_MaterialStructure_beNumberToMaterial: Prisma.$MaterialPayload<ExtArgs>
+    DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs> | null
+    Employee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    shortDescription: string
-    longDescription: string
+    materialId: string
     beNumber: string
-    expiredDate: Date
-    docRevision: string
-    additionalInformation: string
-    valid: boolean
-    management: string
-    referenceDocId: string
-    createdBy: string
-    createdAt: Date
+    shortDescription: string | null
+    longDescription: string | null
+    management: string | null
+    date: Date | null
+    expiredDate: Date | null
+    docRevision: number | null
+    valid: boolean | null
+    additionalInfo: string | null
+    referenceDocId: string | null
+    createdBy: string | null
   }, ExtArgs["result"]["materialStructure"]>
   composites: {}
 }
@@ -1203,8 +1611,10 @@ readonly fields: MaterialStructureFieldRefs;
  */
 export interface Prisma__MaterialStructureClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  DocumentStructure<T extends Prisma.DocumentStructureDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructureDefaultArgs<ExtArgs>>): Prisma.Prisma__DocumentStructureClient<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Material_MaterialStructure_materialIdToMaterial<T extends Prisma.MaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Material_MaterialStructure_beNumberToMaterial<T extends Prisma.MaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  DocumentStructure<T extends Prisma.MaterialStructure$DocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialStructure$DocumentStructureArgs<ExtArgs>>): Prisma.Prisma__DocumentStructureClient<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Employee<T extends Prisma.MaterialStructure$EmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialStructure$EmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1235,17 +1645,18 @@ export interface Prisma__MaterialStructureClient<T, Null = never, ExtArgs extend
  */
 export interface MaterialStructureFieldRefs {
   readonly id: Prisma.FieldRef<"MaterialStructure", 'String'>
+  readonly materialId: Prisma.FieldRef<"MaterialStructure", 'String'>
+  readonly beNumber: Prisma.FieldRef<"MaterialStructure", 'String'>
   readonly shortDescription: Prisma.FieldRef<"MaterialStructure", 'String'>
   readonly longDescription: Prisma.FieldRef<"MaterialStructure", 'String'>
-  readonly beNumber: Prisma.FieldRef<"MaterialStructure", 'String'>
-  readonly expiredDate: Prisma.FieldRef<"MaterialStructure", 'DateTime'>
-  readonly docRevision: Prisma.FieldRef<"MaterialStructure", 'String'>
-  readonly additionalInformation: Prisma.FieldRef<"MaterialStructure", 'String'>
-  readonly valid: Prisma.FieldRef<"MaterialStructure", 'Boolean'>
   readonly management: Prisma.FieldRef<"MaterialStructure", 'String'>
+  readonly date: Prisma.FieldRef<"MaterialStructure", 'DateTime'>
+  readonly expiredDate: Prisma.FieldRef<"MaterialStructure", 'DateTime'>
+  readonly docRevision: Prisma.FieldRef<"MaterialStructure", 'Int'>
+  readonly valid: Prisma.FieldRef<"MaterialStructure", 'Boolean'>
+  readonly additionalInfo: Prisma.FieldRef<"MaterialStructure", 'String'>
   readonly referenceDocId: Prisma.FieldRef<"MaterialStructure", 'String'>
   readonly createdBy: Prisma.FieldRef<"MaterialStructure", 'String'>
-  readonly createdAt: Prisma.FieldRef<"MaterialStructure", 'DateTime'>
 }
     
 
@@ -1586,6 +1997,44 @@ export type MaterialStructureDeleteManyArgs<ExtArgs extends runtime.Types.Extens
    * Limit how many MaterialStructures to delete.
    */
   limit?: number
+}
+
+/**
+ * MaterialStructure.DocumentStructure
+ */
+export type MaterialStructure$DocumentStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DocumentStructure
+   */
+  select?: Prisma.DocumentStructureSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DocumentStructure
+   */
+  omit?: Prisma.DocumentStructureOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DocumentStructureInclude<ExtArgs> | null
+  where?: Prisma.DocumentStructureWhereInput
+}
+
+/**
+ * MaterialStructure.Employee
+ */
+export type MaterialStructure$EmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

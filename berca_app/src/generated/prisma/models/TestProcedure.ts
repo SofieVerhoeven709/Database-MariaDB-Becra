@@ -29,8 +29,8 @@ export type TestProcedureMinAggregateOutputType = {
   name: string | null
   shortDescription: string | null
   longDescription: string | null
-  createdBy: string | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type TestProcedureMaxAggregateOutputType = {
@@ -38,8 +38,8 @@ export type TestProcedureMaxAggregateOutputType = {
   name: string | null
   shortDescription: string | null
   longDescription: string | null
-  createdBy: string | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type TestProcedureCountAggregateOutputType = {
@@ -47,8 +47,8 @@ export type TestProcedureCountAggregateOutputType = {
   name: number
   shortDescription: number
   longDescription: number
-  createdBy: number
   createdAt: number
+  createdBy: number
   _all: number
 }
 
@@ -58,8 +58,8 @@ export type TestProcedureMinAggregateInputType = {
   name?: true
   shortDescription?: true
   longDescription?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type TestProcedureMaxAggregateInputType = {
@@ -67,8 +67,8 @@ export type TestProcedureMaxAggregateInputType = {
   name?: true
   shortDescription?: true
   longDescription?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type TestProcedureCountAggregateInputType = {
@@ -76,8 +76,8 @@ export type TestProcedureCountAggregateInputType = {
   name?: true
   shortDescription?: true
   longDescription?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
   _all?: true
 }
 
@@ -155,11 +155,11 @@ export type TestProcedureGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type TestProcedureGroupByOutputType = {
   id: string
-  name: string
-  shortDescription: string
-  longDescription: string
-  createdBy: string
+  name: string | null
+  shortDescription: string | null
+  longDescription: string | null
   createdAt: Date
+  createdBy: string
   _count: TestProcedureCountAggregateOutputType | null
   _min: TestProcedureMinAggregateOutputType | null
   _max: TestProcedureMaxAggregateOutputType | null
@@ -185,21 +185,21 @@ export type TestProcedureWhereInput = {
   OR?: Prisma.TestProcedureWhereInput[]
   NOT?: Prisma.TestProcedureWhereInput | Prisma.TestProcedureWhereInput[]
   id?: Prisma.StringFilter<"TestProcedure"> | string
-  name?: Prisma.StringFilter<"TestProcedure"> | string
-  shortDescription?: Prisma.StringFilter<"TestProcedure"> | string
-  longDescription?: Prisma.StringFilter<"TestProcedure"> | string
-  createdBy?: Prisma.StringFilter<"TestProcedure"> | string
+  name?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TestProcedure"> | Date | string
+  createdBy?: Prisma.StringFilter<"TestProcedure"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
 
 export type TestProcedureOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.TestProcedureOrderByRelevanceInput
 }
@@ -209,21 +209,21 @@ export type TestProcedureWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TestProcedureWhereInput | Prisma.TestProcedureWhereInput[]
   OR?: Prisma.TestProcedureWhereInput[]
   NOT?: Prisma.TestProcedureWhereInput | Prisma.TestProcedureWhereInput[]
-  name?: Prisma.StringFilter<"TestProcedure"> | string
-  shortDescription?: Prisma.StringFilter<"TestProcedure"> | string
-  longDescription?: Prisma.StringFilter<"TestProcedure"> | string
-  createdBy?: Prisma.StringFilter<"TestProcedure"> | string
+  name?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TestProcedure"> | Date | string
+  createdBy?: Prisma.StringFilter<"TestProcedure"> | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
 
 export type TestProcedureOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   _count?: Prisma.TestProcedureCountOrderByAggregateInput
   _max?: Prisma.TestProcedureMaxOrderByAggregateInput
   _min?: Prisma.TestProcedureMinOrderByAggregateInput
@@ -234,73 +234,73 @@ export type TestProcedureScalarWhereWithAggregatesInput = {
   OR?: Prisma.TestProcedureScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TestProcedureScalarWhereWithAggregatesInput | Prisma.TestProcedureScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"TestProcedure"> | string
-  name?: Prisma.StringWithAggregatesFilter<"TestProcedure"> | string
-  shortDescription?: Prisma.StringWithAggregatesFilter<"TestProcedure"> | string
-  longDescription?: Prisma.StringWithAggregatesFilter<"TestProcedure"> | string
-  createdBy?: Prisma.StringWithAggregatesFilter<"TestProcedure"> | string
+  name?: Prisma.StringNullableWithAggregatesFilter<"TestProcedure"> | string | null
+  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"TestProcedure"> | string | null
+  longDescription?: Prisma.StringNullableWithAggregatesFilter<"TestProcedure"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TestProcedure"> | Date | string
+  createdBy?: Prisma.StringWithAggregatesFilter<"TestProcedure"> | string
 }
 
 export type TestProcedureCreateInput = {
   id: string
-  name: string
-  shortDescription: string
-  longDescription: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdAt: Date | string
   Employee: Prisma.EmployeeCreateNestedOneWithoutTestProcedureInput
 }
 
 export type TestProcedureUncheckedCreateInput = {
   id: string
-  name: string
-  shortDescription: string
-  longDescription: string
-  createdBy: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdAt: Date | string
+  createdBy: string
 }
 
 export type TestProcedureUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTestProcedureNestedInput
 }
 
 export type TestProcedureUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TestProcedureCreateManyInput = {
   id: string
-  name: string
-  shortDescription: string
-  longDescription: string
-  createdBy: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdAt: Date | string
+  createdBy: string
 }
 
 export type TestProcedureUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TestProcedureUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TestProcedureListRelationFilter = {
@@ -324,8 +324,8 @@ export type TestProcedureCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type TestProcedureMaxOrderByAggregateInput = {
@@ -333,8 +333,8 @@ export type TestProcedureMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type TestProcedureMinOrderByAggregateInput = {
@@ -342,8 +342,8 @@ export type TestProcedureMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type TestProcedureCreateNestedManyWithoutEmployeeInput = {
@@ -390,17 +390,17 @@ export type TestProcedureUncheckedUpdateManyWithoutEmployeeNestedInput = {
 
 export type TestProcedureCreateWithoutEmployeeInput = {
   id: string
-  name: string
-  shortDescription: string
-  longDescription: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdAt: Date | string
 }
 
 export type TestProcedureUncheckedCreateWithoutEmployeeInput = {
   id: string
-  name: string
-  shortDescription: string
-  longDescription: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdAt: Date | string
 }
 
@@ -435,42 +435,42 @@ export type TestProcedureScalarWhereInput = {
   OR?: Prisma.TestProcedureScalarWhereInput[]
   NOT?: Prisma.TestProcedureScalarWhereInput | Prisma.TestProcedureScalarWhereInput[]
   id?: Prisma.StringFilter<"TestProcedure"> | string
-  name?: Prisma.StringFilter<"TestProcedure"> | string
-  shortDescription?: Prisma.StringFilter<"TestProcedure"> | string
-  longDescription?: Prisma.StringFilter<"TestProcedure"> | string
-  createdBy?: Prisma.StringFilter<"TestProcedure"> | string
+  name?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TestProcedure"> | Date | string
+  createdBy?: Prisma.StringFilter<"TestProcedure"> | string
 }
 
 export type TestProcedureCreateManyEmployeeInput = {
   id: string
-  name: string
-  shortDescription: string
-  longDescription: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdAt: Date | string
 }
 
 export type TestProcedureUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TestProcedureUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TestProcedureUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -481,8 +481,8 @@ export type TestProcedureSelect<ExtArgs extends runtime.Types.Extensions.Interna
   name?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  createdBy?: boolean
   createdAt?: boolean
+  createdBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["testProcedure"]>
 
@@ -493,11 +493,11 @@ export type TestProcedureSelectScalar = {
   name?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  createdBy?: boolean
   createdAt?: boolean
+  createdBy?: boolean
 }
 
-export type TestProcedureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "shortDescription" | "longDescription" | "createdBy" | "createdAt", ExtArgs["result"]["testProcedure"]>
+export type TestProcedureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "shortDescription" | "longDescription" | "createdAt" | "createdBy", ExtArgs["result"]["testProcedure"]>
 export type TestProcedureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }
@@ -509,11 +509,11 @@ export type $TestProcedurePayload<ExtArgs extends runtime.Types.Extensions.Inter
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    name: string
-    shortDescription: string
-    longDescription: string
-    createdBy: string
+    name: string | null
+    shortDescription: string | null
+    longDescription: string | null
     createdAt: Date
+    createdBy: string
   }, ExtArgs["result"]["testProcedure"]>
   composites: {}
 }
@@ -888,8 +888,8 @@ export interface TestProcedureFieldRefs {
   readonly name: Prisma.FieldRef<"TestProcedure", 'String'>
   readonly shortDescription: Prisma.FieldRef<"TestProcedure", 'String'>
   readonly longDescription: Prisma.FieldRef<"TestProcedure", 'String'>
-  readonly createdBy: Prisma.FieldRef<"TestProcedure", 'String'>
   readonly createdAt: Prisma.FieldRef<"TestProcedure", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"TestProcedure", 'String'>
 }
     
 

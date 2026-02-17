@@ -26,28 +26,112 @@ export type AggregatePurchase = {
 
 export type PurchaseMinAggregateOutputType = {
   id: string | null
+  projectId: string | null
+  purchaseDate: Date | null
+  materialGroupId: string | null
+  orderNumber: string | null
+  companyId: string | null
+  brandName: string | null
+  brandOrderNumber: string | null
+  status: string | null
+  shortDescription: string | null
+  description: string | null
+  preferedSupplier: string | null
+  additionalInfo: string | null
+  updatedAt: Date | null
+  createdBy: string | null
 }
 
 export type PurchaseMaxAggregateOutputType = {
   id: string | null
+  projectId: string | null
+  purchaseDate: Date | null
+  materialGroupId: string | null
+  orderNumber: string | null
+  companyId: string | null
+  brandName: string | null
+  brandOrderNumber: string | null
+  status: string | null
+  shortDescription: string | null
+  description: string | null
+  preferedSupplier: string | null
+  additionalInfo: string | null
+  updatedAt: Date | null
+  createdBy: string | null
 }
 
 export type PurchaseCountAggregateOutputType = {
   id: number
+  projectId: number
+  purchaseDate: number
+  materialGroupId: number
+  orderNumber: number
+  companyId: number
+  brandName: number
+  brandOrderNumber: number
+  status: number
+  shortDescription: number
+  description: number
+  preferedSupplier: number
+  additionalInfo: number
+  updatedAt: number
+  createdBy: number
   _all: number
 }
 
 
 export type PurchaseMinAggregateInputType = {
   id?: true
+  projectId?: true
+  purchaseDate?: true
+  materialGroupId?: true
+  orderNumber?: true
+  companyId?: true
+  brandName?: true
+  brandOrderNumber?: true
+  status?: true
+  shortDescription?: true
+  description?: true
+  preferedSupplier?: true
+  additionalInfo?: true
+  updatedAt?: true
+  createdBy?: true
 }
 
 export type PurchaseMaxAggregateInputType = {
   id?: true
+  projectId?: true
+  purchaseDate?: true
+  materialGroupId?: true
+  orderNumber?: true
+  companyId?: true
+  brandName?: true
+  brandOrderNumber?: true
+  status?: true
+  shortDescription?: true
+  description?: true
+  preferedSupplier?: true
+  additionalInfo?: true
+  updatedAt?: true
+  createdBy?: true
 }
 
 export type PurchaseCountAggregateInputType = {
   id?: true
+  projectId?: true
+  purchaseDate?: true
+  materialGroupId?: true
+  orderNumber?: true
+  companyId?: true
+  brandName?: true
+  brandOrderNumber?: true
+  status?: true
+  shortDescription?: true
+  description?: true
+  preferedSupplier?: true
+  additionalInfo?: true
+  updatedAt?: true
+  createdBy?: true
   _all?: true
 }
 
@@ -125,6 +209,20 @@ export type PurchaseGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type PurchaseGroupByOutputType = {
   id: string
+  projectId: string | null
+  purchaseDate: Date | null
+  materialGroupId: string | null
+  orderNumber: string | null
+  companyId: string | null
+  brandName: string | null
+  brandOrderNumber: string | null
+  status: string | null
+  shortDescription: string | null
+  description: string | null
+  preferedSupplier: string | null
+  additionalInfo: string | null
+  updatedAt: Date | null
+  createdBy: string
   _count: PurchaseCountAggregateOutputType | null
   _min: PurchaseMinAggregateOutputType | null
   _max: PurchaseMaxAggregateOutputType | null
@@ -150,11 +248,47 @@ export type PurchaseWhereInput = {
   OR?: Prisma.PurchaseWhereInput[]
   NOT?: Prisma.PurchaseWhereInput | Prisma.PurchaseWhereInput[]
   id?: Prisma.StringFilter<"Purchase"> | string
+  projectId?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  purchaseDate?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
+  materialGroupId?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  orderNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  companyId?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  brandName?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  brandOrderNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  status?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  description?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  preferedSupplier?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  updatedAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
+  createdBy?: Prisma.StringFilter<"Purchase"> | string
+  Project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
+  MaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
+  Company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
+  Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   PurchaseDetail?: Prisma.PurchaseDetailListRelationFilter
 }
 
 export type PurchaseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  materialGroupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  orderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  companyId?: Prisma.SortOrderInput | Prisma.SortOrder
+  brandName?: Prisma.SortOrderInput | Prisma.SortOrder
+  brandOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferedSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  Project?: Prisma.ProjectOrderByWithRelationInput
+  MaterialGroup?: Prisma.MaterialGroupOrderByWithRelationInput
+  Company?: Prisma.CompanyOrderByWithRelationInput
+  Employee?: Prisma.EmployeeOrderByWithRelationInput
   PurchaseDetail?: Prisma.PurchaseDetailOrderByRelationAggregateInput
   _relevance?: Prisma.PurchaseOrderByRelevanceInput
 }
@@ -164,11 +298,43 @@ export type PurchaseWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PurchaseWhereInput | Prisma.PurchaseWhereInput[]
   OR?: Prisma.PurchaseWhereInput[]
   NOT?: Prisma.PurchaseWhereInput | Prisma.PurchaseWhereInput[]
+  projectId?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  purchaseDate?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
+  materialGroupId?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  orderNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  companyId?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  brandName?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  brandOrderNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  status?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  description?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  preferedSupplier?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  updatedAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
+  createdBy?: Prisma.StringFilter<"Purchase"> | string
+  Project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
+  MaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
+  Company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
+  Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   PurchaseDetail?: Prisma.PurchaseDetailListRelationFilter
 }, "id">
 
 export type PurchaseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  materialGroupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  orderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  companyId?: Prisma.SortOrderInput | Prisma.SortOrder
+  brandName?: Prisma.SortOrderInput | Prisma.SortOrder
+  brandOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferedSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   _count?: Prisma.PurchaseCountOrderByAggregateInput
   _max?: Prisma.PurchaseMaxOrderByAggregateInput
   _min?: Prisma.PurchaseMinOrderByAggregateInput
@@ -179,38 +345,156 @@ export type PurchaseScalarWhereWithAggregatesInput = {
   OR?: Prisma.PurchaseScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PurchaseScalarWhereWithAggregatesInput | Prisma.PurchaseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Purchase"> | string
+  projectId?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  purchaseDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Purchase"> | Date | string | null
+  materialGroupId?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  orderNumber?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  companyId?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  brandName?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  brandOrderNumber?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  status?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  description?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  preferedSupplier?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Purchase"> | Date | string | null
+  createdBy?: Prisma.StringWithAggregatesFilter<"Purchase"> | string
 }
 
 export type PurchaseCreateInput = {
   id: string
+  purchaseDate?: Date | string | null
+  orderNumber?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  Project?: Prisma.ProjectCreateNestedOneWithoutPurchaseInput
+  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutPurchaseInput
+  Company?: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
   PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
 }
 
 export type PurchaseUncheckedCreateInput = {
   id: string
+  projectId?: string | null
+  purchaseDate?: Date | string | null
+  materialGroupId?: string | null
+  orderNumber?: string | null
+  companyId?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  createdBy: string
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutPurchaseInput
 }
 
 export type PurchaseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Project?: Prisma.ProjectUpdateOneWithoutPurchaseNestedInput
+  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutPurchaseNestedInput
+  Company?: Prisma.CompanyUpdateOneWithoutPurchaseNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
   PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
 }
 
 export type PurchaseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutPurchaseNestedInput
 }
 
 export type PurchaseCreateManyInput = {
   id: string
+  projectId?: string | null
+  purchaseDate?: Date | string | null
+  materialGroupId?: string | null
+  orderNumber?: string | null
+  companyId?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  createdBy: string
 }
 
 export type PurchaseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PurchaseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type PurchaseListRelationFilter = {
+  every?: Prisma.PurchaseWhereInput
+  some?: Prisma.PurchaseWhereInput
+  none?: Prisma.PurchaseWhereInput
+}
+
+export type PurchaseOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type PurchaseOrderByRelevanceInput = {
@@ -221,19 +505,229 @@ export type PurchaseOrderByRelevanceInput = {
 
 export type PurchaseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
+  purchaseDate?: Prisma.SortOrder
+  materialGroupId?: Prisma.SortOrder
+  orderNumber?: Prisma.SortOrder
+  companyId?: Prisma.SortOrder
+  brandName?: Prisma.SortOrder
+  brandOrderNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  preferedSupplier?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type PurchaseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
+  purchaseDate?: Prisma.SortOrder
+  materialGroupId?: Prisma.SortOrder
+  orderNumber?: Prisma.SortOrder
+  companyId?: Prisma.SortOrder
+  brandName?: Prisma.SortOrder
+  brandOrderNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  preferedSupplier?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type PurchaseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
+  purchaseDate?: Prisma.SortOrder
+  materialGroupId?: Prisma.SortOrder
+  orderNumber?: Prisma.SortOrder
+  companyId?: Prisma.SortOrder
+  brandName?: Prisma.SortOrder
+  brandOrderNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  preferedSupplier?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type PurchaseNullableScalarRelationFilter = {
   is?: Prisma.PurchaseWhereInput | null
   isNot?: Prisma.PurchaseWhereInput | null
+}
+
+export type PurchaseCreateNestedManyWithoutCompanyInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutCompanyInput, Prisma.PurchaseUncheckedCreateWithoutCompanyInput> | Prisma.PurchaseCreateWithoutCompanyInput[] | Prisma.PurchaseUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutCompanyInput | Prisma.PurchaseCreateOrConnectWithoutCompanyInput[]
+  createMany?: Prisma.PurchaseCreateManyCompanyInputEnvelope
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+}
+
+export type PurchaseUncheckedCreateNestedManyWithoutCompanyInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutCompanyInput, Prisma.PurchaseUncheckedCreateWithoutCompanyInput> | Prisma.PurchaseCreateWithoutCompanyInput[] | Prisma.PurchaseUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutCompanyInput | Prisma.PurchaseCreateOrConnectWithoutCompanyInput[]
+  createMany?: Prisma.PurchaseCreateManyCompanyInputEnvelope
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+}
+
+export type PurchaseUpdateManyWithoutCompanyNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutCompanyInput, Prisma.PurchaseUncheckedCreateWithoutCompanyInput> | Prisma.PurchaseCreateWithoutCompanyInput[] | Prisma.PurchaseUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutCompanyInput | Prisma.PurchaseCreateOrConnectWithoutCompanyInput[]
+  upsert?: Prisma.PurchaseUpsertWithWhereUniqueWithoutCompanyInput | Prisma.PurchaseUpsertWithWhereUniqueWithoutCompanyInput[]
+  createMany?: Prisma.PurchaseCreateManyCompanyInputEnvelope
+  set?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  delete?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  update?: Prisma.PurchaseUpdateWithWhereUniqueWithoutCompanyInput | Prisma.PurchaseUpdateWithWhereUniqueWithoutCompanyInput[]
+  updateMany?: Prisma.PurchaseUpdateManyWithWhereWithoutCompanyInput | Prisma.PurchaseUpdateManyWithWhereWithoutCompanyInput[]
+  deleteMany?: Prisma.PurchaseScalarWhereInput | Prisma.PurchaseScalarWhereInput[]
+}
+
+export type PurchaseUncheckedUpdateManyWithoutCompanyNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutCompanyInput, Prisma.PurchaseUncheckedCreateWithoutCompanyInput> | Prisma.PurchaseCreateWithoutCompanyInput[] | Prisma.PurchaseUncheckedCreateWithoutCompanyInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutCompanyInput | Prisma.PurchaseCreateOrConnectWithoutCompanyInput[]
+  upsert?: Prisma.PurchaseUpsertWithWhereUniqueWithoutCompanyInput | Prisma.PurchaseUpsertWithWhereUniqueWithoutCompanyInput[]
+  createMany?: Prisma.PurchaseCreateManyCompanyInputEnvelope
+  set?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  delete?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  update?: Prisma.PurchaseUpdateWithWhereUniqueWithoutCompanyInput | Prisma.PurchaseUpdateWithWhereUniqueWithoutCompanyInput[]
+  updateMany?: Prisma.PurchaseUpdateManyWithWhereWithoutCompanyInput | Prisma.PurchaseUpdateManyWithWhereWithoutCompanyInput[]
+  deleteMany?: Prisma.PurchaseScalarWhereInput | Prisma.PurchaseScalarWhereInput[]
+}
+
+export type PurchaseCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutEmployeeInput, Prisma.PurchaseUncheckedCreateWithoutEmployeeInput> | Prisma.PurchaseCreateWithoutEmployeeInput[] | Prisma.PurchaseUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutEmployeeInput | Prisma.PurchaseCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.PurchaseCreateManyEmployeeInputEnvelope
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+}
+
+export type PurchaseUncheckedCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutEmployeeInput, Prisma.PurchaseUncheckedCreateWithoutEmployeeInput> | Prisma.PurchaseCreateWithoutEmployeeInput[] | Prisma.PurchaseUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutEmployeeInput | Prisma.PurchaseCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.PurchaseCreateManyEmployeeInputEnvelope
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+}
+
+export type PurchaseUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutEmployeeInput, Prisma.PurchaseUncheckedCreateWithoutEmployeeInput> | Prisma.PurchaseCreateWithoutEmployeeInput[] | Prisma.PurchaseUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutEmployeeInput | Prisma.PurchaseCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.PurchaseUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.PurchaseUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.PurchaseCreateManyEmployeeInputEnvelope
+  set?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  delete?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  update?: Prisma.PurchaseUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.PurchaseUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.PurchaseUpdateManyWithWhereWithoutEmployeeInput | Prisma.PurchaseUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.PurchaseScalarWhereInput | Prisma.PurchaseScalarWhereInput[]
+}
+
+export type PurchaseUncheckedUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutEmployeeInput, Prisma.PurchaseUncheckedCreateWithoutEmployeeInput> | Prisma.PurchaseCreateWithoutEmployeeInput[] | Prisma.PurchaseUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutEmployeeInput | Prisma.PurchaseCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.PurchaseUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.PurchaseUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.PurchaseCreateManyEmployeeInputEnvelope
+  set?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  delete?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  update?: Prisma.PurchaseUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.PurchaseUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.PurchaseUpdateManyWithWhereWithoutEmployeeInput | Prisma.PurchaseUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.PurchaseScalarWhereInput | Prisma.PurchaseScalarWhereInput[]
+}
+
+export type PurchaseCreateNestedManyWithoutMaterialGroupInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutMaterialGroupInput, Prisma.PurchaseUncheckedCreateWithoutMaterialGroupInput> | Prisma.PurchaseCreateWithoutMaterialGroupInput[] | Prisma.PurchaseUncheckedCreateWithoutMaterialGroupInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutMaterialGroupInput | Prisma.PurchaseCreateOrConnectWithoutMaterialGroupInput[]
+  createMany?: Prisma.PurchaseCreateManyMaterialGroupInputEnvelope
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+}
+
+export type PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutMaterialGroupInput, Prisma.PurchaseUncheckedCreateWithoutMaterialGroupInput> | Prisma.PurchaseCreateWithoutMaterialGroupInput[] | Prisma.PurchaseUncheckedCreateWithoutMaterialGroupInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutMaterialGroupInput | Prisma.PurchaseCreateOrConnectWithoutMaterialGroupInput[]
+  createMany?: Prisma.PurchaseCreateManyMaterialGroupInputEnvelope
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+}
+
+export type PurchaseUpdateManyWithoutMaterialGroupNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutMaterialGroupInput, Prisma.PurchaseUncheckedCreateWithoutMaterialGroupInput> | Prisma.PurchaseCreateWithoutMaterialGroupInput[] | Prisma.PurchaseUncheckedCreateWithoutMaterialGroupInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutMaterialGroupInput | Prisma.PurchaseCreateOrConnectWithoutMaterialGroupInput[]
+  upsert?: Prisma.PurchaseUpsertWithWhereUniqueWithoutMaterialGroupInput | Prisma.PurchaseUpsertWithWhereUniqueWithoutMaterialGroupInput[]
+  createMany?: Prisma.PurchaseCreateManyMaterialGroupInputEnvelope
+  set?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  delete?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  update?: Prisma.PurchaseUpdateWithWhereUniqueWithoutMaterialGroupInput | Prisma.PurchaseUpdateWithWhereUniqueWithoutMaterialGroupInput[]
+  updateMany?: Prisma.PurchaseUpdateManyWithWhereWithoutMaterialGroupInput | Prisma.PurchaseUpdateManyWithWhereWithoutMaterialGroupInput[]
+  deleteMany?: Prisma.PurchaseScalarWhereInput | Prisma.PurchaseScalarWhereInput[]
+}
+
+export type PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutMaterialGroupInput, Prisma.PurchaseUncheckedCreateWithoutMaterialGroupInput> | Prisma.PurchaseCreateWithoutMaterialGroupInput[] | Prisma.PurchaseUncheckedCreateWithoutMaterialGroupInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutMaterialGroupInput | Prisma.PurchaseCreateOrConnectWithoutMaterialGroupInput[]
+  upsert?: Prisma.PurchaseUpsertWithWhereUniqueWithoutMaterialGroupInput | Prisma.PurchaseUpsertWithWhereUniqueWithoutMaterialGroupInput[]
+  createMany?: Prisma.PurchaseCreateManyMaterialGroupInputEnvelope
+  set?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  delete?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  update?: Prisma.PurchaseUpdateWithWhereUniqueWithoutMaterialGroupInput | Prisma.PurchaseUpdateWithWhereUniqueWithoutMaterialGroupInput[]
+  updateMany?: Prisma.PurchaseUpdateManyWithWhereWithoutMaterialGroupInput | Prisma.PurchaseUpdateManyWithWhereWithoutMaterialGroupInput[]
+  deleteMany?: Prisma.PurchaseScalarWhereInput | Prisma.PurchaseScalarWhereInput[]
+}
+
+export type PurchaseCreateNestedManyWithoutProjectInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutProjectInput, Prisma.PurchaseUncheckedCreateWithoutProjectInput> | Prisma.PurchaseCreateWithoutProjectInput[] | Prisma.PurchaseUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutProjectInput | Prisma.PurchaseCreateOrConnectWithoutProjectInput[]
+  createMany?: Prisma.PurchaseCreateManyProjectInputEnvelope
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+}
+
+export type PurchaseUncheckedCreateNestedManyWithoutProjectInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutProjectInput, Prisma.PurchaseUncheckedCreateWithoutProjectInput> | Prisma.PurchaseCreateWithoutProjectInput[] | Prisma.PurchaseUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutProjectInput | Prisma.PurchaseCreateOrConnectWithoutProjectInput[]
+  createMany?: Prisma.PurchaseCreateManyProjectInputEnvelope
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+}
+
+export type PurchaseUpdateManyWithoutProjectNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutProjectInput, Prisma.PurchaseUncheckedCreateWithoutProjectInput> | Prisma.PurchaseCreateWithoutProjectInput[] | Prisma.PurchaseUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutProjectInput | Prisma.PurchaseCreateOrConnectWithoutProjectInput[]
+  upsert?: Prisma.PurchaseUpsertWithWhereUniqueWithoutProjectInput | Prisma.PurchaseUpsertWithWhereUniqueWithoutProjectInput[]
+  createMany?: Prisma.PurchaseCreateManyProjectInputEnvelope
+  set?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  delete?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  update?: Prisma.PurchaseUpdateWithWhereUniqueWithoutProjectInput | Prisma.PurchaseUpdateWithWhereUniqueWithoutProjectInput[]
+  updateMany?: Prisma.PurchaseUpdateManyWithWhereWithoutProjectInput | Prisma.PurchaseUpdateManyWithWhereWithoutProjectInput[]
+  deleteMany?: Prisma.PurchaseScalarWhereInput | Prisma.PurchaseScalarWhereInput[]
+}
+
+export type PurchaseUncheckedUpdateManyWithoutProjectNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseCreateWithoutProjectInput, Prisma.PurchaseUncheckedCreateWithoutProjectInput> | Prisma.PurchaseCreateWithoutProjectInput[] | Prisma.PurchaseUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.PurchaseCreateOrConnectWithoutProjectInput | Prisma.PurchaseCreateOrConnectWithoutProjectInput[]
+  upsert?: Prisma.PurchaseUpsertWithWhereUniqueWithoutProjectInput | Prisma.PurchaseUpsertWithWhereUniqueWithoutProjectInput[]
+  createMany?: Prisma.PurchaseCreateManyProjectInputEnvelope
+  set?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  delete?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  connect?: Prisma.PurchaseWhereUniqueInput | Prisma.PurchaseWhereUniqueInput[]
+  update?: Prisma.PurchaseUpdateWithWhereUniqueWithoutProjectInput | Prisma.PurchaseUpdateWithWhereUniqueWithoutProjectInput[]
+  updateMany?: Prisma.PurchaseUpdateManyWithWhereWithoutProjectInput | Prisma.PurchaseUpdateManyWithWhereWithoutProjectInput[]
+  deleteMany?: Prisma.PurchaseScalarWhereInput | Prisma.PurchaseScalarWhereInput[]
 }
 
 export type PurchaseCreateNestedOneWithoutPurchaseDetailInput = {
@@ -252,12 +746,309 @@ export type PurchaseUpdateOneWithoutPurchaseDetailNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PurchaseUpdateToOneWithWhereWithoutPurchaseDetailInput, Prisma.PurchaseUpdateWithoutPurchaseDetailInput>, Prisma.PurchaseUncheckedUpdateWithoutPurchaseDetailInput>
 }
 
+export type PurchaseCreateWithoutCompanyInput = {
+  id: string
+  purchaseDate?: Date | string | null
+  orderNumber?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  Project?: Prisma.ProjectCreateNestedOneWithoutPurchaseInput
+  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutPurchaseInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
+}
+
+export type PurchaseUncheckedCreateWithoutCompanyInput = {
+  id: string
+  projectId?: string | null
+  purchaseDate?: Date | string | null
+  materialGroupId?: string | null
+  orderNumber?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  createdBy: string
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutPurchaseInput
+}
+
+export type PurchaseCreateOrConnectWithoutCompanyInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.PurchaseCreateWithoutCompanyInput, Prisma.PurchaseUncheckedCreateWithoutCompanyInput>
+}
+
+export type PurchaseCreateManyCompanyInputEnvelope = {
+  data: Prisma.PurchaseCreateManyCompanyInput | Prisma.PurchaseCreateManyCompanyInput[]
+  skipDuplicates?: boolean
+}
+
+export type PurchaseUpsertWithWhereUniqueWithoutCompanyInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.PurchaseUpdateWithoutCompanyInput, Prisma.PurchaseUncheckedUpdateWithoutCompanyInput>
+  create: Prisma.XOR<Prisma.PurchaseCreateWithoutCompanyInput, Prisma.PurchaseUncheckedCreateWithoutCompanyInput>
+}
+
+export type PurchaseUpdateWithWhereUniqueWithoutCompanyInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.PurchaseUpdateWithoutCompanyInput, Prisma.PurchaseUncheckedUpdateWithoutCompanyInput>
+}
+
+export type PurchaseUpdateManyWithWhereWithoutCompanyInput = {
+  where: Prisma.PurchaseScalarWhereInput
+  data: Prisma.XOR<Prisma.PurchaseUpdateManyMutationInput, Prisma.PurchaseUncheckedUpdateManyWithoutCompanyInput>
+}
+
+export type PurchaseScalarWhereInput = {
+  AND?: Prisma.PurchaseScalarWhereInput | Prisma.PurchaseScalarWhereInput[]
+  OR?: Prisma.PurchaseScalarWhereInput[]
+  NOT?: Prisma.PurchaseScalarWhereInput | Prisma.PurchaseScalarWhereInput[]
+  id?: Prisma.StringFilter<"Purchase"> | string
+  projectId?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  purchaseDate?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
+  materialGroupId?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  orderNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  companyId?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  brandName?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  brandOrderNumber?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  status?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  description?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  preferedSupplier?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  updatedAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
+  createdBy?: Prisma.StringFilter<"Purchase"> | string
+}
+
+export type PurchaseCreateWithoutEmployeeInput = {
+  id: string
+  purchaseDate?: Date | string | null
+  orderNumber?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  Project?: Prisma.ProjectCreateNestedOneWithoutPurchaseInput
+  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutPurchaseInput
+  Company?: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
+}
+
+export type PurchaseUncheckedCreateWithoutEmployeeInput = {
+  id: string
+  projectId?: string | null
+  purchaseDate?: Date | string | null
+  materialGroupId?: string | null
+  orderNumber?: string | null
+  companyId?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutPurchaseInput
+}
+
+export type PurchaseCreateOrConnectWithoutEmployeeInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.PurchaseCreateWithoutEmployeeInput, Prisma.PurchaseUncheckedCreateWithoutEmployeeInput>
+}
+
+export type PurchaseCreateManyEmployeeInputEnvelope = {
+  data: Prisma.PurchaseCreateManyEmployeeInput | Prisma.PurchaseCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type PurchaseUpsertWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.PurchaseUpdateWithoutEmployeeInput, Prisma.PurchaseUncheckedUpdateWithoutEmployeeInput>
+  create: Prisma.XOR<Prisma.PurchaseCreateWithoutEmployeeInput, Prisma.PurchaseUncheckedCreateWithoutEmployeeInput>
+}
+
+export type PurchaseUpdateWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.PurchaseUpdateWithoutEmployeeInput, Prisma.PurchaseUncheckedUpdateWithoutEmployeeInput>
+}
+
+export type PurchaseUpdateManyWithWhereWithoutEmployeeInput = {
+  where: Prisma.PurchaseScalarWhereInput
+  data: Prisma.XOR<Prisma.PurchaseUpdateManyMutationInput, Prisma.PurchaseUncheckedUpdateManyWithoutEmployeeInput>
+}
+
+export type PurchaseCreateWithoutMaterialGroupInput = {
+  id: string
+  purchaseDate?: Date | string | null
+  orderNumber?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  Project?: Prisma.ProjectCreateNestedOneWithoutPurchaseInput
+  Company?: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
+}
+
+export type PurchaseUncheckedCreateWithoutMaterialGroupInput = {
+  id: string
+  projectId?: string | null
+  purchaseDate?: Date | string | null
+  orderNumber?: string | null
+  companyId?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  createdBy: string
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutPurchaseInput
+}
+
+export type PurchaseCreateOrConnectWithoutMaterialGroupInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.PurchaseCreateWithoutMaterialGroupInput, Prisma.PurchaseUncheckedCreateWithoutMaterialGroupInput>
+}
+
+export type PurchaseCreateManyMaterialGroupInputEnvelope = {
+  data: Prisma.PurchaseCreateManyMaterialGroupInput | Prisma.PurchaseCreateManyMaterialGroupInput[]
+  skipDuplicates?: boolean
+}
+
+export type PurchaseUpsertWithWhereUniqueWithoutMaterialGroupInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.PurchaseUpdateWithoutMaterialGroupInput, Prisma.PurchaseUncheckedUpdateWithoutMaterialGroupInput>
+  create: Prisma.XOR<Prisma.PurchaseCreateWithoutMaterialGroupInput, Prisma.PurchaseUncheckedCreateWithoutMaterialGroupInput>
+}
+
+export type PurchaseUpdateWithWhereUniqueWithoutMaterialGroupInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.PurchaseUpdateWithoutMaterialGroupInput, Prisma.PurchaseUncheckedUpdateWithoutMaterialGroupInput>
+}
+
+export type PurchaseUpdateManyWithWhereWithoutMaterialGroupInput = {
+  where: Prisma.PurchaseScalarWhereInput
+  data: Prisma.XOR<Prisma.PurchaseUpdateManyMutationInput, Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupInput>
+}
+
+export type PurchaseCreateWithoutProjectInput = {
+  id: string
+  purchaseDate?: Date | string | null
+  orderNumber?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutPurchaseInput
+  Company?: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
+  PurchaseDetail?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
+}
+
+export type PurchaseUncheckedCreateWithoutProjectInput = {
+  id: string
+  purchaseDate?: Date | string | null
+  materialGroupId?: string | null
+  orderNumber?: string | null
+  companyId?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  createdBy: string
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedCreateNestedManyWithoutPurchaseInput
+}
+
+export type PurchaseCreateOrConnectWithoutProjectInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.PurchaseCreateWithoutProjectInput, Prisma.PurchaseUncheckedCreateWithoutProjectInput>
+}
+
+export type PurchaseCreateManyProjectInputEnvelope = {
+  data: Prisma.PurchaseCreateManyProjectInput | Prisma.PurchaseCreateManyProjectInput[]
+  skipDuplicates?: boolean
+}
+
+export type PurchaseUpsertWithWhereUniqueWithoutProjectInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.PurchaseUpdateWithoutProjectInput, Prisma.PurchaseUncheckedUpdateWithoutProjectInput>
+  create: Prisma.XOR<Prisma.PurchaseCreateWithoutProjectInput, Prisma.PurchaseUncheckedCreateWithoutProjectInput>
+}
+
+export type PurchaseUpdateWithWhereUniqueWithoutProjectInput = {
+  where: Prisma.PurchaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.PurchaseUpdateWithoutProjectInput, Prisma.PurchaseUncheckedUpdateWithoutProjectInput>
+}
+
+export type PurchaseUpdateManyWithWhereWithoutProjectInput = {
+  where: Prisma.PurchaseScalarWhereInput
+  data: Prisma.XOR<Prisma.PurchaseUpdateManyMutationInput, Prisma.PurchaseUncheckedUpdateManyWithoutProjectInput>
+}
+
 export type PurchaseCreateWithoutPurchaseDetailInput = {
   id: string
+  purchaseDate?: Date | string | null
+  orderNumber?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  Project?: Prisma.ProjectCreateNestedOneWithoutPurchaseInput
+  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutPurchaseInput
+  Company?: Prisma.CompanyCreateNestedOneWithoutPurchaseInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutPurchaseInput
 }
 
 export type PurchaseUncheckedCreateWithoutPurchaseDetailInput = {
   id: string
+  projectId?: string | null
+  purchaseDate?: Date | string | null
+  materialGroupId?: string | null
+  orderNumber?: string | null
+  companyId?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  createdBy: string
 }
 
 export type PurchaseCreateOrConnectWithoutPurchaseDetailInput = {
@@ -278,10 +1069,318 @@ export type PurchaseUpdateToOneWithWhereWithoutPurchaseDetailInput = {
 
 export type PurchaseUpdateWithoutPurchaseDetailInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Project?: Prisma.ProjectUpdateOneWithoutPurchaseNestedInput
+  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutPurchaseNestedInput
+  Company?: Prisma.CompanyUpdateOneWithoutPurchaseNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
 }
 
 export type PurchaseUncheckedUpdateWithoutPurchaseDetailInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type PurchaseCreateManyCompanyInput = {
+  id: string
+  projectId?: string | null
+  purchaseDate?: Date | string | null
+  materialGroupId?: string | null
+  orderNumber?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  createdBy: string
+}
+
+export type PurchaseUpdateWithoutCompanyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Project?: Prisma.ProjectUpdateOneWithoutPurchaseNestedInput
+  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutPurchaseNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
+}
+
+export type PurchaseUncheckedUpdateWithoutCompanyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutPurchaseNestedInput
+}
+
+export type PurchaseUncheckedUpdateManyWithoutCompanyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type PurchaseCreateManyEmployeeInput = {
+  id: string
+  projectId?: string | null
+  purchaseDate?: Date | string | null
+  materialGroupId?: string | null
+  orderNumber?: string | null
+  companyId?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+}
+
+export type PurchaseUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Project?: Prisma.ProjectUpdateOneWithoutPurchaseNestedInput
+  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutPurchaseNestedInput
+  Company?: Prisma.CompanyUpdateOneWithoutPurchaseNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
+}
+
+export type PurchaseUncheckedUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutPurchaseNestedInput
+}
+
+export type PurchaseUncheckedUpdateManyWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type PurchaseCreateManyMaterialGroupInput = {
+  id: string
+  projectId?: string | null
+  purchaseDate?: Date | string | null
+  orderNumber?: string | null
+  companyId?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  createdBy: string
+}
+
+export type PurchaseUpdateWithoutMaterialGroupInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Project?: Prisma.ProjectUpdateOneWithoutPurchaseNestedInput
+  Company?: Prisma.CompanyUpdateOneWithoutPurchaseNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
+}
+
+export type PurchaseUncheckedUpdateWithoutMaterialGroupInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutPurchaseNestedInput
+}
+
+export type PurchaseUncheckedUpdateManyWithoutMaterialGroupInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type PurchaseCreateManyProjectInput = {
+  id: string
+  purchaseDate?: Date | string | null
+  materialGroupId?: string | null
+  orderNumber?: string | null
+  companyId?: string | null
+  brandName?: string | null
+  brandOrderNumber?: string | null
+  status?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  preferedSupplier?: string | null
+  additionalInfo?: string | null
+  updatedAt?: Date | string | null
+  createdBy: string
+}
+
+export type PurchaseUpdateWithoutProjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutPurchaseNestedInput
+  Company?: Prisma.CompanyUpdateOneWithoutPurchaseNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPurchaseNestedInput
+  PurchaseDetail?: Prisma.PurchaseDetailUpdateManyWithoutPurchaseNestedInput
+}
+
+export type PurchaseUncheckedUpdateWithoutProjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  PurchaseDetail?: Prisma.PurchaseDetailUncheckedUpdateManyWithoutPurchaseNestedInput
+}
+
+export type PurchaseUncheckedUpdateManyWithoutProjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -317,6 +1416,24 @@ export type PurchaseCountOutputTypeCountPurchaseDetailArgs<ExtArgs extends runti
 
 export type PurchaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  projectId?: boolean
+  purchaseDate?: boolean
+  materialGroupId?: boolean
+  orderNumber?: boolean
+  companyId?: boolean
+  brandName?: boolean
+  brandOrderNumber?: boolean
+  status?: boolean
+  shortDescription?: boolean
+  description?: boolean
+  preferedSupplier?: boolean
+  additionalInfo?: boolean
+  updatedAt?: boolean
+  createdBy?: boolean
+  Project?: boolean | Prisma.Purchase$ProjectArgs<ExtArgs>
+  MaterialGroup?: boolean | Prisma.Purchase$MaterialGroupArgs<ExtArgs>
+  Company?: boolean | Prisma.Purchase$CompanyArgs<ExtArgs>
+  Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.Purchase$PurchaseDetailArgs<ExtArgs>
   _count?: boolean | Prisma.PurchaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["purchase"]>
@@ -325,10 +1442,28 @@ export type PurchaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 
 export type PurchaseSelectScalar = {
   id?: boolean
+  projectId?: boolean
+  purchaseDate?: boolean
+  materialGroupId?: boolean
+  orderNumber?: boolean
+  companyId?: boolean
+  brandName?: boolean
+  brandOrderNumber?: boolean
+  status?: boolean
+  shortDescription?: boolean
+  description?: boolean
+  preferedSupplier?: boolean
+  additionalInfo?: boolean
+  updatedAt?: boolean
+  createdBy?: boolean
 }
 
-export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id", ExtArgs["result"]["purchase"]>
+export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "purchaseDate" | "materialGroupId" | "orderNumber" | "companyId" | "brandName" | "brandOrderNumber" | "status" | "shortDescription" | "description" | "preferedSupplier" | "additionalInfo" | "updatedAt" | "createdBy", ExtArgs["result"]["purchase"]>
 export type PurchaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  Project?: boolean | Prisma.Purchase$ProjectArgs<ExtArgs>
+  MaterialGroup?: boolean | Prisma.Purchase$MaterialGroupArgs<ExtArgs>
+  Company?: boolean | Prisma.Purchase$CompanyArgs<ExtArgs>
+  Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   PurchaseDetail?: boolean | Prisma.Purchase$PurchaseDetailArgs<ExtArgs>
   _count?: boolean | Prisma.PurchaseCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -336,10 +1471,28 @@ export type PurchaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type $PurchasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Purchase"
   objects: {
+    Project: Prisma.$ProjectPayload<ExtArgs> | null
+    MaterialGroup: Prisma.$MaterialGroupPayload<ExtArgs> | null
+    Company: Prisma.$CompanyPayload<ExtArgs> | null
+    Employee: Prisma.$EmployeePayload<ExtArgs>
     PurchaseDetail: Prisma.$PurchaseDetailPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    projectId: string | null
+    purchaseDate: Date | null
+    materialGroupId: string | null
+    orderNumber: string | null
+    companyId: string | null
+    brandName: string | null
+    brandOrderNumber: string | null
+    status: string | null
+    shortDescription: string | null
+    description: string | null
+    preferedSupplier: string | null
+    additionalInfo: string | null
+    updatedAt: Date | null
+    createdBy: string
   }, ExtArgs["result"]["purchase"]>
   composites: {}
 }
@@ -680,6 +1833,10 @@ readonly fields: PurchaseFieldRefs;
  */
 export interface Prisma__PurchaseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  Project<T extends Prisma.Purchase$ProjectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$ProjectArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  MaterialGroup<T extends Prisma.Purchase$MaterialGroupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$MaterialGroupArgs<ExtArgs>>): Prisma.Prisma__MaterialGroupClient<runtime.Types.Result.GetResult<Prisma.$MaterialGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Company<T extends Prisma.Purchase$CompanyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$CompanyArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   PurchaseDetail<T extends Prisma.Purchase$PurchaseDetailArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$PurchaseDetailArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseDetailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -711,6 +1868,20 @@ export interface Prisma__PurchaseClient<T, Null = never, ExtArgs extends runtime
  */
 export interface PurchaseFieldRefs {
   readonly id: Prisma.FieldRef<"Purchase", 'String'>
+  readonly projectId: Prisma.FieldRef<"Purchase", 'String'>
+  readonly purchaseDate: Prisma.FieldRef<"Purchase", 'DateTime'>
+  readonly materialGroupId: Prisma.FieldRef<"Purchase", 'String'>
+  readonly orderNumber: Prisma.FieldRef<"Purchase", 'String'>
+  readonly companyId: Prisma.FieldRef<"Purchase", 'String'>
+  readonly brandName: Prisma.FieldRef<"Purchase", 'String'>
+  readonly brandOrderNumber: Prisma.FieldRef<"Purchase", 'String'>
+  readonly status: Prisma.FieldRef<"Purchase", 'String'>
+  readonly shortDescription: Prisma.FieldRef<"Purchase", 'String'>
+  readonly description: Prisma.FieldRef<"Purchase", 'String'>
+  readonly preferedSupplier: Prisma.FieldRef<"Purchase", 'String'>
+  readonly additionalInfo: Prisma.FieldRef<"Purchase", 'String'>
+  readonly updatedAt: Prisma.FieldRef<"Purchase", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"Purchase", 'String'>
 }
     
 
@@ -1051,6 +2222,63 @@ export type PurchaseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Purchases to delete.
    */
   limit?: number
+}
+
+/**
+ * Purchase.Project
+ */
+export type Purchase$ProjectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Project
+   */
+  select?: Prisma.ProjectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Project
+   */
+  omit?: Prisma.ProjectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectInclude<ExtArgs> | null
+  where?: Prisma.ProjectWhereInput
+}
+
+/**
+ * Purchase.MaterialGroup
+ */
+export type Purchase$MaterialGroupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaterialGroup
+   */
+  select?: Prisma.MaterialGroupSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaterialGroup
+   */
+  omit?: Prisma.MaterialGroupOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaterialGroupInclude<ExtArgs> | null
+  where?: Prisma.MaterialGroupWhereInput
+}
+
+/**
+ * Purchase.Company
+ */
+export type Purchase$CompanyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Company
+   */
+  select?: Prisma.CompanySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Company
+   */
+  omit?: Prisma.CompanyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompanyInclude<ExtArgs> | null
+  where?: Prisma.CompanyWhereInput
 }
 
 /**

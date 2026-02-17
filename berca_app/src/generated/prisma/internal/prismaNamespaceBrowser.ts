@@ -55,7 +55,10 @@ export const ModelName = {
   CompanyAdress: 'CompanyAdress',
   CompanyContact: 'CompanyContact',
   Contact: 'Contact',
+  DeliveryNoteSupplier: 'DeliveryNoteSupplier',
   Department: 'Department',
+  DocumentGroup: 'DocumentGroup',
+  DocumentPlace: 'DocumentPlace',
   DocumentStructure: 'DocumentStructure',
   EmergencyContact: 'EmergencyContact',
   Employee: 'Employee',
@@ -65,40 +68,14 @@ export const ModelName = {
   FollowUpType: 'FollowUpType',
   Function: 'Function',
   HourType: 'HourType',
+  Inventory: 'Inventory',
+  InventoryChange: 'InventoryChange',
+  InventoryOrder: 'InventoryOrder',
+  InventoryStructure: 'InventoryStructure',
   InvoiceIn: 'InvoiceIn',
   InvoiceInTarget: 'InvoiceInTarget',
   InvoiceOut: 'InvoiceOut',
   InvoiceType: 'InvoiceType',
-  Project: 'Project',
-  ProjectContact: 'ProjectContact',
-  ProjectType: 'ProjectType',
-  Role: 'Role',
-  Status: 'Status',
-  Target: 'Target',
-  TargetType: 'TargetType',
-  TimeRegistry: 'TimeRegistry',
-  TimeRegistryEmployee: 'TimeRegistryEmployee',
-  Title: 'Title',
-  Training: 'Training',
-  TrainingContact: 'TrainingContact',
-  TrainingDocument: 'TrainingDocument',
-  TrainingStandard: 'TrainingStandard',
-  UrgencyType: 'UrgencyType',
-  VisibilityForRole: 'VisibilityForRole',
-  WorkOrder: 'WorkOrder',
-  WorkOrderStructure: 'WorkOrderStructure',
-  Session: 'Session',
-  Accounting: 'Accounting',
-  DeliveryNote: 'DeliveryNote',
-  DocumentGroup: 'DocumentGroup',
-  DocumentPlace: 'DocumentPlace',
-  Inventory: 'Inventory',
-  InventoryChange: 'InventoryChange',
-  InventoryOrder: 'InventoryOrder',
-  InventoryOrderStructure: 'InventoryOrderStructure',
-  InventoryPlace: 'InventoryPlace',
-  InventoryStructure: 'InventoryStructure',
-  InvestingCode: 'InvestingCode',
   Material: 'Material',
   MaterialAssembly: 'MaterialAssembly',
   MaterialCode: 'MaterialCode',
@@ -109,25 +86,42 @@ export const ModelName = {
   MaterialOther: 'MaterialOther',
   MaterialPerformance: 'MaterialPerformance',
   MaterialPrice: 'MaterialPrice',
-  MaterialSerialTracked: 'MaterialSerialTracked',
+  MaterialSerialTrack: 'MaterialSerialTrack',
   MaterialSerialTrackedStructure: 'MaterialSerialTrackedStructure',
-  MaterialSpecification: 'MaterialSpecification',
+  MaterialSpec: 'MaterialSpec',
   MaterialStructure: 'MaterialStructure',
   Part: 'Part',
   Phantom: 'Phantom',
   Product: 'Product',
+  Project: 'Project',
+  ProjectContact: 'ProjectContact',
+  ProjectType: 'ProjectType',
   Purchase: 'Purchase',
   PurchaseDetail: 'PurchaseDetail',
   PurchaseOrderBecra: 'PurchaseOrderBecra',
-  PurchasePriceRequest: 'PurchasePriceRequest',
-  Sale: 'Sale',
-  SaleOrderDetail: 'SaleOrderDetail',
-  SerialTracked: 'SerialTracked',
+  QouteBecra: 'QouteBecra',
+  QuoteSupplier: 'QuoteSupplier',
+  Role: 'Role',
+  Session: 'Session',
+  Status: 'Status',
+  SupplierDeliveryNoteFollowUp: 'SupplierDeliveryNoteFollowUp',
+  Target: 'Target',
+  TargetType: 'TargetType',
   TestProcedure: 'TestProcedure',
-  TransactionType: 'TransactionType',
+  TimeRegistry: 'TimeRegistry',
+  TimeRegistryEmployee: 'TimeRegistryEmployee',
+  Title: 'Title',
+  Training: 'Training',
+  TrainingContact: 'TrainingContact',
+  TrainingDocument: 'TrainingDocument',
+  TrainingStandard: 'TrainingStandard',
   Unit: 'Unit',
-  WarehouseManagement: 'WarehouseManagement',
-  WarehousePlace: 'WarehousePlace'
+  UrgencyType: 'UrgencyType',
+  VisibilityForRole: 'VisibilityForRole',
+  WarehousePlace: 'WarehousePlace',
+  WorkOrder: 'WorkOrder',
+  WorkOrderInvoice: 'WorkOrderInvoice',
+  WorkOrderStructure: 'WorkOrderStructure'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -270,6 +264,18 @@ export const ContactScalarFieldEnum = {
 export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeof ContactScalarFieldEnum]
 
 
+export const DeliveryNoteSupplierScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  supplierNN: 'supplierNN',
+  information: 'information',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type DeliveryNoteSupplierScalarFieldEnum = (typeof DeliveryNoteSupplierScalarFieldEnum)[keyof typeof DeliveryNoteSupplierScalarFieldEnum]
+
+
 export const DepartmentScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -281,6 +287,28 @@ export const DepartmentScalarFieldEnum = {
 } as const
 
 export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
+
+
+export const DocumentGroupScalarFieldEnum = {
+  id: 'id',
+  groupA: 'groupA',
+  groupB: 'groupB',
+  groupC: 'groupC',
+  groupD: 'groupD'
+} as const
+
+export type DocumentGroupScalarFieldEnum = (typeof DocumentGroupScalarFieldEnum)[keyof typeof DocumentGroupScalarFieldEnum]
+
+
+export const DocumentPlaceScalarFieldEnum = {
+  id: 'id',
+  placeA: 'placeA',
+  placeB: 'placeB',
+  placeC: 'placeC',
+  placeD: 'placeD'
+} as const
+
+export type DocumentPlaceScalarFieldEnum = (typeof DocumentPlaceScalarFieldEnum)[keyof typeof DocumentPlaceScalarFieldEnum]
 
 
 export const DocumentStructureScalarFieldEnum = {
@@ -448,6 +476,88 @@ export const HourTypeScalarFieldEnum = {
 export type HourTypeScalarFieldEnum = (typeof HourTypeScalarFieldEnum)[keyof typeof HourTypeScalarFieldEnum]
 
 
+export const InventoryScalarFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  beNumber: 'beNumber',
+  place: 'place',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  serieNumber: 'serieNumber',
+  quantityInStock: 'quantityInStock',
+  minQuantityInStock: 'minQuantityInStock',
+  maxQuantityInStock: 'maxQuantityInStock',
+  information: 'information',
+  valid: 'valid',
+  noValidDate: 'noValidDate',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type InventoryScalarFieldEnum = (typeof InventoryScalarFieldEnum)[keyof typeof InventoryScalarFieldEnum]
+
+
+export const InventoryChangeScalarFieldEnum = {
+  id: 'id',
+  inventoryId: 'inventoryId',
+  beNumber: 'beNumber',
+  serialTrackedId: 'serialTrackedId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  additionalInformation: 'additionalInformation',
+  fromLocation: 'fromLocation',
+  toLocation: 'toLocation',
+  inventoryOldValue: 'inventoryOldValue',
+  inventoryNewValue: 'inventoryNewValue',
+  changeDescription: 'changeDescription',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type InventoryChangeScalarFieldEnum = (typeof InventoryChangeScalarFieldEnum)[keyof typeof InventoryChangeScalarFieldEnum]
+
+
+export const InventoryOrderScalarFieldEnum = {
+  id: 'id',
+  inventoryId: 'inventoryId',
+  orderNumber: 'orderNumber',
+  orderDate: 'orderDate',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type InventoryOrderScalarFieldEnum = (typeof InventoryOrderScalarFieldEnum)[keyof typeof InventoryOrderScalarFieldEnum]
+
+
+export const InventoryStructureScalarFieldEnum = {
+  id: 'id',
+  inventoryPlaceId: 'inventoryPlaceId',
+  place: 'place',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  beNumber: 'beNumber',
+  purchaseOrderBecraId: 'purchaseOrderBecraId',
+  projectId: 'projectId',
+  partSupplierNumber: 'partSupplierNumber',
+  partDescription: 'partDescription',
+  warehousePlaceId: 'warehousePlaceId',
+  information: 'information',
+  coordinate: 'coordinate',
+  inventoryId: 'inventoryId',
+  forInventory: 'forInventory',
+  forProject: 'forProject',
+  active: 'active',
+  materialActive: 'materialActive',
+  valid: 'valid',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type InventoryStructureScalarFieldEnum = (typeof InventoryStructureScalarFieldEnum)[keyof typeof InventoryStructureScalarFieldEnum]
+
+
 export const InvoiceInScalarFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
@@ -513,7 +623,6 @@ export const InvoiceOutScalarFieldEnum = {
   completed: 'completed',
   createdBy: 'createdBy',
   invoiceTypeId: 'invoiceTypeId',
-  workOrderId: 'workOrderId',
   targetId: 'targetId'
 } as const
 
@@ -528,6 +637,295 @@ export const InvoiceTypeScalarFieldEnum = {
 } as const
 
 export type InvoiceTypeScalarFieldEnum = (typeof InvoiceTypeScalarFieldEnum)[keyof typeof InvoiceTypeScalarFieldEnum]
+
+
+export const MaterialScalarFieldEnum = {
+  id: 'id',
+  beNumber: 'beNumber',
+  name: 'name',
+  brandOrderNr: 'brandOrderNr',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  preferedSupplier: 'preferedSupplier',
+  brandName: 'brandName',
+  documentationPlace: 'documentationPlace',
+  bePartDoc: 'bePartDoc',
+  rejected: 'rejected',
+  materialGroupId: 'materialGroupId',
+  unitId: 'unitId',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
+
+
+export const MaterialAssemblyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialAssemblyScalarFieldEnum = (typeof MaterialAssemblyScalarFieldEnum)[keyof typeof MaterialAssemblyScalarFieldEnum]
+
+
+export const MaterialCodeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+} as const
+
+export type MaterialCodeScalarFieldEnum = (typeof MaterialCodeScalarFieldEnum)[keyof typeof MaterialCodeScalarFieldEnum]
+
+
+export const MaterialDimensionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialDimensionScalarFieldEnum = (typeof MaterialDimensionScalarFieldEnum)[keyof typeof MaterialDimensionScalarFieldEnum]
+
+
+export const MaterialFamilyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialFamilyScalarFieldEnum = (typeof MaterialFamilyScalarFieldEnum)[keyof typeof MaterialFamilyScalarFieldEnum]
+
+
+export const MaterialGroupScalarFieldEnum = {
+  id: 'id',
+  groupA: 'groupA',
+  groupB: 'groupB',
+  groupC: 'groupC',
+  groupD: 'groupD'
+} as const
+
+export type MaterialGroupScalarFieldEnum = (typeof MaterialGroupScalarFieldEnum)[keyof typeof MaterialGroupScalarFieldEnum]
+
+
+export const MaterialMovementScalarFieldEnum = {
+  id: 'id',
+  beNumberId: 'beNumberId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  serieId: 'serieId',
+  transactionType: 'transactionType',
+  brandName: 'brandName',
+  brandNameNr: 'brandNameNr',
+  toLocation: 'toLocation',
+  fromLocation: 'fromLocation',
+  updatedAt: 'updatedAt',
+  rejected: 'rejected',
+  additionalInfo: 'additionalInfo',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialMovementScalarFieldEnum = (typeof MaterialMovementScalarFieldEnum)[keyof typeof MaterialMovementScalarFieldEnum]
+
+
+export const MaterialOtherScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  materialId: 'materialId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialOtherScalarFieldEnum = (typeof MaterialOtherScalarFieldEnum)[keyof typeof MaterialOtherScalarFieldEnum]
+
+
+export const MaterialPerformanceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  materialSpecId: 'materialSpecId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  materialFamilyId: 'materialFamilyId',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialPerformanceScalarFieldEnum = (typeof MaterialPerformanceScalarFieldEnum)[keyof typeof MaterialPerformanceScalarFieldEnum]
+
+
+export const MaterialPriceScalarFieldEnum = {
+  id: 'id',
+  beNumber: 'beNumber',
+  orderNr: 'orderNr',
+  quoteBecra: 'quoteBecra',
+  supllierOrderNr: 'supllierOrderNr',
+  brandOrderNr: 'brandOrderNr',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  brandName: 'brandName',
+  updatedAt: 'updatedAt',
+  rejected: 'rejected',
+  additionalInfo: 'additionalInfo',
+  unitPrice: 'unitPrice',
+  quantityPrice: 'quantityPrice',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)[keyof typeof MaterialPriceScalarFieldEnum]
+
+
+export const MaterialSerialTrackScalarFieldEnum = {
+  id: 'id',
+  beNumber: 'beNumber',
+  brandName: 'brandName',
+  management: 'management',
+  brandOrderNumber: 'brandOrderNumber',
+  companyId: 'companyId',
+  orderNumber: 'orderNumber',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  transactionType: 'transactionType',
+  materialGroupId: 'materialGroupId',
+  fromLocation: 'fromLocation',
+  toLocation: 'toLocation',
+  updatedAt: 'updatedAt',
+  preferedSupplier: 'preferedSupplier',
+  rejected: 'rejected',
+  additionalInfo: 'additionalInfo',
+  projectId: 'projectId',
+  becraCode: 'becraCode',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialSerialTrackScalarFieldEnum = (typeof MaterialSerialTrackScalarFieldEnum)[keyof typeof MaterialSerialTrackScalarFieldEnum]
+
+
+export const MaterialSerialTrackedStructureScalarFieldEnum = {
+  id: 'id',
+  serialTrackedId: 'serialTrackedId',
+  certificateId: 'certificateId',
+  materialSpecId: 'materialSpecId',
+  referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
+  documentId: 'documentId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  management: 'management',
+  date: 'date',
+  expiredDate: 'expiredDate',
+  documentationPlace: 'documentationPlace',
+  docRevision: 'docRevision',
+  valid: 'valid',
+  additionalInfo: 'additionalInfo',
+  beNumber: 'beNumber',
+  beParentPart: 'beParentPart',
+  serialCode: 'serialCode',
+  tag: 'tag',
+  preferedSupplier: 'preferedSupplier',
+  brandName: 'brandName',
+  brandOrderNr: 'brandOrderNr',
+  unit: 'unit',
+  unitQuantity: 'unitQuantity',
+  unitPieces: 'unitPieces',
+  unitWeightKg: 'unitWeightKg',
+  quantityRequired: 'quantityRequired',
+  quantityReserved: 'quantityReserved',
+  quantityIssued: 'quantityIssued',
+  rejected: 'rejected',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialSerialTrackedStructureScalarFieldEnum = (typeof MaterialSerialTrackedStructureScalarFieldEnum)[keyof typeof MaterialSerialTrackedStructureScalarFieldEnum]
+
+
+export const MaterialSpecScalarFieldEnum = {
+  id: 'id',
+  materialFamilyId: 'materialFamilyId',
+  name: 'name',
+  materialDimensionId: 'materialDimensionId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialSpecScalarFieldEnum = (typeof MaterialSpecScalarFieldEnum)[keyof typeof MaterialSpecScalarFieldEnum]
+
+
+export const MaterialStructureScalarFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  beNumber: 'beNumber',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  management: 'management',
+  date: 'date',
+  expiredDate: 'expiredDate',
+  docRevision: 'docRevision',
+  valid: 'valid',
+  additionalInfo: 'additionalInfo',
+  referenceDocId: 'referenceDocId',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialStructureScalarFieldEnum = (typeof MaterialStructureScalarFieldEnum)[keyof typeof MaterialStructureScalarFieldEnum]
+
+
+export const PartScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  part: 'part',
+  abbreviation: 'abbreviation',
+  devision: 'devision',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  additionalInfo: 'additionalInfo',
+  date: 'date',
+  createdBy: 'createdBy'
+} as const
+
+export type PartScalarFieldEnum = (typeof PartScalarFieldEnum)[keyof typeof PartScalarFieldEnum]
+
+
+export const PhantomScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  date: 'date',
+  valid: 'valid',
+  createdBy: 'createdBy'
+} as const
+
+export type PhantomScalarFieldEnum = (typeof PhantomScalarFieldEnum)[keyof typeof PhantomScalarFieldEnum]
+
+
+export const ProductScalarFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  shortDescription: 'shortDescription',
+  description: 'description',
+  costPrice: 'costPrice',
+  profit: 'profit',
+  sellingUnitQuantity: 'sellingUnitQuantity',
+  sellingPrice: 'sellingPrice',
+  status: 'status',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy'
+} as const
+
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
 
 
 export const ProjectScalarFieldEnum = {
@@ -580,6 +978,83 @@ export const ProjectTypeScalarFieldEnum = {
 export type ProjectTypeScalarFieldEnum = (typeof ProjectTypeScalarFieldEnum)[keyof typeof ProjectTypeScalarFieldEnum]
 
 
+export const PurchaseScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  purchaseDate: 'purchaseDate',
+  materialGroupId: 'materialGroupId',
+  orderNumber: 'orderNumber',
+  companyId: 'companyId',
+  brandName: 'brandName',
+  brandOrderNumber: 'brandOrderNumber',
+  status: 'status',
+  shortDescription: 'shortDescription',
+  description: 'description',
+  preferedSupplier: 'preferedSupplier',
+  additionalInfo: 'additionalInfo',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy'
+} as const
+
+export type PurchaseScalarFieldEnum = (typeof PurchaseScalarFieldEnum)[keyof typeof PurchaseScalarFieldEnum]
+
+
+export const PurchaseDetailScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  purchaseId: 'purchaseId',
+  beNumber: 'beNumber',
+  unitPrice: 'unitPrice',
+  quantity: 'quantity',
+  totalCost: 'totalCost',
+  status: 'status',
+  additionalInfo: 'additionalInfo',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy'
+} as const
+
+export type PurchaseDetailScalarFieldEnum = (typeof PurchaseDetailScalarFieldEnum)[keyof typeof PurchaseDetailScalarFieldEnum]
+
+
+export const PurchaseOrderBecraScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  date: 'date',
+  createdBy: 'createdBy'
+} as const
+
+export type PurchaseOrderBecraScalarFieldEnum = (typeof PurchaseOrderBecraScalarFieldEnum)[keyof typeof PurchaseOrderBecraScalarFieldEnum]
+
+
+export const QouteBecraScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  validDate: 'validDate',
+  date: 'date',
+  createdBy: 'createdBy'
+} as const
+
+export type QouteBecraScalarFieldEnum = (typeof QouteBecraScalarFieldEnum)[keyof typeof QouteBecraScalarFieldEnum]
+
+
+export const QuoteSupplierScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  projectId: 'projectId',
+  rejected: 'rejected',
+  additionalInfo: 'additionalInfo',
+  link: 'link',
+  documentPlaceId: 'documentPlaceId',
+  payementCondition: 'payementCondition',
+  acceptedForPOB: 'acceptedForPOB',
+  validUntill: 'validUntill',
+  deliveryTimeDays: 'deliveryTimeDays',
+  createdBy: 'createdBy'
+} as const
+
+export type QuoteSupplierScalarFieldEnum = (typeof QuoteSupplierScalarFieldEnum)[keyof typeof QuoteSupplierScalarFieldEnum]
+
+
 export const RoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -591,6 +1066,16 @@ export const RoleScalarFieldEnum = {
 export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
 
 
+export const SessionScalarFieldEnum = {
+  id: 'id',
+  activeFrom: 'activeFrom',
+  activeUntil: 'activeUntil',
+  employeeId: 'employeeId'
+} as const
+
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
 export const StatusScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -599,6 +1084,19 @@ export const StatusScalarFieldEnum = {
 } as const
 
 export type StatusScalarFieldEnum = (typeof StatusScalarFieldEnum)[keyof typeof StatusScalarFieldEnum]
+
+
+export const SupplierDeliveryNoteFollowUpScalarFieldEnum = {
+  id: 'id',
+  deliveryNoteSupplierId: 'deliveryNoteSupplierId',
+  workOrderStructureId: 'workOrderStructureId',
+  quantityDelivered: 'quantityDelivered',
+  information: 'information',
+  deliveryDate: 'deliveryDate',
+  createdBy: 'createdBy'
+} as const
+
+export type SupplierDeliveryNoteFollowUpScalarFieldEnum = (typeof SupplierDeliveryNoteFollowUpScalarFieldEnum)[keyof typeof SupplierDeliveryNoteFollowUpScalarFieldEnum]
 
 
 export const TargetScalarFieldEnum = {
@@ -619,6 +1117,18 @@ export const TargetTypeScalarFieldEnum = {
 } as const
 
 export type TargetTypeScalarFieldEnum = (typeof TargetTypeScalarFieldEnum)[keyof typeof TargetTypeScalarFieldEnum]
+
+
+export const TestProcedureScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type TestProcedureScalarFieldEnum = (typeof TestProcedureScalarFieldEnum)[keyof typeof TestProcedureScalarFieldEnum]
 
 
 export const TimeRegistryScalarFieldEnum = {
@@ -717,6 +1227,21 @@ export const TrainingStandardScalarFieldEnum = {
 export type TrainingStandardScalarFieldEnum = (typeof TrainingStandardScalarFieldEnum)[keyof typeof TrainingStandardScalarFieldEnum]
 
 
+export const UnitScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  quantity: 'quantity',
+  abbreviation: 'abbreviation',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  valid: 'valid',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+} as const
+
+export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof UnitScalarFieldEnum]
+
+
 export const UrgencyTypeScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -735,6 +1260,22 @@ export const VisibilityForRoleScalarFieldEnum = {
 } as const
 
 export type VisibilityForRoleScalarFieldEnum = (typeof VisibilityForRoleScalarFieldEnum)[keyof typeof VisibilityForRoleScalarFieldEnum]
+
+
+export const WarehousePlaceScalarFieldEnum = {
+  id: 'id',
+  place: 'place',
+  shelf: 'shelf',
+  column: 'column',
+  layer: 'layer',
+  layerPlace: 'layerPlace',
+  information: 'information',
+  volume: 'volume',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type WarehousePlaceScalarFieldEnum = (typeof WarehousePlaceScalarFieldEnum)[keyof typeof WarehousePlaceScalarFieldEnum]
 
 
 export const WorkOrderScalarFieldEnum = {
@@ -756,6 +1297,15 @@ export const WorkOrderScalarFieldEnum = {
 export type WorkOrderScalarFieldEnum = (typeof WorkOrderScalarFieldEnum)[keyof typeof WorkOrderScalarFieldEnum]
 
 
+export const WorkOrderInvoiceScalarFieldEnum = {
+  id: 'id',
+  invoiceOutId: 'invoiceOutId',
+  workOrderId: 'workOrderId'
+} as const
+
+export type WorkOrderInvoiceScalarFieldEnum = (typeof WorkOrderInvoiceScalarFieldEnum)[keyof typeof WorkOrderInvoiceScalarFieldEnum]
+
+
 export const WorkOrderStructureScalarFieldEnum = {
   id: 'id',
   clientNumber: 'clientNumber',
@@ -772,669 +1322,6 @@ export const WorkOrderStructureScalarFieldEnum = {
 } as const
 
 export type WorkOrderStructureScalarFieldEnum = (typeof WorkOrderStructureScalarFieldEnum)[keyof typeof WorkOrderStructureScalarFieldEnum]
-
-
-export const SessionScalarFieldEnum = {
-  id: 'id',
-  activeFrom: 'activeFrom',
-  activeUntil: 'activeUntil',
-  employeeId: 'employeeId'
-} as const
-
-export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
-
-
-export const AccountingScalarFieldEnum = {
-  id: 'id',
-  transactionTypeId: 'transactionTypeId',
-  beNumber: 'beNumber',
-  costPrice: 'costPrice',
-  sellingPrice: 'sellingPrice',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type AccountingScalarFieldEnum = (typeof AccountingScalarFieldEnum)[keyof typeof AccountingScalarFieldEnum]
-
-
-export const DeliveryNoteScalarFieldEnum = {
-  id: 'id',
-  companyId: 'companyId',
-  referenceDocId: 'referenceDocId',
-  additionalInformation: 'additionalInformation',
-  beNumber: 'beNumber',
-  createdAt: 'createdAt',
-  createdBy: 'createdBy'
-} as const
-
-export type DeliveryNoteScalarFieldEnum = (typeof DeliveryNoteScalarFieldEnum)[keyof typeof DeliveryNoteScalarFieldEnum]
-
-
-export const DocumentGroupScalarFieldEnum = {
-  id: 'id',
-  groupA: 'groupA',
-  groupB: 'groupB',
-  groupC: 'groupC',
-  groupD: 'groupD'
-} as const
-
-export type DocumentGroupScalarFieldEnum = (typeof DocumentGroupScalarFieldEnum)[keyof typeof DocumentGroupScalarFieldEnum]
-
-
-export const DocumentPlaceScalarFieldEnum = {
-  id: 'id',
-  placeA: 'placeA',
-  placeB: 'placeB',
-  placeC: 'placeC',
-  placeD: 'placeD'
-} as const
-
-export type DocumentPlaceScalarFieldEnum = (typeof DocumentPlaceScalarFieldEnum)[keyof typeof DocumentPlaceScalarFieldEnum]
-
-
-export const InventoryScalarFieldEnum = {
-  id: 'id',
-  place: 'place',
-  beNumber: 'beNumber',
-  longDescription: 'longDescription',
-  shortDescription: 'shortDescription',
-  serialNumber: 'serialNumber',
-  quantityInStock: 'quantityInStock',
-  minimumStock: 'minimumStock',
-  maximumStock: 'maximumStock',
-  information: 'information',
-  valid: 'valid',
-  createdAt: 'createdAt',
-  createdBy: 'createdBy'
-} as const
-
-export type InventoryScalarFieldEnum = (typeof InventoryScalarFieldEnum)[keyof typeof InventoryScalarFieldEnum]
-
-
-export const InventoryChangeScalarFieldEnum = {
-  id: 'id',
-  inventoryId: 'inventoryId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  additionalInformation: 'additionalInformation',
-  transactionDate: 'transactionDate',
-  fromLocation: 'fromLocation',
-  toLocation: 'toLocation',
-  inventoryQuantityOld: 'inventoryQuantityOld',
-  transactionType: 'transactionType',
-  quantityInStock: 'quantityInStock',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type InventoryChangeScalarFieldEnum = (typeof InventoryChangeScalarFieldEnum)[keyof typeof InventoryChangeScalarFieldEnum]
-
-
-export const InventoryOrderScalarFieldEnum = {
-  id: 'id',
-  storePlace: 'storePlace',
-  companyId: 'companyId',
-  inventoryId: 'inventoryId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  additionalInformation: 'additionalInformation',
-  valid: 'valid',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type InventoryOrderScalarFieldEnum = (typeof InventoryOrderScalarFieldEnum)[keyof typeof InventoryOrderScalarFieldEnum]
-
-
-export const InventoryOrderStructureScalarFieldEnum = {
-  id: 'id',
-  inventoryStructureId: 'inventoryStructureId',
-  inventoryOrderId: 'inventoryOrderId',
-  beNumber: 'beNumber',
-  beNumberParentPart: 'beNumberParentPart',
-  serialCode: 'serialCode',
-  inventoryPlaceId: 'inventoryPlaceId',
-  projectId: 'projectId',
-  quoteSupplier: 'quoteSupplier',
-  partSupplierNumber: 'partSupplierNumber',
-  partDescription: 'partDescription',
-  quantityRequired: 'quantityRequired',
-  quantityReserved: 'quantityReserved',
-  quantityIssued: 'quantityIssued',
-  unitId: 'unitId',
-  unitPieces: 'unitPieces',
-  unitPrice: 'unitPrice',
-  docId: 'docId',
-  pobId: 'pobId',
-  active: 'active',
-  forInventory: 'forInventory',
-  forProject: 'forProject',
-  priceTotal: 'priceTotal',
-  additionalInformation: 'additionalInformation',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type InventoryOrderStructureScalarFieldEnum = (typeof InventoryOrderStructureScalarFieldEnum)[keyof typeof InventoryOrderStructureScalarFieldEnum]
-
-
-export const InventoryPlaceScalarFieldEnum = {
-  id: 'id',
-  abbreviation: 'abbreviation',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  additionalInformation: 'additionalInformation',
-  quantityInStock: 'quantityInStock',
-  coordinates: 'coordinates',
-  coordinatesX: 'coordinatesX',
-  coordinatesY: 'coordinatesY',
-  coordinatesZ: 'coordinatesZ',
-  placeName: 'placeName',
-  placeNameA: 'placeNameA',
-  placeNameB: 'placeNameB',
-  placeNameC: 'placeNameC',
-  serialTrackedId: 'serialTrackedId',
-  inventoryId: 'inventoryId',
-  warehousePlaceId: 'warehousePlaceId',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type InventoryPlaceScalarFieldEnum = (typeof InventoryPlaceScalarFieldEnum)[keyof typeof InventoryPlaceScalarFieldEnum]
-
-
-export const InventoryStructureScalarFieldEnum = {
-  id: 'id',
-  place: 'place',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  beNumber: 'beNumber',
-  purchaseOrderBecra: 'purchaseOrderBecra',
-  partSupplierNumber: 'partSupplierNumber',
-  partDescription: 'partDescription',
-  coordinates: 'coordinates',
-  coordinatesX: 'coordinatesX',
-  coordinatesY: 'coordinatesY',
-  coordinatesZ: 'coordinatesZ',
-  inventoryPlaceId: 'inventoryPlaceId',
-  materialId: 'materialId',
-  forProject: 'forProject',
-  projectId: 'projectId',
-  forInventory: 'forInventory',
-  materialActive: 'materialActive',
-  warehousePlaceId: 'warehousePlaceId',
-  active: 'active',
-  additionalInformation: 'additionalInformation',
-  minimumStock: 'minimumStock',
-  maximumStock: 'maximumStock',
-  quantityInStock: 'quantityInStock',
-  quantity: 'quantity',
-  unitPrice: 'unitPrice',
-  unitId: 'unitId',
-  valid: 'valid',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type InventoryStructureScalarFieldEnum = (typeof InventoryStructureScalarFieldEnum)[keyof typeof InventoryStructureScalarFieldEnum]
-
-
-export const InvestingCodeScalarFieldEnum = {
-  id: 'id',
-  code: 'code',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  date: 'date',
-  valid: 'valid',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type InvestingCodeScalarFieldEnum = (typeof InvestingCodeScalarFieldEnum)[keyof typeof InvestingCodeScalarFieldEnum]
-
-
-export const MaterialScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  brandOrder_number: 'brandOrder_number',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  preferedSupplier: 'preferedSupplier',
-  supplierInformation: 'supplierInformation',
-  brandName: 'brandName',
-  documentationPlace: 'documentationPlace',
-  bePartDoc: 'bePartDoc',
-  reject: 'reject',
-  unitId: 'unitId',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
-
-
-export const MaterialAssemblyScalarFieldEnum = {
-  id: 'id',
-  materialId: 'materialId',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialAssemblyScalarFieldEnum = (typeof MaterialAssemblyScalarFieldEnum)[keyof typeof MaterialAssemblyScalarFieldEnum]
-
-
-export const MaterialCodeScalarFieldEnum = {
-  id: 'id',
-  materialId: 'materialId',
-  code: 'code',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialCodeScalarFieldEnum = (typeof MaterialCodeScalarFieldEnum)[keyof typeof MaterialCodeScalarFieldEnum]
-
-
-export const MaterialDimensionScalarFieldEnum = {
-  id: 'id',
-  materialId: 'materialId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialDimensionScalarFieldEnum = (typeof MaterialDimensionScalarFieldEnum)[keyof typeof MaterialDimensionScalarFieldEnum]
-
-
-export const MaterialFamilyScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialFamilyScalarFieldEnum = (typeof MaterialFamilyScalarFieldEnum)[keyof typeof MaterialFamilyScalarFieldEnum]
-
-
-export const MaterialGroupScalarFieldEnum = {
-  id: 'id',
-  groupA: 'groupA',
-  groupB: 'groupB',
-  groupC: 'groupC',
-  groupD: 'groupD',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialGroupScalarFieldEnum = (typeof MaterialGroupScalarFieldEnum)[keyof typeof MaterialGroupScalarFieldEnum]
-
-
-export const MaterialMovementScalarFieldEnum = {
-  id: 'id',
-  beNumber: 'beNumber',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  serieId: 'serieId',
-  transactionTypeId: 'transactionTypeId',
-  fromLocation: 'fromLocation',
-  toLocation: 'toLocation',
-  updatedAt: 'updatedAt',
-  additionalInformation: 'additionalInformation',
-  brandName: 'brandName',
-  rejected: 'rejected',
-  brandNameNumber: 'brandNameNumber',
-  createdAt: 'createdAt',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialMovementScalarFieldEnum = (typeof MaterialMovementScalarFieldEnum)[keyof typeof MaterialMovementScalarFieldEnum]
-
-
-export const MaterialOtherScalarFieldEnum = {
-  id: 'id',
-  materialId: 'materialId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialOtherScalarFieldEnum = (typeof MaterialOtherScalarFieldEnum)[keyof typeof MaterialOtherScalarFieldEnum]
-
-
-export const MaterialPerformanceScalarFieldEnum = {
-  id: 'id',
-  materialSpecificationId: 'materialSpecificationId',
-  materialFamilyId: 'materialFamilyId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialPerformanceScalarFieldEnum = (typeof MaterialPerformanceScalarFieldEnum)[keyof typeof MaterialPerformanceScalarFieldEnum]
-
-
-export const MaterialPriceScalarFieldEnum = {
-  id: 'id',
-  orderNumber: 'orderNumber',
-  beNumber: 'beNumber',
-  quoteId: 'quoteId',
-  supplierOrderNumber: 'supplierOrderNumber',
-  brandOrderNumber: 'brandOrderNumber',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  additionalInformation: 'additionalInformation',
-  brandName: 'brandName',
-  rejected: 'rejected',
-  unitPrice: 'unitPrice',
-  quantityPrice: 'quantityPrice',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)[keyof typeof MaterialPriceScalarFieldEnum]
-
-
-export const MaterialSerialTrackedScalarFieldEnum = {
-  id: 'id',
-  beNumber: 'beNumber',
-  brandName: 'brandName',
-  manager: 'manager',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  brandOrderNumber: 'brandOrderNumber',
-  companyId: 'companyId',
-  transactionTypeId: 'transactionTypeId',
-  fromLocation: 'fromLocation',
-  toLocation: 'toLocation',
-  additionalInformation: 'additionalInformation',
-  preferedSupplier: 'preferedSupplier',
-  rejected: 'rejected',
-  updatedAt: 'updatedAt',
-  projectId: 'projectId',
-  becraCode: 'becraCode',
-  materialGroupId: 'materialGroupId',
-  materialId: 'materialId',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialSerialTrackedScalarFieldEnum = (typeof MaterialSerialTrackedScalarFieldEnum)[keyof typeof MaterialSerialTrackedScalarFieldEnum]
-
-
-export const MaterialSerialTrackedStructureScalarFieldEnum = {
-  id: 'id',
-  materialSerialTrackedId: 'materialSerialTrackedId',
-  becraCode: 'becraCode',
-  certificateId: 'certificateId',
-  materialSpecificationId: 'materialSpecificationId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  manager: 'manager',
-  date: 'date',
-  expiredDate: 'expiredDate',
-  docRevision: 'docRevision',
-  documentPlaceId: 'documentPlaceId',
-  valid: 'valid',
-  referenceDocId: 'referenceDocId',
-  additionalInformation: 'additionalInformation',
-  beNumber: 'beNumber',
-  serialCode: 'serialCode',
-  tag: 'tag',
-  brandName: 'brandName',
-  brandOrderNumber: 'brandOrderNumber',
-  materialFamilyId: 'materialFamilyId',
-  documentId: 'documentId',
-  unitId: 'unitId',
-  unitPieces: 'unitPieces',
-  rejected: 'rejected',
-  createdAt: 'createdAt',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialSerialTrackedStructureScalarFieldEnum = (typeof MaterialSerialTrackedStructureScalarFieldEnum)[keyof typeof MaterialSerialTrackedStructureScalarFieldEnum]
-
-
-export const MaterialSpecificationScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  materialDimensionId: 'materialDimensionId',
-  materialFamilyId: 'materialFamilyId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialSpecificationScalarFieldEnum = (typeof MaterialSpecificationScalarFieldEnum)[keyof typeof MaterialSpecificationScalarFieldEnum]
-
-
-export const MaterialStructureScalarFieldEnum = {
-  id: 'id',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  beNumber: 'beNumber',
-  expiredDate: 'expiredDate',
-  docRevision: 'docRevision',
-  additionalInformation: 'additionalInformation',
-  valid: 'valid',
-  management: 'management',
-  referenceDocId: 'referenceDocId',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type MaterialStructureScalarFieldEnum = (typeof MaterialStructureScalarFieldEnum)[keyof typeof MaterialStructureScalarFieldEnum]
-
-
-export const PartScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  abbreviation: 'abbreviation',
-  devision: 'devision',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  beNumber: 'beNumber',
-  brandName: 'brandName',
-  reject: 'reject',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type PartScalarFieldEnum = (typeof PartScalarFieldEnum)[keyof typeof PartScalarFieldEnum]
-
-
-export const PhantomScalarFieldEnum = {
-  id: 'id',
-  description: 'description',
-  date: 'date',
-  valid: 'valid',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type PhantomScalarFieldEnum = (typeof PhantomScalarFieldEnum)[keyof typeof PhantomScalarFieldEnum]
-
-
-export const ProductScalarFieldEnum = {
-  id: 'id',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  costPrice: 'costPrice',
-  profit: 'profit',
-  sellingUnitQuantity: 'sellingUnitQuantity',
-  sellingPrice: 'sellingPrice',
-  status: 'status',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
-
-
-export const PurchaseScalarFieldEnum = {
-  id: 'id'
-} as const
-
-export type PurchaseScalarFieldEnum = (typeof PurchaseScalarFieldEnum)[keyof typeof PurchaseScalarFieldEnum]
-
-
-export const PurchaseDetailScalarFieldEnum = {
-  id: 'id',
-  purchaseId: 'purchaseId',
-  productId: 'productId',
-  quantity: 'quantity',
-  beNumber: 'beNumber',
-  price: 'price',
-  totalCost: 'totalCost',
-  status: 'status',
-  additionalInformation: 'additionalInformation',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type PurchaseDetailScalarFieldEnum = (typeof PurchaseDetailScalarFieldEnum)[keyof typeof PurchaseDetailScalarFieldEnum]
-
-
-export const PurchaseOrderBecraScalarFieldEnum = {
-  id: 'id'
-} as const
-
-export type PurchaseOrderBecraScalarFieldEnum = (typeof PurchaseOrderBecraScalarFieldEnum)[keyof typeof PurchaseOrderBecraScalarFieldEnum]
-
-
-export const PurchasePriceRequestScalarFieldEnum = {
-  id: 'id',
-  orderNumber: 'orderNumber',
-  brandOrderNumber: 'brandOrderNumber',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  brandName: 'brandName',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  addMaterialActive: 'addMaterialActive',
-  ready: 'ready',
-  active: 'active',
-  purchaseDetailId: 'purchaseDetailId',
-  preferredSupplier: 'preferredSupplier',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type PurchasePriceRequestScalarFieldEnum = (typeof PurchasePriceRequestScalarFieldEnum)[keyof typeof PurchasePriceRequestScalarFieldEnum]
-
-
-export const SaleScalarFieldEnum = {
-  id: 'id',
-  statusPaymentMethod: 'statusPaymentMethod',
-  customerName: 'customerName',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type SaleScalarFieldEnum = (typeof SaleScalarFieldEnum)[keyof typeof SaleScalarFieldEnum]
-
-
-export const SaleOrderDetailScalarFieldEnum = {
-  id: 'id',
-  saleId: 'saleId',
-  productId: 'productId',
-  quantity: 'quantity',
-  price: 'price',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type SaleOrderDetailScalarFieldEnum = (typeof SaleOrderDetailScalarFieldEnum)[keyof typeof SaleOrderDetailScalarFieldEnum]
-
-
-export const SerialTrackedScalarFieldEnum = {
-  id: 'id',
-  serialNumber: 'serialNumber',
-  material_id: 'material_id',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type SerialTrackedScalarFieldEnum = (typeof SerialTrackedScalarFieldEnum)[keyof typeof SerialTrackedScalarFieldEnum]
-
-
-export const TestProcedureScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type TestProcedureScalarFieldEnum = (typeof TestProcedureScalarFieldEnum)[keyof typeof TestProcedureScalarFieldEnum]
-
-
-export const TransactionTypeScalarFieldEnum = {
-  id: 'id'
-} as const
-
-export type TransactionTypeScalarFieldEnum = (typeof TransactionTypeScalarFieldEnum)[keyof typeof TransactionTypeScalarFieldEnum]
-
-
-export const UnitScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  quantity: 'quantity',
-  abbreviation: 'abbreviation',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  valid: 'valid',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof UnitScalarFieldEnum]
-
-
-export const WarehouseManagementScalarFieldEnum = {
-  id: 'id',
-  beNumber: 'beNumber',
-  orderNumber: 'orderNumber',
-  quantityInStock: 'quantityInStock',
-  brandOrderNumber: 'brandOrderNumber',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  materialGroupId: 'materialGroupId',
-  preferedSupplier: 'preferedSupplier',
-  unitId: 'unitId',
-  rejected: 'rejected',
-  additionalInformation: 'additionalInformation',
-  documentationPlace: 'documentationPlace',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type WarehouseManagementScalarFieldEnum = (typeof WarehouseManagementScalarFieldEnum)[keyof typeof WarehouseManagementScalarFieldEnum]
-
-
-export const WarehousePlaceScalarFieldEnum = {
-  id: 'id',
-  place: 'place',
-  shelve: 'shelve',
-  col: 'col',
-  layer: 'layer',
-  layerPlace: 'layerPlace',
-  information: 'information',
-  volume: 'volume',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt'
-} as const
-
-export type WarehousePlaceScalarFieldEnum = (typeof WarehousePlaceScalarFieldEnum)[keyof typeof WarehousePlaceScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1546,6 +1433,17 @@ export const ContactOrderByRelevanceFieldEnum = {
 export type ContactOrderByRelevanceFieldEnum = (typeof ContactOrderByRelevanceFieldEnum)[keyof typeof ContactOrderByRelevanceFieldEnum]
 
 
+export const DeliveryNoteSupplierOrderByRelevanceFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  supplierNN: 'supplierNN',
+  information: 'information',
+  createdBy: 'createdBy'
+} as const
+
+export type DeliveryNoteSupplierOrderByRelevanceFieldEnum = (typeof DeliveryNoteSupplierOrderByRelevanceFieldEnum)[keyof typeof DeliveryNoteSupplierOrderByRelevanceFieldEnum]
+
+
 export const DepartmentOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1556,6 +1454,28 @@ export const DepartmentOrderByRelevanceFieldEnum = {
 } as const
 
 export type DepartmentOrderByRelevanceFieldEnum = (typeof DepartmentOrderByRelevanceFieldEnum)[keyof typeof DepartmentOrderByRelevanceFieldEnum]
+
+
+export const DocumentGroupOrderByRelevanceFieldEnum = {
+  id: 'id',
+  groupA: 'groupA',
+  groupB: 'groupB',
+  groupC: 'groupC',
+  groupD: 'groupD'
+} as const
+
+export type DocumentGroupOrderByRelevanceFieldEnum = (typeof DocumentGroupOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupOrderByRelevanceFieldEnum]
+
+
+export const DocumentPlaceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  placeA: 'placeA',
+  placeB: 'placeB',
+  placeC: 'placeC',
+  placeD: 'placeD'
+} as const
+
+export type DocumentPlaceOrderByRelevanceFieldEnum = (typeof DocumentPlaceOrderByRelevanceFieldEnum)[keyof typeof DocumentPlaceOrderByRelevanceFieldEnum]
 
 
 export const DocumentStructureOrderByRelevanceFieldEnum = {
@@ -1689,6 +1609,70 @@ export const HourTypeOrderByRelevanceFieldEnum = {
 export type HourTypeOrderByRelevanceFieldEnum = (typeof HourTypeOrderByRelevanceFieldEnum)[keyof typeof HourTypeOrderByRelevanceFieldEnum]
 
 
+export const InventoryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  beNumber: 'beNumber',
+  place: 'place',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  serieNumber: 'serieNumber',
+  information: 'information',
+  createdBy: 'createdBy'
+} as const
+
+export type InventoryOrderByRelevanceFieldEnum = (typeof InventoryOrderByRelevanceFieldEnum)[keyof typeof InventoryOrderByRelevanceFieldEnum]
+
+
+export const InventoryChangeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  inventoryId: 'inventoryId',
+  beNumber: 'beNumber',
+  serialTrackedId: 'serialTrackedId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  additionalInformation: 'additionalInformation',
+  fromLocation: 'fromLocation',
+  toLocation: 'toLocation',
+  changeDescription: 'changeDescription',
+  createdBy: 'createdBy'
+} as const
+
+export type InventoryChangeOrderByRelevanceFieldEnum = (typeof InventoryChangeOrderByRelevanceFieldEnum)[keyof typeof InventoryChangeOrderByRelevanceFieldEnum]
+
+
+export const InventoryOrderOrderByRelevanceFieldEnum = {
+  id: 'id',
+  inventoryId: 'inventoryId',
+  orderNumber: 'orderNumber',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy'
+} as const
+
+export type InventoryOrderOrderByRelevanceFieldEnum = (typeof InventoryOrderOrderByRelevanceFieldEnum)[keyof typeof InventoryOrderOrderByRelevanceFieldEnum]
+
+
+export const InventoryStructureOrderByRelevanceFieldEnum = {
+  id: 'id',
+  inventoryPlaceId: 'inventoryPlaceId',
+  place: 'place',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  beNumber: 'beNumber',
+  purchaseOrderBecraId: 'purchaseOrderBecraId',
+  projectId: 'projectId',
+  partSupplierNumber: 'partSupplierNumber',
+  partDescription: 'partDescription',
+  warehousePlaceId: 'warehousePlaceId',
+  information: 'information',
+  inventoryId: 'inventoryId',
+  createdBy: 'createdBy'
+} as const
+
+export type InventoryStructureOrderByRelevanceFieldEnum = (typeof InventoryStructureOrderByRelevanceFieldEnum)[keyof typeof InventoryStructureOrderByRelevanceFieldEnum]
+
+
 export const InvoiceInOrderByRelevanceFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
@@ -1732,7 +1716,6 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   deliveryInvoiceCode: 'deliveryInvoiceCode',
   createdBy: 'createdBy',
   invoiceTypeId: 'invoiceTypeId',
-  workOrderId: 'workOrderId',
   targetId: 'targetId'
 } as const
 
@@ -1746,6 +1729,254 @@ export const InvoiceTypeOrderByRelevanceFieldEnum = {
 } as const
 
 export type InvoiceTypeOrderByRelevanceFieldEnum = (typeof InvoiceTypeOrderByRelevanceFieldEnum)[keyof typeof InvoiceTypeOrderByRelevanceFieldEnum]
+
+
+export const MaterialOrderByRelevanceFieldEnum = {
+  id: 'id',
+  beNumber: 'beNumber',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  preferedSupplier: 'preferedSupplier',
+  brandName: 'brandName',
+  documentationPlace: 'documentationPlace',
+  materialGroupId: 'materialGroupId',
+  unitId: 'unitId',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
+
+
+export const MaterialAssemblyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialAssemblyOrderByRelevanceFieldEnum = (typeof MaterialAssemblyOrderByRelevanceFieldEnum)[keyof typeof MaterialAssemblyOrderByRelevanceFieldEnum]
+
+
+export const MaterialCodeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialCodeOrderByRelevanceFieldEnum = (typeof MaterialCodeOrderByRelevanceFieldEnum)[keyof typeof MaterialCodeOrderByRelevanceFieldEnum]
+
+
+export const MaterialDimensionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialDimensionOrderByRelevanceFieldEnum = (typeof MaterialDimensionOrderByRelevanceFieldEnum)[keyof typeof MaterialDimensionOrderByRelevanceFieldEnum]
+
+
+export const MaterialFamilyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialFamilyOrderByRelevanceFieldEnum = (typeof MaterialFamilyOrderByRelevanceFieldEnum)[keyof typeof MaterialFamilyOrderByRelevanceFieldEnum]
+
+
+export const MaterialGroupOrderByRelevanceFieldEnum = {
+  id: 'id',
+  groupA: 'groupA',
+  groupB: 'groupB',
+  groupC: 'groupC',
+  groupD: 'groupD'
+} as const
+
+export type MaterialGroupOrderByRelevanceFieldEnum = (typeof MaterialGroupOrderByRelevanceFieldEnum)[keyof typeof MaterialGroupOrderByRelevanceFieldEnum]
+
+
+export const MaterialMovementOrderByRelevanceFieldEnum = {
+  id: 'id',
+  beNumberId: 'beNumberId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  serieId: 'serieId',
+  transactionType: 'transactionType',
+  brandName: 'brandName',
+  brandNameNr: 'brandNameNr',
+  toLocation: 'toLocation',
+  fromLocation: 'fromLocation',
+  additionalInfo: 'additionalInfo',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialMovementOrderByRelevanceFieldEnum = (typeof MaterialMovementOrderByRelevanceFieldEnum)[keyof typeof MaterialMovementOrderByRelevanceFieldEnum]
+
+
+export const MaterialOtherOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  materialId: 'materialId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialOtherOrderByRelevanceFieldEnum = (typeof MaterialOtherOrderByRelevanceFieldEnum)[keyof typeof MaterialOtherOrderByRelevanceFieldEnum]
+
+
+export const MaterialPerformanceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  materialSpecId: 'materialSpecId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  materialFamilyId: 'materialFamilyId',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialPerformanceOrderByRelevanceFieldEnum = (typeof MaterialPerformanceOrderByRelevanceFieldEnum)[keyof typeof MaterialPerformanceOrderByRelevanceFieldEnum]
+
+
+export const MaterialPriceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  beNumber: 'beNumber',
+  orderNr: 'orderNr',
+  quoteBecra: 'quoteBecra',
+  supllierOrderNr: 'supllierOrderNr',
+  brandOrderNr: 'brandOrderNr',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  brandName: 'brandName',
+  additionalInfo: 'additionalInfo',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderByRelevanceFieldEnum)[keyof typeof MaterialPriceOrderByRelevanceFieldEnum]
+
+
+export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
+  id: 'id',
+  beNumber: 'beNumber',
+  brandName: 'brandName',
+  management: 'management',
+  brandOrderNumber: 'brandOrderNumber',
+  companyId: 'companyId',
+  orderNumber: 'orderNumber',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  transactionType: 'transactionType',
+  materialGroupId: 'materialGroupId',
+  fromLocation: 'fromLocation',
+  toLocation: 'toLocation',
+  preferedSupplier: 'preferedSupplier',
+  additionalInfo: 'additionalInfo',
+  projectId: 'projectId',
+  becraCode: 'becraCode',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialSerialTrackOrderByRelevanceFieldEnum = (typeof MaterialSerialTrackOrderByRelevanceFieldEnum)[keyof typeof MaterialSerialTrackOrderByRelevanceFieldEnum]
+
+
+export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
+  id: 'id',
+  serialTrackedId: 'serialTrackedId',
+  certificateId: 'certificateId',
+  materialSpecId: 'materialSpecId',
+  referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
+  documentId: 'documentId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  management: 'management',
+  documentationPlace: 'documentationPlace',
+  additionalInfo: 'additionalInfo',
+  beNumber: 'beNumber',
+  beParentPart: 'beParentPart',
+  serialCode: 'serialCode',
+  tag: 'tag',
+  preferedSupplier: 'preferedSupplier',
+  brandName: 'brandName',
+  brandOrderNr: 'brandOrderNr',
+  unit: 'unit',
+  unitQuantity: 'unitQuantity',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = (typeof MaterialSerialTrackedStructureOrderByRelevanceFieldEnum)[keyof typeof MaterialSerialTrackedStructureOrderByRelevanceFieldEnum]
+
+
+export const MaterialSpecOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialFamilyId: 'materialFamilyId',
+  name: 'name',
+  materialDimensionId: 'materialDimensionId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialSpecOrderByRelevanceFieldEnum = (typeof MaterialSpecOrderByRelevanceFieldEnum)[keyof typeof MaterialSpecOrderByRelevanceFieldEnum]
+
+
+export const MaterialStructureOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  beNumber: 'beNumber',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  management: 'management',
+  additionalInfo: 'additionalInfo',
+  referenceDocId: 'referenceDocId',
+  createdBy: 'createdBy'
+} as const
+
+export type MaterialStructureOrderByRelevanceFieldEnum = (typeof MaterialStructureOrderByRelevanceFieldEnum)[keyof typeof MaterialStructureOrderByRelevanceFieldEnum]
+
+
+export const PartOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  part: 'part',
+  abbreviation: 'abbreviation',
+  devision: 'devision',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  additionalInfo: 'additionalInfo',
+  createdBy: 'createdBy'
+} as const
+
+export type PartOrderByRelevanceFieldEnum = (typeof PartOrderByRelevanceFieldEnum)[keyof typeof PartOrderByRelevanceFieldEnum]
+
+
+export const PhantomOrderByRelevanceFieldEnum = {
+  id: 'id',
+  description: 'description',
+  createdBy: 'createdBy'
+} as const
+
+export type PhantomOrderByRelevanceFieldEnum = (typeof PhantomOrderByRelevanceFieldEnum)[keyof typeof PhantomOrderByRelevanceFieldEnum]
+
+
+export const ProductOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  shortDescription: 'shortDescription',
+  description: 'description',
+  status: 'status',
+  createdBy: 'createdBy'
+} as const
+
+export type ProductOrderByRelevanceFieldEnum = (typeof ProductOrderByRelevanceFieldEnum)[keyof typeof ProductOrderByRelevanceFieldEnum]
 
 
 export const ProjectOrderByRelevanceFieldEnum = {
@@ -1785,6 +2016,70 @@ export const ProjectTypeOrderByRelevanceFieldEnum = {
 export type ProjectTypeOrderByRelevanceFieldEnum = (typeof ProjectTypeOrderByRelevanceFieldEnum)[keyof typeof ProjectTypeOrderByRelevanceFieldEnum]
 
 
+export const PurchaseOrderByRelevanceFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  materialGroupId: 'materialGroupId',
+  orderNumber: 'orderNumber',
+  companyId: 'companyId',
+  brandName: 'brandName',
+  brandOrderNumber: 'brandOrderNumber',
+  status: 'status',
+  shortDescription: 'shortDescription',
+  description: 'description',
+  preferedSupplier: 'preferedSupplier',
+  additionalInfo: 'additionalInfo',
+  createdBy: 'createdBy'
+} as const
+
+export type PurchaseOrderByRelevanceFieldEnum = (typeof PurchaseOrderByRelevanceFieldEnum)[keyof typeof PurchaseOrderByRelevanceFieldEnum]
+
+
+export const PurchaseDetailOrderByRelevanceFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  purchaseId: 'purchaseId',
+  beNumber: 'beNumber',
+  status: 'status',
+  additionalInfo: 'additionalInfo',
+  createdBy: 'createdBy'
+} as const
+
+export type PurchaseDetailOrderByRelevanceFieldEnum = (typeof PurchaseDetailOrderByRelevanceFieldEnum)[keyof typeof PurchaseDetailOrderByRelevanceFieldEnum]
+
+
+export const PurchaseOrderBecraOrderByRelevanceFieldEnum = {
+  id: 'id',
+  description: 'description',
+  createdBy: 'createdBy'
+} as const
+
+export type PurchaseOrderBecraOrderByRelevanceFieldEnum = (typeof PurchaseOrderBecraOrderByRelevanceFieldEnum)[keyof typeof PurchaseOrderBecraOrderByRelevanceFieldEnum]
+
+
+export const QouteBecraOrderByRelevanceFieldEnum = {
+  id: 'id',
+  description: 'description',
+  createdBy: 'createdBy'
+} as const
+
+export type QouteBecraOrderByRelevanceFieldEnum = (typeof QouteBecraOrderByRelevanceFieldEnum)[keyof typeof QouteBecraOrderByRelevanceFieldEnum]
+
+
+export const QuoteSupplierOrderByRelevanceFieldEnum = {
+  id: 'id',
+  description: 'description',
+  projectId: 'projectId',
+  additionalInfo: 'additionalInfo',
+  link: 'link',
+  documentPlaceId: 'documentPlaceId',
+  payementCondition: 'payementCondition',
+  createdBy: 'createdBy'
+} as const
+
+export type QuoteSupplierOrderByRelevanceFieldEnum = (typeof QuoteSupplierOrderByRelevanceFieldEnum)[keyof typeof QuoteSupplierOrderByRelevanceFieldEnum]
+
+
 export const RoleOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1794,6 +2089,14 @@ export const RoleOrderByRelevanceFieldEnum = {
 export type RoleOrderByRelevanceFieldEnum = (typeof RoleOrderByRelevanceFieldEnum)[keyof typeof RoleOrderByRelevanceFieldEnum]
 
 
+export const SessionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId'
+} as const
+
+export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum]
+
+
 export const StatusOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1801,6 +2104,17 @@ export const StatusOrderByRelevanceFieldEnum = {
 } as const
 
 export type StatusOrderByRelevanceFieldEnum = (typeof StatusOrderByRelevanceFieldEnum)[keyof typeof StatusOrderByRelevanceFieldEnum]
+
+
+export const SupplierDeliveryNoteFollowUpOrderByRelevanceFieldEnum = {
+  id: 'id',
+  deliveryNoteSupplierId: 'deliveryNoteSupplierId',
+  workOrderStructureId: 'workOrderStructureId',
+  information: 'information',
+  createdBy: 'createdBy'
+} as const
+
+export type SupplierDeliveryNoteFollowUpOrderByRelevanceFieldEnum = (typeof SupplierDeliveryNoteFollowUpOrderByRelevanceFieldEnum)[keyof typeof SupplierDeliveryNoteFollowUpOrderByRelevanceFieldEnum]
 
 
 export const TargetOrderByRelevanceFieldEnum = {
@@ -1819,6 +2133,17 @@ export const TargetTypeOrderByRelevanceFieldEnum = {
 } as const
 
 export type TargetTypeOrderByRelevanceFieldEnum = (typeof TargetTypeOrderByRelevanceFieldEnum)[keyof typeof TargetTypeOrderByRelevanceFieldEnum]
+
+
+export const TestProcedureOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy'
+} as const
+
+export type TestProcedureOrderByRelevanceFieldEnum = (typeof TestProcedureOrderByRelevanceFieldEnum)[keyof typeof TestProcedureOrderByRelevanceFieldEnum]
 
 
 export const TimeRegistryOrderByRelevanceFieldEnum = {
@@ -1897,6 +2222,18 @@ export const TrainingStandardOrderByRelevanceFieldEnum = {
 export type TrainingStandardOrderByRelevanceFieldEnum = (typeof TrainingStandardOrderByRelevanceFieldEnum)[keyof typeof TrainingStandardOrderByRelevanceFieldEnum]
 
 
+export const UnitOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  abbreviation: 'abbreviation',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy'
+} as const
+
+export type UnitOrderByRelevanceFieldEnum = (typeof UnitOrderByRelevanceFieldEnum)[keyof typeof UnitOrderByRelevanceFieldEnum]
+
+
 export const UrgencyTypeOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1915,6 +2252,20 @@ export const VisibilityForRoleOrderByRelevanceFieldEnum = {
 export type VisibilityForRoleOrderByRelevanceFieldEnum = (typeof VisibilityForRoleOrderByRelevanceFieldEnum)[keyof typeof VisibilityForRoleOrderByRelevanceFieldEnum]
 
 
+export const WarehousePlaceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  place: 'place',
+  shelf: 'shelf',
+  column: 'column',
+  layer: 'layer',
+  layerPlace: 'layerPlace',
+  information: 'information',
+  createdBy: 'createdBy'
+} as const
+
+export type WarehousePlaceOrderByRelevanceFieldEnum = (typeof WarehousePlaceOrderByRelevanceFieldEnum)[keyof typeof WarehousePlaceOrderByRelevanceFieldEnum]
+
+
 export const WorkOrderOrderByRelevanceFieldEnum = {
   id: 'id',
   workOrderNumber: 'workOrderNumber',
@@ -1926,6 +2277,15 @@ export const WorkOrderOrderByRelevanceFieldEnum = {
 } as const
 
 export type WorkOrderOrderByRelevanceFieldEnum = (typeof WorkOrderOrderByRelevanceFieldEnum)[keyof typeof WorkOrderOrderByRelevanceFieldEnum]
+
+
+export const WorkOrderInvoiceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  invoiceOutId: 'invoiceOutId',
+  workOrderId: 'workOrderId'
+} as const
+
+export type WorkOrderInvoiceOrderByRelevanceFieldEnum = (typeof WorkOrderInvoiceOrderByRelevanceFieldEnum)[keyof typeof WorkOrderInvoiceOrderByRelevanceFieldEnum]
 
 
 export const WorkOrderStructureOrderByRelevanceFieldEnum = {
@@ -1942,551 +2302,4 @@ export const WorkOrderStructureOrderByRelevanceFieldEnum = {
 } as const
 
 export type WorkOrderStructureOrderByRelevanceFieldEnum = (typeof WorkOrderStructureOrderByRelevanceFieldEnum)[keyof typeof WorkOrderStructureOrderByRelevanceFieldEnum]
-
-
-export const SessionOrderByRelevanceFieldEnum = {
-  id: 'id',
-  employeeId: 'employeeId'
-} as const
-
-export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum]
-
-
-export const AccountingOrderByRelevanceFieldEnum = {
-  id: 'id',
-  transactionTypeId: 'transactionTypeId',
-  beNumber: 'beNumber',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy'
-} as const
-
-export type AccountingOrderByRelevanceFieldEnum = (typeof AccountingOrderByRelevanceFieldEnum)[keyof typeof AccountingOrderByRelevanceFieldEnum]
-
-
-export const DeliveryNoteOrderByRelevanceFieldEnum = {
-  id: 'id',
-  companyId: 'companyId',
-  referenceDocId: 'referenceDocId',
-  additionalInformation: 'additionalInformation',
-  beNumber: 'beNumber',
-  createdBy: 'createdBy'
-} as const
-
-export type DeliveryNoteOrderByRelevanceFieldEnum = (typeof DeliveryNoteOrderByRelevanceFieldEnum)[keyof typeof DeliveryNoteOrderByRelevanceFieldEnum]
-
-
-export const DocumentGroupOrderByRelevanceFieldEnum = {
-  id: 'id',
-  groupA: 'groupA',
-  groupB: 'groupB',
-  groupC: 'groupC',
-  groupD: 'groupD'
-} as const
-
-export type DocumentGroupOrderByRelevanceFieldEnum = (typeof DocumentGroupOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupOrderByRelevanceFieldEnum]
-
-
-export const DocumentPlaceOrderByRelevanceFieldEnum = {
-  id: 'id',
-  placeA: 'placeA',
-  placeB: 'placeB',
-  placeC: 'placeC',
-  placeD: 'placeD'
-} as const
-
-export type DocumentPlaceOrderByRelevanceFieldEnum = (typeof DocumentPlaceOrderByRelevanceFieldEnum)[keyof typeof DocumentPlaceOrderByRelevanceFieldEnum]
-
-
-export const InventoryOrderByRelevanceFieldEnum = {
-  id: 'id',
-  place: 'place',
-  longDescription: 'longDescription',
-  shortDescription: 'shortDescription',
-  serialNumber: 'serialNumber',
-  information: 'information',
-  createdBy: 'createdBy'
-} as const
-
-export type InventoryOrderByRelevanceFieldEnum = (typeof InventoryOrderByRelevanceFieldEnum)[keyof typeof InventoryOrderByRelevanceFieldEnum]
-
-
-export const InventoryChangeOrderByRelevanceFieldEnum = {
-  id: 'id',
-  inventoryId: 'inventoryId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  additionalInformation: 'additionalInformation',
-  fromLocation: 'fromLocation',
-  toLocation: 'toLocation',
-  transactionType: 'transactionType',
-  createdBy: 'createdBy'
-} as const
-
-export type InventoryChangeOrderByRelevanceFieldEnum = (typeof InventoryChangeOrderByRelevanceFieldEnum)[keyof typeof InventoryChangeOrderByRelevanceFieldEnum]
-
-
-export const InventoryOrderOrderByRelevanceFieldEnum = {
-  id: 'id',
-  storePlace: 'storePlace',
-  companyId: 'companyId',
-  inventoryId: 'inventoryId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  additionalInformation: 'additionalInformation',
-  createdBy: 'createdBy'
-} as const
-
-export type InventoryOrderOrderByRelevanceFieldEnum = (typeof InventoryOrderOrderByRelevanceFieldEnum)[keyof typeof InventoryOrderOrderByRelevanceFieldEnum]
-
-
-export const InventoryOrderStructureOrderByRelevanceFieldEnum = {
-  id: 'id',
-  inventoryStructureId: 'inventoryStructureId',
-  inventoryOrderId: 'inventoryOrderId',
-  beNumber: 'beNumber',
-  beNumberParentPart: 'beNumberParentPart',
-  serialCode: 'serialCode',
-  inventoryPlaceId: 'inventoryPlaceId',
-  projectId: 'projectId',
-  quoteSupplier: 'quoteSupplier',
-  partSupplierNumber: 'partSupplierNumber',
-  partDescription: 'partDescription',
-  unitId: 'unitId',
-  docId: 'docId',
-  pobId: 'pobId',
-  additionalInformation: 'additionalInformation',
-  createdBy: 'createdBy'
-} as const
-
-export type InventoryOrderStructureOrderByRelevanceFieldEnum = (typeof InventoryOrderStructureOrderByRelevanceFieldEnum)[keyof typeof InventoryOrderStructureOrderByRelevanceFieldEnum]
-
-
-export const InventoryPlaceOrderByRelevanceFieldEnum = {
-  id: 'id',
-  abbreviation: 'abbreviation',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  additionalInformation: 'additionalInformation',
-  placeName: 'placeName',
-  placeNameA: 'placeNameA',
-  placeNameB: 'placeNameB',
-  placeNameC: 'placeNameC',
-  serialTrackedId: 'serialTrackedId',
-  inventoryId: 'inventoryId',
-  warehousePlaceId: 'warehousePlaceId',
-  createdBy: 'createdBy'
-} as const
-
-export type InventoryPlaceOrderByRelevanceFieldEnum = (typeof InventoryPlaceOrderByRelevanceFieldEnum)[keyof typeof InventoryPlaceOrderByRelevanceFieldEnum]
-
-
-export const InventoryStructureOrderByRelevanceFieldEnum = {
-  id: 'id',
-  place: 'place',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  beNumber: 'beNumber',
-  partSupplierNumber: 'partSupplierNumber',
-  partDescription: 'partDescription',
-  inventoryPlaceId: 'inventoryPlaceId',
-  materialId: 'materialId',
-  projectId: 'projectId',
-  warehousePlaceId: 'warehousePlaceId',
-  additionalInformation: 'additionalInformation',
-  unitId: 'unitId',
-  createdBy: 'createdBy'
-} as const
-
-export type InventoryStructureOrderByRelevanceFieldEnum = (typeof InventoryStructureOrderByRelevanceFieldEnum)[keyof typeof InventoryStructureOrderByRelevanceFieldEnum]
-
-
-export const InvestingCodeOrderByRelevanceFieldEnum = {
-  id: 'id',
-  code: 'code',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy'
-} as const
-
-export type InvestingCodeOrderByRelevanceFieldEnum = (typeof InvestingCodeOrderByRelevanceFieldEnum)[keyof typeof InvestingCodeOrderByRelevanceFieldEnum]
-
-
-export const MaterialOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  brandOrder_number: 'brandOrder_number',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  preferedSupplier: 'preferedSupplier',
-  supplierInformation: 'supplierInformation',
-  brandName: 'brandName',
-  documentationPlace: 'documentationPlace',
-  bePartDoc: 'bePartDoc',
-  unitId: 'unitId',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
-
-
-export const MaterialAssemblyOrderByRelevanceFieldEnum = {
-  id: 'id',
-  materialId: 'materialId',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialAssemblyOrderByRelevanceFieldEnum = (typeof MaterialAssemblyOrderByRelevanceFieldEnum)[keyof typeof MaterialAssemblyOrderByRelevanceFieldEnum]
-
-
-export const MaterialCodeOrderByRelevanceFieldEnum = {
-  id: 'id',
-  materialId: 'materialId',
-  code: 'code',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialCodeOrderByRelevanceFieldEnum = (typeof MaterialCodeOrderByRelevanceFieldEnum)[keyof typeof MaterialCodeOrderByRelevanceFieldEnum]
-
-
-export const MaterialDimensionOrderByRelevanceFieldEnum = {
-  id: 'id',
-  materialId: 'materialId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialDimensionOrderByRelevanceFieldEnum = (typeof MaterialDimensionOrderByRelevanceFieldEnum)[keyof typeof MaterialDimensionOrderByRelevanceFieldEnum]
-
-
-export const MaterialFamilyOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialFamilyOrderByRelevanceFieldEnum = (typeof MaterialFamilyOrderByRelevanceFieldEnum)[keyof typeof MaterialFamilyOrderByRelevanceFieldEnum]
-
-
-export const MaterialGroupOrderByRelevanceFieldEnum = {
-  id: 'id',
-  groupA: 'groupA',
-  groupB: 'groupB',
-  groupC: 'groupC',
-  groupD: 'groupD',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialGroupOrderByRelevanceFieldEnum = (typeof MaterialGroupOrderByRelevanceFieldEnum)[keyof typeof MaterialGroupOrderByRelevanceFieldEnum]
-
-
-export const MaterialMovementOrderByRelevanceFieldEnum = {
-  id: 'id',
-  beNumber: 'beNumber',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  serieId: 'serieId',
-  transactionTypeId: 'transactionTypeId',
-  fromLocation: 'fromLocation',
-  toLocation: 'toLocation',
-  additionalInformation: 'additionalInformation',
-  brandName: 'brandName',
-  brandNameNumber: 'brandNameNumber',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialMovementOrderByRelevanceFieldEnum = (typeof MaterialMovementOrderByRelevanceFieldEnum)[keyof typeof MaterialMovementOrderByRelevanceFieldEnum]
-
-
-export const MaterialOtherOrderByRelevanceFieldEnum = {
-  id: 'id',
-  materialId: 'materialId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialOtherOrderByRelevanceFieldEnum = (typeof MaterialOtherOrderByRelevanceFieldEnum)[keyof typeof MaterialOtherOrderByRelevanceFieldEnum]
-
-
-export const MaterialPerformanceOrderByRelevanceFieldEnum = {
-  id: 'id',
-  materialSpecificationId: 'materialSpecificationId',
-  materialFamilyId: 'materialFamilyId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialPerformanceOrderByRelevanceFieldEnum = (typeof MaterialPerformanceOrderByRelevanceFieldEnum)[keyof typeof MaterialPerformanceOrderByRelevanceFieldEnum]
-
-
-export const MaterialPriceOrderByRelevanceFieldEnum = {
-  id: 'id',
-  orderNumber: 'orderNumber',
-  beNumber: 'beNumber',
-  quoteId: 'quoteId',
-  supplierOrderNumber: 'supplierOrderNumber',
-  brandOrderNumber: 'brandOrderNumber',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  additionalInformation: 'additionalInformation',
-  brandName: 'brandName',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderByRelevanceFieldEnum)[keyof typeof MaterialPriceOrderByRelevanceFieldEnum]
-
-
-export const MaterialSerialTrackedOrderByRelevanceFieldEnum = {
-  id: 'id',
-  beNumber: 'beNumber',
-  brandName: 'brandName',
-  manager: 'manager',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  brandOrderNumber: 'brandOrderNumber',
-  companyId: 'companyId',
-  transactionTypeId: 'transactionTypeId',
-  fromLocation: 'fromLocation',
-  toLocation: 'toLocation',
-  additionalInformation: 'additionalInformation',
-  preferedSupplier: 'preferedSupplier',
-  projectId: 'projectId',
-  becraCode: 'becraCode',
-  materialGroupId: 'materialGroupId',
-  materialId: 'materialId',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialSerialTrackedOrderByRelevanceFieldEnum = (typeof MaterialSerialTrackedOrderByRelevanceFieldEnum)[keyof typeof MaterialSerialTrackedOrderByRelevanceFieldEnum]
-
-
-export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
-  id: 'id',
-  materialSerialTrackedId: 'materialSerialTrackedId',
-  becraCode: 'becraCode',
-  certificateId: 'certificateId',
-  materialSpecificationId: 'materialSpecificationId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  manager: 'manager',
-  docRevision: 'docRevision',
-  documentPlaceId: 'documentPlaceId',
-  referenceDocId: 'referenceDocId',
-  additionalInformation: 'additionalInformation',
-  beNumber: 'beNumber',
-  serialCode: 'serialCode',
-  tag: 'tag',
-  brandName: 'brandName',
-  brandOrderNumber: 'brandOrderNumber',
-  materialFamilyId: 'materialFamilyId',
-  documentId: 'documentId',
-  unitId: 'unitId',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = (typeof MaterialSerialTrackedStructureOrderByRelevanceFieldEnum)[keyof typeof MaterialSerialTrackedStructureOrderByRelevanceFieldEnum]
-
-
-export const MaterialSpecificationOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  materialDimensionId: 'materialDimensionId',
-  materialFamilyId: 'materialFamilyId',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialSpecificationOrderByRelevanceFieldEnum = (typeof MaterialSpecificationOrderByRelevanceFieldEnum)[keyof typeof MaterialSpecificationOrderByRelevanceFieldEnum]
-
-
-export const MaterialStructureOrderByRelevanceFieldEnum = {
-  id: 'id',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  beNumber: 'beNumber',
-  docRevision: 'docRevision',
-  additionalInformation: 'additionalInformation',
-  management: 'management',
-  referenceDocId: 'referenceDocId',
-  createdBy: 'createdBy'
-} as const
-
-export type MaterialStructureOrderByRelevanceFieldEnum = (typeof MaterialStructureOrderByRelevanceFieldEnum)[keyof typeof MaterialStructureOrderByRelevanceFieldEnum]
-
-
-export const PartOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  abbreviation: 'abbreviation',
-  devision: 'devision',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  beNumber: 'beNumber',
-  brandName: 'brandName',
-  createdBy: 'createdBy'
-} as const
-
-export type PartOrderByRelevanceFieldEnum = (typeof PartOrderByRelevanceFieldEnum)[keyof typeof PartOrderByRelevanceFieldEnum]
-
-
-export const PhantomOrderByRelevanceFieldEnum = {
-  id: 'id',
-  description: 'description',
-  createdBy: 'createdBy'
-} as const
-
-export type PhantomOrderByRelevanceFieldEnum = (typeof PhantomOrderByRelevanceFieldEnum)[keyof typeof PhantomOrderByRelevanceFieldEnum]
-
-
-export const ProductOrderByRelevanceFieldEnum = {
-  id: 'id',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  status: 'status',
-  createdBy: 'createdBy'
-} as const
-
-export type ProductOrderByRelevanceFieldEnum = (typeof ProductOrderByRelevanceFieldEnum)[keyof typeof ProductOrderByRelevanceFieldEnum]
-
-
-export const PurchaseOrderByRelevanceFieldEnum = {
-  id: 'id'
-} as const
-
-export type PurchaseOrderByRelevanceFieldEnum = (typeof PurchaseOrderByRelevanceFieldEnum)[keyof typeof PurchaseOrderByRelevanceFieldEnum]
-
-
-export const PurchaseDetailOrderByRelevanceFieldEnum = {
-  id: 'id',
-  purchaseId: 'purchaseId',
-  productId: 'productId',
-  beNumber: 'beNumber',
-  status: 'status',
-  additionalInformation: 'additionalInformation',
-  createdBy: 'createdBy'
-} as const
-
-export type PurchaseDetailOrderByRelevanceFieldEnum = (typeof PurchaseDetailOrderByRelevanceFieldEnum)[keyof typeof PurchaseDetailOrderByRelevanceFieldEnum]
-
-
-export const PurchaseOrderBecraOrderByRelevanceFieldEnum = {
-  id: 'id'
-} as const
-
-export type PurchaseOrderBecraOrderByRelevanceFieldEnum = (typeof PurchaseOrderBecraOrderByRelevanceFieldEnum)[keyof typeof PurchaseOrderBecraOrderByRelevanceFieldEnum]
-
-
-export const PurchasePriceRequestOrderByRelevanceFieldEnum = {
-  id: 'id',
-  orderNumber: 'orderNumber',
-  brandOrderNumber: 'brandOrderNumber',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  brandName: 'brandName',
-  purchaseDetailId: 'purchaseDetailId',
-  preferredSupplier: 'preferredSupplier',
-  createdBy: 'createdBy'
-} as const
-
-export type PurchasePriceRequestOrderByRelevanceFieldEnum = (typeof PurchasePriceRequestOrderByRelevanceFieldEnum)[keyof typeof PurchasePriceRequestOrderByRelevanceFieldEnum]
-
-
-export const SaleOrderByRelevanceFieldEnum = {
-  id: 'id',
-  statusPaymentMethod: 'statusPaymentMethod',
-  customerName: 'customerName',
-  createdBy: 'createdBy'
-} as const
-
-export type SaleOrderByRelevanceFieldEnum = (typeof SaleOrderByRelevanceFieldEnum)[keyof typeof SaleOrderByRelevanceFieldEnum]
-
-
-export const SaleOrderDetailOrderByRelevanceFieldEnum = {
-  id: 'id',
-  saleId: 'saleId',
-  productId: 'productId',
-  createdBy: 'createdBy'
-} as const
-
-export type SaleOrderDetailOrderByRelevanceFieldEnum = (typeof SaleOrderDetailOrderByRelevanceFieldEnum)[keyof typeof SaleOrderDetailOrderByRelevanceFieldEnum]
-
-
-export const SerialTrackedOrderByRelevanceFieldEnum = {
-  id: 'id',
-  serialNumber: 'serialNumber',
-  material_id: 'material_id',
-  createdBy: 'createdBy'
-} as const
-
-export type SerialTrackedOrderByRelevanceFieldEnum = (typeof SerialTrackedOrderByRelevanceFieldEnum)[keyof typeof SerialTrackedOrderByRelevanceFieldEnum]
-
-
-export const TestProcedureOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy'
-} as const
-
-export type TestProcedureOrderByRelevanceFieldEnum = (typeof TestProcedureOrderByRelevanceFieldEnum)[keyof typeof TestProcedureOrderByRelevanceFieldEnum]
-
-
-export const TransactionTypeOrderByRelevanceFieldEnum = {
-  id: 'id'
-} as const
-
-export type TransactionTypeOrderByRelevanceFieldEnum = (typeof TransactionTypeOrderByRelevanceFieldEnum)[keyof typeof TransactionTypeOrderByRelevanceFieldEnum]
-
-
-export const UnitOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  abbreviation: 'abbreviation',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  createdBy: 'createdBy'
-} as const
-
-export type UnitOrderByRelevanceFieldEnum = (typeof UnitOrderByRelevanceFieldEnum)[keyof typeof UnitOrderByRelevanceFieldEnum]
-
-
-export const WarehouseManagementOrderByRelevanceFieldEnum = {
-  id: 'id',
-  beNumber: 'beNumber',
-  orderNumber: 'orderNumber',
-  brandOrderNumber: 'brandOrderNumber',
-  shortDescription: 'shortDescription',
-  longDescription: 'longDescription',
-  materialGroupId: 'materialGroupId',
-  preferedSupplier: 'preferedSupplier',
-  unitId: 'unitId',
-  additionalInformation: 'additionalInformation',
-  documentationPlace: 'documentationPlace',
-  createdBy: 'createdBy'
-} as const
-
-export type WarehouseManagementOrderByRelevanceFieldEnum = (typeof WarehouseManagementOrderByRelevanceFieldEnum)[keyof typeof WarehouseManagementOrderByRelevanceFieldEnum]
-
-
-export const WarehousePlaceOrderByRelevanceFieldEnum = {
-  id: 'id',
-  place: 'place',
-  shelve: 'shelve',
-  col: 'col',
-  layer: 'layer',
-  layerPlace: 'layerPlace',
-  information: 'information',
-  createdBy: 'createdBy'
-} as const
-
-export type WarehousePlaceOrderByRelevanceFieldEnum = (typeof WarehousePlaceOrderByRelevanceFieldEnum)[keyof typeof WarehousePlaceOrderByRelevanceFieldEnum]
 

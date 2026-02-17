@@ -27,43 +27,40 @@ export type AggregatePart = {
 export type PartMinAggregateOutputType = {
   id: string | null
   name: string | null
+  part: string | null
   abbreviation: string | null
   devision: string | null
   shortDescription: string | null
   longDescription: string | null
-  beNumber: string | null
-  brandName: string | null
-  reject: boolean | null
+  additionalInfo: string | null
+  date: Date | null
   createdBy: string | null
-  createdAt: Date | null
 }
 
 export type PartMaxAggregateOutputType = {
   id: string | null
   name: string | null
+  part: string | null
   abbreviation: string | null
   devision: string | null
   shortDescription: string | null
   longDescription: string | null
-  beNumber: string | null
-  brandName: string | null
-  reject: boolean | null
+  additionalInfo: string | null
+  date: Date | null
   createdBy: string | null
-  createdAt: Date | null
 }
 
 export type PartCountAggregateOutputType = {
   id: number
   name: number
+  part: number
   abbreviation: number
   devision: number
   shortDescription: number
   longDescription: number
-  beNumber: number
-  brandName: number
-  reject: number
+  additionalInfo: number
+  date: number
   createdBy: number
-  createdAt: number
   _all: number
 }
 
@@ -71,43 +68,40 @@ export type PartCountAggregateOutputType = {
 export type PartMinAggregateInputType = {
   id?: true
   name?: true
+  part?: true
   abbreviation?: true
   devision?: true
   shortDescription?: true
   longDescription?: true
-  beNumber?: true
-  brandName?: true
-  reject?: true
+  additionalInfo?: true
+  date?: true
   createdBy?: true
-  createdAt?: true
 }
 
 export type PartMaxAggregateInputType = {
   id?: true
   name?: true
+  part?: true
   abbreviation?: true
   devision?: true
   shortDescription?: true
   longDescription?: true
-  beNumber?: true
-  brandName?: true
-  reject?: true
+  additionalInfo?: true
+  date?: true
   createdBy?: true
-  createdAt?: true
 }
 
 export type PartCountAggregateInputType = {
   id?: true
   name?: true
+  part?: true
   abbreviation?: true
   devision?: true
   shortDescription?: true
   longDescription?: true
-  beNumber?: true
-  brandName?: true
-  reject?: true
+  additionalInfo?: true
+  date?: true
   createdBy?: true
-  createdAt?: true
   _all?: true
 }
 
@@ -185,16 +179,15 @@ export type PartGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type PartGroupByOutputType = {
   id: string
-  name: string
-  abbreviation: string
-  devision: string
-  shortDescription: string
-  longDescription: string
-  beNumber: string | null
-  brandName: string
-  reject: boolean
+  name: string | null
+  part: string | null
+  abbreviation: string | null
+  devision: string | null
+  shortDescription: string | null
+  longDescription: string | null
+  additionalInfo: string | null
+  date: Date | null
   createdBy: string
-  createdAt: Date
   _count: PartCountAggregateOutputType | null
   _min: PartMinAggregateOutputType | null
   _max: PartMaxAggregateOutputType | null
@@ -220,31 +213,29 @@ export type PartWhereInput = {
   OR?: Prisma.PartWhereInput[]
   NOT?: Prisma.PartWhereInput | Prisma.PartWhereInput[]
   id?: Prisma.StringFilter<"Part"> | string
-  name?: Prisma.StringFilter<"Part"> | string
-  abbreviation?: Prisma.StringFilter<"Part"> | string
-  devision?: Prisma.StringFilter<"Part"> | string
-  shortDescription?: Prisma.StringFilter<"Part"> | string
-  longDescription?: Prisma.StringFilter<"Part"> | string
-  beNumber?: Prisma.StringNullableFilter<"Part"> | string | null
-  brandName?: Prisma.StringFilter<"Part"> | string
-  reject?: Prisma.BoolFilter<"Part"> | boolean
+  name?: Prisma.StringNullableFilter<"Part"> | string | null
+  part?: Prisma.StringNullableFilter<"Part"> | string | null
+  abbreviation?: Prisma.StringNullableFilter<"Part"> | string | null
+  devision?: Prisma.StringNullableFilter<"Part"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"Part"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"Part"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"Part"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"Part"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Part"> | string
-  createdAt?: Prisma.DateTimeFilter<"Part"> | Date | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
 
 export type PartOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  abbreviation?: Prisma.SortOrder
-  devision?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  brandName?: Prisma.SortOrder
-  reject?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  part?: Prisma.SortOrderInput | Prisma.SortOrder
+  abbreviation?: Prisma.SortOrderInput | Prisma.SortOrder
+  devision?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  date?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.PartOrderByRelevanceInput
 }
@@ -254,31 +245,29 @@ export type PartWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PartWhereInput | Prisma.PartWhereInput[]
   OR?: Prisma.PartWhereInput[]
   NOT?: Prisma.PartWhereInput | Prisma.PartWhereInput[]
-  name?: Prisma.StringFilter<"Part"> | string
-  abbreviation?: Prisma.StringFilter<"Part"> | string
-  devision?: Prisma.StringFilter<"Part"> | string
-  shortDescription?: Prisma.StringFilter<"Part"> | string
-  longDescription?: Prisma.StringFilter<"Part"> | string
-  beNumber?: Prisma.StringNullableFilter<"Part"> | string | null
-  brandName?: Prisma.StringFilter<"Part"> | string
-  reject?: Prisma.BoolFilter<"Part"> | boolean
+  name?: Prisma.StringNullableFilter<"Part"> | string | null
+  part?: Prisma.StringNullableFilter<"Part"> | string | null
+  abbreviation?: Prisma.StringNullableFilter<"Part"> | string | null
+  devision?: Prisma.StringNullableFilter<"Part"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"Part"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"Part"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"Part"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"Part"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Part"> | string
-  createdAt?: Prisma.DateTimeFilter<"Part"> | Date | string
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
 
 export type PartOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  abbreviation?: Prisma.SortOrder
-  devision?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  brandName?: Prisma.SortOrder
-  reject?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  part?: Prisma.SortOrderInput | Prisma.SortOrder
+  abbreviation?: Prisma.SortOrderInput | Prisma.SortOrder
+  devision?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  date?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   _count?: Prisma.PartCountOrderByAggregateInput
   _max?: Prisma.PartMaxOrderByAggregateInput
   _min?: Prisma.PartMinOrderByAggregateInput
@@ -289,113 +278,105 @@ export type PartScalarWhereWithAggregatesInput = {
   OR?: Prisma.PartScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PartScalarWhereWithAggregatesInput | Prisma.PartScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Part"> | string
-  name?: Prisma.StringWithAggregatesFilter<"Part"> | string
-  abbreviation?: Prisma.StringWithAggregatesFilter<"Part"> | string
-  devision?: Prisma.StringWithAggregatesFilter<"Part"> | string
-  shortDescription?: Prisma.StringWithAggregatesFilter<"Part"> | string
-  longDescription?: Prisma.StringWithAggregatesFilter<"Part"> | string
-  beNumber?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
-  brandName?: Prisma.StringWithAggregatesFilter<"Part"> | string
-  reject?: Prisma.BoolWithAggregatesFilter<"Part"> | boolean
+  name?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
+  part?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
+  abbreviation?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
+  devision?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
+  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
+  longDescription?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
+  additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
+  date?: Prisma.DateTimeNullableWithAggregatesFilter<"Part"> | Date | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"Part"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Part"> | Date | string
 }
 
 export type PartCreateInput = {
   id: string
-  name: string
-  abbreviation: string
-  devision: string
-  shortDescription: string
-  longDescription: string
-  beNumber?: string | null
-  brandName: string
-  reject: boolean
-  createdAt: Date | string
+  name?: string | null
+  part?: string | null
+  abbreviation?: string | null
+  devision?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInfo?: string | null
+  date?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutPartInput
 }
 
 export type PartUncheckedCreateInput = {
   id: string
-  name: string
-  abbreviation: string
-  devision: string
-  shortDescription: string
-  longDescription: string
-  beNumber?: string | null
-  brandName: string
-  reject: boolean
+  name?: string | null
+  part?: string | null
+  abbreviation?: string | null
+  devision?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInfo?: string | null
+  date?: Date | string | null
   createdBy: string
-  createdAt: Date | string
 }
 
 export type PartUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  devision?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  reject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  part?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPartNestedInput
 }
 
 export type PartUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  devision?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  reject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  part?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PartCreateManyInput = {
   id: string
-  name: string
-  abbreviation: string
-  devision: string
-  shortDescription: string
-  longDescription: string
-  beNumber?: string | null
-  brandName: string
-  reject: boolean
+  name?: string | null
+  part?: string | null
+  abbreviation?: string | null
+  devision?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInfo?: string | null
+  date?: Date | string | null
   createdBy: string
-  createdAt: Date | string
 }
 
 export type PartUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  devision?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  reject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  part?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PartUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  devision?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  reject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  part?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PartListRelationFilter = {
@@ -417,43 +398,40 @@ export type PartOrderByRelevanceInput = {
 export type PartCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  part?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   devision?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  brandName?: Prisma.SortOrder
-  reject?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  date?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type PartMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  part?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   devision?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  brandName?: Prisma.SortOrder
-  reject?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  date?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type PartMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  part?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   devision?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  brandName?: Prisma.SortOrder
-  reject?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  date?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type PartCreateNestedManyWithoutEmployeeInput = {
@@ -500,28 +478,26 @@ export type PartUncheckedUpdateManyWithoutEmployeeNestedInput = {
 
 export type PartCreateWithoutEmployeeInput = {
   id: string
-  name: string
-  abbreviation: string
-  devision: string
-  shortDescription: string
-  longDescription: string
-  beNumber?: string | null
-  brandName: string
-  reject: boolean
-  createdAt: Date | string
+  name?: string | null
+  part?: string | null
+  abbreviation?: string | null
+  devision?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInfo?: string | null
+  date?: Date | string | null
 }
 
 export type PartUncheckedCreateWithoutEmployeeInput = {
   id: string
-  name: string
-  abbreviation: string
-  devision: string
-  shortDescription: string
-  longDescription: string
-  beNumber?: string | null
-  brandName: string
-  reject: boolean
-  createdAt: Date | string
+  name?: string | null
+  part?: string | null
+  abbreviation?: string | null
+  devision?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInfo?: string | null
+  date?: Date | string | null
 }
 
 export type PartCreateOrConnectWithoutEmployeeInput = {
@@ -555,68 +531,63 @@ export type PartScalarWhereInput = {
   OR?: Prisma.PartScalarWhereInput[]
   NOT?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
   id?: Prisma.StringFilter<"Part"> | string
-  name?: Prisma.StringFilter<"Part"> | string
-  abbreviation?: Prisma.StringFilter<"Part"> | string
-  devision?: Prisma.StringFilter<"Part"> | string
-  shortDescription?: Prisma.StringFilter<"Part"> | string
-  longDescription?: Prisma.StringFilter<"Part"> | string
-  beNumber?: Prisma.StringNullableFilter<"Part"> | string | null
-  brandName?: Prisma.StringFilter<"Part"> | string
-  reject?: Prisma.BoolFilter<"Part"> | boolean
+  name?: Prisma.StringNullableFilter<"Part"> | string | null
+  part?: Prisma.StringNullableFilter<"Part"> | string | null
+  abbreviation?: Prisma.StringNullableFilter<"Part"> | string | null
+  devision?: Prisma.StringNullableFilter<"Part"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"Part"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"Part"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"Part"> | string | null
+  date?: Prisma.DateTimeNullableFilter<"Part"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Part"> | string
-  createdAt?: Prisma.DateTimeFilter<"Part"> | Date | string
 }
 
 export type PartCreateManyEmployeeInput = {
   id: string
-  name: string
-  abbreviation: string
-  devision: string
-  shortDescription: string
-  longDescription: string
-  beNumber?: string | null
-  brandName: string
-  reject: boolean
-  createdAt: Date | string
+  name?: string | null
+  part?: string | null
+  abbreviation?: string | null
+  devision?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInfo?: string | null
+  date?: Date | string | null
 }
 
 export type PartUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  devision?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  reject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  part?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PartUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  devision?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  reject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  part?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PartUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  devision?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.StringFieldUpdateOperationsInput | string
-  reject?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  part?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -624,15 +595,14 @@ export type PartUncheckedUpdateManyWithoutEmployeeInput = {
 export type PartSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  part?: boolean
   abbreviation?: boolean
   devision?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  beNumber?: boolean
-  brandName?: boolean
-  reject?: boolean
+  additionalInfo?: boolean
+  date?: boolean
   createdBy?: boolean
-  createdAt?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["part"]>
 
@@ -641,18 +611,17 @@ export type PartSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type PartSelectScalar = {
   id?: boolean
   name?: boolean
+  part?: boolean
   abbreviation?: boolean
   devision?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  beNumber?: boolean
-  brandName?: boolean
-  reject?: boolean
+  additionalInfo?: boolean
+  date?: boolean
   createdBy?: boolean
-  createdAt?: boolean
 }
 
-export type PartOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "abbreviation" | "devision" | "shortDescription" | "longDescription" | "beNumber" | "brandName" | "reject" | "createdBy" | "createdAt", ExtArgs["result"]["part"]>
+export type PartOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "part" | "abbreviation" | "devision" | "shortDescription" | "longDescription" | "additionalInfo" | "date" | "createdBy", ExtArgs["result"]["part"]>
 export type PartInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }
@@ -664,16 +633,15 @@ export type $PartPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    name: string
-    abbreviation: string
-    devision: string
-    shortDescription: string
-    longDescription: string
-    beNumber: string | null
-    brandName: string
-    reject: boolean
+    name: string | null
+    part: string | null
+    abbreviation: string | null
+    devision: string | null
+    shortDescription: string | null
+    longDescription: string | null
+    additionalInfo: string | null
+    date: Date | null
     createdBy: string
-    createdAt: Date
   }, ExtArgs["result"]["part"]>
   composites: {}
 }
@@ -1046,15 +1014,14 @@ export interface Prisma__PartClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface PartFieldRefs {
   readonly id: Prisma.FieldRef<"Part", 'String'>
   readonly name: Prisma.FieldRef<"Part", 'String'>
+  readonly part: Prisma.FieldRef<"Part", 'String'>
   readonly abbreviation: Prisma.FieldRef<"Part", 'String'>
   readonly devision: Prisma.FieldRef<"Part", 'String'>
   readonly shortDescription: Prisma.FieldRef<"Part", 'String'>
   readonly longDescription: Prisma.FieldRef<"Part", 'String'>
-  readonly beNumber: Prisma.FieldRef<"Part", 'String'>
-  readonly brandName: Prisma.FieldRef<"Part", 'String'>
-  readonly reject: Prisma.FieldRef<"Part", 'Boolean'>
+  readonly additionalInfo: Prisma.FieldRef<"Part", 'String'>
+  readonly date: Prisma.FieldRef<"Part", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Part", 'String'>
-  readonly createdAt: Prisma.FieldRef<"Part", 'DateTime'>
 }
     
 

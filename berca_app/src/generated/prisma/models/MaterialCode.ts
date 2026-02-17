@@ -26,8 +26,7 @@ export type AggregateMaterialCode = {
 
 export type MaterialCodeMinAggregateOutputType = {
   id: string | null
-  materialId: string | null
-  code: string | null
+  name: string | null
   shortDescription: string | null
   longDescription: string | null
   createdBy: string | null
@@ -36,8 +35,7 @@ export type MaterialCodeMinAggregateOutputType = {
 
 export type MaterialCodeMaxAggregateOutputType = {
   id: string | null
-  materialId: string | null
-  code: string | null
+  name: string | null
   shortDescription: string | null
   longDescription: string | null
   createdBy: string | null
@@ -46,8 +44,7 @@ export type MaterialCodeMaxAggregateOutputType = {
 
 export type MaterialCodeCountAggregateOutputType = {
   id: number
-  materialId: number
-  code: number
+  name: number
   shortDescription: number
   longDescription: number
   createdBy: number
@@ -58,8 +55,7 @@ export type MaterialCodeCountAggregateOutputType = {
 
 export type MaterialCodeMinAggregateInputType = {
   id?: true
-  materialId?: true
-  code?: true
+  name?: true
   shortDescription?: true
   longDescription?: true
   createdBy?: true
@@ -68,8 +64,7 @@ export type MaterialCodeMinAggregateInputType = {
 
 export type MaterialCodeMaxAggregateInputType = {
   id?: true
-  materialId?: true
-  code?: true
+  name?: true
   shortDescription?: true
   longDescription?: true
   createdBy?: true
@@ -78,8 +73,7 @@ export type MaterialCodeMaxAggregateInputType = {
 
 export type MaterialCodeCountAggregateInputType = {
   id?: true
-  materialId?: true
-  code?: true
+  name?: true
   shortDescription?: true
   longDescription?: true
   createdBy?: true
@@ -161,10 +155,9 @@ export type MaterialCodeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 
 export type MaterialCodeGroupByOutputType = {
   id: string
-  materialId: string | null
-  code: string
-  shortDescription: string
-  longDescription: string
+  name: string | null
+  shortDescription: string | null
+  longDescription: string | null
   createdBy: string
   createdAt: Date
   _count: MaterialCodeCountAggregateOutputType | null
@@ -192,25 +185,21 @@ export type MaterialCodeWhereInput = {
   OR?: Prisma.MaterialCodeWhereInput[]
   NOT?: Prisma.MaterialCodeWhereInput | Prisma.MaterialCodeWhereInput[]
   id?: Prisma.StringFilter<"MaterialCode"> | string
-  materialId?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
-  code?: Prisma.StringFilter<"MaterialCode"> | string
-  shortDescription?: Prisma.StringFilter<"MaterialCode"> | string
-  longDescription?: Prisma.StringFilter<"MaterialCode"> | string
+  name?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
   createdBy?: Prisma.StringFilter<"MaterialCode"> | string
   createdAt?: Prisma.DateTimeFilter<"MaterialCode"> | Date | string
-  Material?: Prisma.XOR<Prisma.MaterialNullableScalarRelationFilter, Prisma.MaterialWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }
 
 export type MaterialCodeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  materialId?: Prisma.SortOrderInput | Prisma.SortOrder
-  code?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  Material?: Prisma.MaterialOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.MaterialCodeOrderByRelevanceInput
 }
@@ -220,22 +209,19 @@ export type MaterialCodeWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.MaterialCodeWhereInput | Prisma.MaterialCodeWhereInput[]
   OR?: Prisma.MaterialCodeWhereInput[]
   NOT?: Prisma.MaterialCodeWhereInput | Prisma.MaterialCodeWhereInput[]
-  materialId?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
-  code?: Prisma.StringFilter<"MaterialCode"> | string
-  shortDescription?: Prisma.StringFilter<"MaterialCode"> | string
-  longDescription?: Prisma.StringFilter<"MaterialCode"> | string
+  name?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
   createdBy?: Prisma.StringFilter<"MaterialCode"> | string
   createdAt?: Prisma.DateTimeFilter<"MaterialCode"> | Date | string
-  Material?: Prisma.XOR<Prisma.MaterialNullableScalarRelationFilter, Prisma.MaterialWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
 }, "id">
 
 export type MaterialCodeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  materialId?: Prisma.SortOrderInput | Prisma.SortOrder
-  code?: Prisma.SortOrder
-  shortDescription?: Prisma.SortOrder
-  longDescription?: Prisma.SortOrder
+  name?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.MaterialCodeCountOrderByAggregateInput
@@ -248,78 +234,71 @@ export type MaterialCodeScalarWhereWithAggregatesInput = {
   OR?: Prisma.MaterialCodeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MaterialCodeScalarWhereWithAggregatesInput | Prisma.MaterialCodeScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"MaterialCode"> | string
-  materialId?: Prisma.StringNullableWithAggregatesFilter<"MaterialCode"> | string | null
-  code?: Prisma.StringWithAggregatesFilter<"MaterialCode"> | string
-  shortDescription?: Prisma.StringWithAggregatesFilter<"MaterialCode"> | string
-  longDescription?: Prisma.StringWithAggregatesFilter<"MaterialCode"> | string
+  name?: Prisma.StringNullableWithAggregatesFilter<"MaterialCode"> | string | null
+  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"MaterialCode"> | string | null
+  longDescription?: Prisma.StringNullableWithAggregatesFilter<"MaterialCode"> | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"MaterialCode"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MaterialCode"> | Date | string
 }
 
 export type MaterialCodeCreateInput = {
   id: string
-  code: string
-  shortDescription: string
-  longDescription: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdAt: Date | string
-  Material?: Prisma.MaterialCreateNestedOneWithoutMaterialCodeInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialCodeInput
 }
 
 export type MaterialCodeUncheckedCreateInput = {
   id: string
-  materialId?: string | null
-  code: string
-  shortDescription: string
-  longDescription: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdBy: string
   createdAt: Date | string
 }
 
 export type MaterialCodeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Material?: Prisma.MaterialUpdateOneWithoutMaterialCodeNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialCodeNestedInput
 }
 
 export type MaterialCodeUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type MaterialCodeCreateManyInput = {
   id: string
-  materialId?: string | null
-  code: string
-  shortDescription: string
-  longDescription: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdBy: string
   createdAt: Date | string
 }
 
 export type MaterialCodeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type MaterialCodeUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -342,8 +321,7 @@ export type MaterialCodeOrderByRelevanceInput = {
 
 export type MaterialCodeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
-  code?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -352,8 +330,7 @@ export type MaterialCodeCountOrderByAggregateInput = {
 
 export type MaterialCodeMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
-  code?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -362,8 +339,7 @@ export type MaterialCodeMaxOrderByAggregateInput = {
 
 export type MaterialCodeMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
-  code?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -412,63 +388,19 @@ export type MaterialCodeUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.MaterialCodeScalarWhereInput | Prisma.MaterialCodeScalarWhereInput[]
 }
 
-export type MaterialCodeCreateNestedManyWithoutMaterialInput = {
-  create?: Prisma.XOR<Prisma.MaterialCodeCreateWithoutMaterialInput, Prisma.MaterialCodeUncheckedCreateWithoutMaterialInput> | Prisma.MaterialCodeCreateWithoutMaterialInput[] | Prisma.MaterialCodeUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.MaterialCodeCreateOrConnectWithoutMaterialInput | Prisma.MaterialCodeCreateOrConnectWithoutMaterialInput[]
-  createMany?: Prisma.MaterialCodeCreateManyMaterialInputEnvelope
-  connect?: Prisma.MaterialCodeWhereUniqueInput | Prisma.MaterialCodeWhereUniqueInput[]
-}
-
-export type MaterialCodeUncheckedCreateNestedManyWithoutMaterialInput = {
-  create?: Prisma.XOR<Prisma.MaterialCodeCreateWithoutMaterialInput, Prisma.MaterialCodeUncheckedCreateWithoutMaterialInput> | Prisma.MaterialCodeCreateWithoutMaterialInput[] | Prisma.MaterialCodeUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.MaterialCodeCreateOrConnectWithoutMaterialInput | Prisma.MaterialCodeCreateOrConnectWithoutMaterialInput[]
-  createMany?: Prisma.MaterialCodeCreateManyMaterialInputEnvelope
-  connect?: Prisma.MaterialCodeWhereUniqueInput | Prisma.MaterialCodeWhereUniqueInput[]
-}
-
-export type MaterialCodeUpdateManyWithoutMaterialNestedInput = {
-  create?: Prisma.XOR<Prisma.MaterialCodeCreateWithoutMaterialInput, Prisma.MaterialCodeUncheckedCreateWithoutMaterialInput> | Prisma.MaterialCodeCreateWithoutMaterialInput[] | Prisma.MaterialCodeUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.MaterialCodeCreateOrConnectWithoutMaterialInput | Prisma.MaterialCodeCreateOrConnectWithoutMaterialInput[]
-  upsert?: Prisma.MaterialCodeUpsertWithWhereUniqueWithoutMaterialInput | Prisma.MaterialCodeUpsertWithWhereUniqueWithoutMaterialInput[]
-  createMany?: Prisma.MaterialCodeCreateManyMaterialInputEnvelope
-  set?: Prisma.MaterialCodeWhereUniqueInput | Prisma.MaterialCodeWhereUniqueInput[]
-  disconnect?: Prisma.MaterialCodeWhereUniqueInput | Prisma.MaterialCodeWhereUniqueInput[]
-  delete?: Prisma.MaterialCodeWhereUniqueInput | Prisma.MaterialCodeWhereUniqueInput[]
-  connect?: Prisma.MaterialCodeWhereUniqueInput | Prisma.MaterialCodeWhereUniqueInput[]
-  update?: Prisma.MaterialCodeUpdateWithWhereUniqueWithoutMaterialInput | Prisma.MaterialCodeUpdateWithWhereUniqueWithoutMaterialInput[]
-  updateMany?: Prisma.MaterialCodeUpdateManyWithWhereWithoutMaterialInput | Prisma.MaterialCodeUpdateManyWithWhereWithoutMaterialInput[]
-  deleteMany?: Prisma.MaterialCodeScalarWhereInput | Prisma.MaterialCodeScalarWhereInput[]
-}
-
-export type MaterialCodeUncheckedUpdateManyWithoutMaterialNestedInput = {
-  create?: Prisma.XOR<Prisma.MaterialCodeCreateWithoutMaterialInput, Prisma.MaterialCodeUncheckedCreateWithoutMaterialInput> | Prisma.MaterialCodeCreateWithoutMaterialInput[] | Prisma.MaterialCodeUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.MaterialCodeCreateOrConnectWithoutMaterialInput | Prisma.MaterialCodeCreateOrConnectWithoutMaterialInput[]
-  upsert?: Prisma.MaterialCodeUpsertWithWhereUniqueWithoutMaterialInput | Prisma.MaterialCodeUpsertWithWhereUniqueWithoutMaterialInput[]
-  createMany?: Prisma.MaterialCodeCreateManyMaterialInputEnvelope
-  set?: Prisma.MaterialCodeWhereUniqueInput | Prisma.MaterialCodeWhereUniqueInput[]
-  disconnect?: Prisma.MaterialCodeWhereUniqueInput | Prisma.MaterialCodeWhereUniqueInput[]
-  delete?: Prisma.MaterialCodeWhereUniqueInput | Prisma.MaterialCodeWhereUniqueInput[]
-  connect?: Prisma.MaterialCodeWhereUniqueInput | Prisma.MaterialCodeWhereUniqueInput[]
-  update?: Prisma.MaterialCodeUpdateWithWhereUniqueWithoutMaterialInput | Prisma.MaterialCodeUpdateWithWhereUniqueWithoutMaterialInput[]
-  updateMany?: Prisma.MaterialCodeUpdateManyWithWhereWithoutMaterialInput | Prisma.MaterialCodeUpdateManyWithWhereWithoutMaterialInput[]
-  deleteMany?: Prisma.MaterialCodeScalarWhereInput | Prisma.MaterialCodeScalarWhereInput[]
-}
-
 export type MaterialCodeCreateWithoutEmployeeInput = {
   id: string
-  code: string
-  shortDescription: string
-  longDescription: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdAt: Date | string
-  Material?: Prisma.MaterialCreateNestedOneWithoutMaterialCodeInput
 }
 
 export type MaterialCodeUncheckedCreateWithoutEmployeeInput = {
   id: string
-  materialId?: string | null
-  code: string
-  shortDescription: string
-  longDescription: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdAt: Date | string
 }
 
@@ -503,127 +435,42 @@ export type MaterialCodeScalarWhereInput = {
   OR?: Prisma.MaterialCodeScalarWhereInput[]
   NOT?: Prisma.MaterialCodeScalarWhereInput | Prisma.MaterialCodeScalarWhereInput[]
   id?: Prisma.StringFilter<"MaterialCode"> | string
-  materialId?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
-  code?: Prisma.StringFilter<"MaterialCode"> | string
-  shortDescription?: Prisma.StringFilter<"MaterialCode"> | string
-  longDescription?: Prisma.StringFilter<"MaterialCode"> | string
+  name?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
+  longDescription?: Prisma.StringNullableFilter<"MaterialCode"> | string | null
   createdBy?: Prisma.StringFilter<"MaterialCode"> | string
   createdAt?: Prisma.DateTimeFilter<"MaterialCode"> | Date | string
 }
 
-export type MaterialCodeCreateWithoutMaterialInput = {
-  id: string
-  code: string
-  shortDescription: string
-  longDescription: string
-  createdAt: Date | string
-  Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialCodeInput
-}
-
-export type MaterialCodeUncheckedCreateWithoutMaterialInput = {
-  id: string
-  code: string
-  shortDescription: string
-  longDescription: string
-  createdBy: string
-  createdAt: Date | string
-}
-
-export type MaterialCodeCreateOrConnectWithoutMaterialInput = {
-  where: Prisma.MaterialCodeWhereUniqueInput
-  create: Prisma.XOR<Prisma.MaterialCodeCreateWithoutMaterialInput, Prisma.MaterialCodeUncheckedCreateWithoutMaterialInput>
-}
-
-export type MaterialCodeCreateManyMaterialInputEnvelope = {
-  data: Prisma.MaterialCodeCreateManyMaterialInput | Prisma.MaterialCodeCreateManyMaterialInput[]
-  skipDuplicates?: boolean
-}
-
-export type MaterialCodeUpsertWithWhereUniqueWithoutMaterialInput = {
-  where: Prisma.MaterialCodeWhereUniqueInput
-  update: Prisma.XOR<Prisma.MaterialCodeUpdateWithoutMaterialInput, Prisma.MaterialCodeUncheckedUpdateWithoutMaterialInput>
-  create: Prisma.XOR<Prisma.MaterialCodeCreateWithoutMaterialInput, Prisma.MaterialCodeUncheckedCreateWithoutMaterialInput>
-}
-
-export type MaterialCodeUpdateWithWhereUniqueWithoutMaterialInput = {
-  where: Prisma.MaterialCodeWhereUniqueInput
-  data: Prisma.XOR<Prisma.MaterialCodeUpdateWithoutMaterialInput, Prisma.MaterialCodeUncheckedUpdateWithoutMaterialInput>
-}
-
-export type MaterialCodeUpdateManyWithWhereWithoutMaterialInput = {
-  where: Prisma.MaterialCodeScalarWhereInput
-  data: Prisma.XOR<Prisma.MaterialCodeUpdateManyMutationInput, Prisma.MaterialCodeUncheckedUpdateManyWithoutMaterialInput>
-}
-
 export type MaterialCodeCreateManyEmployeeInput = {
   id: string
-  materialId?: string | null
-  code: string
-  shortDescription: string
-  longDescription: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
   createdAt: Date | string
 }
 
 export type MaterialCodeUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Material?: Prisma.MaterialUpdateOneWithoutMaterialCodeNestedInput
 }
 
 export type MaterialCodeUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type MaterialCodeUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type MaterialCodeCreateManyMaterialInput = {
-  id: string
-  code: string
-  shortDescription: string
-  longDescription: string
-  createdBy: string
-  createdAt: Date | string
-}
-
-export type MaterialCodeUpdateWithoutMaterialInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialCodeNestedInput
-}
-
-export type MaterialCodeUncheckedUpdateWithoutMaterialInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type MaterialCodeUncheckedUpdateManyWithoutMaterialInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -631,13 +478,11 @@ export type MaterialCodeUncheckedUpdateManyWithoutMaterialInput = {
 
 export type MaterialCodeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  materialId?: boolean
-  code?: boolean
+  name?: boolean
   shortDescription?: boolean
   longDescription?: boolean
   createdBy?: boolean
   createdAt?: boolean
-  Material?: boolean | Prisma.MaterialCode$MaterialArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["materialCode"]>
 
@@ -645,32 +490,28 @@ export type MaterialCodeSelect<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type MaterialCodeSelectScalar = {
   id?: boolean
-  materialId?: boolean
-  code?: boolean
+  name?: boolean
   shortDescription?: boolean
   longDescription?: boolean
   createdBy?: boolean
   createdAt?: boolean
 }
 
-export type MaterialCodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "code" | "shortDescription" | "longDescription" | "createdBy" | "createdAt", ExtArgs["result"]["materialCode"]>
+export type MaterialCodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "shortDescription" | "longDescription" | "createdBy" | "createdAt", ExtArgs["result"]["materialCode"]>
 export type MaterialCodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Material?: boolean | Prisma.MaterialCode$MaterialArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
 }
 
 export type $MaterialCodePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MaterialCode"
   objects: {
-    Material: Prisma.$MaterialPayload<ExtArgs> | null
     Employee: Prisma.$EmployeePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    materialId: string | null
-    code: string
-    shortDescription: string
-    longDescription: string
+    name: string | null
+    shortDescription: string | null
+    longDescription: string | null
     createdBy: string
     createdAt: Date
   }, ExtArgs["result"]["materialCode"]>
@@ -1013,7 +854,6 @@ readonly fields: MaterialCodeFieldRefs;
  */
 export interface Prisma__MaterialCodeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  Material<T extends Prisma.MaterialCode$MaterialArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialCode$MaterialArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1045,8 +885,7 @@ export interface Prisma__MaterialCodeClient<T, Null = never, ExtArgs extends run
  */
 export interface MaterialCodeFieldRefs {
   readonly id: Prisma.FieldRef<"MaterialCode", 'String'>
-  readonly materialId: Prisma.FieldRef<"MaterialCode", 'String'>
-  readonly code: Prisma.FieldRef<"MaterialCode", 'String'>
+  readonly name: Prisma.FieldRef<"MaterialCode", 'String'>
   readonly shortDescription: Prisma.FieldRef<"MaterialCode", 'String'>
   readonly longDescription: Prisma.FieldRef<"MaterialCode", 'String'>
   readonly createdBy: Prisma.FieldRef<"MaterialCode", 'String'>
@@ -1391,25 +1230,6 @@ export type MaterialCodeDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many MaterialCodes to delete.
    */
   limit?: number
-}
-
-/**
- * MaterialCode.Material
- */
-export type MaterialCode$MaterialArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Material
-   */
-  select?: Prisma.MaterialSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Material
-   */
-  omit?: Prisma.MaterialOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MaterialInclude<ExtArgs> | null
-  where?: Prisma.MaterialWhereInput
 }
 
 /**

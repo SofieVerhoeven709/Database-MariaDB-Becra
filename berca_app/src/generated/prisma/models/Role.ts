@@ -473,14 +473,6 @@ export type RoleUncheckedUpdateManyWithoutEmployee_Role_createdByToEmployeeNeste
   deleteMany?: Prisma.RoleScalarWhereInput | Prisma.RoleScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type RoleCreateNestedOneWithoutVisibilityForRoleInput = {
   create?: Prisma.XOR<Prisma.RoleCreateWithoutVisibilityForRoleInput, Prisma.RoleUncheckedCreateWithoutVisibilityForRoleInput>
   connectOrCreate?: Prisma.RoleCreateOrConnectWithoutVisibilityForRoleInput

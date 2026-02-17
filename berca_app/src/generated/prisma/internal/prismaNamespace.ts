@@ -5868,6 +5868,9 @@ export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeo
 export const DepartmentScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  color: 'color',
+  icon: 'icon',
+  description: 'description',
   createdAt: 'createdAt',
   createdBy: 'createdBy'
 } as const
@@ -7141,6 +7144,9 @@ export type ContactOrderByRelevanceFieldEnum = (typeof ContactOrderByRelevanceFi
 export const DepartmentOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
+  color: 'color',
+  icon: 'icon',
+  description: 'description',
   createdBy: 'createdBy'
 } as const
 

@@ -12,116 +12,58 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import Link from 'next/link'
+import {useEffect, useState} from 'react'
+import type {Role} from '@/generated/prisma/client'
 
-export interface Department {
+interface Department {
   id: string
   name: string
   description: string
-  icon: LucideIcon
-  hue: number
-  saturation: number
-  lightness: number
+  icon: string
+  color: string
 }
 
-const ALL_DEPARTMENTS: Department[] = [
-  {
-    id: 'finance',
-    name: 'Finance',
-    description: 'Budgets, invoices, and financial reports',
-    icon: DollarSign,
-    hue: 45,
-    saturation: 50,
-    lightness: 45,
-  },
-  {
-    id: 'hr',
-    name: 'Human Resources',
-    description: 'Employee records and onboarding',
-    icon: Users,
-    hue: 200,
-    saturation: 45,
-    lightness: 45,
-  },
-  {
-    id: 'engineering',
-    name: 'Engineering',
-    description: 'Development, deployments, and infrastructure',
-    icon: Code,
-    hue: 160,
-    saturation: 40,
-    lightness: 40,
-  },
-  {
-    id: 'marketing',
-    name: 'Marketing',
-    description: 'Campaigns, analytics, and brand assets',
-    icon: Megaphone,
-    hue: 340,
-    saturation: 40,
-    lightness: 45,
-  },
-  {
-    id: 'support',
-    name: 'Customer Support',
-    description: 'Tickets, live chat, and knowledge base',
-    icon: HeadphonesIcon,
-    hue: 270,
-    saturation: 35,
-    lightness: 45,
-  },
-  {
-    id: 'security',
-    name: 'Security',
-    description: 'Access control, audits, and compliance',
-    icon: ShieldCheck,
-    hue: 15,
-    saturation: 50,
-    lightness: 42,
-  },
-  {
-    id: 'analytics',
-    name: 'Analytics',
-    description: 'Data insights and performance metrics',
-    icon: BarChart3,
-    hue: 220,
-    saturation: 40,
-    lightness: 48,
-  },
-  {
-    id: 'operations',
-    name: 'Operations',
-    description: 'Workflows, logistics, and process management',
-    icon: Package,
-    hue: 130,
-    saturation: 35,
-    lightness: 38,
-  },
-]
-
-// Mock: which departments each role can access
-const ROLE_DEPARTMENTS: Record<string, string[]> = {
-  administrator: ALL_DEPARTMENTS.map(d => d.id),
-  manager: ['finance', 'hr', 'marketing', 'analytics', 'operations'],
-  developer: ['engineering', 'analytics', 'security'],
-  support: ['support', 'hr'],
+const ICONS: Record<string, LucideIcon> = {
+  DollarSign,
+  Users,
+  Code,
+  Megaphone,
+  HeadphonesIcon,
+  ShieldCheck,
+  BarChart3,
+  Package,
 }
 
 interface DepartmentGridProps {
-  role: string
+  role: Role
 }
 
 export function DepartmentGrid({role}: DepartmentGridProps) {
-  const normalizedRole = role.toLowerCase()
-  const allowedIds = ROLE_DEPARTMENTS[normalizedRole] ?? ROLE_DEPARTMENTS['administrator']
-  const departments = ALL_DEPARTMENTS.filter(d => allowedIds.includes(d.id))
+  const [departments, setDepartments] = useState<Department[]>([])
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      const res = await fetch('/api/departments', {
+        method: 'POST', // use POST because you’re sending a JSON body
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(role), // full Role object
+      })
+      const data: Department[] = await res.json()
+      setDepartments(data)
+    }
+
+    fetchDepartments()
+  }, [role])
+
+  if (!departments.length) return <p>Loading departments...</p>
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {departments.map(dept => {
-        const Icon = dept.icon
-        const accentColor = `hsl(${dept.hue}, ${dept.saturation}%, ${dept.lightness}%)`
-        const accentBg = `hsl(${dept.hue}, ${dept.saturation}%, ${dept.lightness}%, 0.12)`
-        const accentBgHover = `hsl(${dept.hue}, ${dept.saturation}%, ${dept.lightness}%, 0.18)`
+        const Icon = ICONS[dept.icon] || DollarSign
+        const accentColor = dept.color
+        const accentBg = `${accentColor}1F` // ~12% opacity
+        const accentBgHover = `${accentColor}2E` // ~18% opacity
 
         return (
           <Link

@@ -172,6 +172,9 @@ model Contact {
 model Department {
   id                                         String     @id @db.Char(36)
   name                                       String     @db.VarChar(100)
+  color                                      String?    @db.VarChar(10)
+  icon                                       String?    @db.VarChar(255)
+  description                                String?    @db.VarChar(255)
   createdAt                                  DateTime   @db.DateTime(0)
   createdBy                                  String     @db.Char(36)
   Contact                                    Contact[]

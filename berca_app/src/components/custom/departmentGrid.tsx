@@ -13,6 +13,8 @@ import {
   Database,
   ShoppingCart,
   TrendingUp,
+  Package,
+  CheckCircle,
   type LucideIcon,
 } from 'lucide-react'
 import Link from 'next/link'
@@ -40,6 +42,8 @@ const ICONS: Record<string, LucideIcon> = {
   Database, // Database
   ShoppingCart, // Purchasing
   TrendingUp, // Sales
+  Package, // Warehouse
+  CheckCircle, // Product Quality
 }
 
 interface DepartmentGridProps {

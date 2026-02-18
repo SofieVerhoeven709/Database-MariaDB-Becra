@@ -51,6 +51,9 @@ export type CompanyMinAggregateOutputType = {
   createdBy: string | null
   companyId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type CompanyMaxAggregateOutputType = {
@@ -80,6 +83,9 @@ export type CompanyMaxAggregateOutputType = {
   createdBy: string | null
   companyId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type CompanyCountAggregateOutputType = {
@@ -109,6 +115,9 @@ export type CompanyCountAggregateOutputType = {
   createdBy: number
   companyId: number
   targetId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -140,6 +149,9 @@ export type CompanyMinAggregateInputType = {
   createdBy?: true
   companyId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type CompanyMaxAggregateInputType = {
@@ -169,6 +181,9 @@ export type CompanyMaxAggregateInputType = {
   createdBy?: true
   companyId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type CompanyCountAggregateInputType = {
@@ -198,6 +213,9 @@ export type CompanyCountAggregateInputType = {
   createdBy?: true
   companyId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -300,6 +318,9 @@ export type CompanyGroupByOutputType = {
   createdBy: string
   companyId: string | null
   targetId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: CompanyCountAggregateOutputType | null
   _min: CompanyMinAggregateOutputType | null
   _max: CompanyMaxAggregateOutputType | null
@@ -350,10 +371,14 @@ export type CompanyWhereInput = {
   createdBy?: Prisma.StringFilter<"Company"> | string
   companyId?: Prisma.StringNullableFilter<"Company"> | string | null
   targetId?: Prisma.StringFilter<"Company"> | string
+  deleted?: Prisma.BoolFilter<"Company"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Company"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Company"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   other_Company?: Prisma.CompanyListRelationFilter
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee_Company_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   CompanyAdress?: Prisma.CompanyAdressListRelationFilter
   CompanyContact?: Prisma.CompanyContactListRelationFilter
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierListRelationFilter
@@ -389,10 +414,14 @@ export type CompanyOrderByWithRelationInput = {
   createdBy?: Prisma.SortOrder
   companyId?: Prisma.SortOrderInput | Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Company?: Prisma.CompanyOrderByWithRelationInput
   other_Company?: Prisma.CompanyOrderByRelationAggregateInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   CompanyAdress?: Prisma.CompanyAdressOrderByRelationAggregateInput
   CompanyContact?: Prisma.CompanyContactOrderByRelationAggregateInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierOrderByRelationAggregateInput
@@ -432,10 +461,14 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.StringFilter<"Company"> | string
   companyId?: Prisma.StringNullableFilter<"Company"> | string | null
   targetId?: Prisma.StringFilter<"Company"> | string
+  deleted?: Prisma.BoolFilter<"Company"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Company"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Company"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   other_Company?: Prisma.CompanyListRelationFilter
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee_Company_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   CompanyAdress?: Prisma.CompanyAdressListRelationFilter
   CompanyContact?: Prisma.CompanyContactListRelationFilter
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierListRelationFilter
@@ -471,6 +504,9 @@ export type CompanyOrderByWithAggregationInput = {
   createdBy?: Prisma.SortOrder
   companyId?: Prisma.SortOrderInput | Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CompanyCountOrderByAggregateInput
   _max?: Prisma.CompanyMaxOrderByAggregateInput
   _min?: Prisma.CompanyMinOrderByAggregateInput
@@ -506,6 +542,9 @@ export type CompanyScalarWhereWithAggregatesInput = {
   createdBy?: Prisma.StringWithAggregatesFilter<"Company"> | string
   companyId?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
   targetId?: Prisma.StringWithAggregatesFilter<"Company"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"Company"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Company"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
 }
 
 export type CompanyCreateInput = {
@@ -532,10 +571,13 @@ export type CompanyCreateInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
   Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
   other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
   Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
@@ -571,6 +613,9 @@ export type CompanyUncheckedCreateInput = {
   createdBy: string
   companyId?: string | null
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -604,10 +649,13 @@ export type CompanyUpdateInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
   other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
@@ -643,6 +691,9 @@ export type CompanyUncheckedUpdateInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -679,6 +730,9 @@ export type CompanyCreateManyInput = {
   createdBy: string
   companyId?: string | null
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type CompanyUpdateManyMutationInput = {
@@ -705,6 +759,8 @@ export type CompanyUpdateManyMutationInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CompanyUncheckedUpdateManyInput = {
@@ -734,6 +790,9 @@ export type CompanyUncheckedUpdateManyInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CompanyNullableScalarRelationFilter = {
@@ -784,6 +843,9 @@ export type CompanyCountOrderByAggregateInput = {
   createdBy?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type CompanyMaxOrderByAggregateInput = {
@@ -813,6 +875,9 @@ export type CompanyMaxOrderByAggregateInput = {
   createdBy?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type CompanyMinOrderByAggregateInput = {
@@ -842,6 +907,9 @@ export type CompanyMinOrderByAggregateInput = {
   createdBy?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type CompanyScalarRelationFilter = {
@@ -867,10 +935,6 @@ export type CompanyUncheckedCreateNestedManyWithoutCompanyInput = {
   connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutCompanyInput | Prisma.CompanyCreateOrConnectWithoutCompanyInput[]
   createMany?: Prisma.CompanyCreateManyCompanyInputEnvelope
   connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
 }
 
 export type CompanyUpdateOneWithoutOther_CompanyNestedInput = {
@@ -962,10 +1026,24 @@ export type CompanyCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
 }
 
+export type CompanyCreateNestedManyWithoutEmployee_Company_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput, Prisma.CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput> | Prisma.CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput[] | Prisma.CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutEmployee_Company_deletedByToEmployeeInput | Prisma.CompanyCreateOrConnectWithoutEmployee_Company_deletedByToEmployeeInput[]
+  createMany?: Prisma.CompanyCreateManyEmployee_Company_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+}
+
 export type CompanyUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.CompanyCreateWithoutEmployeeInput, Prisma.CompanyUncheckedCreateWithoutEmployeeInput> | Prisma.CompanyCreateWithoutEmployeeInput[] | Prisma.CompanyUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutEmployeeInput | Prisma.CompanyCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.CompanyCreateManyEmployeeInputEnvelope
+  connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+}
+
+export type CompanyUncheckedCreateNestedManyWithoutEmployee_Company_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput, Prisma.CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput> | Prisma.CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput[] | Prisma.CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutEmployee_Company_deletedByToEmployeeInput | Prisma.CompanyCreateOrConnectWithoutEmployee_Company_deletedByToEmployeeInput[]
+  createMany?: Prisma.CompanyCreateManyEmployee_Company_deletedByToEmployeeInputEnvelope
   connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
 }
 
@@ -983,6 +1061,20 @@ export type CompanyUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
 }
 
+export type CompanyUpdateManyWithoutEmployee_Company_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput, Prisma.CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput> | Prisma.CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput[] | Prisma.CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutEmployee_Company_deletedByToEmployeeInput | Prisma.CompanyCreateOrConnectWithoutEmployee_Company_deletedByToEmployeeInput[]
+  upsert?: Prisma.CompanyUpsertWithWhereUniqueWithoutEmployee_Company_deletedByToEmployeeInput | Prisma.CompanyUpsertWithWhereUniqueWithoutEmployee_Company_deletedByToEmployeeInput[]
+  createMany?: Prisma.CompanyCreateManyEmployee_Company_deletedByToEmployeeInputEnvelope
+  set?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  disconnect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  delete?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  update?: Prisma.CompanyUpdateWithWhereUniqueWithoutEmployee_Company_deletedByToEmployeeInput | Prisma.CompanyUpdateWithWhereUniqueWithoutEmployee_Company_deletedByToEmployeeInput[]
+  updateMany?: Prisma.CompanyUpdateManyWithWhereWithoutEmployee_Company_deletedByToEmployeeInput | Prisma.CompanyUpdateManyWithWhereWithoutEmployee_Company_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
+}
+
 export type CompanyUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.CompanyCreateWithoutEmployeeInput, Prisma.CompanyUncheckedCreateWithoutEmployeeInput> | Prisma.CompanyCreateWithoutEmployeeInput[] | Prisma.CompanyUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutEmployeeInput | Prisma.CompanyCreateOrConnectWithoutEmployeeInput[]
@@ -994,6 +1086,20 @@ export type CompanyUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
   update?: Prisma.CompanyUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.CompanyUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.CompanyUpdateManyWithWhereWithoutEmployeeInput | Prisma.CompanyUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
+}
+
+export type CompanyUncheckedUpdateManyWithoutEmployee_Company_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput, Prisma.CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput> | Prisma.CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput[] | Prisma.CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutEmployee_Company_deletedByToEmployeeInput | Prisma.CompanyCreateOrConnectWithoutEmployee_Company_deletedByToEmployeeInput[]
+  upsert?: Prisma.CompanyUpsertWithWhereUniqueWithoutEmployee_Company_deletedByToEmployeeInput | Prisma.CompanyUpsertWithWhereUniqueWithoutEmployee_Company_deletedByToEmployeeInput[]
+  createMany?: Prisma.CompanyCreateManyEmployee_Company_deletedByToEmployeeInputEnvelope
+  set?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  disconnect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  delete?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  update?: Prisma.CompanyUpdateWithWhereUniqueWithoutEmployee_Company_deletedByToEmployeeInput | Prisma.CompanyUpdateWithWhereUniqueWithoutEmployee_Company_deletedByToEmployeeInput[]
+  updateMany?: Prisma.CompanyUpdateManyWithWhereWithoutEmployee_Company_deletedByToEmployeeInput | Prisma.CompanyUpdateManyWithWhereWithoutEmployee_Company_deletedByToEmployeeInput[]
   deleteMany?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
 }
 
@@ -1109,9 +1215,12 @@ export type CompanyCreateWithoutOther_CompanyInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
   Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
   Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
@@ -1147,6 +1256,9 @@ export type CompanyUncheckedCreateWithoutOther_CompanyInput = {
   createdBy: string
   companyId?: string | null
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
@@ -1184,9 +1296,12 @@ export type CompanyCreateWithoutCompanyInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
   other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
   Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
@@ -1221,6 +1336,9 @@ export type CompanyUncheckedCreateWithoutCompanyInput = {
   createdAt: Date | string
   createdBy: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -1275,9 +1393,12 @@ export type CompanyUpdateWithoutOther_CompanyInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
@@ -1313,6 +1434,9 @@ export type CompanyUncheckedUpdateWithoutOther_CompanyInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
@@ -1367,6 +1491,9 @@ export type CompanyScalarWhereInput = {
   createdBy?: Prisma.StringFilter<"Company"> | string
   companyId?: Prisma.StringNullableFilter<"Company"> | string | null
   targetId?: Prisma.StringFilter<"Company"> | string
+  deleted?: Prisma.BoolFilter<"Company"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Company"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Company"> | string | null
 }
 
 export type CompanyCreateWithoutCompanyAdressInput = {
@@ -1393,10 +1520,13 @@ export type CompanyCreateWithoutCompanyAdressInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
   Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
   other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
   Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
@@ -1431,6 +1561,9 @@ export type CompanyUncheckedCreateWithoutCompanyAdressInput = {
   createdBy: string
   companyId?: string | null
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
@@ -1479,10 +1612,13 @@ export type CompanyUpdateWithoutCompanyAdressInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
   other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
@@ -1517,6 +1653,9 @@ export type CompanyUncheckedUpdateWithoutCompanyAdressInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
@@ -1549,10 +1688,13 @@ export type CompanyCreateWithoutCompanyContactInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
   Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
   other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
   Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
@@ -1587,6 +1729,9 @@ export type CompanyUncheckedCreateWithoutCompanyContactInput = {
   createdBy: string
   companyId?: string | null
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
@@ -1635,10 +1780,13 @@ export type CompanyUpdateWithoutCompanyContactInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
   other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
@@ -1673,6 +1821,9 @@ export type CompanyUncheckedUpdateWithoutCompanyContactInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
@@ -1705,10 +1856,13 @@ export type CompanyCreateWithoutDeliveryNoteSupplierInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
   Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
   other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
   Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
@@ -1743,6 +1897,9 @@ export type CompanyUncheckedCreateWithoutDeliveryNoteSupplierInput = {
   createdBy: string
   companyId?: string | null
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -1791,10 +1948,13 @@ export type CompanyUpdateWithoutDeliveryNoteSupplierInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
   other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
@@ -1829,6 +1989,9 @@ export type CompanyUncheckedUpdateWithoutDeliveryNoteSupplierInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -1861,9 +2024,12 @@ export type CompanyCreateWithoutEmployeeInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
   other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
   Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
@@ -1898,6 +2064,9 @@ export type CompanyUncheckedCreateWithoutEmployeeInput = {
   createdAt: Date | string
   companyId?: string | null
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -1917,6 +2086,92 @@ export type CompanyCreateManyEmployeeInputEnvelope = {
   skipDuplicates?: boolean
 }
 
+export type CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  number: string
+  mail?: string | null
+  businessPhone?: string | null
+  website?: string | null
+  vatNumber?: string | null
+  bankNumber?: string | null
+  iban?: string | null
+  bic?: string | null
+  becraCustomerNumber?: string | null
+  becraWebsiteLogin?: string | null
+  supplier?: boolean
+  prefferedSupplier?: boolean
+  companyActive?: boolean
+  newsLetter?: boolean
+  customer?: boolean
+  potentialCustomer?: boolean
+  headQuarters?: boolean
+  potentialSubContractor?: boolean
+  subContractor?: boolean
+  notes?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
+  Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
+  other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
+  Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedManyWithoutCompanyInput
+  CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  number: string
+  mail?: string | null
+  businessPhone?: string | null
+  website?: string | null
+  vatNumber?: string | null
+  bankNumber?: string | null
+  iban?: string | null
+  bic?: string | null
+  becraCustomerNumber?: string | null
+  becraWebsiteLogin?: string | null
+  supplier?: boolean
+  prefferedSupplier?: boolean
+  companyActive?: boolean
+  newsLetter?: boolean
+  customer?: boolean
+  potentialCustomer?: boolean
+  headQuarters?: boolean
+  potentialSubContractor?: boolean
+  subContractor?: boolean
+  notes?: string | null
+  createdAt: Date | string
+  createdBy: string
+  companyId?: string | null
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
+  CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
+  CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutEmployee_Company_deletedByToEmployeeInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput, Prisma.CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput>
+}
+
+export type CompanyCreateManyEmployee_Company_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.CompanyCreateManyEmployee_Company_deletedByToEmployeeInput | Prisma.CompanyCreateManyEmployee_Company_deletedByToEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
 export type CompanyUpsertWithWhereUniqueWithoutEmployeeInput = {
   where: Prisma.CompanyWhereUniqueInput
   update: Prisma.XOR<Prisma.CompanyUpdateWithoutEmployeeInput, Prisma.CompanyUncheckedUpdateWithoutEmployeeInput>
@@ -1931,6 +2186,22 @@ export type CompanyUpdateWithWhereUniqueWithoutEmployeeInput = {
 export type CompanyUpdateManyWithWhereWithoutEmployeeInput = {
   where: Prisma.CompanyScalarWhereInput
   data: Prisma.XOR<Prisma.CompanyUpdateManyMutationInput, Prisma.CompanyUncheckedUpdateManyWithoutEmployeeInput>
+}
+
+export type CompanyUpsertWithWhereUniqueWithoutEmployee_Company_deletedByToEmployeeInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutEmployee_Company_deletedByToEmployeeInput, Prisma.CompanyUncheckedUpdateWithoutEmployee_Company_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput, Prisma.CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput>
+}
+
+export type CompanyUpdateWithWhereUniqueWithoutEmployee_Company_deletedByToEmployeeInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutEmployee_Company_deletedByToEmployeeInput, Prisma.CompanyUncheckedUpdateWithoutEmployee_Company_deletedByToEmployeeInput>
+}
+
+export type CompanyUpdateManyWithWhereWithoutEmployee_Company_deletedByToEmployeeInput = {
+  where: Prisma.CompanyScalarWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateManyMutationInput, Prisma.CompanyUncheckedUpdateManyWithoutEmployee_Company_deletedByToEmployeeInput>
 }
 
 export type CompanyCreateWithoutMaterialSerialTrackInput = {
@@ -1957,10 +2228,13 @@ export type CompanyCreateWithoutMaterialSerialTrackInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
   Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
   other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
   Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
@@ -1995,6 +2269,9 @@ export type CompanyUncheckedCreateWithoutMaterialSerialTrackInput = {
   createdBy: string
   companyId?: string | null
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -2043,10 +2320,13 @@ export type CompanyUpdateWithoutMaterialSerialTrackInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
   other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
@@ -2081,6 +2361,9 @@ export type CompanyUncheckedUpdateWithoutMaterialSerialTrackInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2113,10 +2396,13 @@ export type CompanyCreateWithoutProjectInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
   Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
   other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
   Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
@@ -2151,6 +2437,9 @@ export type CompanyUncheckedCreateWithoutProjectInput = {
   createdBy: string
   companyId?: string | null
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -2199,10 +2488,13 @@ export type CompanyUpdateWithoutProjectInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
   other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
@@ -2237,6 +2529,9 @@ export type CompanyUncheckedUpdateWithoutProjectInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2269,10 +2564,13 @@ export type CompanyCreateWithoutPurchaseInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
   Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
   other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
   Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
@@ -2307,6 +2605,9 @@ export type CompanyUncheckedCreateWithoutPurchaseInput = {
   createdBy: string
   companyId?: string | null
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -2355,10 +2656,13 @@ export type CompanyUpdateWithoutPurchaseInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
   other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
@@ -2393,6 +2697,9 @@ export type CompanyUncheckedUpdateWithoutPurchaseInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2425,9 +2732,12 @@ export type CompanyCreateWithoutTargetInput = {
   subContractor?: boolean
   notes?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
   Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
   other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
   CompanyAdress?: Prisma.CompanyAdressCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
@@ -2462,6 +2772,9 @@ export type CompanyUncheckedCreateWithoutTargetInput = {
   createdAt: Date | string
   createdBy: string
   companyId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedCreateNestedManyWithoutCompanyInput
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
@@ -2523,6 +2836,9 @@ export type CompanyCreateManyCompanyInput = {
   createdAt: Date | string
   createdBy: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type CompanyUpdateWithoutCompanyInput = {
@@ -2549,9 +2865,12 @@ export type CompanyUpdateWithoutCompanyInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
   other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
@@ -2586,6 +2905,9 @@ export type CompanyUncheckedUpdateWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2621,6 +2943,9 @@ export type CompanyUncheckedUpdateManyWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CompanyCreateManyEmployeeInput = {
@@ -2649,6 +2974,40 @@ export type CompanyCreateManyEmployeeInput = {
   createdAt: Date | string
   companyId?: string | null
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type CompanyCreateManyEmployee_Company_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  number: string
+  mail?: string | null
+  businessPhone?: string | null
+  website?: string | null
+  vatNumber?: string | null
+  bankNumber?: string | null
+  iban?: string | null
+  bic?: string | null
+  becraCustomerNumber?: string | null
+  becraWebsiteLogin?: string | null
+  supplier?: boolean
+  prefferedSupplier?: boolean
+  companyActive?: boolean
+  newsLetter?: boolean
+  customer?: boolean
+  potentialCustomer?: boolean
+  headQuarters?: boolean
+  potentialSubContractor?: boolean
+  subContractor?: boolean
+  notes?: string | null
+  createdAt: Date | string
+  createdBy: string
+  companyId?: string | null
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type CompanyUpdateWithoutEmployeeInput = {
@@ -2675,9 +3034,12 @@ export type CompanyUpdateWithoutEmployeeInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
   other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
@@ -2712,6 +3074,9 @@ export type CompanyUncheckedUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2747,6 +3112,116 @@ export type CompanyUncheckedUpdateManyWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CompanyUpdateWithoutEmployee_Company_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iban?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialCustomer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  headQuarters?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialSubContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
+  Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
+  other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateManyWithoutCompanyNestedInput
+  CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutEmployee_Company_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iban?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialCustomer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  headQuarters?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialSubContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
+  CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateManyWithoutEmployee_Company_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iban?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialCustomer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  headQuarters?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialSubContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CompanyCreateManyTargetInput = {
@@ -2775,6 +3250,9 @@ export type CompanyCreateManyTargetInput = {
   createdAt: Date | string
   createdBy: string
   companyId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type CompanyUpdateWithoutTargetInput = {
@@ -2801,9 +3279,12 @@ export type CompanyUpdateWithoutTargetInput = {
   subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
   Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
   other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
   CompanyAdress?: Prisma.CompanyAdressUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
@@ -2838,6 +3319,9 @@ export type CompanyUncheckedUpdateWithoutTargetInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyAdress?: Prisma.CompanyAdressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
@@ -2873,6 +3357,9 @@ export type CompanyUncheckedUpdateManyWithoutTargetInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -2987,10 +3474,14 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdBy?: boolean
   companyId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.Company$CompanyArgs<ExtArgs>
   other_Company?: boolean | Prisma.Company$other_CompanyArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee_Company_deletedByToEmployee?: boolean | Prisma.Company$Employee_Company_deletedByToEmployeeArgs<ExtArgs>
   CompanyAdress?: boolean | Prisma.Company$CompanyAdressArgs<ExtArgs>
   CompanyContact?: boolean | Prisma.Company$CompanyContactArgs<ExtArgs>
   DeliveryNoteSupplier?: boolean | Prisma.Company$DeliveryNoteSupplierArgs<ExtArgs>
@@ -3029,14 +3520,18 @@ export type CompanySelectScalar = {
   createdBy?: boolean
   companyId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "number" | "mail" | "businessPhone" | "website" | "vatNumber" | "bankNumber" | "iban" | "bic" | "becraCustomerNumber" | "becraWebsiteLogin" | "supplier" | "prefferedSupplier" | "companyActive" | "newsLetter" | "customer" | "potentialCustomer" | "headQuarters" | "potentialSubContractor" | "subContractor" | "notes" | "createdAt" | "createdBy" | "companyId" | "targetId", ExtArgs["result"]["company"]>
+export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "number" | "mail" | "businessPhone" | "website" | "vatNumber" | "bankNumber" | "iban" | "bic" | "becraCustomerNumber" | "becraWebsiteLogin" | "supplier" | "prefferedSupplier" | "companyActive" | "newsLetter" | "customer" | "potentialCustomer" | "headQuarters" | "potentialSubContractor" | "subContractor" | "notes" | "createdAt" | "createdBy" | "companyId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["company"]>
 export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.Company$CompanyArgs<ExtArgs>
   other_Company?: boolean | Prisma.Company$other_CompanyArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee_Company_deletedByToEmployee?: boolean | Prisma.Company$Employee_Company_deletedByToEmployeeArgs<ExtArgs>
   CompanyAdress?: boolean | Prisma.Company$CompanyAdressArgs<ExtArgs>
   CompanyContact?: boolean | Prisma.Company$CompanyContactArgs<ExtArgs>
   DeliveryNoteSupplier?: boolean | Prisma.Company$DeliveryNoteSupplierArgs<ExtArgs>
@@ -3053,6 +3548,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     Company: Prisma.$CompanyPayload<ExtArgs> | null
     other_Company: Prisma.$CompanyPayload<ExtArgs>[]
     Target: Prisma.$TargetPayload<ExtArgs>
+    Employee_Company_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     CompanyAdress: Prisma.$CompanyAdressPayload<ExtArgs>[]
     CompanyContact: Prisma.$CompanyContactPayload<ExtArgs>[]
     DeliveryNoteSupplier: Prisma.$DeliveryNoteSupplierPayload<ExtArgs>[]
@@ -3087,6 +3583,9 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     createdBy: string
     companyId: string | null
     targetId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["company"]>
   composites: {}
 }
@@ -3431,6 +3930,7 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   Company<T extends Prisma.Company$CompanyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$CompanyArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   other_Company<T extends Prisma.Company$other_CompanyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$other_CompanyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_Company_deletedByToEmployee<T extends Prisma.Company$Employee_Company_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$Employee_Company_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   CompanyAdress<T extends Prisma.Company$CompanyAdressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$CompanyAdressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyAdressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   CompanyContact<T extends Prisma.Company$CompanyContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$CompanyContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   DeliveryNoteSupplier<T extends Prisma.Company$DeliveryNoteSupplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$DeliveryNoteSupplierArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DeliveryNoteSupplierPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3492,6 +3992,9 @@ export interface CompanyFieldRefs {
   readonly createdBy: Prisma.FieldRef<"Company", 'String'>
   readonly companyId: Prisma.FieldRef<"Company", 'String'>
   readonly targetId: Prisma.FieldRef<"Company", 'String'>
+  readonly deleted: Prisma.FieldRef<"Company", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Company", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"Company", 'String'>
 }
     
 
@@ -3875,6 +4378,25 @@ export type Company$other_CompanyArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.CompanyScalarFieldEnum | Prisma.CompanyScalarFieldEnum[]
+}
+
+/**
+ * Company.Employee_Company_deletedByToEmployee
+ */
+export type Company$Employee_Company_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

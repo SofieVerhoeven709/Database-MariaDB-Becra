@@ -35,6 +35,9 @@ export type PartMinAggregateOutputType = {
   additionalInfo: string | null
   date: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type PartMaxAggregateOutputType = {
@@ -48,6 +51,9 @@ export type PartMaxAggregateOutputType = {
   additionalInfo: string | null
   date: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type PartCountAggregateOutputType = {
@@ -61,6 +67,9 @@ export type PartCountAggregateOutputType = {
   additionalInfo: number
   date: number
   createdBy: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -76,6 +85,9 @@ export type PartMinAggregateInputType = {
   additionalInfo?: true
   date?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type PartMaxAggregateInputType = {
@@ -89,6 +101,9 @@ export type PartMaxAggregateInputType = {
   additionalInfo?: true
   date?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type PartCountAggregateInputType = {
@@ -102,6 +117,9 @@ export type PartCountAggregateInputType = {
   additionalInfo?: true
   date?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -188,6 +206,9 @@ export type PartGroupByOutputType = {
   additionalInfo: string | null
   date: Date | null
   createdBy: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: PartCountAggregateOutputType | null
   _min: PartMinAggregateOutputType | null
   _max: PartMaxAggregateOutputType | null
@@ -222,7 +243,11 @@ export type PartWhereInput = {
   additionalInfo?: Prisma.StringNullableFilter<"Part"> | string | null
   date?: Prisma.DateTimeNullableFilter<"Part"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Part"> | string
+  deleted?: Prisma.BoolFilter<"Part"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Part"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Part"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Part_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type PartOrderByWithRelationInput = {
@@ -236,7 +261,11 @@ export type PartOrderByWithRelationInput = {
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   date?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_Part_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.PartOrderByRelevanceInput
 }
 
@@ -254,7 +283,11 @@ export type PartWhereUniqueInput = Prisma.AtLeast<{
   additionalInfo?: Prisma.StringNullableFilter<"Part"> | string | null
   date?: Prisma.DateTimeNullableFilter<"Part"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Part"> | string
+  deleted?: Prisma.BoolFilter<"Part"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Part"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Part"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Part_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type PartOrderByWithAggregationInput = {
@@ -268,6 +301,9 @@ export type PartOrderByWithAggregationInput = {
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   date?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PartCountOrderByAggregateInput
   _max?: Prisma.PartMaxOrderByAggregateInput
   _min?: Prisma.PartMinOrderByAggregateInput
@@ -287,6 +323,9 @@ export type PartScalarWhereWithAggregatesInput = {
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
   date?: Prisma.DateTimeNullableWithAggregatesFilter<"Part"> | Date | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"Part"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"Part"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Part"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Part"> | string | null
 }
 
 export type PartCreateInput = {
@@ -299,7 +338,10 @@ export type PartCreateInput = {
   longDescription?: string | null
   additionalInfo?: string | null
   date?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutPartInput
+  Employee_Part_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPart_Part_deletedByToEmployeeInput
 }
 
 export type PartUncheckedCreateInput = {
@@ -313,6 +355,9 @@ export type PartUncheckedCreateInput = {
   additionalInfo?: string | null
   date?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type PartUpdateInput = {
@@ -325,7 +370,10 @@ export type PartUpdateInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPartNestedInput
+  Employee_Part_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPart_Part_deletedByToEmployeeNestedInput
 }
 
 export type PartUncheckedUpdateInput = {
@@ -339,6 +387,9 @@ export type PartUncheckedUpdateInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PartCreateManyInput = {
@@ -352,6 +403,9 @@ export type PartCreateManyInput = {
   additionalInfo?: string | null
   date?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type PartUpdateManyMutationInput = {
@@ -364,6 +418,8 @@ export type PartUpdateManyMutationInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PartUncheckedUpdateManyInput = {
@@ -377,6 +433,9 @@ export type PartUncheckedUpdateManyInput = {
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PartListRelationFilter = {
@@ -406,6 +465,9 @@ export type PartCountOrderByAggregateInput = {
   additionalInfo?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type PartMaxOrderByAggregateInput = {
@@ -419,6 +481,9 @@ export type PartMaxOrderByAggregateInput = {
   additionalInfo?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type PartMinOrderByAggregateInput = {
@@ -432,6 +497,9 @@ export type PartMinOrderByAggregateInput = {
   additionalInfo?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type PartCreateNestedManyWithoutEmployeeInput = {
@@ -441,10 +509,24 @@ export type PartCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
 }
 
+export type PartCreateNestedManyWithoutEmployee_Part_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.PartCreateWithoutEmployee_Part_deletedByToEmployeeInput, Prisma.PartUncheckedCreateWithoutEmployee_Part_deletedByToEmployeeInput> | Prisma.PartCreateWithoutEmployee_Part_deletedByToEmployeeInput[] | Prisma.PartUncheckedCreateWithoutEmployee_Part_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.PartCreateOrConnectWithoutEmployee_Part_deletedByToEmployeeInput | Prisma.PartCreateOrConnectWithoutEmployee_Part_deletedByToEmployeeInput[]
+  createMany?: Prisma.PartCreateManyEmployee_Part_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
+}
+
 export type PartUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.PartCreateWithoutEmployeeInput, Prisma.PartUncheckedCreateWithoutEmployeeInput> | Prisma.PartCreateWithoutEmployeeInput[] | Prisma.PartUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.PartCreateOrConnectWithoutEmployeeInput | Prisma.PartCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.PartCreateManyEmployeeInputEnvelope
+  connect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
+}
+
+export type PartUncheckedCreateNestedManyWithoutEmployee_Part_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.PartCreateWithoutEmployee_Part_deletedByToEmployeeInput, Prisma.PartUncheckedCreateWithoutEmployee_Part_deletedByToEmployeeInput> | Prisma.PartCreateWithoutEmployee_Part_deletedByToEmployeeInput[] | Prisma.PartUncheckedCreateWithoutEmployee_Part_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.PartCreateOrConnectWithoutEmployee_Part_deletedByToEmployeeInput | Prisma.PartCreateOrConnectWithoutEmployee_Part_deletedByToEmployeeInput[]
+  createMany?: Prisma.PartCreateManyEmployee_Part_deletedByToEmployeeInputEnvelope
   connect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
 }
 
@@ -462,6 +544,20 @@ export type PartUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
 }
 
+export type PartUpdateManyWithoutEmployee_Part_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.PartCreateWithoutEmployee_Part_deletedByToEmployeeInput, Prisma.PartUncheckedCreateWithoutEmployee_Part_deletedByToEmployeeInput> | Prisma.PartCreateWithoutEmployee_Part_deletedByToEmployeeInput[] | Prisma.PartUncheckedCreateWithoutEmployee_Part_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.PartCreateOrConnectWithoutEmployee_Part_deletedByToEmployeeInput | Prisma.PartCreateOrConnectWithoutEmployee_Part_deletedByToEmployeeInput[]
+  upsert?: Prisma.PartUpsertWithWhereUniqueWithoutEmployee_Part_deletedByToEmployeeInput | Prisma.PartUpsertWithWhereUniqueWithoutEmployee_Part_deletedByToEmployeeInput[]
+  createMany?: Prisma.PartCreateManyEmployee_Part_deletedByToEmployeeInputEnvelope
+  set?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
+  disconnect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
+  delete?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
+  connect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
+  update?: Prisma.PartUpdateWithWhereUniqueWithoutEmployee_Part_deletedByToEmployeeInput | Prisma.PartUpdateWithWhereUniqueWithoutEmployee_Part_deletedByToEmployeeInput[]
+  updateMany?: Prisma.PartUpdateManyWithWhereWithoutEmployee_Part_deletedByToEmployeeInput | Prisma.PartUpdateManyWithWhereWithoutEmployee_Part_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
+}
+
 export type PartUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.PartCreateWithoutEmployeeInput, Prisma.PartUncheckedCreateWithoutEmployeeInput> | Prisma.PartCreateWithoutEmployeeInput[] | Prisma.PartUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.PartCreateOrConnectWithoutEmployeeInput | Prisma.PartCreateOrConnectWithoutEmployeeInput[]
@@ -476,6 +572,20 @@ export type PartUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
 }
 
+export type PartUncheckedUpdateManyWithoutEmployee_Part_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.PartCreateWithoutEmployee_Part_deletedByToEmployeeInput, Prisma.PartUncheckedCreateWithoutEmployee_Part_deletedByToEmployeeInput> | Prisma.PartCreateWithoutEmployee_Part_deletedByToEmployeeInput[] | Prisma.PartUncheckedCreateWithoutEmployee_Part_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.PartCreateOrConnectWithoutEmployee_Part_deletedByToEmployeeInput | Prisma.PartCreateOrConnectWithoutEmployee_Part_deletedByToEmployeeInput[]
+  upsert?: Prisma.PartUpsertWithWhereUniqueWithoutEmployee_Part_deletedByToEmployeeInput | Prisma.PartUpsertWithWhereUniqueWithoutEmployee_Part_deletedByToEmployeeInput[]
+  createMany?: Prisma.PartCreateManyEmployee_Part_deletedByToEmployeeInputEnvelope
+  set?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
+  disconnect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
+  delete?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
+  connect?: Prisma.PartWhereUniqueInput | Prisma.PartWhereUniqueInput[]
+  update?: Prisma.PartUpdateWithWhereUniqueWithoutEmployee_Part_deletedByToEmployeeInput | Prisma.PartUpdateWithWhereUniqueWithoutEmployee_Part_deletedByToEmployeeInput[]
+  updateMany?: Prisma.PartUpdateManyWithWhereWithoutEmployee_Part_deletedByToEmployeeInput | Prisma.PartUpdateManyWithWhereWithoutEmployee_Part_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.PartScalarWhereInput | Prisma.PartScalarWhereInput[]
+}
+
 export type PartCreateWithoutEmployeeInput = {
   id: string
   name?: string | null
@@ -486,6 +596,9 @@ export type PartCreateWithoutEmployeeInput = {
   longDescription?: string | null
   additionalInfo?: string | null
   date?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee_Part_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPart_Part_deletedByToEmployeeInput
 }
 
 export type PartUncheckedCreateWithoutEmployeeInput = {
@@ -498,6 +611,9 @@ export type PartUncheckedCreateWithoutEmployeeInput = {
   longDescription?: string | null
   additionalInfo?: string | null
   date?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type PartCreateOrConnectWithoutEmployeeInput = {
@@ -507,6 +623,46 @@ export type PartCreateOrConnectWithoutEmployeeInput = {
 
 export type PartCreateManyEmployeeInputEnvelope = {
   data: Prisma.PartCreateManyEmployeeInput | Prisma.PartCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type PartCreateWithoutEmployee_Part_deletedByToEmployeeInput = {
+  id: string
+  name?: string | null
+  part?: string | null
+  abbreviation?: string | null
+  devision?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInfo?: string | null
+  date?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutPartInput
+}
+
+export type PartUncheckedCreateWithoutEmployee_Part_deletedByToEmployeeInput = {
+  id: string
+  name?: string | null
+  part?: string | null
+  abbreviation?: string | null
+  devision?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInfo?: string | null
+  date?: Date | string | null
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type PartCreateOrConnectWithoutEmployee_Part_deletedByToEmployeeInput = {
+  where: Prisma.PartWhereUniqueInput
+  create: Prisma.XOR<Prisma.PartCreateWithoutEmployee_Part_deletedByToEmployeeInput, Prisma.PartUncheckedCreateWithoutEmployee_Part_deletedByToEmployeeInput>
+}
+
+export type PartCreateManyEmployee_Part_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.PartCreateManyEmployee_Part_deletedByToEmployeeInput | Prisma.PartCreateManyEmployee_Part_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -540,6 +696,25 @@ export type PartScalarWhereInput = {
   additionalInfo?: Prisma.StringNullableFilter<"Part"> | string | null
   date?: Prisma.DateTimeNullableFilter<"Part"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Part"> | string
+  deleted?: Prisma.BoolFilter<"Part"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Part"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Part"> | string | null
+}
+
+export type PartUpsertWithWhereUniqueWithoutEmployee_Part_deletedByToEmployeeInput = {
+  where: Prisma.PartWhereUniqueInput
+  update: Prisma.XOR<Prisma.PartUpdateWithoutEmployee_Part_deletedByToEmployeeInput, Prisma.PartUncheckedUpdateWithoutEmployee_Part_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.PartCreateWithoutEmployee_Part_deletedByToEmployeeInput, Prisma.PartUncheckedCreateWithoutEmployee_Part_deletedByToEmployeeInput>
+}
+
+export type PartUpdateWithWhereUniqueWithoutEmployee_Part_deletedByToEmployeeInput = {
+  where: Prisma.PartWhereUniqueInput
+  data: Prisma.XOR<Prisma.PartUpdateWithoutEmployee_Part_deletedByToEmployeeInput, Prisma.PartUncheckedUpdateWithoutEmployee_Part_deletedByToEmployeeInput>
+}
+
+export type PartUpdateManyWithWhereWithoutEmployee_Part_deletedByToEmployeeInput = {
+  where: Prisma.PartScalarWhereInput
+  data: Prisma.XOR<Prisma.PartUpdateManyMutationInput, Prisma.PartUncheckedUpdateManyWithoutEmployee_Part_deletedByToEmployeeInput>
 }
 
 export type PartCreateManyEmployeeInput = {
@@ -552,6 +727,24 @@ export type PartCreateManyEmployeeInput = {
   longDescription?: string | null
   additionalInfo?: string | null
   date?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type PartCreateManyEmployee_Part_deletedByToEmployeeInput = {
+  id: string
+  name?: string | null
+  part?: string | null
+  abbreviation?: string | null
+  devision?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  additionalInfo?: string | null
+  date?: Date | string | null
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type PartUpdateWithoutEmployeeInput = {
@@ -564,6 +757,9 @@ export type PartUpdateWithoutEmployeeInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee_Part_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPart_Part_deletedByToEmployeeNestedInput
 }
 
 export type PartUncheckedUpdateWithoutEmployeeInput = {
@@ -576,6 +772,9 @@ export type PartUncheckedUpdateWithoutEmployeeInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PartUncheckedUpdateManyWithoutEmployeeInput = {
@@ -588,6 +787,54 @@ export type PartUncheckedUpdateManyWithoutEmployeeInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type PartUpdateWithoutEmployee_Part_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  part?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutPartNestedInput
+}
+
+export type PartUncheckedUpdateWithoutEmployee_Part_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  part?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type PartUncheckedUpdateManyWithoutEmployee_Part_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  part?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  devision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -603,7 +850,11 @@ export type PartSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   additionalInfo?: boolean
   date?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Part_deletedByToEmployee?: boolean | Prisma.Part$Employee_Part_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["part"]>
 
 
@@ -619,17 +870,22 @@ export type PartSelectScalar = {
   additionalInfo?: boolean
   date?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type PartOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "part" | "abbreviation" | "devision" | "shortDescription" | "longDescription" | "additionalInfo" | "date" | "createdBy", ExtArgs["result"]["part"]>
+export type PartOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "part" | "abbreviation" | "devision" | "shortDescription" | "longDescription" | "additionalInfo" | "date" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["part"]>
 export type PartInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Part_deletedByToEmployee?: boolean | Prisma.Part$Employee_Part_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $PartPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Part"
   objects: {
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_Part_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -642,6 +898,9 @@ export type $PartPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     additionalInfo: string | null
     date: Date | null
     createdBy: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["part"]>
   composites: {}
 }
@@ -983,6 +1242,7 @@ readonly fields: PartFieldRefs;
 export interface Prisma__PartClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_Part_deletedByToEmployee<T extends Prisma.Part$Employee_Part_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Part$Employee_Part_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1022,6 +1282,9 @@ export interface PartFieldRefs {
   readonly additionalInfo: Prisma.FieldRef<"Part", 'String'>
   readonly date: Prisma.FieldRef<"Part", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Part", 'String'>
+  readonly deleted: Prisma.FieldRef<"Part", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Part", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"Part", 'String'>
 }
     
 
@@ -1362,6 +1625,25 @@ export type PartDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Parts to delete.
    */
   limit?: number
+}
+
+/**
+ * Part.Employee_Part_deletedByToEmployee
+ */
+export type Part$Employee_Part_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

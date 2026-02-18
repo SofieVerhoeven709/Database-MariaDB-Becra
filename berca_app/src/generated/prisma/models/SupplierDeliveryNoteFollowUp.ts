@@ -42,6 +42,9 @@ export type SupplierDeliveryNoteFollowUpMinAggregateOutputType = {
   information: string | null
   deliveryDate: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type SupplierDeliveryNoteFollowUpMaxAggregateOutputType = {
@@ -52,6 +55,9 @@ export type SupplierDeliveryNoteFollowUpMaxAggregateOutputType = {
   information: string | null
   deliveryDate: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type SupplierDeliveryNoteFollowUpCountAggregateOutputType = {
@@ -62,6 +68,9 @@ export type SupplierDeliveryNoteFollowUpCountAggregateOutputType = {
   information: number
   deliveryDate: number
   createdBy: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -82,6 +91,9 @@ export type SupplierDeliveryNoteFollowUpMinAggregateInputType = {
   information?: true
   deliveryDate?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type SupplierDeliveryNoteFollowUpMaxAggregateInputType = {
@@ -92,6 +104,9 @@ export type SupplierDeliveryNoteFollowUpMaxAggregateInputType = {
   information?: true
   deliveryDate?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type SupplierDeliveryNoteFollowUpCountAggregateInputType = {
@@ -102,6 +117,9 @@ export type SupplierDeliveryNoteFollowUpCountAggregateInputType = {
   information?: true
   deliveryDate?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -199,6 +217,9 @@ export type SupplierDeliveryNoteFollowUpGroupByOutputType = {
   information: string | null
   deliveryDate: Date | null
   createdBy: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: SupplierDeliveryNoteFollowUpCountAggregateOutputType | null
   _avg: SupplierDeliveryNoteFollowUpAvgAggregateOutputType | null
   _sum: SupplierDeliveryNoteFollowUpSumAggregateOutputType | null
@@ -232,9 +253,13 @@ export type SupplierDeliveryNoteFollowUpWhereInput = {
   information?: Prisma.StringNullableFilter<"SupplierDeliveryNoteFollowUp"> | string | null
   deliveryDate?: Prisma.DateTimeNullableFilter<"SupplierDeliveryNoteFollowUp"> | Date | string | null
   createdBy?: Prisma.StringFilter<"SupplierDeliveryNoteFollowUp"> | string
+  deleted?: Prisma.BoolFilter<"SupplierDeliveryNoteFollowUp"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"SupplierDeliveryNoteFollowUp"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"SupplierDeliveryNoteFollowUp"> | string | null
   DeliveryNoteSupplier?: Prisma.XOR<Prisma.DeliveryNoteSupplierScalarRelationFilter, Prisma.DeliveryNoteSupplierWhereInput>
   WorkOrderStructure?: Prisma.XOR<Prisma.WorkOrderStructureScalarRelationFilter, Prisma.WorkOrderStructureWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type SupplierDeliveryNoteFollowUpOrderByWithRelationInput = {
@@ -245,9 +270,13 @@ export type SupplierDeliveryNoteFollowUpOrderByWithRelationInput = {
   information?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierOrderByWithRelationInput
   WorkOrderStructure?: Prisma.WorkOrderStructureOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.SupplierDeliveryNoteFollowUpOrderByRelevanceInput
 }
 
@@ -262,9 +291,13 @@ export type SupplierDeliveryNoteFollowUpWhereUniqueInput = Prisma.AtLeast<{
   information?: Prisma.StringNullableFilter<"SupplierDeliveryNoteFollowUp"> | string | null
   deliveryDate?: Prisma.DateTimeNullableFilter<"SupplierDeliveryNoteFollowUp"> | Date | string | null
   createdBy?: Prisma.StringFilter<"SupplierDeliveryNoteFollowUp"> | string
+  deleted?: Prisma.BoolFilter<"SupplierDeliveryNoteFollowUp"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"SupplierDeliveryNoteFollowUp"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"SupplierDeliveryNoteFollowUp"> | string | null
   DeliveryNoteSupplier?: Prisma.XOR<Prisma.DeliveryNoteSupplierScalarRelationFilter, Prisma.DeliveryNoteSupplierWhereInput>
   WorkOrderStructure?: Prisma.XOR<Prisma.WorkOrderStructureScalarRelationFilter, Prisma.WorkOrderStructureWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type SupplierDeliveryNoteFollowUpOrderByWithAggregationInput = {
@@ -275,6 +308,9 @@ export type SupplierDeliveryNoteFollowUpOrderByWithAggregationInput = {
   information?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SupplierDeliveryNoteFollowUpCountOrderByAggregateInput
   _avg?: Prisma.SupplierDeliveryNoteFollowUpAvgOrderByAggregateInput
   _max?: Prisma.SupplierDeliveryNoteFollowUpMaxOrderByAggregateInput
@@ -293,6 +329,9 @@ export type SupplierDeliveryNoteFollowUpScalarWhereWithAggregatesInput = {
   information?: Prisma.StringNullableWithAggregatesFilter<"SupplierDeliveryNoteFollowUp"> | string | null
   deliveryDate?: Prisma.DateTimeNullableWithAggregatesFilter<"SupplierDeliveryNoteFollowUp"> | Date | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"SupplierDeliveryNoteFollowUp"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"SupplierDeliveryNoteFollowUp"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"SupplierDeliveryNoteFollowUp"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"SupplierDeliveryNoteFollowUp"> | string | null
 }
 
 export type SupplierDeliveryNoteFollowUpCreateInput = {
@@ -300,9 +339,12 @@ export type SupplierDeliveryNoteFollowUpCreateInput = {
   quantityDelivered?: number | null
   information?: string | null
   deliveryDate?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   DeliveryNoteSupplier: Prisma.DeliveryNoteSupplierCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
   WorkOrderStructure: Prisma.WorkOrderStructureCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutSupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedCreateInput = {
@@ -313,6 +355,9 @@ export type SupplierDeliveryNoteFollowUpUncheckedCreateInput = {
   information?: string | null
   deliveryDate?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type SupplierDeliveryNoteFollowUpUpdateInput = {
@@ -320,9 +365,12 @@ export type SupplierDeliveryNoteFollowUpUpdateInput = {
   quantityDelivered?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutSupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployeeNestedInput
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedUpdateInput = {
@@ -333,6 +381,9 @@ export type SupplierDeliveryNoteFollowUpUncheckedUpdateInput = {
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SupplierDeliveryNoteFollowUpCreateManyInput = {
@@ -343,6 +394,9 @@ export type SupplierDeliveryNoteFollowUpCreateManyInput = {
   information?: string | null
   deliveryDate?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type SupplierDeliveryNoteFollowUpUpdateManyMutationInput = {
@@ -350,6 +404,8 @@ export type SupplierDeliveryNoteFollowUpUpdateManyMutationInput = {
   quantityDelivered?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyInput = {
@@ -360,6 +416,9 @@ export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyInput = {
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SupplierDeliveryNoteFollowUpListRelationFilter = {
@@ -386,6 +445,9 @@ export type SupplierDeliveryNoteFollowUpCountOrderByAggregateInput = {
   information?: Prisma.SortOrder
   deliveryDate?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type SupplierDeliveryNoteFollowUpAvgOrderByAggregateInput = {
@@ -400,6 +462,9 @@ export type SupplierDeliveryNoteFollowUpMaxOrderByAggregateInput = {
   information?: Prisma.SortOrder
   deliveryDate?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type SupplierDeliveryNoteFollowUpMinOrderByAggregateInput = {
@@ -410,6 +475,9 @@ export type SupplierDeliveryNoteFollowUpMinOrderByAggregateInput = {
   information?: Prisma.SortOrder
   deliveryDate?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type SupplierDeliveryNoteFollowUpSumOrderByAggregateInput = {
@@ -465,10 +533,24 @@ export type SupplierDeliveryNoteFollowUpCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
 }
 
+export type SupplierDeliveryNoteFollowUpCreateNestedManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput> | Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[] | Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  createMany?: Prisma.SupplierDeliveryNoteFollowUpCreateManyEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
+}
+
 export type SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployeeInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployeeInput> | Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployeeInput[] | Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.SupplierDeliveryNoteFollowUpCreateManyEmployeeInputEnvelope
+  connect?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
+}
+
+export type SupplierDeliveryNoteFollowUpUncheckedCreateNestedManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput> | Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[] | Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  createMany?: Prisma.SupplierDeliveryNoteFollowUpCreateManyEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInputEnvelope
   connect?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
 }
 
@@ -486,6 +568,20 @@ export type SupplierDeliveryNoteFollowUpUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.SupplierDeliveryNoteFollowUpScalarWhereInput | Prisma.SupplierDeliveryNoteFollowUpScalarWhereInput[]
 }
 
+export type SupplierDeliveryNoteFollowUpUpdateManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput> | Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[] | Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  upsert?: Prisma.SupplierDeliveryNoteFollowUpUpsertWithWhereUniqueWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpUpsertWithWhereUniqueWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  createMany?: Prisma.SupplierDeliveryNoteFollowUpCreateManyEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInputEnvelope
+  set?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
+  disconnect?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
+  delete?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
+  connect?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
+  update?: Prisma.SupplierDeliveryNoteFollowUpUpdateWithWhereUniqueWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpUpdateWithWhereUniqueWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  updateMany?: Prisma.SupplierDeliveryNoteFollowUpUpdateManyWithWhereWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpUpdateManyWithWhereWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.SupplierDeliveryNoteFollowUpScalarWhereInput | Prisma.SupplierDeliveryNoteFollowUpScalarWhereInput[]
+}
+
 export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployeeInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployeeInput> | Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployeeInput[] | Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployeeInput[]
@@ -497,6 +593,20 @@ export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployeeNested
   connect?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
   update?: Prisma.SupplierDeliveryNoteFollowUpUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.SupplierDeliveryNoteFollowUpUpdateManyWithWhereWithoutEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.SupplierDeliveryNoteFollowUpScalarWhereInput | Prisma.SupplierDeliveryNoteFollowUpScalarWhereInput[]
+}
+
+export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput> | Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[] | Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  upsert?: Prisma.SupplierDeliveryNoteFollowUpUpsertWithWhereUniqueWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpUpsertWithWhereUniqueWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  createMany?: Prisma.SupplierDeliveryNoteFollowUpCreateManyEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInputEnvelope
+  set?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
+  disconnect?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
+  delete?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
+  connect?: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput | Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput[]
+  update?: Prisma.SupplierDeliveryNoteFollowUpUpdateWithWhereUniqueWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpUpdateWithWhereUniqueWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
+  updateMany?: Prisma.SupplierDeliveryNoteFollowUpUpdateManyWithWhereWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpUpdateManyWithWhereWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
   deleteMany?: Prisma.SupplierDeliveryNoteFollowUpScalarWhereInput | Prisma.SupplierDeliveryNoteFollowUpScalarWhereInput[]
 }
 
@@ -547,8 +657,11 @@ export type SupplierDeliveryNoteFollowUpCreateWithoutDeliveryNoteSupplierInput =
   quantityDelivered?: number | null
   information?: string | null
   deliveryDate?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   WorkOrderStructure: Prisma.WorkOrderStructureCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutSupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedCreateWithoutDeliveryNoteSupplierInput = {
@@ -558,6 +671,9 @@ export type SupplierDeliveryNoteFollowUpUncheckedCreateWithoutDeliveryNoteSuppli
   information?: string | null
   deliveryDate?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type SupplierDeliveryNoteFollowUpCreateOrConnectWithoutDeliveryNoteSupplierInput = {
@@ -597,6 +713,9 @@ export type SupplierDeliveryNoteFollowUpScalarWhereInput = {
   information?: Prisma.StringNullableFilter<"SupplierDeliveryNoteFollowUp"> | string | null
   deliveryDate?: Prisma.DateTimeNullableFilter<"SupplierDeliveryNoteFollowUp"> | Date | string | null
   createdBy?: Prisma.StringFilter<"SupplierDeliveryNoteFollowUp"> | string
+  deleted?: Prisma.BoolFilter<"SupplierDeliveryNoteFollowUp"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"SupplierDeliveryNoteFollowUp"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"SupplierDeliveryNoteFollowUp"> | string | null
 }
 
 export type SupplierDeliveryNoteFollowUpCreateWithoutEmployeeInput = {
@@ -604,8 +723,11 @@ export type SupplierDeliveryNoteFollowUpCreateWithoutEmployeeInput = {
   quantityDelivered?: number | null
   information?: string | null
   deliveryDate?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   DeliveryNoteSupplier: Prisma.DeliveryNoteSupplierCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
   WorkOrderStructure: Prisma.WorkOrderStructureCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutSupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployeeInput = {
@@ -615,6 +737,9 @@ export type SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployeeInput = {
   quantityDelivered?: number | null
   information?: string | null
   deliveryDate?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployeeInput = {
@@ -624,6 +749,40 @@ export type SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployeeInput = {
 
 export type SupplierDeliveryNoteFollowUpCreateManyEmployeeInputEnvelope = {
   data: Prisma.SupplierDeliveryNoteFollowUpCreateManyEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type SupplierDeliveryNoteFollowUpCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  id: string
+  quantityDelivered?: number | null
+  information?: string | null
+  deliveryDate?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  DeliveryNoteSupplier: Prisma.DeliveryNoteSupplierCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
+  WorkOrderStructure: Prisma.WorkOrderStructureCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
+}
+
+export type SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  id: string
+  deliveryNoteSupplierId: string
+  workOrderStructureId: string
+  quantityDelivered?: number | null
+  information?: string | null
+  deliveryDate?: Date | string | null
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type SupplierDeliveryNoteFollowUpCreateOrConnectWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  where: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput
+  create: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput>
+}
+
+export type SupplierDeliveryNoteFollowUpCreateManyEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.SupplierDeliveryNoteFollowUpCreateManyEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput | Prisma.SupplierDeliveryNoteFollowUpCreateManyEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -643,13 +802,32 @@ export type SupplierDeliveryNoteFollowUpUpdateManyWithWhereWithoutEmployeeInput 
   data: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpUpdateManyMutationInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployeeInput>
 }
 
+export type SupplierDeliveryNoteFollowUpUpsertWithWhereUniqueWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  where: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput
+  update: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpUpdateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedCreateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput>
+}
+
+export type SupplierDeliveryNoteFollowUpUpdateWithWhereUniqueWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  where: Prisma.SupplierDeliveryNoteFollowUpWhereUniqueInput
+  data: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpUpdateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput>
+}
+
+export type SupplierDeliveryNoteFollowUpUpdateManyWithWhereWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  where: Prisma.SupplierDeliveryNoteFollowUpScalarWhereInput
+  data: Prisma.XOR<Prisma.SupplierDeliveryNoteFollowUpUpdateManyMutationInput, Prisma.SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput>
+}
+
 export type SupplierDeliveryNoteFollowUpCreateWithoutWorkOrderStructureInput = {
   id: string
   quantityDelivered?: number | null
   information?: string | null
   deliveryDate?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   DeliveryNoteSupplier: Prisma.DeliveryNoteSupplierCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutSupplierDeliveryNoteFollowUpInput
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutSupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedCreateWithoutWorkOrderStructureInput = {
@@ -659,6 +837,9 @@ export type SupplierDeliveryNoteFollowUpUncheckedCreateWithoutWorkOrderStructure
   information?: string | null
   deliveryDate?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type SupplierDeliveryNoteFollowUpCreateOrConnectWithoutWorkOrderStructureInput = {
@@ -694,6 +875,9 @@ export type SupplierDeliveryNoteFollowUpCreateManyDeliveryNoteSupplierInput = {
   information?: string | null
   deliveryDate?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type SupplierDeliveryNoteFollowUpUpdateWithoutDeliveryNoteSupplierInput = {
@@ -701,8 +885,11 @@ export type SupplierDeliveryNoteFollowUpUpdateWithoutDeliveryNoteSupplierInput =
   quantityDelivered?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   WorkOrderStructure?: Prisma.WorkOrderStructureUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutSupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployeeNestedInput
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedUpdateWithoutDeliveryNoteSupplierInput = {
@@ -712,6 +899,9 @@ export type SupplierDeliveryNoteFollowUpUncheckedUpdateWithoutDeliveryNoteSuppli
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutDeliveryNoteSupplierInput = {
@@ -721,6 +911,9 @@ export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutDeliveryNoteSu
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SupplierDeliveryNoteFollowUpCreateManyEmployeeInput = {
@@ -730,6 +923,21 @@ export type SupplierDeliveryNoteFollowUpCreateManyEmployeeInput = {
   quantityDelivered?: number | null
   information?: string | null
   deliveryDate?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type SupplierDeliveryNoteFollowUpCreateManyEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  id: string
+  deliveryNoteSupplierId: string
+  workOrderStructureId: string
+  quantityDelivered?: number | null
+  information?: string | null
+  deliveryDate?: Date | string | null
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type SupplierDeliveryNoteFollowUpUpdateWithoutEmployeeInput = {
@@ -737,8 +945,11 @@ export type SupplierDeliveryNoteFollowUpUpdateWithoutEmployeeInput = {
   quantityDelivered?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
   WorkOrderStructure?: Prisma.WorkOrderStructureUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutSupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployeeNestedInput
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedUpdateWithoutEmployeeInput = {
@@ -748,6 +959,9 @@ export type SupplierDeliveryNoteFollowUpUncheckedUpdateWithoutEmployeeInput = {
   quantityDelivered?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployeeInput = {
@@ -757,6 +971,45 @@ export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployeeInput 
   quantityDelivered?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type SupplierDeliveryNoteFollowUpUpdateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityDelivered?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
+}
+
+export type SupplierDeliveryNoteFollowUpUncheckedUpdateWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryNoteSupplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderStructureId?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityDelivered?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutEmployee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryNoteSupplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderStructureId?: Prisma.StringFieldUpdateOperationsInput | string
+  quantityDelivered?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SupplierDeliveryNoteFollowUpCreateManyWorkOrderStructureInput = {
@@ -766,6 +1019,9 @@ export type SupplierDeliveryNoteFollowUpCreateManyWorkOrderStructureInput = {
   information?: string | null
   deliveryDate?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type SupplierDeliveryNoteFollowUpUpdateWithoutWorkOrderStructureInput = {
@@ -773,8 +1029,11 @@ export type SupplierDeliveryNoteFollowUpUpdateWithoutWorkOrderStructureInput = {
   quantityDelivered?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutSupplierDeliveryNoteFollowUpNestedInput
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutSupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployeeNestedInput
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedUpdateWithoutWorkOrderStructureInput = {
@@ -784,6 +1043,9 @@ export type SupplierDeliveryNoteFollowUpUncheckedUpdateWithoutWorkOrderStructure
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutWorkOrderStructureInput = {
@@ -793,6 +1055,9 @@ export type SupplierDeliveryNoteFollowUpUncheckedUpdateManyWithoutWorkOrderStruc
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -805,9 +1070,13 @@ export type SupplierDeliveryNoteFollowUpSelect<ExtArgs extends runtime.Types.Ext
   information?: boolean
   deliveryDate?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   DeliveryNoteSupplier?: boolean | Prisma.DeliveryNoteSupplierDefaultArgs<ExtArgs>
   WorkOrderStructure?: boolean | Prisma.WorkOrderStructureDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: boolean | Prisma.SupplierDeliveryNoteFollowUp$Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["supplierDeliveryNoteFollowUp"]>
 
 
@@ -820,13 +1089,17 @@ export type SupplierDeliveryNoteFollowUpSelectScalar = {
   information?: boolean
   deliveryDate?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type SupplierDeliveryNoteFollowUpOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "deliveryNoteSupplierId" | "workOrderStructureId" | "quantityDelivered" | "information" | "deliveryDate" | "createdBy", ExtArgs["result"]["supplierDeliveryNoteFollowUp"]>
+export type SupplierDeliveryNoteFollowUpOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "deliveryNoteSupplierId" | "workOrderStructureId" | "quantityDelivered" | "information" | "deliveryDate" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["supplierDeliveryNoteFollowUp"]>
 export type SupplierDeliveryNoteFollowUpInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   DeliveryNoteSupplier?: boolean | Prisma.DeliveryNoteSupplierDefaultArgs<ExtArgs>
   WorkOrderStructure?: boolean | Prisma.WorkOrderStructureDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee?: boolean | Prisma.SupplierDeliveryNoteFollowUp$Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $SupplierDeliveryNoteFollowUpPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -835,6 +1108,7 @@ export type $SupplierDeliveryNoteFollowUpPayload<ExtArgs extends runtime.Types.E
     DeliveryNoteSupplier: Prisma.$DeliveryNoteSupplierPayload<ExtArgs>
     WorkOrderStructure: Prisma.$WorkOrderStructurePayload<ExtArgs>
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -844,6 +1118,9 @@ export type $SupplierDeliveryNoteFollowUpPayload<ExtArgs extends runtime.Types.E
     information: string | null
     deliveryDate: Date | null
     createdBy: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["supplierDeliveryNoteFollowUp"]>
   composites: {}
 }
@@ -1187,6 +1464,7 @@ export interface Prisma__SupplierDeliveryNoteFollowUpClient<T, Null = never, Ext
   DeliveryNoteSupplier<T extends Prisma.DeliveryNoteSupplierDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DeliveryNoteSupplierDefaultArgs<ExtArgs>>): Prisma.Prisma__DeliveryNoteSupplierClient<runtime.Types.Result.GetResult<Prisma.$DeliveryNoteSupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   WorkOrderStructure<T extends Prisma.WorkOrderStructureDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WorkOrderStructureDefaultArgs<ExtArgs>>): Prisma.Prisma__WorkOrderStructureClient<runtime.Types.Result.GetResult<Prisma.$WorkOrderStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee<T extends Prisma.SupplierDeliveryNoteFollowUp$Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SupplierDeliveryNoteFollowUp$Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1223,6 +1501,9 @@ export interface SupplierDeliveryNoteFollowUpFieldRefs {
   readonly information: Prisma.FieldRef<"SupplierDeliveryNoteFollowUp", 'String'>
   readonly deliveryDate: Prisma.FieldRef<"SupplierDeliveryNoteFollowUp", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"SupplierDeliveryNoteFollowUp", 'String'>
+  readonly deleted: Prisma.FieldRef<"SupplierDeliveryNoteFollowUp", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"SupplierDeliveryNoteFollowUp", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"SupplierDeliveryNoteFollowUp", 'String'>
 }
     
 
@@ -1563,6 +1844,25 @@ export type SupplierDeliveryNoteFollowUpDeleteManyArgs<ExtArgs extends runtime.T
    * Limit how many SupplierDeliveryNoteFollowUps to delete.
    */
   limit?: number
+}
+
+/**
+ * SupplierDeliveryNoteFollowUp.Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployee
+ */
+export type SupplierDeliveryNoteFollowUp$Employee_SupplierDeliveryNoteFollowUp_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

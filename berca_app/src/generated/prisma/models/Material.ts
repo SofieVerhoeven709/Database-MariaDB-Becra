@@ -51,6 +51,9 @@ export type MaterialMinAggregateOutputType = {
   materialGroupId: string | null
   unitId: string | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type MaterialMaxAggregateOutputType = {
@@ -68,6 +71,9 @@ export type MaterialMaxAggregateOutputType = {
   materialGroupId: string | null
   unitId: string | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type MaterialCountAggregateOutputType = {
@@ -85,6 +91,9 @@ export type MaterialCountAggregateOutputType = {
   materialGroupId: number
   unitId: number
   createdBy: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -114,6 +123,9 @@ export type MaterialMinAggregateInputType = {
   materialGroupId?: true
   unitId?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type MaterialMaxAggregateInputType = {
@@ -131,6 +143,9 @@ export type MaterialMaxAggregateInputType = {
   materialGroupId?: true
   unitId?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type MaterialCountAggregateInputType = {
@@ -148,6 +163,9 @@ export type MaterialCountAggregateInputType = {
   materialGroupId?: true
   unitId?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -252,6 +270,9 @@ export type MaterialGroupByOutputType = {
   materialGroupId: string
   unitId: string
   createdBy: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: MaterialCountAggregateOutputType | null
   _avg: MaterialAvgAggregateOutputType | null
   _sum: MaterialSumAggregateOutputType | null
@@ -292,11 +313,15 @@ export type MaterialWhereInput = {
   materialGroupId?: Prisma.StringFilter<"Material"> | string
   unitId?: Prisma.StringFilter<"Material"> | string
   createdBy?: Prisma.StringFilter<"Material"> | string
+  deleted?: Prisma.BoolFilter<"Material"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Material"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Material"> | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryListRelationFilter
   Inventory_Inventory_beNumberToMaterial?: Prisma.XOR<Prisma.InventoryNullableScalarRelationFilter, Prisma.InventoryWhereInput> | null
   MaterialGroup?: Prisma.XOR<Prisma.MaterialGroupScalarRelationFilter, Prisma.MaterialGroupWhereInput>
   Unit?: Prisma.XOR<Prisma.UnitScalarRelationFilter, Prisma.UnitWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Material_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   MaterialMovement?: Prisma.MaterialMovementListRelationFilter
   MaterialOther?: Prisma.MaterialOtherListRelationFilter
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureListRelationFilter
@@ -320,11 +345,15 @@ export type MaterialOrderByWithRelationInput = {
   materialGroupId?: Prisma.SortOrder
   unitId?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryOrderByRelationAggregateInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryOrderByWithRelationInput
   MaterialGroup?: Prisma.MaterialGroupOrderByWithRelationInput
   Unit?: Prisma.UnitOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   MaterialMovement?: Prisma.MaterialMovementOrderByRelationAggregateInput
   MaterialOther?: Prisma.MaterialOtherOrderByRelationAggregateInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureOrderByRelationAggregateInput
@@ -352,11 +381,15 @@ export type MaterialWhereUniqueInput = Prisma.AtLeast<{
   materialGroupId?: Prisma.StringFilter<"Material"> | string
   unitId?: Prisma.StringFilter<"Material"> | string
   createdBy?: Prisma.StringFilter<"Material"> | string
+  deleted?: Prisma.BoolFilter<"Material"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Material"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Material"> | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryListRelationFilter
   Inventory_Inventory_beNumberToMaterial?: Prisma.XOR<Prisma.InventoryNullableScalarRelationFilter, Prisma.InventoryWhereInput> | null
   MaterialGroup?: Prisma.XOR<Prisma.MaterialGroupScalarRelationFilter, Prisma.MaterialGroupWhereInput>
   Unit?: Prisma.XOR<Prisma.UnitScalarRelationFilter, Prisma.UnitWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Material_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   MaterialMovement?: Prisma.MaterialMovementListRelationFilter
   MaterialOther?: Prisma.MaterialOtherListRelationFilter
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureListRelationFilter
@@ -380,6 +413,9 @@ export type MaterialOrderByWithAggregationInput = {
   materialGroupId?: Prisma.SortOrder
   unitId?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MaterialCountOrderByAggregateInput
   _avg?: Prisma.MaterialAvgOrderByAggregateInput
   _max?: Prisma.MaterialMaxOrderByAggregateInput
@@ -405,6 +441,9 @@ export type MaterialScalarWhereWithAggregatesInput = {
   materialGroupId?: Prisma.StringWithAggregatesFilter<"Material"> | string
   unitId?: Prisma.StringWithAggregatesFilter<"Material"> | string
   createdBy?: Prisma.StringWithAggregatesFilter<"Material"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"Material"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Material"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Material"> | string | null
 }
 
 export type MaterialCreateInput = {
@@ -419,11 +458,14 @@ export type MaterialCreateInput = {
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
   Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
@@ -447,6 +489,9 @@ export type MaterialUncheckedCreateInput = {
   materialGroupId: string
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -469,11 +514,14 @@ export type MaterialUpdateInput = {
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
   Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
@@ -497,6 +545,9 @@ export type MaterialUncheckedUpdateInput = {
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -522,6 +573,9 @@ export type MaterialCreateManyInput = {
   materialGroupId: string
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type MaterialUpdateManyMutationInput = {
@@ -536,6 +590,8 @@ export type MaterialUpdateManyMutationInput = {
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type MaterialUncheckedUpdateManyInput = {
@@ -553,6 +609,9 @@ export type MaterialUncheckedUpdateManyInput = {
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialListRelationFilter = {
@@ -591,6 +650,9 @@ export type MaterialCountOrderByAggregateInput = {
   materialGroupId?: Prisma.SortOrder
   unitId?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type MaterialAvgOrderByAggregateInput = {
@@ -613,6 +675,9 @@ export type MaterialMaxOrderByAggregateInput = {
   materialGroupId?: Prisma.SortOrder
   unitId?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type MaterialMinOrderByAggregateInput = {
@@ -630,6 +695,9 @@ export type MaterialMinOrderByAggregateInput = {
   materialGroupId?: Prisma.SortOrder
   unitId?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type MaterialSumOrderByAggregateInput = {
@@ -649,10 +717,24 @@ export type MaterialCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
 }
 
+export type MaterialCreateNestedManyWithoutEmployee_Material_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput, Prisma.MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeInput> | Prisma.MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput[] | Prisma.MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.MaterialCreateOrConnectWithoutEmployee_Material_deletedByToEmployeeInput | Prisma.MaterialCreateOrConnectWithoutEmployee_Material_deletedByToEmployeeInput[]
+  createMany?: Prisma.MaterialCreateManyEmployee_Material_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
+}
+
 export type MaterialUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.MaterialCreateWithoutEmployeeInput, Prisma.MaterialUncheckedCreateWithoutEmployeeInput> | Prisma.MaterialCreateWithoutEmployeeInput[] | Prisma.MaterialUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.MaterialCreateOrConnectWithoutEmployeeInput | Prisma.MaterialCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.MaterialCreateManyEmployeeInputEnvelope
+  connect?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
+}
+
+export type MaterialUncheckedCreateNestedManyWithoutEmployee_Material_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput, Prisma.MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeInput> | Prisma.MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput[] | Prisma.MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.MaterialCreateOrConnectWithoutEmployee_Material_deletedByToEmployeeInput | Prisma.MaterialCreateOrConnectWithoutEmployee_Material_deletedByToEmployeeInput[]
+  createMany?: Prisma.MaterialCreateManyEmployee_Material_deletedByToEmployeeInputEnvelope
   connect?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
 }
 
@@ -670,6 +752,20 @@ export type MaterialUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.MaterialScalarWhereInput | Prisma.MaterialScalarWhereInput[]
 }
 
+export type MaterialUpdateManyWithoutEmployee_Material_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput, Prisma.MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeInput> | Prisma.MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput[] | Prisma.MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.MaterialCreateOrConnectWithoutEmployee_Material_deletedByToEmployeeInput | Prisma.MaterialCreateOrConnectWithoutEmployee_Material_deletedByToEmployeeInput[]
+  upsert?: Prisma.MaterialUpsertWithWhereUniqueWithoutEmployee_Material_deletedByToEmployeeInput | Prisma.MaterialUpsertWithWhereUniqueWithoutEmployee_Material_deletedByToEmployeeInput[]
+  createMany?: Prisma.MaterialCreateManyEmployee_Material_deletedByToEmployeeInputEnvelope
+  set?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
+  disconnect?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
+  delete?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
+  connect?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
+  update?: Prisma.MaterialUpdateWithWhereUniqueWithoutEmployee_Material_deletedByToEmployeeInput | Prisma.MaterialUpdateWithWhereUniqueWithoutEmployee_Material_deletedByToEmployeeInput[]
+  updateMany?: Prisma.MaterialUpdateManyWithWhereWithoutEmployee_Material_deletedByToEmployeeInput | Prisma.MaterialUpdateManyWithWhereWithoutEmployee_Material_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.MaterialScalarWhereInput | Prisma.MaterialScalarWhereInput[]
+}
+
 export type MaterialUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.MaterialCreateWithoutEmployeeInput, Prisma.MaterialUncheckedCreateWithoutEmployeeInput> | Prisma.MaterialCreateWithoutEmployeeInput[] | Prisma.MaterialUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.MaterialCreateOrConnectWithoutEmployeeInput | Prisma.MaterialCreateOrConnectWithoutEmployeeInput[]
@@ -681,6 +777,20 @@ export type MaterialUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
   update?: Prisma.MaterialUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.MaterialUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.MaterialUpdateManyWithWhereWithoutEmployeeInput | Prisma.MaterialUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.MaterialScalarWhereInput | Prisma.MaterialScalarWhereInput[]
+}
+
+export type MaterialUncheckedUpdateManyWithoutEmployee_Material_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput, Prisma.MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeInput> | Prisma.MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput[] | Prisma.MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.MaterialCreateOrConnectWithoutEmployee_Material_deletedByToEmployeeInput | Prisma.MaterialCreateOrConnectWithoutEmployee_Material_deletedByToEmployeeInput[]
+  upsert?: Prisma.MaterialUpsertWithWhereUniqueWithoutEmployee_Material_deletedByToEmployeeInput | Prisma.MaterialUpsertWithWhereUniqueWithoutEmployee_Material_deletedByToEmployeeInput[]
+  createMany?: Prisma.MaterialCreateManyEmployee_Material_deletedByToEmployeeInputEnvelope
+  set?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
+  disconnect?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
+  delete?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
+  connect?: Prisma.MaterialWhereUniqueInput | Prisma.MaterialWhereUniqueInput[]
+  update?: Prisma.MaterialUpdateWithWhereUniqueWithoutEmployee_Material_deletedByToEmployeeInput | Prisma.MaterialUpdateWithWhereUniqueWithoutEmployee_Material_deletedByToEmployeeInput[]
+  updateMany?: Prisma.MaterialUpdateManyWithWhereWithoutEmployee_Material_deletedByToEmployeeInput | Prisma.MaterialUpdateManyWithWhereWithoutEmployee_Material_deletedByToEmployeeInput[]
   deleteMany?: Prisma.MaterialScalarWhereInput | Prisma.MaterialScalarWhereInput[]
 }
 
@@ -900,10 +1010,13 @@ export type MaterialCreateWithoutEmployeeInput = {
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
   Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
@@ -926,6 +1039,9 @@ export type MaterialUncheckedCreateWithoutEmployeeInput = {
   rejected?: boolean | null
   materialGroupId: string
   unitId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -943,6 +1059,70 @@ export type MaterialCreateOrConnectWithoutEmployeeInput = {
 
 export type MaterialCreateManyEmployeeInputEnvelope = {
   data: Prisma.MaterialCreateManyEmployeeInput | Prisma.MaterialCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput = {
+  id: string
+  beNumber: string
+  name?: string | null
+  brandOrderNr: number
+  shortDescription: string
+  longDescription?: string | null
+  preferedSupplier?: string | null
+  brandName?: string | null
+  documentationPlace?: string | null
+  bePartDoc?: number | null
+  rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
+  Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
+  Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
+  MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
+  MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
+  MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_beNumberToMaterialInput
+  Product?: Prisma.ProductCreateNestedManyWithoutMaterialInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutMaterialInput
+}
+
+export type MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeInput = {
+  id: string
+  beNumber: string
+  name?: string | null
+  brandOrderNr: number
+  shortDescription: string
+  longDescription?: string | null
+  preferedSupplier?: string | null
+  brandName?: string | null
+  documentationPlace?: string | null
+  bePartDoc?: number | null
+  rejected?: boolean | null
+  materialGroupId: string
+  unitId: string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
+  Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
+  MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
+  MaterialOther?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutMaterialInput
+  MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
+  MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutMaterial_MaterialStructure_beNumberToMaterialInput
+  Product?: Prisma.ProductUncheckedCreateNestedManyWithoutMaterialInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutMaterialInput
+}
+
+export type MaterialCreateOrConnectWithoutEmployee_Material_deletedByToEmployeeInput = {
+  where: Prisma.MaterialWhereUniqueInput
+  create: Prisma.XOR<Prisma.MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput, Prisma.MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeInput>
+}
+
+export type MaterialCreateManyEmployee_Material_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.MaterialCreateManyEmployee_Material_deletedByToEmployeeInput | Prisma.MaterialCreateManyEmployee_Material_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -980,6 +1160,25 @@ export type MaterialScalarWhereInput = {
   materialGroupId?: Prisma.StringFilter<"Material"> | string
   unitId?: Prisma.StringFilter<"Material"> | string
   createdBy?: Prisma.StringFilter<"Material"> | string
+  deleted?: Prisma.BoolFilter<"Material"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Material"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Material"> | string | null
+}
+
+export type MaterialUpsertWithWhereUniqueWithoutEmployee_Material_deletedByToEmployeeInput = {
+  where: Prisma.MaterialWhereUniqueInput
+  update: Prisma.XOR<Prisma.MaterialUpdateWithoutEmployee_Material_deletedByToEmployeeInput, Prisma.MaterialUncheckedUpdateWithoutEmployee_Material_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput, Prisma.MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeInput>
+}
+
+export type MaterialUpdateWithWhereUniqueWithoutEmployee_Material_deletedByToEmployeeInput = {
+  where: Prisma.MaterialWhereUniqueInput
+  data: Prisma.XOR<Prisma.MaterialUpdateWithoutEmployee_Material_deletedByToEmployeeInput, Prisma.MaterialUncheckedUpdateWithoutEmployee_Material_deletedByToEmployeeInput>
+}
+
+export type MaterialUpdateManyWithWhereWithoutEmployee_Material_deletedByToEmployeeInput = {
+  where: Prisma.MaterialScalarWhereInput
+  data: Prisma.XOR<Prisma.MaterialUpdateManyMutationInput, Prisma.MaterialUncheckedUpdateManyWithoutEmployee_Material_deletedByToEmployeeInput>
 }
 
 export type MaterialCreateWithoutInventory_Inventory_materialIdToMaterialInput = {
@@ -994,10 +1193,13 @@ export type MaterialCreateWithoutInventory_Inventory_materialIdToMaterialInput =
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
   Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
@@ -1021,6 +1223,9 @@ export type MaterialUncheckedCreateWithoutInventory_Inventory_materialIdToMateri
   materialGroupId: string
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutMaterialInput
@@ -1047,10 +1252,13 @@ export type MaterialCreateWithoutInventory_Inventory_beNumberToMaterialInput = {
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
   Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
@@ -1074,6 +1282,9 @@ export type MaterialUncheckedCreateWithoutInventory_Inventory_beNumberToMaterial
   materialGroupId: string
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutMaterialInput
@@ -1111,10 +1322,13 @@ export type MaterialUpdateWithoutInventory_Inventory_materialIdToMaterialInput =
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
   Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
@@ -1138,6 +1352,9 @@ export type MaterialUncheckedUpdateWithoutInventory_Inventory_materialIdToMateri
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUncheckedUpdateManyWithoutMaterialNestedInput
@@ -1170,10 +1387,13 @@ export type MaterialUpdateWithoutInventory_Inventory_beNumberToMaterialInput = {
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
   Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
@@ -1197,6 +1417,9 @@ export type MaterialUncheckedUpdateWithoutInventory_Inventory_beNumberToMaterial
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUncheckedUpdateManyWithoutMaterialNestedInput
@@ -1218,10 +1441,13 @@ export type MaterialCreateWithoutMaterialGroupInput = {
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
@@ -1244,6 +1470,9 @@ export type MaterialUncheckedCreateWithoutMaterialGroupInput = {
   rejected?: boolean | null
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -1292,11 +1521,14 @@ export type MaterialCreateWithoutMaterialMovementInput = {
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
   Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
   MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_beNumberToMaterialInput
@@ -1319,6 +1551,9 @@ export type MaterialUncheckedCreateWithoutMaterialMovementInput = {
   materialGroupId: string
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialOther?: Prisma.MaterialOtherUncheckedCreateNestedManyWithoutMaterialInput
@@ -1356,11 +1591,14 @@ export type MaterialUpdateWithoutMaterialMovementInput = {
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
   Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
   MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_beNumberToMaterialNestedInput
@@ -1383,6 +1621,9 @@ export type MaterialUncheckedUpdateWithoutMaterialMovementInput = {
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUncheckedUpdateManyWithoutMaterialNestedInput
@@ -1404,11 +1645,14 @@ export type MaterialCreateWithoutMaterialOtherInput = {
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
   Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
   MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_beNumberToMaterialInput
@@ -1431,6 +1675,9 @@ export type MaterialUncheckedCreateWithoutMaterialOtherInput = {
   materialGroupId: string
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -1468,11 +1715,14 @@ export type MaterialUpdateWithoutMaterialOtherInput = {
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
   Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
   MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_beNumberToMaterialNestedInput
@@ -1495,6 +1745,9 @@ export type MaterialUncheckedUpdateWithoutMaterialOtherInput = {
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -1516,11 +1769,14 @@ export type MaterialCreateWithoutMaterialStructure_MaterialStructure_materialIdT
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
   Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_beNumberToMaterialInput
@@ -1543,6 +1799,9 @@ export type MaterialUncheckedCreateWithoutMaterialStructure_MaterialStructure_ma
   materialGroupId: string
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -1569,11 +1828,14 @@ export type MaterialCreateWithoutMaterialStructure_MaterialStructure_beNumberToM
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
   Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
@@ -1596,6 +1858,9 @@ export type MaterialUncheckedCreateWithoutMaterialStructure_MaterialStructure_be
   materialGroupId: string
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -1633,11 +1898,14 @@ export type MaterialUpdateWithoutMaterialStructure_MaterialStructure_materialIdT
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
   Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_beNumberToMaterialNestedInput
@@ -1660,6 +1928,9 @@ export type MaterialUncheckedUpdateWithoutMaterialStructure_MaterialStructure_ma
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -1692,11 +1963,14 @@ export type MaterialUpdateWithoutMaterialStructure_MaterialStructure_beNumberToM
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
   Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
@@ -1719,6 +1993,9 @@ export type MaterialUncheckedUpdateWithoutMaterialStructure_MaterialStructure_be
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -1740,11 +2017,14 @@ export type MaterialCreateWithoutProductInput = {
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
   Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
@@ -1767,6 +2047,9 @@ export type MaterialUncheckedCreateWithoutProductInput = {
   materialGroupId: string
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -1804,11 +2087,14 @@ export type MaterialUpdateWithoutProductInput = {
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
   Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
@@ -1831,6 +2117,9 @@ export type MaterialUncheckedUpdateWithoutProductInput = {
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -1852,10 +2141,13 @@ export type MaterialCreateWithoutUnitInput = {
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
@@ -1878,6 +2170,9 @@ export type MaterialUncheckedCreateWithoutUnitInput = {
   rejected?: boolean | null
   materialGroupId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -1926,11 +2221,14 @@ export type MaterialCreateWithoutWorkOrderStructureInput = {
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialGroup: Prisma.MaterialGroupCreateNestedOneWithoutMaterialInput
   Unit: Prisma.UnitCreateNestedOneWithoutMaterialInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutMaterialInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterial_Material_deletedByToEmployeeInput
   MaterialMovement?: Prisma.MaterialMovementCreateNestedManyWithoutMaterialInput
   MaterialOther?: Prisma.MaterialOtherCreateNestedManyWithoutMaterialInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureCreateNestedManyWithoutMaterial_MaterialStructure_materialIdToMaterialInput
@@ -1953,6 +2251,9 @@ export type MaterialUncheckedCreateWithoutWorkOrderStructureInput = {
   materialGroupId: string
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedCreateNestedManyWithoutMaterial_Inventory_materialIdToMaterialInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedCreateNestedOneWithoutMaterial_Inventory_beNumberToMaterialInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedCreateNestedManyWithoutMaterialInput
@@ -1990,11 +2291,14 @@ export type MaterialUpdateWithoutWorkOrderStructureInput = {
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
   Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
@@ -2017,6 +2321,9 @@ export type MaterialUncheckedUpdateWithoutWorkOrderStructureInput = {
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -2040,6 +2347,28 @@ export type MaterialCreateManyEmployeeInput = {
   rejected?: boolean | null
   materialGroupId: string
   unitId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type MaterialCreateManyEmployee_Material_deletedByToEmployeeInput = {
+  id: string
+  beNumber: string
+  name?: string | null
+  brandOrderNr: number
+  shortDescription: string
+  longDescription?: string | null
+  preferedSupplier?: string | null
+  brandName?: string | null
+  documentationPlace?: string | null
+  bePartDoc?: number | null
+  rejected?: boolean | null
+  materialGroupId: string
+  unitId: string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type MaterialUpdateWithoutEmployeeInput = {
@@ -2054,10 +2383,13 @@ export type MaterialUpdateWithoutEmployeeInput = {
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
   Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
@@ -2080,6 +2412,9 @@ export type MaterialUncheckedUpdateWithoutEmployeeInput = {
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -2104,6 +2439,82 @@ export type MaterialUncheckedUpdateManyWithoutEmployeeInput = {
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MaterialUpdateWithoutEmployee_Material_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNr?: Prisma.IntFieldUpdateOperationsInput | number
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
+  Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
+  Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
+  MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
+  MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
+  MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_beNumberToMaterialNestedInput
+  Product?: Prisma.ProductUpdateManyWithoutMaterialNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutMaterialNestedInput
+}
+
+export type MaterialUncheckedUpdateWithoutEmployee_Material_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNr?: Prisma.IntFieldUpdateOperationsInput | number
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
+  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
+  Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
+  MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
+  MaterialOther?: Prisma.MaterialOtherUncheckedUpdateManyWithoutMaterialNestedInput
+  MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUncheckedUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
+  MaterialStructure_MaterialStructure_beNumberToMaterial?: Prisma.MaterialStructureUncheckedUpdateManyWithoutMaterial_MaterialStructure_beNumberToMaterialNestedInput
+  Product?: Prisma.ProductUncheckedUpdateManyWithoutMaterialNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutMaterialNestedInput
+}
+
+export type MaterialUncheckedUpdateManyWithoutEmployee_Material_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNr?: Prisma.IntFieldUpdateOperationsInput | number
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
+  unitId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type MaterialCreateManyMaterialGroupInput = {
@@ -2120,6 +2531,9 @@ export type MaterialCreateManyMaterialGroupInput = {
   rejected?: boolean | null
   unitId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type MaterialUpdateWithoutMaterialGroupInput = {
@@ -2134,10 +2548,13 @@ export type MaterialUpdateWithoutMaterialGroupInput = {
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   Unit?: Prisma.UnitUpdateOneRequiredWithoutMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
@@ -2160,6 +2577,9 @@ export type MaterialUncheckedUpdateWithoutMaterialGroupInput = {
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -2184,6 +2604,9 @@ export type MaterialUncheckedUpdateManyWithoutMaterialGroupInput = {
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   unitId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialCreateManyUnitInput = {
@@ -2200,6 +2623,9 @@ export type MaterialCreateManyUnitInput = {
   rejected?: boolean | null
   materialGroupId: string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type MaterialUpdateWithoutUnitInput = {
@@ -2214,10 +2640,13 @@ export type MaterialUpdateWithoutUnitInput = {
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialGroup?: Prisma.MaterialGroupUpdateOneRequiredWithoutMaterialNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutMaterialNestedInput
+  Employee_Material_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterial_Material_deletedByToEmployeeNestedInput
   MaterialMovement?: Prisma.MaterialMovementUpdateManyWithoutMaterialNestedInput
   MaterialOther?: Prisma.MaterialOtherUpdateManyWithoutMaterialNestedInput
   MaterialStructure_MaterialStructure_materialIdToMaterial?: Prisma.MaterialStructureUpdateManyWithoutMaterial_MaterialStructure_materialIdToMaterialNestedInput
@@ -2240,6 +2669,9 @@ export type MaterialUncheckedUpdateWithoutUnitInput = {
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Inventory_Inventory_materialIdToMaterial?: Prisma.InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMaterialNestedInput
   Inventory_Inventory_beNumberToMaterial?: Prisma.InventoryUncheckedUpdateOneWithoutMaterial_Inventory_beNumberToMaterialNestedInput
   MaterialMovement?: Prisma.MaterialMovementUncheckedUpdateManyWithoutMaterialNestedInput
@@ -2264,6 +2696,9 @@ export type MaterialUncheckedUpdateManyWithoutUnitInput = {
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   materialGroupId?: Prisma.StringFieldUpdateOperationsInput | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -2366,11 +2801,15 @@ export type MaterialSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   materialGroupId?: boolean
   unitId?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Inventory_Inventory_materialIdToMaterial?: boolean | Prisma.Material$Inventory_Inventory_materialIdToMaterialArgs<ExtArgs>
   Inventory_Inventory_beNumberToMaterial?: boolean | Prisma.Material$Inventory_Inventory_beNumberToMaterialArgs<ExtArgs>
   MaterialGroup?: boolean | Prisma.MaterialGroupDefaultArgs<ExtArgs>
   Unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Material_deletedByToEmployee?: boolean | Prisma.Material$Employee_Material_deletedByToEmployeeArgs<ExtArgs>
   MaterialMovement?: boolean | Prisma.Material$MaterialMovementArgs<ExtArgs>
   MaterialOther?: boolean | Prisma.Material$MaterialOtherArgs<ExtArgs>
   MaterialStructure_MaterialStructure_materialIdToMaterial?: boolean | Prisma.Material$MaterialStructure_MaterialStructure_materialIdToMaterialArgs<ExtArgs>
@@ -2397,15 +2836,19 @@ export type MaterialSelectScalar = {
   materialGroupId?: boolean
   unitId?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type MaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "beNumber" | "name" | "brandOrderNr" | "shortDescription" | "longDescription" | "preferedSupplier" | "brandName" | "documentationPlace" | "bePartDoc" | "rejected" | "materialGroupId" | "unitId" | "createdBy", ExtArgs["result"]["material"]>
+export type MaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "beNumber" | "name" | "brandOrderNr" | "shortDescription" | "longDescription" | "preferedSupplier" | "brandName" | "documentationPlace" | "bePartDoc" | "rejected" | "materialGroupId" | "unitId" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["material"]>
 export type MaterialInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Inventory_Inventory_materialIdToMaterial?: boolean | Prisma.Material$Inventory_Inventory_materialIdToMaterialArgs<ExtArgs>
   Inventory_Inventory_beNumberToMaterial?: boolean | Prisma.Material$Inventory_Inventory_beNumberToMaterialArgs<ExtArgs>
   MaterialGroup?: boolean | Prisma.MaterialGroupDefaultArgs<ExtArgs>
   Unit?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Material_deletedByToEmployee?: boolean | Prisma.Material$Employee_Material_deletedByToEmployeeArgs<ExtArgs>
   MaterialMovement?: boolean | Prisma.Material$MaterialMovementArgs<ExtArgs>
   MaterialOther?: boolean | Prisma.Material$MaterialOtherArgs<ExtArgs>
   MaterialStructure_MaterialStructure_materialIdToMaterial?: boolean | Prisma.Material$MaterialStructure_MaterialStructure_materialIdToMaterialArgs<ExtArgs>
@@ -2423,6 +2866,7 @@ export type $MaterialPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     MaterialGroup: Prisma.$MaterialGroupPayload<ExtArgs>
     Unit: Prisma.$UnitPayload<ExtArgs>
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_Material_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     MaterialMovement: Prisma.$MaterialMovementPayload<ExtArgs>[]
     MaterialOther: Prisma.$MaterialOtherPayload<ExtArgs>[]
     MaterialStructure_MaterialStructure_materialIdToMaterial: Prisma.$MaterialStructurePayload<ExtArgs>[]
@@ -2445,6 +2889,9 @@ export type $MaterialPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     materialGroupId: string
     unitId: string
     createdBy: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["material"]>
   composites: {}
 }
@@ -2790,6 +3237,7 @@ export interface Prisma__MaterialClient<T, Null = never, ExtArgs extends runtime
   MaterialGroup<T extends Prisma.MaterialGroupDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialGroupDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialGroupClient<runtime.Types.Result.GetResult<Prisma.$MaterialGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Unit<T extends Prisma.UnitDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UnitDefaultArgs<ExtArgs>>): Prisma.Prisma__UnitClient<runtime.Types.Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_Material_deletedByToEmployee<T extends Prisma.Material$Employee_Material_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$Employee_Material_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   MaterialMovement<T extends Prisma.Material$MaterialMovementArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$MaterialMovementArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   MaterialOther<T extends Prisma.Material$MaterialOtherArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$MaterialOtherArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialOtherPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   MaterialStructure_MaterialStructure_materialIdToMaterial<T extends Prisma.Material$MaterialStructure_MaterialStructure_materialIdToMaterialArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$MaterialStructure_MaterialStructure_materialIdToMaterialArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2839,6 +3287,9 @@ export interface MaterialFieldRefs {
   readonly materialGroupId: Prisma.FieldRef<"Material", 'String'>
   readonly unitId: Prisma.FieldRef<"Material", 'String'>
   readonly createdBy: Prisma.FieldRef<"Material", 'String'>
+  readonly deleted: Prisma.FieldRef<"Material", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Material", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"Material", 'String'>
 }
     
 
@@ -3222,6 +3673,25 @@ export type Material$Inventory_Inventory_beNumberToMaterialArgs<ExtArgs extends 
    */
   include?: Prisma.InventoryInclude<ExtArgs> | null
   where?: Prisma.InventoryWhereInput
+}
+
+/**
+ * Material.Employee_Material_deletedByToEmployee
+ */
+export type Material$Employee_Material_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

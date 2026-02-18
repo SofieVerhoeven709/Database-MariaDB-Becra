@@ -44,6 +44,9 @@ export type UnitMinAggregateOutputType = {
   valid: boolean | null
   createdBy: string | null
   createdAt: Date | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type UnitMaxAggregateOutputType = {
@@ -56,6 +59,9 @@ export type UnitMaxAggregateOutputType = {
   valid: boolean | null
   createdBy: string | null
   createdAt: Date | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type UnitCountAggregateOutputType = {
@@ -68,6 +74,9 @@ export type UnitCountAggregateOutputType = {
   valid: number
   createdBy: number
   createdAt: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -90,6 +99,9 @@ export type UnitMinAggregateInputType = {
   valid?: true
   createdBy?: true
   createdAt?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type UnitMaxAggregateInputType = {
@@ -102,6 +114,9 @@ export type UnitMaxAggregateInputType = {
   valid?: true
   createdBy?: true
   createdAt?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type UnitCountAggregateInputType = {
@@ -114,6 +129,9 @@ export type UnitCountAggregateInputType = {
   valid?: true
   createdBy?: true
   createdAt?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -213,6 +231,9 @@ export type UnitGroupByOutputType = {
   valid: boolean
   createdBy: string
   createdAt: Date
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: UnitCountAggregateOutputType | null
   _avg: UnitAvgAggregateOutputType | null
   _sum: UnitSumAggregateOutputType | null
@@ -248,8 +269,12 @@ export type UnitWhereInput = {
   valid?: Prisma.BoolFilter<"Unit"> | boolean
   createdBy?: Prisma.StringFilter<"Unit"> | string
   createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
+  deleted?: Prisma.BoolFilter<"Unit"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Unit"> | string | null
   Material?: Prisma.MaterialListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Unit_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type UnitOrderByWithRelationInput = {
@@ -262,8 +287,12 @@ export type UnitOrderByWithRelationInput = {
   valid?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Material?: Prisma.MaterialOrderByRelationAggregateInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_Unit_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.UnitOrderByRelevanceInput
 }
 
@@ -280,8 +309,12 @@ export type UnitWhereUniqueInput = Prisma.AtLeast<{
   valid?: Prisma.BoolFilter<"Unit"> | boolean
   createdBy?: Prisma.StringFilter<"Unit"> | string
   createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
+  deleted?: Prisma.BoolFilter<"Unit"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Unit"> | string | null
   Material?: Prisma.MaterialListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Unit_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type UnitOrderByWithAggregationInput = {
@@ -294,6 +327,9 @@ export type UnitOrderByWithAggregationInput = {
   valid?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UnitCountOrderByAggregateInput
   _avg?: Prisma.UnitAvgOrderByAggregateInput
   _max?: Prisma.UnitMaxOrderByAggregateInput
@@ -314,6 +350,9 @@ export type UnitScalarWhereWithAggregatesInput = {
   valid?: Prisma.BoolWithAggregatesFilter<"Unit"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"Unit"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Unit"> | Date | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"Unit"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Unit"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
 }
 
 export type UnitCreateInput = {
@@ -325,8 +364,11 @@ export type UnitCreateInput = {
   longDescription?: string | null
   valid: boolean
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Material?: Prisma.MaterialCreateNestedManyWithoutUnitInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutUnitInput
+  Employee_Unit_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutUnit_Unit_deletedByToEmployeeInput
 }
 
 export type UnitUncheckedCreateInput = {
@@ -339,6 +381,9 @@ export type UnitUncheckedCreateInput = {
   valid: boolean
   createdBy: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutUnitInput
 }
 
@@ -351,8 +396,11 @@ export type UnitUpdateInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Material?: Prisma.MaterialUpdateManyWithoutUnitNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUnitNestedInput
+  Employee_Unit_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutUnit_Unit_deletedByToEmployeeNestedInput
 }
 
 export type UnitUncheckedUpdateInput = {
@@ -365,6 +413,9 @@ export type UnitUncheckedUpdateInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Material?: Prisma.MaterialUncheckedUpdateManyWithoutUnitNestedInput
 }
 
@@ -378,6 +429,9 @@ export type UnitCreateManyInput = {
   valid: boolean
   createdBy: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type UnitUpdateManyMutationInput = {
@@ -389,6 +443,8 @@ export type UnitUpdateManyMutationInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UnitUncheckedUpdateManyInput = {
@@ -401,6 +457,9 @@ export type UnitUncheckedUpdateManyInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UnitListRelationFilter = {
@@ -434,6 +493,9 @@ export type UnitCountOrderByAggregateInput = {
   valid?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type UnitAvgOrderByAggregateInput = {
@@ -450,6 +512,9 @@ export type UnitMaxOrderByAggregateInput = {
   valid?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type UnitMinOrderByAggregateInput = {
@@ -462,6 +527,9 @@ export type UnitMinOrderByAggregateInput = {
   valid?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type UnitSumOrderByAggregateInput = {
@@ -475,10 +543,24 @@ export type UnitCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
 }
 
+export type UnitCreateNestedManyWithoutEmployee_Unit_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput, Prisma.UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput> | Prisma.UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput[] | Prisma.UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutEmployee_Unit_deletedByToEmployeeInput | Prisma.UnitCreateOrConnectWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  createMany?: Prisma.UnitCreateManyEmployee_Unit_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+}
+
 export type UnitUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.UnitCreateWithoutEmployeeInput, Prisma.UnitUncheckedCreateWithoutEmployeeInput> | Prisma.UnitCreateWithoutEmployeeInput[] | Prisma.UnitUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.UnitCreateOrConnectWithoutEmployeeInput | Prisma.UnitCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.UnitCreateManyEmployeeInputEnvelope
+  connect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+}
+
+export type UnitUncheckedCreateNestedManyWithoutEmployee_Unit_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput, Prisma.UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput> | Prisma.UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput[] | Prisma.UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutEmployee_Unit_deletedByToEmployeeInput | Prisma.UnitCreateOrConnectWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  createMany?: Prisma.UnitCreateManyEmployee_Unit_deletedByToEmployeeInputEnvelope
   connect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
 }
 
@@ -496,6 +578,20 @@ export type UnitUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
 }
 
+export type UnitUpdateManyWithoutEmployee_Unit_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput, Prisma.UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput> | Prisma.UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput[] | Prisma.UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutEmployee_Unit_deletedByToEmployeeInput | Prisma.UnitCreateOrConnectWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  upsert?: Prisma.UnitUpsertWithWhereUniqueWithoutEmployee_Unit_deletedByToEmployeeInput | Prisma.UnitUpsertWithWhereUniqueWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  createMany?: Prisma.UnitCreateManyEmployee_Unit_deletedByToEmployeeInputEnvelope
+  set?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  disconnect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  delete?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  connect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  update?: Prisma.UnitUpdateWithWhereUniqueWithoutEmployee_Unit_deletedByToEmployeeInput | Prisma.UnitUpdateWithWhereUniqueWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  updateMany?: Prisma.UnitUpdateManyWithWhereWithoutEmployee_Unit_deletedByToEmployeeInput | Prisma.UnitUpdateManyWithWhereWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
+}
+
 export type UnitUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.UnitCreateWithoutEmployeeInput, Prisma.UnitUncheckedCreateWithoutEmployeeInput> | Prisma.UnitCreateWithoutEmployeeInput[] | Prisma.UnitUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.UnitCreateOrConnectWithoutEmployeeInput | Prisma.UnitCreateOrConnectWithoutEmployeeInput[]
@@ -507,6 +603,20 @@ export type UnitUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
   update?: Prisma.UnitUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.UnitUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.UnitUpdateManyWithWhereWithoutEmployeeInput | Prisma.UnitUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
+}
+
+export type UnitUncheckedUpdateManyWithoutEmployee_Unit_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput, Prisma.UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput> | Prisma.UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput[] | Prisma.UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.UnitCreateOrConnectWithoutEmployee_Unit_deletedByToEmployeeInput | Prisma.UnitCreateOrConnectWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  upsert?: Prisma.UnitUpsertWithWhereUniqueWithoutEmployee_Unit_deletedByToEmployeeInput | Prisma.UnitUpsertWithWhereUniqueWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  createMany?: Prisma.UnitCreateManyEmployee_Unit_deletedByToEmployeeInputEnvelope
+  set?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  disconnect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  delete?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  connect?: Prisma.UnitWhereUniqueInput | Prisma.UnitWhereUniqueInput[]
+  update?: Prisma.UnitUpdateWithWhereUniqueWithoutEmployee_Unit_deletedByToEmployeeInput | Prisma.UnitUpdateWithWhereUniqueWithoutEmployee_Unit_deletedByToEmployeeInput[]
+  updateMany?: Prisma.UnitUpdateManyWithWhereWithoutEmployee_Unit_deletedByToEmployeeInput | Prisma.UnitUpdateManyWithWhereWithoutEmployee_Unit_deletedByToEmployeeInput[]
   deleteMany?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
 }
 
@@ -533,7 +643,10 @@ export type UnitCreateWithoutEmployeeInput = {
   longDescription?: string | null
   valid: boolean
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Material?: Prisma.MaterialCreateNestedManyWithoutUnitInput
+  Employee_Unit_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutUnit_Unit_deletedByToEmployeeInput
 }
 
 export type UnitUncheckedCreateWithoutEmployeeInput = {
@@ -545,6 +658,9 @@ export type UnitUncheckedCreateWithoutEmployeeInput = {
   longDescription?: string | null
   valid: boolean
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutUnitInput
 }
 
@@ -555,6 +671,46 @@ export type UnitCreateOrConnectWithoutEmployeeInput = {
 
 export type UnitCreateManyEmployeeInputEnvelope = {
   data: Prisma.UnitCreateManyEmployeeInput | Prisma.UnitCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  quantity: number
+  abbreviation: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  valid: boolean
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Material?: Prisma.MaterialCreateNestedManyWithoutUnitInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutUnitInput
+}
+
+export type UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  quantity: number
+  abbreviation: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  valid: boolean
+  createdBy: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutUnitInput
+}
+
+export type UnitCreateOrConnectWithoutEmployee_Unit_deletedByToEmployeeInput = {
+  where: Prisma.UnitWhereUniqueInput
+  create: Prisma.XOR<Prisma.UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput, Prisma.UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput>
+}
+
+export type UnitCreateManyEmployee_Unit_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.UnitCreateManyEmployee_Unit_deletedByToEmployeeInput | Prisma.UnitCreateManyEmployee_Unit_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -587,6 +743,25 @@ export type UnitScalarWhereInput = {
   valid?: Prisma.BoolFilter<"Unit"> | boolean
   createdBy?: Prisma.StringFilter<"Unit"> | string
   createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
+  deleted?: Prisma.BoolFilter<"Unit"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Unit"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Unit"> | string | null
+}
+
+export type UnitUpsertWithWhereUniqueWithoutEmployee_Unit_deletedByToEmployeeInput = {
+  where: Prisma.UnitWhereUniqueInput
+  update: Prisma.XOR<Prisma.UnitUpdateWithoutEmployee_Unit_deletedByToEmployeeInput, Prisma.UnitUncheckedUpdateWithoutEmployee_Unit_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput, Prisma.UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput>
+}
+
+export type UnitUpdateWithWhereUniqueWithoutEmployee_Unit_deletedByToEmployeeInput = {
+  where: Prisma.UnitWhereUniqueInput
+  data: Prisma.XOR<Prisma.UnitUpdateWithoutEmployee_Unit_deletedByToEmployeeInput, Prisma.UnitUncheckedUpdateWithoutEmployee_Unit_deletedByToEmployeeInput>
+}
+
+export type UnitUpdateManyWithWhereWithoutEmployee_Unit_deletedByToEmployeeInput = {
+  where: Prisma.UnitScalarWhereInput
+  data: Prisma.XOR<Prisma.UnitUpdateManyMutationInput, Prisma.UnitUncheckedUpdateManyWithoutEmployee_Unit_deletedByToEmployeeInput>
 }
 
 export type UnitCreateWithoutMaterialInput = {
@@ -598,7 +773,10 @@ export type UnitCreateWithoutMaterialInput = {
   longDescription?: string | null
   valid: boolean
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutUnitInput
+  Employee_Unit_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutUnit_Unit_deletedByToEmployeeInput
 }
 
 export type UnitUncheckedCreateWithoutMaterialInput = {
@@ -611,6 +789,9 @@ export type UnitUncheckedCreateWithoutMaterialInput = {
   valid: boolean
   createdBy: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type UnitCreateOrConnectWithoutMaterialInput = {
@@ -638,7 +819,10 @@ export type UnitUpdateWithoutMaterialInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUnitNestedInput
+  Employee_Unit_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutUnit_Unit_deletedByToEmployeeNestedInput
 }
 
 export type UnitUncheckedUpdateWithoutMaterialInput = {
@@ -651,6 +835,9 @@ export type UnitUncheckedUpdateWithoutMaterialInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UnitCreateManyEmployeeInput = {
@@ -662,6 +849,23 @@ export type UnitCreateManyEmployeeInput = {
   longDescription?: string | null
   valid: boolean
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type UnitCreateManyEmployee_Unit_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  quantity: number
+  abbreviation: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  valid: boolean
+  createdBy: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type UnitUpdateWithoutEmployeeInput = {
@@ -673,7 +877,10 @@ export type UnitUpdateWithoutEmployeeInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Material?: Prisma.MaterialUpdateManyWithoutUnitNestedInput
+  Employee_Unit_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutUnit_Unit_deletedByToEmployeeNestedInput
 }
 
 export type UnitUncheckedUpdateWithoutEmployeeInput = {
@@ -685,6 +892,9 @@ export type UnitUncheckedUpdateWithoutEmployeeInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Material?: Prisma.MaterialUncheckedUpdateManyWithoutUnitNestedInput
 }
 
@@ -697,6 +907,53 @@ export type UnitUncheckedUpdateManyWithoutEmployeeInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type UnitUpdateWithoutEmployee_Unit_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Material?: Prisma.MaterialUpdateManyWithoutUnitNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUnitNestedInput
+}
+
+export type UnitUncheckedUpdateWithoutEmployee_Unit_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Material?: Prisma.MaterialUncheckedUpdateManyWithoutUnitNestedInput
+}
+
+export type UnitUncheckedUpdateManyWithoutEmployee_Unit_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -740,8 +997,12 @@ export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   valid?: boolean
   createdBy?: boolean
   createdAt?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Material?: boolean | Prisma.Unit$MaterialArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Unit_deletedByToEmployee?: boolean | Prisma.Unit$Employee_Unit_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.UnitCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["unit"]>
 
@@ -757,12 +1018,16 @@ export type UnitSelectScalar = {
   valid?: boolean
   createdBy?: boolean
   createdAt?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "quantity" | "abbreviation" | "shortDescription" | "longDescription" | "valid" | "createdBy" | "createdAt", ExtArgs["result"]["unit"]>
+export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "quantity" | "abbreviation" | "shortDescription" | "longDescription" | "valid" | "createdBy" | "createdAt" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["unit"]>
 export type UnitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Material?: boolean | Prisma.Unit$MaterialArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Unit_deletedByToEmployee?: boolean | Prisma.Unit$Employee_Unit_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.UnitCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -771,6 +1036,7 @@ export type $UnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     Material: Prisma.$MaterialPayload<ExtArgs>[]
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_Unit_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -782,6 +1048,9 @@ export type $UnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     valid: boolean
     createdBy: string
     createdAt: Date
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["unit"]>
   composites: {}
 }
@@ -1124,6 +1393,7 @@ export interface Prisma__UnitClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Material<T extends Prisma.Unit$MaterialArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$MaterialArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_Unit_deletedByToEmployee<T extends Prisma.Unit$Employee_Unit_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$Employee_Unit_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1162,6 +1432,9 @@ export interface UnitFieldRefs {
   readonly valid: Prisma.FieldRef<"Unit", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"Unit", 'String'>
   readonly createdAt: Prisma.FieldRef<"Unit", 'DateTime'>
+  readonly deleted: Prisma.FieldRef<"Unit", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Unit", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"Unit", 'String'>
 }
     
 
@@ -1526,6 +1799,25 @@ export type Unit$MaterialArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.MaterialScalarFieldEnum | Prisma.MaterialScalarFieldEnum[]
+}
+
+/**
+ * Unit.Employee_Unit_deletedByToEmployee
+ */
+export type Unit$Employee_Unit_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

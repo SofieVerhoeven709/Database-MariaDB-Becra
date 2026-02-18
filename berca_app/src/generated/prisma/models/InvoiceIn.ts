@@ -64,6 +64,9 @@ export type InvoiceInMinAggregateOutputType = {
   createdBy: string | null
   invoiceTypeId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type InvoiceInMaxAggregateOutputType = {
@@ -94,6 +97,9 @@ export type InvoiceInMaxAggregateOutputType = {
   createdBy: string | null
   invoiceTypeId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type InvoiceInCountAggregateOutputType = {
@@ -124,6 +130,9 @@ export type InvoiceInCountAggregateOutputType = {
   createdBy: number
   invoiceTypeId: number
   targetId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -166,6 +175,9 @@ export type InvoiceInMinAggregateInputType = {
   createdBy?: true
   invoiceTypeId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type InvoiceInMaxAggregateInputType = {
@@ -196,6 +208,9 @@ export type InvoiceInMaxAggregateInputType = {
   createdBy?: true
   invoiceTypeId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type InvoiceInCountAggregateInputType = {
@@ -226,6 +241,9 @@ export type InvoiceInCountAggregateInputType = {
   createdBy?: true
   invoiceTypeId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -343,6 +361,9 @@ export type InvoiceInGroupByOutputType = {
   createdBy: string
   invoiceTypeId: string
   targetId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: InvoiceInCountAggregateOutputType | null
   _avg: InvoiceInAvgAggregateOutputType | null
   _sum: InvoiceInSumAggregateOutputType | null
@@ -396,9 +417,13 @@ export type InvoiceInWhereInput = {
   createdBy?: Prisma.StringFilter<"InvoiceIn"> | string
   invoiceTypeId?: Prisma.StringFilter<"InvoiceIn"> | string
   targetId?: Prisma.StringFilter<"InvoiceIn"> | string
+  deleted?: Prisma.BoolFilter<"InvoiceIn"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"InvoiceIn"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"InvoiceIn"> | string | null
   InvoiceType?: Prisma.XOR<Prisma.InvoiceTypeScalarRelationFilter, Prisma.InvoiceTypeWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   InvoiceInTarget?: Prisma.InvoiceInTargetListRelationFilter
 }
 
@@ -430,9 +455,13 @@ export type InvoiceInOrderByWithRelationInput = {
   createdBy?: Prisma.SortOrder
   invoiceTypeId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   InvoiceType?: Prisma.InvoiceTypeOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   InvoiceInTarget?: Prisma.InvoiceInTargetOrderByRelationAggregateInput
   _relevance?: Prisma.InvoiceInOrderByRelevanceInput
 }
@@ -468,9 +497,13 @@ export type InvoiceInWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.StringFilter<"InvoiceIn"> | string
   invoiceTypeId?: Prisma.StringFilter<"InvoiceIn"> | string
   targetId?: Prisma.StringFilter<"InvoiceIn"> | string
+  deleted?: Prisma.BoolFilter<"InvoiceIn"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"InvoiceIn"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"InvoiceIn"> | string | null
   InvoiceType?: Prisma.XOR<Prisma.InvoiceTypeScalarRelationFilter, Prisma.InvoiceTypeWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   InvoiceInTarget?: Prisma.InvoiceInTargetListRelationFilter
 }, "id">
 
@@ -502,6 +535,9 @@ export type InvoiceInOrderByWithAggregationInput = {
   createdBy?: Prisma.SortOrder
   invoiceTypeId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.InvoiceInCountOrderByAggregateInput
   _avg?: Prisma.InvoiceInAvgOrderByAggregateInput
   _max?: Prisma.InvoiceInMaxOrderByAggregateInput
@@ -540,6 +576,9 @@ export type InvoiceInScalarWhereWithAggregatesInput = {
   createdBy?: Prisma.StringWithAggregatesFilter<"InvoiceIn"> | string
   invoiceTypeId?: Prisma.StringWithAggregatesFilter<"InvoiceIn"> | string
   targetId?: Prisma.StringWithAggregatesFilter<"InvoiceIn"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"InvoiceIn"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"InvoiceIn"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"InvoiceIn"> | string | null
 }
 
 export type InvoiceInCreateInput = {
@@ -567,9 +606,12 @@ export type InvoiceInCreateInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceInInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceInInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceInInput
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutInvoiceInInput
 }
 
@@ -601,6 +643,9 @@ export type InvoiceInUncheckedCreateInput = {
   createdBy: string
   invoiceTypeId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutInvoiceInInput
 }
 
@@ -629,9 +674,12 @@ export type InvoiceInUpdateInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceInNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceInNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceInNestedInput
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutInvoiceInNestedInput
 }
 
@@ -663,6 +711,9 @@ export type InvoiceInUncheckedUpdateInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutInvoiceInNestedInput
 }
 
@@ -694,6 +745,9 @@ export type InvoiceInCreateManyInput = {
   createdBy: string
   invoiceTypeId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type InvoiceInUpdateManyMutationInput = {
@@ -721,6 +775,8 @@ export type InvoiceInUpdateManyMutationInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InvoiceInUncheckedUpdateManyInput = {
@@ -751,6 +807,9 @@ export type InvoiceInUncheckedUpdateManyInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type InvoiceInListRelationFilter = {
@@ -797,6 +856,9 @@ export type InvoiceInCountOrderByAggregateInput = {
   createdBy?: Prisma.SortOrder
   invoiceTypeId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type InvoiceInAvgOrderByAggregateInput = {
@@ -832,6 +894,9 @@ export type InvoiceInMaxOrderByAggregateInput = {
   createdBy?: Prisma.SortOrder
   invoiceTypeId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type InvoiceInMinOrderByAggregateInput = {
@@ -862,6 +927,9 @@ export type InvoiceInMinOrderByAggregateInput = {
   createdBy?: Prisma.SortOrder
   invoiceTypeId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type InvoiceInSumOrderByAggregateInput = {
@@ -881,10 +949,24 @@ export type InvoiceInCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
 }
 
+export type InvoiceInCreateNestedManyWithoutEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.InvoiceInCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput, Prisma.InvoiceInUncheckedCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput> | Prisma.InvoiceInCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[] | Prisma.InvoiceInUncheckedCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.InvoiceInCreateOrConnectWithoutEmployee_InvoiceIn_deletedByToEmployeeInput | Prisma.InvoiceInCreateOrConnectWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  createMany?: Prisma.InvoiceInCreateManyEmployee_InvoiceIn_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
+}
+
 export type InvoiceInUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.InvoiceInCreateWithoutEmployeeInput, Prisma.InvoiceInUncheckedCreateWithoutEmployeeInput> | Prisma.InvoiceInCreateWithoutEmployeeInput[] | Prisma.InvoiceInUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.InvoiceInCreateOrConnectWithoutEmployeeInput | Prisma.InvoiceInCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.InvoiceInCreateManyEmployeeInputEnvelope
+  connect?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
+}
+
+export type InvoiceInUncheckedCreateNestedManyWithoutEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.InvoiceInCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput, Prisma.InvoiceInUncheckedCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput> | Prisma.InvoiceInCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[] | Prisma.InvoiceInUncheckedCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.InvoiceInCreateOrConnectWithoutEmployee_InvoiceIn_deletedByToEmployeeInput | Prisma.InvoiceInCreateOrConnectWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  createMany?: Prisma.InvoiceInCreateManyEmployee_InvoiceIn_deletedByToEmployeeInputEnvelope
   connect?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
 }
 
@@ -902,6 +984,20 @@ export type InvoiceInUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.InvoiceInScalarWhereInput | Prisma.InvoiceInScalarWhereInput[]
 }
 
+export type InvoiceInUpdateManyWithoutEmployee_InvoiceIn_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceInCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput, Prisma.InvoiceInUncheckedCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput> | Prisma.InvoiceInCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[] | Prisma.InvoiceInUncheckedCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.InvoiceInCreateOrConnectWithoutEmployee_InvoiceIn_deletedByToEmployeeInput | Prisma.InvoiceInCreateOrConnectWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  upsert?: Prisma.InvoiceInUpsertWithWhereUniqueWithoutEmployee_InvoiceIn_deletedByToEmployeeInput | Prisma.InvoiceInUpsertWithWhereUniqueWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  createMany?: Prisma.InvoiceInCreateManyEmployee_InvoiceIn_deletedByToEmployeeInputEnvelope
+  set?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
+  disconnect?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
+  delete?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
+  connect?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
+  update?: Prisma.InvoiceInUpdateWithWhereUniqueWithoutEmployee_InvoiceIn_deletedByToEmployeeInput | Prisma.InvoiceInUpdateWithWhereUniqueWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  updateMany?: Prisma.InvoiceInUpdateManyWithWhereWithoutEmployee_InvoiceIn_deletedByToEmployeeInput | Prisma.InvoiceInUpdateManyWithWhereWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.InvoiceInScalarWhereInput | Prisma.InvoiceInScalarWhereInput[]
+}
+
 export type InvoiceInUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.InvoiceInCreateWithoutEmployeeInput, Prisma.InvoiceInUncheckedCreateWithoutEmployeeInput> | Prisma.InvoiceInCreateWithoutEmployeeInput[] | Prisma.InvoiceInUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.InvoiceInCreateOrConnectWithoutEmployeeInput | Prisma.InvoiceInCreateOrConnectWithoutEmployeeInput[]
@@ -913,6 +1009,20 @@ export type InvoiceInUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
   update?: Prisma.InvoiceInUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.InvoiceInUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.InvoiceInUpdateManyWithWhereWithoutEmployeeInput | Prisma.InvoiceInUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.InvoiceInScalarWhereInput | Prisma.InvoiceInScalarWhereInput[]
+}
+
+export type InvoiceInUncheckedUpdateManyWithoutEmployee_InvoiceIn_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceInCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput, Prisma.InvoiceInUncheckedCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput> | Prisma.InvoiceInCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[] | Prisma.InvoiceInUncheckedCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.InvoiceInCreateOrConnectWithoutEmployee_InvoiceIn_deletedByToEmployeeInput | Prisma.InvoiceInCreateOrConnectWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  upsert?: Prisma.InvoiceInUpsertWithWhereUniqueWithoutEmployee_InvoiceIn_deletedByToEmployeeInput | Prisma.InvoiceInUpsertWithWhereUniqueWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  createMany?: Prisma.InvoiceInCreateManyEmployee_InvoiceIn_deletedByToEmployeeInputEnvelope
+  set?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
+  disconnect?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
+  delete?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
+  connect?: Prisma.InvoiceInWhereUniqueInput | Prisma.InvoiceInWhereUniqueInput[]
+  update?: Prisma.InvoiceInUpdateWithWhereUniqueWithoutEmployee_InvoiceIn_deletedByToEmployeeInput | Prisma.InvoiceInUpdateWithWhereUniqueWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
+  updateMany?: Prisma.InvoiceInUpdateManyWithWhereWithoutEmployee_InvoiceIn_deletedByToEmployeeInput | Prisma.InvoiceInUpdateManyWithWhereWithoutEmployee_InvoiceIn_deletedByToEmployeeInput[]
   deleteMany?: Prisma.InvoiceInScalarWhereInput | Prisma.InvoiceInScalarWhereInput[]
 }
 
@@ -1047,8 +1157,11 @@ export type InvoiceInCreateWithoutEmployeeInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceInInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceInInput
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutInvoiceInInput
 }
 
@@ -1079,6 +1192,9 @@ export type InvoiceInUncheckedCreateWithoutEmployeeInput = {
   private?: boolean
   invoiceTypeId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutInvoiceInInput
 }
 
@@ -1089,6 +1205,82 @@ export type InvoiceInCreateOrConnectWithoutEmployeeInput = {
 
 export type InvoiceInCreateManyEmployeeInputEnvelope = {
   data: Prisma.InvoiceInCreateManyEmployeeInput | Prisma.InvoiceInCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type InvoiceInCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  id: string
+  invoiceNumber?: string | null
+  invoiceDate: Date | string
+  expireDate: Date | string
+  payDate?: Date | string | null
+  invoiceReference?: string | null
+  invoiceOutAttachement?: string | null
+  deliveryNote?: string | null
+  purchaseOrder?: string | null
+  transactionNumber?: string | null
+  info?: string | null
+  deliveryInvoiceCode?: string | null
+  vatMargin: number
+  amountWithoutVat: number
+  deliveryBonDate?: Date | string | null
+  deliveryBon?: string | null
+  remark?: string | null
+  createdAt: Date | string
+  completed?: boolean
+  masterCard?: boolean
+  cash?: boolean
+  bankContact?: boolean
+  expectedInvoice?: boolean
+  private?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceInInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceInInput
+  Target: Prisma.TargetCreateNestedOneWithoutInvoiceInInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutInvoiceInInput
+}
+
+export type InvoiceInUncheckedCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  id: string
+  invoiceNumber?: string | null
+  invoiceDate: Date | string
+  expireDate: Date | string
+  payDate?: Date | string | null
+  invoiceReference?: string | null
+  invoiceOutAttachement?: string | null
+  deliveryNote?: string | null
+  purchaseOrder?: string | null
+  transactionNumber?: string | null
+  info?: string | null
+  deliveryInvoiceCode?: string | null
+  vatMargin: number
+  amountWithoutVat: number
+  deliveryBonDate?: Date | string | null
+  deliveryBon?: string | null
+  remark?: string | null
+  createdAt: Date | string
+  completed?: boolean
+  masterCard?: boolean
+  cash?: boolean
+  bankContact?: boolean
+  expectedInvoice?: boolean
+  private?: boolean
+  createdBy: string
+  invoiceTypeId: string
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutInvoiceInInput
+}
+
+export type InvoiceInCreateOrConnectWithoutEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  where: Prisma.InvoiceInWhereUniqueInput
+  create: Prisma.XOR<Prisma.InvoiceInCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput, Prisma.InvoiceInUncheckedCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput>
+}
+
+export type InvoiceInCreateManyEmployee_InvoiceIn_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.InvoiceInCreateManyEmployee_InvoiceIn_deletedByToEmployeeInput | Prisma.InvoiceInCreateManyEmployee_InvoiceIn_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -1139,6 +1331,25 @@ export type InvoiceInScalarWhereInput = {
   createdBy?: Prisma.StringFilter<"InvoiceIn"> | string
   invoiceTypeId?: Prisma.StringFilter<"InvoiceIn"> | string
   targetId?: Prisma.StringFilter<"InvoiceIn"> | string
+  deleted?: Prisma.BoolFilter<"InvoiceIn"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"InvoiceIn"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"InvoiceIn"> | string | null
+}
+
+export type InvoiceInUpsertWithWhereUniqueWithoutEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  where: Prisma.InvoiceInWhereUniqueInput
+  update: Prisma.XOR<Prisma.InvoiceInUpdateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput, Prisma.InvoiceInUncheckedUpdateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.InvoiceInCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput, Prisma.InvoiceInUncheckedCreateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput>
+}
+
+export type InvoiceInUpdateWithWhereUniqueWithoutEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  where: Prisma.InvoiceInWhereUniqueInput
+  data: Prisma.XOR<Prisma.InvoiceInUpdateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput, Prisma.InvoiceInUncheckedUpdateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput>
+}
+
+export type InvoiceInUpdateManyWithWhereWithoutEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  where: Prisma.InvoiceInScalarWhereInput
+  data: Prisma.XOR<Prisma.InvoiceInUpdateManyMutationInput, Prisma.InvoiceInUncheckedUpdateManyWithoutEmployee_InvoiceIn_deletedByToEmployeeInput>
 }
 
 export type InvoiceInCreateWithoutInvoiceInTargetInput = {
@@ -1166,9 +1377,12 @@ export type InvoiceInCreateWithoutInvoiceInTargetInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceInInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceInInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceInInput
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeInput
 }
 
 export type InvoiceInUncheckedCreateWithoutInvoiceInTargetInput = {
@@ -1199,6 +1413,9 @@ export type InvoiceInUncheckedCreateWithoutInvoiceInTargetInput = {
   createdBy: string
   invoiceTypeId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type InvoiceInCreateOrConnectWithoutInvoiceInTargetInput = {
@@ -1242,9 +1459,12 @@ export type InvoiceInUpdateWithoutInvoiceInTargetInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceInNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceInNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceInNestedInput
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeNestedInput
 }
 
 export type InvoiceInUncheckedUpdateWithoutInvoiceInTargetInput = {
@@ -1275,6 +1495,9 @@ export type InvoiceInUncheckedUpdateWithoutInvoiceInTargetInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type InvoiceInCreateWithoutInvoiceTypeInput = {
@@ -1302,8 +1525,11 @@ export type InvoiceInCreateWithoutInvoiceTypeInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceInInput
   Target: Prisma.TargetCreateNestedOneWithoutInvoiceInInput
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutInvoiceInInput
 }
 
@@ -1334,6 +1560,9 @@ export type InvoiceInUncheckedCreateWithoutInvoiceTypeInput = {
   private?: boolean
   createdBy: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutInvoiceInInput
 }
 
@@ -1388,8 +1617,11 @@ export type InvoiceInCreateWithoutTargetInput = {
   bankContact?: boolean
   expectedInvoice?: boolean
   private?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   InvoiceType: Prisma.InvoiceTypeCreateNestedOneWithoutInvoiceInInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInvoiceInInput
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutInvoiceInInput
 }
 
@@ -1420,6 +1652,9 @@ export type InvoiceInUncheckedCreateWithoutTargetInput = {
   private?: boolean
   createdBy: string
   invoiceTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutInvoiceInInput
 }
 
@@ -1476,6 +1711,41 @@ export type InvoiceInCreateManyEmployeeInput = {
   private?: boolean
   invoiceTypeId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type InvoiceInCreateManyEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  id: string
+  invoiceNumber?: string | null
+  invoiceDate: Date | string
+  expireDate: Date | string
+  payDate?: Date | string | null
+  invoiceReference?: string | null
+  invoiceOutAttachement?: string | null
+  deliveryNote?: string | null
+  purchaseOrder?: string | null
+  transactionNumber?: string | null
+  info?: string | null
+  deliveryInvoiceCode?: string | null
+  vatMargin: number
+  amountWithoutVat: number
+  deliveryBonDate?: Date | string | null
+  deliveryBon?: string | null
+  remark?: string | null
+  createdAt: Date | string
+  completed?: boolean
+  masterCard?: boolean
+  cash?: boolean
+  bankContact?: boolean
+  expectedInvoice?: boolean
+  private?: boolean
+  createdBy: string
+  invoiceTypeId: string
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type InvoiceInUpdateWithoutEmployeeInput = {
@@ -1503,8 +1773,11 @@ export type InvoiceInUpdateWithoutEmployeeInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceInNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceInNestedInput
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutInvoiceInNestedInput
 }
 
@@ -1535,6 +1808,9 @@ export type InvoiceInUncheckedUpdateWithoutEmployeeInput = {
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutInvoiceInNestedInput
 }
 
@@ -1565,6 +1841,107 @@ export type InvoiceInUncheckedUpdateManyWithoutEmployeeInput = {
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type InvoiceInUpdateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceOutAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountWithoutVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  deliveryBonDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryBon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  masterCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cash?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  private?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceInNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceInNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceInNestedInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutInvoiceInNestedInput
+}
+
+export type InvoiceInUncheckedUpdateWithoutEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceOutAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountWithoutVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  deliveryBonDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryBon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  masterCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cash?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  private?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutInvoiceInNestedInput
+}
+
+export type InvoiceInUncheckedUpdateManyWithoutEmployee_InvoiceIn_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceOutAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountWithoutVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  deliveryBonDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryBon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  masterCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  cash?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  private?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InvoiceInCreateManyInvoiceTypeInput = {
@@ -1594,6 +1971,9 @@ export type InvoiceInCreateManyInvoiceTypeInput = {
   private?: boolean
   createdBy: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type InvoiceInUpdateWithoutInvoiceTypeInput = {
@@ -1621,8 +2001,11 @@ export type InvoiceInUpdateWithoutInvoiceTypeInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceInNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutInvoiceInNestedInput
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutInvoiceInNestedInput
 }
 
@@ -1653,6 +2036,9 @@ export type InvoiceInUncheckedUpdateWithoutInvoiceTypeInput = {
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutInvoiceInNestedInput
 }
 
@@ -1683,6 +2069,9 @@ export type InvoiceInUncheckedUpdateManyWithoutInvoiceTypeInput = {
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type InvoiceInCreateManyTargetInput = {
@@ -1712,6 +2101,9 @@ export type InvoiceInCreateManyTargetInput = {
   private?: boolean
   createdBy: string
   invoiceTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type InvoiceInUpdateWithoutTargetInput = {
@@ -1739,8 +2131,11 @@ export type InvoiceInUpdateWithoutTargetInput = {
   bankContact?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expectedInvoice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InvoiceType?: Prisma.InvoiceTypeUpdateOneRequiredWithoutInvoiceInNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceInNestedInput
+  Employee_InvoiceIn_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceIn_InvoiceIn_deletedByToEmployeeNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutInvoiceInNestedInput
 }
 
@@ -1771,6 +2166,9 @@ export type InvoiceInUncheckedUpdateWithoutTargetInput = {
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutInvoiceInNestedInput
 }
 
@@ -1801,6 +2199,9 @@ export type InvoiceInUncheckedUpdateManyWithoutTargetInput = {
   private?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1862,9 +2263,13 @@ export type InvoiceInSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   createdBy?: boolean
   invoiceTypeId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   InvoiceType?: boolean | Prisma.InvoiceTypeDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee_InvoiceIn_deletedByToEmployee?: boolean | Prisma.InvoiceIn$Employee_InvoiceIn_deletedByToEmployeeArgs<ExtArgs>
   InvoiceInTarget?: boolean | Prisma.InvoiceIn$InvoiceInTargetArgs<ExtArgs>
   _count?: boolean | Prisma.InvoiceInCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["invoiceIn"]>
@@ -1899,13 +2304,17 @@ export type InvoiceInSelectScalar = {
   createdBy?: boolean
   invoiceTypeId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type InvoiceInOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "invoiceDate" | "expireDate" | "payDate" | "invoiceReference" | "invoiceOutAttachement" | "deliveryNote" | "purchaseOrder" | "transactionNumber" | "info" | "deliveryInvoiceCode" | "vatMargin" | "amountWithoutVat" | "deliveryBonDate" | "deliveryBon" | "remark" | "createdAt" | "completed" | "masterCard" | "cash" | "bankContact" | "expectedInvoice" | "private" | "createdBy" | "invoiceTypeId" | "targetId", ExtArgs["result"]["invoiceIn"]>
+export type InvoiceInOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "invoiceDate" | "expireDate" | "payDate" | "invoiceReference" | "invoiceOutAttachement" | "deliveryNote" | "purchaseOrder" | "transactionNumber" | "info" | "deliveryInvoiceCode" | "vatMargin" | "amountWithoutVat" | "deliveryBonDate" | "deliveryBon" | "remark" | "createdAt" | "completed" | "masterCard" | "cash" | "bankContact" | "expectedInvoice" | "private" | "createdBy" | "invoiceTypeId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["invoiceIn"]>
 export type InvoiceInInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   InvoiceType?: boolean | Prisma.InvoiceTypeDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee_InvoiceIn_deletedByToEmployee?: boolean | Prisma.InvoiceIn$Employee_InvoiceIn_deletedByToEmployeeArgs<ExtArgs>
   InvoiceInTarget?: boolean | Prisma.InvoiceIn$InvoiceInTargetArgs<ExtArgs>
   _count?: boolean | Prisma.InvoiceInCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1916,6 +2325,7 @@ export type $InvoiceInPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     InvoiceType: Prisma.$InvoiceTypePayload<ExtArgs>
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Target: Prisma.$TargetPayload<ExtArgs>
+    Employee_InvoiceIn_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     InvoiceInTarget: Prisma.$InvoiceInTargetPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1946,6 +2356,9 @@ export type $InvoiceInPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     createdBy: string
     invoiceTypeId: string
     targetId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["invoiceIn"]>
   composites: {}
 }
@@ -2289,6 +2702,7 @@ export interface Prisma__InvoiceInClient<T, Null = never, ExtArgs extends runtim
   InvoiceType<T extends Prisma.InvoiceTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__InvoiceTypeClient<runtime.Types.Result.GetResult<Prisma.$InvoiceTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_InvoiceIn_deletedByToEmployee<T extends Prisma.InvoiceIn$Employee_InvoiceIn_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceIn$Employee_InvoiceIn_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   InvoiceInTarget<T extends Prisma.InvoiceIn$InvoiceInTargetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceIn$InvoiceInTargetArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceInTargetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2346,6 +2760,9 @@ export interface InvoiceInFieldRefs {
   readonly createdBy: Prisma.FieldRef<"InvoiceIn", 'String'>
   readonly invoiceTypeId: Prisma.FieldRef<"InvoiceIn", 'String'>
   readonly targetId: Prisma.FieldRef<"InvoiceIn", 'String'>
+  readonly deleted: Prisma.FieldRef<"InvoiceIn", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"InvoiceIn", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"InvoiceIn", 'String'>
 }
     
 
@@ -2686,6 +3103,25 @@ export type InvoiceInDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many InvoiceIns to delete.
    */
   limit?: number
+}
+
+/**
+ * InvoiceIn.Employee_InvoiceIn_deletedByToEmployee
+ */
+export type InvoiceIn$Employee_InvoiceIn_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

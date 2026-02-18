@@ -31,6 +31,9 @@ export type TestProcedureMinAggregateOutputType = {
   longDescription: string | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TestProcedureMaxAggregateOutputType = {
@@ -40,6 +43,9 @@ export type TestProcedureMaxAggregateOutputType = {
   longDescription: string | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TestProcedureCountAggregateOutputType = {
@@ -49,6 +55,9 @@ export type TestProcedureCountAggregateOutputType = {
   longDescription: number
   createdAt: number
   createdBy: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -60,6 +69,9 @@ export type TestProcedureMinAggregateInputType = {
   longDescription?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TestProcedureMaxAggregateInputType = {
@@ -69,6 +81,9 @@ export type TestProcedureMaxAggregateInputType = {
   longDescription?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TestProcedureCountAggregateInputType = {
@@ -78,6 +93,9 @@ export type TestProcedureCountAggregateInputType = {
   longDescription?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -160,6 +178,9 @@ export type TestProcedureGroupByOutputType = {
   longDescription: string | null
   createdAt: Date
   createdBy: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: TestProcedureCountAggregateOutputType | null
   _min: TestProcedureMinAggregateOutputType | null
   _max: TestProcedureMaxAggregateOutputType | null
@@ -190,7 +211,11 @@ export type TestProcedureWhereInput = {
   longDescription?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TestProcedure"> | Date | string
   createdBy?: Prisma.StringFilter<"TestProcedure"> | string
+  deleted?: Prisma.BoolFilter<"TestProcedure"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TestProcedure"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_TestProcedure_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type TestProcedureOrderByWithRelationInput = {
@@ -200,7 +225,11 @@ export type TestProcedureOrderByWithRelationInput = {
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_TestProcedure_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.TestProcedureOrderByRelevanceInput
 }
 
@@ -214,7 +243,11 @@ export type TestProcedureWhereUniqueInput = Prisma.AtLeast<{
   longDescription?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TestProcedure"> | Date | string
   createdBy?: Prisma.StringFilter<"TestProcedure"> | string
+  deleted?: Prisma.BoolFilter<"TestProcedure"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TestProcedure"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_TestProcedure_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type TestProcedureOrderByWithAggregationInput = {
@@ -224,6 +257,9 @@ export type TestProcedureOrderByWithAggregationInput = {
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TestProcedureCountOrderByAggregateInput
   _max?: Prisma.TestProcedureMaxOrderByAggregateInput
   _min?: Prisma.TestProcedureMinOrderByAggregateInput
@@ -239,6 +275,9 @@ export type TestProcedureScalarWhereWithAggregatesInput = {
   longDescription?: Prisma.StringNullableWithAggregatesFilter<"TestProcedure"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TestProcedure"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"TestProcedure"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"TestProcedure"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TestProcedure"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"TestProcedure"> | string | null
 }
 
 export type TestProcedureCreateInput = {
@@ -247,7 +286,10 @@ export type TestProcedureCreateInput = {
   shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTestProcedureInput
+  Employee_TestProcedure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTestProcedure_TestProcedure_deletedByToEmployeeInput
 }
 
 export type TestProcedureUncheckedCreateInput = {
@@ -257,6 +299,9 @@ export type TestProcedureUncheckedCreateInput = {
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TestProcedureUpdateInput = {
@@ -265,7 +310,10 @@ export type TestProcedureUpdateInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTestProcedureNestedInput
+  Employee_TestProcedure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTestProcedure_TestProcedure_deletedByToEmployeeNestedInput
 }
 
 export type TestProcedureUncheckedUpdateInput = {
@@ -275,6 +323,9 @@ export type TestProcedureUncheckedUpdateInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TestProcedureCreateManyInput = {
@@ -284,6 +335,9 @@ export type TestProcedureCreateManyInput = {
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TestProcedureUpdateManyMutationInput = {
@@ -292,6 +346,8 @@ export type TestProcedureUpdateManyMutationInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TestProcedureUncheckedUpdateManyInput = {
@@ -301,6 +357,9 @@ export type TestProcedureUncheckedUpdateManyInput = {
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TestProcedureListRelationFilter = {
@@ -326,6 +385,9 @@ export type TestProcedureCountOrderByAggregateInput = {
   longDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TestProcedureMaxOrderByAggregateInput = {
@@ -335,6 +397,9 @@ export type TestProcedureMaxOrderByAggregateInput = {
   longDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TestProcedureMinOrderByAggregateInput = {
@@ -344,6 +409,9 @@ export type TestProcedureMinOrderByAggregateInput = {
   longDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TestProcedureCreateNestedManyWithoutEmployeeInput = {
@@ -353,10 +421,24 @@ export type TestProcedureCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
 }
 
+export type TestProcedureCreateNestedManyWithoutEmployee_TestProcedure_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TestProcedureCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput, Prisma.TestProcedureUncheckedCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput> | Prisma.TestProcedureCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput[] | Prisma.TestProcedureUncheckedCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TestProcedureCreateOrConnectWithoutEmployee_TestProcedure_deletedByToEmployeeInput | Prisma.TestProcedureCreateOrConnectWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  createMany?: Prisma.TestProcedureCreateManyEmployee_TestProcedure_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
+}
+
 export type TestProcedureUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.TestProcedureCreateWithoutEmployeeInput, Prisma.TestProcedureUncheckedCreateWithoutEmployeeInput> | Prisma.TestProcedureCreateWithoutEmployeeInput[] | Prisma.TestProcedureUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TestProcedureCreateOrConnectWithoutEmployeeInput | Prisma.TestProcedureCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.TestProcedureCreateManyEmployeeInputEnvelope
+  connect?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
+}
+
+export type TestProcedureUncheckedCreateNestedManyWithoutEmployee_TestProcedure_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TestProcedureCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput, Prisma.TestProcedureUncheckedCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput> | Prisma.TestProcedureCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput[] | Prisma.TestProcedureUncheckedCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TestProcedureCreateOrConnectWithoutEmployee_TestProcedure_deletedByToEmployeeInput | Prisma.TestProcedureCreateOrConnectWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  createMany?: Prisma.TestProcedureCreateManyEmployee_TestProcedure_deletedByToEmployeeInputEnvelope
   connect?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
 }
 
@@ -374,6 +456,20 @@ export type TestProcedureUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.TestProcedureScalarWhereInput | Prisma.TestProcedureScalarWhereInput[]
 }
 
+export type TestProcedureUpdateManyWithoutEmployee_TestProcedure_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TestProcedureCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput, Prisma.TestProcedureUncheckedCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput> | Prisma.TestProcedureCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput[] | Prisma.TestProcedureUncheckedCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TestProcedureCreateOrConnectWithoutEmployee_TestProcedure_deletedByToEmployeeInput | Prisma.TestProcedureCreateOrConnectWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  upsert?: Prisma.TestProcedureUpsertWithWhereUniqueWithoutEmployee_TestProcedure_deletedByToEmployeeInput | Prisma.TestProcedureUpsertWithWhereUniqueWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  createMany?: Prisma.TestProcedureCreateManyEmployee_TestProcedure_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
+  disconnect?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
+  delete?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
+  connect?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
+  update?: Prisma.TestProcedureUpdateWithWhereUniqueWithoutEmployee_TestProcedure_deletedByToEmployeeInput | Prisma.TestProcedureUpdateWithWhereUniqueWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TestProcedureUpdateManyWithWhereWithoutEmployee_TestProcedure_deletedByToEmployeeInput | Prisma.TestProcedureUpdateManyWithWhereWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.TestProcedureScalarWhereInput | Prisma.TestProcedureScalarWhereInput[]
+}
+
 export type TestProcedureUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.TestProcedureCreateWithoutEmployeeInput, Prisma.TestProcedureUncheckedCreateWithoutEmployeeInput> | Prisma.TestProcedureCreateWithoutEmployeeInput[] | Prisma.TestProcedureUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TestProcedureCreateOrConnectWithoutEmployeeInput | Prisma.TestProcedureCreateOrConnectWithoutEmployeeInput[]
@@ -388,12 +484,29 @@ export type TestProcedureUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.TestProcedureScalarWhereInput | Prisma.TestProcedureScalarWhereInput[]
 }
 
+export type TestProcedureUncheckedUpdateManyWithoutEmployee_TestProcedure_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TestProcedureCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput, Prisma.TestProcedureUncheckedCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput> | Prisma.TestProcedureCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput[] | Prisma.TestProcedureUncheckedCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TestProcedureCreateOrConnectWithoutEmployee_TestProcedure_deletedByToEmployeeInput | Prisma.TestProcedureCreateOrConnectWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  upsert?: Prisma.TestProcedureUpsertWithWhereUniqueWithoutEmployee_TestProcedure_deletedByToEmployeeInput | Prisma.TestProcedureUpsertWithWhereUniqueWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  createMany?: Prisma.TestProcedureCreateManyEmployee_TestProcedure_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
+  disconnect?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
+  delete?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
+  connect?: Prisma.TestProcedureWhereUniqueInput | Prisma.TestProcedureWhereUniqueInput[]
+  update?: Prisma.TestProcedureUpdateWithWhereUniqueWithoutEmployee_TestProcedure_deletedByToEmployeeInput | Prisma.TestProcedureUpdateWithWhereUniqueWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TestProcedureUpdateManyWithWhereWithoutEmployee_TestProcedure_deletedByToEmployeeInput | Prisma.TestProcedureUpdateManyWithWhereWithoutEmployee_TestProcedure_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.TestProcedureScalarWhereInput | Prisma.TestProcedureScalarWhereInput[]
+}
+
 export type TestProcedureCreateWithoutEmployeeInput = {
   id: string
   name?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee_TestProcedure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTestProcedure_TestProcedure_deletedByToEmployeeInput
 }
 
 export type TestProcedureUncheckedCreateWithoutEmployeeInput = {
@@ -402,6 +515,9 @@ export type TestProcedureUncheckedCreateWithoutEmployeeInput = {
   shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TestProcedureCreateOrConnectWithoutEmployeeInput = {
@@ -411,6 +527,38 @@ export type TestProcedureCreateOrConnectWithoutEmployeeInput = {
 
 export type TestProcedureCreateManyEmployeeInputEnvelope = {
   data: Prisma.TestProcedureCreateManyEmployeeInput | Prisma.TestProcedureCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type TestProcedureCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput = {
+  id: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutTestProcedureInput
+}
+
+export type TestProcedureUncheckedCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput = {
+  id: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type TestProcedureCreateOrConnectWithoutEmployee_TestProcedure_deletedByToEmployeeInput = {
+  where: Prisma.TestProcedureWhereUniqueInput
+  create: Prisma.XOR<Prisma.TestProcedureCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput, Prisma.TestProcedureUncheckedCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput>
+}
+
+export type TestProcedureCreateManyEmployee_TestProcedure_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.TestProcedureCreateManyEmployee_TestProcedure_deletedByToEmployeeInput | Prisma.TestProcedureCreateManyEmployee_TestProcedure_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -440,6 +588,25 @@ export type TestProcedureScalarWhereInput = {
   longDescription?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TestProcedure"> | Date | string
   createdBy?: Prisma.StringFilter<"TestProcedure"> | string
+  deleted?: Prisma.BoolFilter<"TestProcedure"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TestProcedure"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TestProcedure"> | string | null
+}
+
+export type TestProcedureUpsertWithWhereUniqueWithoutEmployee_TestProcedure_deletedByToEmployeeInput = {
+  where: Prisma.TestProcedureWhereUniqueInput
+  update: Prisma.XOR<Prisma.TestProcedureUpdateWithoutEmployee_TestProcedure_deletedByToEmployeeInput, Prisma.TestProcedureUncheckedUpdateWithoutEmployee_TestProcedure_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.TestProcedureCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput, Prisma.TestProcedureUncheckedCreateWithoutEmployee_TestProcedure_deletedByToEmployeeInput>
+}
+
+export type TestProcedureUpdateWithWhereUniqueWithoutEmployee_TestProcedure_deletedByToEmployeeInput = {
+  where: Prisma.TestProcedureWhereUniqueInput
+  data: Prisma.XOR<Prisma.TestProcedureUpdateWithoutEmployee_TestProcedure_deletedByToEmployeeInput, Prisma.TestProcedureUncheckedUpdateWithoutEmployee_TestProcedure_deletedByToEmployeeInput>
+}
+
+export type TestProcedureUpdateManyWithWhereWithoutEmployee_TestProcedure_deletedByToEmployeeInput = {
+  where: Prisma.TestProcedureScalarWhereInput
+  data: Prisma.XOR<Prisma.TestProcedureUpdateManyMutationInput, Prisma.TestProcedureUncheckedUpdateManyWithoutEmployee_TestProcedure_deletedByToEmployeeInput>
 }
 
 export type TestProcedureCreateManyEmployeeInput = {
@@ -448,6 +615,20 @@ export type TestProcedureCreateManyEmployeeInput = {
   shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type TestProcedureCreateManyEmployee_TestProcedure_deletedByToEmployeeInput = {
+  id: string
+  name?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type TestProcedureUpdateWithoutEmployeeInput = {
@@ -456,6 +637,9 @@ export type TestProcedureUpdateWithoutEmployeeInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee_TestProcedure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTestProcedure_TestProcedure_deletedByToEmployeeNestedInput
 }
 
 export type TestProcedureUncheckedUpdateWithoutEmployeeInput = {
@@ -464,6 +648,9 @@ export type TestProcedureUncheckedUpdateWithoutEmployeeInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TestProcedureUncheckedUpdateManyWithoutEmployeeInput = {
@@ -472,6 +659,42 @@ export type TestProcedureUncheckedUpdateManyWithoutEmployeeInput = {
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type TestProcedureUpdateWithoutEmployee_TestProcedure_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTestProcedureNestedInput
+}
+
+export type TestProcedureUncheckedUpdateWithoutEmployee_TestProcedure_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type TestProcedureUncheckedUpdateManyWithoutEmployee_TestProcedure_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -483,7 +706,11 @@ export type TestProcedureSelect<ExtArgs extends runtime.Types.Extensions.Interna
   longDescription?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_TestProcedure_deletedByToEmployee?: boolean | Prisma.TestProcedure$Employee_TestProcedure_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["testProcedure"]>
 
 
@@ -495,17 +722,22 @@ export type TestProcedureSelectScalar = {
   longDescription?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type TestProcedureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "shortDescription" | "longDescription" | "createdAt" | "createdBy", ExtArgs["result"]["testProcedure"]>
+export type TestProcedureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "shortDescription" | "longDescription" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["testProcedure"]>
 export type TestProcedureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_TestProcedure_deletedByToEmployee?: boolean | Prisma.TestProcedure$Employee_TestProcedure_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $TestProcedurePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TestProcedure"
   objects: {
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_TestProcedure_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -514,6 +746,9 @@ export type $TestProcedurePayload<ExtArgs extends runtime.Types.Extensions.Inter
     longDescription: string | null
     createdAt: Date
     createdBy: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["testProcedure"]>
   composites: {}
 }
@@ -855,6 +1090,7 @@ readonly fields: TestProcedureFieldRefs;
 export interface Prisma__TestProcedureClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_TestProcedure_deletedByToEmployee<T extends Prisma.TestProcedure$Employee_TestProcedure_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TestProcedure$Employee_TestProcedure_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -890,6 +1126,9 @@ export interface TestProcedureFieldRefs {
   readonly longDescription: Prisma.FieldRef<"TestProcedure", 'String'>
   readonly createdAt: Prisma.FieldRef<"TestProcedure", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"TestProcedure", 'String'>
+  readonly deleted: Prisma.FieldRef<"TestProcedure", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"TestProcedure", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"TestProcedure", 'String'>
 }
     
 
@@ -1230,6 +1469,25 @@ export type TestProcedureDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many TestProcedures to delete.
    */
   limit?: number
+}
+
+/**
+ * TestProcedure.Employee_TestProcedure_deletedByToEmployee
+ */
+export type TestProcedure$Employee_TestProcedure_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

@@ -52,6 +52,9 @@ export type ProductMinAggregateOutputType = {
   status: string | null
   updatedAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type ProductMaxAggregateOutputType = {
@@ -66,6 +69,9 @@ export type ProductMaxAggregateOutputType = {
   status: string | null
   updatedAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type ProductCountAggregateOutputType = {
@@ -80,6 +86,9 @@ export type ProductCountAggregateOutputType = {
   status: number
   updatedAt: number
   createdBy: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -110,6 +119,9 @@ export type ProductMinAggregateInputType = {
   status?: true
   updatedAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type ProductMaxAggregateInputType = {
@@ -124,6 +136,9 @@ export type ProductMaxAggregateInputType = {
   status?: true
   updatedAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type ProductCountAggregateInputType = {
@@ -138,6 +153,9 @@ export type ProductCountAggregateInputType = {
   status?: true
   updatedAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -239,6 +257,9 @@ export type ProductGroupByOutputType = {
   status: string | null
   updatedAt: Date | null
   createdBy: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: ProductCountAggregateOutputType | null
   _avg: ProductAvgAggregateOutputType | null
   _sum: ProductSumAggregateOutputType | null
@@ -276,8 +297,12 @@ export type ProductWhereInput = {
   status?: Prisma.StringNullableFilter<"Product"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Product"> | string
+  deleted?: Prisma.BoolFilter<"Product"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Product"> | string | null
   Material?: Prisma.XOR<Prisma.MaterialNullableScalarRelationFilter, Prisma.MaterialWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Product_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -292,8 +317,12 @@ export type ProductOrderByWithRelationInput = {
   status?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Material?: Prisma.MaterialOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_Product_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.ProductOrderByRelevanceInput
 }
 
@@ -312,8 +341,12 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.StringNullableFilter<"Product"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Product"> | string
+  deleted?: Prisma.BoolFilter<"Product"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Product"> | string | null
   Material?: Prisma.XOR<Prisma.MaterialNullableScalarRelationFilter, Prisma.MaterialWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Product_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type ProductOrderByWithAggregationInput = {
@@ -328,6 +361,9 @@ export type ProductOrderByWithAggregationInput = {
   status?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
   _avg?: Prisma.ProductAvgOrderByAggregateInput
   _max?: Prisma.ProductMaxOrderByAggregateInput
@@ -350,6 +386,9 @@ export type ProductScalarWhereWithAggregatesInput = {
   status?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Product"> | Date | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Product"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
 }
 
 export type ProductCreateInput = {
@@ -362,8 +401,11 @@ export type ProductCreateInput = {
   sellingPrice?: number | null
   status?: string | null
   updatedAt?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Material?: Prisma.MaterialCreateNestedOneWithoutProductInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutProductInput
+  Employee_Product_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProduct_Product_deletedByToEmployeeInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -378,6 +420,9 @@ export type ProductUncheckedCreateInput = {
   status?: string | null
   updatedAt?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProductUpdateInput = {
@@ -390,8 +435,11 @@ export type ProductUpdateInput = {
   sellingPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Material?: Prisma.MaterialUpdateOneWithoutProductNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProductNestedInput
+  Employee_Product_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProduct_Product_deletedByToEmployeeNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -406,6 +454,9 @@ export type ProductUncheckedUpdateInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductCreateManyInput = {
@@ -420,6 +471,9 @@ export type ProductCreateManyInput = {
   status?: string | null
   updatedAt?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProductUpdateManyMutationInput = {
@@ -432,6 +486,8 @@ export type ProductUpdateManyMutationInput = {
   sellingPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ProductUncheckedUpdateManyInput = {
@@ -446,6 +502,9 @@ export type ProductUncheckedUpdateManyInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductListRelationFilter = {
@@ -476,6 +535,9 @@ export type ProductCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type ProductAvgOrderByAggregateInput = {
@@ -497,6 +559,9 @@ export type ProductMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type ProductMinOrderByAggregateInput = {
@@ -511,6 +576,9 @@ export type ProductMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type ProductSumOrderByAggregateInput = {
@@ -527,10 +595,24 @@ export type ProductCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
 }
 
+export type ProductCreateNestedManyWithoutEmployee_Product_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutEmployee_Product_deletedByToEmployeeInput, Prisma.ProductUncheckedCreateWithoutEmployee_Product_deletedByToEmployeeInput> | Prisma.ProductCreateWithoutEmployee_Product_deletedByToEmployeeInput[] | Prisma.ProductUncheckedCreateWithoutEmployee_Product_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutEmployee_Product_deletedByToEmployeeInput | Prisma.ProductCreateOrConnectWithoutEmployee_Product_deletedByToEmployeeInput[]
+  createMany?: Prisma.ProductCreateManyEmployee_Product_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
 export type ProductUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutEmployeeInput, Prisma.ProductUncheckedCreateWithoutEmployeeInput> | Prisma.ProductCreateWithoutEmployeeInput[] | Prisma.ProductUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutEmployeeInput | Prisma.ProductCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.ProductCreateManyEmployeeInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
+export type ProductUncheckedCreateNestedManyWithoutEmployee_Product_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutEmployee_Product_deletedByToEmployeeInput, Prisma.ProductUncheckedCreateWithoutEmployee_Product_deletedByToEmployeeInput> | Prisma.ProductCreateWithoutEmployee_Product_deletedByToEmployeeInput[] | Prisma.ProductUncheckedCreateWithoutEmployee_Product_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutEmployee_Product_deletedByToEmployeeInput | Prisma.ProductCreateOrConnectWithoutEmployee_Product_deletedByToEmployeeInput[]
+  createMany?: Prisma.ProductCreateManyEmployee_Product_deletedByToEmployeeInputEnvelope
   connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
 }
 
@@ -548,6 +630,20 @@ export type ProductUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
 }
 
+export type ProductUpdateManyWithoutEmployee_Product_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutEmployee_Product_deletedByToEmployeeInput, Prisma.ProductUncheckedCreateWithoutEmployee_Product_deletedByToEmployeeInput> | Prisma.ProductCreateWithoutEmployee_Product_deletedByToEmployeeInput[] | Prisma.ProductUncheckedCreateWithoutEmployee_Product_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutEmployee_Product_deletedByToEmployeeInput | Prisma.ProductCreateOrConnectWithoutEmployee_Product_deletedByToEmployeeInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutEmployee_Product_deletedByToEmployeeInput | Prisma.ProductUpsertWithWhereUniqueWithoutEmployee_Product_deletedByToEmployeeInput[]
+  createMany?: Prisma.ProductCreateManyEmployee_Product_deletedByToEmployeeInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutEmployee_Product_deletedByToEmployeeInput | Prisma.ProductUpdateWithWhereUniqueWithoutEmployee_Product_deletedByToEmployeeInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutEmployee_Product_deletedByToEmployeeInput | Prisma.ProductUpdateManyWithWhereWithoutEmployee_Product_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+}
+
 export type ProductUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutEmployeeInput, Prisma.ProductUncheckedCreateWithoutEmployeeInput> | Prisma.ProductCreateWithoutEmployeeInput[] | Prisma.ProductUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutEmployeeInput | Prisma.ProductCreateOrConnectWithoutEmployeeInput[]
@@ -559,6 +655,20 @@ export type ProductUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
   update?: Prisma.ProductUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.ProductUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.ProductUpdateManyWithWhereWithoutEmployeeInput | Prisma.ProductUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+}
+
+export type ProductUncheckedUpdateManyWithoutEmployee_Product_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutEmployee_Product_deletedByToEmployeeInput, Prisma.ProductUncheckedCreateWithoutEmployee_Product_deletedByToEmployeeInput> | Prisma.ProductCreateWithoutEmployee_Product_deletedByToEmployeeInput[] | Prisma.ProductUncheckedCreateWithoutEmployee_Product_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutEmployee_Product_deletedByToEmployeeInput | Prisma.ProductCreateOrConnectWithoutEmployee_Product_deletedByToEmployeeInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutEmployee_Product_deletedByToEmployeeInput | Prisma.ProductUpsertWithWhereUniqueWithoutEmployee_Product_deletedByToEmployeeInput[]
+  createMany?: Prisma.ProductCreateManyEmployee_Product_deletedByToEmployeeInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutEmployee_Product_deletedByToEmployeeInput | Prisma.ProductUpdateWithWhereUniqueWithoutEmployee_Product_deletedByToEmployeeInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutEmployee_Product_deletedByToEmployeeInput | Prisma.ProductUpdateManyWithWhereWithoutEmployee_Product_deletedByToEmployeeInput[]
   deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
 }
 
@@ -614,7 +724,10 @@ export type ProductCreateWithoutEmployeeInput = {
   sellingPrice?: number | null
   status?: string | null
   updatedAt?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Material?: Prisma.MaterialCreateNestedOneWithoutProductInput
+  Employee_Product_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProduct_Product_deletedByToEmployeeInput
 }
 
 export type ProductUncheckedCreateWithoutEmployeeInput = {
@@ -628,6 +741,9 @@ export type ProductUncheckedCreateWithoutEmployeeInput = {
   sellingPrice?: number | null
   status?: string | null
   updatedAt?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProductCreateOrConnectWithoutEmployeeInput = {
@@ -637,6 +753,48 @@ export type ProductCreateOrConnectWithoutEmployeeInput = {
 
 export type ProductCreateManyEmployeeInputEnvelope = {
   data: Prisma.ProductCreateManyEmployeeInput | Prisma.ProductCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type ProductCreateWithoutEmployee_Product_deletedByToEmployeeInput = {
+  id: string
+  shortDescription?: string | null
+  description?: string | null
+  costPrice?: number | null
+  profit?: number | null
+  sellingUnitQuantity?: number | null
+  sellingPrice?: number | null
+  status?: string | null
+  updatedAt?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Material?: Prisma.MaterialCreateNestedOneWithoutProductInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutEmployee_Product_deletedByToEmployeeInput = {
+  id: string
+  materialId?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  costPrice?: number | null
+  profit?: number | null
+  sellingUnitQuantity?: number | null
+  sellingPrice?: number | null
+  status?: string | null
+  updatedAt?: Date | string | null
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type ProductCreateOrConnectWithoutEmployee_Product_deletedByToEmployeeInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutEmployee_Product_deletedByToEmployeeInput, Prisma.ProductUncheckedCreateWithoutEmployee_Product_deletedByToEmployeeInput>
+}
+
+export type ProductCreateManyEmployee_Product_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.ProductCreateManyEmployee_Product_deletedByToEmployeeInput | Prisma.ProductCreateManyEmployee_Product_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -671,6 +829,25 @@ export type ProductScalarWhereInput = {
   status?: Prisma.StringNullableFilter<"Product"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Product"> | string
+  deleted?: Prisma.BoolFilter<"Product"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Product"> | string | null
+}
+
+export type ProductUpsertWithWhereUniqueWithoutEmployee_Product_deletedByToEmployeeInput = {
+  where: Prisma.ProductWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutEmployee_Product_deletedByToEmployeeInput, Prisma.ProductUncheckedUpdateWithoutEmployee_Product_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutEmployee_Product_deletedByToEmployeeInput, Prisma.ProductUncheckedCreateWithoutEmployee_Product_deletedByToEmployeeInput>
+}
+
+export type ProductUpdateWithWhereUniqueWithoutEmployee_Product_deletedByToEmployeeInput = {
+  where: Prisma.ProductWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutEmployee_Product_deletedByToEmployeeInput, Prisma.ProductUncheckedUpdateWithoutEmployee_Product_deletedByToEmployeeInput>
+}
+
+export type ProductUpdateManyWithWhereWithoutEmployee_Product_deletedByToEmployeeInput = {
+  where: Prisma.ProductScalarWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutEmployee_Product_deletedByToEmployeeInput>
 }
 
 export type ProductCreateWithoutMaterialInput = {
@@ -683,7 +860,10 @@ export type ProductCreateWithoutMaterialInput = {
   sellingPrice?: number | null
   status?: string | null
   updatedAt?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutProductInput
+  Employee_Product_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProduct_Product_deletedByToEmployeeInput
 }
 
 export type ProductUncheckedCreateWithoutMaterialInput = {
@@ -697,6 +877,9 @@ export type ProductUncheckedCreateWithoutMaterialInput = {
   status?: string | null
   updatedAt?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProductCreateOrConnectWithoutMaterialInput = {
@@ -736,6 +919,25 @@ export type ProductCreateManyEmployeeInput = {
   sellingPrice?: number | null
   status?: string | null
   updatedAt?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type ProductCreateManyEmployee_Product_deletedByToEmployeeInput = {
+  id: string
+  materialId?: string | null
+  shortDescription?: string | null
+  description?: string | null
+  costPrice?: number | null
+  profit?: number | null
+  sellingUnitQuantity?: number | null
+  sellingPrice?: number | null
+  status?: string | null
+  updatedAt?: Date | string | null
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type ProductUpdateWithoutEmployeeInput = {
@@ -748,7 +950,10 @@ export type ProductUpdateWithoutEmployeeInput = {
   sellingPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Material?: Prisma.MaterialUpdateOneWithoutProductNestedInput
+  Employee_Product_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProduct_Product_deletedByToEmployeeNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutEmployeeInput = {
@@ -762,6 +967,9 @@ export type ProductUncheckedUpdateWithoutEmployeeInput = {
   sellingPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductUncheckedUpdateManyWithoutEmployeeInput = {
@@ -775,6 +983,57 @@ export type ProductUncheckedUpdateManyWithoutEmployeeInput = {
   sellingPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ProductUpdateWithoutEmployee_Product_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  profit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sellingUnitQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sellingPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Material?: Prisma.MaterialUpdateOneWithoutProductNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutEmployee_Product_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  profit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sellingUnitQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sellingPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type ProductUncheckedUpdateManyWithoutEmployee_Product_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  profit?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sellingUnitQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sellingPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ProductCreateManyMaterialInput = {
@@ -788,6 +1047,9 @@ export type ProductCreateManyMaterialInput = {
   status?: string | null
   updatedAt?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProductUpdateWithoutMaterialInput = {
@@ -800,7 +1062,10 @@ export type ProductUpdateWithoutMaterialInput = {
   sellingPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutProductNestedInput
+  Employee_Product_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProduct_Product_deletedByToEmployeeNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutMaterialInput = {
@@ -814,6 +1079,9 @@ export type ProductUncheckedUpdateWithoutMaterialInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProductUncheckedUpdateManyWithoutMaterialInput = {
@@ -827,6 +1095,9 @@ export type ProductUncheckedUpdateManyWithoutMaterialInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -843,8 +1114,12 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   status?: boolean
   updatedAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Material?: boolean | Prisma.Product$MaterialArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Product_deletedByToEmployee?: boolean | Prisma.Product$Employee_Product_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 
@@ -861,12 +1136,16 @@ export type ProductSelectScalar = {
   status?: boolean
   updatedAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "shortDescription" | "description" | "costPrice" | "profit" | "sellingUnitQuantity" | "sellingPrice" | "status" | "updatedAt" | "createdBy", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "shortDescription" | "description" | "costPrice" | "profit" | "sellingUnitQuantity" | "sellingPrice" | "status" | "updatedAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Material?: boolean | Prisma.Product$MaterialArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Product_deletedByToEmployee?: boolean | Prisma.Product$Employee_Product_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -874,6 +1153,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     Material: Prisma.$MaterialPayload<ExtArgs> | null
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_Product_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -887,6 +1167,9 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     status: string | null
     updatedAt: Date | null
     createdBy: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["product"]>
   composites: {}
 }
@@ -1229,6 +1512,7 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Material<T extends Prisma.Product$MaterialArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$MaterialArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_Product_deletedByToEmployee<T extends Prisma.Product$Employee_Product_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$Employee_Product_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1269,6 +1553,9 @@ export interface ProductFieldRefs {
   readonly status: Prisma.FieldRef<"Product", 'String'>
   readonly updatedAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Product", 'String'>
+  readonly deleted: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Product", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"Product", 'String'>
 }
     
 
@@ -1628,6 +1915,25 @@ export type Product$MaterialArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   include?: Prisma.MaterialInclude<ExtArgs> | null
   where?: Prisma.MaterialWhereInput
+}
+
+/**
+ * Product.Employee_Product_deletedByToEmployee
+ */
+export type Product$Employee_Product_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

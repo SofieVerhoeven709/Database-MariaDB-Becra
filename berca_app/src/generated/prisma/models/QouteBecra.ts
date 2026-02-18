@@ -30,6 +30,9 @@ export type QouteBecraMinAggregateOutputType = {
   validDate: boolean | null
   date: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type QouteBecraMaxAggregateOutputType = {
@@ -38,6 +41,9 @@ export type QouteBecraMaxAggregateOutputType = {
   validDate: boolean | null
   date: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type QouteBecraCountAggregateOutputType = {
@@ -46,6 +52,9 @@ export type QouteBecraCountAggregateOutputType = {
   validDate: number
   date: number
   createdBy: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -56,6 +65,9 @@ export type QouteBecraMinAggregateInputType = {
   validDate?: true
   date?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type QouteBecraMaxAggregateInputType = {
@@ -64,6 +76,9 @@ export type QouteBecraMaxAggregateInputType = {
   validDate?: true
   date?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type QouteBecraCountAggregateInputType = {
@@ -72,6 +87,9 @@ export type QouteBecraCountAggregateInputType = {
   validDate?: true
   date?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -153,6 +171,9 @@ export type QouteBecraGroupByOutputType = {
   validDate: boolean
   date: Date | null
   createdBy: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: QouteBecraCountAggregateOutputType | null
   _min: QouteBecraMinAggregateOutputType | null
   _max: QouteBecraMaxAggregateOutputType | null
@@ -182,7 +203,11 @@ export type QouteBecraWhereInput = {
   validDate?: Prisma.BoolFilter<"QouteBecra"> | boolean
   date?: Prisma.DateTimeNullableFilter<"QouteBecra"> | Date | string | null
   createdBy?: Prisma.StringFilter<"QouteBecra"> | string
+  deleted?: Prisma.BoolFilter<"QouteBecra"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"QouteBecra"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"QouteBecra"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_QouteBecra_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type QouteBecraOrderByWithRelationInput = {
@@ -191,7 +216,11 @@ export type QouteBecraOrderByWithRelationInput = {
   validDate?: Prisma.SortOrder
   date?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_QouteBecra_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.QouteBecraOrderByRelevanceInput
 }
 
@@ -204,7 +233,11 @@ export type QouteBecraWhereUniqueInput = Prisma.AtLeast<{
   validDate?: Prisma.BoolFilter<"QouteBecra"> | boolean
   date?: Prisma.DateTimeNullableFilter<"QouteBecra"> | Date | string | null
   createdBy?: Prisma.StringFilter<"QouteBecra"> | string
+  deleted?: Prisma.BoolFilter<"QouteBecra"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"QouteBecra"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"QouteBecra"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_QouteBecra_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type QouteBecraOrderByWithAggregationInput = {
@@ -213,6 +246,9 @@ export type QouteBecraOrderByWithAggregationInput = {
   validDate?: Prisma.SortOrder
   date?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.QouteBecraCountOrderByAggregateInput
   _max?: Prisma.QouteBecraMaxOrderByAggregateInput
   _min?: Prisma.QouteBecraMinOrderByAggregateInput
@@ -227,6 +263,9 @@ export type QouteBecraScalarWhereWithAggregatesInput = {
   validDate?: Prisma.BoolWithAggregatesFilter<"QouteBecra"> | boolean
   date?: Prisma.DateTimeNullableWithAggregatesFilter<"QouteBecra"> | Date | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"QouteBecra"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"QouteBecra"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QouteBecra"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"QouteBecra"> | string | null
 }
 
 export type QouteBecraCreateInput = {
@@ -234,7 +273,10 @@ export type QouteBecraCreateInput = {
   description?: string | null
   validDate: boolean
   date?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutQouteBecraInput
+  Employee_QouteBecra_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQouteBecra_QouteBecra_deletedByToEmployeeInput
 }
 
 export type QouteBecraUncheckedCreateInput = {
@@ -243,6 +285,9 @@ export type QouteBecraUncheckedCreateInput = {
   validDate: boolean
   date?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type QouteBecraUpdateInput = {
@@ -250,7 +295,10 @@ export type QouteBecraUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQouteBecraNestedInput
+  Employee_QouteBecra_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQouteBecra_QouteBecra_deletedByToEmployeeNestedInput
 }
 
 export type QouteBecraUncheckedUpdateInput = {
@@ -259,6 +307,9 @@ export type QouteBecraUncheckedUpdateInput = {
   validDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type QouteBecraCreateManyInput = {
@@ -267,6 +318,9 @@ export type QouteBecraCreateManyInput = {
   validDate: boolean
   date?: Date | string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type QouteBecraUpdateManyMutationInput = {
@@ -274,6 +328,8 @@ export type QouteBecraUpdateManyMutationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type QouteBecraUncheckedUpdateManyInput = {
@@ -282,6 +338,9 @@ export type QouteBecraUncheckedUpdateManyInput = {
   validDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type QouteBecraListRelationFilter = {
@@ -306,6 +365,9 @@ export type QouteBecraCountOrderByAggregateInput = {
   validDate?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type QouteBecraMaxOrderByAggregateInput = {
@@ -314,6 +376,9 @@ export type QouteBecraMaxOrderByAggregateInput = {
   validDate?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type QouteBecraMinOrderByAggregateInput = {
@@ -322,6 +387,9 @@ export type QouteBecraMinOrderByAggregateInput = {
   validDate?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type QouteBecraCreateNestedManyWithoutEmployeeInput = {
@@ -331,10 +399,24 @@ export type QouteBecraCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
 }
 
+export type QouteBecraCreateNestedManyWithoutEmployee_QouteBecra_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.QouteBecraCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput, Prisma.QouteBecraUncheckedCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput> | Prisma.QouteBecraCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput[] | Prisma.QouteBecraUncheckedCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QouteBecraCreateOrConnectWithoutEmployee_QouteBecra_deletedByToEmployeeInput | Prisma.QouteBecraCreateOrConnectWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  createMany?: Prisma.QouteBecraCreateManyEmployee_QouteBecra_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
+}
+
 export type QouteBecraUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.QouteBecraCreateWithoutEmployeeInput, Prisma.QouteBecraUncheckedCreateWithoutEmployeeInput> | Prisma.QouteBecraCreateWithoutEmployeeInput[] | Prisma.QouteBecraUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.QouteBecraCreateOrConnectWithoutEmployeeInput | Prisma.QouteBecraCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.QouteBecraCreateManyEmployeeInputEnvelope
+  connect?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
+}
+
+export type QouteBecraUncheckedCreateNestedManyWithoutEmployee_QouteBecra_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.QouteBecraCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput, Prisma.QouteBecraUncheckedCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput> | Prisma.QouteBecraCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput[] | Prisma.QouteBecraUncheckedCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QouteBecraCreateOrConnectWithoutEmployee_QouteBecra_deletedByToEmployeeInput | Prisma.QouteBecraCreateOrConnectWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  createMany?: Prisma.QouteBecraCreateManyEmployee_QouteBecra_deletedByToEmployeeInputEnvelope
   connect?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
 }
 
@@ -352,6 +434,20 @@ export type QouteBecraUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.QouteBecraScalarWhereInput | Prisma.QouteBecraScalarWhereInput[]
 }
 
+export type QouteBecraUpdateManyWithoutEmployee_QouteBecra_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.QouteBecraCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput, Prisma.QouteBecraUncheckedCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput> | Prisma.QouteBecraCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput[] | Prisma.QouteBecraUncheckedCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QouteBecraCreateOrConnectWithoutEmployee_QouteBecra_deletedByToEmployeeInput | Prisma.QouteBecraCreateOrConnectWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  upsert?: Prisma.QouteBecraUpsertWithWhereUniqueWithoutEmployee_QouteBecra_deletedByToEmployeeInput | Prisma.QouteBecraUpsertWithWhereUniqueWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  createMany?: Prisma.QouteBecraCreateManyEmployee_QouteBecra_deletedByToEmployeeInputEnvelope
+  set?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
+  disconnect?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
+  delete?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
+  connect?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
+  update?: Prisma.QouteBecraUpdateWithWhereUniqueWithoutEmployee_QouteBecra_deletedByToEmployeeInput | Prisma.QouteBecraUpdateWithWhereUniqueWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  updateMany?: Prisma.QouteBecraUpdateManyWithWhereWithoutEmployee_QouteBecra_deletedByToEmployeeInput | Prisma.QouteBecraUpdateManyWithWhereWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.QouteBecraScalarWhereInput | Prisma.QouteBecraScalarWhereInput[]
+}
+
 export type QouteBecraUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.QouteBecraCreateWithoutEmployeeInput, Prisma.QouteBecraUncheckedCreateWithoutEmployeeInput> | Prisma.QouteBecraCreateWithoutEmployeeInput[] | Prisma.QouteBecraUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.QouteBecraCreateOrConnectWithoutEmployeeInput | Prisma.QouteBecraCreateOrConnectWithoutEmployeeInput[]
@@ -366,11 +462,28 @@ export type QouteBecraUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.QouteBecraScalarWhereInput | Prisma.QouteBecraScalarWhereInput[]
 }
 
+export type QouteBecraUncheckedUpdateManyWithoutEmployee_QouteBecra_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.QouteBecraCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput, Prisma.QouteBecraUncheckedCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput> | Prisma.QouteBecraCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput[] | Prisma.QouteBecraUncheckedCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.QouteBecraCreateOrConnectWithoutEmployee_QouteBecra_deletedByToEmployeeInput | Prisma.QouteBecraCreateOrConnectWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  upsert?: Prisma.QouteBecraUpsertWithWhereUniqueWithoutEmployee_QouteBecra_deletedByToEmployeeInput | Prisma.QouteBecraUpsertWithWhereUniqueWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  createMany?: Prisma.QouteBecraCreateManyEmployee_QouteBecra_deletedByToEmployeeInputEnvelope
+  set?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
+  disconnect?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
+  delete?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
+  connect?: Prisma.QouteBecraWhereUniqueInput | Prisma.QouteBecraWhereUniqueInput[]
+  update?: Prisma.QouteBecraUpdateWithWhereUniqueWithoutEmployee_QouteBecra_deletedByToEmployeeInput | Prisma.QouteBecraUpdateWithWhereUniqueWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  updateMany?: Prisma.QouteBecraUpdateManyWithWhereWithoutEmployee_QouteBecra_deletedByToEmployeeInput | Prisma.QouteBecraUpdateManyWithWhereWithoutEmployee_QouteBecra_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.QouteBecraScalarWhereInput | Prisma.QouteBecraScalarWhereInput[]
+}
+
 export type QouteBecraCreateWithoutEmployeeInput = {
   id: string
   description?: string | null
   validDate: boolean
   date?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee_QouteBecra_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutQouteBecra_QouteBecra_deletedByToEmployeeInput
 }
 
 export type QouteBecraUncheckedCreateWithoutEmployeeInput = {
@@ -378,6 +491,9 @@ export type QouteBecraUncheckedCreateWithoutEmployeeInput = {
   description?: string | null
   validDate: boolean
   date?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type QouteBecraCreateOrConnectWithoutEmployeeInput = {
@@ -387,6 +503,36 @@ export type QouteBecraCreateOrConnectWithoutEmployeeInput = {
 
 export type QouteBecraCreateManyEmployeeInputEnvelope = {
   data: Prisma.QouteBecraCreateManyEmployeeInput | Prisma.QouteBecraCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type QouteBecraCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput = {
+  id: string
+  description?: string | null
+  validDate: boolean
+  date?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutQouteBecraInput
+}
+
+export type QouteBecraUncheckedCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput = {
+  id: string
+  description?: string | null
+  validDate: boolean
+  date?: Date | string | null
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type QouteBecraCreateOrConnectWithoutEmployee_QouteBecra_deletedByToEmployeeInput = {
+  where: Prisma.QouteBecraWhereUniqueInput
+  create: Prisma.XOR<Prisma.QouteBecraCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput, Prisma.QouteBecraUncheckedCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput>
+}
+
+export type QouteBecraCreateManyEmployee_QouteBecra_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.QouteBecraCreateManyEmployee_QouteBecra_deletedByToEmployeeInput | Prisma.QouteBecraCreateManyEmployee_QouteBecra_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -415,6 +561,25 @@ export type QouteBecraScalarWhereInput = {
   validDate?: Prisma.BoolFilter<"QouteBecra"> | boolean
   date?: Prisma.DateTimeNullableFilter<"QouteBecra"> | Date | string | null
   createdBy?: Prisma.StringFilter<"QouteBecra"> | string
+  deleted?: Prisma.BoolFilter<"QouteBecra"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"QouteBecra"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"QouteBecra"> | string | null
+}
+
+export type QouteBecraUpsertWithWhereUniqueWithoutEmployee_QouteBecra_deletedByToEmployeeInput = {
+  where: Prisma.QouteBecraWhereUniqueInput
+  update: Prisma.XOR<Prisma.QouteBecraUpdateWithoutEmployee_QouteBecra_deletedByToEmployeeInput, Prisma.QouteBecraUncheckedUpdateWithoutEmployee_QouteBecra_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.QouteBecraCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput, Prisma.QouteBecraUncheckedCreateWithoutEmployee_QouteBecra_deletedByToEmployeeInput>
+}
+
+export type QouteBecraUpdateWithWhereUniqueWithoutEmployee_QouteBecra_deletedByToEmployeeInput = {
+  where: Prisma.QouteBecraWhereUniqueInput
+  data: Prisma.XOR<Prisma.QouteBecraUpdateWithoutEmployee_QouteBecra_deletedByToEmployeeInput, Prisma.QouteBecraUncheckedUpdateWithoutEmployee_QouteBecra_deletedByToEmployeeInput>
+}
+
+export type QouteBecraUpdateManyWithWhereWithoutEmployee_QouteBecra_deletedByToEmployeeInput = {
+  where: Prisma.QouteBecraScalarWhereInput
+  data: Prisma.XOR<Prisma.QouteBecraUpdateManyMutationInput, Prisma.QouteBecraUncheckedUpdateManyWithoutEmployee_QouteBecra_deletedByToEmployeeInput>
 }
 
 export type QouteBecraCreateManyEmployeeInput = {
@@ -422,6 +587,19 @@ export type QouteBecraCreateManyEmployeeInput = {
   description?: string | null
   validDate: boolean
   date?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type QouteBecraCreateManyEmployee_QouteBecra_deletedByToEmployeeInput = {
+  id: string
+  description?: string | null
+  validDate: boolean
+  date?: Date | string | null
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type QouteBecraUpdateWithoutEmployeeInput = {
@@ -429,6 +607,9 @@ export type QouteBecraUpdateWithoutEmployeeInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee_QouteBecra_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutQouteBecra_QouteBecra_deletedByToEmployeeNestedInput
 }
 
 export type QouteBecraUncheckedUpdateWithoutEmployeeInput = {
@@ -436,6 +617,9 @@ export type QouteBecraUncheckedUpdateWithoutEmployeeInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type QouteBecraUncheckedUpdateManyWithoutEmployeeInput = {
@@ -443,6 +627,39 @@ export type QouteBecraUncheckedUpdateManyWithoutEmployeeInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type QouteBecraUpdateWithoutEmployee_QouteBecra_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutQouteBecraNestedInput
+}
+
+export type QouteBecraUncheckedUpdateWithoutEmployee_QouteBecra_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type QouteBecraUncheckedUpdateManyWithoutEmployee_QouteBecra_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -453,7 +670,11 @@ export type QouteBecraSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   validDate?: boolean
   date?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_QouteBecra_deletedByToEmployee?: boolean | Prisma.QouteBecra$Employee_QouteBecra_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["qouteBecra"]>
 
 
@@ -464,17 +685,22 @@ export type QouteBecraSelectScalar = {
   validDate?: boolean
   date?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type QouteBecraOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "validDate" | "date" | "createdBy", ExtArgs["result"]["qouteBecra"]>
+export type QouteBecraOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "validDate" | "date" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["qouteBecra"]>
 export type QouteBecraInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_QouteBecra_deletedByToEmployee?: boolean | Prisma.QouteBecra$Employee_QouteBecra_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $QouteBecraPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "QouteBecra"
   objects: {
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_QouteBecra_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -482,6 +708,9 @@ export type $QouteBecraPayload<ExtArgs extends runtime.Types.Extensions.Internal
     validDate: boolean
     date: Date | null
     createdBy: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["qouteBecra"]>
   composites: {}
 }
@@ -823,6 +1052,7 @@ readonly fields: QouteBecraFieldRefs;
 export interface Prisma__QouteBecraClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_QouteBecra_deletedByToEmployee<T extends Prisma.QouteBecra$Employee_QouteBecra_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QouteBecra$Employee_QouteBecra_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -857,6 +1087,9 @@ export interface QouteBecraFieldRefs {
   readonly validDate: Prisma.FieldRef<"QouteBecra", 'Boolean'>
   readonly date: Prisma.FieldRef<"QouteBecra", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"QouteBecra", 'String'>
+  readonly deleted: Prisma.FieldRef<"QouteBecra", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"QouteBecra", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"QouteBecra", 'String'>
 }
     
 
@@ -1197,6 +1430,25 @@ export type QouteBecraDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many QouteBecras to delete.
    */
   limit?: number
+}
+
+/**
+ * QouteBecra.Employee_QouteBecra_deletedByToEmployee
+ */
+export type QouteBecra$Employee_QouteBecra_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

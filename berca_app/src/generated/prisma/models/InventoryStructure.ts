@@ -46,6 +46,9 @@ export type InventoryStructureMinAggregateOutputType = {
   valid: boolean | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type InventoryStructureMaxAggregateOutputType = {
@@ -70,6 +73,9 @@ export type InventoryStructureMaxAggregateOutputType = {
   valid: boolean | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type InventoryStructureCountAggregateOutputType = {
@@ -94,6 +100,9 @@ export type InventoryStructureCountAggregateOutputType = {
   valid: number
   createdAt: number
   createdBy: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -120,6 +129,9 @@ export type InventoryStructureMinAggregateInputType = {
   valid?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type InventoryStructureMaxAggregateInputType = {
@@ -144,6 +156,9 @@ export type InventoryStructureMaxAggregateInputType = {
   valid?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type InventoryStructureCountAggregateInputType = {
@@ -168,6 +183,9 @@ export type InventoryStructureCountAggregateInputType = {
   valid?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -265,6 +283,9 @@ export type InventoryStructureGroupByOutputType = {
   valid: boolean
   createdAt: Date
   createdBy: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: InventoryStructureCountAggregateOutputType | null
   _min: InventoryStructureMinAggregateOutputType | null
   _max: InventoryStructureMaxAggregateOutputType | null
@@ -310,8 +331,12 @@ export type InventoryStructureWhereInput = {
   valid?: Prisma.BoolFilter<"InventoryStructure"> | boolean
   createdAt?: Prisma.DateTimeFilter<"InventoryStructure"> | Date | string
   createdBy?: Prisma.StringFilter<"InventoryStructure"> | string
+  deleted?: Prisma.BoolFilter<"InventoryStructure"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"InventoryStructure"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
   Inventory?: Prisma.XOR<Prisma.InventoryScalarRelationFilter, Prisma.InventoryWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_InventoryStructure_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type InventoryStructureOrderByWithRelationInput = {
@@ -336,8 +361,12 @@ export type InventoryStructureOrderByWithRelationInput = {
   valid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Inventory?: Prisma.InventoryOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_InventoryStructure_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.InventoryStructureOrderByRelevanceInput
 }
 
@@ -366,8 +395,12 @@ export type InventoryStructureWhereUniqueInput = Prisma.AtLeast<{
   valid?: Prisma.BoolFilter<"InventoryStructure"> | boolean
   createdAt?: Prisma.DateTimeFilter<"InventoryStructure"> | Date | string
   createdBy?: Prisma.StringFilter<"InventoryStructure"> | string
+  deleted?: Prisma.BoolFilter<"InventoryStructure"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"InventoryStructure"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
   Inventory?: Prisma.XOR<Prisma.InventoryScalarRelationFilter, Prisma.InventoryWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_InventoryStructure_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type InventoryStructureOrderByWithAggregationInput = {
@@ -392,6 +425,9 @@ export type InventoryStructureOrderByWithAggregationInput = {
   valid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.InventoryStructureCountOrderByAggregateInput
   _max?: Prisma.InventoryStructureMaxOrderByAggregateInput
   _min?: Prisma.InventoryStructureMinOrderByAggregateInput
@@ -422,6 +458,9 @@ export type InventoryStructureScalarWhereWithAggregatesInput = {
   valid?: Prisma.BoolWithAggregatesFilter<"InventoryStructure"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"InventoryStructure"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"InventoryStructure"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"InventoryStructure"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"InventoryStructure"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"InventoryStructure"> | string | null
 }
 
 export type InventoryStructureCreateInput = {
@@ -444,8 +483,11 @@ export type InventoryStructureCreateInput = {
   materialActive: boolean
   valid: boolean
   createdAt?: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory: Prisma.InventoryCreateNestedOneWithoutInventoryStructureInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryStructureInput
+  Employee_InventoryStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryStructure_InventoryStructure_deletedByToEmployeeInput
 }
 
 export type InventoryStructureUncheckedCreateInput = {
@@ -470,6 +512,9 @@ export type InventoryStructureUncheckedCreateInput = {
   valid: boolean
   createdAt?: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type InventoryStructureUpdateInput = {
@@ -492,8 +537,11 @@ export type InventoryStructureUpdateInput = {
   materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory?: Prisma.InventoryUpdateOneRequiredWithoutInventoryStructureNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryStructureNestedInput
+  Employee_InventoryStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryStructure_InventoryStructure_deletedByToEmployeeNestedInput
 }
 
 export type InventoryStructureUncheckedUpdateInput = {
@@ -518,6 +566,9 @@ export type InventoryStructureUncheckedUpdateInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type InventoryStructureCreateManyInput = {
@@ -542,6 +593,9 @@ export type InventoryStructureCreateManyInput = {
   valid: boolean
   createdAt?: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type InventoryStructureUpdateManyMutationInput = {
@@ -564,6 +618,8 @@ export type InventoryStructureUpdateManyMutationInput = {
   materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryStructureUncheckedUpdateManyInput = {
@@ -588,6 +644,9 @@ export type InventoryStructureUncheckedUpdateManyInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type InventoryStructureListRelationFilter = {
@@ -628,6 +687,9 @@ export type InventoryStructureCountOrderByAggregateInput = {
   valid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type InventoryStructureMaxOrderByAggregateInput = {
@@ -652,6 +714,9 @@ export type InventoryStructureMaxOrderByAggregateInput = {
   valid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type InventoryStructureMinOrderByAggregateInput = {
@@ -676,6 +741,9 @@ export type InventoryStructureMinOrderByAggregateInput = {
   valid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type InventoryStructureCreateNestedManyWithoutEmployeeInput = {
@@ -685,10 +753,24 @@ export type InventoryStructureCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
 }
 
+export type InventoryStructureCreateNestedManyWithoutEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput, Prisma.InventoryStructureUncheckedCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput> | Prisma.InventoryStructureCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[] | Prisma.InventoryStructureUncheckedCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutEmployee_InventoryStructure_deletedByToEmployeeInput | Prisma.InventoryStructureCreateOrConnectWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  createMany?: Prisma.InventoryStructureCreateManyEmployee_InventoryStructure_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
+}
+
 export type InventoryStructureUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutEmployeeInput, Prisma.InventoryStructureUncheckedCreateWithoutEmployeeInput> | Prisma.InventoryStructureCreateWithoutEmployeeInput[] | Prisma.InventoryStructureUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutEmployeeInput | Prisma.InventoryStructureCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.InventoryStructureCreateManyEmployeeInputEnvelope
+  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
+}
+
+export type InventoryStructureUncheckedCreateNestedManyWithoutEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput, Prisma.InventoryStructureUncheckedCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput> | Prisma.InventoryStructureCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[] | Prisma.InventoryStructureUncheckedCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutEmployee_InventoryStructure_deletedByToEmployeeInput | Prisma.InventoryStructureCreateOrConnectWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  createMany?: Prisma.InventoryStructureCreateManyEmployee_InventoryStructure_deletedByToEmployeeInputEnvelope
   connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
 }
 
@@ -706,6 +788,20 @@ export type InventoryStructureUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
 }
 
+export type InventoryStructureUpdateManyWithoutEmployee_InventoryStructure_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput, Prisma.InventoryStructureUncheckedCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput> | Prisma.InventoryStructureCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[] | Prisma.InventoryStructureUncheckedCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutEmployee_InventoryStructure_deletedByToEmployeeInput | Prisma.InventoryStructureCreateOrConnectWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutEmployee_InventoryStructure_deletedByToEmployeeInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  createMany?: Prisma.InventoryStructureCreateManyEmployee_InventoryStructure_deletedByToEmployeeInputEnvelope
+  set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
+  disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
+  delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
+  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
+  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutEmployee_InventoryStructure_deletedByToEmployeeInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutEmployee_InventoryStructure_deletedByToEmployeeInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
+}
+
 export type InventoryStructureUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutEmployeeInput, Prisma.InventoryStructureUncheckedCreateWithoutEmployeeInput> | Prisma.InventoryStructureCreateWithoutEmployeeInput[] | Prisma.InventoryStructureUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutEmployeeInput | Prisma.InventoryStructureCreateOrConnectWithoutEmployeeInput[]
@@ -717,6 +813,20 @@ export type InventoryStructureUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
   update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutEmployeeInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
+}
+
+export type InventoryStructureUncheckedUpdateManyWithoutEmployee_InventoryStructure_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryStructureCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput, Prisma.InventoryStructureUncheckedCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput> | Prisma.InventoryStructureCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[] | Prisma.InventoryStructureUncheckedCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.InventoryStructureCreateOrConnectWithoutEmployee_InventoryStructure_deletedByToEmployeeInput | Prisma.InventoryStructureCreateOrConnectWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  upsert?: Prisma.InventoryStructureUpsertWithWhereUniqueWithoutEmployee_InventoryStructure_deletedByToEmployeeInput | Prisma.InventoryStructureUpsertWithWhereUniqueWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  createMany?: Prisma.InventoryStructureCreateManyEmployee_InventoryStructure_deletedByToEmployeeInputEnvelope
+  set?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
+  disconnect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
+  delete?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
+  connect?: Prisma.InventoryStructureWhereUniqueInput | Prisma.InventoryStructureWhereUniqueInput[]
+  update?: Prisma.InventoryStructureUpdateWithWhereUniqueWithoutEmployee_InventoryStructure_deletedByToEmployeeInput | Prisma.InventoryStructureUpdateWithWhereUniqueWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
+  updateMany?: Prisma.InventoryStructureUpdateManyWithWhereWithoutEmployee_InventoryStructure_deletedByToEmployeeInput | Prisma.InventoryStructureUpdateManyWithWhereWithoutEmployee_InventoryStructure_deletedByToEmployeeInput[]
   deleteMany?: Prisma.InventoryStructureScalarWhereInput | Prisma.InventoryStructureScalarWhereInput[]
 }
 
@@ -782,7 +892,10 @@ export type InventoryStructureCreateWithoutEmployeeInput = {
   materialActive: boolean
   valid: boolean
   createdAt?: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Inventory: Prisma.InventoryCreateNestedOneWithoutInventoryStructureInput
+  Employee_InventoryStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryStructure_InventoryStructure_deletedByToEmployeeInput
 }
 
 export type InventoryStructureUncheckedCreateWithoutEmployeeInput = {
@@ -806,6 +919,9 @@ export type InventoryStructureUncheckedCreateWithoutEmployeeInput = {
   materialActive: boolean
   valid: boolean
   createdAt?: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type InventoryStructureCreateOrConnectWithoutEmployeeInput = {
@@ -815,6 +931,68 @@ export type InventoryStructureCreateOrConnectWithoutEmployeeInput = {
 
 export type InventoryStructureCreateManyEmployeeInputEnvelope = {
   data: Prisma.InventoryStructureCreateManyEmployeeInput | Prisma.InventoryStructureCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type InventoryStructureCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  id: string
+  inventoryPlaceId: string
+  place: string
+  shortDescription: string
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
+  forInventory: boolean
+  forProject: boolean
+  active: boolean
+  materialActive: boolean
+  valid: boolean
+  createdAt?: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Inventory: Prisma.InventoryCreateNestedOneWithoutInventoryStructureInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryStructureInput
+}
+
+export type InventoryStructureUncheckedCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  id: string
+  inventoryPlaceId: string
+  place: string
+  shortDescription: string
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
+  inventoryId: string
+  forInventory: boolean
+  forProject: boolean
+  active: boolean
+  materialActive: boolean
+  valid: boolean
+  createdAt?: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type InventoryStructureCreateOrConnectWithoutEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  where: Prisma.InventoryStructureWhereUniqueInput
+  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput, Prisma.InventoryStructureUncheckedCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput>
+}
+
+export type InventoryStructureCreateManyEmployee_InventoryStructure_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.InventoryStructureCreateManyEmployee_InventoryStructure_deletedByToEmployeeInput | Prisma.InventoryStructureCreateManyEmployee_InventoryStructure_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -859,6 +1037,25 @@ export type InventoryStructureScalarWhereInput = {
   valid?: Prisma.BoolFilter<"InventoryStructure"> | boolean
   createdAt?: Prisma.DateTimeFilter<"InventoryStructure"> | Date | string
   createdBy?: Prisma.StringFilter<"InventoryStructure"> | string
+  deleted?: Prisma.BoolFilter<"InventoryStructure"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"InventoryStructure"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"InventoryStructure"> | string | null
+}
+
+export type InventoryStructureUpsertWithWhereUniqueWithoutEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  where: Prisma.InventoryStructureWhereUniqueInput
+  update: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput, Prisma.InventoryStructureUncheckedUpdateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.InventoryStructureCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput, Prisma.InventoryStructureUncheckedCreateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput>
+}
+
+export type InventoryStructureUpdateWithWhereUniqueWithoutEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  where: Prisma.InventoryStructureWhereUniqueInput
+  data: Prisma.XOR<Prisma.InventoryStructureUpdateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput, Prisma.InventoryStructureUncheckedUpdateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput>
+}
+
+export type InventoryStructureUpdateManyWithWhereWithoutEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  where: Prisma.InventoryStructureScalarWhereInput
+  data: Prisma.XOR<Prisma.InventoryStructureUpdateManyMutationInput, Prisma.InventoryStructureUncheckedUpdateManyWithoutEmployee_InventoryStructure_deletedByToEmployeeInput>
 }
 
 export type InventoryStructureCreateWithoutInventoryInput = {
@@ -881,7 +1078,10 @@ export type InventoryStructureCreateWithoutInventoryInput = {
   materialActive: boolean
   valid: boolean
   createdAt?: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutInventoryStructureInput
+  Employee_InventoryStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInventoryStructure_InventoryStructure_deletedByToEmployeeInput
 }
 
 export type InventoryStructureUncheckedCreateWithoutInventoryInput = {
@@ -905,6 +1105,9 @@ export type InventoryStructureUncheckedCreateWithoutInventoryInput = {
   valid: boolean
   createdAt?: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type InventoryStructureCreateOrConnectWithoutInventoryInput = {
@@ -954,6 +1157,35 @@ export type InventoryStructureCreateManyEmployeeInput = {
   materialActive: boolean
   valid: boolean
   createdAt?: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type InventoryStructureCreateManyEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  id: string
+  inventoryPlaceId: string
+  place: string
+  shortDescription: string
+  longDescription?: string | null
+  beNumber?: string | null
+  purchaseOrderBecraId?: string | null
+  projectId?: string | null
+  partSupplierNumber?: string | null
+  partDescription?: string | null
+  warehousePlaceId?: string | null
+  information?: string | null
+  coordinate: boolean
+  inventoryId: string
+  forInventory: boolean
+  forProject: boolean
+  active: boolean
+  materialActive: boolean
+  valid: boolean
+  createdAt?: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type InventoryStructureUpdateWithoutEmployeeInput = {
@@ -976,7 +1208,10 @@ export type InventoryStructureUpdateWithoutEmployeeInput = {
   materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Inventory?: Prisma.InventoryUpdateOneRequiredWithoutInventoryStructureNestedInput
+  Employee_InventoryStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryStructure_InventoryStructure_deletedByToEmployeeNestedInput
 }
 
 export type InventoryStructureUncheckedUpdateWithoutEmployeeInput = {
@@ -1000,6 +1235,9 @@ export type InventoryStructureUncheckedUpdateWithoutEmployeeInput = {
   materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type InventoryStructureUncheckedUpdateManyWithoutEmployeeInput = {
@@ -1023,6 +1261,87 @@ export type InventoryStructureUncheckedUpdateManyWithoutEmployeeInput = {
   materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type InventoryStructureUpdateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Inventory?: Prisma.InventoryUpdateOneRequiredWithoutInventoryStructureNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryStructureNestedInput
+}
+
+export type InventoryStructureUncheckedUpdateWithoutEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type InventoryStructureUncheckedUpdateManyWithoutEmployee_InventoryStructure_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  inventoryPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purchaseOrderBecraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partSupplierNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coordinate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  inventoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  forInventory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  forProject?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type InventoryStructureCreateManyInventoryInput = {
@@ -1046,6 +1365,9 @@ export type InventoryStructureCreateManyInventoryInput = {
   valid: boolean
   createdAt?: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type InventoryStructureUpdateWithoutInventoryInput = {
@@ -1068,7 +1390,10 @@ export type InventoryStructureUpdateWithoutInventoryInput = {
   materialActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutInventoryStructureNestedInput
+  Employee_InventoryStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInventoryStructure_InventoryStructure_deletedByToEmployeeNestedInput
 }
 
 export type InventoryStructureUncheckedUpdateWithoutInventoryInput = {
@@ -1092,6 +1417,9 @@ export type InventoryStructureUncheckedUpdateWithoutInventoryInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type InventoryStructureUncheckedUpdateManyWithoutInventoryInput = {
@@ -1115,6 +1443,9 @@ export type InventoryStructureUncheckedUpdateManyWithoutInventoryInput = {
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1141,8 +1472,12 @@ export type InventoryStructureSelect<ExtArgs extends runtime.Types.Extensions.In
   valid?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Inventory?: boolean | Prisma.InventoryDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_InventoryStructure_deletedByToEmployee?: boolean | Prisma.InventoryStructure$Employee_InventoryStructure_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["inventoryStructure"]>
 
 
@@ -1169,12 +1504,16 @@ export type InventoryStructureSelectScalar = {
   valid?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type InventoryStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "inventoryPlaceId" | "place" | "shortDescription" | "longDescription" | "beNumber" | "purchaseOrderBecraId" | "projectId" | "partSupplierNumber" | "partDescription" | "warehousePlaceId" | "information" | "coordinate" | "inventoryId" | "forInventory" | "forProject" | "active" | "materialActive" | "valid" | "createdAt" | "createdBy", ExtArgs["result"]["inventoryStructure"]>
+export type InventoryStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "inventoryPlaceId" | "place" | "shortDescription" | "longDescription" | "beNumber" | "purchaseOrderBecraId" | "projectId" | "partSupplierNumber" | "partDescription" | "warehousePlaceId" | "information" | "coordinate" | "inventoryId" | "forInventory" | "forProject" | "active" | "materialActive" | "valid" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["inventoryStructure"]>
 export type InventoryStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Inventory?: boolean | Prisma.InventoryDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_InventoryStructure_deletedByToEmployee?: boolean | Prisma.InventoryStructure$Employee_InventoryStructure_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $InventoryStructurePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1182,6 +1521,7 @@ export type $InventoryStructurePayload<ExtArgs extends runtime.Types.Extensions.
   objects: {
     Inventory: Prisma.$InventoryPayload<ExtArgs>
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_InventoryStructure_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1205,6 +1545,9 @@ export type $InventoryStructurePayload<ExtArgs extends runtime.Types.Extensions.
     valid: boolean
     createdAt: Date
     createdBy: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["inventoryStructure"]>
   composites: {}
 }
@@ -1547,6 +1890,7 @@ export interface Prisma__InventoryStructureClient<T, Null = never, ExtArgs exten
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Inventory<T extends Prisma.InventoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryDefaultArgs<ExtArgs>>): Prisma.Prisma__InventoryClient<runtime.Types.Result.GetResult<Prisma.$InventoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_InventoryStructure_deletedByToEmployee<T extends Prisma.InventoryStructure$Employee_InventoryStructure_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryStructure$Employee_InventoryStructure_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1597,6 +1941,9 @@ export interface InventoryStructureFieldRefs {
   readonly valid: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"InventoryStructure", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"InventoryStructure", 'String'>
+  readonly deleted: Prisma.FieldRef<"InventoryStructure", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"InventoryStructure", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"InventoryStructure", 'String'>
 }
     
 
@@ -1937,6 +2284,25 @@ export type InventoryStructureDeleteManyArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many InventoryStructures to delete.
    */
   limit?: number
+}
+
+/**
+ * InventoryStructure.Employee_InventoryStructure_deletedByToEmployee
+ */
+export type InventoryStructure$Employee_InventoryStructure_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

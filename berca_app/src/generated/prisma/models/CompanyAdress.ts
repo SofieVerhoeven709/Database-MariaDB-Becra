@@ -35,6 +35,9 @@ export type CompanyAdressMinAggregateOutputType = {
   typeAdress: string | null
   createdBy: string | null
   companyId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type CompanyAdressMaxAggregateOutputType = {
@@ -48,6 +51,9 @@ export type CompanyAdressMaxAggregateOutputType = {
   typeAdress: string | null
   createdBy: string | null
   companyId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type CompanyAdressCountAggregateOutputType = {
@@ -61,6 +67,9 @@ export type CompanyAdressCountAggregateOutputType = {
   typeAdress: number
   createdBy: number
   companyId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -76,6 +85,9 @@ export type CompanyAdressMinAggregateInputType = {
   typeAdress?: true
   createdBy?: true
   companyId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type CompanyAdressMaxAggregateInputType = {
@@ -89,6 +101,9 @@ export type CompanyAdressMaxAggregateInputType = {
   typeAdress?: true
   createdBy?: true
   companyId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type CompanyAdressCountAggregateInputType = {
@@ -102,6 +117,9 @@ export type CompanyAdressCountAggregateInputType = {
   typeAdress?: true
   createdBy?: true
   companyId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -188,6 +206,9 @@ export type CompanyAdressGroupByOutputType = {
   typeAdress: string | null
   createdBy: string
   companyId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: CompanyAdressCountAggregateOutputType | null
   _min: CompanyAdressMinAggregateOutputType | null
   _max: CompanyAdressMaxAggregateOutputType | null
@@ -222,8 +243,12 @@ export type CompanyAdressWhereInput = {
   typeAdress?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   createdBy?: Prisma.StringFilter<"CompanyAdress"> | string
   companyId?: Prisma.StringFilter<"CompanyAdress"> | string
+  deleted?: Prisma.BoolFilter<"CompanyAdress"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"CompanyAdress"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
+  Employee_CompanyAdress_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type CompanyAdressOrderByWithRelationInput = {
@@ -237,8 +262,12 @@ export type CompanyAdressOrderByWithRelationInput = {
   typeAdress?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Company?: Prisma.CompanyOrderByWithRelationInput
+  Employee_CompanyAdress_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.CompanyAdressOrderByRelevanceInput
 }
 
@@ -256,8 +285,12 @@ export type CompanyAdressWhereUniqueInput = Prisma.AtLeast<{
   typeAdress?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   createdBy?: Prisma.StringFilter<"CompanyAdress"> | string
   companyId?: Prisma.StringFilter<"CompanyAdress"> | string
+  deleted?: Prisma.BoolFilter<"CompanyAdress"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"CompanyAdress"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
+  Employee_CompanyAdress_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type CompanyAdressOrderByWithAggregationInput = {
@@ -271,6 +304,9 @@ export type CompanyAdressOrderByWithAggregationInput = {
   typeAdress?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CompanyAdressCountOrderByAggregateInput
   _max?: Prisma.CompanyAdressMaxOrderByAggregateInput
   _min?: Prisma.CompanyAdressMinOrderByAggregateInput
@@ -290,6 +326,9 @@ export type CompanyAdressScalarWhereWithAggregatesInput = {
   typeAdress?: Prisma.StringNullableWithAggregatesFilter<"CompanyAdress"> | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"CompanyAdress"> | string
   companyId?: Prisma.StringWithAggregatesFilter<"CompanyAdress"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"CompanyAdress"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CompanyAdress"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"CompanyAdress"> | string | null
 }
 
 export type CompanyAdressCreateInput = {
@@ -301,8 +340,11 @@ export type CompanyAdressCreateInput = {
   place?: string | null
   createdAt: Date | string
   typeAdress?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyAdressInput
   Company: Prisma.CompanyCreateNestedOneWithoutCompanyAdressInput
+  Employee_CompanyAdress_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompanyAdress_CompanyAdress_deletedByToEmployeeInput
 }
 
 export type CompanyAdressUncheckedCreateInput = {
@@ -316,6 +358,9 @@ export type CompanyAdressUncheckedCreateInput = {
   typeAdress?: string | null
   createdBy: string
   companyId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type CompanyAdressUpdateInput = {
@@ -327,8 +372,11 @@ export type CompanyAdressUpdateInput = {
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyAdressNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutCompanyAdressNestedInput
+  Employee_CompanyAdress_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompanyAdress_CompanyAdress_deletedByToEmployeeNestedInput
 }
 
 export type CompanyAdressUncheckedUpdateInput = {
@@ -342,6 +390,9 @@ export type CompanyAdressUncheckedUpdateInput = {
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CompanyAdressCreateManyInput = {
@@ -355,6 +406,9 @@ export type CompanyAdressCreateManyInput = {
   typeAdress?: string | null
   createdBy: string
   companyId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type CompanyAdressUpdateManyMutationInput = {
@@ -366,6 +420,8 @@ export type CompanyAdressUpdateManyMutationInput = {
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CompanyAdressUncheckedUpdateManyInput = {
@@ -379,6 +435,9 @@ export type CompanyAdressUncheckedUpdateManyInput = {
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CompanyAdressListRelationFilter = {
@@ -408,6 +467,9 @@ export type CompanyAdressCountOrderByAggregateInput = {
   typeAdress?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type CompanyAdressMaxOrderByAggregateInput = {
@@ -421,6 +483,9 @@ export type CompanyAdressMaxOrderByAggregateInput = {
   typeAdress?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type CompanyAdressMinOrderByAggregateInput = {
@@ -434,6 +499,9 @@ export type CompanyAdressMinOrderByAggregateInput = {
   typeAdress?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type CompanyAdressCreateNestedManyWithoutCompanyInput = {
@@ -485,10 +553,24 @@ export type CompanyAdressCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
 }
 
+export type CompanyAdressCreateNestedManyWithoutEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.CompanyAdressCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput, Prisma.CompanyAdressUncheckedCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput> | Prisma.CompanyAdressCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[] | Prisma.CompanyAdressUncheckedCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.CompanyAdressCreateOrConnectWithoutEmployee_CompanyAdress_deletedByToEmployeeInput | Prisma.CompanyAdressCreateOrConnectWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  createMany?: Prisma.CompanyAdressCreateManyEmployee_CompanyAdress_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
+}
+
 export type CompanyAdressUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.CompanyAdressCreateWithoutEmployeeInput, Prisma.CompanyAdressUncheckedCreateWithoutEmployeeInput> | Prisma.CompanyAdressCreateWithoutEmployeeInput[] | Prisma.CompanyAdressUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.CompanyAdressCreateOrConnectWithoutEmployeeInput | Prisma.CompanyAdressCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.CompanyAdressCreateManyEmployeeInputEnvelope
+  connect?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
+}
+
+export type CompanyAdressUncheckedCreateNestedManyWithoutEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.CompanyAdressCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput, Prisma.CompanyAdressUncheckedCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput> | Prisma.CompanyAdressCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[] | Prisma.CompanyAdressUncheckedCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.CompanyAdressCreateOrConnectWithoutEmployee_CompanyAdress_deletedByToEmployeeInput | Prisma.CompanyAdressCreateOrConnectWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  createMany?: Prisma.CompanyAdressCreateManyEmployee_CompanyAdress_deletedByToEmployeeInputEnvelope
   connect?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
 }
 
@@ -506,6 +588,20 @@ export type CompanyAdressUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.CompanyAdressScalarWhereInput | Prisma.CompanyAdressScalarWhereInput[]
 }
 
+export type CompanyAdressUpdateManyWithoutEmployee_CompanyAdress_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyAdressCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput, Prisma.CompanyAdressUncheckedCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput> | Prisma.CompanyAdressCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[] | Prisma.CompanyAdressUncheckedCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.CompanyAdressCreateOrConnectWithoutEmployee_CompanyAdress_deletedByToEmployeeInput | Prisma.CompanyAdressCreateOrConnectWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  upsert?: Prisma.CompanyAdressUpsertWithWhereUniqueWithoutEmployee_CompanyAdress_deletedByToEmployeeInput | Prisma.CompanyAdressUpsertWithWhereUniqueWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  createMany?: Prisma.CompanyAdressCreateManyEmployee_CompanyAdress_deletedByToEmployeeInputEnvelope
+  set?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
+  disconnect?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
+  delete?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
+  connect?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
+  update?: Prisma.CompanyAdressUpdateWithWhereUniqueWithoutEmployee_CompanyAdress_deletedByToEmployeeInput | Prisma.CompanyAdressUpdateWithWhereUniqueWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  updateMany?: Prisma.CompanyAdressUpdateManyWithWhereWithoutEmployee_CompanyAdress_deletedByToEmployeeInput | Prisma.CompanyAdressUpdateManyWithWhereWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.CompanyAdressScalarWhereInput | Prisma.CompanyAdressScalarWhereInput[]
+}
+
 export type CompanyAdressUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.CompanyAdressCreateWithoutEmployeeInput, Prisma.CompanyAdressUncheckedCreateWithoutEmployeeInput> | Prisma.CompanyAdressCreateWithoutEmployeeInput[] | Prisma.CompanyAdressUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.CompanyAdressCreateOrConnectWithoutEmployeeInput | Prisma.CompanyAdressCreateOrConnectWithoutEmployeeInput[]
@@ -520,6 +616,20 @@ export type CompanyAdressUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.CompanyAdressScalarWhereInput | Prisma.CompanyAdressScalarWhereInput[]
 }
 
+export type CompanyAdressUncheckedUpdateManyWithoutEmployee_CompanyAdress_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyAdressCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput, Prisma.CompanyAdressUncheckedCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput> | Prisma.CompanyAdressCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[] | Prisma.CompanyAdressUncheckedCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.CompanyAdressCreateOrConnectWithoutEmployee_CompanyAdress_deletedByToEmployeeInput | Prisma.CompanyAdressCreateOrConnectWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  upsert?: Prisma.CompanyAdressUpsertWithWhereUniqueWithoutEmployee_CompanyAdress_deletedByToEmployeeInput | Prisma.CompanyAdressUpsertWithWhereUniqueWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  createMany?: Prisma.CompanyAdressCreateManyEmployee_CompanyAdress_deletedByToEmployeeInputEnvelope
+  set?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
+  disconnect?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
+  delete?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
+  connect?: Prisma.CompanyAdressWhereUniqueInput | Prisma.CompanyAdressWhereUniqueInput[]
+  update?: Prisma.CompanyAdressUpdateWithWhereUniqueWithoutEmployee_CompanyAdress_deletedByToEmployeeInput | Prisma.CompanyAdressUpdateWithWhereUniqueWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  updateMany?: Prisma.CompanyAdressUpdateManyWithWhereWithoutEmployee_CompanyAdress_deletedByToEmployeeInput | Prisma.CompanyAdressUpdateManyWithWhereWithoutEmployee_CompanyAdress_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.CompanyAdressScalarWhereInput | Prisma.CompanyAdressScalarWhereInput[]
+}
+
 export type CompanyAdressCreateWithoutCompanyInput = {
   id: string
   street?: string | null
@@ -529,7 +639,10 @@ export type CompanyAdressCreateWithoutCompanyInput = {
   place?: string | null
   createdAt: Date | string
   typeAdress?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyAdressInput
+  Employee_CompanyAdress_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompanyAdress_CompanyAdress_deletedByToEmployeeInput
 }
 
 export type CompanyAdressUncheckedCreateWithoutCompanyInput = {
@@ -542,6 +655,9 @@ export type CompanyAdressUncheckedCreateWithoutCompanyInput = {
   createdAt: Date | string
   typeAdress?: string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type CompanyAdressCreateOrConnectWithoutCompanyInput = {
@@ -584,6 +700,9 @@ export type CompanyAdressScalarWhereInput = {
   typeAdress?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
   createdBy?: Prisma.StringFilter<"CompanyAdress"> | string
   companyId?: Prisma.StringFilter<"CompanyAdress"> | string
+  deleted?: Prisma.BoolFilter<"CompanyAdress"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"CompanyAdress"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"CompanyAdress"> | string | null
 }
 
 export type CompanyAdressCreateWithoutEmployeeInput = {
@@ -595,7 +714,10 @@ export type CompanyAdressCreateWithoutEmployeeInput = {
   place?: string | null
   createdAt: Date | string
   typeAdress?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Company: Prisma.CompanyCreateNestedOneWithoutCompanyAdressInput
+  Employee_CompanyAdress_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompanyAdress_CompanyAdress_deletedByToEmployeeInput
 }
 
 export type CompanyAdressUncheckedCreateWithoutEmployeeInput = {
@@ -608,6 +730,9 @@ export type CompanyAdressUncheckedCreateWithoutEmployeeInput = {
   createdAt: Date | string
   typeAdress?: string | null
   companyId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type CompanyAdressCreateOrConnectWithoutEmployeeInput = {
@@ -617,6 +742,46 @@ export type CompanyAdressCreateOrConnectWithoutEmployeeInput = {
 
 export type CompanyAdressCreateManyEmployeeInputEnvelope = {
   data: Prisma.CompanyAdressCreateManyEmployeeInput | Prisma.CompanyAdressCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type CompanyAdressCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  id: string
+  street?: string | null
+  houseNumber?: string | null
+  busNumber?: string | null
+  zipCode?: string | null
+  place?: string | null
+  createdAt: Date | string
+  typeAdress?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyAdressInput
+  Company: Prisma.CompanyCreateNestedOneWithoutCompanyAdressInput
+}
+
+export type CompanyAdressUncheckedCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  id: string
+  street?: string | null
+  houseNumber?: string | null
+  busNumber?: string | null
+  zipCode?: string | null
+  place?: string | null
+  createdAt: Date | string
+  typeAdress?: string | null
+  createdBy: string
+  companyId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type CompanyAdressCreateOrConnectWithoutEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  where: Prisma.CompanyAdressWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyAdressCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput, Prisma.CompanyAdressUncheckedCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput>
+}
+
+export type CompanyAdressCreateManyEmployee_CompanyAdress_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.CompanyAdressCreateManyEmployee_CompanyAdress_deletedByToEmployeeInput | Prisma.CompanyAdressCreateManyEmployee_CompanyAdress_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -636,6 +801,22 @@ export type CompanyAdressUpdateManyWithWhereWithoutEmployeeInput = {
   data: Prisma.XOR<Prisma.CompanyAdressUpdateManyMutationInput, Prisma.CompanyAdressUncheckedUpdateManyWithoutEmployeeInput>
 }
 
+export type CompanyAdressUpsertWithWhereUniqueWithoutEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  where: Prisma.CompanyAdressWhereUniqueInput
+  update: Prisma.XOR<Prisma.CompanyAdressUpdateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput, Prisma.CompanyAdressUncheckedUpdateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.CompanyAdressCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput, Prisma.CompanyAdressUncheckedCreateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput>
+}
+
+export type CompanyAdressUpdateWithWhereUniqueWithoutEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  where: Prisma.CompanyAdressWhereUniqueInput
+  data: Prisma.XOR<Prisma.CompanyAdressUpdateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput, Prisma.CompanyAdressUncheckedUpdateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput>
+}
+
+export type CompanyAdressUpdateManyWithWhereWithoutEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  where: Prisma.CompanyAdressScalarWhereInput
+  data: Prisma.XOR<Prisma.CompanyAdressUpdateManyMutationInput, Prisma.CompanyAdressUncheckedUpdateManyWithoutEmployee_CompanyAdress_deletedByToEmployeeInput>
+}
+
 export type CompanyAdressCreateManyCompanyInput = {
   id: string
   street?: string | null
@@ -646,6 +827,9 @@ export type CompanyAdressCreateManyCompanyInput = {
   createdAt: Date | string
   typeAdress?: string | null
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type CompanyAdressUpdateWithoutCompanyInput = {
@@ -657,7 +841,10 @@ export type CompanyAdressUpdateWithoutCompanyInput = {
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyAdressNestedInput
+  Employee_CompanyAdress_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompanyAdress_CompanyAdress_deletedByToEmployeeNestedInput
 }
 
 export type CompanyAdressUncheckedUpdateWithoutCompanyInput = {
@@ -670,6 +857,9 @@ export type CompanyAdressUncheckedUpdateWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CompanyAdressUncheckedUpdateManyWithoutCompanyInput = {
@@ -682,6 +872,9 @@ export type CompanyAdressUncheckedUpdateManyWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CompanyAdressCreateManyEmployeeInput = {
@@ -694,6 +887,24 @@ export type CompanyAdressCreateManyEmployeeInput = {
   createdAt: Date | string
   typeAdress?: string | null
   companyId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type CompanyAdressCreateManyEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  id: string
+  street?: string | null
+  houseNumber?: string | null
+  busNumber?: string | null
+  zipCode?: string | null
+  place?: string | null
+  createdAt: Date | string
+  typeAdress?: string | null
+  createdBy: string
+  companyId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type CompanyAdressUpdateWithoutEmployeeInput = {
@@ -705,7 +916,10 @@ export type CompanyAdressUpdateWithoutEmployeeInput = {
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Company?: Prisma.CompanyUpdateOneRequiredWithoutCompanyAdressNestedInput
+  Employee_CompanyAdress_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompanyAdress_CompanyAdress_deletedByToEmployeeNestedInput
 }
 
 export type CompanyAdressUncheckedUpdateWithoutEmployeeInput = {
@@ -718,6 +932,9 @@ export type CompanyAdressUncheckedUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CompanyAdressUncheckedUpdateManyWithoutEmployeeInput = {
@@ -730,6 +947,54 @@ export type CompanyAdressUncheckedUpdateManyWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CompanyAdressUpdateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyAdressNestedInput
+  Company?: Prisma.CompanyUpdateOneRequiredWithoutCompanyAdressNestedInput
+}
+
+export type CompanyAdressUncheckedUpdateWithoutEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type CompanyAdressUncheckedUpdateManyWithoutEmployee_CompanyAdress_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  houseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  busNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zipCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  typeAdress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -745,8 +1010,12 @@ export type CompanyAdressSelect<ExtArgs extends runtime.Types.Extensions.Interna
   typeAdress?: boolean
   createdBy?: boolean
   companyId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
+  Employee_CompanyAdress_deletedByToEmployee?: boolean | Prisma.CompanyAdress$Employee_CompanyAdress_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["companyAdress"]>
 
 
@@ -762,12 +1031,16 @@ export type CompanyAdressSelectScalar = {
   typeAdress?: boolean
   createdBy?: boolean
   companyId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type CompanyAdressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "street" | "houseNumber" | "busNumber" | "zipCode" | "place" | "createdAt" | "typeAdress" | "createdBy" | "companyId", ExtArgs["result"]["companyAdress"]>
+export type CompanyAdressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "street" | "houseNumber" | "busNumber" | "zipCode" | "place" | "createdAt" | "typeAdress" | "createdBy" | "companyId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["companyAdress"]>
 export type CompanyAdressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
+  Employee_CompanyAdress_deletedByToEmployee?: boolean | Prisma.CompanyAdress$Employee_CompanyAdress_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $CompanyAdressPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -775,6 +1048,7 @@ export type $CompanyAdressPayload<ExtArgs extends runtime.Types.Extensions.Inter
   objects: {
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Company: Prisma.$CompanyPayload<ExtArgs>
+    Employee_CompanyAdress_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -787,6 +1061,9 @@ export type $CompanyAdressPayload<ExtArgs extends runtime.Types.Extensions.Inter
     typeAdress: string | null
     createdBy: string
     companyId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["companyAdress"]>
   composites: {}
 }
@@ -1129,6 +1406,7 @@ export interface Prisma__CompanyAdressClient<T, Null = never, ExtArgs extends ru
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Company<T extends Prisma.CompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_CompanyAdress_deletedByToEmployee<T extends Prisma.CompanyAdress$Employee_CompanyAdress_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompanyAdress$Employee_CompanyAdress_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1168,6 +1446,9 @@ export interface CompanyAdressFieldRefs {
   readonly typeAdress: Prisma.FieldRef<"CompanyAdress", 'String'>
   readonly createdBy: Prisma.FieldRef<"CompanyAdress", 'String'>
   readonly companyId: Prisma.FieldRef<"CompanyAdress", 'String'>
+  readonly deleted: Prisma.FieldRef<"CompanyAdress", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"CompanyAdress", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"CompanyAdress", 'String'>
 }
     
 
@@ -1508,6 +1789,25 @@ export type CompanyAdressDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many CompanyAdresses to delete.
    */
   limit?: number
+}
+
+/**
+ * CompanyAdress.Employee_CompanyAdress_deletedByToEmployee
+ */
+export type CompanyAdress$Employee_CompanyAdress_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

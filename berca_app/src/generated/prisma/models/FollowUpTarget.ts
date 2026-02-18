@@ -28,18 +28,27 @@ export type FollowUpTargetMinAggregateOutputType = {
   id: string | null
   followUpId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type FollowUpTargetMaxAggregateOutputType = {
   id: string | null
   followUpId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type FollowUpTargetCountAggregateOutputType = {
   id: number
   followUpId: number
   targetId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -48,18 +57,27 @@ export type FollowUpTargetMinAggregateInputType = {
   id?: true
   followUpId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type FollowUpTargetMaxAggregateInputType = {
   id?: true
   followUpId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type FollowUpTargetCountAggregateInputType = {
   id?: true
   followUpId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -139,6 +157,9 @@ export type FollowUpTargetGroupByOutputType = {
   id: string
   followUpId: string
   targetId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: FollowUpTargetCountAggregateOutputType | null
   _min: FollowUpTargetMinAggregateOutputType | null
   _max: FollowUpTargetMaxAggregateOutputType | null
@@ -166,16 +187,24 @@ export type FollowUpTargetWhereInput = {
   id?: Prisma.StringFilter<"FollowUpTarget"> | string
   followUpId?: Prisma.StringFilter<"FollowUpTarget"> | string
   targetId?: Prisma.StringFilter<"FollowUpTarget"> | string
+  deleted?: Prisma.BoolFilter<"FollowUpTarget"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"FollowUpTarget"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"FollowUpTarget"> | string | null
   FollowUp?: Prisma.XOR<Prisma.FollowUpScalarRelationFilter, Prisma.FollowUpWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type FollowUpTargetOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   followUpId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   FollowUp?: Prisma.FollowUpOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.FollowUpTargetOrderByRelevanceInput
 }
 
@@ -186,14 +215,21 @@ export type FollowUpTargetWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.FollowUpTargetWhereInput | Prisma.FollowUpTargetWhereInput[]
   followUpId?: Prisma.StringFilter<"FollowUpTarget"> | string
   targetId?: Prisma.StringFilter<"FollowUpTarget"> | string
+  deleted?: Prisma.BoolFilter<"FollowUpTarget"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"FollowUpTarget"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"FollowUpTarget"> | string | null
   FollowUp?: Prisma.XOR<Prisma.FollowUpScalarRelationFilter, Prisma.FollowUpWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type FollowUpTargetOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   followUpId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.FollowUpTargetCountOrderByAggregateInput
   _max?: Prisma.FollowUpTargetMaxOrderByAggregateInput
   _min?: Prisma.FollowUpTargetMinOrderByAggregateInput
@@ -206,46 +242,69 @@ export type FollowUpTargetScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"FollowUpTarget"> | string
   followUpId?: Prisma.StringWithAggregatesFilter<"FollowUpTarget"> | string
   targetId?: Prisma.StringWithAggregatesFilter<"FollowUpTarget"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"FollowUpTarget"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"FollowUpTarget"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"FollowUpTarget"> | string | null
 }
 
 export type FollowUpTargetCreateInput = {
   id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpTargetInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpTargetInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpTargetInput
 }
 
 export type FollowUpTargetUncheckedCreateInput = {
   id: string
   followUpId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type FollowUpTargetUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpTargetNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpTargetNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutFollowUpTargetNestedInput
 }
 
 export type FollowUpTargetUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   followUpId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type FollowUpTargetCreateManyInput = {
   id: string
   followUpId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type FollowUpTargetUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type FollowUpTargetUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   followUpId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type FollowUpTargetListRelationFilter = {
@@ -268,18 +327,69 @@ export type FollowUpTargetCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   followUpId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type FollowUpTargetMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   followUpId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type FollowUpTargetMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   followUpId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
+}
+
+export type FollowUpTargetCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.FollowUpTargetCreateWithoutEmployeeInput, Prisma.FollowUpTargetUncheckedCreateWithoutEmployeeInput> | Prisma.FollowUpTargetCreateWithoutEmployeeInput[] | Prisma.FollowUpTargetUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.FollowUpTargetCreateOrConnectWithoutEmployeeInput | Prisma.FollowUpTargetCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.FollowUpTargetCreateManyEmployeeInputEnvelope
+  connect?: Prisma.FollowUpTargetWhereUniqueInput | Prisma.FollowUpTargetWhereUniqueInput[]
+}
+
+export type FollowUpTargetUncheckedCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.FollowUpTargetCreateWithoutEmployeeInput, Prisma.FollowUpTargetUncheckedCreateWithoutEmployeeInput> | Prisma.FollowUpTargetCreateWithoutEmployeeInput[] | Prisma.FollowUpTargetUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.FollowUpTargetCreateOrConnectWithoutEmployeeInput | Prisma.FollowUpTargetCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.FollowUpTargetCreateManyEmployeeInputEnvelope
+  connect?: Prisma.FollowUpTargetWhereUniqueInput | Prisma.FollowUpTargetWhereUniqueInput[]
+}
+
+export type FollowUpTargetUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.FollowUpTargetCreateWithoutEmployeeInput, Prisma.FollowUpTargetUncheckedCreateWithoutEmployeeInput> | Prisma.FollowUpTargetCreateWithoutEmployeeInput[] | Prisma.FollowUpTargetUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.FollowUpTargetCreateOrConnectWithoutEmployeeInput | Prisma.FollowUpTargetCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.FollowUpTargetUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.FollowUpTargetUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.FollowUpTargetCreateManyEmployeeInputEnvelope
+  set?: Prisma.FollowUpTargetWhereUniqueInput | Prisma.FollowUpTargetWhereUniqueInput[]
+  disconnect?: Prisma.FollowUpTargetWhereUniqueInput | Prisma.FollowUpTargetWhereUniqueInput[]
+  delete?: Prisma.FollowUpTargetWhereUniqueInput | Prisma.FollowUpTargetWhereUniqueInput[]
+  connect?: Prisma.FollowUpTargetWhereUniqueInput | Prisma.FollowUpTargetWhereUniqueInput[]
+  update?: Prisma.FollowUpTargetUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.FollowUpTargetUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.FollowUpTargetUpdateManyWithWhereWithoutEmployeeInput | Prisma.FollowUpTargetUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.FollowUpTargetScalarWhereInput | Prisma.FollowUpTargetScalarWhereInput[]
+}
+
+export type FollowUpTargetUncheckedUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.FollowUpTargetCreateWithoutEmployeeInput, Prisma.FollowUpTargetUncheckedCreateWithoutEmployeeInput> | Prisma.FollowUpTargetCreateWithoutEmployeeInput[] | Prisma.FollowUpTargetUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.FollowUpTargetCreateOrConnectWithoutEmployeeInput | Prisma.FollowUpTargetCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.FollowUpTargetUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.FollowUpTargetUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.FollowUpTargetCreateManyEmployeeInputEnvelope
+  set?: Prisma.FollowUpTargetWhereUniqueInput | Prisma.FollowUpTargetWhereUniqueInput[]
+  disconnect?: Prisma.FollowUpTargetWhereUniqueInput | Prisma.FollowUpTargetWhereUniqueInput[]
+  delete?: Prisma.FollowUpTargetWhereUniqueInput | Prisma.FollowUpTargetWhereUniqueInput[]
+  connect?: Prisma.FollowUpTargetWhereUniqueInput | Prisma.FollowUpTargetWhereUniqueInput[]
+  update?: Prisma.FollowUpTargetUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.FollowUpTargetUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.FollowUpTargetUpdateManyWithWhereWithoutEmployeeInput | Prisma.FollowUpTargetUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.FollowUpTargetScalarWhereInput | Prisma.FollowUpTargetScalarWhereInput[]
 }
 
 export type FollowUpTargetCreateNestedManyWithoutFollowUpInput = {
@@ -366,14 +476,74 @@ export type FollowUpTargetUncheckedUpdateManyWithoutTargetNestedInput = {
   deleteMany?: Prisma.FollowUpTargetScalarWhereInput | Prisma.FollowUpTargetScalarWhereInput[]
 }
 
+export type FollowUpTargetCreateWithoutEmployeeInput = {
+  id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpTargetInput
+  Target: Prisma.TargetCreateNestedOneWithoutFollowUpTargetInput
+}
+
+export type FollowUpTargetUncheckedCreateWithoutEmployeeInput = {
+  id: string
+  followUpId: string
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type FollowUpTargetCreateOrConnectWithoutEmployeeInput = {
+  where: Prisma.FollowUpTargetWhereUniqueInput
+  create: Prisma.XOR<Prisma.FollowUpTargetCreateWithoutEmployeeInput, Prisma.FollowUpTargetUncheckedCreateWithoutEmployeeInput>
+}
+
+export type FollowUpTargetCreateManyEmployeeInputEnvelope = {
+  data: Prisma.FollowUpTargetCreateManyEmployeeInput | Prisma.FollowUpTargetCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type FollowUpTargetUpsertWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.FollowUpTargetWhereUniqueInput
+  update: Prisma.XOR<Prisma.FollowUpTargetUpdateWithoutEmployeeInput, Prisma.FollowUpTargetUncheckedUpdateWithoutEmployeeInput>
+  create: Prisma.XOR<Prisma.FollowUpTargetCreateWithoutEmployeeInput, Prisma.FollowUpTargetUncheckedCreateWithoutEmployeeInput>
+}
+
+export type FollowUpTargetUpdateWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.FollowUpTargetWhereUniqueInput
+  data: Prisma.XOR<Prisma.FollowUpTargetUpdateWithoutEmployeeInput, Prisma.FollowUpTargetUncheckedUpdateWithoutEmployeeInput>
+}
+
+export type FollowUpTargetUpdateManyWithWhereWithoutEmployeeInput = {
+  where: Prisma.FollowUpTargetScalarWhereInput
+  data: Prisma.XOR<Prisma.FollowUpTargetUpdateManyMutationInput, Prisma.FollowUpTargetUncheckedUpdateManyWithoutEmployeeInput>
+}
+
+export type FollowUpTargetScalarWhereInput = {
+  AND?: Prisma.FollowUpTargetScalarWhereInput | Prisma.FollowUpTargetScalarWhereInput[]
+  OR?: Prisma.FollowUpTargetScalarWhereInput[]
+  NOT?: Prisma.FollowUpTargetScalarWhereInput | Prisma.FollowUpTargetScalarWhereInput[]
+  id?: Prisma.StringFilter<"FollowUpTarget"> | string
+  followUpId?: Prisma.StringFilter<"FollowUpTarget"> | string
+  targetId?: Prisma.StringFilter<"FollowUpTarget"> | string
+  deleted?: Prisma.BoolFilter<"FollowUpTarget"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"FollowUpTarget"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"FollowUpTarget"> | string | null
+}
+
 export type FollowUpTargetCreateWithoutFollowUpInput = {
   id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpTargetInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpTargetInput
 }
 
 export type FollowUpTargetUncheckedCreateWithoutFollowUpInput = {
   id: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type FollowUpTargetCreateOrConnectWithoutFollowUpInput = {
@@ -402,23 +572,20 @@ export type FollowUpTargetUpdateManyWithWhereWithoutFollowUpInput = {
   data: Prisma.XOR<Prisma.FollowUpTargetUpdateManyMutationInput, Prisma.FollowUpTargetUncheckedUpdateManyWithoutFollowUpInput>
 }
 
-export type FollowUpTargetScalarWhereInput = {
-  AND?: Prisma.FollowUpTargetScalarWhereInput | Prisma.FollowUpTargetScalarWhereInput[]
-  OR?: Prisma.FollowUpTargetScalarWhereInput[]
-  NOT?: Prisma.FollowUpTargetScalarWhereInput | Prisma.FollowUpTargetScalarWhereInput[]
-  id?: Prisma.StringFilter<"FollowUpTarget"> | string
-  followUpId?: Prisma.StringFilter<"FollowUpTarget"> | string
-  targetId?: Prisma.StringFilter<"FollowUpTarget"> | string
-}
-
 export type FollowUpTargetCreateWithoutTargetInput = {
   id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   FollowUp: Prisma.FollowUpCreateNestedOneWithoutFollowUpTargetInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutFollowUpTargetInput
 }
 
 export type FollowUpTargetUncheckedCreateWithoutTargetInput = {
   id: string
   followUpId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type FollowUpTargetCreateOrConnectWithoutTargetInput = {
@@ -447,44 +614,100 @@ export type FollowUpTargetUpdateManyWithWhereWithoutTargetInput = {
   data: Prisma.XOR<Prisma.FollowUpTargetUpdateManyMutationInput, Prisma.FollowUpTargetUncheckedUpdateManyWithoutTargetInput>
 }
 
+export type FollowUpTargetCreateManyEmployeeInput = {
+  id: string
+  followUpId: string
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type FollowUpTargetUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpTargetNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpTargetNestedInput
+}
+
+export type FollowUpTargetUncheckedUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type FollowUpTargetUncheckedUpdateManyWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  followUpId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
 export type FollowUpTargetCreateManyFollowUpInput = {
   id: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type FollowUpTargetUpdateWithoutFollowUpInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpTargetNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutFollowUpTargetNestedInput
 }
 
 export type FollowUpTargetUncheckedUpdateWithoutFollowUpInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type FollowUpTargetUncheckedUpdateManyWithoutFollowUpInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type FollowUpTargetCreateManyTargetInput = {
   id: string
   followUpId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type FollowUpTargetUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   FollowUp?: Prisma.FollowUpUpdateOneRequiredWithoutFollowUpTargetNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutFollowUpTargetNestedInput
 }
 
 export type FollowUpTargetUncheckedUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   followUpId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type FollowUpTargetUncheckedUpdateManyWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   followUpId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -493,8 +716,12 @@ export type FollowUpTargetSelect<ExtArgs extends runtime.Types.Extensions.Intern
   id?: boolean
   followUpId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   FollowUp?: boolean | Prisma.FollowUpDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee?: boolean | Prisma.FollowUpTarget$EmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["followUpTarget"]>
 
 
@@ -503,12 +730,16 @@ export type FollowUpTargetSelectScalar = {
   id?: boolean
   followUpId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type FollowUpTargetOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "followUpId" | "targetId", ExtArgs["result"]["followUpTarget"]>
+export type FollowUpTargetOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "followUpId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["followUpTarget"]>
 export type FollowUpTargetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   FollowUp?: boolean | Prisma.FollowUpDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee?: boolean | Prisma.FollowUpTarget$EmployeeArgs<ExtArgs>
 }
 
 export type $FollowUpTargetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -516,11 +747,15 @@ export type $FollowUpTargetPayload<ExtArgs extends runtime.Types.Extensions.Inte
   objects: {
     FollowUp: Prisma.$FollowUpPayload<ExtArgs>
     Target: Prisma.$TargetPayload<ExtArgs>
+    Employee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     followUpId: string
     targetId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["followUpTarget"]>
   composites: {}
 }
@@ -863,6 +1098,7 @@ export interface Prisma__FollowUpTargetClient<T, Null = never, ExtArgs extends r
   readonly [Symbol.toStringTag]: "PrismaPromise"
   FollowUp<T extends Prisma.FollowUpDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FollowUpDefaultArgs<ExtArgs>>): Prisma.Prisma__FollowUpClient<runtime.Types.Result.GetResult<Prisma.$FollowUpPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee<T extends Prisma.FollowUpTarget$EmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FollowUpTarget$EmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -895,6 +1131,9 @@ export interface FollowUpTargetFieldRefs {
   readonly id: Prisma.FieldRef<"FollowUpTarget", 'String'>
   readonly followUpId: Prisma.FieldRef<"FollowUpTarget", 'String'>
   readonly targetId: Prisma.FieldRef<"FollowUpTarget", 'String'>
+  readonly deleted: Prisma.FieldRef<"FollowUpTarget", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"FollowUpTarget", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"FollowUpTarget", 'String'>
 }
     
 
@@ -1235,6 +1474,25 @@ export type FollowUpTargetDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many FollowUpTargets to delete.
    */
   limit?: number
+}
+
+/**
+ * FollowUpTarget.Employee
+ */
+export type FollowUpTarget$EmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

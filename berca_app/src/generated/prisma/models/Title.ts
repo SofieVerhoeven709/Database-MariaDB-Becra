@@ -28,21 +28,30 @@ export type TitleMinAggregateOutputType = {
   id: string | null
   name: string | null
   createdAt: Date | null
+  deleted: boolean | null
+  deletedAt: Date | null
   createdBy: string | null
+  deletedBy: string | null
 }
 
 export type TitleMaxAggregateOutputType = {
   id: string | null
   name: string | null
   createdAt: Date | null
+  deleted: boolean | null
+  deletedAt: Date | null
   createdBy: string | null
+  deletedBy: string | null
 }
 
 export type TitleCountAggregateOutputType = {
   id: number
   name: number
   createdAt: number
+  deleted: number
+  deletedAt: number
   createdBy: number
+  deletedBy: number
   _all: number
 }
 
@@ -51,21 +60,30 @@ export type TitleMinAggregateInputType = {
   id?: true
   name?: true
   createdAt?: true
+  deleted?: true
+  deletedAt?: true
   createdBy?: true
+  deletedBy?: true
 }
 
 export type TitleMaxAggregateInputType = {
   id?: true
   name?: true
   createdAt?: true
+  deleted?: true
+  deletedAt?: true
   createdBy?: true
+  deletedBy?: true
 }
 
 export type TitleCountAggregateInputType = {
   id?: true
   name?: true
   createdAt?: true
+  deleted?: true
+  deletedAt?: true
   createdBy?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -145,7 +163,10 @@ export type TitleGroupByOutputType = {
   id: string
   name: string
   createdAt: Date
+  deleted: boolean
+  deletedAt: Date | null
   createdBy: string
+  deletedBy: string | null
   _count: TitleCountAggregateOutputType | null
   _min: TitleMinAggregateOutputType | null
   _max: TitleMaxAggregateOutputType | null
@@ -173,20 +194,28 @@ export type TitleWhereInput = {
   id?: Prisma.StringFilter<"Title"> | string
   name?: Prisma.StringFilter<"Title"> | string
   createdAt?: Prisma.DateTimeFilter<"Title"> | Date | string
+  deleted?: Prisma.BoolFilter<"Title"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Title"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Title"> | string
+  deletedBy?: Prisma.StringNullableFilter<"Title"> | string | null
   Contact?: Prisma.ContactListRelationFilter
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeListRelationFilter
   Employee_Title_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Title_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type TitleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Contact?: Prisma.ContactOrderByRelationAggregateInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeOrderByRelationAggregateInput
   Employee_Title_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_Title_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.TitleOrderByRelevanceInput
 }
 
@@ -197,17 +226,24 @@ export type TitleWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TitleWhereInput | Prisma.TitleWhereInput[]
   name?: Prisma.StringFilter<"Title"> | string
   createdAt?: Prisma.DateTimeFilter<"Title"> | Date | string
+  deleted?: Prisma.BoolFilter<"Title"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Title"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Title"> | string
+  deletedBy?: Prisma.StringNullableFilter<"Title"> | string | null
   Contact?: Prisma.ContactListRelationFilter
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeListRelationFilter
   Employee_Title_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Title_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type TitleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TitleCountOrderByAggregateInput
   _max?: Prisma.TitleMaxOrderByAggregateInput
   _min?: Prisma.TitleMinOrderByAggregateInput
@@ -220,23 +256,32 @@ export type TitleScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Title"> | string
   name?: Prisma.StringWithAggregatesFilter<"Title"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Title"> | Date | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"Title"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Title"> | Date | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"Title"> | string
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Title"> | string | null
 }
 
 export type TitleCreateInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutTitleInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
   Employee_Title_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
+  Employee_Title_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_deletedByToEmployeeInput
 }
 
 export type TitleUncheckedCreateInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   createdBy: string
+  deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTitleInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
 }
@@ -245,16 +290,22 @@ export type TitleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutTitleNestedInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUpdateManyWithoutTitle_Employee_titleIdToTitleNestedInput
   Employee_Title_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutTitle_Title_createdByToEmployeeNestedInput
+  Employee_Title_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTitle_Title_deletedByToEmployeeNestedInput
 }
 
 export type TitleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTitleNestedInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedUpdateManyWithoutTitle_Employee_titleIdToTitleNestedInput
 }
@@ -263,20 +314,28 @@ export type TitleCreateManyInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   createdBy: string
+  deletedBy?: string | null
 }
 
 export type TitleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TitleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TitleNullableScalarRelationFilter = {
@@ -304,21 +363,30 @@ export type TitleCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TitleMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TitleMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TitleCreateNestedOneWithoutContactInput = {
@@ -350,10 +418,24 @@ export type TitleCreateNestedManyWithoutEmployee_Title_createdByToEmployeeInput 
   connect?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
 }
 
+export type TitleCreateNestedManyWithoutEmployee_Title_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput, Prisma.TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput> | Prisma.TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput[] | Prisma.TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TitleCreateOrConnectWithoutEmployee_Title_deletedByToEmployeeInput | Prisma.TitleCreateOrConnectWithoutEmployee_Title_deletedByToEmployeeInput[]
+  createMany?: Prisma.TitleCreateManyEmployee_Title_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
+}
+
 export type TitleUncheckedCreateNestedManyWithoutEmployee_Title_createdByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.TitleCreateWithoutEmployee_Title_createdByToEmployeeInput, Prisma.TitleUncheckedCreateWithoutEmployee_Title_createdByToEmployeeInput> | Prisma.TitleCreateWithoutEmployee_Title_createdByToEmployeeInput[] | Prisma.TitleUncheckedCreateWithoutEmployee_Title_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.TitleCreateOrConnectWithoutEmployee_Title_createdByToEmployeeInput | Prisma.TitleCreateOrConnectWithoutEmployee_Title_createdByToEmployeeInput[]
   createMany?: Prisma.TitleCreateManyEmployee_Title_createdByToEmployeeInputEnvelope
+  connect?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
+}
+
+export type TitleUncheckedCreateNestedManyWithoutEmployee_Title_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput, Prisma.TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput> | Prisma.TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput[] | Prisma.TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TitleCreateOrConnectWithoutEmployee_Title_deletedByToEmployeeInput | Prisma.TitleCreateOrConnectWithoutEmployee_Title_deletedByToEmployeeInput[]
+  createMany?: Prisma.TitleCreateManyEmployee_Title_deletedByToEmployeeInputEnvelope
   connect?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
 }
 
@@ -381,6 +463,20 @@ export type TitleUpdateManyWithoutEmployee_Title_createdByToEmployeeNestedInput 
   deleteMany?: Prisma.TitleScalarWhereInput | Prisma.TitleScalarWhereInput[]
 }
 
+export type TitleUpdateManyWithoutEmployee_Title_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput, Prisma.TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput> | Prisma.TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput[] | Prisma.TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TitleCreateOrConnectWithoutEmployee_Title_deletedByToEmployeeInput | Prisma.TitleCreateOrConnectWithoutEmployee_Title_deletedByToEmployeeInput[]
+  upsert?: Prisma.TitleUpsertWithWhereUniqueWithoutEmployee_Title_deletedByToEmployeeInput | Prisma.TitleUpsertWithWhereUniqueWithoutEmployee_Title_deletedByToEmployeeInput[]
+  createMany?: Prisma.TitleCreateManyEmployee_Title_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
+  disconnect?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
+  delete?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
+  connect?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
+  update?: Prisma.TitleUpdateWithWhereUniqueWithoutEmployee_Title_deletedByToEmployeeInput | Prisma.TitleUpdateWithWhereUniqueWithoutEmployee_Title_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TitleUpdateManyWithWhereWithoutEmployee_Title_deletedByToEmployeeInput | Prisma.TitleUpdateManyWithWhereWithoutEmployee_Title_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.TitleScalarWhereInput | Prisma.TitleScalarWhereInput[]
+}
+
 export type TitleUncheckedUpdateManyWithoutEmployee_Title_createdByToEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.TitleCreateWithoutEmployee_Title_createdByToEmployeeInput, Prisma.TitleUncheckedCreateWithoutEmployee_Title_createdByToEmployeeInput> | Prisma.TitleCreateWithoutEmployee_Title_createdByToEmployeeInput[] | Prisma.TitleUncheckedCreateWithoutEmployee_Title_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.TitleCreateOrConnectWithoutEmployee_Title_createdByToEmployeeInput | Prisma.TitleCreateOrConnectWithoutEmployee_Title_createdByToEmployeeInput[]
@@ -395,19 +491,39 @@ export type TitleUncheckedUpdateManyWithoutEmployee_Title_createdByToEmployeeNes
   deleteMany?: Prisma.TitleScalarWhereInput | Prisma.TitleScalarWhereInput[]
 }
 
+export type TitleUncheckedUpdateManyWithoutEmployee_Title_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput, Prisma.TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput> | Prisma.TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput[] | Prisma.TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TitleCreateOrConnectWithoutEmployee_Title_deletedByToEmployeeInput | Prisma.TitleCreateOrConnectWithoutEmployee_Title_deletedByToEmployeeInput[]
+  upsert?: Prisma.TitleUpsertWithWhereUniqueWithoutEmployee_Title_deletedByToEmployeeInput | Prisma.TitleUpsertWithWhereUniqueWithoutEmployee_Title_deletedByToEmployeeInput[]
+  createMany?: Prisma.TitleCreateManyEmployee_Title_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
+  disconnect?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
+  delete?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
+  connect?: Prisma.TitleWhereUniqueInput | Prisma.TitleWhereUniqueInput[]
+  update?: Prisma.TitleUpdateWithWhereUniqueWithoutEmployee_Title_deletedByToEmployeeInput | Prisma.TitleUpdateWithWhereUniqueWithoutEmployee_Title_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TitleUpdateManyWithWhereWithoutEmployee_Title_deletedByToEmployeeInput | Prisma.TitleUpdateManyWithWhereWithoutEmployee_Title_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.TitleScalarWhereInput | Prisma.TitleScalarWhereInput[]
+}
+
 export type TitleCreateWithoutContactInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
   Employee_Title_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
+  Employee_Title_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_deletedByToEmployeeInput
 }
 
 export type TitleUncheckedCreateWithoutContactInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   createdBy: string
+  deletedBy?: string | null
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
 }
 
@@ -431,15 +547,21 @@ export type TitleUpdateWithoutContactInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUpdateManyWithoutTitle_Employee_titleIdToTitleNestedInput
   Employee_Title_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutTitle_Title_createdByToEmployeeNestedInput
+  Employee_Title_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTitle_Title_deletedByToEmployeeNestedInput
 }
 
 export type TitleUncheckedUpdateWithoutContactInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedUpdateManyWithoutTitle_Employee_titleIdToTitleNestedInput
 }
 
@@ -447,15 +569,21 @@ export type TitleCreateWithoutEmployee_Employee_titleIdToTitleInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutTitleInput
   Employee_Title_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
+  Employee_Title_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_deletedByToEmployeeInput
 }
 
 export type TitleUncheckedCreateWithoutEmployee_Employee_titleIdToTitleInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   createdBy: string
+  deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTitleInput
 }
 
@@ -468,14 +596,20 @@ export type TitleCreateWithoutEmployee_Title_createdByToEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutTitleInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
+  Employee_Title_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_deletedByToEmployeeInput
 }
 
 export type TitleUncheckedCreateWithoutEmployee_Title_createdByToEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTitleInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
 }
@@ -487,6 +621,38 @@ export type TitleCreateOrConnectWithoutEmployee_Title_createdByToEmployeeInput =
 
 export type TitleCreateManyEmployee_Title_createdByToEmployeeInputEnvelope = {
   data: Prisma.TitleCreateManyEmployee_Title_createdByToEmployeeInput | Prisma.TitleCreateManyEmployee_Title_createdByToEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Contact?: Prisma.ContactCreateNestedManyWithoutTitleInput
+  Employee_Employee_titleIdToTitle?: Prisma.EmployeeCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
+  Employee_Title_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
+}
+
+export type TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  createdBy: string
+  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTitleInput
+  Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
+}
+
+export type TitleCreateOrConnectWithoutEmployee_Title_deletedByToEmployeeInput = {
+  where: Prisma.TitleWhereUniqueInput
+  create: Prisma.XOR<Prisma.TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput, Prisma.TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput>
+}
+
+export type TitleCreateManyEmployee_Title_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.TitleCreateManyEmployee_Title_deletedByToEmployeeInput | Prisma.TitleCreateManyEmployee_Title_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -505,15 +671,21 @@ export type TitleUpdateWithoutEmployee_Employee_titleIdToTitleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutTitleNestedInput
   Employee_Title_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutTitle_Title_createdByToEmployeeNestedInput
+  Employee_Title_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTitle_Title_deletedByToEmployeeNestedInput
 }
 
 export type TitleUncheckedUpdateWithoutEmployee_Employee_titleIdToTitleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTitleNestedInput
 }
 
@@ -540,27 +712,64 @@ export type TitleScalarWhereInput = {
   id?: Prisma.StringFilter<"Title"> | string
   name?: Prisma.StringFilter<"Title"> | string
   createdAt?: Prisma.DateTimeFilter<"Title"> | Date | string
+  deleted?: Prisma.BoolFilter<"Title"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Title"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Title"> | string
+  deletedBy?: Prisma.StringNullableFilter<"Title"> | string | null
+}
+
+export type TitleUpsertWithWhereUniqueWithoutEmployee_Title_deletedByToEmployeeInput = {
+  where: Prisma.TitleWhereUniqueInput
+  update: Prisma.XOR<Prisma.TitleUpdateWithoutEmployee_Title_deletedByToEmployeeInput, Prisma.TitleUncheckedUpdateWithoutEmployee_Title_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput, Prisma.TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput>
+}
+
+export type TitleUpdateWithWhereUniqueWithoutEmployee_Title_deletedByToEmployeeInput = {
+  where: Prisma.TitleWhereUniqueInput
+  data: Prisma.XOR<Prisma.TitleUpdateWithoutEmployee_Title_deletedByToEmployeeInput, Prisma.TitleUncheckedUpdateWithoutEmployee_Title_deletedByToEmployeeInput>
+}
+
+export type TitleUpdateManyWithWhereWithoutEmployee_Title_deletedByToEmployeeInput = {
+  where: Prisma.TitleScalarWhereInput
+  data: Prisma.XOR<Prisma.TitleUpdateManyMutationInput, Prisma.TitleUncheckedUpdateManyWithoutEmployee_Title_deletedByToEmployeeInput>
 }
 
 export type TitleCreateManyEmployee_Title_createdByToEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type TitleCreateManyEmployee_Title_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  createdBy: string
 }
 
 export type TitleUpdateWithoutEmployee_Title_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutTitleNestedInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUpdateManyWithoutTitle_Employee_titleIdToTitleNestedInput
+  Employee_Title_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTitle_Title_deletedByToEmployeeNestedInput
 }
 
 export type TitleUncheckedUpdateWithoutEmployee_Title_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTitleNestedInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedUpdateManyWithoutTitle_Employee_titleIdToTitleNestedInput
 }
@@ -569,6 +778,40 @@ export type TitleUncheckedUpdateManyWithoutEmployee_Title_createdByToEmployeeInp
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type TitleUpdateWithoutEmployee_Title_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Contact?: Prisma.ContactUpdateManyWithoutTitleNestedInput
+  Employee_Employee_titleIdToTitle?: Prisma.EmployeeUpdateManyWithoutTitle_Employee_titleIdToTitleNestedInput
+  Employee_Title_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutTitle_Title_createdByToEmployeeNestedInput
+}
+
+export type TitleUncheckedUpdateWithoutEmployee_Title_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  Contact?: Prisma.ContactUncheckedUpdateManyWithoutTitleNestedInput
+  Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedUpdateManyWithoutTitle_Employee_titleIdToTitleNestedInput
+}
+
+export type TitleUncheckedUpdateManyWithoutEmployee_Title_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -615,10 +858,14 @@ export type TitleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   name?: boolean
   createdAt?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
   createdBy?: boolean
+  deletedBy?: boolean
   Contact?: boolean | Prisma.Title$ContactArgs<ExtArgs>
   Employee_Employee_titleIdToTitle?: boolean | Prisma.Title$Employee_Employee_titleIdToTitleArgs<ExtArgs>
   Employee_Title_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Title_deletedByToEmployee?: boolean | Prisma.Title$Employee_Title_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.TitleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["title"]>
 
@@ -628,14 +875,18 @@ export type TitleSelectScalar = {
   id?: boolean
   name?: boolean
   createdAt?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
   createdBy?: boolean
+  deletedBy?: boolean
 }
 
-export type TitleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "createdBy", ExtArgs["result"]["title"]>
+export type TitleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "deleted" | "deletedAt" | "createdBy" | "deletedBy", ExtArgs["result"]["title"]>
 export type TitleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Contact?: boolean | Prisma.Title$ContactArgs<ExtArgs>
   Employee_Employee_titleIdToTitle?: boolean | Prisma.Title$Employee_Employee_titleIdToTitleArgs<ExtArgs>
   Employee_Title_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Title_deletedByToEmployee?: boolean | Prisma.Title$Employee_Title_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.TitleCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -645,12 +896,16 @@ export type $TitlePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     Contact: Prisma.$ContactPayload<ExtArgs>[]
     Employee_Employee_titleIdToTitle: Prisma.$EmployeePayload<ExtArgs>[]
     Employee_Title_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_Title_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     createdAt: Date
+    deleted: boolean
+    deletedAt: Date | null
     createdBy: string
+    deletedBy: string | null
   }, ExtArgs["result"]["title"]>
   composites: {}
 }
@@ -994,6 +1249,7 @@ export interface Prisma__TitleClient<T, Null = never, ExtArgs extends runtime.Ty
   Contact<T extends Prisma.Title$ContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Title$ContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee_Employee_titleIdToTitle<T extends Prisma.Title$Employee_Employee_titleIdToTitleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Title$Employee_Employee_titleIdToTitleArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee_Title_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_Title_deletedByToEmployee<T extends Prisma.Title$Employee_Title_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Title$Employee_Title_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1026,7 +1282,10 @@ export interface TitleFieldRefs {
   readonly id: Prisma.FieldRef<"Title", 'String'>
   readonly name: Prisma.FieldRef<"Title", 'String'>
   readonly createdAt: Prisma.FieldRef<"Title", 'DateTime'>
+  readonly deleted: Prisma.FieldRef<"Title", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Title", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Title", 'String'>
+  readonly deletedBy: Prisma.FieldRef<"Title", 'String'>
 }
     
 
@@ -1415,6 +1674,25 @@ export type Title$Employee_Employee_titleIdToTitleArgs<ExtArgs extends runtime.T
   take?: number
   skip?: number
   distinct?: Prisma.EmployeeScalarFieldEnum | Prisma.EmployeeScalarFieldEnum[]
+}
+
+/**
+ * Title.Employee_Title_deletedByToEmployee
+ */
+export type Title$Employee_Title_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

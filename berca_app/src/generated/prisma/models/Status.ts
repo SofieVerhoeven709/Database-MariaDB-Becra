@@ -29,6 +29,9 @@ export type StatusMinAggregateOutputType = {
   name: string | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type StatusMaxAggregateOutputType = {
@@ -36,6 +39,9 @@ export type StatusMaxAggregateOutputType = {
   name: string | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type StatusCountAggregateOutputType = {
@@ -43,6 +49,9 @@ export type StatusCountAggregateOutputType = {
   name: number
   createdAt: number
   createdBy: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -52,6 +61,9 @@ export type StatusMinAggregateInputType = {
   name?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type StatusMaxAggregateInputType = {
@@ -59,6 +71,9 @@ export type StatusMaxAggregateInputType = {
   name?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type StatusCountAggregateInputType = {
@@ -66,6 +81,9 @@ export type StatusCountAggregateInputType = {
   name?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -146,6 +164,9 @@ export type StatusGroupByOutputType = {
   name: string
   createdAt: Date
   createdBy: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: StatusCountAggregateOutputType | null
   _min: StatusMinAggregateOutputType | null
   _max: StatusMaxAggregateOutputType | null
@@ -174,9 +195,13 @@ export type StatusWhereInput = {
   name?: Prisma.StringFilter<"Status"> | string
   createdAt?: Prisma.DateTimeFilter<"Status"> | Date | string
   createdBy?: Prisma.StringFilter<"Status"> | string
+  deleted?: Prisma.BoolFilter<"Status"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Status"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Status"> | string | null
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Status_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type StatusOrderByWithRelationInput = {
@@ -184,9 +209,13 @@ export type StatusOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   FollowUp?: Prisma.FollowUpOrderByRelationAggregateInput
   FollowUpStructure?: Prisma.FollowUpStructureOrderByRelationAggregateInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_Status_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.StatusOrderByRelevanceInput
 }
 
@@ -198,9 +227,13 @@ export type StatusWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Status"> | string
   createdAt?: Prisma.DateTimeFilter<"Status"> | Date | string
   createdBy?: Prisma.StringFilter<"Status"> | string
+  deleted?: Prisma.BoolFilter<"Status"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Status"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Status"> | string | null
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_Status_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type StatusOrderByWithAggregationInput = {
@@ -208,6 +241,9 @@ export type StatusOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.StatusCountOrderByAggregateInput
   _max?: Prisma.StatusMaxOrderByAggregateInput
   _min?: Prisma.StatusMinOrderByAggregateInput
@@ -221,15 +257,21 @@ export type StatusScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Status"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Status"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"Status"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"Status"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Status"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Status"> | string | null
 }
 
 export type StatusCreateInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutStatusInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutStatusInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutStatusInput
+  Employee_Status_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutStatus_Status_deletedByToEmployeeInput
 }
 
 export type StatusUncheckedCreateInput = {
@@ -237,6 +279,9 @@ export type StatusUncheckedCreateInput = {
   name: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutStatusInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutStatusInput
 }
@@ -245,9 +290,12 @@ export type StatusUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   FollowUp?: Prisma.FollowUpUpdateManyWithoutStatusNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutStatusNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutStatusNestedInput
+  Employee_Status_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutStatus_Status_deletedByToEmployeeNestedInput
 }
 
 export type StatusUncheckedUpdateInput = {
@@ -255,6 +303,9 @@ export type StatusUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutStatusNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutStatusNestedInput
 }
@@ -264,12 +315,17 @@ export type StatusCreateManyInput = {
   name: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type StatusUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type StatusUncheckedUpdateManyInput = {
@@ -277,6 +333,9 @@ export type StatusUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StatusListRelationFilter = {
@@ -305,6 +364,9 @@ export type StatusCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type StatusMaxOrderByAggregateInput = {
@@ -312,6 +374,9 @@ export type StatusMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type StatusMinOrderByAggregateInput = {
@@ -319,6 +384,9 @@ export type StatusMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type StatusCreateNestedManyWithoutEmployeeInput = {
@@ -328,10 +396,24 @@ export type StatusCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
 }
 
+export type StatusCreateNestedManyWithoutEmployee_Status_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.StatusCreateWithoutEmployee_Status_deletedByToEmployeeInput, Prisma.StatusUncheckedCreateWithoutEmployee_Status_deletedByToEmployeeInput> | Prisma.StatusCreateWithoutEmployee_Status_deletedByToEmployeeInput[] | Prisma.StatusUncheckedCreateWithoutEmployee_Status_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.StatusCreateOrConnectWithoutEmployee_Status_deletedByToEmployeeInput | Prisma.StatusCreateOrConnectWithoutEmployee_Status_deletedByToEmployeeInput[]
+  createMany?: Prisma.StatusCreateManyEmployee_Status_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
+}
+
 export type StatusUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.StatusCreateWithoutEmployeeInput, Prisma.StatusUncheckedCreateWithoutEmployeeInput> | Prisma.StatusCreateWithoutEmployeeInput[] | Prisma.StatusUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.StatusCreateOrConnectWithoutEmployeeInput | Prisma.StatusCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.StatusCreateManyEmployeeInputEnvelope
+  connect?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
+}
+
+export type StatusUncheckedCreateNestedManyWithoutEmployee_Status_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.StatusCreateWithoutEmployee_Status_deletedByToEmployeeInput, Prisma.StatusUncheckedCreateWithoutEmployee_Status_deletedByToEmployeeInput> | Prisma.StatusCreateWithoutEmployee_Status_deletedByToEmployeeInput[] | Prisma.StatusUncheckedCreateWithoutEmployee_Status_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.StatusCreateOrConnectWithoutEmployee_Status_deletedByToEmployeeInput | Prisma.StatusCreateOrConnectWithoutEmployee_Status_deletedByToEmployeeInput[]
+  createMany?: Prisma.StatusCreateManyEmployee_Status_deletedByToEmployeeInputEnvelope
   connect?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
 }
 
@@ -349,6 +431,20 @@ export type StatusUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.StatusScalarWhereInput | Prisma.StatusScalarWhereInput[]
 }
 
+export type StatusUpdateManyWithoutEmployee_Status_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.StatusCreateWithoutEmployee_Status_deletedByToEmployeeInput, Prisma.StatusUncheckedCreateWithoutEmployee_Status_deletedByToEmployeeInput> | Prisma.StatusCreateWithoutEmployee_Status_deletedByToEmployeeInput[] | Prisma.StatusUncheckedCreateWithoutEmployee_Status_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.StatusCreateOrConnectWithoutEmployee_Status_deletedByToEmployeeInput | Prisma.StatusCreateOrConnectWithoutEmployee_Status_deletedByToEmployeeInput[]
+  upsert?: Prisma.StatusUpsertWithWhereUniqueWithoutEmployee_Status_deletedByToEmployeeInput | Prisma.StatusUpsertWithWhereUniqueWithoutEmployee_Status_deletedByToEmployeeInput[]
+  createMany?: Prisma.StatusCreateManyEmployee_Status_deletedByToEmployeeInputEnvelope
+  set?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
+  disconnect?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
+  delete?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
+  connect?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
+  update?: Prisma.StatusUpdateWithWhereUniqueWithoutEmployee_Status_deletedByToEmployeeInput | Prisma.StatusUpdateWithWhereUniqueWithoutEmployee_Status_deletedByToEmployeeInput[]
+  updateMany?: Prisma.StatusUpdateManyWithWhereWithoutEmployee_Status_deletedByToEmployeeInput | Prisma.StatusUpdateManyWithWhereWithoutEmployee_Status_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.StatusScalarWhereInput | Prisma.StatusScalarWhereInput[]
+}
+
 export type StatusUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.StatusCreateWithoutEmployeeInput, Prisma.StatusUncheckedCreateWithoutEmployeeInput> | Prisma.StatusCreateWithoutEmployeeInput[] | Prisma.StatusUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.StatusCreateOrConnectWithoutEmployeeInput | Prisma.StatusCreateOrConnectWithoutEmployeeInput[]
@@ -360,6 +456,20 @@ export type StatusUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
   update?: Prisma.StatusUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.StatusUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.StatusUpdateManyWithWhereWithoutEmployeeInput | Prisma.StatusUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.StatusScalarWhereInput | Prisma.StatusScalarWhereInput[]
+}
+
+export type StatusUncheckedUpdateManyWithoutEmployee_Status_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.StatusCreateWithoutEmployee_Status_deletedByToEmployeeInput, Prisma.StatusUncheckedCreateWithoutEmployee_Status_deletedByToEmployeeInput> | Prisma.StatusCreateWithoutEmployee_Status_deletedByToEmployeeInput[] | Prisma.StatusUncheckedCreateWithoutEmployee_Status_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.StatusCreateOrConnectWithoutEmployee_Status_deletedByToEmployeeInput | Prisma.StatusCreateOrConnectWithoutEmployee_Status_deletedByToEmployeeInput[]
+  upsert?: Prisma.StatusUpsertWithWhereUniqueWithoutEmployee_Status_deletedByToEmployeeInput | Prisma.StatusUpsertWithWhereUniqueWithoutEmployee_Status_deletedByToEmployeeInput[]
+  createMany?: Prisma.StatusCreateManyEmployee_Status_deletedByToEmployeeInputEnvelope
+  set?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
+  disconnect?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
+  delete?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
+  connect?: Prisma.StatusWhereUniqueInput | Prisma.StatusWhereUniqueInput[]
+  update?: Prisma.StatusUpdateWithWhereUniqueWithoutEmployee_Status_deletedByToEmployeeInput | Prisma.StatusUpdateWithWhereUniqueWithoutEmployee_Status_deletedByToEmployeeInput[]
+  updateMany?: Prisma.StatusUpdateManyWithWhereWithoutEmployee_Status_deletedByToEmployeeInput | Prisma.StatusUpdateManyWithWhereWithoutEmployee_Status_deletedByToEmployeeInput[]
   deleteMany?: Prisma.StatusScalarWhereInput | Prisma.StatusScalarWhereInput[]
 }
 
@@ -395,14 +505,20 @@ export type StatusCreateWithoutEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutStatusInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutStatusInput
+  Employee_Status_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutStatus_Status_deletedByToEmployeeInput
 }
 
 export type StatusUncheckedCreateWithoutEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutStatusInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutStatusInput
 }
@@ -414,6 +530,38 @@ export type StatusCreateOrConnectWithoutEmployeeInput = {
 
 export type StatusCreateManyEmployeeInputEnvelope = {
   data: Prisma.StatusCreateManyEmployeeInput | Prisma.StatusCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type StatusCreateWithoutEmployee_Status_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutStatusInput
+  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutStatusInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutStatusInput
+}
+
+export type StatusUncheckedCreateWithoutEmployee_Status_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutStatusInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutStatusInput
+}
+
+export type StatusCreateOrConnectWithoutEmployee_Status_deletedByToEmployeeInput = {
+  where: Prisma.StatusWhereUniqueInput
+  create: Prisma.XOR<Prisma.StatusCreateWithoutEmployee_Status_deletedByToEmployeeInput, Prisma.StatusUncheckedCreateWithoutEmployee_Status_deletedByToEmployeeInput>
+}
+
+export type StatusCreateManyEmployee_Status_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.StatusCreateManyEmployee_Status_deletedByToEmployeeInput | Prisma.StatusCreateManyEmployee_Status_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -441,14 +589,36 @@ export type StatusScalarWhereInput = {
   name?: Prisma.StringFilter<"Status"> | string
   createdAt?: Prisma.DateTimeFilter<"Status"> | Date | string
   createdBy?: Prisma.StringFilter<"Status"> | string
+  deleted?: Prisma.BoolFilter<"Status"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Status"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Status"> | string | null
+}
+
+export type StatusUpsertWithWhereUniqueWithoutEmployee_Status_deletedByToEmployeeInput = {
+  where: Prisma.StatusWhereUniqueInput
+  update: Prisma.XOR<Prisma.StatusUpdateWithoutEmployee_Status_deletedByToEmployeeInput, Prisma.StatusUncheckedUpdateWithoutEmployee_Status_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.StatusCreateWithoutEmployee_Status_deletedByToEmployeeInput, Prisma.StatusUncheckedCreateWithoutEmployee_Status_deletedByToEmployeeInput>
+}
+
+export type StatusUpdateWithWhereUniqueWithoutEmployee_Status_deletedByToEmployeeInput = {
+  where: Prisma.StatusWhereUniqueInput
+  data: Prisma.XOR<Prisma.StatusUpdateWithoutEmployee_Status_deletedByToEmployeeInput, Prisma.StatusUncheckedUpdateWithoutEmployee_Status_deletedByToEmployeeInput>
+}
+
+export type StatusUpdateManyWithWhereWithoutEmployee_Status_deletedByToEmployeeInput = {
+  where: Prisma.StatusScalarWhereInput
+  data: Prisma.XOR<Prisma.StatusUpdateManyMutationInput, Prisma.StatusUncheckedUpdateManyWithoutEmployee_Status_deletedByToEmployeeInput>
 }
 
 export type StatusCreateWithoutFollowUpInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutStatusInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutStatusInput
+  Employee_Status_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutStatus_Status_deletedByToEmployeeInput
 }
 
 export type StatusUncheckedCreateWithoutFollowUpInput = {
@@ -456,6 +626,9 @@ export type StatusUncheckedCreateWithoutFollowUpInput = {
   name: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutStatusInput
 }
 
@@ -479,8 +652,11 @@ export type StatusUpdateWithoutFollowUpInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutStatusNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutStatusNestedInput
+  Employee_Status_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutStatus_Status_deletedByToEmployeeNestedInput
 }
 
 export type StatusUncheckedUpdateWithoutFollowUpInput = {
@@ -488,6 +664,9 @@ export type StatusUncheckedUpdateWithoutFollowUpInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutStatusNestedInput
 }
 
@@ -495,8 +674,11 @@ export type StatusCreateWithoutFollowUpStructureInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutStatusInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutStatusInput
+  Employee_Status_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutStatus_Status_deletedByToEmployeeInput
 }
 
 export type StatusUncheckedCreateWithoutFollowUpStructureInput = {
@@ -504,6 +686,9 @@ export type StatusUncheckedCreateWithoutFollowUpStructureInput = {
   name: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutStatusInput
 }
 
@@ -527,8 +712,11 @@ export type StatusUpdateWithoutFollowUpStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   FollowUp?: Prisma.FollowUpUpdateManyWithoutStatusNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutStatusNestedInput
+  Employee_Status_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutStatus_Status_deletedByToEmployeeNestedInput
 }
 
 export type StatusUncheckedUpdateWithoutFollowUpStructureInput = {
@@ -536,6 +724,9 @@ export type StatusUncheckedUpdateWithoutFollowUpStructureInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutStatusNestedInput
 }
 
@@ -543,20 +734,38 @@ export type StatusCreateManyEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type StatusCreateManyEmployee_Status_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type StatusUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   FollowUp?: Prisma.FollowUpUpdateManyWithoutStatusNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutStatusNestedInput
+  Employee_Status_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutStatus_Status_deletedByToEmployeeNestedInput
 }
 
 export type StatusUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutStatusNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutStatusNestedInput
 }
@@ -565,6 +774,40 @@ export type StatusUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type StatusUpdateWithoutEmployee_Status_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  FollowUp?: Prisma.FollowUpUpdateManyWithoutStatusNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutStatusNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutStatusNestedInput
+}
+
+export type StatusUncheckedUpdateWithoutEmployee_Status_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutStatusNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutStatusNestedInput
+}
+
+export type StatusUncheckedUpdateManyWithoutEmployee_Status_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -612,9 +855,13 @@ export type StatusSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   FollowUp?: boolean | Prisma.Status$FollowUpArgs<ExtArgs>
   FollowUpStructure?: boolean | Prisma.Status$FollowUpStructureArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Status_deletedByToEmployee?: boolean | Prisma.Status$Employee_Status_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.StatusCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["status"]>
 
@@ -625,13 +872,17 @@ export type StatusSelectScalar = {
   name?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type StatusOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "createdBy", ExtArgs["result"]["status"]>
+export type StatusOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["status"]>
 export type StatusInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   FollowUp?: boolean | Prisma.Status$FollowUpArgs<ExtArgs>
   FollowUpStructure?: boolean | Prisma.Status$FollowUpStructureArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_Status_deletedByToEmployee?: boolean | Prisma.Status$Employee_Status_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.StatusCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -641,12 +892,16 @@ export type $StatusPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     FollowUp: Prisma.$FollowUpPayload<ExtArgs>[]
     FollowUpStructure: Prisma.$FollowUpStructurePayload<ExtArgs>[]
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_Status_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     createdAt: Date
     createdBy: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["status"]>
   composites: {}
 }
@@ -990,6 +1245,7 @@ export interface Prisma__StatusClient<T, Null = never, ExtArgs extends runtime.T
   FollowUp<T extends Prisma.Status$FollowUpArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Status$FollowUpArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   FollowUpStructure<T extends Prisma.Status$FollowUpStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Status$FollowUpStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_Status_deletedByToEmployee<T extends Prisma.Status$Employee_Status_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Status$Employee_Status_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1023,6 +1279,9 @@ export interface StatusFieldRefs {
   readonly name: Prisma.FieldRef<"Status", 'String'>
   readonly createdAt: Prisma.FieldRef<"Status", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Status", 'String'>
+  readonly deleted: Prisma.FieldRef<"Status", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Status", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"Status", 'String'>
 }
     
 
@@ -1411,6 +1670,25 @@ export type Status$FollowUpStructureArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.FollowUpStructureScalarFieldEnum | Prisma.FollowUpStructureScalarFieldEnum[]
+}
+
+/**
+ * Status.Employee_Status_deletedByToEmployee
+ */
+export type Status$Employee_Status_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

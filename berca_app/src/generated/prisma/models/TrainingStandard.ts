@@ -35,6 +35,9 @@ export type TrainingStandardMinAggregateOutputType = {
   createdBy: string | null
   certificateId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TrainingStandardMaxAggregateOutputType = {
@@ -48,6 +51,9 @@ export type TrainingStandardMaxAggregateOutputType = {
   createdBy: string | null
   certificateId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TrainingStandardCountAggregateOutputType = {
@@ -61,6 +67,9 @@ export type TrainingStandardCountAggregateOutputType = {
   createdBy: number
   certificateId: number
   targetId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -76,6 +85,9 @@ export type TrainingStandardMinAggregateInputType = {
   createdBy?: true
   certificateId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TrainingStandardMaxAggregateInputType = {
@@ -89,6 +101,9 @@ export type TrainingStandardMaxAggregateInputType = {
   createdBy?: true
   certificateId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TrainingStandardCountAggregateInputType = {
@@ -102,6 +117,9 @@ export type TrainingStandardCountAggregateInputType = {
   createdBy?: true
   certificateId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -188,6 +206,9 @@ export type TrainingStandardGroupByOutputType = {
   createdBy: string
   certificateId: string
   targetId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: TrainingStandardCountAggregateOutputType | null
   _min: TrainingStandardMinAggregateOutputType | null
   _max: TrainingStandardMaxAggregateOutputType | null
@@ -222,11 +243,15 @@ export type TrainingStandardWhereInput = {
   createdBy?: Prisma.StringFilter<"TrainingStandard"> | string
   certificateId?: Prisma.StringFilter<"TrainingStandard"> | string
   targetId?: Prisma.StringFilter<"TrainingStandard"> | string
+  deleted?: Prisma.BoolFilter<"TrainingStandard"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TrainingStandard"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   Training?: Prisma.TrainingListRelationFilter
   TrainingDocument?: Prisma.TrainingDocumentListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Certificate?: Prisma.XOR<Prisma.CertificateScalarRelationFilter, Prisma.CertificateWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type TrainingStandardOrderByWithRelationInput = {
@@ -240,11 +265,15 @@ export type TrainingStandardOrderByWithRelationInput = {
   createdBy?: Prisma.SortOrder
   certificateId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Training?: Prisma.TrainingOrderByRelationAggregateInput
   TrainingDocument?: Prisma.TrainingDocumentOrderByRelationAggregateInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Certificate?: Prisma.CertificateOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.TrainingStandardOrderByRelevanceInput
 }
 
@@ -262,11 +291,15 @@ export type TrainingStandardWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.StringFilter<"TrainingStandard"> | string
   certificateId?: Prisma.StringFilter<"TrainingStandard"> | string
   targetId?: Prisma.StringFilter<"TrainingStandard"> | string
+  deleted?: Prisma.BoolFilter<"TrainingStandard"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TrainingStandard"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   Training?: Prisma.TrainingListRelationFilter
   TrainingDocument?: Prisma.TrainingDocumentListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Certificate?: Prisma.XOR<Prisma.CertificateScalarRelationFilter, Prisma.CertificateWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type TrainingStandardOrderByWithAggregationInput = {
@@ -280,6 +313,9 @@ export type TrainingStandardOrderByWithAggregationInput = {
   createdBy?: Prisma.SortOrder
   certificateId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TrainingStandardCountOrderByAggregateInput
   _max?: Prisma.TrainingStandardMaxOrderByAggregateInput
   _min?: Prisma.TrainingStandardMinOrderByAggregateInput
@@ -299,6 +335,9 @@ export type TrainingStandardScalarWhereWithAggregatesInput = {
   createdBy?: Prisma.StringWithAggregatesFilter<"TrainingStandard"> | string
   certificateId?: Prisma.StringWithAggregatesFilter<"TrainingStandard"> | string
   targetId?: Prisma.StringWithAggregatesFilter<"TrainingStandard"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"TrainingStandard"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TrainingStandard"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"TrainingStandard"> | string | null
 }
 
 export type TrainingStandardCreateInput = {
@@ -309,11 +348,14 @@ export type TrainingStandardCreateInput = {
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
   Certificate: Prisma.CertificateCreateNestedOneWithoutTrainingStandardInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingStandardInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeInput
 }
 
 export type TrainingStandardUncheckedCreateInput = {
@@ -327,6 +369,9 @@ export type TrainingStandardUncheckedCreateInput = {
   createdBy: string
   certificateId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -339,11 +384,14 @@ export type TrainingStandardUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
   Certificate?: Prisma.CertificateUpdateOneRequiredWithoutTrainingStandardNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingStandardNestedInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeNestedInput
 }
 
 export type TrainingStandardUncheckedUpdateInput = {
@@ -357,6 +405,9 @@ export type TrainingStandardUncheckedUpdateInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   certificateId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
@@ -372,6 +423,9 @@ export type TrainingStandardCreateManyInput = {
   createdBy: string
   certificateId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingStandardUpdateManyMutationInput = {
@@ -382,6 +436,8 @@ export type TrainingStandardUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TrainingStandardUncheckedUpdateManyInput = {
@@ -395,6 +451,9 @@ export type TrainingStandardUncheckedUpdateManyInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   certificateId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingStandardListRelationFilter = {
@@ -429,6 +488,9 @@ export type TrainingStandardCountOrderByAggregateInput = {
   createdBy?: Prisma.SortOrder
   certificateId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TrainingStandardMaxOrderByAggregateInput = {
@@ -442,6 +504,9 @@ export type TrainingStandardMaxOrderByAggregateInput = {
   createdBy?: Prisma.SortOrder
   certificateId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TrainingStandardMinOrderByAggregateInput = {
@@ -455,6 +520,9 @@ export type TrainingStandardMinOrderByAggregateInput = {
   createdBy?: Prisma.SortOrder
   certificateId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TrainingStandardCreateNestedManyWithoutCertificateInput = {
@@ -506,10 +574,24 @@ export type TrainingStandardCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
 }
 
+export type TrainingStandardCreateNestedManyWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput, Prisma.TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput> | Prisma.TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[] | Prisma.TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingStandardCreateOrConnectWithoutEmployee_TrainingStandard_deletedByToEmployeeInput | Prisma.TrainingStandardCreateOrConnectWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  createMany?: Prisma.TrainingStandardCreateManyEmployee_TrainingStandard_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
+}
+
 export type TrainingStandardUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.TrainingStandardCreateWithoutEmployeeInput, Prisma.TrainingStandardUncheckedCreateWithoutEmployeeInput> | Prisma.TrainingStandardCreateWithoutEmployeeInput[] | Prisma.TrainingStandardUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TrainingStandardCreateOrConnectWithoutEmployeeInput | Prisma.TrainingStandardCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.TrainingStandardCreateManyEmployeeInputEnvelope
+  connect?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
+}
+
+export type TrainingStandardUncheckedCreateNestedManyWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput, Prisma.TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput> | Prisma.TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[] | Prisma.TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingStandardCreateOrConnectWithoutEmployee_TrainingStandard_deletedByToEmployeeInput | Prisma.TrainingStandardCreateOrConnectWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  createMany?: Prisma.TrainingStandardCreateManyEmployee_TrainingStandard_deletedByToEmployeeInputEnvelope
   connect?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
 }
 
@@ -527,6 +609,20 @@ export type TrainingStandardUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.TrainingStandardScalarWhereInput | Prisma.TrainingStandardScalarWhereInput[]
 }
 
+export type TrainingStandardUpdateManyWithoutEmployee_TrainingStandard_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput, Prisma.TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput> | Prisma.TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[] | Prisma.TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingStandardCreateOrConnectWithoutEmployee_TrainingStandard_deletedByToEmployeeInput | Prisma.TrainingStandardCreateOrConnectWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  upsert?: Prisma.TrainingStandardUpsertWithWhereUniqueWithoutEmployee_TrainingStandard_deletedByToEmployeeInput | Prisma.TrainingStandardUpsertWithWhereUniqueWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  createMany?: Prisma.TrainingStandardCreateManyEmployee_TrainingStandard_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
+  disconnect?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
+  delete?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
+  connect?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
+  update?: Prisma.TrainingStandardUpdateWithWhereUniqueWithoutEmployee_TrainingStandard_deletedByToEmployeeInput | Prisma.TrainingStandardUpdateWithWhereUniqueWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TrainingStandardUpdateManyWithWhereWithoutEmployee_TrainingStandard_deletedByToEmployeeInput | Prisma.TrainingStandardUpdateManyWithWhereWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.TrainingStandardScalarWhereInput | Prisma.TrainingStandardScalarWhereInput[]
+}
+
 export type TrainingStandardUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.TrainingStandardCreateWithoutEmployeeInput, Prisma.TrainingStandardUncheckedCreateWithoutEmployeeInput> | Prisma.TrainingStandardCreateWithoutEmployeeInput[] | Prisma.TrainingStandardUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TrainingStandardCreateOrConnectWithoutEmployeeInput | Prisma.TrainingStandardCreateOrConnectWithoutEmployeeInput[]
@@ -538,6 +634,20 @@ export type TrainingStandardUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
   update?: Prisma.TrainingStandardUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.TrainingStandardUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.TrainingStandardUpdateManyWithWhereWithoutEmployeeInput | Prisma.TrainingStandardUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.TrainingStandardScalarWhereInput | Prisma.TrainingStandardScalarWhereInput[]
+}
+
+export type TrainingStandardUncheckedUpdateManyWithoutEmployee_TrainingStandard_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput, Prisma.TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput> | Prisma.TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[] | Prisma.TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingStandardCreateOrConnectWithoutEmployee_TrainingStandard_deletedByToEmployeeInput | Prisma.TrainingStandardCreateOrConnectWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  upsert?: Prisma.TrainingStandardUpsertWithWhereUniqueWithoutEmployee_TrainingStandard_deletedByToEmployeeInput | Prisma.TrainingStandardUpsertWithWhereUniqueWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  createMany?: Prisma.TrainingStandardCreateManyEmployee_TrainingStandard_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
+  disconnect?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
+  delete?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
+  connect?: Prisma.TrainingStandardWhereUniqueInput | Prisma.TrainingStandardWhereUniqueInput[]
+  update?: Prisma.TrainingStandardUpdateWithWhereUniqueWithoutEmployee_TrainingStandard_deletedByToEmployeeInput | Prisma.TrainingStandardUpdateWithWhereUniqueWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TrainingStandardUpdateManyWithWhereWithoutEmployee_TrainingStandard_deletedByToEmployeeInput | Prisma.TrainingStandardUpdateManyWithWhereWithoutEmployee_TrainingStandard_deletedByToEmployeeInput[]
   deleteMany?: Prisma.TrainingStandardScalarWhereInput | Prisma.TrainingStandardScalarWhereInput[]
 }
 
@@ -619,10 +729,13 @@ export type TrainingStandardCreateWithoutCertificateInput = {
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingStandardInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeInput
 }
 
 export type TrainingStandardUncheckedCreateWithoutCertificateInput = {
@@ -635,6 +748,9 @@ export type TrainingStandardUncheckedCreateWithoutCertificateInput = {
   repeat?: boolean
   createdBy: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -679,6 +795,9 @@ export type TrainingStandardScalarWhereInput = {
   createdBy?: Prisma.StringFilter<"TrainingStandard"> | string
   certificateId?: Prisma.StringFilter<"TrainingStandard"> | string
   targetId?: Prisma.StringFilter<"TrainingStandard"> | string
+  deleted?: Prisma.BoolFilter<"TrainingStandard"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TrainingStandard"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
 }
 
 export type TrainingStandardCreateWithoutEmployeeInput = {
@@ -689,10 +808,13 @@ export type TrainingStandardCreateWithoutEmployeeInput = {
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
   Certificate: Prisma.CertificateCreateNestedOneWithoutTrainingStandardInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingStandardInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeInput
 }
 
 export type TrainingStandardUncheckedCreateWithoutEmployeeInput = {
@@ -705,6 +827,9 @@ export type TrainingStandardUncheckedCreateWithoutEmployeeInput = {
   repeat?: boolean
   certificateId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -716,6 +841,50 @@ export type TrainingStandardCreateOrConnectWithoutEmployeeInput = {
 
 export type TrainingStandardCreateManyEmployeeInputEnvelope = {
   data: Prisma.TrainingStandardCreateManyEmployeeInput | Prisma.TrainingStandardCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  id: string
+  description?: string | null
+  descriptionShort?: string | null
+  location?: string | null
+  createdAt: Date | string
+  certificate?: boolean
+  repeat?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
+  TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
+  Certificate: Prisma.CertificateCreateNestedOneWithoutTrainingStandardInput
+  Target: Prisma.TargetCreateNestedOneWithoutTrainingStandardInput
+}
+
+export type TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  id: string
+  description?: string | null
+  descriptionShort?: string | null
+  location?: string | null
+  createdAt: Date | string
+  certificate?: boolean
+  repeat?: boolean
+  createdBy: string
+  certificateId: string
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
+  TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
+}
+
+export type TrainingStandardCreateOrConnectWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  where: Prisma.TrainingStandardWhereUniqueInput
+  create: Prisma.XOR<Prisma.TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput, Prisma.TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput>
+}
+
+export type TrainingStandardCreateManyEmployee_TrainingStandard_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.TrainingStandardCreateManyEmployee_TrainingStandard_deletedByToEmployeeInput | Prisma.TrainingStandardCreateManyEmployee_TrainingStandard_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -735,6 +904,22 @@ export type TrainingStandardUpdateManyWithWhereWithoutEmployeeInput = {
   data: Prisma.XOR<Prisma.TrainingStandardUpdateManyMutationInput, Prisma.TrainingStandardUncheckedUpdateManyWithoutEmployeeInput>
 }
 
+export type TrainingStandardUpsertWithWhereUniqueWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  where: Prisma.TrainingStandardWhereUniqueInput
+  update: Prisma.XOR<Prisma.TrainingStandardUpdateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput, Prisma.TrainingStandardUncheckedUpdateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput, Prisma.TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput>
+}
+
+export type TrainingStandardUpdateWithWhereUniqueWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  where: Prisma.TrainingStandardWhereUniqueInput
+  data: Prisma.XOR<Prisma.TrainingStandardUpdateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput, Prisma.TrainingStandardUncheckedUpdateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput>
+}
+
+export type TrainingStandardUpdateManyWithWhereWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  where: Prisma.TrainingStandardScalarWhereInput
+  data: Prisma.XOR<Prisma.TrainingStandardUpdateManyMutationInput, Prisma.TrainingStandardUncheckedUpdateManyWithoutEmployee_TrainingStandard_deletedByToEmployeeInput>
+}
+
 export type TrainingStandardCreateWithoutTargetInput = {
   id: string
   description?: string | null
@@ -743,10 +928,13 @@ export type TrainingStandardCreateWithoutTargetInput = {
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
   Certificate: Prisma.CertificateCreateNestedOneWithoutTrainingStandardInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeInput
 }
 
 export type TrainingStandardUncheckedCreateWithoutTargetInput = {
@@ -759,6 +947,9 @@ export type TrainingStandardUncheckedCreateWithoutTargetInput = {
   repeat?: boolean
   createdBy: string
   certificateId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -797,10 +988,13 @@ export type TrainingStandardCreateWithoutTrainingInput = {
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
   Certificate: Prisma.CertificateCreateNestedOneWithoutTrainingStandardInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingStandardInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeInput
 }
 
 export type TrainingStandardUncheckedCreateWithoutTrainingInput = {
@@ -814,6 +1008,9 @@ export type TrainingStandardUncheckedCreateWithoutTrainingInput = {
   createdBy: string
   certificateId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
 
@@ -841,10 +1038,13 @@ export type TrainingStandardUpdateWithoutTrainingInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
   Certificate?: Prisma.CertificateUpdateOneRequiredWithoutTrainingStandardNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingStandardNestedInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeNestedInput
 }
 
 export type TrainingStandardUncheckedUpdateWithoutTrainingInput = {
@@ -858,6 +1058,9 @@ export type TrainingStandardUncheckedUpdateWithoutTrainingInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   certificateId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
 
@@ -869,10 +1072,13 @@ export type TrainingStandardCreateWithoutTrainingDocumentInput = {
   createdAt: Date | string
   certificate?: boolean
   repeat?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
   Certificate: Prisma.CertificateCreateNestedOneWithoutTrainingStandardInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingStandardInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeInput
 }
 
 export type TrainingStandardUncheckedCreateWithoutTrainingDocumentInput = {
@@ -886,6 +1092,9 @@ export type TrainingStandardUncheckedCreateWithoutTrainingDocumentInput = {
   createdBy: string
   certificateId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
 
@@ -913,10 +1122,13 @@ export type TrainingStandardUpdateWithoutTrainingDocumentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
   Certificate?: Prisma.CertificateUpdateOneRequiredWithoutTrainingStandardNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingStandardNestedInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeNestedInput
 }
 
 export type TrainingStandardUncheckedUpdateWithoutTrainingDocumentInput = {
@@ -930,6 +1142,9 @@ export type TrainingStandardUncheckedUpdateWithoutTrainingDocumentInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   certificateId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
 
@@ -943,6 +1158,9 @@ export type TrainingStandardCreateManyCertificateInput = {
   repeat?: boolean
   createdBy: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingStandardUpdateWithoutCertificateInput = {
@@ -953,10 +1171,13 @@ export type TrainingStandardUpdateWithoutCertificateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingStandardNestedInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeNestedInput
 }
 
 export type TrainingStandardUncheckedUpdateWithoutCertificateInput = {
@@ -969,6 +1190,9 @@ export type TrainingStandardUncheckedUpdateWithoutCertificateInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
@@ -983,6 +1207,9 @@ export type TrainingStandardUncheckedUpdateManyWithoutCertificateInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingStandardCreateManyEmployeeInput = {
@@ -995,6 +1222,24 @@ export type TrainingStandardCreateManyEmployeeInput = {
   repeat?: boolean
   certificateId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type TrainingStandardCreateManyEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  id: string
+  description?: string | null
+  descriptionShort?: string | null
+  location?: string | null
+  createdAt: Date | string
+  certificate?: boolean
+  repeat?: boolean
+  createdBy: string
+  certificateId: string
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type TrainingStandardUpdateWithoutEmployeeInput = {
@@ -1005,10 +1250,13 @@ export type TrainingStandardUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
   Certificate?: Prisma.CertificateUpdateOneRequiredWithoutTrainingStandardNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingStandardNestedInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeNestedInput
 }
 
 export type TrainingStandardUncheckedUpdateWithoutEmployeeInput = {
@@ -1021,6 +1269,9 @@ export type TrainingStandardUncheckedUpdateWithoutEmployeeInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   certificateId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
@@ -1035,6 +1286,58 @@ export type TrainingStandardUncheckedUpdateManyWithoutEmployeeInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   certificateId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type TrainingStandardUpdateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
+  TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
+  Certificate?: Prisma.CertificateUpdateOneRequiredWithoutTrainingStandardNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingStandardNestedInput
+}
+
+export type TrainingStandardUncheckedUpdateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  certificateId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
+  TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
+}
+
+export type TrainingStandardUncheckedUpdateManyWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  certificateId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TrainingStandardCreateManyTargetInput = {
@@ -1047,6 +1350,9 @@ export type TrainingStandardCreateManyTargetInput = {
   repeat?: boolean
   createdBy: string
   certificateId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingStandardUpdateWithoutTargetInput = {
@@ -1057,10 +1363,13 @@ export type TrainingStandardUpdateWithoutTargetInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
   Certificate?: Prisma.CertificateUpdateOneRequiredWithoutTrainingStandardNestedInput
+  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeNestedInput
 }
 
 export type TrainingStandardUncheckedUpdateWithoutTargetInput = {
@@ -1073,6 +1382,9 @@ export type TrainingStandardUncheckedUpdateWithoutTargetInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   certificateId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
@@ -1087,6 +1399,9 @@ export type TrainingStandardUncheckedUpdateManyWithoutTargetInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   certificateId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1140,11 +1455,15 @@ export type TrainingStandardSelect<ExtArgs extends runtime.Types.Extensions.Inte
   createdBy?: boolean
   certificateId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Training?: boolean | Prisma.TrainingStandard$TrainingArgs<ExtArgs>
   TrainingDocument?: boolean | Prisma.TrainingStandard$TrainingDocumentArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Certificate?: boolean | Prisma.CertificateDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee_TrainingStandard_deletedByToEmployee?: boolean | Prisma.TrainingStandard$Employee_TrainingStandard_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.TrainingStandardCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["trainingStandard"]>
 
@@ -1161,15 +1480,19 @@ export type TrainingStandardSelectScalar = {
   createdBy?: boolean
   certificateId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type TrainingStandardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "descriptionShort" | "location" | "createdAt" | "certificate" | "repeat" | "createdBy" | "certificateId" | "targetId", ExtArgs["result"]["trainingStandard"]>
+export type TrainingStandardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "descriptionShort" | "location" | "createdAt" | "certificate" | "repeat" | "createdBy" | "certificateId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["trainingStandard"]>
 export type TrainingStandardInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Training?: boolean | Prisma.TrainingStandard$TrainingArgs<ExtArgs>
   TrainingDocument?: boolean | Prisma.TrainingStandard$TrainingDocumentArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Certificate?: boolean | Prisma.CertificateDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee_TrainingStandard_deletedByToEmployee?: boolean | Prisma.TrainingStandard$Employee_TrainingStandard_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.TrainingStandardCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1181,6 +1504,7 @@ export type $TrainingStandardPayload<ExtArgs extends runtime.Types.Extensions.In
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Certificate: Prisma.$CertificatePayload<ExtArgs>
     Target: Prisma.$TargetPayload<ExtArgs>
+    Employee_TrainingStandard_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1193,6 +1517,9 @@ export type $TrainingStandardPayload<ExtArgs extends runtime.Types.Extensions.In
     createdBy: string
     certificateId: string
     targetId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["trainingStandard"]>
   composites: {}
 }
@@ -1538,6 +1865,7 @@ export interface Prisma__TrainingStandardClient<T, Null = never, ExtArgs extends
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Certificate<T extends Prisma.CertificateDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CertificateDefaultArgs<ExtArgs>>): Prisma.Prisma__CertificateClient<runtime.Types.Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_TrainingStandard_deletedByToEmployee<T extends Prisma.TrainingStandard$Employee_TrainingStandard_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingStandard$Employee_TrainingStandard_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1577,6 +1905,9 @@ export interface TrainingStandardFieldRefs {
   readonly createdBy: Prisma.FieldRef<"TrainingStandard", 'String'>
   readonly certificateId: Prisma.FieldRef<"TrainingStandard", 'String'>
   readonly targetId: Prisma.FieldRef<"TrainingStandard", 'String'>
+  readonly deleted: Prisma.FieldRef<"TrainingStandard", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"TrainingStandard", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"TrainingStandard", 'String'>
 }
     
 
@@ -1965,6 +2296,25 @@ export type TrainingStandard$TrainingDocumentArgs<ExtArgs extends runtime.Types.
   take?: number
   skip?: number
   distinct?: Prisma.TrainingDocumentScalarFieldEnum | Prisma.TrainingDocumentScalarFieldEnum[]
+}
+
+/**
+ * TrainingStandard.Employee_TrainingStandard_deletedByToEmployee
+ */
+export type TrainingStandard$Employee_TrainingStandard_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

@@ -28,18 +28,27 @@ export type TrainingDocumentMinAggregateOutputType = {
   id: string | null
   documentId: string | null
   trainingStandardId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TrainingDocumentMaxAggregateOutputType = {
   id: string | null
   documentId: string | null
   trainingStandardId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TrainingDocumentCountAggregateOutputType = {
   id: number
   documentId: number
   trainingStandardId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -48,18 +57,27 @@ export type TrainingDocumentMinAggregateInputType = {
   id?: true
   documentId?: true
   trainingStandardId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TrainingDocumentMaxAggregateInputType = {
   id?: true
   documentId?: true
   trainingStandardId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TrainingDocumentCountAggregateInputType = {
   id?: true
   documentId?: true
   trainingStandardId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -139,6 +157,9 @@ export type TrainingDocumentGroupByOutputType = {
   id: string
   documentId: string
   trainingStandardId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: TrainingDocumentCountAggregateOutputType | null
   _min: TrainingDocumentMinAggregateOutputType | null
   _max: TrainingDocumentMaxAggregateOutputType | null
@@ -166,16 +187,24 @@ export type TrainingDocumentWhereInput = {
   id?: Prisma.StringFilter<"TrainingDocument"> | string
   documentId?: Prisma.StringFilter<"TrainingDocument"> | string
   trainingStandardId?: Prisma.StringFilter<"TrainingDocument"> | string
+  deleted?: Prisma.BoolFilter<"TrainingDocument"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TrainingDocument"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TrainingDocument"> | string | null
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureScalarRelationFilter, Prisma.DocumentStructureWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type TrainingDocumentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   DocumentStructure?: Prisma.DocumentStructureOrderByWithRelationInput
   TrainingStandard?: Prisma.TrainingStandardOrderByWithRelationInput
+  Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.TrainingDocumentOrderByRelevanceInput
 }
 
@@ -186,14 +215,21 @@ export type TrainingDocumentWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TrainingDocumentWhereInput | Prisma.TrainingDocumentWhereInput[]
   documentId?: Prisma.StringFilter<"TrainingDocument"> | string
   trainingStandardId?: Prisma.StringFilter<"TrainingDocument"> | string
+  deleted?: Prisma.BoolFilter<"TrainingDocument"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TrainingDocument"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TrainingDocument"> | string | null
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureScalarRelationFilter, Prisma.DocumentStructureWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type TrainingDocumentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TrainingDocumentCountOrderByAggregateInput
   _max?: Prisma.TrainingDocumentMaxOrderByAggregateInput
   _min?: Prisma.TrainingDocumentMinOrderByAggregateInput
@@ -206,46 +242,69 @@ export type TrainingDocumentScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"TrainingDocument"> | string
   documentId?: Prisma.StringWithAggregatesFilter<"TrainingDocument"> | string
   trainingStandardId?: Prisma.StringWithAggregatesFilter<"TrainingDocument"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"TrainingDocument"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TrainingDocument"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"TrainingDocument"> | string | null
 }
 
 export type TrainingDocumentCreateInput = {
   id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutTrainingDocumentInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingDocumentInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutTrainingDocumentInput
 }
 
 export type TrainingDocumentUncheckedCreateInput = {
   id: string
   documentId: string
   trainingStandardId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingDocumentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutTrainingDocumentNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingDocumentNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutTrainingDocumentNestedInput
 }
 
 export type TrainingDocumentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingDocumentCreateManyInput = {
   id: string
   documentId: string
   trainingStandardId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingDocumentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TrainingDocumentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingDocumentListRelationFilter = {
@@ -268,18 +327,27 @@ export type TrainingDocumentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TrainingDocumentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TrainingDocumentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TrainingDocumentCreateNestedManyWithoutDocumentStructureInput = {
@@ -321,6 +389,48 @@ export type TrainingDocumentUncheckedUpdateManyWithoutDocumentStructureNestedInp
   connect?: Prisma.TrainingDocumentWhereUniqueInput | Prisma.TrainingDocumentWhereUniqueInput[]
   update?: Prisma.TrainingDocumentUpdateWithWhereUniqueWithoutDocumentStructureInput | Prisma.TrainingDocumentUpdateWithWhereUniqueWithoutDocumentStructureInput[]
   updateMany?: Prisma.TrainingDocumentUpdateManyWithWhereWithoutDocumentStructureInput | Prisma.TrainingDocumentUpdateManyWithWhereWithoutDocumentStructureInput[]
+  deleteMany?: Prisma.TrainingDocumentScalarWhereInput | Prisma.TrainingDocumentScalarWhereInput[]
+}
+
+export type TrainingDocumentCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TrainingDocumentCreateWithoutEmployeeInput, Prisma.TrainingDocumentUncheckedCreateWithoutEmployeeInput> | Prisma.TrainingDocumentCreateWithoutEmployeeInput[] | Prisma.TrainingDocumentUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingDocumentCreateOrConnectWithoutEmployeeInput | Prisma.TrainingDocumentCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.TrainingDocumentCreateManyEmployeeInputEnvelope
+  connect?: Prisma.TrainingDocumentWhereUniqueInput | Prisma.TrainingDocumentWhereUniqueInput[]
+}
+
+export type TrainingDocumentUncheckedCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TrainingDocumentCreateWithoutEmployeeInput, Prisma.TrainingDocumentUncheckedCreateWithoutEmployeeInput> | Prisma.TrainingDocumentCreateWithoutEmployeeInput[] | Prisma.TrainingDocumentUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingDocumentCreateOrConnectWithoutEmployeeInput | Prisma.TrainingDocumentCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.TrainingDocumentCreateManyEmployeeInputEnvelope
+  connect?: Prisma.TrainingDocumentWhereUniqueInput | Prisma.TrainingDocumentWhereUniqueInput[]
+}
+
+export type TrainingDocumentUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TrainingDocumentCreateWithoutEmployeeInput, Prisma.TrainingDocumentUncheckedCreateWithoutEmployeeInput> | Prisma.TrainingDocumentCreateWithoutEmployeeInput[] | Prisma.TrainingDocumentUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingDocumentCreateOrConnectWithoutEmployeeInput | Prisma.TrainingDocumentCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.TrainingDocumentUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.TrainingDocumentUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.TrainingDocumentCreateManyEmployeeInputEnvelope
+  set?: Prisma.TrainingDocumentWhereUniqueInput | Prisma.TrainingDocumentWhereUniqueInput[]
+  disconnect?: Prisma.TrainingDocumentWhereUniqueInput | Prisma.TrainingDocumentWhereUniqueInput[]
+  delete?: Prisma.TrainingDocumentWhereUniqueInput | Prisma.TrainingDocumentWhereUniqueInput[]
+  connect?: Prisma.TrainingDocumentWhereUniqueInput | Prisma.TrainingDocumentWhereUniqueInput[]
+  update?: Prisma.TrainingDocumentUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.TrainingDocumentUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.TrainingDocumentUpdateManyWithWhereWithoutEmployeeInput | Prisma.TrainingDocumentUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.TrainingDocumentScalarWhereInput | Prisma.TrainingDocumentScalarWhereInput[]
+}
+
+export type TrainingDocumentUncheckedUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TrainingDocumentCreateWithoutEmployeeInput, Prisma.TrainingDocumentUncheckedCreateWithoutEmployeeInput> | Prisma.TrainingDocumentCreateWithoutEmployeeInput[] | Prisma.TrainingDocumentUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingDocumentCreateOrConnectWithoutEmployeeInput | Prisma.TrainingDocumentCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.TrainingDocumentUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.TrainingDocumentUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.TrainingDocumentCreateManyEmployeeInputEnvelope
+  set?: Prisma.TrainingDocumentWhereUniqueInput | Prisma.TrainingDocumentWhereUniqueInput[]
+  disconnect?: Prisma.TrainingDocumentWhereUniqueInput | Prisma.TrainingDocumentWhereUniqueInput[]
+  delete?: Prisma.TrainingDocumentWhereUniqueInput | Prisma.TrainingDocumentWhereUniqueInput[]
+  connect?: Prisma.TrainingDocumentWhereUniqueInput | Prisma.TrainingDocumentWhereUniqueInput[]
+  update?: Prisma.TrainingDocumentUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.TrainingDocumentUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.TrainingDocumentUpdateManyWithWhereWithoutEmployeeInput | Prisma.TrainingDocumentUpdateManyWithWhereWithoutEmployeeInput[]
   deleteMany?: Prisma.TrainingDocumentScalarWhereInput | Prisma.TrainingDocumentScalarWhereInput[]
 }
 
@@ -368,12 +478,18 @@ export type TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInpu
 
 export type TrainingDocumentCreateWithoutDocumentStructureInput = {
   id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingDocumentInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutTrainingDocumentInput
 }
 
 export type TrainingDocumentUncheckedCreateWithoutDocumentStructureInput = {
   id: string
   trainingStandardId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingDocumentCreateOrConnectWithoutDocumentStructureInput = {
@@ -409,16 +525,67 @@ export type TrainingDocumentScalarWhereInput = {
   id?: Prisma.StringFilter<"TrainingDocument"> | string
   documentId?: Prisma.StringFilter<"TrainingDocument"> | string
   trainingStandardId?: Prisma.StringFilter<"TrainingDocument"> | string
+  deleted?: Prisma.BoolFilter<"TrainingDocument"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TrainingDocument"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TrainingDocument"> | string | null
+}
+
+export type TrainingDocumentCreateWithoutEmployeeInput = {
+  id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutTrainingDocumentInput
+  TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingDocumentInput
+}
+
+export type TrainingDocumentUncheckedCreateWithoutEmployeeInput = {
+  id: string
+  documentId: string
+  trainingStandardId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type TrainingDocumentCreateOrConnectWithoutEmployeeInput = {
+  where: Prisma.TrainingDocumentWhereUniqueInput
+  create: Prisma.XOR<Prisma.TrainingDocumentCreateWithoutEmployeeInput, Prisma.TrainingDocumentUncheckedCreateWithoutEmployeeInput>
+}
+
+export type TrainingDocumentCreateManyEmployeeInputEnvelope = {
+  data: Prisma.TrainingDocumentCreateManyEmployeeInput | Prisma.TrainingDocumentCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type TrainingDocumentUpsertWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.TrainingDocumentWhereUniqueInput
+  update: Prisma.XOR<Prisma.TrainingDocumentUpdateWithoutEmployeeInput, Prisma.TrainingDocumentUncheckedUpdateWithoutEmployeeInput>
+  create: Prisma.XOR<Prisma.TrainingDocumentCreateWithoutEmployeeInput, Prisma.TrainingDocumentUncheckedCreateWithoutEmployeeInput>
+}
+
+export type TrainingDocumentUpdateWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.TrainingDocumentWhereUniqueInput
+  data: Prisma.XOR<Prisma.TrainingDocumentUpdateWithoutEmployeeInput, Prisma.TrainingDocumentUncheckedUpdateWithoutEmployeeInput>
+}
+
+export type TrainingDocumentUpdateManyWithWhereWithoutEmployeeInput = {
+  where: Prisma.TrainingDocumentScalarWhereInput
+  data: Prisma.XOR<Prisma.TrainingDocumentUpdateManyMutationInput, Prisma.TrainingDocumentUncheckedUpdateManyWithoutEmployeeInput>
 }
 
 export type TrainingDocumentCreateWithoutTrainingStandardInput = {
   id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutTrainingDocumentInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutTrainingDocumentInput
 }
 
 export type TrainingDocumentUncheckedCreateWithoutTrainingStandardInput = {
   id: string
   documentId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingDocumentCreateOrConnectWithoutTrainingStandardInput = {
@@ -450,41 +617,97 @@ export type TrainingDocumentUpdateManyWithWhereWithoutTrainingStandardInput = {
 export type TrainingDocumentCreateManyDocumentStructureInput = {
   id: string
   trainingStandardId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingDocumentUpdateWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingDocumentNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutTrainingDocumentNestedInput
 }
 
 export type TrainingDocumentUncheckedUpdateWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingDocumentUncheckedUpdateManyWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type TrainingDocumentCreateManyEmployeeInput = {
+  id: string
+  documentId: string
+  trainingStandardId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type TrainingDocumentUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutTrainingDocumentNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingDocumentNestedInput
+}
+
+export type TrainingDocumentUncheckedUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type TrainingDocumentUncheckedUpdateManyWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TrainingDocumentCreateManyTrainingStandardInput = {
   id: string
   documentId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingDocumentUpdateWithoutTrainingStandardInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutTrainingDocumentNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutTrainingDocumentNestedInput
 }
 
 export type TrainingDocumentUncheckedUpdateWithoutTrainingStandardInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -493,8 +716,12 @@ export type TrainingDocumentSelect<ExtArgs extends runtime.Types.Extensions.Inte
   id?: boolean
   documentId?: boolean
   trainingStandardId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   DocumentStructure?: boolean | Prisma.DocumentStructureDefaultArgs<ExtArgs>
   TrainingStandard?: boolean | Prisma.TrainingStandardDefaultArgs<ExtArgs>
+  Employee?: boolean | Prisma.TrainingDocument$EmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["trainingDocument"]>
 
 
@@ -503,12 +730,16 @@ export type TrainingDocumentSelectScalar = {
   id?: boolean
   documentId?: boolean
   trainingStandardId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type TrainingDocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "documentId" | "trainingStandardId", ExtArgs["result"]["trainingDocument"]>
+export type TrainingDocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "documentId" | "trainingStandardId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["trainingDocument"]>
 export type TrainingDocumentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   DocumentStructure?: boolean | Prisma.DocumentStructureDefaultArgs<ExtArgs>
   TrainingStandard?: boolean | Prisma.TrainingStandardDefaultArgs<ExtArgs>
+  Employee?: boolean | Prisma.TrainingDocument$EmployeeArgs<ExtArgs>
 }
 
 export type $TrainingDocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -516,11 +747,15 @@ export type $TrainingDocumentPayload<ExtArgs extends runtime.Types.Extensions.In
   objects: {
     DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs>
     TrainingStandard: Prisma.$TrainingStandardPayload<ExtArgs>
+    Employee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     documentId: string
     trainingStandardId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["trainingDocument"]>
   composites: {}
 }
@@ -863,6 +1098,7 @@ export interface Prisma__TrainingDocumentClient<T, Null = never, ExtArgs extends
   readonly [Symbol.toStringTag]: "PrismaPromise"
   DocumentStructure<T extends Prisma.DocumentStructureDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructureDefaultArgs<ExtArgs>>): Prisma.Prisma__DocumentStructureClient<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   TrainingStandard<T extends Prisma.TrainingStandardDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingStandardDefaultArgs<ExtArgs>>): Prisma.Prisma__TrainingStandardClient<runtime.Types.Result.GetResult<Prisma.$TrainingStandardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee<T extends Prisma.TrainingDocument$EmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingDocument$EmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -895,6 +1131,9 @@ export interface TrainingDocumentFieldRefs {
   readonly id: Prisma.FieldRef<"TrainingDocument", 'String'>
   readonly documentId: Prisma.FieldRef<"TrainingDocument", 'String'>
   readonly trainingStandardId: Prisma.FieldRef<"TrainingDocument", 'String'>
+  readonly deleted: Prisma.FieldRef<"TrainingDocument", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"TrainingDocument", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"TrainingDocument", 'String'>
 }
     
 
@@ -1235,6 +1474,25 @@ export type TrainingDocumentDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many TrainingDocuments to delete.
    */
   limit?: number
+}
+
+/**
+ * TrainingDocument.Employee
+ */
+export type TrainingDocument$EmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

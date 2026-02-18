@@ -29,6 +29,9 @@ export type VisibilityForRoleMinAggregateOutputType = {
   visible: boolean | null
   roleId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type VisibilityForRoleMaxAggregateOutputType = {
@@ -36,6 +39,9 @@ export type VisibilityForRoleMaxAggregateOutputType = {
   visible: boolean | null
   roleId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type VisibilityForRoleCountAggregateOutputType = {
@@ -43,6 +49,9 @@ export type VisibilityForRoleCountAggregateOutputType = {
   visible: number
   roleId: number
   targetId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -52,6 +61,9 @@ export type VisibilityForRoleMinAggregateInputType = {
   visible?: true
   roleId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type VisibilityForRoleMaxAggregateInputType = {
@@ -59,6 +71,9 @@ export type VisibilityForRoleMaxAggregateInputType = {
   visible?: true
   roleId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type VisibilityForRoleCountAggregateInputType = {
@@ -66,6 +81,9 @@ export type VisibilityForRoleCountAggregateInputType = {
   visible?: true
   roleId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -146,6 +164,9 @@ export type VisibilityForRoleGroupByOutputType = {
   visible: boolean
   roleId: string
   targetId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: VisibilityForRoleCountAggregateOutputType | null
   _min: VisibilityForRoleMinAggregateOutputType | null
   _max: VisibilityForRoleMaxAggregateOutputType | null
@@ -174,8 +195,12 @@ export type VisibilityForRoleWhereInput = {
   visible?: Prisma.BoolFilter<"VisibilityForRole"> | boolean
   roleId?: Prisma.StringFilter<"VisibilityForRole"> | string
   targetId?: Prisma.StringFilter<"VisibilityForRole"> | string
+  deleted?: Prisma.BoolFilter<"VisibilityForRole"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"VisibilityForRole"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"VisibilityForRole"> | string | null
   Role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type VisibilityForRoleOrderByWithRelationInput = {
@@ -183,8 +208,12 @@ export type VisibilityForRoleOrderByWithRelationInput = {
   visible?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Role?: Prisma.RoleOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  Employee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.VisibilityForRoleOrderByRelevanceInput
 }
 
@@ -196,8 +225,12 @@ export type VisibilityForRoleWhereUniqueInput = Prisma.AtLeast<{
   visible?: Prisma.BoolFilter<"VisibilityForRole"> | boolean
   roleId?: Prisma.StringFilter<"VisibilityForRole"> | string
   targetId?: Prisma.StringFilter<"VisibilityForRole"> | string
+  deleted?: Prisma.BoolFilter<"VisibilityForRole"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"VisibilityForRole"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"VisibilityForRole"> | string | null
   Role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type VisibilityForRoleOrderByWithAggregationInput = {
@@ -205,6 +238,9 @@ export type VisibilityForRoleOrderByWithAggregationInput = {
   visible?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.VisibilityForRoleCountOrderByAggregateInput
   _max?: Prisma.VisibilityForRoleMaxOrderByAggregateInput
   _min?: Prisma.VisibilityForRoleMinOrderByAggregateInput
@@ -218,13 +254,19 @@ export type VisibilityForRoleScalarWhereWithAggregatesInput = {
   visible?: Prisma.BoolWithAggregatesFilter<"VisibilityForRole"> | boolean
   roleId?: Prisma.StringWithAggregatesFilter<"VisibilityForRole"> | string
   targetId?: Prisma.StringWithAggregatesFilter<"VisibilityForRole"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"VisibilityForRole"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"VisibilityForRole"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"VisibilityForRole"> | string | null
 }
 
 export type VisibilityForRoleCreateInput = {
   id: string
   visible?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Role: Prisma.RoleCreateNestedOneWithoutVisibilityForRoleInput
   Target: Prisma.TargetCreateNestedOneWithoutVisibilityForRoleInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutVisibilityForRoleInput
 }
 
 export type VisibilityForRoleUncheckedCreateInput = {
@@ -232,13 +274,19 @@ export type VisibilityForRoleUncheckedCreateInput = {
   visible?: boolean
   roleId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type VisibilityForRoleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Role?: Prisma.RoleUpdateOneRequiredWithoutVisibilityForRoleNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutVisibilityForRoleNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutVisibilityForRoleNestedInput
 }
 
 export type VisibilityForRoleUncheckedUpdateInput = {
@@ -246,6 +294,9 @@ export type VisibilityForRoleUncheckedUpdateInput = {
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VisibilityForRoleCreateManyInput = {
@@ -253,11 +304,16 @@ export type VisibilityForRoleCreateManyInput = {
   visible?: boolean
   roleId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type VisibilityForRoleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type VisibilityForRoleUncheckedUpdateManyInput = {
@@ -265,6 +321,9 @@ export type VisibilityForRoleUncheckedUpdateManyInput = {
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VisibilityForRoleListRelationFilter = {
@@ -288,6 +347,9 @@ export type VisibilityForRoleCountOrderByAggregateInput = {
   visible?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type VisibilityForRoleMaxOrderByAggregateInput = {
@@ -295,6 +357,9 @@ export type VisibilityForRoleMaxOrderByAggregateInput = {
   visible?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type VisibilityForRoleMinOrderByAggregateInput = {
@@ -302,6 +367,51 @@ export type VisibilityForRoleMinOrderByAggregateInput = {
   visible?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
+}
+
+export type VisibilityForRoleCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.VisibilityForRoleCreateWithoutEmployeeInput, Prisma.VisibilityForRoleUncheckedCreateWithoutEmployeeInput> | Prisma.VisibilityForRoleCreateWithoutEmployeeInput[] | Prisma.VisibilityForRoleUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.VisibilityForRoleCreateOrConnectWithoutEmployeeInput | Prisma.VisibilityForRoleCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.VisibilityForRoleCreateManyEmployeeInputEnvelope
+  connect?: Prisma.VisibilityForRoleWhereUniqueInput | Prisma.VisibilityForRoleWhereUniqueInput[]
+}
+
+export type VisibilityForRoleUncheckedCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.VisibilityForRoleCreateWithoutEmployeeInput, Prisma.VisibilityForRoleUncheckedCreateWithoutEmployeeInput> | Prisma.VisibilityForRoleCreateWithoutEmployeeInput[] | Prisma.VisibilityForRoleUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.VisibilityForRoleCreateOrConnectWithoutEmployeeInput | Prisma.VisibilityForRoleCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.VisibilityForRoleCreateManyEmployeeInputEnvelope
+  connect?: Prisma.VisibilityForRoleWhereUniqueInput | Prisma.VisibilityForRoleWhereUniqueInput[]
+}
+
+export type VisibilityForRoleUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.VisibilityForRoleCreateWithoutEmployeeInput, Prisma.VisibilityForRoleUncheckedCreateWithoutEmployeeInput> | Prisma.VisibilityForRoleCreateWithoutEmployeeInput[] | Prisma.VisibilityForRoleUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.VisibilityForRoleCreateOrConnectWithoutEmployeeInput | Prisma.VisibilityForRoleCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.VisibilityForRoleUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.VisibilityForRoleUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.VisibilityForRoleCreateManyEmployeeInputEnvelope
+  set?: Prisma.VisibilityForRoleWhereUniqueInput | Prisma.VisibilityForRoleWhereUniqueInput[]
+  disconnect?: Prisma.VisibilityForRoleWhereUniqueInput | Prisma.VisibilityForRoleWhereUniqueInput[]
+  delete?: Prisma.VisibilityForRoleWhereUniqueInput | Prisma.VisibilityForRoleWhereUniqueInput[]
+  connect?: Prisma.VisibilityForRoleWhereUniqueInput | Prisma.VisibilityForRoleWhereUniqueInput[]
+  update?: Prisma.VisibilityForRoleUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.VisibilityForRoleUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.VisibilityForRoleUpdateManyWithWhereWithoutEmployeeInput | Prisma.VisibilityForRoleUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.VisibilityForRoleScalarWhereInput | Prisma.VisibilityForRoleScalarWhereInput[]
+}
+
+export type VisibilityForRoleUncheckedUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.VisibilityForRoleCreateWithoutEmployeeInput, Prisma.VisibilityForRoleUncheckedCreateWithoutEmployeeInput> | Prisma.VisibilityForRoleCreateWithoutEmployeeInput[] | Prisma.VisibilityForRoleUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.VisibilityForRoleCreateOrConnectWithoutEmployeeInput | Prisma.VisibilityForRoleCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.VisibilityForRoleUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.VisibilityForRoleUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.VisibilityForRoleCreateManyEmployeeInputEnvelope
+  set?: Prisma.VisibilityForRoleWhereUniqueInput | Prisma.VisibilityForRoleWhereUniqueInput[]
+  disconnect?: Prisma.VisibilityForRoleWhereUniqueInput | Prisma.VisibilityForRoleWhereUniqueInput[]
+  delete?: Prisma.VisibilityForRoleWhereUniqueInput | Prisma.VisibilityForRoleWhereUniqueInput[]
+  connect?: Prisma.VisibilityForRoleWhereUniqueInput | Prisma.VisibilityForRoleWhereUniqueInput[]
+  update?: Prisma.VisibilityForRoleUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.VisibilityForRoleUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.VisibilityForRoleUpdateManyWithWhereWithoutEmployeeInput | Prisma.VisibilityForRoleUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.VisibilityForRoleScalarWhereInput | Prisma.VisibilityForRoleScalarWhereInput[]
 }
 
 export type VisibilityForRoleCreateNestedManyWithoutRoleInput = {
@@ -388,16 +498,79 @@ export type VisibilityForRoleUncheckedUpdateManyWithoutTargetNestedInput = {
   deleteMany?: Prisma.VisibilityForRoleScalarWhereInput | Prisma.VisibilityForRoleScalarWhereInput[]
 }
 
+export type VisibilityForRoleCreateWithoutEmployeeInput = {
+  id: string
+  visible?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Role: Prisma.RoleCreateNestedOneWithoutVisibilityForRoleInput
+  Target: Prisma.TargetCreateNestedOneWithoutVisibilityForRoleInput
+}
+
+export type VisibilityForRoleUncheckedCreateWithoutEmployeeInput = {
+  id: string
+  visible?: boolean
+  roleId: string
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type VisibilityForRoleCreateOrConnectWithoutEmployeeInput = {
+  where: Prisma.VisibilityForRoleWhereUniqueInput
+  create: Prisma.XOR<Prisma.VisibilityForRoleCreateWithoutEmployeeInput, Prisma.VisibilityForRoleUncheckedCreateWithoutEmployeeInput>
+}
+
+export type VisibilityForRoleCreateManyEmployeeInputEnvelope = {
+  data: Prisma.VisibilityForRoleCreateManyEmployeeInput | Prisma.VisibilityForRoleCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type VisibilityForRoleUpsertWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.VisibilityForRoleWhereUniqueInput
+  update: Prisma.XOR<Prisma.VisibilityForRoleUpdateWithoutEmployeeInput, Prisma.VisibilityForRoleUncheckedUpdateWithoutEmployeeInput>
+  create: Prisma.XOR<Prisma.VisibilityForRoleCreateWithoutEmployeeInput, Prisma.VisibilityForRoleUncheckedCreateWithoutEmployeeInput>
+}
+
+export type VisibilityForRoleUpdateWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.VisibilityForRoleWhereUniqueInput
+  data: Prisma.XOR<Prisma.VisibilityForRoleUpdateWithoutEmployeeInput, Prisma.VisibilityForRoleUncheckedUpdateWithoutEmployeeInput>
+}
+
+export type VisibilityForRoleUpdateManyWithWhereWithoutEmployeeInput = {
+  where: Prisma.VisibilityForRoleScalarWhereInput
+  data: Prisma.XOR<Prisma.VisibilityForRoleUpdateManyMutationInput, Prisma.VisibilityForRoleUncheckedUpdateManyWithoutEmployeeInput>
+}
+
+export type VisibilityForRoleScalarWhereInput = {
+  AND?: Prisma.VisibilityForRoleScalarWhereInput | Prisma.VisibilityForRoleScalarWhereInput[]
+  OR?: Prisma.VisibilityForRoleScalarWhereInput[]
+  NOT?: Prisma.VisibilityForRoleScalarWhereInput | Prisma.VisibilityForRoleScalarWhereInput[]
+  id?: Prisma.StringFilter<"VisibilityForRole"> | string
+  visible?: Prisma.BoolFilter<"VisibilityForRole"> | boolean
+  roleId?: Prisma.StringFilter<"VisibilityForRole"> | string
+  targetId?: Prisma.StringFilter<"VisibilityForRole"> | string
+  deleted?: Prisma.BoolFilter<"VisibilityForRole"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"VisibilityForRole"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"VisibilityForRole"> | string | null
+}
+
 export type VisibilityForRoleCreateWithoutRoleInput = {
   id: string
   visible?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Target: Prisma.TargetCreateNestedOneWithoutVisibilityForRoleInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutVisibilityForRoleInput
 }
 
 export type VisibilityForRoleUncheckedCreateWithoutRoleInput = {
   id: string
   visible?: boolean
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type VisibilityForRoleCreateOrConnectWithoutRoleInput = {
@@ -426,26 +599,22 @@ export type VisibilityForRoleUpdateManyWithWhereWithoutRoleInput = {
   data: Prisma.XOR<Prisma.VisibilityForRoleUpdateManyMutationInput, Prisma.VisibilityForRoleUncheckedUpdateManyWithoutRoleInput>
 }
 
-export type VisibilityForRoleScalarWhereInput = {
-  AND?: Prisma.VisibilityForRoleScalarWhereInput | Prisma.VisibilityForRoleScalarWhereInput[]
-  OR?: Prisma.VisibilityForRoleScalarWhereInput[]
-  NOT?: Prisma.VisibilityForRoleScalarWhereInput | Prisma.VisibilityForRoleScalarWhereInput[]
-  id?: Prisma.StringFilter<"VisibilityForRole"> | string
-  visible?: Prisma.BoolFilter<"VisibilityForRole"> | boolean
-  roleId?: Prisma.StringFilter<"VisibilityForRole"> | string
-  targetId?: Prisma.StringFilter<"VisibilityForRole"> | string
-}
-
 export type VisibilityForRoleCreateWithoutTargetInput = {
   id: string
   visible?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Role: Prisma.RoleCreateNestedOneWithoutVisibilityForRoleInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutVisibilityForRoleInput
 }
 
 export type VisibilityForRoleUncheckedCreateWithoutTargetInput = {
   id: string
   visible?: boolean
   roleId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type VisibilityForRoleCreateOrConnectWithoutTargetInput = {
@@ -474,52 +643,112 @@ export type VisibilityForRoleUpdateManyWithWhereWithoutTargetInput = {
   data: Prisma.XOR<Prisma.VisibilityForRoleUpdateManyMutationInput, Prisma.VisibilityForRoleUncheckedUpdateManyWithoutTargetInput>
 }
 
+export type VisibilityForRoleCreateManyEmployeeInput = {
+  id: string
+  visible?: boolean
+  roleId: string
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type VisibilityForRoleUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Role?: Prisma.RoleUpdateOneRequiredWithoutVisibilityForRoleNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutVisibilityForRoleNestedInput
+}
+
+export type VisibilityForRoleUncheckedUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type VisibilityForRoleUncheckedUpdateManyWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
 export type VisibilityForRoleCreateManyRoleInput = {
   id: string
   visible?: boolean
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type VisibilityForRoleUpdateWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Target?: Prisma.TargetUpdateOneRequiredWithoutVisibilityForRoleNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutVisibilityForRoleNestedInput
 }
 
 export type VisibilityForRoleUncheckedUpdateWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VisibilityForRoleUncheckedUpdateManyWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VisibilityForRoleCreateManyTargetInput = {
   id: string
   visible?: boolean
   roleId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type VisibilityForRoleUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Role?: Prisma.RoleUpdateOneRequiredWithoutVisibilityForRoleNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutVisibilityForRoleNestedInput
 }
 
 export type VisibilityForRoleUncheckedUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VisibilityForRoleUncheckedUpdateManyWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -529,8 +758,12 @@ export type VisibilityForRoleSelect<ExtArgs extends runtime.Types.Extensions.Int
   visible?: boolean
   roleId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee?: boolean | Prisma.VisibilityForRole$EmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["visibilityForRole"]>
 
 
@@ -540,12 +773,16 @@ export type VisibilityForRoleSelectScalar = {
   visible?: boolean
   roleId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type VisibilityForRoleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "visible" | "roleId" | "targetId", ExtArgs["result"]["visibilityForRole"]>
+export type VisibilityForRoleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "visible" | "roleId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["visibilityForRole"]>
 export type VisibilityForRoleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee?: boolean | Prisma.VisibilityForRole$EmployeeArgs<ExtArgs>
 }
 
 export type $VisibilityForRolePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -553,12 +790,16 @@ export type $VisibilityForRolePayload<ExtArgs extends runtime.Types.Extensions.I
   objects: {
     Role: Prisma.$RolePayload<ExtArgs>
     Target: Prisma.$TargetPayload<ExtArgs>
+    Employee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     visible: boolean
     roleId: string
     targetId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["visibilityForRole"]>
   composites: {}
 }
@@ -901,6 +1142,7 @@ export interface Prisma__VisibilityForRoleClient<T, Null = never, ExtArgs extend
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Role<T extends Prisma.RoleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RoleDefaultArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee<T extends Prisma.VisibilityForRole$EmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VisibilityForRole$EmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -934,6 +1176,9 @@ export interface VisibilityForRoleFieldRefs {
   readonly visible: Prisma.FieldRef<"VisibilityForRole", 'Boolean'>
   readonly roleId: Prisma.FieldRef<"VisibilityForRole", 'String'>
   readonly targetId: Prisma.FieldRef<"VisibilityForRole", 'String'>
+  readonly deleted: Prisma.FieldRef<"VisibilityForRole", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"VisibilityForRole", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"VisibilityForRole", 'String'>
 }
     
 
@@ -1274,6 +1519,25 @@ export type VisibilityForRoleDeleteManyArgs<ExtArgs extends runtime.Types.Extens
    * Limit how many VisibilityForRoles to delete.
    */
   limit?: number
+}
+
+/**
+ * VisibilityForRole.Employee
+ */
+export type VisibilityForRole$EmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

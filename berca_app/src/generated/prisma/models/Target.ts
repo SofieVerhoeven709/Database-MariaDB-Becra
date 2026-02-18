@@ -29,6 +29,9 @@ export type TargetMinAggregateOutputType = {
   createdAt: Date | null
   createdBy: string | null
   targetTypeId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TargetMaxAggregateOutputType = {
@@ -36,6 +39,9 @@ export type TargetMaxAggregateOutputType = {
   createdAt: Date | null
   createdBy: string | null
   targetTypeId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TargetCountAggregateOutputType = {
@@ -43,6 +49,9 @@ export type TargetCountAggregateOutputType = {
   createdAt: number
   createdBy: number
   targetTypeId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -52,6 +61,9 @@ export type TargetMinAggregateInputType = {
   createdAt?: true
   createdBy?: true
   targetTypeId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TargetMaxAggregateInputType = {
@@ -59,6 +71,9 @@ export type TargetMaxAggregateInputType = {
   createdAt?: true
   createdBy?: true
   targetTypeId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TargetCountAggregateInputType = {
@@ -66,6 +81,9 @@ export type TargetCountAggregateInputType = {
   createdAt?: true
   createdBy?: true
   targetTypeId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -146,6 +164,9 @@ export type TargetGroupByOutputType = {
   createdAt: Date
   createdBy: string
   targetTypeId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: TargetCountAggregateOutputType | null
   _min: TargetMinAggregateOutputType | null
   _max: TargetMaxAggregateOutputType | null
@@ -174,6 +195,9 @@ export type TargetWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Target"> | Date | string
   createdBy?: Prisma.StringFilter<"Target"> | string
   targetTypeId?: Prisma.StringFilter<"Target"> | string
+  deleted?: Prisma.BoolFilter<"Target"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Target"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Target"> | string | null
   Certificate?: Prisma.CertificateListRelationFilter
   Company?: Prisma.CompanyListRelationFilter
   Contact?: Prisma.ContactListRelationFilter
@@ -187,6 +211,7 @@ export type TargetWhereInput = {
   Project?: Prisma.ProjectListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TargetType?: Prisma.XOR<Prisma.TargetTypeScalarRelationFilter, Prisma.TargetTypeWhereInput>
+  Employee_Target_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Training?: Prisma.TrainingListRelationFilter
   TrainingStandard?: Prisma.TrainingStandardListRelationFilter
   VisibilityForRole?: Prisma.VisibilityForRoleListRelationFilter
@@ -199,6 +224,9 @@ export type TargetOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   targetTypeId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Certificate?: Prisma.CertificateOrderByRelationAggregateInput
   Company?: Prisma.CompanyOrderByRelationAggregateInput
   Contact?: Prisma.ContactOrderByRelationAggregateInput
@@ -212,6 +240,7 @@ export type TargetOrderByWithRelationInput = {
   Project?: Prisma.ProjectOrderByRelationAggregateInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   TargetType?: Prisma.TargetTypeOrderByWithRelationInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Training?: Prisma.TrainingOrderByRelationAggregateInput
   TrainingStandard?: Prisma.TrainingStandardOrderByRelationAggregateInput
   VisibilityForRole?: Prisma.VisibilityForRoleOrderByRelationAggregateInput
@@ -228,6 +257,9 @@ export type TargetWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Target"> | Date | string
   createdBy?: Prisma.StringFilter<"Target"> | string
   targetTypeId?: Prisma.StringFilter<"Target"> | string
+  deleted?: Prisma.BoolFilter<"Target"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Target"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Target"> | string | null
   Certificate?: Prisma.CertificateListRelationFilter
   Company?: Prisma.CompanyListRelationFilter
   Contact?: Prisma.ContactListRelationFilter
@@ -241,6 +273,7 @@ export type TargetWhereUniqueInput = Prisma.AtLeast<{
   Project?: Prisma.ProjectListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TargetType?: Prisma.XOR<Prisma.TargetTypeScalarRelationFilter, Prisma.TargetTypeWhereInput>
+  Employee_Target_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Training?: Prisma.TrainingListRelationFilter
   TrainingStandard?: Prisma.TrainingStandardListRelationFilter
   VisibilityForRole?: Prisma.VisibilityForRoleListRelationFilter
@@ -253,6 +286,9 @@ export type TargetOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   targetTypeId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TargetCountOrderByAggregateInput
   _max?: Prisma.TargetMaxOrderByAggregateInput
   _min?: Prisma.TargetMinOrderByAggregateInput
@@ -266,11 +302,16 @@ export type TargetScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Target"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"Target"> | string
   targetTypeId?: Prisma.StringWithAggregatesFilter<"Target"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"Target"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Target"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Target"> | string | null
 }
 
 export type TargetCreateInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -284,6 +325,7 @@ export type TargetCreateInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -296,6 +338,9 @@ export type TargetUncheckedCreateInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -317,6 +362,8 @@ export type TargetUncheckedCreateInput = {
 export type TargetUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -330,6 +377,7 @@ export type TargetUpdateInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -342,6 +390,9 @@ export type TargetUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -365,11 +416,16 @@ export type TargetCreateManyInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TargetUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TargetUncheckedUpdateManyInput = {
@@ -377,6 +433,9 @@ export type TargetUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TargetScalarRelationFilter = {
@@ -405,6 +464,9 @@ export type TargetCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   targetTypeId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TargetMaxOrderByAggregateInput = {
@@ -412,6 +474,9 @@ export type TargetMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   targetTypeId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TargetMinOrderByAggregateInput = {
@@ -419,6 +484,9 @@ export type TargetMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   targetTypeId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TargetCreateNestedOneWithoutCertificateInput = {
@@ -484,10 +552,24 @@ export type TargetCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
 }
 
+export type TargetCreateNestedManyWithoutEmployee_Target_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput, Prisma.TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput> | Prisma.TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput[] | Prisma.TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TargetCreateOrConnectWithoutEmployee_Target_deletedByToEmployeeInput | Prisma.TargetCreateOrConnectWithoutEmployee_Target_deletedByToEmployeeInput[]
+  createMany?: Prisma.TargetCreateManyEmployee_Target_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
+}
+
 export type TargetUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.TargetCreateWithoutEmployeeInput, Prisma.TargetUncheckedCreateWithoutEmployeeInput> | Prisma.TargetCreateWithoutEmployeeInput[] | Prisma.TargetUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TargetCreateOrConnectWithoutEmployeeInput | Prisma.TargetCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.TargetCreateManyEmployeeInputEnvelope
+  connect?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
+}
+
+export type TargetUncheckedCreateNestedManyWithoutEmployee_Target_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput, Prisma.TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput> | Prisma.TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput[] | Prisma.TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TargetCreateOrConnectWithoutEmployee_Target_deletedByToEmployeeInput | Prisma.TargetCreateOrConnectWithoutEmployee_Target_deletedByToEmployeeInput[]
+  createMany?: Prisma.TargetCreateManyEmployee_Target_deletedByToEmployeeInputEnvelope
   connect?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
 }
 
@@ -505,6 +587,20 @@ export type TargetUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.TargetScalarWhereInput | Prisma.TargetScalarWhereInput[]
 }
 
+export type TargetUpdateManyWithoutEmployee_Target_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput, Prisma.TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput> | Prisma.TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput[] | Prisma.TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TargetCreateOrConnectWithoutEmployee_Target_deletedByToEmployeeInput | Prisma.TargetCreateOrConnectWithoutEmployee_Target_deletedByToEmployeeInput[]
+  upsert?: Prisma.TargetUpsertWithWhereUniqueWithoutEmployee_Target_deletedByToEmployeeInput | Prisma.TargetUpsertWithWhereUniqueWithoutEmployee_Target_deletedByToEmployeeInput[]
+  createMany?: Prisma.TargetCreateManyEmployee_Target_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
+  disconnect?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
+  delete?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
+  connect?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
+  update?: Prisma.TargetUpdateWithWhereUniqueWithoutEmployee_Target_deletedByToEmployeeInput | Prisma.TargetUpdateWithWhereUniqueWithoutEmployee_Target_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TargetUpdateManyWithWhereWithoutEmployee_Target_deletedByToEmployeeInput | Prisma.TargetUpdateManyWithWhereWithoutEmployee_Target_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.TargetScalarWhereInput | Prisma.TargetScalarWhereInput[]
+}
+
 export type TargetUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.TargetCreateWithoutEmployeeInput, Prisma.TargetUncheckedCreateWithoutEmployeeInput> | Prisma.TargetCreateWithoutEmployeeInput[] | Prisma.TargetUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TargetCreateOrConnectWithoutEmployeeInput | Prisma.TargetCreateOrConnectWithoutEmployeeInput[]
@@ -516,6 +612,20 @@ export type TargetUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
   update?: Prisma.TargetUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.TargetUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.TargetUpdateManyWithWhereWithoutEmployeeInput | Prisma.TargetUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.TargetScalarWhereInput | Prisma.TargetScalarWhereInput[]
+}
+
+export type TargetUncheckedUpdateManyWithoutEmployee_Target_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput, Prisma.TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput> | Prisma.TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput[] | Prisma.TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TargetCreateOrConnectWithoutEmployee_Target_deletedByToEmployeeInput | Prisma.TargetCreateOrConnectWithoutEmployee_Target_deletedByToEmployeeInput[]
+  upsert?: Prisma.TargetUpsertWithWhereUniqueWithoutEmployee_Target_deletedByToEmployeeInput | Prisma.TargetUpsertWithWhereUniqueWithoutEmployee_Target_deletedByToEmployeeInput[]
+  createMany?: Prisma.TargetCreateManyEmployee_Target_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
+  disconnect?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
+  delete?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
+  connect?: Prisma.TargetWhereUniqueInput | Prisma.TargetWhereUniqueInput[]
+  update?: Prisma.TargetUpdateWithWhereUniqueWithoutEmployee_Target_deletedByToEmployeeInput | Prisma.TargetUpdateWithWhereUniqueWithoutEmployee_Target_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TargetUpdateManyWithWhereWithoutEmployee_Target_deletedByToEmployeeInput | Prisma.TargetUpdateManyWithWhereWithoutEmployee_Target_deletedByToEmployeeInput[]
   deleteMany?: Prisma.TargetScalarWhereInput | Prisma.TargetScalarWhereInput[]
 }
 
@@ -732,6 +842,8 @@ export type TargetUpdateOneRequiredWithoutWorkOrderStructureNestedInput = {
 export type TargetCreateWithoutCertificateInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
@@ -744,6 +856,7 @@ export type TargetCreateWithoutCertificateInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -756,6 +869,9 @@ export type TargetUncheckedCreateWithoutCertificateInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -792,6 +908,8 @@ export type TargetUpdateToOneWithWhereWithoutCertificateInput = {
 export type TargetUpdateWithoutCertificateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
@@ -804,6 +922,7 @@ export type TargetUpdateWithoutCertificateInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -816,6 +935,9 @@ export type TargetUncheckedUpdateWithoutCertificateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -836,6 +958,8 @@ export type TargetUncheckedUpdateWithoutCertificateInput = {
 export type TargetCreateWithoutCompanyInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
@@ -848,6 +972,7 @@ export type TargetCreateWithoutCompanyInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -860,6 +985,9 @@ export type TargetUncheckedCreateWithoutCompanyInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -896,6 +1024,8 @@ export type TargetUpdateToOneWithWhereWithoutCompanyInput = {
 export type TargetUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
@@ -908,6 +1038,7 @@ export type TargetUpdateWithoutCompanyInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -920,6 +1051,9 @@ export type TargetUncheckedUpdateWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -940,6 +1074,8 @@ export type TargetUncheckedUpdateWithoutCompanyInput = {
 export type TargetCreateWithoutContactInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
@@ -952,6 +1088,7 @@ export type TargetCreateWithoutContactInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -964,6 +1101,9 @@ export type TargetUncheckedCreateWithoutContactInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -1000,6 +1140,8 @@ export type TargetUpdateToOneWithWhereWithoutContactInput = {
 export type TargetUpdateWithoutContactInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
@@ -1012,6 +1154,7 @@ export type TargetUpdateWithoutContactInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -1024,6 +1167,9 @@ export type TargetUncheckedUpdateWithoutContactInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -1044,6 +1190,8 @@ export type TargetUncheckedUpdateWithoutContactInput = {
 export type TargetCreateWithoutDocumentStructureInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -1056,6 +1204,7 @@ export type TargetCreateWithoutDocumentStructureInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -1068,6 +1217,9 @@ export type TargetUncheckedCreateWithoutDocumentStructureInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1104,6 +1256,8 @@ export type TargetUpdateToOneWithWhereWithoutDocumentStructureInput = {
 export type TargetUpdateWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -1116,6 +1270,7 @@ export type TargetUpdateWithoutDocumentStructureInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -1128,6 +1283,9 @@ export type TargetUncheckedUpdateWithoutDocumentStructureInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1148,6 +1306,8 @@ export type TargetUncheckedUpdateWithoutDocumentStructureInput = {
 export type TargetCreateWithoutEmployeeInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -1160,6 +1320,7 @@ export type TargetCreateWithoutEmployeeInput = {
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -1171,6 +1332,9 @@ export type TargetUncheckedCreateWithoutEmployeeInput = {
   id: string
   createdAt: Date | string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1199,6 +1363,66 @@ export type TargetCreateManyEmployeeInputEnvelope = {
   skipDuplicates?: boolean
 }
 
+export type TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput = {
+  id: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
+  Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
+  Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
+  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
+  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
+  FollowUpTarget?: Prisma.FollowUpTargetCreateNestedManyWithoutTargetInput
+  InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
+  TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
+  TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
+  VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
+  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutTargetInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutTargetInput
+}
+
+export type TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput = {
+  id: string
+  createdAt: Date | string
+  createdBy: string
+  targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
+  Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
+  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
+  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
+  FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutTargetInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
+  TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
+  VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutTargetInput
+  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutTargetInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTargetInput
+}
+
+export type TargetCreateOrConnectWithoutEmployee_Target_deletedByToEmployeeInput = {
+  where: Prisma.TargetWhereUniqueInput
+  create: Prisma.XOR<Prisma.TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput, Prisma.TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput>
+}
+
+export type TargetCreateManyEmployee_Target_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.TargetCreateManyEmployee_Target_deletedByToEmployeeInput | Prisma.TargetCreateManyEmployee_Target_deletedByToEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
 export type TargetUpsertWithWhereUniqueWithoutEmployeeInput = {
   where: Prisma.TargetWhereUniqueInput
   update: Prisma.XOR<Prisma.TargetUpdateWithoutEmployeeInput, Prisma.TargetUncheckedUpdateWithoutEmployeeInput>
@@ -1223,11 +1447,32 @@ export type TargetScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Target"> | Date | string
   createdBy?: Prisma.StringFilter<"Target"> | string
   targetTypeId?: Prisma.StringFilter<"Target"> | string
+  deleted?: Prisma.BoolFilter<"Target"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Target"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Target"> | string | null
+}
+
+export type TargetUpsertWithWhereUniqueWithoutEmployee_Target_deletedByToEmployeeInput = {
+  where: Prisma.TargetWhereUniqueInput
+  update: Prisma.XOR<Prisma.TargetUpdateWithoutEmployee_Target_deletedByToEmployeeInput, Prisma.TargetUncheckedUpdateWithoutEmployee_Target_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput, Prisma.TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput>
+}
+
+export type TargetUpdateWithWhereUniqueWithoutEmployee_Target_deletedByToEmployeeInput = {
+  where: Prisma.TargetWhereUniqueInput
+  data: Prisma.XOR<Prisma.TargetUpdateWithoutEmployee_Target_deletedByToEmployeeInput, Prisma.TargetUncheckedUpdateWithoutEmployee_Target_deletedByToEmployeeInput>
+}
+
+export type TargetUpdateManyWithWhereWithoutEmployee_Target_deletedByToEmployeeInput = {
+  where: Prisma.TargetScalarWhereInput
+  data: Prisma.XOR<Prisma.TargetUpdateManyMutationInput, Prisma.TargetUncheckedUpdateManyWithoutEmployee_Target_deletedByToEmployeeInput>
 }
 
 export type TargetCreateWithoutFollowUpInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -1240,6 +1485,7 @@ export type TargetCreateWithoutFollowUpInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -1252,6 +1498,9 @@ export type TargetUncheckedCreateWithoutFollowUpInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1288,6 +1537,8 @@ export type TargetUpdateToOneWithWhereWithoutFollowUpInput = {
 export type TargetUpdateWithoutFollowUpInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -1300,6 +1551,7 @@ export type TargetUpdateWithoutFollowUpInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -1312,6 +1564,9 @@ export type TargetUncheckedUpdateWithoutFollowUpInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1332,6 +1587,8 @@ export type TargetUncheckedUpdateWithoutFollowUpInput = {
 export type TargetCreateWithoutFollowUpStructureInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -1344,6 +1601,7 @@ export type TargetCreateWithoutFollowUpStructureInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -1356,6 +1614,9 @@ export type TargetUncheckedCreateWithoutFollowUpStructureInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1392,6 +1653,8 @@ export type TargetUpdateToOneWithWhereWithoutFollowUpStructureInput = {
 export type TargetUpdateWithoutFollowUpStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -1404,6 +1667,7 @@ export type TargetUpdateWithoutFollowUpStructureInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -1416,6 +1680,9 @@ export type TargetUncheckedUpdateWithoutFollowUpStructureInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1436,6 +1703,8 @@ export type TargetUncheckedUpdateWithoutFollowUpStructureInput = {
 export type TargetCreateWithoutFollowUpTargetInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -1448,6 +1717,7 @@ export type TargetCreateWithoutFollowUpTargetInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -1460,6 +1730,9 @@ export type TargetUncheckedCreateWithoutFollowUpTargetInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1496,6 +1769,8 @@ export type TargetUpdateToOneWithWhereWithoutFollowUpTargetInput = {
 export type TargetUpdateWithoutFollowUpTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -1508,6 +1783,7 @@ export type TargetUpdateWithoutFollowUpTargetInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -1520,6 +1796,9 @@ export type TargetUncheckedUpdateWithoutFollowUpTargetInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1540,6 +1819,8 @@ export type TargetUncheckedUpdateWithoutFollowUpTargetInput = {
 export type TargetCreateWithoutInvoiceInInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -1552,6 +1833,7 @@ export type TargetCreateWithoutInvoiceInInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -1564,6 +1846,9 @@ export type TargetUncheckedCreateWithoutInvoiceInInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1600,6 +1885,8 @@ export type TargetUpdateToOneWithWhereWithoutInvoiceInInput = {
 export type TargetUpdateWithoutInvoiceInInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -1612,6 +1899,7 @@ export type TargetUpdateWithoutInvoiceInInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -1624,6 +1912,9 @@ export type TargetUncheckedUpdateWithoutInvoiceInInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1644,6 +1935,8 @@ export type TargetUncheckedUpdateWithoutInvoiceInInput = {
 export type TargetCreateWithoutInvoiceInTargetInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -1656,6 +1949,7 @@ export type TargetCreateWithoutInvoiceInTargetInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -1668,6 +1962,9 @@ export type TargetUncheckedCreateWithoutInvoiceInTargetInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1704,6 +2001,8 @@ export type TargetUpdateToOneWithWhereWithoutInvoiceInTargetInput = {
 export type TargetUpdateWithoutInvoiceInTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -1716,6 +2015,7 @@ export type TargetUpdateWithoutInvoiceInTargetInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -1728,6 +2028,9 @@ export type TargetUncheckedUpdateWithoutInvoiceInTargetInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1748,6 +2051,8 @@ export type TargetUncheckedUpdateWithoutInvoiceInTargetInput = {
 export type TargetCreateWithoutInvoiceOutInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -1760,6 +2065,7 @@ export type TargetCreateWithoutInvoiceOutInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -1772,6 +2078,9 @@ export type TargetUncheckedCreateWithoutInvoiceOutInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1808,6 +2117,8 @@ export type TargetUpdateToOneWithWhereWithoutInvoiceOutInput = {
 export type TargetUpdateWithoutInvoiceOutInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -1820,6 +2131,7 @@ export type TargetUpdateWithoutInvoiceOutInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -1832,6 +2144,9 @@ export type TargetUncheckedUpdateWithoutInvoiceOutInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1852,6 +2167,8 @@ export type TargetUncheckedUpdateWithoutInvoiceOutInput = {
 export type TargetCreateWithoutProjectInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -1864,6 +2181,7 @@ export type TargetCreateWithoutProjectInput = {
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -1876,6 +2194,9 @@ export type TargetUncheckedCreateWithoutProjectInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -1912,6 +2233,8 @@ export type TargetUpdateToOneWithWhereWithoutProjectInput = {
 export type TargetUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -1924,6 +2247,7 @@ export type TargetUpdateWithoutProjectInput = {
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -1936,6 +2260,9 @@ export type TargetUncheckedUpdateWithoutProjectInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -1956,6 +2283,8 @@ export type TargetUncheckedUpdateWithoutProjectInput = {
 export type TargetCreateWithoutTargetTypeInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -1968,6 +2297,7 @@ export type TargetCreateWithoutTargetTypeInput = {
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -1979,6 +2309,9 @@ export type TargetUncheckedCreateWithoutTargetTypeInput = {
   id: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2026,6 +2359,8 @@ export type TargetUpdateManyWithWhereWithoutTargetTypeInput = {
 export type TargetCreateWithoutTrainingInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -2039,6 +2374,7 @@ export type TargetCreateWithoutTrainingInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
   WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutTargetInput
@@ -2050,6 +2386,9 @@ export type TargetUncheckedCreateWithoutTrainingInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2086,6 +2425,8 @@ export type TargetUpdateToOneWithWhereWithoutTrainingInput = {
 export type TargetUpdateWithoutTrainingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -2099,6 +2440,7 @@ export type TargetUpdateWithoutTrainingInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateManyWithoutTargetNestedInput
@@ -2110,6 +2452,9 @@ export type TargetUncheckedUpdateWithoutTrainingInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2130,6 +2475,8 @@ export type TargetUncheckedUpdateWithoutTrainingInput = {
 export type TargetCreateWithoutTrainingStandardInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -2143,6 +2490,7 @@ export type TargetCreateWithoutTrainingStandardInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
   WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutTargetInput
@@ -2154,6 +2502,9 @@ export type TargetUncheckedCreateWithoutTrainingStandardInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2190,6 +2541,8 @@ export type TargetUpdateToOneWithWhereWithoutTrainingStandardInput = {
 export type TargetUpdateWithoutTrainingStandardInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -2203,6 +2556,7 @@ export type TargetUpdateWithoutTrainingStandardInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateManyWithoutTargetNestedInput
@@ -2214,6 +2568,9 @@ export type TargetUncheckedUpdateWithoutTrainingStandardInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2234,6 +2591,8 @@ export type TargetUncheckedUpdateWithoutTrainingStandardInput = {
 export type TargetCreateWithoutVisibilityForRoleInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -2247,6 +2606,7 @@ export type TargetCreateWithoutVisibilityForRoleInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutTargetInput
@@ -2258,6 +2618,9 @@ export type TargetUncheckedCreateWithoutVisibilityForRoleInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2294,6 +2657,8 @@ export type TargetUpdateToOneWithWhereWithoutVisibilityForRoleInput = {
 export type TargetUpdateWithoutVisibilityForRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -2307,6 +2672,7 @@ export type TargetUpdateWithoutVisibilityForRoleInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateManyWithoutTargetNestedInput
@@ -2318,6 +2684,9 @@ export type TargetUncheckedUpdateWithoutVisibilityForRoleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2338,6 +2707,8 @@ export type TargetUncheckedUpdateWithoutVisibilityForRoleInput = {
 export type TargetCreateWithoutWorkOrderInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -2351,6 +2722,7 @@ export type TargetCreateWithoutWorkOrderInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -2362,6 +2734,9 @@ export type TargetUncheckedCreateWithoutWorkOrderInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2398,6 +2773,8 @@ export type TargetUpdateToOneWithWhereWithoutWorkOrderInput = {
 export type TargetUpdateWithoutWorkOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -2411,6 +2788,7 @@ export type TargetUpdateWithoutWorkOrderInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -2422,6 +2800,9 @@ export type TargetUncheckedUpdateWithoutWorkOrderInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2442,6 +2823,8 @@ export type TargetUncheckedUpdateWithoutWorkOrderInput = {
 export type TargetCreateWithoutWorkOrderStructureInput = {
   id: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
@@ -2455,6 +2838,7 @@ export type TargetCreateWithoutWorkOrderStructureInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
@@ -2466,6 +2850,9 @@ export type TargetUncheckedCreateWithoutWorkOrderStructureInput = {
   createdAt: Date | string
   createdBy: string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
@@ -2502,6 +2889,8 @@ export type TargetUpdateToOneWithWhereWithoutWorkOrderStructureInput = {
 export type TargetUpdateWithoutWorkOrderStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -2515,6 +2904,7 @@ export type TargetUpdateWithoutWorkOrderStructureInput = {
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -2526,6 +2916,9 @@ export type TargetUncheckedUpdateWithoutWorkOrderStructureInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2547,11 +2940,25 @@ export type TargetCreateManyEmployeeInput = {
   id: string
   createdAt: Date | string
   targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type TargetCreateManyEmployee_Target_deletedByToEmployeeInput = {
+  id: string
+  createdAt: Date | string
+  createdBy: string
+  targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type TargetUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -2564,6 +2971,7 @@ export type TargetUpdateWithoutEmployeeInput = {
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -2575,6 +2983,9 @@ export type TargetUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2597,17 +3008,16 @@ export type TargetUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type TargetCreateManyTargetTypeInput = {
-  id: string
-  createdAt: Date | string
-  createdBy: string
-}
-
-export type TargetUpdateWithoutTargetTypeInput = {
+export type TargetUpdateWithoutEmployee_Target_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
@@ -2620,6 +3030,75 @@ export type TargetUpdateWithoutTargetTypeInput = {
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
+  TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
+  VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutTargetNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutTargetNestedInput
+}
+
+export type TargetUncheckedUpdateWithoutEmployee_Target_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
+  Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
+  Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
+  FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
+  FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutTargetNestedInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
+  VisibilityForRole?: Prisma.VisibilityForRoleUncheckedUpdateManyWithoutTargetNestedInput
+  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutTargetNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTargetNestedInput
+}
+
+export type TargetUncheckedUpdateManyWithoutEmployee_Target_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type TargetCreateManyTargetTypeInput = {
+  id: string
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type TargetUpdateWithoutTargetTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
+  Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
+  Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
+  FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
+  FollowUpTarget?: Prisma.FollowUpTargetUpdateManyWithoutTargetNestedInput
+  InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
@@ -2631,6 +3110,9 @@ export type TargetUncheckedUpdateWithoutTargetTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
@@ -2653,6 +3135,9 @@ export type TargetUncheckedUpdateManyWithoutTargetTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -2826,6 +3311,9 @@ export type TargetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   createdAt?: boolean
   createdBy?: boolean
   targetTypeId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Certificate?: boolean | Prisma.Target$CertificateArgs<ExtArgs>
   Company?: boolean | Prisma.Target$CompanyArgs<ExtArgs>
   Contact?: boolean | Prisma.Target$ContactArgs<ExtArgs>
@@ -2839,6 +3327,7 @@ export type TargetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   Project?: boolean | Prisma.Target$ProjectArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   TargetType?: boolean | Prisma.TargetTypeDefaultArgs<ExtArgs>
+  Employee_Target_deletedByToEmployee?: boolean | Prisma.Target$Employee_Target_deletedByToEmployeeArgs<ExtArgs>
   Training?: boolean | Prisma.Target$TrainingArgs<ExtArgs>
   TrainingStandard?: boolean | Prisma.Target$TrainingStandardArgs<ExtArgs>
   VisibilityForRole?: boolean | Prisma.Target$VisibilityForRoleArgs<ExtArgs>
@@ -2854,9 +3343,12 @@ export type TargetSelectScalar = {
   createdAt?: boolean
   createdBy?: boolean
   targetTypeId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type TargetOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "createdBy" | "targetTypeId", ExtArgs["result"]["target"]>
+export type TargetOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "createdBy" | "targetTypeId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["target"]>
 export type TargetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Certificate?: boolean | Prisma.Target$CertificateArgs<ExtArgs>
   Company?: boolean | Prisma.Target$CompanyArgs<ExtArgs>
@@ -2871,6 +3363,7 @@ export type TargetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   Project?: boolean | Prisma.Target$ProjectArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   TargetType?: boolean | Prisma.TargetTypeDefaultArgs<ExtArgs>
+  Employee_Target_deletedByToEmployee?: boolean | Prisma.Target$Employee_Target_deletedByToEmployeeArgs<ExtArgs>
   Training?: boolean | Prisma.Target$TrainingArgs<ExtArgs>
   TrainingStandard?: boolean | Prisma.Target$TrainingStandardArgs<ExtArgs>
   VisibilityForRole?: boolean | Prisma.Target$VisibilityForRoleArgs<ExtArgs>
@@ -2895,6 +3388,7 @@ export type $TargetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     Project: Prisma.$ProjectPayload<ExtArgs>[]
     Employee: Prisma.$EmployeePayload<ExtArgs>
     TargetType: Prisma.$TargetTypePayload<ExtArgs>
+    Employee_Target_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Training: Prisma.$TrainingPayload<ExtArgs>[]
     TrainingStandard: Prisma.$TrainingStandardPayload<ExtArgs>[]
     VisibilityForRole: Prisma.$VisibilityForRolePayload<ExtArgs>[]
@@ -2906,6 +3400,9 @@ export type $TargetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     createdAt: Date
     createdBy: string
     targetTypeId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["target"]>
   composites: {}
 }
@@ -3259,6 +3756,7 @@ export interface Prisma__TargetClient<T, Null = never, ExtArgs extends runtime.T
   Project<T extends Prisma.Target$ProjectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$ProjectArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   TargetType<T extends Prisma.TargetTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetTypeClient<runtime.Types.Result.GetResult<Prisma.$TargetTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_Target_deletedByToEmployee<T extends Prisma.Target$Employee_Target_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$Employee_Target_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Training<T extends Prisma.Target$TrainingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$TrainingArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   TrainingStandard<T extends Prisma.Target$TrainingStandardArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$TrainingStandardArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingStandardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   VisibilityForRole<T extends Prisma.Target$VisibilityForRoleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$VisibilityForRoleArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VisibilityForRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3297,6 +3795,9 @@ export interface TargetFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Target", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Target", 'String'>
   readonly targetTypeId: Prisma.FieldRef<"Target", 'String'>
+  readonly deleted: Prisma.FieldRef<"Target", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Target", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"Target", 'String'>
 }
     
 
@@ -3901,6 +4402,25 @@ export type Target$ProjectArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[]
+}
+
+/**
+ * Target.Employee_Target_deletedByToEmployee
+ */
+export type Target$Employee_Target_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

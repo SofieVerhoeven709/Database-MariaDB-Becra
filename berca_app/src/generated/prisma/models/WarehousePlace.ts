@@ -45,6 +45,9 @@ export type WarehousePlaceMinAggregateOutputType = {
   volume: number | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type WarehousePlaceMaxAggregateOutputType = {
@@ -58,6 +61,9 @@ export type WarehousePlaceMaxAggregateOutputType = {
   volume: number | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type WarehousePlaceCountAggregateOutputType = {
@@ -71,6 +77,9 @@ export type WarehousePlaceCountAggregateOutputType = {
   volume: number
   createdAt: number
   createdBy: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -94,6 +103,9 @@ export type WarehousePlaceMinAggregateInputType = {
   volume?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type WarehousePlaceMaxAggregateInputType = {
@@ -107,6 +119,9 @@ export type WarehousePlaceMaxAggregateInputType = {
   volume?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type WarehousePlaceCountAggregateInputType = {
@@ -120,6 +135,9 @@ export type WarehousePlaceCountAggregateInputType = {
   volume?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -220,6 +238,9 @@ export type WarehousePlaceGroupByOutputType = {
   volume: number
   createdAt: Date
   createdBy: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: WarehousePlaceCountAggregateOutputType | null
   _avg: WarehousePlaceAvgAggregateOutputType | null
   _sum: WarehousePlaceSumAggregateOutputType | null
@@ -256,7 +277,11 @@ export type WarehousePlaceWhereInput = {
   volume?: Prisma.IntFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeFilter<"WarehousePlace"> | Date | string
   createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
+  deleted?: Prisma.BoolFilter<"WarehousePlace"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"WarehousePlace"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_WarehousePlace_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type WarehousePlaceOrderByWithRelationInput = {
@@ -270,7 +295,11 @@ export type WarehousePlaceOrderByWithRelationInput = {
   volume?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.WarehousePlaceOrderByRelevanceInput
 }
 
@@ -288,7 +317,11 @@ export type WarehousePlaceWhereUniqueInput = Prisma.AtLeast<{
   volume?: Prisma.IntFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeFilter<"WarehousePlace"> | Date | string
   createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
+  deleted?: Prisma.BoolFilter<"WarehousePlace"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"WarehousePlace"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_WarehousePlace_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type WarehousePlaceOrderByWithAggregationInput = {
@@ -302,6 +335,9 @@ export type WarehousePlaceOrderByWithAggregationInput = {
   volume?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.WarehousePlaceCountOrderByAggregateInput
   _avg?: Prisma.WarehousePlaceAvgOrderByAggregateInput
   _max?: Prisma.WarehousePlaceMaxOrderByAggregateInput
@@ -323,6 +359,9 @@ export type WarehousePlaceScalarWhereWithAggregatesInput = {
   volume?: Prisma.IntWithAggregatesFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"WarehousePlace"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"WarehousePlace"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"WarehousePlace"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
 }
 
 export type WarehousePlaceCreateInput = {
@@ -335,7 +374,10 @@ export type WarehousePlaceCreateInput = {
   information?: string | null
   volume: number
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutWarehousePlaceInput
+  Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeInput
 }
 
 export type WarehousePlaceUncheckedCreateInput = {
@@ -349,6 +391,9 @@ export type WarehousePlaceUncheckedCreateInput = {
   volume: number
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type WarehousePlaceUpdateInput = {
@@ -361,7 +406,10 @@ export type WarehousePlaceUpdateInput = {
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutWarehousePlaceNestedInput
+  Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeNestedInput
 }
 
 export type WarehousePlaceUncheckedUpdateInput = {
@@ -375,6 +423,9 @@ export type WarehousePlaceUncheckedUpdateInput = {
   volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WarehousePlaceCreateManyInput = {
@@ -388,6 +439,9 @@ export type WarehousePlaceCreateManyInput = {
   volume: number
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type WarehousePlaceUpdateManyMutationInput = {
@@ -400,6 +454,8 @@ export type WarehousePlaceUpdateManyMutationInput = {
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type WarehousePlaceUncheckedUpdateManyInput = {
@@ -413,6 +469,9 @@ export type WarehousePlaceUncheckedUpdateManyInput = {
   volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WarehousePlaceListRelationFilter = {
@@ -442,6 +501,9 @@ export type WarehousePlaceCountOrderByAggregateInput = {
   volume?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type WarehousePlaceAvgOrderByAggregateInput = {
@@ -459,6 +521,9 @@ export type WarehousePlaceMaxOrderByAggregateInput = {
   volume?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type WarehousePlaceMinOrderByAggregateInput = {
@@ -472,6 +537,9 @@ export type WarehousePlaceMinOrderByAggregateInput = {
   volume?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type WarehousePlaceSumOrderByAggregateInput = {
@@ -485,10 +553,24 @@ export type WarehousePlaceCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
 }
 
+export type WarehousePlaceCreateNestedManyWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput, Prisma.WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput> | Prisma.WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[] | Prisma.WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.WarehousePlaceCreateOrConnectWithoutEmployee_WarehousePlace_deletedByToEmployeeInput | Prisma.WarehousePlaceCreateOrConnectWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  createMany?: Prisma.WarehousePlaceCreateManyEmployee_WarehousePlace_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
+}
+
 export type WarehousePlaceUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutEmployeeInput, Prisma.WarehousePlaceUncheckedCreateWithoutEmployeeInput> | Prisma.WarehousePlaceCreateWithoutEmployeeInput[] | Prisma.WarehousePlaceUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.WarehousePlaceCreateOrConnectWithoutEmployeeInput | Prisma.WarehousePlaceCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.WarehousePlaceCreateManyEmployeeInputEnvelope
+  connect?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
+}
+
+export type WarehousePlaceUncheckedCreateNestedManyWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput, Prisma.WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput> | Prisma.WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[] | Prisma.WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.WarehousePlaceCreateOrConnectWithoutEmployee_WarehousePlace_deletedByToEmployeeInput | Prisma.WarehousePlaceCreateOrConnectWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  createMany?: Prisma.WarehousePlaceCreateManyEmployee_WarehousePlace_deletedByToEmployeeInputEnvelope
   connect?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
 }
 
@@ -506,6 +588,20 @@ export type WarehousePlaceUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.WarehousePlaceScalarWhereInput | Prisma.WarehousePlaceScalarWhereInput[]
 }
 
+export type WarehousePlaceUpdateManyWithoutEmployee_WarehousePlace_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput, Prisma.WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput> | Prisma.WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[] | Prisma.WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.WarehousePlaceCreateOrConnectWithoutEmployee_WarehousePlace_deletedByToEmployeeInput | Prisma.WarehousePlaceCreateOrConnectWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  upsert?: Prisma.WarehousePlaceUpsertWithWhereUniqueWithoutEmployee_WarehousePlace_deletedByToEmployeeInput | Prisma.WarehousePlaceUpsertWithWhereUniqueWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  createMany?: Prisma.WarehousePlaceCreateManyEmployee_WarehousePlace_deletedByToEmployeeInputEnvelope
+  set?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
+  disconnect?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
+  delete?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
+  connect?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
+  update?: Prisma.WarehousePlaceUpdateWithWhereUniqueWithoutEmployee_WarehousePlace_deletedByToEmployeeInput | Prisma.WarehousePlaceUpdateWithWhereUniqueWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  updateMany?: Prisma.WarehousePlaceUpdateManyWithWhereWithoutEmployee_WarehousePlace_deletedByToEmployeeInput | Prisma.WarehousePlaceUpdateManyWithWhereWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.WarehousePlaceScalarWhereInput | Prisma.WarehousePlaceScalarWhereInput[]
+}
+
 export type WarehousePlaceUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutEmployeeInput, Prisma.WarehousePlaceUncheckedCreateWithoutEmployeeInput> | Prisma.WarehousePlaceCreateWithoutEmployeeInput[] | Prisma.WarehousePlaceUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.WarehousePlaceCreateOrConnectWithoutEmployeeInput | Prisma.WarehousePlaceCreateOrConnectWithoutEmployeeInput[]
@@ -520,6 +616,20 @@ export type WarehousePlaceUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.WarehousePlaceScalarWhereInput | Prisma.WarehousePlaceScalarWhereInput[]
 }
 
+export type WarehousePlaceUncheckedUpdateManyWithoutEmployee_WarehousePlace_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput, Prisma.WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput> | Prisma.WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[] | Prisma.WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.WarehousePlaceCreateOrConnectWithoutEmployee_WarehousePlace_deletedByToEmployeeInput | Prisma.WarehousePlaceCreateOrConnectWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  upsert?: Prisma.WarehousePlaceUpsertWithWhereUniqueWithoutEmployee_WarehousePlace_deletedByToEmployeeInput | Prisma.WarehousePlaceUpsertWithWhereUniqueWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  createMany?: Prisma.WarehousePlaceCreateManyEmployee_WarehousePlace_deletedByToEmployeeInputEnvelope
+  set?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
+  disconnect?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
+  delete?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
+  connect?: Prisma.WarehousePlaceWhereUniqueInput | Prisma.WarehousePlaceWhereUniqueInput[]
+  update?: Prisma.WarehousePlaceUpdateWithWhereUniqueWithoutEmployee_WarehousePlace_deletedByToEmployeeInput | Prisma.WarehousePlaceUpdateWithWhereUniqueWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  updateMany?: Prisma.WarehousePlaceUpdateManyWithWhereWithoutEmployee_WarehousePlace_deletedByToEmployeeInput | Prisma.WarehousePlaceUpdateManyWithWhereWithoutEmployee_WarehousePlace_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.WarehousePlaceScalarWhereInput | Prisma.WarehousePlaceScalarWhereInput[]
+}
+
 export type WarehousePlaceCreateWithoutEmployeeInput = {
   id: string
   place?: string | null
@@ -530,6 +640,9 @@ export type WarehousePlaceCreateWithoutEmployeeInput = {
   information?: string | null
   volume: number
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeInput
 }
 
 export type WarehousePlaceUncheckedCreateWithoutEmployeeInput = {
@@ -542,6 +655,9 @@ export type WarehousePlaceUncheckedCreateWithoutEmployeeInput = {
   information?: string | null
   volume: number
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type WarehousePlaceCreateOrConnectWithoutEmployeeInput = {
@@ -551,6 +667,46 @@ export type WarehousePlaceCreateOrConnectWithoutEmployeeInput = {
 
 export type WarehousePlaceCreateManyEmployeeInputEnvelope = {
   data: Prisma.WarehousePlaceCreateManyEmployeeInput | Prisma.WarehousePlaceCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  id: string
+  place?: string | null
+  shelf?: string | null
+  column?: string | null
+  layer?: string | null
+  layerPlace?: string | null
+  information?: string | null
+  volume: number
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutWarehousePlaceInput
+}
+
+export type WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  id: string
+  place?: string | null
+  shelf?: string | null
+  column?: string | null
+  layer?: string | null
+  layerPlace?: string | null
+  information?: string | null
+  volume: number
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type WarehousePlaceCreateOrConnectWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  where: Prisma.WarehousePlaceWhereUniqueInput
+  create: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput, Prisma.WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput>
+}
+
+export type WarehousePlaceCreateManyEmployee_WarehousePlace_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.WarehousePlaceCreateManyEmployee_WarehousePlace_deletedByToEmployeeInput | Prisma.WarehousePlaceCreateManyEmployee_WarehousePlace_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -584,6 +740,25 @@ export type WarehousePlaceScalarWhereInput = {
   volume?: Prisma.IntFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeFilter<"WarehousePlace"> | Date | string
   createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
+  deleted?: Prisma.BoolFilter<"WarehousePlace"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"WarehousePlace"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+}
+
+export type WarehousePlaceUpsertWithWhereUniqueWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  where: Prisma.WarehousePlaceWhereUniqueInput
+  update: Prisma.XOR<Prisma.WarehousePlaceUpdateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput, Prisma.WarehousePlaceUncheckedUpdateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput, Prisma.WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput>
+}
+
+export type WarehousePlaceUpdateWithWhereUniqueWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  where: Prisma.WarehousePlaceWhereUniqueInput
+  data: Prisma.XOR<Prisma.WarehousePlaceUpdateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput, Prisma.WarehousePlaceUncheckedUpdateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput>
+}
+
+export type WarehousePlaceUpdateManyWithWhereWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  where: Prisma.WarehousePlaceScalarWhereInput
+  data: Prisma.XOR<Prisma.WarehousePlaceUpdateManyMutationInput, Prisma.WarehousePlaceUncheckedUpdateManyWithoutEmployee_WarehousePlace_deletedByToEmployeeInput>
 }
 
 export type WarehousePlaceCreateManyEmployeeInput = {
@@ -596,6 +771,24 @@ export type WarehousePlaceCreateManyEmployeeInput = {
   information?: string | null
   volume: number
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type WarehousePlaceCreateManyEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  id: string
+  place?: string | null
+  shelf?: string | null
+  column?: string | null
+  layer?: string | null
+  layerPlace?: string | null
+  information?: string | null
+  volume: number
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type WarehousePlaceUpdateWithoutEmployeeInput = {
@@ -608,6 +801,9 @@ export type WarehousePlaceUpdateWithoutEmployeeInput = {
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeNestedInput
 }
 
 export type WarehousePlaceUncheckedUpdateWithoutEmployeeInput = {
@@ -620,6 +816,9 @@ export type WarehousePlaceUncheckedUpdateWithoutEmployeeInput = {
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WarehousePlaceUncheckedUpdateManyWithoutEmployeeInput = {
@@ -632,6 +831,54 @@ export type WarehousePlaceUncheckedUpdateManyWithoutEmployeeInput = {
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   volume?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type WarehousePlaceUpdateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutWarehousePlaceNestedInput
+}
+
+export type WarehousePlaceUncheckedUpdateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type WarehousePlaceUncheckedUpdateManyWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -647,7 +894,11 @@ export type WarehousePlaceSelect<ExtArgs extends runtime.Types.Extensions.Intern
   volume?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_WarehousePlace_deletedByToEmployee?: boolean | Prisma.WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["warehousePlace"]>
 
 
@@ -663,17 +914,22 @@ export type WarehousePlaceSelectScalar = {
   volume?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type WarehousePlaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "place" | "shelf" | "column" | "layer" | "layerPlace" | "information" | "volume" | "createdAt" | "createdBy", ExtArgs["result"]["warehousePlace"]>
+export type WarehousePlaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "place" | "shelf" | "column" | "layer" | "layerPlace" | "information" | "volume" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["warehousePlace"]>
 export type WarehousePlaceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_WarehousePlace_deletedByToEmployee?: boolean | Prisma.WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $WarehousePlacePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "WarehousePlace"
   objects: {
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_WarehousePlace_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -686,6 +942,9 @@ export type $WarehousePlacePayload<ExtArgs extends runtime.Types.Extensions.Inte
     volume: number
     createdAt: Date
     createdBy: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["warehousePlace"]>
   composites: {}
 }
@@ -1027,6 +1286,7 @@ readonly fields: WarehousePlaceFieldRefs;
 export interface Prisma__WarehousePlaceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_WarehousePlace_deletedByToEmployee<T extends Prisma.WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1066,6 +1326,9 @@ export interface WarehousePlaceFieldRefs {
   readonly volume: Prisma.FieldRef<"WarehousePlace", 'Int'>
   readonly createdAt: Prisma.FieldRef<"WarehousePlace", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"WarehousePlace", 'String'>
+  readonly deleted: Prisma.FieldRef<"WarehousePlace", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"WarehousePlace", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"WarehousePlace", 'String'>
 }
     
 
@@ -1406,6 +1669,25 @@ export type WarehousePlaceDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many WarehousePlaces to delete.
    */
   limit?: number
+}
+
+/**
+ * WarehousePlace.Employee_WarehousePlace_deletedByToEmployee
+ */
+export type WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

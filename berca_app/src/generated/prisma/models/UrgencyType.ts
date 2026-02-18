@@ -29,6 +29,9 @@ export type UrgencyTypeMinAggregateOutputType = {
   name: string | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type UrgencyTypeMaxAggregateOutputType = {
@@ -36,6 +39,9 @@ export type UrgencyTypeMaxAggregateOutputType = {
   name: string | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type UrgencyTypeCountAggregateOutputType = {
@@ -43,6 +49,9 @@ export type UrgencyTypeCountAggregateOutputType = {
   name: number
   createdAt: number
   createdBy: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -52,6 +61,9 @@ export type UrgencyTypeMinAggregateInputType = {
   name?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type UrgencyTypeMaxAggregateInputType = {
@@ -59,6 +71,9 @@ export type UrgencyTypeMaxAggregateInputType = {
   name?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type UrgencyTypeCountAggregateInputType = {
@@ -66,6 +81,9 @@ export type UrgencyTypeCountAggregateInputType = {
   name?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -146,6 +164,9 @@ export type UrgencyTypeGroupByOutputType = {
   name: string
   createdAt: Date
   createdBy: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: UrgencyTypeCountAggregateOutputType | null
   _min: UrgencyTypeMinAggregateOutputType | null
   _max: UrgencyTypeMaxAggregateOutputType | null
@@ -174,9 +195,13 @@ export type UrgencyTypeWhereInput = {
   name?: Prisma.StringFilter<"UrgencyType"> | string
   createdAt?: Prisma.DateTimeFilter<"UrgencyType"> | Date | string
   createdBy?: Prisma.StringFilter<"UrgencyType"> | string
+  deleted?: Prisma.BoolFilter<"UrgencyType"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"UrgencyType"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"UrgencyType"> | string | null
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_UrgencyType_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type UrgencyTypeOrderByWithRelationInput = {
@@ -184,9 +209,13 @@ export type UrgencyTypeOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   FollowUp?: Prisma.FollowUpOrderByRelationAggregateInput
   FollowUpStructure?: Prisma.FollowUpStructureOrderByRelationAggregateInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_UrgencyType_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.UrgencyTypeOrderByRelevanceInput
 }
 
@@ -198,9 +227,13 @@ export type UrgencyTypeWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"UrgencyType"> | string
   createdAt?: Prisma.DateTimeFilter<"UrgencyType"> | Date | string
   createdBy?: Prisma.StringFilter<"UrgencyType"> | string
+  deleted?: Prisma.BoolFilter<"UrgencyType"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"UrgencyType"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"UrgencyType"> | string | null
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_UrgencyType_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type UrgencyTypeOrderByWithAggregationInput = {
@@ -208,6 +241,9 @@ export type UrgencyTypeOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UrgencyTypeCountOrderByAggregateInput
   _max?: Prisma.UrgencyTypeMaxOrderByAggregateInput
   _min?: Prisma.UrgencyTypeMinOrderByAggregateInput
@@ -221,15 +257,21 @@ export type UrgencyTypeScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"UrgencyType"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UrgencyType"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"UrgencyType"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"UrgencyType"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"UrgencyType"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"UrgencyType"> | string | null
 }
 
 export type UrgencyTypeCreateInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutUrgencyTypeInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutUrgencyTypeInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutUrgencyTypeInput
+  Employee_UrgencyType_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutUrgencyType_UrgencyType_deletedByToEmployeeInput
 }
 
 export type UrgencyTypeUncheckedCreateInput = {
@@ -237,6 +279,9 @@ export type UrgencyTypeUncheckedCreateInput = {
   name: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutUrgencyTypeInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutUrgencyTypeInput
 }
@@ -245,9 +290,12 @@ export type UrgencyTypeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   FollowUp?: Prisma.FollowUpUpdateManyWithoutUrgencyTypeNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutUrgencyTypeNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUrgencyTypeNestedInput
+  Employee_UrgencyType_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutUrgencyType_UrgencyType_deletedByToEmployeeNestedInput
 }
 
 export type UrgencyTypeUncheckedUpdateInput = {
@@ -255,6 +303,9 @@ export type UrgencyTypeUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutUrgencyTypeNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutUrgencyTypeNestedInput
 }
@@ -264,12 +315,17 @@ export type UrgencyTypeCreateManyInput = {
   name: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type UrgencyTypeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UrgencyTypeUncheckedUpdateManyInput = {
@@ -277,6 +333,9 @@ export type UrgencyTypeUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UrgencyTypeListRelationFilter = {
@@ -305,6 +364,9 @@ export type UrgencyTypeCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type UrgencyTypeMaxOrderByAggregateInput = {
@@ -312,6 +374,9 @@ export type UrgencyTypeMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type UrgencyTypeMinOrderByAggregateInput = {
@@ -319,6 +384,9 @@ export type UrgencyTypeMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type UrgencyTypeCreateNestedManyWithoutEmployeeInput = {
@@ -328,10 +396,24 @@ export type UrgencyTypeCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
 }
 
+export type UrgencyTypeCreateNestedManyWithoutEmployee_UrgencyType_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.UrgencyTypeCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput, Prisma.UrgencyTypeUncheckedCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput> | Prisma.UrgencyTypeCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput[] | Prisma.UrgencyTypeUncheckedCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.UrgencyTypeCreateOrConnectWithoutEmployee_UrgencyType_deletedByToEmployeeInput | Prisma.UrgencyTypeCreateOrConnectWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  createMany?: Prisma.UrgencyTypeCreateManyEmployee_UrgencyType_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
+}
+
 export type UrgencyTypeUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.UrgencyTypeCreateWithoutEmployeeInput, Prisma.UrgencyTypeUncheckedCreateWithoutEmployeeInput> | Prisma.UrgencyTypeCreateWithoutEmployeeInput[] | Prisma.UrgencyTypeUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.UrgencyTypeCreateOrConnectWithoutEmployeeInput | Prisma.UrgencyTypeCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.UrgencyTypeCreateManyEmployeeInputEnvelope
+  connect?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
+}
+
+export type UrgencyTypeUncheckedCreateNestedManyWithoutEmployee_UrgencyType_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.UrgencyTypeCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput, Prisma.UrgencyTypeUncheckedCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput> | Prisma.UrgencyTypeCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput[] | Prisma.UrgencyTypeUncheckedCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.UrgencyTypeCreateOrConnectWithoutEmployee_UrgencyType_deletedByToEmployeeInput | Prisma.UrgencyTypeCreateOrConnectWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  createMany?: Prisma.UrgencyTypeCreateManyEmployee_UrgencyType_deletedByToEmployeeInputEnvelope
   connect?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
 }
 
@@ -349,6 +431,20 @@ export type UrgencyTypeUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.UrgencyTypeScalarWhereInput | Prisma.UrgencyTypeScalarWhereInput[]
 }
 
+export type UrgencyTypeUpdateManyWithoutEmployee_UrgencyType_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.UrgencyTypeCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput, Prisma.UrgencyTypeUncheckedCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput> | Prisma.UrgencyTypeCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput[] | Prisma.UrgencyTypeUncheckedCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.UrgencyTypeCreateOrConnectWithoutEmployee_UrgencyType_deletedByToEmployeeInput | Prisma.UrgencyTypeCreateOrConnectWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  upsert?: Prisma.UrgencyTypeUpsertWithWhereUniqueWithoutEmployee_UrgencyType_deletedByToEmployeeInput | Prisma.UrgencyTypeUpsertWithWhereUniqueWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  createMany?: Prisma.UrgencyTypeCreateManyEmployee_UrgencyType_deletedByToEmployeeInputEnvelope
+  set?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
+  disconnect?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
+  delete?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
+  connect?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
+  update?: Prisma.UrgencyTypeUpdateWithWhereUniqueWithoutEmployee_UrgencyType_deletedByToEmployeeInput | Prisma.UrgencyTypeUpdateWithWhereUniqueWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  updateMany?: Prisma.UrgencyTypeUpdateManyWithWhereWithoutEmployee_UrgencyType_deletedByToEmployeeInput | Prisma.UrgencyTypeUpdateManyWithWhereWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.UrgencyTypeScalarWhereInput | Prisma.UrgencyTypeScalarWhereInput[]
+}
+
 export type UrgencyTypeUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.UrgencyTypeCreateWithoutEmployeeInput, Prisma.UrgencyTypeUncheckedCreateWithoutEmployeeInput> | Prisma.UrgencyTypeCreateWithoutEmployeeInput[] | Prisma.UrgencyTypeUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.UrgencyTypeCreateOrConnectWithoutEmployeeInput | Prisma.UrgencyTypeCreateOrConnectWithoutEmployeeInput[]
@@ -360,6 +456,20 @@ export type UrgencyTypeUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
   update?: Prisma.UrgencyTypeUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.UrgencyTypeUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.UrgencyTypeUpdateManyWithWhereWithoutEmployeeInput | Prisma.UrgencyTypeUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.UrgencyTypeScalarWhereInput | Prisma.UrgencyTypeScalarWhereInput[]
+}
+
+export type UrgencyTypeUncheckedUpdateManyWithoutEmployee_UrgencyType_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.UrgencyTypeCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput, Prisma.UrgencyTypeUncheckedCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput> | Prisma.UrgencyTypeCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput[] | Prisma.UrgencyTypeUncheckedCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.UrgencyTypeCreateOrConnectWithoutEmployee_UrgencyType_deletedByToEmployeeInput | Prisma.UrgencyTypeCreateOrConnectWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  upsert?: Prisma.UrgencyTypeUpsertWithWhereUniqueWithoutEmployee_UrgencyType_deletedByToEmployeeInput | Prisma.UrgencyTypeUpsertWithWhereUniqueWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  createMany?: Prisma.UrgencyTypeCreateManyEmployee_UrgencyType_deletedByToEmployeeInputEnvelope
+  set?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
+  disconnect?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
+  delete?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
+  connect?: Prisma.UrgencyTypeWhereUniqueInput | Prisma.UrgencyTypeWhereUniqueInput[]
+  update?: Prisma.UrgencyTypeUpdateWithWhereUniqueWithoutEmployee_UrgencyType_deletedByToEmployeeInput | Prisma.UrgencyTypeUpdateWithWhereUniqueWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
+  updateMany?: Prisma.UrgencyTypeUpdateManyWithWhereWithoutEmployee_UrgencyType_deletedByToEmployeeInput | Prisma.UrgencyTypeUpdateManyWithWhereWithoutEmployee_UrgencyType_deletedByToEmployeeInput[]
   deleteMany?: Prisma.UrgencyTypeScalarWhereInput | Prisma.UrgencyTypeScalarWhereInput[]
 }
 
@@ -395,14 +505,20 @@ export type UrgencyTypeCreateWithoutEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutUrgencyTypeInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutUrgencyTypeInput
+  Employee_UrgencyType_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutUrgencyType_UrgencyType_deletedByToEmployeeInput
 }
 
 export type UrgencyTypeUncheckedCreateWithoutEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutUrgencyTypeInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutUrgencyTypeInput
 }
@@ -414,6 +530,38 @@ export type UrgencyTypeCreateOrConnectWithoutEmployeeInput = {
 
 export type UrgencyTypeCreateManyEmployeeInputEnvelope = {
   data: Prisma.UrgencyTypeCreateManyEmployeeInput | Prisma.UrgencyTypeCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type UrgencyTypeCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutUrgencyTypeInput
+  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutUrgencyTypeInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutUrgencyTypeInput
+}
+
+export type UrgencyTypeUncheckedCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutUrgencyTypeInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutUrgencyTypeInput
+}
+
+export type UrgencyTypeCreateOrConnectWithoutEmployee_UrgencyType_deletedByToEmployeeInput = {
+  where: Prisma.UrgencyTypeWhereUniqueInput
+  create: Prisma.XOR<Prisma.UrgencyTypeCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput, Prisma.UrgencyTypeUncheckedCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput>
+}
+
+export type UrgencyTypeCreateManyEmployee_UrgencyType_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.UrgencyTypeCreateManyEmployee_UrgencyType_deletedByToEmployeeInput | Prisma.UrgencyTypeCreateManyEmployee_UrgencyType_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -441,14 +589,36 @@ export type UrgencyTypeScalarWhereInput = {
   name?: Prisma.StringFilter<"UrgencyType"> | string
   createdAt?: Prisma.DateTimeFilter<"UrgencyType"> | Date | string
   createdBy?: Prisma.StringFilter<"UrgencyType"> | string
+  deleted?: Prisma.BoolFilter<"UrgencyType"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"UrgencyType"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"UrgencyType"> | string | null
+}
+
+export type UrgencyTypeUpsertWithWhereUniqueWithoutEmployee_UrgencyType_deletedByToEmployeeInput = {
+  where: Prisma.UrgencyTypeWhereUniqueInput
+  update: Prisma.XOR<Prisma.UrgencyTypeUpdateWithoutEmployee_UrgencyType_deletedByToEmployeeInput, Prisma.UrgencyTypeUncheckedUpdateWithoutEmployee_UrgencyType_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.UrgencyTypeCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput, Prisma.UrgencyTypeUncheckedCreateWithoutEmployee_UrgencyType_deletedByToEmployeeInput>
+}
+
+export type UrgencyTypeUpdateWithWhereUniqueWithoutEmployee_UrgencyType_deletedByToEmployeeInput = {
+  where: Prisma.UrgencyTypeWhereUniqueInput
+  data: Prisma.XOR<Prisma.UrgencyTypeUpdateWithoutEmployee_UrgencyType_deletedByToEmployeeInput, Prisma.UrgencyTypeUncheckedUpdateWithoutEmployee_UrgencyType_deletedByToEmployeeInput>
+}
+
+export type UrgencyTypeUpdateManyWithWhereWithoutEmployee_UrgencyType_deletedByToEmployeeInput = {
+  where: Prisma.UrgencyTypeScalarWhereInput
+  data: Prisma.XOR<Prisma.UrgencyTypeUpdateManyMutationInput, Prisma.UrgencyTypeUncheckedUpdateManyWithoutEmployee_UrgencyType_deletedByToEmployeeInput>
 }
 
 export type UrgencyTypeCreateWithoutFollowUpInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutUrgencyTypeInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutUrgencyTypeInput
+  Employee_UrgencyType_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutUrgencyType_UrgencyType_deletedByToEmployeeInput
 }
 
 export type UrgencyTypeUncheckedCreateWithoutFollowUpInput = {
@@ -456,6 +626,9 @@ export type UrgencyTypeUncheckedCreateWithoutFollowUpInput = {
   name: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutUrgencyTypeInput
 }
 
@@ -479,8 +652,11 @@ export type UrgencyTypeUpdateWithoutFollowUpInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutUrgencyTypeNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUrgencyTypeNestedInput
+  Employee_UrgencyType_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutUrgencyType_UrgencyType_deletedByToEmployeeNestedInput
 }
 
 export type UrgencyTypeUncheckedUpdateWithoutFollowUpInput = {
@@ -488,6 +664,9 @@ export type UrgencyTypeUncheckedUpdateWithoutFollowUpInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutUrgencyTypeNestedInput
 }
 
@@ -495,8 +674,11 @@ export type UrgencyTypeCreateWithoutFollowUpStructureInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutUrgencyTypeInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutUrgencyTypeInput
+  Employee_UrgencyType_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutUrgencyType_UrgencyType_deletedByToEmployeeInput
 }
 
 export type UrgencyTypeUncheckedCreateWithoutFollowUpStructureInput = {
@@ -504,6 +686,9 @@ export type UrgencyTypeUncheckedCreateWithoutFollowUpStructureInput = {
   name: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutUrgencyTypeInput
 }
 
@@ -527,8 +712,11 @@ export type UrgencyTypeUpdateWithoutFollowUpStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   FollowUp?: Prisma.FollowUpUpdateManyWithoutUrgencyTypeNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUrgencyTypeNestedInput
+  Employee_UrgencyType_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutUrgencyType_UrgencyType_deletedByToEmployeeNestedInput
 }
 
 export type UrgencyTypeUncheckedUpdateWithoutFollowUpStructureInput = {
@@ -536,6 +724,9 @@ export type UrgencyTypeUncheckedUpdateWithoutFollowUpStructureInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutUrgencyTypeNestedInput
 }
 
@@ -543,20 +734,38 @@ export type UrgencyTypeCreateManyEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type UrgencyTypeCreateManyEmployee_UrgencyType_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type UrgencyTypeUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   FollowUp?: Prisma.FollowUpUpdateManyWithoutUrgencyTypeNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutUrgencyTypeNestedInput
+  Employee_UrgencyType_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutUrgencyType_UrgencyType_deletedByToEmployeeNestedInput
 }
 
 export type UrgencyTypeUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutUrgencyTypeNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutUrgencyTypeNestedInput
 }
@@ -565,6 +774,40 @@ export type UrgencyTypeUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type UrgencyTypeUpdateWithoutEmployee_UrgencyType_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  FollowUp?: Prisma.FollowUpUpdateManyWithoutUrgencyTypeNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutUrgencyTypeNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutUrgencyTypeNestedInput
+}
+
+export type UrgencyTypeUncheckedUpdateWithoutEmployee_UrgencyType_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutUrgencyTypeNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutUrgencyTypeNestedInput
+}
+
+export type UrgencyTypeUncheckedUpdateManyWithoutEmployee_UrgencyType_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -612,9 +855,13 @@ export type UrgencyTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   name?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   FollowUp?: boolean | Prisma.UrgencyType$FollowUpArgs<ExtArgs>
   FollowUpStructure?: boolean | Prisma.UrgencyType$FollowUpStructureArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_UrgencyType_deletedByToEmployee?: boolean | Prisma.UrgencyType$Employee_UrgencyType_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.UrgencyTypeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["urgencyType"]>
 
@@ -625,13 +872,17 @@ export type UrgencyTypeSelectScalar = {
   name?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type UrgencyTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "createdBy", ExtArgs["result"]["urgencyType"]>
+export type UrgencyTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["urgencyType"]>
 export type UrgencyTypeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   FollowUp?: boolean | Prisma.UrgencyType$FollowUpArgs<ExtArgs>
   FollowUpStructure?: boolean | Prisma.UrgencyType$FollowUpStructureArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_UrgencyType_deletedByToEmployee?: boolean | Prisma.UrgencyType$Employee_UrgencyType_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.UrgencyTypeCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -641,12 +892,16 @@ export type $UrgencyTypePayload<ExtArgs extends runtime.Types.Extensions.Interna
     FollowUp: Prisma.$FollowUpPayload<ExtArgs>[]
     FollowUpStructure: Prisma.$FollowUpStructurePayload<ExtArgs>[]
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_UrgencyType_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     createdAt: Date
     createdBy: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["urgencyType"]>
   composites: {}
 }
@@ -990,6 +1245,7 @@ export interface Prisma__UrgencyTypeClient<T, Null = never, ExtArgs extends runt
   FollowUp<T extends Prisma.UrgencyType$FollowUpArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UrgencyType$FollowUpArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   FollowUpStructure<T extends Prisma.UrgencyType$FollowUpStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UrgencyType$FollowUpStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_UrgencyType_deletedByToEmployee<T extends Prisma.UrgencyType$Employee_UrgencyType_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UrgencyType$Employee_UrgencyType_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1023,6 +1279,9 @@ export interface UrgencyTypeFieldRefs {
   readonly name: Prisma.FieldRef<"UrgencyType", 'String'>
   readonly createdAt: Prisma.FieldRef<"UrgencyType", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"UrgencyType", 'String'>
+  readonly deleted: Prisma.FieldRef<"UrgencyType", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"UrgencyType", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"UrgencyType", 'String'>
 }
     
 
@@ -1411,6 +1670,25 @@ export type UrgencyType$FollowUpStructureArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.FollowUpStructureScalarFieldEnum | Prisma.FollowUpStructureScalarFieldEnum[]
+}
+
+/**
+ * UrgencyType.Employee_UrgencyType_deletedByToEmployee
+ */
+export type UrgencyType$Employee_UrgencyType_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

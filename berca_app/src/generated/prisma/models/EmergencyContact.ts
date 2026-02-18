@@ -31,6 +31,9 @@ export type EmergencyContactMinAggregateOutputType = {
   mail: string | null
   phoneNumber: string | null
   employeeId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type EmergencyContactMaxAggregateOutputType = {
@@ -40,6 +43,9 @@ export type EmergencyContactMaxAggregateOutputType = {
   mail: string | null
   phoneNumber: string | null
   employeeId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type EmergencyContactCountAggregateOutputType = {
@@ -49,6 +55,9 @@ export type EmergencyContactCountAggregateOutputType = {
   mail: number
   phoneNumber: number
   employeeId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -60,6 +69,9 @@ export type EmergencyContactMinAggregateInputType = {
   mail?: true
   phoneNumber?: true
   employeeId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type EmergencyContactMaxAggregateInputType = {
@@ -69,6 +81,9 @@ export type EmergencyContactMaxAggregateInputType = {
   mail?: true
   phoneNumber?: true
   employeeId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type EmergencyContactCountAggregateInputType = {
@@ -78,6 +93,9 @@ export type EmergencyContactCountAggregateInputType = {
   mail?: true
   phoneNumber?: true
   employeeId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -160,6 +178,9 @@ export type EmergencyContactGroupByOutputType = {
   mail: string
   phoneNumber: string
   employeeId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: EmergencyContactCountAggregateOutputType | null
   _min: EmergencyContactMinAggregateOutputType | null
   _max: EmergencyContactMaxAggregateOutputType | null
@@ -190,7 +211,11 @@ export type EmergencyContactWhereInput = {
   mail?: Prisma.StringFilter<"EmergencyContact"> | string
   phoneNumber?: Prisma.StringFilter<"EmergencyContact"> | string
   employeeId?: Prisma.StringFilter<"EmergencyContact"> | string
+  deleted?: Prisma.BoolFilter<"EmergencyContact"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"EmergencyContact"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"EmergencyContact"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_EmergencyContact_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type EmergencyContactOrderByWithRelationInput = {
@@ -200,7 +225,11 @@ export type EmergencyContactOrderByWithRelationInput = {
   mail?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_EmergencyContact_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.EmergencyContactOrderByRelevanceInput
 }
 
@@ -214,7 +243,11 @@ export type EmergencyContactWhereUniqueInput = Prisma.AtLeast<{
   mail?: Prisma.StringFilter<"EmergencyContact"> | string
   phoneNumber?: Prisma.StringFilter<"EmergencyContact"> | string
   employeeId?: Prisma.StringFilter<"EmergencyContact"> | string
+  deleted?: Prisma.BoolFilter<"EmergencyContact"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"EmergencyContact"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"EmergencyContact"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_EmergencyContact_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type EmergencyContactOrderByWithAggregationInput = {
@@ -224,6 +257,9 @@ export type EmergencyContactOrderByWithAggregationInput = {
   mail?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.EmergencyContactCountOrderByAggregateInput
   _max?: Prisma.EmergencyContactMaxOrderByAggregateInput
   _min?: Prisma.EmergencyContactMinOrderByAggregateInput
@@ -239,6 +275,9 @@ export type EmergencyContactScalarWhereWithAggregatesInput = {
   mail?: Prisma.StringWithAggregatesFilter<"EmergencyContact"> | string
   phoneNumber?: Prisma.StringWithAggregatesFilter<"EmergencyContact"> | string
   employeeId?: Prisma.StringWithAggregatesFilter<"EmergencyContact"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"EmergencyContact"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"EmergencyContact"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"EmergencyContact"> | string | null
 }
 
 export type EmergencyContactCreateInput = {
@@ -247,7 +286,10 @@ export type EmergencyContactCreateInput = {
   relationship: string
   mail: string
   phoneNumber: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutEmergencyContactInput
+  Employee_EmergencyContact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutEmergencyContact_EmergencyContact_deletedByToEmployeeInput
 }
 
 export type EmergencyContactUncheckedCreateInput = {
@@ -257,6 +299,9 @@ export type EmergencyContactUncheckedCreateInput = {
   mail: string
   phoneNumber: string
   employeeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type EmergencyContactUpdateInput = {
@@ -265,7 +310,10 @@ export type EmergencyContactUpdateInput = {
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutEmergencyContactNestedInput
+  Employee_EmergencyContact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutEmergencyContact_EmergencyContact_deletedByToEmployeeNestedInput
 }
 
 export type EmergencyContactUncheckedUpdateInput = {
@@ -275,6 +323,9 @@ export type EmergencyContactUncheckedUpdateInput = {
   mail?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type EmergencyContactCreateManyInput = {
@@ -284,6 +335,9 @@ export type EmergencyContactCreateManyInput = {
   mail: string
   phoneNumber: string
   employeeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type EmergencyContactUpdateManyMutationInput = {
@@ -292,6 +346,8 @@ export type EmergencyContactUpdateManyMutationInput = {
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type EmergencyContactUncheckedUpdateManyInput = {
@@ -301,6 +357,9 @@ export type EmergencyContactUncheckedUpdateManyInput = {
   mail?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type EmergencyContactOrderByRelevanceInput = {
@@ -316,6 +375,9 @@ export type EmergencyContactCountOrderByAggregateInput = {
   mail?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type EmergencyContactMaxOrderByAggregateInput = {
@@ -325,6 +387,9 @@ export type EmergencyContactMaxOrderByAggregateInput = {
   mail?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type EmergencyContactMinOrderByAggregateInput = {
@@ -334,6 +399,9 @@ export type EmergencyContactMinOrderByAggregateInput = {
   mail?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type EmergencyContactListRelationFilter = {
@@ -353,10 +421,24 @@ export type EmergencyContactCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
 }
 
+export type EmergencyContactCreateNestedManyWithoutEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.EmergencyContactCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput, Prisma.EmergencyContactUncheckedCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput> | Prisma.EmergencyContactCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[] | Prisma.EmergencyContactUncheckedCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.EmergencyContactCreateOrConnectWithoutEmployee_EmergencyContact_deletedByToEmployeeInput | Prisma.EmergencyContactCreateOrConnectWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  createMany?: Prisma.EmergencyContactCreateManyEmployee_EmergencyContact_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+}
+
 export type EmergencyContactUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.EmergencyContactCreateWithoutEmployeeInput, Prisma.EmergencyContactUncheckedCreateWithoutEmployeeInput> | Prisma.EmergencyContactCreateWithoutEmployeeInput[] | Prisma.EmergencyContactUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.EmergencyContactCreateOrConnectWithoutEmployeeInput | Prisma.EmergencyContactCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.EmergencyContactCreateManyEmployeeInputEnvelope
+  connect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+}
+
+export type EmergencyContactUncheckedCreateNestedManyWithoutEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.EmergencyContactCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput, Prisma.EmergencyContactUncheckedCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput> | Prisma.EmergencyContactCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[] | Prisma.EmergencyContactUncheckedCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.EmergencyContactCreateOrConnectWithoutEmployee_EmergencyContact_deletedByToEmployeeInput | Prisma.EmergencyContactCreateOrConnectWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  createMany?: Prisma.EmergencyContactCreateManyEmployee_EmergencyContact_deletedByToEmployeeInputEnvelope
   connect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
 }
 
@@ -374,6 +456,20 @@ export type EmergencyContactUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
 }
 
+export type EmergencyContactUpdateManyWithoutEmployee_EmergencyContact_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.EmergencyContactCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput, Prisma.EmergencyContactUncheckedCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput> | Prisma.EmergencyContactCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[] | Prisma.EmergencyContactUncheckedCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.EmergencyContactCreateOrConnectWithoutEmployee_EmergencyContact_deletedByToEmployeeInput | Prisma.EmergencyContactCreateOrConnectWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  upsert?: Prisma.EmergencyContactUpsertWithWhereUniqueWithoutEmployee_EmergencyContact_deletedByToEmployeeInput | Prisma.EmergencyContactUpsertWithWhereUniqueWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  createMany?: Prisma.EmergencyContactCreateManyEmployee_EmergencyContact_deletedByToEmployeeInputEnvelope
+  set?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  disconnect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  delete?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  connect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  update?: Prisma.EmergencyContactUpdateWithWhereUniqueWithoutEmployee_EmergencyContact_deletedByToEmployeeInput | Prisma.EmergencyContactUpdateWithWhereUniqueWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  updateMany?: Prisma.EmergencyContactUpdateManyWithWhereWithoutEmployee_EmergencyContact_deletedByToEmployeeInput | Prisma.EmergencyContactUpdateManyWithWhereWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
+}
+
 export type EmergencyContactUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.EmergencyContactCreateWithoutEmployeeInput, Prisma.EmergencyContactUncheckedCreateWithoutEmployeeInput> | Prisma.EmergencyContactCreateWithoutEmployeeInput[] | Prisma.EmergencyContactUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.EmergencyContactCreateOrConnectWithoutEmployeeInput | Prisma.EmergencyContactCreateOrConnectWithoutEmployeeInput[]
@@ -388,12 +484,29 @@ export type EmergencyContactUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
 }
 
+export type EmergencyContactUncheckedUpdateManyWithoutEmployee_EmergencyContact_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.EmergencyContactCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput, Prisma.EmergencyContactUncheckedCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput> | Prisma.EmergencyContactCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[] | Prisma.EmergencyContactUncheckedCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.EmergencyContactCreateOrConnectWithoutEmployee_EmergencyContact_deletedByToEmployeeInput | Prisma.EmergencyContactCreateOrConnectWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  upsert?: Prisma.EmergencyContactUpsertWithWhereUniqueWithoutEmployee_EmergencyContact_deletedByToEmployeeInput | Prisma.EmergencyContactUpsertWithWhereUniqueWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  createMany?: Prisma.EmergencyContactCreateManyEmployee_EmergencyContact_deletedByToEmployeeInputEnvelope
+  set?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  disconnect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  delete?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  connect?: Prisma.EmergencyContactWhereUniqueInput | Prisma.EmergencyContactWhereUniqueInput[]
+  update?: Prisma.EmergencyContactUpdateWithWhereUniqueWithoutEmployee_EmergencyContact_deletedByToEmployeeInput | Prisma.EmergencyContactUpdateWithWhereUniqueWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  updateMany?: Prisma.EmergencyContactUpdateManyWithWhereWithoutEmployee_EmergencyContact_deletedByToEmployeeInput | Prisma.EmergencyContactUpdateManyWithWhereWithoutEmployee_EmergencyContact_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.EmergencyContactScalarWhereInput | Prisma.EmergencyContactScalarWhereInput[]
+}
+
 export type EmergencyContactCreateWithoutEmployeeInput = {
   id: string
   name: string
   relationship: string
   mail: string
   phoneNumber: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee_EmergencyContact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutEmergencyContact_EmergencyContact_deletedByToEmployeeInput
 }
 
 export type EmergencyContactUncheckedCreateWithoutEmployeeInput = {
@@ -402,6 +515,9 @@ export type EmergencyContactUncheckedCreateWithoutEmployeeInput = {
   relationship: string
   mail: string
   phoneNumber: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type EmergencyContactCreateOrConnectWithoutEmployeeInput = {
@@ -411,6 +527,38 @@ export type EmergencyContactCreateOrConnectWithoutEmployeeInput = {
 
 export type EmergencyContactCreateManyEmployeeInputEnvelope = {
   data: Prisma.EmergencyContactCreateManyEmployeeInput | Prisma.EmergencyContactCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type EmergencyContactCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  relationship: string
+  mail: string
+  phoneNumber: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutEmergencyContactInput
+}
+
+export type EmergencyContactUncheckedCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  relationship: string
+  mail: string
+  phoneNumber: string
+  employeeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type EmergencyContactCreateOrConnectWithoutEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  where: Prisma.EmergencyContactWhereUniqueInput
+  create: Prisma.XOR<Prisma.EmergencyContactCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput, Prisma.EmergencyContactUncheckedCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput>
+}
+
+export type EmergencyContactCreateManyEmployee_EmergencyContact_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.EmergencyContactCreateManyEmployee_EmergencyContact_deletedByToEmployeeInput | Prisma.EmergencyContactCreateManyEmployee_EmergencyContact_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -440,6 +588,25 @@ export type EmergencyContactScalarWhereInput = {
   mail?: Prisma.StringFilter<"EmergencyContact"> | string
   phoneNumber?: Prisma.StringFilter<"EmergencyContact"> | string
   employeeId?: Prisma.StringFilter<"EmergencyContact"> | string
+  deleted?: Prisma.BoolFilter<"EmergencyContact"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"EmergencyContact"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"EmergencyContact"> | string | null
+}
+
+export type EmergencyContactUpsertWithWhereUniqueWithoutEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  where: Prisma.EmergencyContactWhereUniqueInput
+  update: Prisma.XOR<Prisma.EmergencyContactUpdateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput, Prisma.EmergencyContactUncheckedUpdateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.EmergencyContactCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput, Prisma.EmergencyContactUncheckedCreateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput>
+}
+
+export type EmergencyContactUpdateWithWhereUniqueWithoutEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  where: Prisma.EmergencyContactWhereUniqueInput
+  data: Prisma.XOR<Prisma.EmergencyContactUpdateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput, Prisma.EmergencyContactUncheckedUpdateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput>
+}
+
+export type EmergencyContactUpdateManyWithWhereWithoutEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  where: Prisma.EmergencyContactScalarWhereInput
+  data: Prisma.XOR<Prisma.EmergencyContactUpdateManyMutationInput, Prisma.EmergencyContactUncheckedUpdateManyWithoutEmployee_EmergencyContact_deletedByToEmployeeInput>
 }
 
 export type EmergencyContactCreateManyEmployeeInput = {
@@ -448,6 +615,20 @@ export type EmergencyContactCreateManyEmployeeInput = {
   relationship: string
   mail: string
   phoneNumber: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type EmergencyContactCreateManyEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  relationship: string
+  mail: string
+  phoneNumber: string
+  employeeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type EmergencyContactUpdateWithoutEmployeeInput = {
@@ -456,6 +637,9 @@ export type EmergencyContactUpdateWithoutEmployeeInput = {
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee_EmergencyContact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutEmergencyContact_EmergencyContact_deletedByToEmployeeNestedInput
 }
 
 export type EmergencyContactUncheckedUpdateWithoutEmployeeInput = {
@@ -464,6 +648,9 @@ export type EmergencyContactUncheckedUpdateWithoutEmployeeInput = {
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type EmergencyContactUncheckedUpdateManyWithoutEmployeeInput = {
@@ -472,6 +659,42 @@ export type EmergencyContactUncheckedUpdateManyWithoutEmployeeInput = {
   relationship?: Prisma.StringFieldUpdateOperationsInput | string
   mail?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type EmergencyContactUpdateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  relationship?: Prisma.StringFieldUpdateOperationsInput | string
+  mail?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutEmergencyContactNestedInput
+}
+
+export type EmergencyContactUncheckedUpdateWithoutEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  relationship?: Prisma.StringFieldUpdateOperationsInput | string
+  mail?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type EmergencyContactUncheckedUpdateManyWithoutEmployee_EmergencyContact_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  relationship?: Prisma.StringFieldUpdateOperationsInput | string
+  mail?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -483,7 +706,11 @@ export type EmergencyContactSelect<ExtArgs extends runtime.Types.Extensions.Inte
   mail?: boolean
   phoneNumber?: boolean
   employeeId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_EmergencyContact_deletedByToEmployee?: boolean | Prisma.EmergencyContact$Employee_EmergencyContact_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["emergencyContact"]>
 
 
@@ -495,17 +722,22 @@ export type EmergencyContactSelectScalar = {
   mail?: boolean
   phoneNumber?: boolean
   employeeId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type EmergencyContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "relationship" | "mail" | "phoneNumber" | "employeeId", ExtArgs["result"]["emergencyContact"]>
+export type EmergencyContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "relationship" | "mail" | "phoneNumber" | "employeeId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["emergencyContact"]>
 export type EmergencyContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_EmergencyContact_deletedByToEmployee?: boolean | Prisma.EmergencyContact$Employee_EmergencyContact_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $EmergencyContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "EmergencyContact"
   objects: {
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_EmergencyContact_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -514,6 +746,9 @@ export type $EmergencyContactPayload<ExtArgs extends runtime.Types.Extensions.In
     mail: string
     phoneNumber: string
     employeeId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["emergencyContact"]>
   composites: {}
 }
@@ -855,6 +1090,7 @@ readonly fields: EmergencyContactFieldRefs;
 export interface Prisma__EmergencyContactClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_EmergencyContact_deletedByToEmployee<T extends Prisma.EmergencyContact$Employee_EmergencyContact_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmergencyContact$Employee_EmergencyContact_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -890,6 +1126,9 @@ export interface EmergencyContactFieldRefs {
   readonly mail: Prisma.FieldRef<"EmergencyContact", 'String'>
   readonly phoneNumber: Prisma.FieldRef<"EmergencyContact", 'String'>
   readonly employeeId: Prisma.FieldRef<"EmergencyContact", 'String'>
+  readonly deleted: Prisma.FieldRef<"EmergencyContact", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"EmergencyContact", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"EmergencyContact", 'String'>
 }
     
 
@@ -1230,6 +1469,25 @@ export type EmergencyContactDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many EmergencyContacts to delete.
    */
   limit?: number
+}
+
+/**
+ * EmergencyContact.Employee_EmergencyContact_deletedByToEmployee
+ */
+export type EmergencyContact$Employee_EmergencyContact_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

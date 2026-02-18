@@ -382,3 +382,13 @@ export type WorkOrderInvoice = Prisma.WorkOrderInvoiceModel
  * 
  */
 export type WorkOrderStructure = Prisma.WorkOrderStructureModel
+/**
+ * Model RoleLevel
+ * 
+ */
+export type RoleLevel = Prisma.RoleLevelModel
+/**
+ * Model SubRole
+ * 
+ */
+export type SubRole = Prisma.SubRoleModel

@@ -109,7 +109,7 @@ export const seedDev = async (prisma: PrismaClient) => {
 
   const now = new Date()
 
-  // Create admin employee
+  // 1. Create admin employee
   const adminEmployee = await prisma.employee.create({
     data: {
       id: randomUUID(),
@@ -126,20 +126,42 @@ export const seedDev = async (prisma: PrismaClient) => {
     },
   })
 
-  // Create admin role
+  // 2. Create admin role
   const adminRole = await prisma.role.create({
     data: {
       id: randomUUID(),
       name: 'Administrator',
-      level: 100,
       createdAt: now,
       createdBy: adminEmployee.id,
     },
   })
 
+  // 3. Create admin subRole
+  const adminSubRole = await prisma.subRole.create({
+    data: {
+      id: randomUUID(),
+      name: 'Administrator',
+      createdAt: now,
+      createdBy: adminEmployee.id,
+    },
+  })
+
+  // 4. Create roleLevel linking Role and SubRole
+  const adminRoleLevel = await prisma.roleLevel.create({
+    data: {
+      id: randomUUID(),
+      level: 100, // highest level for admin
+      roleId: adminRole.id,
+      subRoleId: adminSubRole.id,
+      createdAt: now,
+      createdBy: adminEmployee.id,
+    },
+  })
+
+  // 5. Update employee with roleLevel
   await prisma.employee.update({
     where: {id: adminEmployee.id},
-    data: {roleId: adminRole.id},
+    data: {roleLevelId: adminRoleLevel.id},
   })
 
   console.log('Administrator account created')

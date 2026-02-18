@@ -34,6 +34,9 @@ export type TrainingMinAggregateOutputType = {
   workOrderId: string | null
   trainingStandardId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TrainingMaxAggregateOutputType = {
@@ -46,6 +49,9 @@ export type TrainingMaxAggregateOutputType = {
   workOrderId: string | null
   trainingStandardId: string | null
   targetId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TrainingCountAggregateOutputType = {
@@ -58,6 +64,9 @@ export type TrainingCountAggregateOutputType = {
   workOrderId: number
   trainingStandardId: number
   targetId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -72,6 +81,9 @@ export type TrainingMinAggregateInputType = {
   workOrderId?: true
   trainingStandardId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TrainingMaxAggregateInputType = {
@@ -84,6 +96,9 @@ export type TrainingMaxAggregateInputType = {
   workOrderId?: true
   trainingStandardId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TrainingCountAggregateInputType = {
@@ -96,6 +111,9 @@ export type TrainingCountAggregateInputType = {
   workOrderId?: true
   trainingStandardId?: true
   targetId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -181,6 +199,9 @@ export type TrainingGroupByOutputType = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: TrainingCountAggregateOutputType | null
   _min: TrainingMinAggregateOutputType | null
   _max: TrainingMaxAggregateOutputType | null
@@ -214,10 +235,14 @@ export type TrainingWhereInput = {
   workOrderId?: Prisma.StringFilter<"Training"> | string
   trainingStandardId?: Prisma.StringFilter<"Training"> | string
   targetId?: Prisma.StringFilter<"Training"> | string
+  deleted?: Prisma.BoolFilter<"Training"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Training"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Training"> | string | null
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee_Training_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   TrainingContact?: Prisma.TrainingContactListRelationFilter
 }
 
@@ -231,10 +256,14 @@ export type TrainingOrderByWithRelationInput = {
   workOrderId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   WorkOrder?: Prisma.WorkOrderOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   TrainingStandard?: Prisma.TrainingStandardOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   TrainingContact?: Prisma.TrainingContactOrderByRelationAggregateInput
   _relevance?: Prisma.TrainingOrderByRelevanceInput
 }
@@ -252,10 +281,14 @@ export type TrainingWhereUniqueInput = Prisma.AtLeast<{
   workOrderId?: Prisma.StringFilter<"Training"> | string
   trainingStandardId?: Prisma.StringFilter<"Training"> | string
   targetId?: Prisma.StringFilter<"Training"> | string
+  deleted?: Prisma.BoolFilter<"Training"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Training"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Training"> | string | null
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  Employee_Training_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   TrainingContact?: Prisma.TrainingContactListRelationFilter
 }, "id">
 
@@ -269,6 +302,9 @@ export type TrainingOrderByWithAggregationInput = {
   workOrderId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TrainingCountOrderByAggregateInput
   _max?: Prisma.TrainingMaxOrderByAggregateInput
   _min?: Prisma.TrainingMinOrderByAggregateInput
@@ -287,6 +323,9 @@ export type TrainingScalarWhereWithAggregatesInput = {
   workOrderId?: Prisma.StringWithAggregatesFilter<"Training"> | string
   trainingStandardId?: Prisma.StringWithAggregatesFilter<"Training"> | string
   targetId?: Prisma.StringWithAggregatesFilter<"Training"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"Training"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Training"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Training"> | string | null
 }
 
 export type TrainingCreateInput = {
@@ -295,10 +334,13 @@ export type TrainingCreateInput = {
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTraining_Training_deletedByToEmployeeInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
 }
 
@@ -312,6 +354,9 @@ export type TrainingUncheckedCreateInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -321,10 +366,13 @@ export type TrainingUpdateInput = {
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTraining_Training_deletedByToEmployeeNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
 }
 
@@ -338,6 +386,9 @@ export type TrainingUncheckedUpdateInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -351,6 +402,9 @@ export type TrainingCreateManyInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingUpdateManyMutationInput = {
@@ -359,6 +413,8 @@ export type TrainingUpdateManyMutationInput = {
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TrainingUncheckedUpdateManyInput = {
@@ -371,6 +427,9 @@ export type TrainingUncheckedUpdateManyInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingListRelationFilter = {
@@ -399,6 +458,9 @@ export type TrainingCountOrderByAggregateInput = {
   workOrderId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TrainingMaxOrderByAggregateInput = {
@@ -411,6 +473,9 @@ export type TrainingMaxOrderByAggregateInput = {
   workOrderId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TrainingMinOrderByAggregateInput = {
@@ -423,6 +488,9 @@ export type TrainingMinOrderByAggregateInput = {
   workOrderId?: Prisma.SortOrder
   trainingStandardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TrainingScalarRelationFilter = {
@@ -437,10 +505,24 @@ export type TrainingCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
 }
 
+export type TrainingCreateNestedManyWithoutEmployee_Training_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput, Prisma.TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeInput> | Prisma.TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput[] | Prisma.TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingCreateOrConnectWithoutEmployee_Training_deletedByToEmployeeInput | Prisma.TrainingCreateOrConnectWithoutEmployee_Training_deletedByToEmployeeInput[]
+  createMany?: Prisma.TrainingCreateManyEmployee_Training_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
+}
+
 export type TrainingUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.TrainingCreateWithoutEmployeeInput, Prisma.TrainingUncheckedCreateWithoutEmployeeInput> | Prisma.TrainingCreateWithoutEmployeeInput[] | Prisma.TrainingUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TrainingCreateOrConnectWithoutEmployeeInput | Prisma.TrainingCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.TrainingCreateManyEmployeeInputEnvelope
+  connect?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
+}
+
+export type TrainingUncheckedCreateNestedManyWithoutEmployee_Training_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput, Prisma.TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeInput> | Prisma.TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput[] | Prisma.TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingCreateOrConnectWithoutEmployee_Training_deletedByToEmployeeInput | Prisma.TrainingCreateOrConnectWithoutEmployee_Training_deletedByToEmployeeInput[]
+  createMany?: Prisma.TrainingCreateManyEmployee_Training_deletedByToEmployeeInputEnvelope
   connect?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
 }
 
@@ -458,6 +540,20 @@ export type TrainingUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.TrainingScalarWhereInput | Prisma.TrainingScalarWhereInput[]
 }
 
+export type TrainingUpdateManyWithoutEmployee_Training_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput, Prisma.TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeInput> | Prisma.TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput[] | Prisma.TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingCreateOrConnectWithoutEmployee_Training_deletedByToEmployeeInput | Prisma.TrainingCreateOrConnectWithoutEmployee_Training_deletedByToEmployeeInput[]
+  upsert?: Prisma.TrainingUpsertWithWhereUniqueWithoutEmployee_Training_deletedByToEmployeeInput | Prisma.TrainingUpsertWithWhereUniqueWithoutEmployee_Training_deletedByToEmployeeInput[]
+  createMany?: Prisma.TrainingCreateManyEmployee_Training_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
+  disconnect?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
+  delete?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
+  connect?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
+  update?: Prisma.TrainingUpdateWithWhereUniqueWithoutEmployee_Training_deletedByToEmployeeInput | Prisma.TrainingUpdateWithWhereUniqueWithoutEmployee_Training_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TrainingUpdateManyWithWhereWithoutEmployee_Training_deletedByToEmployeeInput | Prisma.TrainingUpdateManyWithWhereWithoutEmployee_Training_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.TrainingScalarWhereInput | Prisma.TrainingScalarWhereInput[]
+}
+
 export type TrainingUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.TrainingCreateWithoutEmployeeInput, Prisma.TrainingUncheckedCreateWithoutEmployeeInput> | Prisma.TrainingCreateWithoutEmployeeInput[] | Prisma.TrainingUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TrainingCreateOrConnectWithoutEmployeeInput | Prisma.TrainingCreateOrConnectWithoutEmployeeInput[]
@@ -469,6 +565,20 @@ export type TrainingUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
   update?: Prisma.TrainingUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.TrainingUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.TrainingUpdateManyWithWhereWithoutEmployeeInput | Prisma.TrainingUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.TrainingScalarWhereInput | Prisma.TrainingScalarWhereInput[]
+}
+
+export type TrainingUncheckedUpdateManyWithoutEmployee_Training_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput, Prisma.TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeInput> | Prisma.TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput[] | Prisma.TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TrainingCreateOrConnectWithoutEmployee_Training_deletedByToEmployeeInput | Prisma.TrainingCreateOrConnectWithoutEmployee_Training_deletedByToEmployeeInput[]
+  upsert?: Prisma.TrainingUpsertWithWhereUniqueWithoutEmployee_Training_deletedByToEmployeeInput | Prisma.TrainingUpsertWithWhereUniqueWithoutEmployee_Training_deletedByToEmployeeInput[]
+  createMany?: Prisma.TrainingCreateManyEmployee_Training_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
+  disconnect?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
+  delete?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
+  connect?: Prisma.TrainingWhereUniqueInput | Prisma.TrainingWhereUniqueInput[]
+  update?: Prisma.TrainingUpdateWithWhereUniqueWithoutEmployee_Training_deletedByToEmployeeInput | Prisma.TrainingUpdateWithWhereUniqueWithoutEmployee_Training_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TrainingUpdateManyWithWhereWithoutEmployee_Training_deletedByToEmployeeInput | Prisma.TrainingUpdateManyWithWhereWithoutEmployee_Training_deletedByToEmployeeInput[]
   deleteMany?: Prisma.TrainingScalarWhereInput | Prisma.TrainingScalarWhereInput[]
 }
 
@@ -618,9 +728,12 @@ export type TrainingCreateWithoutEmployeeInput = {
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTraining_Training_deletedByToEmployeeInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
 }
 
@@ -633,6 +746,9 @@ export type TrainingUncheckedCreateWithoutEmployeeInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -643,6 +759,46 @@ export type TrainingCreateOrConnectWithoutEmployeeInput = {
 
 export type TrainingCreateManyEmployeeInputEnvelope = {
   data: Prisma.TrainingCreateManyEmployeeInput | Prisma.TrainingCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput = {
+  id: string
+  trainingNumber?: string | null
+  trainingDate: Date | string
+  createdAt: Date | string
+  closed?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
+  TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
+  Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
+  TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
+}
+
+export type TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeInput = {
+  id: string
+  trainingNumber?: string | null
+  trainingDate: Date | string
+  createdAt: Date | string
+  closed?: boolean
+  createdBy: string
+  workOrderId: string
+  trainingStandardId: string
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
+}
+
+export type TrainingCreateOrConnectWithoutEmployee_Training_deletedByToEmployeeInput = {
+  where: Prisma.TrainingWhereUniqueInput
+  create: Prisma.XOR<Prisma.TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput, Prisma.TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeInput>
+}
+
+export type TrainingCreateManyEmployee_Training_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.TrainingCreateManyEmployee_Training_deletedByToEmployeeInput | Prisma.TrainingCreateManyEmployee_Training_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -675,6 +831,25 @@ export type TrainingScalarWhereInput = {
   workOrderId?: Prisma.StringFilter<"Training"> | string
   trainingStandardId?: Prisma.StringFilter<"Training"> | string
   targetId?: Prisma.StringFilter<"Training"> | string
+  deleted?: Prisma.BoolFilter<"Training"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Training"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Training"> | string | null
+}
+
+export type TrainingUpsertWithWhereUniqueWithoutEmployee_Training_deletedByToEmployeeInput = {
+  where: Prisma.TrainingWhereUniqueInput
+  update: Prisma.XOR<Prisma.TrainingUpdateWithoutEmployee_Training_deletedByToEmployeeInput, Prisma.TrainingUncheckedUpdateWithoutEmployee_Training_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput, Prisma.TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeInput>
+}
+
+export type TrainingUpdateWithWhereUniqueWithoutEmployee_Training_deletedByToEmployeeInput = {
+  where: Prisma.TrainingWhereUniqueInput
+  data: Prisma.XOR<Prisma.TrainingUpdateWithoutEmployee_Training_deletedByToEmployeeInput, Prisma.TrainingUncheckedUpdateWithoutEmployee_Training_deletedByToEmployeeInput>
+}
+
+export type TrainingUpdateManyWithWhereWithoutEmployee_Training_deletedByToEmployeeInput = {
+  where: Prisma.TrainingScalarWhereInput
+  data: Prisma.XOR<Prisma.TrainingUpdateManyMutationInput, Prisma.TrainingUncheckedUpdateManyWithoutEmployee_Training_deletedByToEmployeeInput>
 }
 
 export type TrainingCreateWithoutTargetInput = {
@@ -683,9 +858,12 @@ export type TrainingCreateWithoutTargetInput = {
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTraining_Training_deletedByToEmployeeInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
 }
 
@@ -698,6 +876,9 @@ export type TrainingUncheckedCreateWithoutTargetInput = {
   createdBy: string
   workOrderId: string
   trainingStandardId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -733,10 +914,13 @@ export type TrainingCreateWithoutTrainingContactInput = {
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTraining_Training_deletedByToEmployeeInput
 }
 
 export type TrainingUncheckedCreateWithoutTrainingContactInput = {
@@ -749,6 +933,9 @@ export type TrainingUncheckedCreateWithoutTrainingContactInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingCreateOrConnectWithoutTrainingContactInput = {
@@ -773,10 +960,13 @@ export type TrainingUpdateWithoutTrainingContactInput = {
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTraining_Training_deletedByToEmployeeNestedInput
 }
 
 export type TrainingUncheckedUpdateWithoutTrainingContactInput = {
@@ -789,6 +979,9 @@ export type TrainingUncheckedUpdateWithoutTrainingContactInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingCreateWithoutTrainingStandardInput = {
@@ -797,9 +990,12 @@ export type TrainingCreateWithoutTrainingStandardInput = {
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTraining_Training_deletedByToEmployeeInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
 }
 
@@ -812,6 +1008,9 @@ export type TrainingUncheckedCreateWithoutTrainingStandardInput = {
   createdBy: string
   workOrderId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -847,9 +1046,12 @@ export type TrainingCreateWithoutWorkOrderInput = {
   trainingDate: Date | string
   createdAt: Date | string
   closed?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTraining_Training_deletedByToEmployeeInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
 }
 
@@ -862,6 +1064,9 @@ export type TrainingUncheckedCreateWithoutWorkOrderInput = {
   createdBy: string
   trainingStandardId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -900,6 +1105,23 @@ export type TrainingCreateManyEmployeeInput = {
   workOrderId: string
   trainingStandardId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type TrainingCreateManyEmployee_Training_deletedByToEmployeeInput = {
+  id: string
+  trainingNumber?: string | null
+  trainingDate: Date | string
+  createdAt: Date | string
+  closed?: boolean
+  createdBy: string
+  workOrderId: string
+  trainingStandardId: string
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type TrainingUpdateWithoutEmployeeInput = {
@@ -908,9 +1130,12 @@ export type TrainingUpdateWithoutEmployeeInput = {
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTraining_Training_deletedByToEmployeeNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
 }
 
@@ -923,6 +1148,9 @@ export type TrainingUncheckedUpdateWithoutEmployeeInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -935,6 +1163,53 @@ export type TrainingUncheckedUpdateManyWithoutEmployeeInput = {
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type TrainingUpdateWithoutEmployee_Training_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
+  TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
+}
+
+export type TrainingUncheckedUpdateWithoutEmployee_Training_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
+}
+
+export type TrainingUncheckedUpdateManyWithoutEmployee_Training_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TrainingCreateManyTargetInput = {
@@ -946,6 +1221,9 @@ export type TrainingCreateManyTargetInput = {
   createdBy: string
   workOrderId: string
   trainingStandardId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingUpdateWithoutTargetInput = {
@@ -954,9 +1232,12 @@ export type TrainingUpdateWithoutTargetInput = {
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTraining_Training_deletedByToEmployeeNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
 }
 
@@ -969,6 +1250,9 @@ export type TrainingUncheckedUpdateWithoutTargetInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -981,6 +1265,9 @@ export type TrainingUncheckedUpdateManyWithoutTargetInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingCreateManyTrainingStandardInput = {
@@ -992,6 +1279,9 @@ export type TrainingCreateManyTrainingStandardInput = {
   createdBy: string
   workOrderId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingUpdateWithoutTrainingStandardInput = {
@@ -1000,9 +1290,12 @@ export type TrainingUpdateWithoutTrainingStandardInput = {
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTraining_Training_deletedByToEmployeeNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1015,6 +1308,9 @@ export type TrainingUncheckedUpdateWithoutTrainingStandardInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1027,6 +1323,9 @@ export type TrainingUncheckedUpdateManyWithoutTrainingStandardInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TrainingCreateManyWorkOrderInput = {
@@ -1038,6 +1337,9 @@ export type TrainingCreateManyWorkOrderInput = {
   createdBy: string
   trainingStandardId: string
   targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TrainingUpdateWithoutWorkOrderInput = {
@@ -1046,9 +1348,12 @@ export type TrainingUpdateWithoutWorkOrderInput = {
   trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTraining_Training_deletedByToEmployeeNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1061,6 +1366,9 @@ export type TrainingUncheckedUpdateWithoutWorkOrderInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1073,6 +1381,9 @@ export type TrainingUncheckedUpdateManyWithoutWorkOrderInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1116,10 +1427,14 @@ export type TrainingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   workOrderId?: boolean
   trainingStandardId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   TrainingStandard?: boolean | Prisma.TrainingStandardDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee_Training_deletedByToEmployee?: boolean | Prisma.Training$Employee_Training_deletedByToEmployeeArgs<ExtArgs>
   TrainingContact?: boolean | Prisma.Training$TrainingContactArgs<ExtArgs>
   _count?: boolean | Prisma.TrainingCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["training"]>
@@ -1136,14 +1451,18 @@ export type TrainingSelectScalar = {
   workOrderId?: boolean
   trainingStandardId?: boolean
   targetId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type TrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "trainingNumber" | "trainingDate" | "createdAt" | "closed" | "createdBy" | "workOrderId" | "trainingStandardId" | "targetId", ExtArgs["result"]["training"]>
+export type TrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "trainingNumber" | "trainingDate" | "createdAt" | "closed" | "createdBy" | "workOrderId" | "trainingStandardId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["training"]>
 export type TrainingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   TrainingStandard?: boolean | Prisma.TrainingStandardDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  Employee_Training_deletedByToEmployee?: boolean | Prisma.Training$Employee_Training_deletedByToEmployeeArgs<ExtArgs>
   TrainingContact?: boolean | Prisma.Training$TrainingContactArgs<ExtArgs>
   _count?: boolean | Prisma.TrainingCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1155,6 +1474,7 @@ export type $TrainingPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     Employee: Prisma.$EmployeePayload<ExtArgs>
     TrainingStandard: Prisma.$TrainingStandardPayload<ExtArgs>
     Target: Prisma.$TargetPayload<ExtArgs>
+    Employee_Training_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     TrainingContact: Prisma.$TrainingContactPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1167,6 +1487,9 @@ export type $TrainingPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     workOrderId: string
     trainingStandardId: string
     targetId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["training"]>
   composites: {}
 }
@@ -1511,6 +1834,7 @@ export interface Prisma__TrainingClient<T, Null = never, ExtArgs extends runtime
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   TrainingStandard<T extends Prisma.TrainingStandardDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingStandardDefaultArgs<ExtArgs>>): Prisma.Prisma__TrainingStandardClient<runtime.Types.Result.GetResult<Prisma.$TrainingStandardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_Training_deletedByToEmployee<T extends Prisma.Training$Employee_Training_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Training$Employee_Training_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   TrainingContact<T extends Prisma.Training$TrainingContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Training$TrainingContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1550,6 +1874,9 @@ export interface TrainingFieldRefs {
   readonly workOrderId: Prisma.FieldRef<"Training", 'String'>
   readonly trainingStandardId: Prisma.FieldRef<"Training", 'String'>
   readonly targetId: Prisma.FieldRef<"Training", 'String'>
+  readonly deleted: Prisma.FieldRef<"Training", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Training", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"Training", 'String'>
 }
     
 
@@ -1890,6 +2217,25 @@ export type TrainingDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Trainings to delete.
    */
   limit?: number
+}
+
+/**
+ * Training.Employee_Training_deletedByToEmployee
+ */
+export type Training$Employee_Training_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

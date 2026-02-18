@@ -30,6 +30,9 @@ export type MaterialGroupMinAggregateOutputType = {
   groupB: string | null
   groupC: string | null
   groupD: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type MaterialGroupMaxAggregateOutputType = {
@@ -38,6 +41,9 @@ export type MaterialGroupMaxAggregateOutputType = {
   groupB: string | null
   groupC: string | null
   groupD: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type MaterialGroupCountAggregateOutputType = {
@@ -46,6 +52,9 @@ export type MaterialGroupCountAggregateOutputType = {
   groupB: number
   groupC: number
   groupD: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -56,6 +65,9 @@ export type MaterialGroupMinAggregateInputType = {
   groupB?: true
   groupC?: true
   groupD?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type MaterialGroupMaxAggregateInputType = {
@@ -64,6 +76,9 @@ export type MaterialGroupMaxAggregateInputType = {
   groupB?: true
   groupC?: true
   groupD?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type MaterialGroupCountAggregateInputType = {
@@ -72,6 +87,9 @@ export type MaterialGroupCountAggregateInputType = {
   groupB?: true
   groupC?: true
   groupD?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -153,6 +171,9 @@ export type MaterialGroupGroupByOutputType = {
   groupB: string | null
   groupC: string | null
   groupD: string | null
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: MaterialGroupCountAggregateOutputType | null
   _min: MaterialGroupMinAggregateOutputType | null
   _max: MaterialGroupMaxAggregateOutputType | null
@@ -182,7 +203,11 @@ export type MaterialGroupWhereInput = {
   groupB?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
   groupC?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
   groupD?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
+  deleted?: Prisma.BoolFilter<"MaterialGroup"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"MaterialGroup"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
   Material?: Prisma.MaterialListRelationFilter
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   MaterialSerialTrack?: Prisma.MaterialSerialTrackListRelationFilter
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
   Purchase?: Prisma.PurchaseListRelationFilter
@@ -194,7 +219,11 @@ export type MaterialGroupOrderByWithRelationInput = {
   groupB?: Prisma.SortOrderInput | Prisma.SortOrder
   groupC?: Prisma.SortOrderInput | Prisma.SortOrder
   groupD?: Prisma.SortOrderInput | Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Material?: Prisma.MaterialOrderByRelationAggregateInput
+  Employee?: Prisma.EmployeeOrderByWithRelationInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackOrderByRelationAggregateInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureOrderByRelationAggregateInput
   Purchase?: Prisma.PurchaseOrderByRelationAggregateInput
@@ -210,7 +239,11 @@ export type MaterialGroupWhereUniqueInput = Prisma.AtLeast<{
   groupB?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
   groupC?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
   groupD?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
+  deleted?: Prisma.BoolFilter<"MaterialGroup"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"MaterialGroup"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
   Material?: Prisma.MaterialListRelationFilter
+  Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   MaterialSerialTrack?: Prisma.MaterialSerialTrackListRelationFilter
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
   Purchase?: Prisma.PurchaseListRelationFilter
@@ -222,6 +255,9 @@ export type MaterialGroupOrderByWithAggregationInput = {
   groupB?: Prisma.SortOrderInput | Prisma.SortOrder
   groupC?: Prisma.SortOrderInput | Prisma.SortOrder
   groupD?: Prisma.SortOrderInput | Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MaterialGroupCountOrderByAggregateInput
   _max?: Prisma.MaterialGroupMaxOrderByAggregateInput
   _min?: Prisma.MaterialGroupMinOrderByAggregateInput
@@ -236,6 +272,9 @@ export type MaterialGroupScalarWhereWithAggregatesInput = {
   groupB?: Prisma.StringNullableWithAggregatesFilter<"MaterialGroup"> | string | null
   groupC?: Prisma.StringNullableWithAggregatesFilter<"MaterialGroup"> | string | null
   groupD?: Prisma.StringNullableWithAggregatesFilter<"MaterialGroup"> | string | null
+  deleted?: Prisma.BoolWithAggregatesFilter<"MaterialGroup"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"MaterialGroup"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"MaterialGroup"> | string | null
 }
 
 export type MaterialGroupCreateInput = {
@@ -244,7 +283,10 @@ export type MaterialGroupCreateInput = {
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Material?: Prisma.MaterialCreateNestedManyWithoutMaterialGroupInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
@@ -256,6 +298,9 @@ export type MaterialGroupUncheckedCreateInput = {
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
@@ -268,7 +313,10 @@ export type MaterialGroupUpdateInput = {
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Material?: Prisma.MaterialUpdateManyWithoutMaterialGroupNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
@@ -280,6 +328,9 @@ export type MaterialGroupUncheckedUpdateInput = {
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Material?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
@@ -292,6 +343,9 @@ export type MaterialGroupCreateManyInput = {
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type MaterialGroupUpdateManyMutationInput = {
@@ -300,6 +354,8 @@ export type MaterialGroupUpdateManyMutationInput = {
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type MaterialGroupUncheckedUpdateManyInput = {
@@ -308,6 +364,19 @@ export type MaterialGroupUncheckedUpdateManyInput = {
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MaterialGroupListRelationFilter = {
+  every?: Prisma.MaterialGroupWhereInput
+  some?: Prisma.MaterialGroupWhereInput
+  none?: Prisma.MaterialGroupWhereInput
+}
+
+export type MaterialGroupOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type MaterialGroupScalarRelationFilter = {
@@ -327,6 +396,9 @@ export type MaterialGroupCountOrderByAggregateInput = {
   groupB?: Prisma.SortOrder
   groupC?: Prisma.SortOrder
   groupD?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type MaterialGroupMaxOrderByAggregateInput = {
@@ -335,6 +407,9 @@ export type MaterialGroupMaxOrderByAggregateInput = {
   groupB?: Prisma.SortOrder
   groupC?: Prisma.SortOrder
   groupD?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type MaterialGroupMinOrderByAggregateInput = {
@@ -343,11 +418,56 @@ export type MaterialGroupMinOrderByAggregateInput = {
   groupB?: Prisma.SortOrder
   groupC?: Prisma.SortOrder
   groupD?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type MaterialGroupNullableScalarRelationFilter = {
   is?: Prisma.MaterialGroupWhereInput | null
   isNot?: Prisma.MaterialGroupWhereInput | null
+}
+
+export type MaterialGroupCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.MaterialGroupCreateWithoutEmployeeInput, Prisma.MaterialGroupUncheckedCreateWithoutEmployeeInput> | Prisma.MaterialGroupCreateWithoutEmployeeInput[] | Prisma.MaterialGroupUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.MaterialGroupCreateOrConnectWithoutEmployeeInput | Prisma.MaterialGroupCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.MaterialGroupCreateManyEmployeeInputEnvelope
+  connect?: Prisma.MaterialGroupWhereUniqueInput | Prisma.MaterialGroupWhereUniqueInput[]
+}
+
+export type MaterialGroupUncheckedCreateNestedManyWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.MaterialGroupCreateWithoutEmployeeInput, Prisma.MaterialGroupUncheckedCreateWithoutEmployeeInput> | Prisma.MaterialGroupCreateWithoutEmployeeInput[] | Prisma.MaterialGroupUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.MaterialGroupCreateOrConnectWithoutEmployeeInput | Prisma.MaterialGroupCreateOrConnectWithoutEmployeeInput[]
+  createMany?: Prisma.MaterialGroupCreateManyEmployeeInputEnvelope
+  connect?: Prisma.MaterialGroupWhereUniqueInput | Prisma.MaterialGroupWhereUniqueInput[]
+}
+
+export type MaterialGroupUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialGroupCreateWithoutEmployeeInput, Prisma.MaterialGroupUncheckedCreateWithoutEmployeeInput> | Prisma.MaterialGroupCreateWithoutEmployeeInput[] | Prisma.MaterialGroupUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.MaterialGroupCreateOrConnectWithoutEmployeeInput | Prisma.MaterialGroupCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.MaterialGroupUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.MaterialGroupUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.MaterialGroupCreateManyEmployeeInputEnvelope
+  set?: Prisma.MaterialGroupWhereUniqueInput | Prisma.MaterialGroupWhereUniqueInput[]
+  disconnect?: Prisma.MaterialGroupWhereUniqueInput | Prisma.MaterialGroupWhereUniqueInput[]
+  delete?: Prisma.MaterialGroupWhereUniqueInput | Prisma.MaterialGroupWhereUniqueInput[]
+  connect?: Prisma.MaterialGroupWhereUniqueInput | Prisma.MaterialGroupWhereUniqueInput[]
+  update?: Prisma.MaterialGroupUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.MaterialGroupUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.MaterialGroupUpdateManyWithWhereWithoutEmployeeInput | Prisma.MaterialGroupUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.MaterialGroupScalarWhereInput | Prisma.MaterialGroupScalarWhereInput[]
+}
+
+export type MaterialGroupUncheckedUpdateManyWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialGroupCreateWithoutEmployeeInput, Prisma.MaterialGroupUncheckedCreateWithoutEmployeeInput> | Prisma.MaterialGroupCreateWithoutEmployeeInput[] | Prisma.MaterialGroupUncheckedCreateWithoutEmployeeInput[]
+  connectOrCreate?: Prisma.MaterialGroupCreateOrConnectWithoutEmployeeInput | Prisma.MaterialGroupCreateOrConnectWithoutEmployeeInput[]
+  upsert?: Prisma.MaterialGroupUpsertWithWhereUniqueWithoutEmployeeInput | Prisma.MaterialGroupUpsertWithWhereUniqueWithoutEmployeeInput[]
+  createMany?: Prisma.MaterialGroupCreateManyEmployeeInputEnvelope
+  set?: Prisma.MaterialGroupWhereUniqueInput | Prisma.MaterialGroupWhereUniqueInput[]
+  disconnect?: Prisma.MaterialGroupWhereUniqueInput | Prisma.MaterialGroupWhereUniqueInput[]
+  delete?: Prisma.MaterialGroupWhereUniqueInput | Prisma.MaterialGroupWhereUniqueInput[]
+  connect?: Prisma.MaterialGroupWhereUniqueInput | Prisma.MaterialGroupWhereUniqueInput[]
+  update?: Prisma.MaterialGroupUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.MaterialGroupUpdateWithWhereUniqueWithoutEmployeeInput[]
+  updateMany?: Prisma.MaterialGroupUpdateManyWithWhereWithoutEmployeeInput | Prisma.MaterialGroupUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.MaterialGroupScalarWhereInput | Prisma.MaterialGroupScalarWhereInput[]
 }
 
 export type MaterialGroupCreateNestedOneWithoutMaterialInput = {
@@ -412,12 +532,83 @@ export type MaterialGroupUpdateOneWithoutPurchaseNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialGroupUpdateToOneWithWhereWithoutPurchaseInput, Prisma.MaterialGroupUpdateWithoutPurchaseInput>, Prisma.MaterialGroupUncheckedUpdateWithoutPurchaseInput>
 }
 
+export type MaterialGroupCreateWithoutEmployeeInput = {
+  id: string
+  groupA: string
+  groupB?: string | null
+  groupC?: string | null
+  groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Material?: Prisma.MaterialCreateNestedManyWithoutMaterialGroupInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
+}
+
+export type MaterialGroupUncheckedCreateWithoutEmployeeInput = {
+  id: string
+  groupA: string
+  groupB?: string | null
+  groupC?: string | null
+  groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroupInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
+}
+
+export type MaterialGroupCreateOrConnectWithoutEmployeeInput = {
+  where: Prisma.MaterialGroupWhereUniqueInput
+  create: Prisma.XOR<Prisma.MaterialGroupCreateWithoutEmployeeInput, Prisma.MaterialGroupUncheckedCreateWithoutEmployeeInput>
+}
+
+export type MaterialGroupCreateManyEmployeeInputEnvelope = {
+  data: Prisma.MaterialGroupCreateManyEmployeeInput | Prisma.MaterialGroupCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type MaterialGroupUpsertWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.MaterialGroupWhereUniqueInput
+  update: Prisma.XOR<Prisma.MaterialGroupUpdateWithoutEmployeeInput, Prisma.MaterialGroupUncheckedUpdateWithoutEmployeeInput>
+  create: Prisma.XOR<Prisma.MaterialGroupCreateWithoutEmployeeInput, Prisma.MaterialGroupUncheckedCreateWithoutEmployeeInput>
+}
+
+export type MaterialGroupUpdateWithWhereUniqueWithoutEmployeeInput = {
+  where: Prisma.MaterialGroupWhereUniqueInput
+  data: Prisma.XOR<Prisma.MaterialGroupUpdateWithoutEmployeeInput, Prisma.MaterialGroupUncheckedUpdateWithoutEmployeeInput>
+}
+
+export type MaterialGroupUpdateManyWithWhereWithoutEmployeeInput = {
+  where: Prisma.MaterialGroupScalarWhereInput
+  data: Prisma.XOR<Prisma.MaterialGroupUpdateManyMutationInput, Prisma.MaterialGroupUncheckedUpdateManyWithoutEmployeeInput>
+}
+
+export type MaterialGroupScalarWhereInput = {
+  AND?: Prisma.MaterialGroupScalarWhereInput | Prisma.MaterialGroupScalarWhereInput[]
+  OR?: Prisma.MaterialGroupScalarWhereInput[]
+  NOT?: Prisma.MaterialGroupScalarWhereInput | Prisma.MaterialGroupScalarWhereInput[]
+  id?: Prisma.StringFilter<"MaterialGroup"> | string
+  groupA?: Prisma.StringFilter<"MaterialGroup"> | string
+  groupB?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
+  groupC?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
+  groupD?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
+  deleted?: Prisma.BoolFilter<"MaterialGroup"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"MaterialGroup"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"MaterialGroup"> | string | null
+}
+
 export type MaterialGroupCreateWithoutMaterialInput = {
   id: string
   groupA: string
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
@@ -429,6 +620,9 @@ export type MaterialGroupUncheckedCreateWithoutMaterialInput = {
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
@@ -456,6 +650,9 @@ export type MaterialGroupUpdateWithoutMaterialInput = {
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
@@ -467,6 +664,9 @@ export type MaterialGroupUncheckedUpdateWithoutMaterialInput = {
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
@@ -478,7 +678,10 @@ export type MaterialGroupCreateWithoutMaterialSerialTrackInput = {
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Material?: Prisma.MaterialCreateNestedManyWithoutMaterialGroupInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
 }
@@ -489,6 +692,9 @@ export type MaterialGroupUncheckedCreateWithoutMaterialSerialTrackInput = {
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
@@ -516,7 +722,10 @@ export type MaterialGroupUpdateWithoutMaterialSerialTrackInput = {
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Material?: Prisma.MaterialUpdateManyWithoutMaterialGroupNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
 }
@@ -527,6 +736,9 @@ export type MaterialGroupUncheckedUpdateWithoutMaterialSerialTrackInput = {
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Material?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
@@ -538,7 +750,10 @@ export type MaterialGroupCreateWithoutMaterialSerialTrackedStructureInput = {
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Material?: Prisma.MaterialCreateNestedManyWithoutMaterialGroupInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutMaterialGroupInput
 }
@@ -549,6 +764,9 @@ export type MaterialGroupUncheckedCreateWithoutMaterialSerialTrackedStructureInp
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutMaterialGroupInput
@@ -576,7 +794,10 @@ export type MaterialGroupUpdateWithoutMaterialSerialTrackedStructureInput = {
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Material?: Prisma.MaterialUpdateManyWithoutMaterialGroupNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
 }
@@ -587,6 +808,9 @@ export type MaterialGroupUncheckedUpdateWithoutMaterialSerialTrackedStructureInp
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Material?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
@@ -598,7 +822,10 @@ export type MaterialGroupCreateWithoutPurchaseInput = {
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Material?: Prisma.MaterialCreateNestedManyWithoutMaterialGroupInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput
 }
@@ -609,6 +836,9 @@ export type MaterialGroupUncheckedCreateWithoutPurchaseInput = {
   groupB?: string | null
   groupC?: string | null
   groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Material?: Prisma.MaterialUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput
@@ -636,7 +866,10 @@ export type MaterialGroupUpdateWithoutPurchaseInput = {
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Material?: Prisma.MaterialUpdateManyWithoutMaterialGroupNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
 }
@@ -647,9 +880,60 @@ export type MaterialGroupUncheckedUpdateWithoutPurchaseInput = {
   groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Material?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
+}
+
+export type MaterialGroupCreateManyEmployeeInput = {
+  id: string
+  groupA: string
+  groupB?: string | null
+  groupC?: string | null
+  groupD?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type MaterialGroupUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  groupA?: Prisma.StringFieldUpdateOperationsInput | string
+  groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Material?: Prisma.MaterialUpdateManyWithoutMaterialGroupNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutMaterialGroupNestedInput
+}
+
+export type MaterialGroupUncheckedUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  groupA?: Prisma.StringFieldUpdateOperationsInput | string
+  groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Material?: Prisma.MaterialUncheckedUpdateManyWithoutMaterialGroupNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput
+  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutMaterialGroupNestedInput
+}
+
+export type MaterialGroupUncheckedUpdateManyWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  groupA?: Prisma.StringFieldUpdateOperationsInput | string
+  groupB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -716,7 +1000,11 @@ export type MaterialGroupSelect<ExtArgs extends runtime.Types.Extensions.Interna
   groupB?: boolean
   groupC?: boolean
   groupD?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Material?: boolean | Prisma.MaterialGroup$MaterialArgs<ExtArgs>
+  Employee?: boolean | Prisma.MaterialGroup$EmployeeArgs<ExtArgs>
   MaterialSerialTrack?: boolean | Prisma.MaterialGroup$MaterialSerialTrackArgs<ExtArgs>
   MaterialSerialTrackedStructure?: boolean | Prisma.MaterialGroup$MaterialSerialTrackedStructureArgs<ExtArgs>
   Purchase?: boolean | Prisma.MaterialGroup$PurchaseArgs<ExtArgs>
@@ -731,11 +1019,15 @@ export type MaterialGroupSelectScalar = {
   groupB?: boolean
   groupC?: boolean
   groupD?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type MaterialGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "groupA" | "groupB" | "groupC" | "groupD", ExtArgs["result"]["materialGroup"]>
+export type MaterialGroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "groupA" | "groupB" | "groupC" | "groupD" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["materialGroup"]>
 export type MaterialGroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Material?: boolean | Prisma.MaterialGroup$MaterialArgs<ExtArgs>
+  Employee?: boolean | Prisma.MaterialGroup$EmployeeArgs<ExtArgs>
   MaterialSerialTrack?: boolean | Prisma.MaterialGroup$MaterialSerialTrackArgs<ExtArgs>
   MaterialSerialTrackedStructure?: boolean | Prisma.MaterialGroup$MaterialSerialTrackedStructureArgs<ExtArgs>
   Purchase?: boolean | Prisma.MaterialGroup$PurchaseArgs<ExtArgs>
@@ -746,6 +1038,7 @@ export type $MaterialGroupPayload<ExtArgs extends runtime.Types.Extensions.Inter
   name: "MaterialGroup"
   objects: {
     Material: Prisma.$MaterialPayload<ExtArgs>[]
+    Employee: Prisma.$EmployeePayload<ExtArgs> | null
     MaterialSerialTrack: Prisma.$MaterialSerialTrackPayload<ExtArgs>[]
     MaterialSerialTrackedStructure: Prisma.$MaterialSerialTrackedStructurePayload<ExtArgs>[]
     Purchase: Prisma.$PurchasePayload<ExtArgs>[]
@@ -756,6 +1049,9 @@ export type $MaterialGroupPayload<ExtArgs extends runtime.Types.Extensions.Inter
     groupB: string | null
     groupC: string | null
     groupD: string | null
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["materialGroup"]>
   composites: {}
 }
@@ -1097,6 +1393,7 @@ readonly fields: MaterialGroupFieldRefs;
 export interface Prisma__MaterialGroupClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Material<T extends Prisma.MaterialGroup$MaterialArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialGroup$MaterialArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Employee<T extends Prisma.MaterialGroup$EmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialGroup$EmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   MaterialSerialTrack<T extends Prisma.MaterialGroup$MaterialSerialTrackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialGroup$MaterialSerialTrackArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   MaterialSerialTrackedStructure<T extends Prisma.MaterialGroup$MaterialSerialTrackedStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialGroup$MaterialSerialTrackedStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackedStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Purchase<T extends Prisma.MaterialGroup$PurchaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialGroup$PurchaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1134,6 +1431,9 @@ export interface MaterialGroupFieldRefs {
   readonly groupB: Prisma.FieldRef<"MaterialGroup", 'String'>
   readonly groupC: Prisma.FieldRef<"MaterialGroup", 'String'>
   readonly groupD: Prisma.FieldRef<"MaterialGroup", 'String'>
+  readonly deleted: Prisma.FieldRef<"MaterialGroup", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"MaterialGroup", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"MaterialGroup", 'String'>
 }
     
 
@@ -1498,6 +1798,25 @@ export type MaterialGroup$MaterialArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.MaterialScalarFieldEnum | Prisma.MaterialScalarFieldEnum[]
+}
+
+/**
+ * MaterialGroup.Employee
+ */
+export type MaterialGroup$EmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

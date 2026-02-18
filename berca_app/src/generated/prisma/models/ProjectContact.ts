@@ -35,6 +35,9 @@ export type ProjectContactMinAggregateOutputType = {
   moddifiedBy: string | null
   projectId: string | null
   contactId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type ProjectContactMaxAggregateOutputType = {
@@ -48,6 +51,9 @@ export type ProjectContactMaxAggregateOutputType = {
   moddifiedBy: string | null
   projectId: string | null
   contactId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type ProjectContactCountAggregateOutputType = {
@@ -61,6 +67,9 @@ export type ProjectContactCountAggregateOutputType = {
   moddifiedBy: number
   projectId: number
   contactId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -76,6 +85,9 @@ export type ProjectContactMinAggregateInputType = {
   moddifiedBy?: true
   projectId?: true
   contactId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type ProjectContactMaxAggregateInputType = {
@@ -89,6 +101,9 @@ export type ProjectContactMaxAggregateInputType = {
   moddifiedBy?: true
   projectId?: true
   contactId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type ProjectContactCountAggregateInputType = {
@@ -102,6 +117,9 @@ export type ProjectContactCountAggregateInputType = {
   moddifiedBy?: true
   projectId?: true
   contactId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -188,6 +206,9 @@ export type ProjectContactGroupByOutputType = {
   moddifiedBy: string
   projectId: string
   contactId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: ProjectContactCountAggregateOutputType | null
   _min: ProjectContactMinAggregateOutputType | null
   _max: ProjectContactMaxAggregateOutputType | null
@@ -222,10 +243,14 @@ export type ProjectContactWhereInput = {
   moddifiedBy?: Prisma.StringFilter<"ProjectContact"> | string
   projectId?: Prisma.StringFilter<"ProjectContact"> | string
   contactId?: Prisma.StringFilter<"ProjectContact"> | string
+  deleted?: Prisma.BoolFilter<"ProjectContact"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"ProjectContact"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"ProjectContact"> | string | null
   Employee_ProjectContact_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   Employee_ProjectContact_moddifiedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Contact?: Prisma.XOR<Prisma.ContactScalarRelationFilter, Prisma.ContactWhereInput>
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type ProjectContactOrderByWithRelationInput = {
@@ -239,10 +264,14 @@ export type ProjectContactOrderByWithRelationInput = {
   moddifiedBy?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   contactId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee_ProjectContact_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Project?: Prisma.ProjectOrderByWithRelationInput
   Employee_ProjectContact_moddifiedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Contact?: Prisma.ContactOrderByWithRelationInput
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.ProjectContactOrderByRelevanceInput
 }
 
@@ -260,10 +289,14 @@ export type ProjectContactWhereUniqueInput = Prisma.AtLeast<{
   moddifiedBy?: Prisma.StringFilter<"ProjectContact"> | string
   projectId?: Prisma.StringFilter<"ProjectContact"> | string
   contactId?: Prisma.StringFilter<"ProjectContact"> | string
+  deleted?: Prisma.BoolFilter<"ProjectContact"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"ProjectContact"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"ProjectContact"> | string | null
   Employee_ProjectContact_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   Employee_ProjectContact_moddifiedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Contact?: Prisma.XOR<Prisma.ContactScalarRelationFilter, Prisma.ContactWhereInput>
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type ProjectContactOrderByWithAggregationInput = {
@@ -277,6 +310,9 @@ export type ProjectContactOrderByWithAggregationInput = {
   moddifiedBy?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   contactId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProjectContactCountOrderByAggregateInput
   _max?: Prisma.ProjectContactMaxOrderByAggregateInput
   _min?: Prisma.ProjectContactMinOrderByAggregateInput
@@ -296,6 +332,9 @@ export type ProjectContactScalarWhereWithAggregatesInput = {
   moddifiedBy?: Prisma.StringWithAggregatesFilter<"ProjectContact"> | string
   projectId?: Prisma.StringWithAggregatesFilter<"ProjectContact"> | string
   contactId?: Prisma.StringWithAggregatesFilter<"ProjectContact"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"ProjectContact"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ProjectContact"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"ProjectContact"> | string | null
 }
 
 export type ProjectContactCreateInput = {
@@ -305,10 +344,13 @@ export type ProjectContactCreateInput = {
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee_ProjectContact_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_createdByToEmployeeInput
   Project: Prisma.ProjectCreateNestedOneWithoutProjectContactInput
   Employee_ProjectContact_moddifiedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_moddifiedByToEmployeeInput
   Contact: Prisma.ContactCreateNestedOneWithoutProjectContactInput
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_deletedByToEmployeeInput
 }
 
 export type ProjectContactUncheckedCreateInput = {
@@ -322,6 +364,9 @@ export type ProjectContactUncheckedCreateInput = {
   moddifiedBy: string
   projectId: string
   contactId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProjectContactUpdateInput = {
@@ -331,10 +376,13 @@ export type ProjectContactUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_ProjectContact_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectContact_ProjectContact_createdByToEmployeeNestedInput
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectContactNestedInput
   Employee_ProjectContact_moddifiedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectContact_ProjectContact_moddifiedByToEmployeeNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutProjectContactNestedInput
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectContact_ProjectContact_deletedByToEmployeeNestedInput
 }
 
 export type ProjectContactUncheckedUpdateInput = {
@@ -348,6 +396,9 @@ export type ProjectContactUncheckedUpdateInput = {
   moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProjectContactCreateManyInput = {
@@ -361,6 +412,9 @@ export type ProjectContactCreateManyInput = {
   moddifiedBy: string
   projectId: string
   contactId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProjectContactUpdateManyMutationInput = {
@@ -370,6 +424,8 @@ export type ProjectContactUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ProjectContactUncheckedUpdateManyInput = {
@@ -383,6 +439,9 @@ export type ProjectContactUncheckedUpdateManyInput = {
   moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProjectContactListRelationFilter = {
@@ -412,6 +471,9 @@ export type ProjectContactCountOrderByAggregateInput = {
   moddifiedBy?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   contactId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type ProjectContactMaxOrderByAggregateInput = {
@@ -425,6 +487,9 @@ export type ProjectContactMaxOrderByAggregateInput = {
   moddifiedBy?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   contactId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type ProjectContactMinOrderByAggregateInput = {
@@ -438,6 +503,9 @@ export type ProjectContactMinOrderByAggregateInput = {
   moddifiedBy?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   contactId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type ProjectContactCreateNestedManyWithoutContactInput = {
@@ -496,6 +564,13 @@ export type ProjectContactCreateNestedManyWithoutEmployee_ProjectContact_moddifi
   connect?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
 }
 
+export type ProjectContactCreateNestedManyWithoutEmployee_ProjectContact_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput, Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput> | Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput[] | Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_deletedByToEmployeeInput | Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  createMany?: Prisma.ProjectContactCreateManyEmployee_ProjectContact_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
+}
+
 export type ProjectContactUncheckedCreateNestedManyWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput, Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput> | Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput[] | Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_createdByToEmployeeInput | Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_createdByToEmployeeInput[]
@@ -507,6 +582,13 @@ export type ProjectContactUncheckedCreateNestedManyWithoutEmployee_ProjectContac
   create?: Prisma.XOR<Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput, Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput> | Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput[] | Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput[]
   connectOrCreate?: Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput | Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput[]
   createMany?: Prisma.ProjectContactCreateManyEmployee_ProjectContact_moddifiedByToEmployeeInputEnvelope
+  connect?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
+}
+
+export type ProjectContactUncheckedCreateNestedManyWithoutEmployee_ProjectContact_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput, Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput> | Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput[] | Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_deletedByToEmployeeInput | Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  createMany?: Prisma.ProjectContactCreateManyEmployee_ProjectContact_deletedByToEmployeeInputEnvelope
   connect?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
 }
 
@@ -538,6 +620,20 @@ export type ProjectContactUpdateManyWithoutEmployee_ProjectContact_moddifiedByTo
   deleteMany?: Prisma.ProjectContactScalarWhereInput | Prisma.ProjectContactScalarWhereInput[]
 }
 
+export type ProjectContactUpdateManyWithoutEmployee_ProjectContact_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput, Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput> | Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput[] | Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_deletedByToEmployeeInput | Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  upsert?: Prisma.ProjectContactUpsertWithWhereUniqueWithoutEmployee_ProjectContact_deletedByToEmployeeInput | Prisma.ProjectContactUpsertWithWhereUniqueWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  createMany?: Prisma.ProjectContactCreateManyEmployee_ProjectContact_deletedByToEmployeeInputEnvelope
+  set?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
+  disconnect?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
+  delete?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
+  connect?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
+  update?: Prisma.ProjectContactUpdateWithWhereUniqueWithoutEmployee_ProjectContact_deletedByToEmployeeInput | Prisma.ProjectContactUpdateWithWhereUniqueWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  updateMany?: Prisma.ProjectContactUpdateManyWithWhereWithoutEmployee_ProjectContact_deletedByToEmployeeInput | Prisma.ProjectContactUpdateManyWithWhereWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.ProjectContactScalarWhereInput | Prisma.ProjectContactScalarWhereInput[]
+}
+
 export type ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_createdByToEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput, Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput> | Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput[] | Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_createdByToEmployeeInput | Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_createdByToEmployeeInput[]
@@ -563,6 +659,20 @@ export type ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_modd
   connect?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
   update?: Prisma.ProjectContactUpdateWithWhereUniqueWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput | Prisma.ProjectContactUpdateWithWhereUniqueWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput[]
   updateMany?: Prisma.ProjectContactUpdateManyWithWhereWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput | Prisma.ProjectContactUpdateManyWithWhereWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput[]
+  deleteMany?: Prisma.ProjectContactScalarWhereInput | Prisma.ProjectContactScalarWhereInput[]
+}
+
+export type ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput, Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput> | Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput[] | Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_deletedByToEmployeeInput | Prisma.ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  upsert?: Prisma.ProjectContactUpsertWithWhereUniqueWithoutEmployee_ProjectContact_deletedByToEmployeeInput | Prisma.ProjectContactUpsertWithWhereUniqueWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  createMany?: Prisma.ProjectContactCreateManyEmployee_ProjectContact_deletedByToEmployeeInputEnvelope
+  set?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
+  disconnect?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
+  delete?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
+  connect?: Prisma.ProjectContactWhereUniqueInput | Prisma.ProjectContactWhereUniqueInput[]
+  update?: Prisma.ProjectContactUpdateWithWhereUniqueWithoutEmployee_ProjectContact_deletedByToEmployeeInput | Prisma.ProjectContactUpdateWithWhereUniqueWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
+  updateMany?: Prisma.ProjectContactUpdateManyWithWhereWithoutEmployee_ProjectContact_deletedByToEmployeeInput | Prisma.ProjectContactUpdateManyWithWhereWithoutEmployee_ProjectContact_deletedByToEmployeeInput[]
   deleteMany?: Prisma.ProjectContactScalarWhereInput | Prisma.ProjectContactScalarWhereInput[]
 }
 
@@ -615,9 +725,12 @@ export type ProjectContactCreateWithoutContactInput = {
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee_ProjectContact_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_createdByToEmployeeInput
   Project: Prisma.ProjectCreateNestedOneWithoutProjectContactInput
   Employee_ProjectContact_moddifiedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_moddifiedByToEmployeeInput
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_deletedByToEmployeeInput
 }
 
 export type ProjectContactUncheckedCreateWithoutContactInput = {
@@ -630,6 +743,9 @@ export type ProjectContactUncheckedCreateWithoutContactInput = {
   createdBy: string
   moddifiedBy: string
   projectId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProjectContactCreateOrConnectWithoutContactInput = {
@@ -672,6 +788,9 @@ export type ProjectContactScalarWhereInput = {
   moddifiedBy?: Prisma.StringFilter<"ProjectContact"> | string
   projectId?: Prisma.StringFilter<"ProjectContact"> | string
   contactId?: Prisma.StringFilter<"ProjectContact"> | string
+  deleted?: Prisma.BoolFilter<"ProjectContact"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"ProjectContact"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"ProjectContact"> | string | null
 }
 
 export type ProjectContactCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
@@ -681,9 +800,12 @@ export type ProjectContactCreateWithoutEmployee_ProjectContact_createdByToEmploy
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Project: Prisma.ProjectCreateNestedOneWithoutProjectContactInput
   Employee_ProjectContact_moddifiedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_moddifiedByToEmployeeInput
   Contact: Prisma.ContactCreateNestedOneWithoutProjectContactInput
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_deletedByToEmployeeInput
 }
 
 export type ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
@@ -696,6 +818,9 @@ export type ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_createdB
   moddifiedBy: string
   projectId: string
   contactId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
@@ -715,9 +840,12 @@ export type ProjectContactCreateWithoutEmployee_ProjectContact_moddifiedByToEmpl
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee_ProjectContact_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_createdByToEmployeeInput
   Project: Prisma.ProjectCreateNestedOneWithoutProjectContactInput
   Contact: Prisma.ContactCreateNestedOneWithoutProjectContactInput
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_deletedByToEmployeeInput
 }
 
 export type ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput = {
@@ -730,6 +858,9 @@ export type ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_moddifie
   createdBy: string
   projectId: string
   contactId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput = {
@@ -739,6 +870,46 @@ export type ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_moddifie
 
 export type ProjectContactCreateManyEmployee_ProjectContact_moddifiedByToEmployeeInputEnvelope = {
   data: Prisma.ProjectContactCreateManyEmployee_ProjectContact_moddifiedByToEmployeeInput | Prisma.ProjectContactCreateManyEmployee_ProjectContact_moddifiedByToEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type ProjectContactCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput = {
+  id: string
+  description?: string | null
+  extraInfo?: string | null
+  createdAt: Date | string
+  moddifiedAt?: Date | string | null
+  idValid?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee_ProjectContact_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_createdByToEmployeeInput
+  Project: Prisma.ProjectCreateNestedOneWithoutProjectContactInput
+  Employee_ProjectContact_moddifiedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_moddifiedByToEmployeeInput
+  Contact: Prisma.ContactCreateNestedOneWithoutProjectContactInput
+}
+
+export type ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput = {
+  id: string
+  description?: string | null
+  extraInfo?: string | null
+  createdAt: Date | string
+  moddifiedAt?: Date | string | null
+  idValid?: boolean
+  createdBy: string
+  moddifiedBy: string
+  projectId: string
+  contactId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type ProjectContactCreateOrConnectWithoutEmployee_ProjectContact_deletedByToEmployeeInput = {
+  where: Prisma.ProjectContactWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput, Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput>
+}
+
+export type ProjectContactCreateManyEmployee_ProjectContact_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.ProjectContactCreateManyEmployee_ProjectContact_deletedByToEmployeeInput | Prisma.ProjectContactCreateManyEmployee_ProjectContact_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -774,6 +945,22 @@ export type ProjectContactUpdateManyWithWhereWithoutEmployee_ProjectContact_modd
   data: Prisma.XOR<Prisma.ProjectContactUpdateManyMutationInput, Prisma.ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput>
 }
 
+export type ProjectContactUpsertWithWhereUniqueWithoutEmployee_ProjectContact_deletedByToEmployeeInput = {
+  where: Prisma.ProjectContactWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProjectContactUpdateWithoutEmployee_ProjectContact_deletedByToEmployeeInput, Prisma.ProjectContactUncheckedUpdateWithoutEmployee_ProjectContact_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.ProjectContactCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput, Prisma.ProjectContactUncheckedCreateWithoutEmployee_ProjectContact_deletedByToEmployeeInput>
+}
+
+export type ProjectContactUpdateWithWhereUniqueWithoutEmployee_ProjectContact_deletedByToEmployeeInput = {
+  where: Prisma.ProjectContactWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProjectContactUpdateWithoutEmployee_ProjectContact_deletedByToEmployeeInput, Prisma.ProjectContactUncheckedUpdateWithoutEmployee_ProjectContact_deletedByToEmployeeInput>
+}
+
+export type ProjectContactUpdateManyWithWhereWithoutEmployee_ProjectContact_deletedByToEmployeeInput = {
+  where: Prisma.ProjectContactScalarWhereInput
+  data: Prisma.XOR<Prisma.ProjectContactUpdateManyMutationInput, Prisma.ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_deletedByToEmployeeInput>
+}
+
 export type ProjectContactCreateWithoutProjectInput = {
   id: string
   description?: string | null
@@ -781,9 +968,12 @@ export type ProjectContactCreateWithoutProjectInput = {
   createdAt: Date | string
   moddifiedAt?: Date | string | null
   idValid?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee_ProjectContact_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_createdByToEmployeeInput
   Employee_ProjectContact_moddifiedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_moddifiedByToEmployeeInput
   Contact: Prisma.ContactCreateNestedOneWithoutProjectContactInput
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutProjectContact_ProjectContact_deletedByToEmployeeInput
 }
 
 export type ProjectContactUncheckedCreateWithoutProjectInput = {
@@ -796,6 +986,9 @@ export type ProjectContactUncheckedCreateWithoutProjectInput = {
   createdBy: string
   moddifiedBy: string
   contactId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProjectContactCreateOrConnectWithoutProjectInput = {
@@ -834,6 +1027,9 @@ export type ProjectContactCreateManyContactInput = {
   createdBy: string
   moddifiedBy: string
   projectId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProjectContactUpdateWithoutContactInput = {
@@ -843,9 +1039,12 @@ export type ProjectContactUpdateWithoutContactInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_ProjectContact_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectContact_ProjectContact_createdByToEmployeeNestedInput
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectContactNestedInput
   Employee_ProjectContact_moddifiedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectContact_ProjectContact_moddifiedByToEmployeeNestedInput
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectContact_ProjectContact_deletedByToEmployeeNestedInput
 }
 
 export type ProjectContactUncheckedUpdateWithoutContactInput = {
@@ -858,6 +1057,9 @@ export type ProjectContactUncheckedUpdateWithoutContactInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProjectContactUncheckedUpdateManyWithoutContactInput = {
@@ -870,6 +1072,9 @@ export type ProjectContactUncheckedUpdateManyWithoutContactInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProjectContactCreateManyEmployee_ProjectContact_createdByToEmployeeInput = {
@@ -882,6 +1087,9 @@ export type ProjectContactCreateManyEmployee_ProjectContact_createdByToEmployeeI
   moddifiedBy: string
   projectId: string
   contactId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProjectContactCreateManyEmployee_ProjectContact_moddifiedByToEmployeeInput = {
@@ -894,6 +1102,24 @@ export type ProjectContactCreateManyEmployee_ProjectContact_moddifiedByToEmploye
   createdBy: string
   projectId: string
   contactId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type ProjectContactCreateManyEmployee_ProjectContact_deletedByToEmployeeInput = {
+  id: string
+  description?: string | null
+  extraInfo?: string | null
+  createdAt: Date | string
+  moddifiedAt?: Date | string | null
+  idValid?: boolean
+  createdBy: string
+  moddifiedBy: string
+  projectId: string
+  contactId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type ProjectContactUpdateWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
@@ -903,9 +1129,12 @@ export type ProjectContactUpdateWithoutEmployee_ProjectContact_createdByToEmploy
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectContactNestedInput
   Employee_ProjectContact_moddifiedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectContact_ProjectContact_moddifiedByToEmployeeNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutProjectContactNestedInput
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectContact_ProjectContact_deletedByToEmployeeNestedInput
 }
 
 export type ProjectContactUncheckedUpdateWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
@@ -918,6 +1147,9 @@ export type ProjectContactUncheckedUpdateWithoutEmployee_ProjectContact_createdB
   moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_createdByToEmployeeInput = {
@@ -930,6 +1162,9 @@ export type ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_crea
   moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProjectContactUpdateWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput = {
@@ -939,9 +1174,12 @@ export type ProjectContactUpdateWithoutEmployee_ProjectContact_moddifiedByToEmpl
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_ProjectContact_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectContact_ProjectContact_createdByToEmployeeNestedInput
   Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectContactNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutProjectContactNestedInput
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectContact_ProjectContact_deletedByToEmployeeNestedInput
 }
 
 export type ProjectContactUncheckedUpdateWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput = {
@@ -954,6 +1192,9 @@ export type ProjectContactUncheckedUpdateWithoutEmployee_ProjectContact_moddifie
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_moddifiedByToEmployeeInput = {
@@ -966,6 +1207,54 @@ export type ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_modd
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ProjectContactUpdateWithoutEmployee_ProjectContact_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee_ProjectContact_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectContact_ProjectContact_createdByToEmployeeNestedInput
+  Project?: Prisma.ProjectUpdateOneRequiredWithoutProjectContactNestedInput
+  Employee_ProjectContact_moddifiedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectContact_ProjectContact_moddifiedByToEmployeeNestedInput
+  Contact?: Prisma.ContactUpdateOneRequiredWithoutProjectContactNestedInput
+}
+
+export type ProjectContactUncheckedUpdateWithoutEmployee_ProjectContact_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type ProjectContactUncheckedUpdateManyWithoutEmployee_ProjectContact_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extraInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ProjectContactCreateManyProjectInput = {
@@ -978,6 +1267,9 @@ export type ProjectContactCreateManyProjectInput = {
   createdBy: string
   moddifiedBy: string
   contactId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type ProjectContactUpdateWithoutProjectInput = {
@@ -987,9 +1279,12 @@ export type ProjectContactUpdateWithoutProjectInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moddifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   idValid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_ProjectContact_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectContact_ProjectContact_createdByToEmployeeNestedInput
   Employee_ProjectContact_moddifiedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutProjectContact_ProjectContact_moddifiedByToEmployeeNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutProjectContactNestedInput
+  Employee_ProjectContact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutProjectContact_ProjectContact_deletedByToEmployeeNestedInput
 }
 
 export type ProjectContactUncheckedUpdateWithoutProjectInput = {
@@ -1002,6 +1297,9 @@ export type ProjectContactUncheckedUpdateWithoutProjectInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
   contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProjectContactUncheckedUpdateManyWithoutProjectInput = {
@@ -1014,6 +1312,9 @@ export type ProjectContactUncheckedUpdateManyWithoutProjectInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   moddifiedBy?: Prisma.StringFieldUpdateOperationsInput | string
   contactId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1029,10 +1330,14 @@ export type ProjectContactSelect<ExtArgs extends runtime.Types.Extensions.Intern
   moddifiedBy?: boolean
   projectId?: boolean
   contactId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Employee_ProjectContact_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   Employee_ProjectContact_moddifiedByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Contact?: boolean | Prisma.ContactDefaultArgs<ExtArgs>
+  Employee_ProjectContact_deletedByToEmployee?: boolean | Prisma.ProjectContact$Employee_ProjectContact_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["projectContact"]>
 
 
@@ -1048,14 +1353,18 @@ export type ProjectContactSelectScalar = {
   moddifiedBy?: boolean
   projectId?: boolean
   contactId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type ProjectContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "extraInfo" | "createdAt" | "moddifiedAt" | "idValid" | "createdBy" | "moddifiedBy" | "projectId" | "contactId", ExtArgs["result"]["projectContact"]>
+export type ProjectContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "extraInfo" | "createdAt" | "moddifiedAt" | "idValid" | "createdBy" | "moddifiedBy" | "projectId" | "contactId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["projectContact"]>
 export type ProjectContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee_ProjectContact_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   Employee_ProjectContact_moddifiedByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Contact?: boolean | Prisma.ContactDefaultArgs<ExtArgs>
+  Employee_ProjectContact_deletedByToEmployee?: boolean | Prisma.ProjectContact$Employee_ProjectContact_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $ProjectContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1065,6 +1374,7 @@ export type $ProjectContactPayload<ExtArgs extends runtime.Types.Extensions.Inte
     Project: Prisma.$ProjectPayload<ExtArgs>
     Employee_ProjectContact_moddifiedByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Contact: Prisma.$ContactPayload<ExtArgs>
+    Employee_ProjectContact_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1077,6 +1387,9 @@ export type $ProjectContactPayload<ExtArgs extends runtime.Types.Extensions.Inte
     moddifiedBy: string
     projectId: string
     contactId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["projectContact"]>
   composites: {}
 }
@@ -1421,6 +1734,7 @@ export interface Prisma__ProjectContactClient<T, Null = never, ExtArgs extends r
   Project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_ProjectContact_moddifiedByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Contact<T extends Prisma.ContactDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ContactDefaultArgs<ExtArgs>>): Prisma.Prisma__ContactClient<runtime.Types.Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_ProjectContact_deletedByToEmployee<T extends Prisma.ProjectContact$Employee_ProjectContact_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectContact$Employee_ProjectContact_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1460,6 +1774,9 @@ export interface ProjectContactFieldRefs {
   readonly moddifiedBy: Prisma.FieldRef<"ProjectContact", 'String'>
   readonly projectId: Prisma.FieldRef<"ProjectContact", 'String'>
   readonly contactId: Prisma.FieldRef<"ProjectContact", 'String'>
+  readonly deleted: Prisma.FieldRef<"ProjectContact", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"ProjectContact", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"ProjectContact", 'String'>
 }
     
 
@@ -1800,6 +2117,25 @@ export type ProjectContactDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many ProjectContacts to delete.
    */
   limit?: number
+}
+
+/**
+ * ProjectContact.Employee_ProjectContact_deletedByToEmployee
+ */
+export type ProjectContact$Employee_ProjectContact_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

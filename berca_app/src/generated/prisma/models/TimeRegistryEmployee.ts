@@ -28,18 +28,27 @@ export type TimeRegistryEmployeeMinAggregateOutputType = {
   id: string | null
   employeeId: string | null
   timeRegistryId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TimeRegistryEmployeeMaxAggregateOutputType = {
   id: string | null
   employeeId: string | null
   timeRegistryId: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TimeRegistryEmployeeCountAggregateOutputType = {
   id: number
   employeeId: number
   timeRegistryId: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -48,18 +57,27 @@ export type TimeRegistryEmployeeMinAggregateInputType = {
   id?: true
   employeeId?: true
   timeRegistryId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TimeRegistryEmployeeMaxAggregateInputType = {
   id?: true
   employeeId?: true
   timeRegistryId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TimeRegistryEmployeeCountAggregateInputType = {
   id?: true
   employeeId?: true
   timeRegistryId?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -139,6 +157,9 @@ export type TimeRegistryEmployeeGroupByOutputType = {
   id: string
   employeeId: string
   timeRegistryId: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: TimeRegistryEmployeeCountAggregateOutputType | null
   _min: TimeRegistryEmployeeMinAggregateOutputType | null
   _max: TimeRegistryEmployeeMaxAggregateOutputType | null
@@ -166,16 +187,24 @@ export type TimeRegistryEmployeeWhereInput = {
   id?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
   employeeId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
   timeRegistryId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
+  deleted?: Prisma.BoolFilter<"TimeRegistryEmployee"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TimeRegistryEmployee"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TimeRegistryEmployee"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TimeRegistry?: Prisma.XOR<Prisma.TimeRegistryScalarRelationFilter, Prisma.TimeRegistryWhereInput>
+  Employee_TimeRegistryEmployee_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type TimeRegistryEmployeeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   timeRegistryId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   TimeRegistry?: Prisma.TimeRegistryOrderByWithRelationInput
+  Employee_TimeRegistryEmployee_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.TimeRegistryEmployeeOrderByRelevanceInput
 }
 
@@ -186,14 +215,21 @@ export type TimeRegistryEmployeeWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TimeRegistryEmployeeWhereInput | Prisma.TimeRegistryEmployeeWhereInput[]
   employeeId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
   timeRegistryId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
+  deleted?: Prisma.BoolFilter<"TimeRegistryEmployee"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TimeRegistryEmployee"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TimeRegistryEmployee"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TimeRegistry?: Prisma.XOR<Prisma.TimeRegistryScalarRelationFilter, Prisma.TimeRegistryWhereInput>
+  Employee_TimeRegistryEmployee_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type TimeRegistryEmployeeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   timeRegistryId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TimeRegistryEmployeeCountOrderByAggregateInput
   _max?: Prisma.TimeRegistryEmployeeMaxOrderByAggregateInput
   _min?: Prisma.TimeRegistryEmployeeMinOrderByAggregateInput
@@ -206,46 +242,69 @@ export type TimeRegistryEmployeeScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"TimeRegistryEmployee"> | string
   employeeId?: Prisma.StringWithAggregatesFilter<"TimeRegistryEmployee"> | string
   timeRegistryId?: Prisma.StringWithAggregatesFilter<"TimeRegistryEmployee"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"TimeRegistryEmployee"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TimeRegistryEmployee"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"TimeRegistryEmployee"> | string | null
 }
 
 export type TimeRegistryEmployeeCreateInput = {
   id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryEmployeeInput
   TimeRegistry: Prisma.TimeRegistryCreateNestedOneWithoutTimeRegistryEmployeeInput
+  Employee_TimeRegistryEmployee_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryEmployee_TimeRegistryEmployee_deletedByToEmployeeInput
 }
 
 export type TimeRegistryEmployeeUncheckedCreateInput = {
   id: string
   employeeId: string
   timeRegistryId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TimeRegistryEmployeeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryEmployeeNestedInput
   TimeRegistry?: Prisma.TimeRegistryUpdateOneRequiredWithoutTimeRegistryEmployeeNestedInput
+  Employee_TimeRegistryEmployee_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTimeRegistryEmployee_TimeRegistryEmployee_deletedByToEmployeeNestedInput
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
   timeRegistryId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TimeRegistryEmployeeCreateManyInput = {
   id: string
   employeeId: string
   timeRegistryId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TimeRegistryEmployeeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
   timeRegistryId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TimeRegistryEmployeeListRelationFilter = {
@@ -268,18 +327,27 @@ export type TimeRegistryEmployeeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   timeRegistryId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TimeRegistryEmployeeMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   timeRegistryId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TimeRegistryEmployeeMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   timeRegistryId?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TimeRegistryEmployeeCreateNestedManyWithoutEmployeeInput = {
@@ -289,10 +357,24 @@ export type TimeRegistryEmployeeCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
 }
 
+export type TimeRegistryEmployeeCreateNestedManyWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TimeRegistryEmployeeCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput, Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput> | Prisma.TimeRegistryEmployeeCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[] | Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput | Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  createMany?: Prisma.TimeRegistryEmployeeCreateManyEmployee_TimeRegistryEmployee_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
+}
+
 export type TimeRegistryEmployeeUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.TimeRegistryEmployeeCreateWithoutEmployeeInput, Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployeeInput> | Prisma.TimeRegistryEmployeeCreateWithoutEmployeeInput[] | Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployeeInput | Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.TimeRegistryEmployeeCreateManyEmployeeInputEnvelope
+  connect?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
+}
+
+export type TimeRegistryEmployeeUncheckedCreateNestedManyWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TimeRegistryEmployeeCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput, Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput> | Prisma.TimeRegistryEmployeeCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[] | Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput | Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  createMany?: Prisma.TimeRegistryEmployeeCreateManyEmployee_TimeRegistryEmployee_deletedByToEmployeeInputEnvelope
   connect?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
 }
 
@@ -310,6 +392,20 @@ export type TimeRegistryEmployeeUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.TimeRegistryEmployeeScalarWhereInput | Prisma.TimeRegistryEmployeeScalarWhereInput[]
 }
 
+export type TimeRegistryEmployeeUpdateManyWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TimeRegistryEmployeeCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput, Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput> | Prisma.TimeRegistryEmployeeCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[] | Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput | Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  upsert?: Prisma.TimeRegistryEmployeeUpsertWithWhereUniqueWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput | Prisma.TimeRegistryEmployeeUpsertWithWhereUniqueWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  createMany?: Prisma.TimeRegistryEmployeeCreateManyEmployee_TimeRegistryEmployee_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
+  disconnect?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
+  delete?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
+  connect?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
+  update?: Prisma.TimeRegistryEmployeeUpdateWithWhereUniqueWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput | Prisma.TimeRegistryEmployeeUpdateWithWhereUniqueWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TimeRegistryEmployeeUpdateManyWithWhereWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput | Prisma.TimeRegistryEmployeeUpdateManyWithWhereWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.TimeRegistryEmployeeScalarWhereInput | Prisma.TimeRegistryEmployeeScalarWhereInput[]
+}
+
 export type TimeRegistryEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.TimeRegistryEmployeeCreateWithoutEmployeeInput, Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployeeInput> | Prisma.TimeRegistryEmployeeCreateWithoutEmployeeInput[] | Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployeeInput | Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployeeInput[]
@@ -321,6 +417,20 @@ export type TimeRegistryEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput = 
   connect?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
   update?: Prisma.TimeRegistryEmployeeUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.TimeRegistryEmployeeUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.TimeRegistryEmployeeUpdateManyWithWhereWithoutEmployeeInput | Prisma.TimeRegistryEmployeeUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.TimeRegistryEmployeeScalarWhereInput | Prisma.TimeRegistryEmployeeScalarWhereInput[]
+}
+
+export type TimeRegistryEmployeeUncheckedUpdateManyWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TimeRegistryEmployeeCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput, Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput> | Prisma.TimeRegistryEmployeeCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[] | Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput | Prisma.TimeRegistryEmployeeCreateOrConnectWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  upsert?: Prisma.TimeRegistryEmployeeUpsertWithWhereUniqueWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput | Prisma.TimeRegistryEmployeeUpsertWithWhereUniqueWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  createMany?: Prisma.TimeRegistryEmployeeCreateManyEmployee_TimeRegistryEmployee_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
+  disconnect?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
+  delete?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
+  connect?: Prisma.TimeRegistryEmployeeWhereUniqueInput | Prisma.TimeRegistryEmployeeWhereUniqueInput[]
+  update?: Prisma.TimeRegistryEmployeeUpdateWithWhereUniqueWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput | Prisma.TimeRegistryEmployeeUpdateWithWhereUniqueWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TimeRegistryEmployeeUpdateManyWithWhereWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput | Prisma.TimeRegistryEmployeeUpdateManyWithWhereWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
   deleteMany?: Prisma.TimeRegistryEmployeeScalarWhereInput | Prisma.TimeRegistryEmployeeScalarWhereInput[]
 }
 
@@ -368,12 +478,18 @@ export type TimeRegistryEmployeeUncheckedUpdateManyWithoutTimeRegistryNestedInpu
 
 export type TimeRegistryEmployeeCreateWithoutEmployeeInput = {
   id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   TimeRegistry: Prisma.TimeRegistryCreateNestedOneWithoutTimeRegistryEmployeeInput
+  Employee_TimeRegistryEmployee_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryEmployee_TimeRegistryEmployee_deletedByToEmployeeInput
 }
 
 export type TimeRegistryEmployeeUncheckedCreateWithoutEmployeeInput = {
   id: string
   timeRegistryId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TimeRegistryEmployeeCreateOrConnectWithoutEmployeeInput = {
@@ -383,6 +499,32 @@ export type TimeRegistryEmployeeCreateOrConnectWithoutEmployeeInput = {
 
 export type TimeRegistryEmployeeCreateManyEmployeeInputEnvelope = {
   data: Prisma.TimeRegistryEmployeeCreateManyEmployeeInput | Prisma.TimeRegistryEmployeeCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type TimeRegistryEmployeeCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryEmployeeInput
+  TimeRegistry: Prisma.TimeRegistryCreateNestedOneWithoutTimeRegistryEmployeeInput
+}
+
+export type TimeRegistryEmployeeUncheckedCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  id: string
+  employeeId: string
+  timeRegistryId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+}
+
+export type TimeRegistryEmployeeCreateOrConnectWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  where: Prisma.TimeRegistryEmployeeWhereUniqueInput
+  create: Prisma.XOR<Prisma.TimeRegistryEmployeeCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput, Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput>
+}
+
+export type TimeRegistryEmployeeCreateManyEmployee_TimeRegistryEmployee_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.TimeRegistryEmployeeCreateManyEmployee_TimeRegistryEmployee_deletedByToEmployeeInput | Prisma.TimeRegistryEmployeeCreateManyEmployee_TimeRegistryEmployee_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -409,16 +551,41 @@ export type TimeRegistryEmployeeScalarWhereInput = {
   id?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
   employeeId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
   timeRegistryId?: Prisma.StringFilter<"TimeRegistryEmployee"> | string
+  deleted?: Prisma.BoolFilter<"TimeRegistryEmployee"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TimeRegistryEmployee"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TimeRegistryEmployee"> | string | null
+}
+
+export type TimeRegistryEmployeeUpsertWithWhereUniqueWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  where: Prisma.TimeRegistryEmployeeWhereUniqueInput
+  update: Prisma.XOR<Prisma.TimeRegistryEmployeeUpdateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput, Prisma.TimeRegistryEmployeeUncheckedUpdateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.TimeRegistryEmployeeCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput, Prisma.TimeRegistryEmployeeUncheckedCreateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput>
+}
+
+export type TimeRegistryEmployeeUpdateWithWhereUniqueWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  where: Prisma.TimeRegistryEmployeeWhereUniqueInput
+  data: Prisma.XOR<Prisma.TimeRegistryEmployeeUpdateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput, Prisma.TimeRegistryEmployeeUncheckedUpdateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput>
+}
+
+export type TimeRegistryEmployeeUpdateManyWithWhereWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  where: Prisma.TimeRegistryEmployeeScalarWhereInput
+  data: Prisma.XOR<Prisma.TimeRegistryEmployeeUpdateManyMutationInput, Prisma.TimeRegistryEmployeeUncheckedUpdateManyWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput>
 }
 
 export type TimeRegistryEmployeeCreateWithoutTimeRegistryInput = {
   id: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryEmployeeInput
+  Employee_TimeRegistryEmployee_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryEmployee_TimeRegistryEmployee_deletedByToEmployeeInput
 }
 
 export type TimeRegistryEmployeeUncheckedCreateWithoutTimeRegistryInput = {
   id: string
   employeeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TimeRegistryEmployeeCreateOrConnectWithoutTimeRegistryInput = {
@@ -450,41 +617,97 @@ export type TimeRegistryEmployeeUpdateManyWithWhereWithoutTimeRegistryInput = {
 export type TimeRegistryEmployeeCreateManyEmployeeInput = {
   id: string
   timeRegistryId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type TimeRegistryEmployeeCreateManyEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  id: string
+  employeeId: string
+  timeRegistryId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type TimeRegistryEmployeeUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   TimeRegistry?: Prisma.TimeRegistryUpdateOneRequiredWithoutTimeRegistryEmployeeNestedInput
+  Employee_TimeRegistryEmployee_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTimeRegistryEmployee_TimeRegistryEmployee_deletedByToEmployeeNestedInput
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   timeRegistryId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   timeRegistryId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type TimeRegistryEmployeeUpdateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryEmployeeNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUpdateOneRequiredWithoutTimeRegistryEmployeeNestedInput
+}
+
+export type TimeRegistryEmployeeUncheckedUpdateWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type TimeRegistryEmployeeUncheckedUpdateManyWithoutEmployee_TimeRegistryEmployee_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TimeRegistryEmployeeCreateManyTimeRegistryInput = {
   id: string
   employeeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TimeRegistryEmployeeUpdateWithoutTimeRegistryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryEmployeeNestedInput
+  Employee_TimeRegistryEmployee_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTimeRegistryEmployee_TimeRegistryEmployee_deletedByToEmployeeNestedInput
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateWithoutTimeRegistryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TimeRegistryEmployeeUncheckedUpdateManyWithoutTimeRegistryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -493,8 +716,12 @@ export type TimeRegistryEmployeeSelect<ExtArgs extends runtime.Types.Extensions.
   id?: boolean
   employeeId?: boolean
   timeRegistryId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   TimeRegistry?: boolean | Prisma.TimeRegistryDefaultArgs<ExtArgs>
+  Employee_TimeRegistryEmployee_deletedByToEmployee?: boolean | Prisma.TimeRegistryEmployee$Employee_TimeRegistryEmployee_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["timeRegistryEmployee"]>
 
 
@@ -503,12 +730,16 @@ export type TimeRegistryEmployeeSelectScalar = {
   id?: boolean
   employeeId?: boolean
   timeRegistryId?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type TimeRegistryEmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "timeRegistryId", ExtArgs["result"]["timeRegistryEmployee"]>
+export type TimeRegistryEmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "timeRegistryId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["timeRegistryEmployee"]>
 export type TimeRegistryEmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   TimeRegistry?: boolean | Prisma.TimeRegistryDefaultArgs<ExtArgs>
+  Employee_TimeRegistryEmployee_deletedByToEmployee?: boolean | Prisma.TimeRegistryEmployee$Employee_TimeRegistryEmployee_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $TimeRegistryEmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -516,11 +747,15 @@ export type $TimeRegistryEmployeePayload<ExtArgs extends runtime.Types.Extension
   objects: {
     Employee: Prisma.$EmployeePayload<ExtArgs>
     TimeRegistry: Prisma.$TimeRegistryPayload<ExtArgs>
+    Employee_TimeRegistryEmployee_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     employeeId: string
     timeRegistryId: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["timeRegistryEmployee"]>
   composites: {}
 }
@@ -863,6 +1098,7 @@ export interface Prisma__TimeRegistryEmployeeClient<T, Null = never, ExtArgs ext
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   TimeRegistry<T extends Prisma.TimeRegistryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TimeRegistryDefaultArgs<ExtArgs>>): Prisma.Prisma__TimeRegistryClient<runtime.Types.Result.GetResult<Prisma.$TimeRegistryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_TimeRegistryEmployee_deletedByToEmployee<T extends Prisma.TimeRegistryEmployee$Employee_TimeRegistryEmployee_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TimeRegistryEmployee$Employee_TimeRegistryEmployee_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -895,6 +1131,9 @@ export interface TimeRegistryEmployeeFieldRefs {
   readonly id: Prisma.FieldRef<"TimeRegistryEmployee", 'String'>
   readonly employeeId: Prisma.FieldRef<"TimeRegistryEmployee", 'String'>
   readonly timeRegistryId: Prisma.FieldRef<"TimeRegistryEmployee", 'String'>
+  readonly deleted: Prisma.FieldRef<"TimeRegistryEmployee", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"TimeRegistryEmployee", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"TimeRegistryEmployee", 'String'>
 }
     
 
@@ -1235,6 +1474,25 @@ export type TimeRegistryEmployeeDeleteManyArgs<ExtArgs extends runtime.Types.Ext
    * Limit how many TimeRegistryEmployees to delete.
    */
   limit?: number
+}
+
+/**
+ * TimeRegistryEmployee.Employee_TimeRegistryEmployee_deletedByToEmployee
+ */
+export type TimeRegistryEmployee$Employee_TimeRegistryEmployee_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

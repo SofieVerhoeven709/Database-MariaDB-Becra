@@ -29,6 +29,9 @@ export type TargetTypeMinAggregateOutputType = {
   name: string | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TargetTypeMaxAggregateOutputType = {
@@ -36,6 +39,9 @@ export type TargetTypeMaxAggregateOutputType = {
   name: string | null
   createdAt: Date | null
   createdBy: string | null
+  deleted: boolean | null
+  deletedAt: Date | null
+  deletedBy: string | null
 }
 
 export type TargetTypeCountAggregateOutputType = {
@@ -43,6 +49,9 @@ export type TargetTypeCountAggregateOutputType = {
   name: number
   createdAt: number
   createdBy: number
+  deleted: number
+  deletedAt: number
+  deletedBy: number
   _all: number
 }
 
@@ -52,6 +61,9 @@ export type TargetTypeMinAggregateInputType = {
   name?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TargetTypeMaxAggregateInputType = {
@@ -59,6 +71,9 @@ export type TargetTypeMaxAggregateInputType = {
   name?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
 }
 
 export type TargetTypeCountAggregateInputType = {
@@ -66,6 +81,9 @@ export type TargetTypeCountAggregateInputType = {
   name?: true
   createdAt?: true
   createdBy?: true
+  deleted?: true
+  deletedAt?: true
+  deletedBy?: true
   _all?: true
 }
 
@@ -146,6 +164,9 @@ export type TargetTypeGroupByOutputType = {
   name: string
   createdAt: Date
   createdBy: string
+  deleted: boolean
+  deletedAt: Date | null
+  deletedBy: string | null
   _count: TargetTypeCountAggregateOutputType | null
   _min: TargetTypeMinAggregateOutputType | null
   _max: TargetTypeMaxAggregateOutputType | null
@@ -174,8 +195,12 @@ export type TargetTypeWhereInput = {
   name?: Prisma.StringFilter<"TargetType"> | string
   createdAt?: Prisma.DateTimeFilter<"TargetType"> | Date | string
   createdBy?: Prisma.StringFilter<"TargetType"> | string
+  deleted?: Prisma.BoolFilter<"TargetType"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TargetType"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TargetType"> | string | null
   Target?: Prisma.TargetListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_TargetType_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type TargetTypeOrderByWithRelationInput = {
@@ -183,8 +208,12 @@ export type TargetTypeOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Target?: Prisma.TargetOrderByRelationAggregateInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
+  Employee_TargetType_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.TargetTypeOrderByRelevanceInput
 }
 
@@ -196,8 +225,12 @@ export type TargetTypeWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"TargetType"> | string
   createdAt?: Prisma.DateTimeFilter<"TargetType"> | Date | string
   createdBy?: Prisma.StringFilter<"TargetType"> | string
+  deleted?: Prisma.BoolFilter<"TargetType"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TargetType"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TargetType"> | string | null
   Target?: Prisma.TargetListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  Employee_TargetType_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type TargetTypeOrderByWithAggregationInput = {
@@ -205,6 +238,9 @@ export type TargetTypeOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TargetTypeCountOrderByAggregateInput
   _max?: Prisma.TargetTypeMaxOrderByAggregateInput
   _min?: Prisma.TargetTypeMinOrderByAggregateInput
@@ -218,14 +254,20 @@ export type TargetTypeScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"TargetType"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TargetType"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"TargetType"> | string
+  deleted?: Prisma.BoolWithAggregatesFilter<"TargetType"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TargetType"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"TargetType"> | string | null
 }
 
 export type TargetTypeCreateInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Target?: Prisma.TargetCreateNestedManyWithoutTargetTypeInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetTypeInput
+  Employee_TargetType_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTargetType_TargetType_deletedByToEmployeeInput
 }
 
 export type TargetTypeUncheckedCreateInput = {
@@ -233,6 +275,9 @@ export type TargetTypeUncheckedCreateInput = {
   name: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Target?: Prisma.TargetUncheckedCreateNestedManyWithoutTargetTypeInput
 }
 
@@ -240,8 +285,11 @@ export type TargetTypeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Target?: Prisma.TargetUpdateManyWithoutTargetTypeNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetTypeNestedInput
+  Employee_TargetType_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTargetType_TargetType_deletedByToEmployeeNestedInput
 }
 
 export type TargetTypeUncheckedUpdateInput = {
@@ -249,6 +297,9 @@ export type TargetTypeUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Target?: Prisma.TargetUncheckedUpdateManyWithoutTargetTypeNestedInput
 }
 
@@ -257,12 +308,17 @@ export type TargetTypeCreateManyInput = {
   name: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TargetTypeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TargetTypeUncheckedUpdateManyInput = {
@@ -270,6 +326,9 @@ export type TargetTypeUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TargetTypeListRelationFilter = {
@@ -298,6 +357,9 @@ export type TargetTypeCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TargetTypeMaxOrderByAggregateInput = {
@@ -305,6 +367,9 @@ export type TargetTypeMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TargetTypeMinOrderByAggregateInput = {
@@ -312,6 +377,9 @@ export type TargetTypeMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
+  deleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
 }
 
 export type TargetTypeCreateNestedManyWithoutEmployeeInput = {
@@ -321,10 +389,24 @@ export type TargetTypeCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
 }
 
+export type TargetTypeCreateNestedManyWithoutEmployee_TargetType_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TargetTypeCreateWithoutEmployee_TargetType_deletedByToEmployeeInput, Prisma.TargetTypeUncheckedCreateWithoutEmployee_TargetType_deletedByToEmployeeInput> | Prisma.TargetTypeCreateWithoutEmployee_TargetType_deletedByToEmployeeInput[] | Prisma.TargetTypeUncheckedCreateWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TargetTypeCreateOrConnectWithoutEmployee_TargetType_deletedByToEmployeeInput | Prisma.TargetTypeCreateOrConnectWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  createMany?: Prisma.TargetTypeCreateManyEmployee_TargetType_deletedByToEmployeeInputEnvelope
+  connect?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
+}
+
 export type TargetTypeUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.TargetTypeCreateWithoutEmployeeInput, Prisma.TargetTypeUncheckedCreateWithoutEmployeeInput> | Prisma.TargetTypeCreateWithoutEmployeeInput[] | Prisma.TargetTypeUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TargetTypeCreateOrConnectWithoutEmployeeInput | Prisma.TargetTypeCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.TargetTypeCreateManyEmployeeInputEnvelope
+  connect?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
+}
+
+export type TargetTypeUncheckedCreateNestedManyWithoutEmployee_TargetType_deletedByToEmployeeInput = {
+  create?: Prisma.XOR<Prisma.TargetTypeCreateWithoutEmployee_TargetType_deletedByToEmployeeInput, Prisma.TargetTypeUncheckedCreateWithoutEmployee_TargetType_deletedByToEmployeeInput> | Prisma.TargetTypeCreateWithoutEmployee_TargetType_deletedByToEmployeeInput[] | Prisma.TargetTypeUncheckedCreateWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TargetTypeCreateOrConnectWithoutEmployee_TargetType_deletedByToEmployeeInput | Prisma.TargetTypeCreateOrConnectWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  createMany?: Prisma.TargetTypeCreateManyEmployee_TargetType_deletedByToEmployeeInputEnvelope
   connect?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
 }
 
@@ -342,6 +424,20 @@ export type TargetTypeUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.TargetTypeScalarWhereInput | Prisma.TargetTypeScalarWhereInput[]
 }
 
+export type TargetTypeUpdateManyWithoutEmployee_TargetType_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TargetTypeCreateWithoutEmployee_TargetType_deletedByToEmployeeInput, Prisma.TargetTypeUncheckedCreateWithoutEmployee_TargetType_deletedByToEmployeeInput> | Prisma.TargetTypeCreateWithoutEmployee_TargetType_deletedByToEmployeeInput[] | Prisma.TargetTypeUncheckedCreateWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TargetTypeCreateOrConnectWithoutEmployee_TargetType_deletedByToEmployeeInput | Prisma.TargetTypeCreateOrConnectWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  upsert?: Prisma.TargetTypeUpsertWithWhereUniqueWithoutEmployee_TargetType_deletedByToEmployeeInput | Prisma.TargetTypeUpsertWithWhereUniqueWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  createMany?: Prisma.TargetTypeCreateManyEmployee_TargetType_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
+  disconnect?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
+  delete?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
+  connect?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
+  update?: Prisma.TargetTypeUpdateWithWhereUniqueWithoutEmployee_TargetType_deletedByToEmployeeInput | Prisma.TargetTypeUpdateWithWhereUniqueWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TargetTypeUpdateManyWithWhereWithoutEmployee_TargetType_deletedByToEmployeeInput | Prisma.TargetTypeUpdateManyWithWhereWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  deleteMany?: Prisma.TargetTypeScalarWhereInput | Prisma.TargetTypeScalarWhereInput[]
+}
+
 export type TargetTypeUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.TargetTypeCreateWithoutEmployeeInput, Prisma.TargetTypeUncheckedCreateWithoutEmployeeInput> | Prisma.TargetTypeCreateWithoutEmployeeInput[] | Prisma.TargetTypeUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.TargetTypeCreateOrConnectWithoutEmployeeInput | Prisma.TargetTypeCreateOrConnectWithoutEmployeeInput[]
@@ -353,6 +449,20 @@ export type TargetTypeUncheckedUpdateManyWithoutEmployeeNestedInput = {
   connect?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
   update?: Prisma.TargetTypeUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.TargetTypeUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.TargetTypeUpdateManyWithWhereWithoutEmployeeInput | Prisma.TargetTypeUpdateManyWithWhereWithoutEmployeeInput[]
+  deleteMany?: Prisma.TargetTypeScalarWhereInput | Prisma.TargetTypeScalarWhereInput[]
+}
+
+export type TargetTypeUncheckedUpdateManyWithoutEmployee_TargetType_deletedByToEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.TargetTypeCreateWithoutEmployee_TargetType_deletedByToEmployeeInput, Prisma.TargetTypeUncheckedCreateWithoutEmployee_TargetType_deletedByToEmployeeInput> | Prisma.TargetTypeCreateWithoutEmployee_TargetType_deletedByToEmployeeInput[] | Prisma.TargetTypeUncheckedCreateWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  connectOrCreate?: Prisma.TargetTypeCreateOrConnectWithoutEmployee_TargetType_deletedByToEmployeeInput | Prisma.TargetTypeCreateOrConnectWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  upsert?: Prisma.TargetTypeUpsertWithWhereUniqueWithoutEmployee_TargetType_deletedByToEmployeeInput | Prisma.TargetTypeUpsertWithWhereUniqueWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  createMany?: Prisma.TargetTypeCreateManyEmployee_TargetType_deletedByToEmployeeInputEnvelope
+  set?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
+  disconnect?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
+  delete?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
+  connect?: Prisma.TargetTypeWhereUniqueInput | Prisma.TargetTypeWhereUniqueInput[]
+  update?: Prisma.TargetTypeUpdateWithWhereUniqueWithoutEmployee_TargetType_deletedByToEmployeeInput | Prisma.TargetTypeUpdateWithWhereUniqueWithoutEmployee_TargetType_deletedByToEmployeeInput[]
+  updateMany?: Prisma.TargetTypeUpdateManyWithWhereWithoutEmployee_TargetType_deletedByToEmployeeInput | Prisma.TargetTypeUpdateManyWithWhereWithoutEmployee_TargetType_deletedByToEmployeeInput[]
   deleteMany?: Prisma.TargetTypeScalarWhereInput | Prisma.TargetTypeScalarWhereInput[]
 }
 
@@ -374,13 +484,19 @@ export type TargetTypeCreateWithoutEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Target?: Prisma.TargetCreateNestedManyWithoutTargetTypeInput
+  Employee_TargetType_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTargetType_TargetType_deletedByToEmployeeInput
 }
 
 export type TargetTypeUncheckedCreateWithoutEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   Target?: Prisma.TargetUncheckedCreateNestedManyWithoutTargetTypeInput
 }
 
@@ -391,6 +507,36 @@ export type TargetTypeCreateOrConnectWithoutEmployeeInput = {
 
 export type TargetTypeCreateManyEmployeeInputEnvelope = {
   data: Prisma.TargetTypeCreateManyEmployeeInput | Prisma.TargetTypeCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
+}
+
+export type TargetTypeCreateWithoutEmployee_TargetType_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Target?: Prisma.TargetCreateNestedManyWithoutTargetTypeInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutTargetTypeInput
+}
+
+export type TargetTypeUncheckedCreateWithoutEmployee_TargetType_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Target?: Prisma.TargetUncheckedCreateNestedManyWithoutTargetTypeInput
+}
+
+export type TargetTypeCreateOrConnectWithoutEmployee_TargetType_deletedByToEmployeeInput = {
+  where: Prisma.TargetTypeWhereUniqueInput
+  create: Prisma.XOR<Prisma.TargetTypeCreateWithoutEmployee_TargetType_deletedByToEmployeeInput, Prisma.TargetTypeUncheckedCreateWithoutEmployee_TargetType_deletedByToEmployeeInput>
+}
+
+export type TargetTypeCreateManyEmployee_TargetType_deletedByToEmployeeInputEnvelope = {
+  data: Prisma.TargetTypeCreateManyEmployee_TargetType_deletedByToEmployeeInput | Prisma.TargetTypeCreateManyEmployee_TargetType_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -418,13 +564,35 @@ export type TargetTypeScalarWhereInput = {
   name?: Prisma.StringFilter<"TargetType"> | string
   createdAt?: Prisma.DateTimeFilter<"TargetType"> | Date | string
   createdBy?: Prisma.StringFilter<"TargetType"> | string
+  deleted?: Prisma.BoolFilter<"TargetType"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"TargetType"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"TargetType"> | string | null
+}
+
+export type TargetTypeUpsertWithWhereUniqueWithoutEmployee_TargetType_deletedByToEmployeeInput = {
+  where: Prisma.TargetTypeWhereUniqueInput
+  update: Prisma.XOR<Prisma.TargetTypeUpdateWithoutEmployee_TargetType_deletedByToEmployeeInput, Prisma.TargetTypeUncheckedUpdateWithoutEmployee_TargetType_deletedByToEmployeeInput>
+  create: Prisma.XOR<Prisma.TargetTypeCreateWithoutEmployee_TargetType_deletedByToEmployeeInput, Prisma.TargetTypeUncheckedCreateWithoutEmployee_TargetType_deletedByToEmployeeInput>
+}
+
+export type TargetTypeUpdateWithWhereUniqueWithoutEmployee_TargetType_deletedByToEmployeeInput = {
+  where: Prisma.TargetTypeWhereUniqueInput
+  data: Prisma.XOR<Prisma.TargetTypeUpdateWithoutEmployee_TargetType_deletedByToEmployeeInput, Prisma.TargetTypeUncheckedUpdateWithoutEmployee_TargetType_deletedByToEmployeeInput>
+}
+
+export type TargetTypeUpdateManyWithWhereWithoutEmployee_TargetType_deletedByToEmployeeInput = {
+  where: Prisma.TargetTypeScalarWhereInput
+  data: Prisma.XOR<Prisma.TargetTypeUpdateManyMutationInput, Prisma.TargetTypeUncheckedUpdateManyWithoutEmployee_TargetType_deletedByToEmployeeInput>
 }
 
 export type TargetTypeCreateWithoutTargetInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetTypeInput
+  Employee_TargetType_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTargetType_TargetType_deletedByToEmployeeInput
 }
 
 export type TargetTypeUncheckedCreateWithoutTargetInput = {
@@ -432,6 +600,9 @@ export type TargetTypeUncheckedCreateWithoutTargetInput = {
   name: string
   createdAt: Date | string
   createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
 }
 
 export type TargetTypeCreateOrConnectWithoutTargetInput = {
@@ -454,7 +625,10 @@ export type TargetTypeUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetTypeNestedInput
+  Employee_TargetType_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTargetType_TargetType_deletedByToEmployeeNestedInput
 }
 
 export type TargetTypeUncheckedUpdateWithoutTargetInput = {
@@ -462,25 +636,46 @@ export type TargetTypeUncheckedUpdateWithoutTargetInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type TargetTypeCreateManyEmployeeInput = {
   id: string
   name: string
   createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type TargetTypeCreateManyEmployee_TargetType_deletedByToEmployeeInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type TargetTypeUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Target?: Prisma.TargetUpdateManyWithoutTargetTypeNestedInput
+  Employee_TargetType_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTargetType_TargetType_deletedByToEmployeeNestedInput
 }
 
 export type TargetTypeUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Target?: Prisma.TargetUncheckedUpdateManyWithoutTargetTypeNestedInput
 }
 
@@ -488,6 +683,38 @@ export type TargetTypeUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type TargetTypeUpdateWithoutEmployee_TargetType_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Target?: Prisma.TargetUpdateManyWithoutTargetTypeNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetTypeNestedInput
+}
+
+export type TargetTypeUncheckedUpdateWithoutEmployee_TargetType_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Target?: Prisma.TargetUncheckedUpdateManyWithoutTargetTypeNestedInput
+}
+
+export type TargetTypeUncheckedUpdateManyWithoutEmployee_TargetType_deletedByToEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -526,8 +753,12 @@ export type TargetTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   name?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   Target?: boolean | Prisma.TargetType$TargetArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_TargetType_deletedByToEmployee?: boolean | Prisma.TargetType$Employee_TargetType_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.TargetTypeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["targetType"]>
 
@@ -538,12 +769,16 @@ export type TargetTypeSelectScalar = {
   name?: boolean
   createdAt?: boolean
   createdBy?: boolean
+  deleted?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
 }
 
-export type TargetTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "createdBy", ExtArgs["result"]["targetType"]>
+export type TargetTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["targetType"]>
 export type TargetTypeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Target?: boolean | Prisma.TargetType$TargetArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  Employee_TargetType_deletedByToEmployee?: boolean | Prisma.TargetType$Employee_TargetType_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.TargetTypeCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -552,12 +787,16 @@ export type $TargetTypePayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     Target: Prisma.$TargetPayload<ExtArgs>[]
     Employee: Prisma.$EmployeePayload<ExtArgs>
+    Employee_TargetType_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     createdAt: Date
     createdBy: string
+    deleted: boolean
+    deletedAt: Date | null
+    deletedBy: string | null
   }, ExtArgs["result"]["targetType"]>
   composites: {}
 }
@@ -900,6 +1139,7 @@ export interface Prisma__TargetTypeClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Target<T extends Prisma.TargetType$TargetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetType$TargetArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Employee_TargetType_deletedByToEmployee<T extends Prisma.TargetType$Employee_TargetType_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetType$Employee_TargetType_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -933,6 +1173,9 @@ export interface TargetTypeFieldRefs {
   readonly name: Prisma.FieldRef<"TargetType", 'String'>
   readonly createdAt: Prisma.FieldRef<"TargetType", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"TargetType", 'String'>
+  readonly deleted: Prisma.FieldRef<"TargetType", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"TargetType", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"TargetType", 'String'>
 }
     
 
@@ -1297,6 +1540,25 @@ export type TargetType$TargetArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.TargetScalarFieldEnum | Prisma.TargetScalarFieldEnum[]
+}
+
+/**
+ * TargetType.Employee_TargetType_deletedByToEmployee
+ */
+export type TargetType$Employee_TargetType_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

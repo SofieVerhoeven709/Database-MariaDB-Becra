@@ -29,9 +29,6 @@ export type SessionMinAggregateOutputType = {
   activeFrom: Date | null
   activeUntil: Date | null
   employeeId: string | null
-  deleted: boolean | null
-  deletedAt: Date | null
-  deletedBy: string | null
 }
 
 export type SessionMaxAggregateOutputType = {
@@ -39,9 +36,6 @@ export type SessionMaxAggregateOutputType = {
   activeFrom: Date | null
   activeUntil: Date | null
   employeeId: string | null
-  deleted: boolean | null
-  deletedAt: Date | null
-  deletedBy: string | null
 }
 
 export type SessionCountAggregateOutputType = {
@@ -49,9 +43,6 @@ export type SessionCountAggregateOutputType = {
   activeFrom: number
   activeUntil: number
   employeeId: number
-  deleted: number
-  deletedAt: number
-  deletedBy: number
   _all: number
 }
 
@@ -61,9 +52,6 @@ export type SessionMinAggregateInputType = {
   activeFrom?: true
   activeUntil?: true
   employeeId?: true
-  deleted?: true
-  deletedAt?: true
-  deletedBy?: true
 }
 
 export type SessionMaxAggregateInputType = {
@@ -71,9 +59,6 @@ export type SessionMaxAggregateInputType = {
   activeFrom?: true
   activeUntil?: true
   employeeId?: true
-  deleted?: true
-  deletedAt?: true
-  deletedBy?: true
 }
 
 export type SessionCountAggregateInputType = {
@@ -81,9 +66,6 @@ export type SessionCountAggregateInputType = {
   activeFrom?: true
   activeUntil?: true
   employeeId?: true
-  deleted?: true
-  deletedAt?: true
-  deletedBy?: true
   _all?: true
 }
 
@@ -164,9 +146,6 @@ export type SessionGroupByOutputType = {
   activeFrom: Date
   activeUntil: Date
   employeeId: string
-  deleted: boolean
-  deletedAt: Date | null
-  deletedBy: string | null
   _count: SessionCountAggregateOutputType | null
   _min: SessionMinAggregateOutputType | null
   _max: SessionMaxAggregateOutputType | null
@@ -195,11 +174,7 @@ export type SessionWhereInput = {
   activeFrom?: Prisma.DateTimeFilter<"Session"> | Date | string
   activeUntil?: Prisma.DateTimeFilter<"Session"> | Date | string
   employeeId?: Prisma.StringFilter<"Session"> | string
-  deleted?: Prisma.BoolFilter<"Session"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Session"> | Date | string | null
-  deletedBy?: Prisma.StringNullableFilter<"Session"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  Employee_Session_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type SessionOrderByWithRelationInput = {
@@ -207,11 +182,7 @@ export type SessionOrderByWithRelationInput = {
   activeFrom?: Prisma.SortOrder
   activeUntil?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  deleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
-  Employee_Session_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.SessionOrderByRelevanceInput
 }
 
@@ -223,11 +194,7 @@ export type SessionWhereUniqueInput = Prisma.AtLeast<{
   activeFrom?: Prisma.DateTimeFilter<"Session"> | Date | string
   activeUntil?: Prisma.DateTimeFilter<"Session"> | Date | string
   employeeId?: Prisma.StringFilter<"Session"> | string
-  deleted?: Prisma.BoolFilter<"Session"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Session"> | Date | string | null
-  deletedBy?: Prisma.StringNullableFilter<"Session"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  Employee_Session_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type SessionOrderByWithAggregationInput = {
@@ -235,9 +202,6 @@ export type SessionOrderByWithAggregationInput = {
   activeFrom?: Prisma.SortOrder
   activeUntil?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  deleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SessionCountOrderByAggregateInput
   _max?: Prisma.SessionMaxOrderByAggregateInput
   _min?: Prisma.SessionMinOrderByAggregateInput
@@ -251,19 +215,13 @@ export type SessionScalarWhereWithAggregatesInput = {
   activeFrom?: Prisma.DateTimeWithAggregatesFilter<"Session"> | Date | string
   activeUntil?: Prisma.DateTimeWithAggregatesFilter<"Session"> | Date | string
   employeeId?: Prisma.StringWithAggregatesFilter<"Session"> | string
-  deleted?: Prisma.BoolWithAggregatesFilter<"Session"> | boolean
-  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Session"> | Date | string | null
-  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Session"> | string | null
 }
 
 export type SessionCreateInput = {
   id: string
   activeFrom?: Date | string
   activeUntil: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutSessionInput
-  Employee_Session_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutSession_Session_deletedByToEmployeeInput
 }
 
 export type SessionUncheckedCreateInput = {
@@ -271,19 +229,13 @@ export type SessionUncheckedCreateInput = {
   activeFrom?: Date | string
   activeUntil: Date | string
   employeeId: string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
 }
 
 export type SessionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutSessionNestedInput
-  Employee_Session_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutSession_Session_deletedByToEmployeeNestedInput
 }
 
 export type SessionUncheckedUpdateInput = {
@@ -291,9 +243,6 @@ export type SessionUncheckedUpdateInput = {
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SessionCreateManyInput = {
@@ -301,17 +250,12 @@ export type SessionCreateManyInput = {
   activeFrom?: Date | string
   activeUntil: Date | string
   employeeId: string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
 }
 
 export type SessionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SessionUncheckedUpdateManyInput = {
@@ -319,9 +263,6 @@ export type SessionUncheckedUpdateManyInput = {
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SessionListRelationFilter = {
@@ -345,9 +286,6 @@ export type SessionCountOrderByAggregateInput = {
   activeFrom?: Prisma.SortOrder
   activeUntil?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  deleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
-  deletedBy?: Prisma.SortOrder
 }
 
 export type SessionMaxOrderByAggregateInput = {
@@ -355,9 +293,6 @@ export type SessionMaxOrderByAggregateInput = {
   activeFrom?: Prisma.SortOrder
   activeUntil?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  deleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
-  deletedBy?: Prisma.SortOrder
 }
 
 export type SessionMinOrderByAggregateInput = {
@@ -365,9 +300,6 @@ export type SessionMinOrderByAggregateInput = {
   activeFrom?: Prisma.SortOrder
   activeUntil?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
-  deleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
-  deletedBy?: Prisma.SortOrder
 }
 
 export type SessionCreateNestedManyWithoutEmployeeInput = {
@@ -377,24 +309,10 @@ export type SessionCreateNestedManyWithoutEmployeeInput = {
   connect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
 }
 
-export type SessionCreateNestedManyWithoutEmployee_Session_deletedByToEmployeeInput = {
-  create?: Prisma.XOR<Prisma.SessionCreateWithoutEmployee_Session_deletedByToEmployeeInput, Prisma.SessionUncheckedCreateWithoutEmployee_Session_deletedByToEmployeeInput> | Prisma.SessionCreateWithoutEmployee_Session_deletedByToEmployeeInput[] | Prisma.SessionUncheckedCreateWithoutEmployee_Session_deletedByToEmployeeInput[]
-  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutEmployee_Session_deletedByToEmployeeInput | Prisma.SessionCreateOrConnectWithoutEmployee_Session_deletedByToEmployeeInput[]
-  createMany?: Prisma.SessionCreateManyEmployee_Session_deletedByToEmployeeInputEnvelope
-  connect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
-}
-
 export type SessionUncheckedCreateNestedManyWithoutEmployeeInput = {
   create?: Prisma.XOR<Prisma.SessionCreateWithoutEmployeeInput, Prisma.SessionUncheckedCreateWithoutEmployeeInput> | Prisma.SessionCreateWithoutEmployeeInput[] | Prisma.SessionUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.SessionCreateOrConnectWithoutEmployeeInput | Prisma.SessionCreateOrConnectWithoutEmployeeInput[]
   createMany?: Prisma.SessionCreateManyEmployeeInputEnvelope
-  connect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
-}
-
-export type SessionUncheckedCreateNestedManyWithoutEmployee_Session_deletedByToEmployeeInput = {
-  create?: Prisma.XOR<Prisma.SessionCreateWithoutEmployee_Session_deletedByToEmployeeInput, Prisma.SessionUncheckedCreateWithoutEmployee_Session_deletedByToEmployeeInput> | Prisma.SessionCreateWithoutEmployee_Session_deletedByToEmployeeInput[] | Prisma.SessionUncheckedCreateWithoutEmployee_Session_deletedByToEmployeeInput[]
-  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutEmployee_Session_deletedByToEmployeeInput | Prisma.SessionCreateOrConnectWithoutEmployee_Session_deletedByToEmployeeInput[]
-  createMany?: Prisma.SessionCreateManyEmployee_Session_deletedByToEmployeeInputEnvelope
   connect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
 }
 
@@ -412,20 +330,6 @@ export type SessionUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.SessionScalarWhereInput | Prisma.SessionScalarWhereInput[]
 }
 
-export type SessionUpdateManyWithoutEmployee_Session_deletedByToEmployeeNestedInput = {
-  create?: Prisma.XOR<Prisma.SessionCreateWithoutEmployee_Session_deletedByToEmployeeInput, Prisma.SessionUncheckedCreateWithoutEmployee_Session_deletedByToEmployeeInput> | Prisma.SessionCreateWithoutEmployee_Session_deletedByToEmployeeInput[] | Prisma.SessionUncheckedCreateWithoutEmployee_Session_deletedByToEmployeeInput[]
-  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutEmployee_Session_deletedByToEmployeeInput | Prisma.SessionCreateOrConnectWithoutEmployee_Session_deletedByToEmployeeInput[]
-  upsert?: Prisma.SessionUpsertWithWhereUniqueWithoutEmployee_Session_deletedByToEmployeeInput | Prisma.SessionUpsertWithWhereUniqueWithoutEmployee_Session_deletedByToEmployeeInput[]
-  createMany?: Prisma.SessionCreateManyEmployee_Session_deletedByToEmployeeInputEnvelope
-  set?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
-  disconnect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
-  delete?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
-  connect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
-  update?: Prisma.SessionUpdateWithWhereUniqueWithoutEmployee_Session_deletedByToEmployeeInput | Prisma.SessionUpdateWithWhereUniqueWithoutEmployee_Session_deletedByToEmployeeInput[]
-  updateMany?: Prisma.SessionUpdateManyWithWhereWithoutEmployee_Session_deletedByToEmployeeInput | Prisma.SessionUpdateManyWithWhereWithoutEmployee_Session_deletedByToEmployeeInput[]
-  deleteMany?: Prisma.SessionScalarWhereInput | Prisma.SessionScalarWhereInput[]
-}
-
 export type SessionUncheckedUpdateManyWithoutEmployeeNestedInput = {
   create?: Prisma.XOR<Prisma.SessionCreateWithoutEmployeeInput, Prisma.SessionUncheckedCreateWithoutEmployeeInput> | Prisma.SessionCreateWithoutEmployeeInput[] | Prisma.SessionUncheckedCreateWithoutEmployeeInput[]
   connectOrCreate?: Prisma.SessionCreateOrConnectWithoutEmployeeInput | Prisma.SessionCreateOrConnectWithoutEmployeeInput[]
@@ -440,36 +344,16 @@ export type SessionUncheckedUpdateManyWithoutEmployeeNestedInput = {
   deleteMany?: Prisma.SessionScalarWhereInput | Prisma.SessionScalarWhereInput[]
 }
 
-export type SessionUncheckedUpdateManyWithoutEmployee_Session_deletedByToEmployeeNestedInput = {
-  create?: Prisma.XOR<Prisma.SessionCreateWithoutEmployee_Session_deletedByToEmployeeInput, Prisma.SessionUncheckedCreateWithoutEmployee_Session_deletedByToEmployeeInput> | Prisma.SessionCreateWithoutEmployee_Session_deletedByToEmployeeInput[] | Prisma.SessionUncheckedCreateWithoutEmployee_Session_deletedByToEmployeeInput[]
-  connectOrCreate?: Prisma.SessionCreateOrConnectWithoutEmployee_Session_deletedByToEmployeeInput | Prisma.SessionCreateOrConnectWithoutEmployee_Session_deletedByToEmployeeInput[]
-  upsert?: Prisma.SessionUpsertWithWhereUniqueWithoutEmployee_Session_deletedByToEmployeeInput | Prisma.SessionUpsertWithWhereUniqueWithoutEmployee_Session_deletedByToEmployeeInput[]
-  createMany?: Prisma.SessionCreateManyEmployee_Session_deletedByToEmployeeInputEnvelope
-  set?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
-  disconnect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
-  delete?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
-  connect?: Prisma.SessionWhereUniqueInput | Prisma.SessionWhereUniqueInput[]
-  update?: Prisma.SessionUpdateWithWhereUniqueWithoutEmployee_Session_deletedByToEmployeeInput | Prisma.SessionUpdateWithWhereUniqueWithoutEmployee_Session_deletedByToEmployeeInput[]
-  updateMany?: Prisma.SessionUpdateManyWithWhereWithoutEmployee_Session_deletedByToEmployeeInput | Prisma.SessionUpdateManyWithWhereWithoutEmployee_Session_deletedByToEmployeeInput[]
-  deleteMany?: Prisma.SessionScalarWhereInput | Prisma.SessionScalarWhereInput[]
-}
-
 export type SessionCreateWithoutEmployeeInput = {
   id: string
   activeFrom?: Date | string
   activeUntil: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Employee_Session_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutSession_Session_deletedByToEmployeeInput
 }
 
 export type SessionUncheckedCreateWithoutEmployeeInput = {
   id: string
   activeFrom?: Date | string
   activeUntil: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
 }
 
 export type SessionCreateOrConnectWithoutEmployeeInput = {
@@ -479,34 +363,6 @@ export type SessionCreateOrConnectWithoutEmployeeInput = {
 
 export type SessionCreateManyEmployeeInputEnvelope = {
   data: Prisma.SessionCreateManyEmployeeInput | Prisma.SessionCreateManyEmployeeInput[]
-  skipDuplicates?: boolean
-}
-
-export type SessionCreateWithoutEmployee_Session_deletedByToEmployeeInput = {
-  id: string
-  activeFrom?: Date | string
-  activeUntil: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Employee: Prisma.EmployeeCreateNestedOneWithoutSessionInput
-}
-
-export type SessionUncheckedCreateWithoutEmployee_Session_deletedByToEmployeeInput = {
-  id: string
-  activeFrom?: Date | string
-  activeUntil: Date | string
-  employeeId: string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-}
-
-export type SessionCreateOrConnectWithoutEmployee_Session_deletedByToEmployeeInput = {
-  where: Prisma.SessionWhereUniqueInput
-  create: Prisma.XOR<Prisma.SessionCreateWithoutEmployee_Session_deletedByToEmployeeInput, Prisma.SessionUncheckedCreateWithoutEmployee_Session_deletedByToEmployeeInput>
-}
-
-export type SessionCreateManyEmployee_Session_deletedByToEmployeeInputEnvelope = {
-  data: Prisma.SessionCreateManyEmployee_Session_deletedByToEmployeeInput | Prisma.SessionCreateManyEmployee_Session_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
 }
 
@@ -534,97 +390,30 @@ export type SessionScalarWhereInput = {
   activeFrom?: Prisma.DateTimeFilter<"Session"> | Date | string
   activeUntil?: Prisma.DateTimeFilter<"Session"> | Date | string
   employeeId?: Prisma.StringFilter<"Session"> | string
-  deleted?: Prisma.BoolFilter<"Session"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Session"> | Date | string | null
-  deletedBy?: Prisma.StringNullableFilter<"Session"> | string | null
-}
-
-export type SessionUpsertWithWhereUniqueWithoutEmployee_Session_deletedByToEmployeeInput = {
-  where: Prisma.SessionWhereUniqueInput
-  update: Prisma.XOR<Prisma.SessionUpdateWithoutEmployee_Session_deletedByToEmployeeInput, Prisma.SessionUncheckedUpdateWithoutEmployee_Session_deletedByToEmployeeInput>
-  create: Prisma.XOR<Prisma.SessionCreateWithoutEmployee_Session_deletedByToEmployeeInput, Prisma.SessionUncheckedCreateWithoutEmployee_Session_deletedByToEmployeeInput>
-}
-
-export type SessionUpdateWithWhereUniqueWithoutEmployee_Session_deletedByToEmployeeInput = {
-  where: Prisma.SessionWhereUniqueInput
-  data: Prisma.XOR<Prisma.SessionUpdateWithoutEmployee_Session_deletedByToEmployeeInput, Prisma.SessionUncheckedUpdateWithoutEmployee_Session_deletedByToEmployeeInput>
-}
-
-export type SessionUpdateManyWithWhereWithoutEmployee_Session_deletedByToEmployeeInput = {
-  where: Prisma.SessionScalarWhereInput
-  data: Prisma.XOR<Prisma.SessionUpdateManyMutationInput, Prisma.SessionUncheckedUpdateManyWithoutEmployee_Session_deletedByToEmployeeInput>
 }
 
 export type SessionCreateManyEmployeeInput = {
   id: string
   activeFrom?: Date | string
   activeUntil: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-}
-
-export type SessionCreateManyEmployee_Session_deletedByToEmployeeInput = {
-  id: string
-  activeFrom?: Date | string
-  activeUntil: Date | string
-  employeeId: string
-  deleted?: boolean
-  deletedAt?: Date | string | null
 }
 
 export type SessionUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_Session_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutSession_Session_deletedByToEmployeeNestedInput
 }
 
 export type SessionUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SessionUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type SessionUpdateWithoutEmployee_Session_deletedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutSessionNestedInput
-}
-
-export type SessionUncheckedUpdateWithoutEmployee_Session_deletedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-}
-
-export type SessionUncheckedUpdateManyWithoutEmployee_Session_deletedByToEmployeeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  activeFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  activeUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -634,11 +423,7 @@ export type SessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   activeFrom?: boolean
   activeUntil?: boolean
   employeeId?: boolean
-  deleted?: boolean
-  deletedAt?: boolean
-  deletedBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  Employee_Session_deletedByToEmployee?: boolean | Prisma.Session$Employee_Session_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
 
@@ -648,31 +433,23 @@ export type SessionSelectScalar = {
   activeFrom?: boolean
   activeUntil?: boolean
   employeeId?: boolean
-  deleted?: boolean
-  deletedAt?: boolean
-  deletedBy?: boolean
 }
 
-export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activeFrom" | "activeUntil" | "employeeId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["session"]>
+export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activeFrom" | "activeUntil" | "employeeId", ExtArgs["result"]["session"]>
 export type SessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  Employee_Session_deletedByToEmployee?: boolean | Prisma.Session$Employee_Session_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $SessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Session"
   objects: {
     Employee: Prisma.$EmployeePayload<ExtArgs>
-    Employee_Session_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     activeFrom: Date
     activeUntil: Date
     employeeId: string
-    deleted: boolean
-    deletedAt: Date | null
-    deletedBy: string | null
   }, ExtArgs["result"]["session"]>
   composites: {}
 }
@@ -1014,7 +791,6 @@ readonly fields: SessionFieldRefs;
 export interface Prisma__SessionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  Employee_Session_deletedByToEmployee<T extends Prisma.Session$Employee_Session_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Session$Employee_Session_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1048,9 +824,6 @@ export interface SessionFieldRefs {
   readonly activeFrom: Prisma.FieldRef<"Session", 'DateTime'>
   readonly activeUntil: Prisma.FieldRef<"Session", 'DateTime'>
   readonly employeeId: Prisma.FieldRef<"Session", 'String'>
-  readonly deleted: Prisma.FieldRef<"Session", 'Boolean'>
-  readonly deletedAt: Prisma.FieldRef<"Session", 'DateTime'>
-  readonly deletedBy: Prisma.FieldRef<"Session", 'String'>
 }
     
 
@@ -1391,25 +1164,6 @@ export type SessionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Sessions to delete.
    */
   limit?: number
-}
-
-/**
- * Session.Employee_Session_deletedByToEmployee
- */
-export type Session$Employee_Session_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Employee
-   */
-  select?: Prisma.EmployeeSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Employee
-   */
-  omit?: Prisma.EmployeeOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmployeeInclude<ExtArgs> | null
-  where?: Prisma.EmployeeWhereInput
 }
 
 /**

@@ -12,7 +12,7 @@ import {validateSchema} from '@/lib/validateSchema'
 import type {Logger} from 'pino'
 import {getLogger, logger} from '@/lib/logger'
 import {convertFormData} from '@/lib/convertFormData'
-import type {Role} from '@/generated/prisma/client'
+import type {RoleLevel} from '@/generated/prisma/client'
 
 const emptySchema = z.object({})
 type EmptySchema = ZodType<typeof emptySchema>
@@ -42,7 +42,7 @@ interface ServerFunctionOptions<Schema extends ZodType, ReturnType, Auth extends
   // will be returned.
   sendBackOnSuccess?: (keyof z.infer<Schema>)[] | true
   // The roles by which the server function can be executed, if no argument was passed, anyone can execute the function.
-  requiredRoles?: Role[]
+  requiredRolesLevel?: RoleLevel[]
   // The name of the server function, used in logs.
   functionName: string
 }
@@ -167,8 +167,8 @@ async function handleServerFunction<Schema extends ZodType, ReturnType, Auth ext
     logger.warn(`Checking authorization for ${functionName}.`)
     if (
       authenticated &&
-      options.requiredRoles &&
-      !options.requiredRoles.includes(profile!.RoleLevel_Employee_roleLevelIdToRoleLevel!)
+      options.requiredRolesLevel &&
+      !options.requiredRolesLevel.includes(profile!.RoleLevel_Employee_roleLevelIdToRoleLevel!)
     ) {
       logger.warn(`Unauthorized user ${profile!.id} tried executing ${functionName ?? 'a server function'}.`)
       return {

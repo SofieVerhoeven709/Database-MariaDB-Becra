@@ -485,7 +485,6 @@ model Employee {
   RoleLevel_RoleLevel_createdByToEmployee                                           RoleLevel[]                      @relation("RoleLevel_createdByToEmployee")
   RoleLevel_RoleLevel_deletedByToEmployee                                           RoleLevel[]                      @relation("RoleLevel_deletedByToEmployee")
   Session                                                                           Session[]
-  Session_Session_deletedByToEmployee                                               Session[]                        @relation("Session_deletedByToEmployee")
   Status                                                                            Status[]
   Status_Status_deletedByToEmployee                                                 Status[]                         @relation("Status_deletedByToEmployee")
   SubRole_SubRole_createdByToEmployee                                               SubRole[]                        @relation("SubRole_createdByToEmployee")
@@ -1586,18 +1585,13 @@ model Role {
 }
 
 model Session {
-  id                                   String    @id @db.Char(36)
-  activeFrom                           DateTime  @default(now()) @db.DateTime(0)
-  activeUntil                          DateTime  @db.DateTime(0)
-  employeeId                           String    @db.Char(36)
-  deleted                              Boolean   @default(false)
-  deletedAt                            DateTime? @db.DateTime(0)
-  deletedBy                            String?   @db.Char(36)
-  Employee                             Employee  @relation(fields: [employeeId], references: [id], onUpdate: Restrict, map: "Session_ibfk_1")
-  Employee_Session_deletedByToEmployee Employee? @relation("Session_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Session_ibfk_2")
+  id          String   @id @db.Char(36)
+  activeFrom  DateTime @default(now()) @db.DateTime(0)
+  activeUntil DateTime @db.DateTime(0)
+  employeeId  String   @db.Char(36)
+  Employee    Employee @relation(fields: [employeeId], references: [id], onUpdate: Restrict, map: "Session_ibfk_1")
 
   @@index([employeeId], map: "employeeId")
-  @@index([deletedBy], map: "deletedBy")
 }
 
 model Status {

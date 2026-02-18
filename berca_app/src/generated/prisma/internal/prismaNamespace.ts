@@ -6562,10 +6562,7 @@ export const SessionScalarFieldEnum = {
   id: 'id',
   activeFrom: 'activeFrom',
   activeUntil: 'activeUntil',
-  employeeId: 'employeeId',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  employeeId: 'employeeId'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -7724,8 +7721,7 @@ export type RoleOrderByRelevanceFieldEnum = (typeof RoleOrderByRelevanceFieldEnu
 
 export const SessionOrderByRelevanceFieldEnum = {
   id: 'id',
-  employeeId: 'employeeId',
-  deletedBy: 'deletedBy'
+  employeeId: 'employeeId'
 } as const
 
 export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum]

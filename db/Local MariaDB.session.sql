@@ -192,11 +192,7 @@ CREATE TABLE
             activeFrom DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             activeUntil DATETIME NOT NULL,
             employeeId CHAR(36) NOT NULL,
-            FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME,
-            deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE

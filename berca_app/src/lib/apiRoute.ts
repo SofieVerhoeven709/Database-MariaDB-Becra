@@ -11,7 +11,7 @@ import {convertFormData} from '@/lib/convertFormData'
 import type {Logger} from 'pino'
 import {getLogger} from '@/lib/logger'
 import {validateJwtToken} from '@/lib/jwtUtils'
-import type {Role} from '@/generated/prisma/client'
+import type {RoleLevel} from '@/generated/prisma/client'
 import {prismaClient} from '@/dal/prismaClient'
 
 const emptySchema = z.object({})
@@ -46,7 +46,7 @@ interface ApiRouteOptions<Params, Schema extends ZodType, Auth extends boolean> 
   authenticationType?: 'jwt' | 'cookie'
 
   // The roles by which the server function can be executed, if no argument was passed, anyone can execute the function.
-  requiredRoles?: Role[]
+  requiredRolesLevel?: RoleLevel[]
 }
 
 /**
@@ -114,8 +114,8 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
     if (
       (!profile && authenticated) ||
       (profile &&
-        options.requiredRoles &&
-        !options.requiredRoles.includes(profile.RoleLevel_Employee_roleLevelIdToRoleLevel!))
+        options.requiredRolesLevel &&
+        !options.requiredRolesLevel.includes(profile.RoleLevel_Employee_roleLevelIdToRoleLevel!))
     ) {
       logger.warn(`Unauthorized user ${profile!.id} tried executing API Route.`)
       return unauthorized()

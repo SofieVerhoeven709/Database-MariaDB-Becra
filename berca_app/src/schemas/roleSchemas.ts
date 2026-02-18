@@ -61,3 +61,11 @@ export const roleContextSchema = roleLevelSchema
   }))
 
 export type RoleContext = z.infer<typeof roleContextSchema>
+
+export const roleContextInputSchema = z.object({
+  role: z.string(),
+  subRole: z.string().optional(),
+  level: z.number(),
+})
+
+export type RoleContextInput = z.infer<typeof roleContextInputSchema>

@@ -1,10 +1,10 @@
 import {prismaClient} from '@/dal/prismaClient'
 import {publicApiRoute} from '@/lib/apiRoute'
-import {type RoleContext, roleContextSchema} from '@/schemas/roleSchemas'
+import {type RoleContextInput, roleContextInputSchema} from '@/schemas/roleSchemas'
 import {NextResponse} from 'next/server'
 
 // Helper function to get departments by role
-async function getDepartmentsByRoleContext(context: RoleContext) {
+async function getDepartmentsByRoleContext(context: RoleContextInput) {
   const allDepartments = await prismaClient.department.findMany({
     select: {
       id: true,
@@ -53,9 +53,9 @@ async function getDepartmentsByRoleContext(context: RoleContext) {
   return []
 }
 
-export const POST = publicApiRoute<{}, typeof roleContextSchema>({
+export const POST = publicApiRoute<{}, typeof roleContextInputSchema>({
   type: 'body',
-  schema: roleContextSchema,
+  schema: roleContextInputSchema,
   routeFn: async ({data}) => {
     const departments = await getDepartmentsByRoleContext({
       role: data.role,

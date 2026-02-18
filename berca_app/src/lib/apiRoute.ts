@@ -95,7 +95,15 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
       if (tokenBody) {
         profile = await prismaClient.employee.findUnique({
           where: {id: tokenBody.id},
-          include: {Role_Employee_roleIdToRole: true},
+          include: {
+            RoleLevel_Employee_roleLevelIdToRoleLevel: {
+              // This is the Employee → RoleLevel relation
+              include: {
+                Role: true, // RoleLevel → Role
+                SubRole: true, // RoleLevel → SubRole
+              },
+            },
+          },
         })
       }
     } else if (authenticated) {
@@ -105,7 +113,9 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
 
     if (
       (!profile && authenticated) ||
-      (profile && options.requiredRoles && !options.requiredRoles.includes(profile.Role_Employee_roleIdToRole!))
+      (profile &&
+        options.requiredRoles &&
+        !options.requiredRoles.includes(profile.RoleLevel_Employee_roleLevelIdToRoleLevel!))
     ) {
       logger.warn(`Unauthorized user ${profile!.id} tried executing API Route.`)
       return unauthorized()

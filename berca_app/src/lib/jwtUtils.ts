@@ -44,7 +44,7 @@ export const createJwtToken = (employee: Profile) => {
     {
       id: employee.id,
       username: employee.username,
-      role: employee.roleId,
+      role: employee.roleLevelId,
     },
     PRIVATE_KEY_DECODED,
     {algorithm: 'RS256', expiresIn: TOKEN_EXPIRATION, subject: employee.username, issuer: 'contacts-app'},
@@ -56,7 +56,7 @@ export const createStatefulJwtToken = (session: SessionWithProfile) => {
     {
       id: session.Employee.id,
       username: session.Employee.username,
-      role: session.Employee.roleId,
+      role: session.Employee.roleLevelId,
       sessionId: session.id,
     },
     PRIVATE_KEY_DECODED,

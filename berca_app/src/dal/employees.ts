@@ -22,7 +22,15 @@ export async function createEmployee(data: CreateEmployeeParams): Promise<Profil
       password_hash: hashPassword(data.password_hash),
     },
     omit: profileOmit,
-    include: {Role_Employee_roleIdToRole: true},
+    include: {
+      RoleLevel_Employee_roleLevelIdToRoleLevel: {
+        // This is the Employee → RoleLevel relation
+        include: {
+          Role: true, // RoleLevel → Role
+          SubRole: true, // RoleLevel → SubRole
+        },
+      },
+    },
   })
 }
 
@@ -101,7 +109,15 @@ export async function updateEmployee({id, ...data}: UpdateEmployeeParams): Promi
       ...data,
     },
     omit: profileOmit,
-    include: {Role_Employee_roleIdToRole: true},
+    include: {
+      RoleLevel_Employee_roleLevelIdToRoleLevel: {
+        // This is the Employee → RoleLevel relation
+        include: {
+          Role: true, // RoleLevel → Role
+          SubRole: true, // RoleLevel → SubRole
+        },
+      },
+    },
   })
 }
 

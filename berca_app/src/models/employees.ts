@@ -6,13 +6,29 @@ export const profileOmit = {
 
 export type Profile = Prisma.EmployeeGetPayload<{
   omit: typeof profileOmit
-  include: {Role_Employee_roleIdToRole: true}
+  include: {
+    RoleLevel_Employee_roleLevelIdToRoleLevel: {
+      // This is the Employee → RoleLevel relation
+      include: {
+        Role: true // RoleLevel → Role
+        SubRole: true // RoleLevel → SubRole
+      }
+    }
+  }
 }>
 
 export const sessionWithProfileInclude = {
   Employee: {
     omit: profileOmit,
-    include: {Role_Employee_roleIdToRole: true},
+    include: {
+      RoleLevel_Employee_roleLevelIdToRoleLevel: {
+        // This is the Employee → RoleLevel relation
+        include: {
+          Role: true, // RoleLevel → Role
+          SubRole: true, // RoleLevel → SubRole
+        },
+      },
+    },
   },
 } satisfies Prisma.SessionInclude
 

@@ -10,9 +10,9 @@ export default async function DashboardPage() {
     redirect('/')
   }
 
-  const role = employee.Role_Employee_roleIdToRole
+  const roleLevel = employee.RoleLevel_Employee_roleLevelIdToRoleLevel
 
-  if (!role) {
+  if (!roleLevel) {
     redirect('/')
   }
 
@@ -24,7 +24,7 @@ export default async function DashboardPage() {
           <p className="mt-1 text-sm text-muted-foreground">Select a department to manage</p>
         </div>
 
-        <DepartmentGrid role={role} />
+        <DepartmentGrid roleLevel={roleLevel} />
       </div>
     </main>
   )

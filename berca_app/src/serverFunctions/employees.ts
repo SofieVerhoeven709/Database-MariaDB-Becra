@@ -23,12 +23,16 @@ export const registerAction = publicFormAction({
     const employee = await createEmployee(data)
     logger.info(`New employee created: ${employee.id}`)
 
-    const role = await prismaClient.role.findUnique({
-      where: {id: employee.roleId!},
+    const role = await prismaClient.roleLevel.findUnique({
+      where: {id: employee.roleLevelId!},
+      include: {
+        Role: true, // RoleLevel → Role
+        SubRole: true, // RoleLevel → SubRole
+      },
     })
     if (!role) throw new Error('Employee has no role assigned.')
 
-    const session = await startSession(employee.id, role)
+    const session = await startSession(employee.id, role.Role)
     logger.info(`New session started: ${session.id}, ends at ${session.activeUntil.toISOString()}`)
 
     await setSessionCookie(session)
@@ -66,12 +70,16 @@ export const signInAction = publicFormAction({
 
     logger.info(`Successful authentication request for ${employee!.id}`)
 
-    const role = await prismaClient.role.findUnique({
-      where: {id: employee!.roleId!},
+    const role = await prismaClient.roleLevel.findUnique({
+      where: {id: employee!.roleLevelId!},
+      include: {
+        Role: true, // RoleLevel → Role
+        SubRole: true, // RoleLevel → SubRole
+      },
     })
     if (!role) throw new Error('Employee has no role assigned.')
 
-    const session = await startSession(employee!.id, role)
+    const session = await startSession(employee!.id, role.Role)
     logger.info(`New session started: ${session.id}, ends at ${session.activeUntil.toISOString()}`)
 
     await setSessionCookie(session)

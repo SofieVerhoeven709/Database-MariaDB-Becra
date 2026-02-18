@@ -10,7 +10,7 @@ export default async function DashboardPage() {
     redirect('/')
   }
 
-  const roleLevel = employee.Role_Employee_roleIdToRole?.level
+  const roleLevel = employee.RoleLevel_Employee_roleLevelIdToRoleLevel?.level
 
   if (!roleLevel) {
     redirect('/')

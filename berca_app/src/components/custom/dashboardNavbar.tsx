@@ -12,16 +12,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import type {Department, Employee, Role} from '@/generated/prisma/client'
+import type {Department, Employee, RoleLevel} from '@/generated/prisma/client'
 import {useEffect, useState} from 'react'
 
 interface DashboardNavbarProps {
   employee: EmployeeSafe
-  role: Role
+  roleLevel: RoleLevel
 }
 export type EmployeeSafe = Omit<Employee, 'password_hash'>
 
-export function DashboardNavbar({employee, role}: DashboardNavbarProps) {
+export function DashboardNavbar({employee, roleLevel}: DashboardNavbarProps) {
   const [departmentMap, setDepartmentMap] = useState<Record<string, string>>({})
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export function DashboardNavbar({employee, role}: DashboardNavbarProps) {
         const res = await fetch('/api/departments', {
           method: 'POST', // match what DepartmentGrid does
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(role), // send the full role object
+          body: JSON.stringify(roleLevel), // send the full role object
         })
         if (!res.ok) throw new Error('Failed to fetch departments')
         const data: Department[] = await res.json()
@@ -41,7 +41,7 @@ export function DashboardNavbar({employee, role}: DashboardNavbarProps) {
       }
     }
     fetchDepartments()
-  }, [role])
+  }, [roleLevel])
 
   const pathname = usePathname()
 
@@ -51,6 +51,8 @@ export function DashboardNavbar({employee, role}: DashboardNavbarProps) {
     .join('')
     .toUpperCase()
     .slice(0, 2)
+
+  const role = 'administrator'
 
   const isHome = pathname === '/dashboard'
 
@@ -82,7 +84,7 @@ export function DashboardNavbar({employee, role}: DashboardNavbarProps) {
           <button className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-secondary outline-none">
             <div className="flex flex-col items-end gap-0.5">
               <span className="text-sm font-medium text-foreground">{employee.username}</span>
-              <span className="text-xs text-muted-foreground capitalize">{role.name}</span>
+              <span className="text-xs text-muted-foreground capitalize">{role}</span>
             </div>
             <Avatar className="h-8 w-8">
               <AvatarFallback className="bg-secondary text-foreground text-xs font-medium">{initials}</AvatarFallback>

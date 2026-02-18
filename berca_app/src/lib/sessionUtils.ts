@@ -26,7 +26,15 @@ export async function getSessionFromCookie(stateful = true): Promise<SessionWith
 
   const employee = await prismaClient.employee.findUnique({
     where: {id: tokenBody.sub},
-    include: {Role_Employee_roleIdToRole: true},
+    include: {
+      RoleLevel_Employee_roleLevelIdToRoleLevel: {
+        // This is the Employee → RoleLevel relation
+        include: {
+          Role: true, // RoleLevel → Role
+          SubRole: true, // RoleLevel → SubRole
+        },
+      },
+    },
   })
 
   if (!employee) return null

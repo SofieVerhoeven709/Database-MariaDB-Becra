@@ -168,7 +168,7 @@ async function handleServerFunction<Schema extends ZodType, ReturnType, Auth ext
     if (
       authenticated &&
       options.requiredRoles &&
-      !options.requiredRoles.includes(profile!.Role_Employee_roleIdToRole!)
+      !options.requiredRoles.includes(profile!.RoleLevel_Employee_roleLevelIdToRoleLevel!)
     ) {
       logger.warn(`Unauthorized user ${profile!.id} tried executing ${functionName ?? 'a server function'}.`)
       return {

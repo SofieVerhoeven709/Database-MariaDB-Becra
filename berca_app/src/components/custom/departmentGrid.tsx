@@ -19,7 +19,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import {useEffect, useState} from 'react'
-import type {Role} from '@/generated/prisma/client'
+import type {RoleLevel} from '@/generated/prisma/client'
 
 interface Department {
   id: string
@@ -47,10 +47,10 @@ const ICONS: Record<string, LucideIcon> = {
 }
 
 interface DepartmentGridProps {
-  role: Role
+  roleLevel: RoleLevel
 }
 
-export function DepartmentGrid({role}: DepartmentGridProps) {
+export function DepartmentGrid({roleLevel}: DepartmentGridProps) {
   const [departments, setDepartments] = useState<Department[]>([])
 
   useEffect(() => {
@@ -58,14 +58,14 @@ export function DepartmentGrid({role}: DepartmentGridProps) {
       const res = await fetch('/api/departments', {
         method: 'POST', // use POST because you’re sending a JSON body
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(role), // full Role object
+        body: JSON.stringify(roleLevel), // full Role object
       })
       const data: Department[] = await res.json()
       setDepartments(data)
     }
 
     fetchDepartments()
-  }, [role])
+  }, [roleLevel])
 
   if (!departments.length) return <p>Loading departments...</p>
 

@@ -12,19 +12,25 @@ export default async function DashboardPage() {
 
   const roleLevel = employee.RoleLevel_Employee_roleLevelIdToRoleLevel
 
-  if (!roleLevel) {
+  if (!roleLevel || !roleLevel.Role) {
     redirect('/')
+  }
+
+  const roleContext = {
+    role: roleLevel.Role.name,
+    subRole: roleLevel.SubRole?.name,
+    level: roleLevel.level,
   }
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8">
-          <h1 className="text-lg font-semibold text-foreground">Departments</h1>
+          <h1 className="text-lg font-semibold">Departments</h1>
           <p className="mt-1 text-sm text-muted-foreground">Select a department to manage</p>
         </div>
 
-        <DepartmentGrid roleLevel={roleLevel} />
+        <DepartmentGrid roleContext={roleContext} />
       </div>
     </main>
   )

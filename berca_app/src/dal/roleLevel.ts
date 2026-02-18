@@ -1,12 +1,19 @@
 import {prismaClient} from '@/dal/prismaClient'
-import type {RoleLevel} from '@/generated/prisma/client'
+import type {Prisma} from '@/generated/prisma/client'
 
-export async function getRolelevelById(id: string): Promise<RoleLevel | null> {
+export type RoleLevelWithRelations = Prisma.RoleLevelGetPayload<{
+  include: {
+    Role: true
+    SubRole: true
+  }
+}>
+
+export async function getRolelevelById(id: string): Promise<RoleLevelWithRelations | null> {
   return prismaClient.roleLevel.findFirst({
     where: {id},
     include: {
-      Role: true, // RoleLevel → Role
-      SubRole: true, // RoleLevel → SubRole
+      Role: true,
+      SubRole: true,
     },
   })
 }

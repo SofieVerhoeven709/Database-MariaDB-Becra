@@ -13,9 +13,19 @@ export default async function DashboardLayout({children}: {children: React.React
   const roleLevel =
     employee.RoleLevel_Employee_roleLevelIdToRoleLevel ?? (await getRolelevelById(employee.roleLevelId!))
 
+  if (!roleLevel || !roleLevel.Role) {
+    return <div>Role not configured</div>
+  }
+
+  const roleContext = {
+    role: roleLevel.Role.name,
+    subRole: roleLevel.SubRole?.name,
+    level: roleLevel.level,
+  }
+
   return (
     <div className="flex min-h-svh flex-col">
-      <DashboardNavbar employee={employee} roleLevel={roleLevel!} />
+      <DashboardNavbar employee={employee} roleContext={roleContext} />
       <div className="flex-1">{children}</div>
     </div>
   )

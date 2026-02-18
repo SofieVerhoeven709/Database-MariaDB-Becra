@@ -19,7 +19,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import {useEffect, useState} from 'react'
-import type {RoleLevel} from '@/generated/prisma/client'
+import type {RoleContext} from '@/schemas/roleSchemas'
 
 interface Department {
   id: string
@@ -30,42 +30,48 @@ interface Department {
 }
 
 const ICONS: Record<string, LucideIcon> = {
-  Clipboard, // Admin
-  Users, // HR
-  Wrench, // Engineering
-  Megaphone, // PR
-  ShieldCheck, // SHEQ
-  Calculator, // Accounting
-  BookOpen, // Training
-  ClipboardList, // Project
-  Briefcase, // Management
-  Database, // Database
-  ShoppingCart, // Purchasing
-  TrendingUp, // Sales
-  Package, // Warehouse
-  CheckCircle, // Product Quality
+  Clipboard,
+  Users,
+  Wrench,
+  Megaphone,
+  ShieldCheck,
+  Calculator,
+  BookOpen,
+  ClipboardList,
+  Briefcase,
+  Database,
+  ShoppingCart,
+  TrendingUp,
+  Package,
+  CheckCircle,
 }
 
 interface DepartmentGridProps {
-  roleLevel: RoleLevel
+  roleContext: RoleContext
 }
 
-export function DepartmentGrid({roleLevel}: DepartmentGridProps) {
+export function DepartmentGrid({roleContext}: DepartmentGridProps) {
   const [departments, setDepartments] = useState<Department[]>([])
 
   useEffect(() => {
     const fetchDepartments = async () => {
       const res = await fetch('/api/departments', {
-        method: 'POST', // use POST because you’re sending a JSON body
+        method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(roleLevel), // full Role object
+        body: JSON.stringify(roleContext),
       })
+
+      if (!res.ok) {
+        console.error('Failed to fetch departments')
+        return
+      }
+
       const data: Department[] = await res.json()
       setDepartments(data)
     }
 
     fetchDepartments()
-  }, [roleLevel])
+  }, [roleContext])
 
   if (!departments.length) return <p>Loading departments...</p>
 
@@ -74,14 +80,14 @@ export function DepartmentGrid({roleLevel}: DepartmentGridProps) {
       {departments.map(dept => {
         const Icon = ICONS[dept.icon]
         const accentColor = dept.color
-        const accentBg = `${accentColor}1F` // ~12% opacity
-        const accentBgHover = `${accentColor}2E` // ~18% opacity
+        const accentBg = `${accentColor}1F`
+        const accentBgHover = `${accentColor}2E`
 
         return (
           <Link
             key={dept.id}
             href={`/departments/${dept.id}`}
-            className="group flex flex-col items-start gap-4 rounded-xl border border-border/60 bg-card p-5 text-left transition-all duration-200 hover:shadow-lg hover:shadow-black/15 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="group flex flex-col items-start gap-4 rounded-xl border border-border/60 bg-card p-5 transition-all hover:shadow-lg hover:-translate-y-0.5"
             style={
               {
                 '--dept-accent': accentColor,
@@ -90,16 +96,18 @@ export function DepartmentGrid({roleLevel}: DepartmentGridProps) {
               } as React.CSSProperties
             }>
             <div
-              className="flex h-11 w-11 items-center justify-center rounded-lg transition-colors duration-200"
+              className="flex h-11 w-11 items-center justify-center rounded-lg"
               style={{backgroundColor: 'var(--dept-bg)'}}>
               <Icon className="h-5 w-5" style={{color: 'var(--dept-accent)'}} />
             </div>
+
             <div className="flex flex-col gap-1">
-              <span className="text-sm font-semibold text-foreground group-hover:text-foreground/90">{dept.name}</span>
-              <span className="text-xs text-muted-foreground leading-relaxed">{dept.description}</span>
+              <span className="text-sm font-semibold">{dept.name}</span>
+              <span className="text-xs text-muted-foreground">{dept.description}</span>
             </div>
+
             <div
-              className="mt-auto h-0.5 w-0 rounded-full transition-all duration-300 group-hover:w-full"
+              className="mt-auto h-0.5 w-0 rounded-full transition-all group-hover:w-full"
               style={{backgroundColor: 'var(--dept-accent)'}}
             />
           </Link>

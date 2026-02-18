@@ -12,7 +12,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import type {Employee, Role} from '@/generated/prisma/client'
+import type {Department, Employee, Role} from '@/generated/prisma/client'
+import {useEffect, useState} from 'react'
 
 interface DashboardNavbarProps {
   employee: EmployeeSafe
@@ -21,6 +22,27 @@ interface DashboardNavbarProps {
 export type EmployeeSafe = Omit<Employee, 'password_hash'>
 
 export function DashboardNavbar({employee, role}: DashboardNavbarProps) {
+  const [departmentMap, setDepartmentMap] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const res = await fetch('/api/departments', {
+          method: 'POST', // match what DepartmentGrid does
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(role), // send the full role object
+        })
+        if (!res.ok) throw new Error('Failed to fetch departments')
+        const data: Department[] = await res.json()
+        const map = Object.fromEntries(data.map(d => [d.id, d.name]))
+        setDepartmentMap(map)
+      } catch (err) {
+        console.error('Error fetching departments for navbar:', err)
+      }
+    }
+    fetchDepartments()
+  }, [role])
+
   const pathname = usePathname()
 
   const initials = employee.username
@@ -31,6 +53,12 @@ export function DashboardNavbar({employee, role}: DashboardNavbarProps) {
     .slice(0, 2)
 
   const isHome = pathname === '/dashboard'
+
+  const pathSegments = pathname.split('/').filter(Boolean).slice(1) // skip 'dashboard'
+
+  const breadcrumb = pathSegments
+    .map(segment => departmentMap[segment] || segment) // replace id with name
+    .join(' / ')
 
   return (
     <header className="flex items-center justify-between border-b border-border px-6 py-4">
@@ -44,9 +72,7 @@ export function DashboardNavbar({employee, role}: DashboardNavbarProps) {
         {!isHome && (
           <nav className="flex items-center" aria-label="Breadcrumb">
             <span className="mx-2 text-muted-foreground/40">/</span>
-            <span className="text-sm text-muted-foreground capitalize">
-              {pathname.split('/').filter(Boolean).slice(1).join(' / ') || 'Home'}
-            </span>
+            <span className="text-sm text-muted-foreground capitalize">{breadcrumb || 'Home'}</span>
           </nav>
         )}
       </div>

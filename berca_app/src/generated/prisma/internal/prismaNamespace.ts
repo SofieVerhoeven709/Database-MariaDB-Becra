@@ -464,7 +464,8 @@ export const ModelName = {
   WorkOrderInvoice: 'WorkOrderInvoice',
   WorkOrderStructure: 'WorkOrderStructure',
   RoleLevel: 'RoleLevel',
-  SubRole: 'SubRole'
+  SubRole: 'SubRole',
+  DepartmentExtern: 'DepartmentExtern'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -480,7 +481,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyAdress" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentGroup" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "qouteBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole"
+    modelProps: "certificate" | "certificateType" | "company" | "companyAdress" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentGroup" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "qouteBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -5434,6 +5435,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DepartmentExtern: {
+      payload: Prisma.$DepartmentExternPayload<ExtArgs>
+      fields: Prisma.DepartmentExternFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DepartmentExternFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentExternPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DepartmentExternFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentExternPayload>
+        }
+        findFirst: {
+          args: Prisma.DepartmentExternFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentExternPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DepartmentExternFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentExternPayload>
+        }
+        findMany: {
+          args: Prisma.DepartmentExternFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentExternPayload>[]
+        }
+        create: {
+          args: Prisma.DepartmentExternCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentExternPayload>
+        }
+        createMany: {
+          args: Prisma.DepartmentExternCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.DepartmentExternDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentExternPayload>
+        }
+        update: {
+          args: Prisma.DepartmentExternUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentExternPayload>
+        }
+        deleteMany: {
+          args: Prisma.DepartmentExternDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DepartmentExternUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.DepartmentExternUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentExternPayload>
+        }
+        aggregate: {
+          args: Prisma.DepartmentExternAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDepartmentExtern>
+        }
+        groupBy: {
+          args: Prisma.DepartmentExternGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DepartmentExternGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DepartmentExternCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DepartmentExternCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -5603,7 +5670,7 @@ export const ContactScalarFieldEnum = {
   participantTrainingAndAdvice: 'participantTrainingAndAdvice',
   createdBy: 'createdBy',
   functionId: 'functionId',
-  departmentId: 'departmentId',
+  departmentExternId: 'departmentExternId',
   titleId: 'titleId',
   businessCardId: 'businessCardId',
   targetId: 'targetId',
@@ -5641,8 +5708,8 @@ export const DepartmentScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   createdBy: 'createdBy',
-  targetId: 'targetId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
@@ -5708,10 +5775,7 @@ export const EmergencyContactScalarFieldEnum = {
   relationship: 'relationship',
   mail: 'mail',
   phoneNumber: 'phoneNumber',
-  employeeId: 'employeeId',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  employeeId: 'employeeId'
 } as const
 
 export type EmergencyContactScalarFieldEnum = (typeof EmergencyContactScalarFieldEnum)[keyof typeof EmergencyContactScalarFieldEnum]
@@ -5742,8 +5806,6 @@ export const EmployeeScalarFieldEnum = {
   passwordCreatedAt: 'passwordCreatedAt',
   createdBy: 'createdBy',
   roleLevelId: 'roleLevelId',
-  functionId: 'functionId',
-  departmentId: 'departmentId',
   titleId: 'titleId',
   pictureId: 'pictureId',
   deleted: 'deleted',
@@ -6666,10 +6728,7 @@ export type TimeRegistryScalarFieldEnum = (typeof TimeRegistryScalarFieldEnum)[k
 export const TimeRegistryEmployeeScalarFieldEnum = {
   id: 'id',
   employeeId: 'employeeId',
-  timeRegistryId: 'timeRegistryId',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  timeRegistryId: 'timeRegistryId'
 } as const
 
 export type TimeRegistryEmployeeScalarFieldEnum = (typeof TimeRegistryEmployeeScalarFieldEnum)[keyof typeof TimeRegistryEmployeeScalarFieldEnum]
@@ -6876,7 +6935,6 @@ export type WorkOrderStructureScalarFieldEnum = (typeof WorkOrderStructureScalar
 
 export const RoleLevelScalarFieldEnum = {
   id: 'id',
-  level: 'level',
   roleId: 'roleId',
   subRoleId: 'subRoleId',
   createdAt: 'createdAt',
@@ -6892,6 +6950,7 @@ export type RoleLevelScalarFieldEnum = (typeof RoleLevelScalarFieldEnum)[keyof t
 export const SubRoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  level: 'level',
   createdAt: 'createdAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -6900,6 +6959,20 @@ export const SubRoleScalarFieldEnum = {
 } as const
 
 export type SubRoleScalarFieldEnum = (typeof SubRoleScalarFieldEnum)[keyof typeof SubRoleScalarFieldEnum]
+
+
+export const DepartmentExternScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
+} as const
+
+export type DepartmentExternScalarFieldEnum = (typeof DepartmentExternScalarFieldEnum)[keyof typeof DepartmentExternScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -7007,7 +7080,7 @@ export const ContactOrderByRelevanceFieldEnum = {
   description: 'description',
   createdBy: 'createdBy',
   functionId: 'functionId',
-  departmentId: 'departmentId',
+  departmentExternId: 'departmentExternId',
   titleId: 'titleId',
   businessCardId: 'businessCardId',
   targetId: 'targetId',
@@ -7036,8 +7109,8 @@ export const DepartmentOrderByRelevanceFieldEnum = {
   icon: 'icon',
   description: 'description',
   createdBy: 'createdBy',
-  targetId: 'targetId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type DepartmentOrderByRelevanceFieldEnum = (typeof DepartmentOrderByRelevanceFieldEnum)[keyof typeof DepartmentOrderByRelevanceFieldEnum]
@@ -7092,8 +7165,7 @@ export const EmergencyContactOrderByRelevanceFieldEnum = {
   relationship: 'relationship',
   mail: 'mail',
   phoneNumber: 'phoneNumber',
-  employeeId: 'employeeId',
-  deletedBy: 'deletedBy'
+  employeeId: 'employeeId'
 } as const
 
 export type EmergencyContactOrderByRelevanceFieldEnum = (typeof EmergencyContactOrderByRelevanceFieldEnum)[keyof typeof EmergencyContactOrderByRelevanceFieldEnum]
@@ -7115,8 +7187,6 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   username: 'username',
   createdBy: 'createdBy',
   roleLevelId: 'roleLevelId',
-  functionId: 'functionId',
-  departmentId: 'departmentId',
   titleId: 'titleId',
   pictureId: 'pictureId',
   deletedBy: 'deletedBy'
@@ -7800,8 +7870,7 @@ export type TimeRegistryOrderByRelevanceFieldEnum = (typeof TimeRegistryOrderByR
 export const TimeRegistryEmployeeOrderByRelevanceFieldEnum = {
   id: 'id',
   employeeId: 'employeeId',
-  timeRegistryId: 'timeRegistryId',
-  deletedBy: 'deletedBy'
+  timeRegistryId: 'timeRegistryId'
 } as const
 
 export type TimeRegistryEmployeeOrderByRelevanceFieldEnum = (typeof TimeRegistryEmployeeOrderByRelevanceFieldEnum)[keyof typeof TimeRegistryEmployeeOrderByRelevanceFieldEnum]
@@ -7974,6 +8043,17 @@ export const SubRoleOrderByRelevanceFieldEnum = {
 } as const
 
 export type SubRoleOrderByRelevanceFieldEnum = (typeof SubRoleOrderByRelevanceFieldEnum)[keyof typeof SubRoleOrderByRelevanceFieldEnum]
+
+
+export const DepartmentExternOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
+} as const
+
+export type DepartmentExternOrderByRelevanceFieldEnum = (typeof DepartmentExternOrderByRelevanceFieldEnum)[keyof typeof DepartmentExternOrderByRelevanceFieldEnum]
 
 
 
@@ -8178,6 +8258,7 @@ export type GlobalOmitConfig = {
   workOrderStructure?: Prisma.WorkOrderStructureOmit
   roleLevel?: Prisma.RoleLevelOmit
   subRole?: Prisma.SubRoleOmit
+  departmentExtern?: Prisma.DepartmentExternOmit
 }
 
 /* Types for Logging */

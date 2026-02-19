@@ -13,12 +13,12 @@ export default async function DashboardLayout({children}: {children: React.React
   const roleLevel =
     employee.RoleLevel_Employee_roleLevelIdToRoleLevel ?? (await getRolelevelById(employee.roleLevelId!))
 
-  if (!roleLevel || !roleLevel.Role) {
+  if (!roleLevel || !roleLevel.Role || !roleLevel.SubRole) {
     return <div>Role not configured</div>
   }
 
   const roleContext = {
-    level: roleLevel.level,
+    level: roleLevel.SubRole.level,
     role: roleLevel.Role.name,
     subRole: roleLevel.SubRole.name,
   }

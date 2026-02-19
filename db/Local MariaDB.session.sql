@@ -23,19 +23,6 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Department (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            name VARCHAR(100) NOT NULL,
-            color VARCHAR(10),
-            icon VARCHAR(255),
-            description VARCHAR(255),
-            number INT,
-            createdAt DATETIME NOT NULL,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME
-      ) ENGINE = InnoDB;
-
-CREATE TABLE
       Title (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
@@ -69,6 +56,7 @@ CREATE TABLE
       SubRole (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
+            level INT NOT NULL,
             createdAt DATETIME NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME
@@ -77,7 +65,6 @@ CREATE TABLE
 CREATE TABLE
       RoleLevel(
             id CHAR(36) NOT NULL PRIMARY KEY,
-            level INT NOT NULL,
             roleId CHAR(36) NOT NULL,
             subRoleId CHAR(36) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -113,20 +100,46 @@ CREATE TABLE
             passwordCreatedAt DATETIME NOT NULL,
             createdBy CHAR(36),
             roleLevelId CHAR(36),
-            functionId CHAR(36),
-            departmentId CHAR(36),
             titleId CHAR(36),
             pictureId CHAR(36),
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT,
-            FOREIGN KEY (functionId) REFERENCES Function (id) ON DELETE RESTRICT,
-            FOREIGN KEY (departmentId) REFERENCES Department (id) ON DELETE RESTRICT,
             FOREIGN KEY (titleId) REFERENCES Title (id) ON DELETE RESTRICT,
             FOREIGN KEY (pictureId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      Department (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            color VARCHAR(10),
+            icon VARCHAR(255),
+            description VARCHAR(255),
+            number INT,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            createdBy CHAR(36) NOT NULL,
+            deletedBy CHAR(36) NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      DepartmentExtern (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            createdBy CHAR(36) NOT NULL,
+            deletedBy CHAR(36) NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -237,9 +250,6 @@ ADD CONSTRAINT fk_function_createdBy FOREIGN KEY (createdBy) REFERENCES Employee
 ALTER TABLE Title ADD createdBy CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_title_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
-ALTER TABLE Department ADD createdBy CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_department_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
-
 ALTER TABLE DocumentStructure ADD createdBy CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
@@ -254,6 +264,9 @@ ADD CONSTRAINT fk_documentStructure_target FOREIGN KEY (targetId) REFERENCES Tar
 
 ALTER TABLE Department ADD targetId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_department_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
+
+ALTER TABLE DepartmentExtern ADD targetId CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_departmentextern_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
 
 ALTER TABLE Role ADD deletedBy CHAR(36) NULL,
 ADD CONSTRAINT fk_role_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
@@ -270,9 +283,6 @@ ADD CONSTRAINT fk_function_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee
 ALTER TABLE Title ADD deletedBy CHAR(36) NULL,
 ADD CONSTRAINT fk_title_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
-ALTER TABLE Department ADD deletedBy CHAR(36) NULL,
-ADD CONSTRAINT fk_department_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
-
 ALTER TABLE DocumentStructure ADD deletedBy CHAR(36) NULL,
 ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
@@ -285,11 +295,7 @@ CREATE TABLE
             mail VARCHAR(100) NOT NULL,
             phoneNumber VARCHAR(100) NOT NULL,
             employeeId CHAR(36) NOT NULL,
-            FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME,
-            deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -360,13 +366,13 @@ CREATE TABLE
             participantTrainingAndAdvice BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             functionId CHAR(36) NULL,
-            departmentId CHAR(36) NULL,
+            departmentExternId CHAR(36) NULL,
             titleId CHAR(36) NULL,
             businessCardId CHAR(36) NULL,
             targetId CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (functionId) REFERENCES Function (id) ON DELETE SET NULL,
-            FOREIGN KEY (departmentId) REFERENCES Department (id) ON DELETE SET NULL,
+            FOREIGN KEY (departmentExternId) REFERENCES DepartmentExtern (id) ON DELETE SET NULL,
             FOREIGN KEY (titleId) REFERENCES Title (id) ON DELETE SET NULL,
             FOREIGN KEY (businessCardId) REFERENCES DocumentStructure (id) ON DELETE SET NULL,
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
@@ -646,11 +652,7 @@ CREATE TABLE
             employeeId CHAR(36) NOT NULL,
             timeRegistryId CHAR(36) NOT NULL,
             FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (timeRegistryId) REFERENCES TimeRegistry (id) ON DELETE RESTRICT,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME,
-            deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (timeRegistryId) REFERENCES TimeRegistry (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE

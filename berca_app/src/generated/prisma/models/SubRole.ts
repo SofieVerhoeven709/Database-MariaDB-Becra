@@ -20,13 +20,24 @@ export type SubRoleModel = runtime.Types.Result.DefaultSelection<Prisma.$SubRole
 
 export type AggregateSubRole = {
   _count: SubRoleCountAggregateOutputType | null
+  _avg: SubRoleAvgAggregateOutputType | null
+  _sum: SubRoleSumAggregateOutputType | null
   _min: SubRoleMinAggregateOutputType | null
   _max: SubRoleMaxAggregateOutputType | null
+}
+
+export type SubRoleAvgAggregateOutputType = {
+  level: number | null
+}
+
+export type SubRoleSumAggregateOutputType = {
+  level: number | null
 }
 
 export type SubRoleMinAggregateOutputType = {
   id: string | null
   name: string | null
+  level: number | null
   createdAt: Date | null
   deleted: boolean | null
   deletedAt: Date | null
@@ -37,6 +48,7 @@ export type SubRoleMinAggregateOutputType = {
 export type SubRoleMaxAggregateOutputType = {
   id: string | null
   name: string | null
+  level: number | null
   createdAt: Date | null
   deleted: boolean | null
   deletedAt: Date | null
@@ -47,6 +59,7 @@ export type SubRoleMaxAggregateOutputType = {
 export type SubRoleCountAggregateOutputType = {
   id: number
   name: number
+  level: number
   createdAt: number
   deleted: number
   deletedAt: number
@@ -56,9 +69,18 @@ export type SubRoleCountAggregateOutputType = {
 }
 
 
+export type SubRoleAvgAggregateInputType = {
+  level?: true
+}
+
+export type SubRoleSumAggregateInputType = {
+  level?: true
+}
+
 export type SubRoleMinAggregateInputType = {
   id?: true
   name?: true
+  level?: true
   createdAt?: true
   deleted?: true
   deletedAt?: true
@@ -69,6 +91,7 @@ export type SubRoleMinAggregateInputType = {
 export type SubRoleMaxAggregateInputType = {
   id?: true
   name?: true
+  level?: true
   createdAt?: true
   deleted?: true
   deletedAt?: true
@@ -79,6 +102,7 @@ export type SubRoleMaxAggregateInputType = {
 export type SubRoleCountAggregateInputType = {
   id?: true
   name?: true
+  level?: true
   createdAt?: true
   deleted?: true
   deletedAt?: true
@@ -125,6 +149,18 @@ export type SubRoleAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: SubRoleAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: SubRoleSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: SubRoleMinAggregateInputType
@@ -155,6 +191,8 @@ export type SubRoleGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: SubRoleCountAggregateInputType | true
+  _avg?: SubRoleAvgAggregateInputType
+  _sum?: SubRoleSumAggregateInputType
   _min?: SubRoleMinAggregateInputType
   _max?: SubRoleMaxAggregateInputType
 }
@@ -162,12 +200,15 @@ export type SubRoleGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type SubRoleGroupByOutputType = {
   id: string
   name: string
+  level: number
   createdAt: Date
   deleted: boolean
   deletedAt: Date | null
   createdBy: string
   deletedBy: string | null
   _count: SubRoleCountAggregateOutputType | null
+  _avg: SubRoleAvgAggregateOutputType | null
+  _sum: SubRoleSumAggregateOutputType | null
   _min: SubRoleMinAggregateOutputType | null
   _max: SubRoleMaxAggregateOutputType | null
 }
@@ -193,6 +234,7 @@ export type SubRoleWhereInput = {
   NOT?: Prisma.SubRoleWhereInput | Prisma.SubRoleWhereInput[]
   id?: Prisma.StringFilter<"SubRole"> | string
   name?: Prisma.StringFilter<"SubRole"> | string
+  level?: Prisma.IntFilter<"SubRole"> | number
   createdAt?: Prisma.DateTimeFilter<"SubRole"> | Date | string
   deleted?: Prisma.BoolFilter<"SubRole"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"SubRole"> | Date | string | null
@@ -206,6 +248,7 @@ export type SubRoleWhereInput = {
 export type SubRoleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -223,6 +266,7 @@ export type SubRoleWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SubRoleWhereInput[]
   NOT?: Prisma.SubRoleWhereInput | Prisma.SubRoleWhereInput[]
   name?: Prisma.StringFilter<"SubRole"> | string
+  level?: Prisma.IntFilter<"SubRole"> | number
   createdAt?: Prisma.DateTimeFilter<"SubRole"> | Date | string
   deleted?: Prisma.BoolFilter<"SubRole"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"SubRole"> | Date | string | null
@@ -236,14 +280,17 @@ export type SubRoleWhereUniqueInput = Prisma.AtLeast<{
 export type SubRoleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SubRoleCountOrderByAggregateInput
+  _avg?: Prisma.SubRoleAvgOrderByAggregateInput
   _max?: Prisma.SubRoleMaxOrderByAggregateInput
   _min?: Prisma.SubRoleMinOrderByAggregateInput
+  _sum?: Prisma.SubRoleSumOrderByAggregateInput
 }
 
 export type SubRoleScalarWhereWithAggregatesInput = {
@@ -252,6 +299,7 @@ export type SubRoleScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SubRoleScalarWhereWithAggregatesInput | Prisma.SubRoleScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"SubRole"> | string
   name?: Prisma.StringWithAggregatesFilter<"SubRole"> | string
+  level?: Prisma.IntWithAggregatesFilter<"SubRole"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SubRole"> | Date | string
   deleted?: Prisma.BoolWithAggregatesFilter<"SubRole"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"SubRole"> | Date | string | null
@@ -262,6 +310,7 @@ export type SubRoleScalarWhereWithAggregatesInput = {
 export type SubRoleCreateInput = {
   id: string
   name: string
+  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -273,6 +322,7 @@ export type SubRoleCreateInput = {
 export type SubRoleUncheckedCreateInput = {
   id: string
   name: string
+  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -284,6 +334,7 @@ export type SubRoleUncheckedCreateInput = {
 export type SubRoleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -295,6 +346,7 @@ export type SubRoleUpdateInput = {
 export type SubRoleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -306,6 +358,7 @@ export type SubRoleUncheckedUpdateInput = {
 export type SubRoleCreateManyInput = {
   id: string
   name: string
+  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -316,6 +369,7 @@ export type SubRoleCreateManyInput = {
 export type SubRoleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -324,6 +378,7 @@ export type SubRoleUpdateManyMutationInput = {
 export type SubRoleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -355,6 +410,7 @@ export type SubRoleOrderByRelevanceInput = {
 export type SubRoleCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -362,9 +418,14 @@ export type SubRoleCountOrderByAggregateInput = {
   deletedBy?: Prisma.SortOrder
 }
 
+export type SubRoleAvgOrderByAggregateInput = {
+  level?: Prisma.SortOrder
+}
+
 export type SubRoleMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -375,11 +436,16 @@ export type SubRoleMaxOrderByAggregateInput = {
 export type SubRoleMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+}
+
+export type SubRoleSumOrderByAggregateInput = {
+  level?: Prisma.SortOrder
 }
 
 export type SubRoleCreateNestedManyWithoutEmployee_SubRole_createdByToEmployeeInput = {
@@ -483,6 +549,7 @@ export type SubRoleUpdateOneRequiredWithoutRoleLevelNestedInput = {
 export type SubRoleCreateWithoutEmployee_SubRole_createdByToEmployeeInput = {
   id: string
   name: string
+  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -493,6 +560,7 @@ export type SubRoleCreateWithoutEmployee_SubRole_createdByToEmployeeInput = {
 export type SubRoleUncheckedCreateWithoutEmployee_SubRole_createdByToEmployeeInput = {
   id: string
   name: string
+  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -513,6 +581,7 @@ export type SubRoleCreateManyEmployee_SubRole_createdByToEmployeeInputEnvelope =
 export type SubRoleCreateWithoutEmployee_SubRole_deletedByToEmployeeInput = {
   id: string
   name: string
+  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -523,6 +592,7 @@ export type SubRoleCreateWithoutEmployee_SubRole_deletedByToEmployeeInput = {
 export type SubRoleUncheckedCreateWithoutEmployee_SubRole_deletedByToEmployeeInput = {
   id: string
   name: string
+  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -562,6 +632,7 @@ export type SubRoleScalarWhereInput = {
   NOT?: Prisma.SubRoleScalarWhereInput | Prisma.SubRoleScalarWhereInput[]
   id?: Prisma.StringFilter<"SubRole"> | string
   name?: Prisma.StringFilter<"SubRole"> | string
+  level?: Prisma.IntFilter<"SubRole"> | number
   createdAt?: Prisma.DateTimeFilter<"SubRole"> | Date | string
   deleted?: Prisma.BoolFilter<"SubRole"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"SubRole"> | Date | string | null
@@ -588,6 +659,7 @@ export type SubRoleUpdateManyWithWhereWithoutEmployee_SubRole_deletedByToEmploye
 export type SubRoleCreateWithoutRoleLevelInput = {
   id: string
   name: string
+  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -598,6 +670,7 @@ export type SubRoleCreateWithoutRoleLevelInput = {
 export type SubRoleUncheckedCreateWithoutRoleLevelInput = {
   id: string
   name: string
+  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -624,6 +697,7 @@ export type SubRoleUpdateToOneWithWhereWithoutRoleLevelInput = {
 export type SubRoleUpdateWithoutRoleLevelInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -634,6 +708,7 @@ export type SubRoleUpdateWithoutRoleLevelInput = {
 export type SubRoleUncheckedUpdateWithoutRoleLevelInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -644,6 +719,7 @@ export type SubRoleUncheckedUpdateWithoutRoleLevelInput = {
 export type SubRoleCreateManyEmployee_SubRole_createdByToEmployeeInput = {
   id: string
   name: string
+  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -653,6 +729,7 @@ export type SubRoleCreateManyEmployee_SubRole_createdByToEmployeeInput = {
 export type SubRoleCreateManyEmployee_SubRole_deletedByToEmployeeInput = {
   id: string
   name: string
+  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -662,6 +739,7 @@ export type SubRoleCreateManyEmployee_SubRole_deletedByToEmployeeInput = {
 export type SubRoleUpdateWithoutEmployee_SubRole_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -672,6 +750,7 @@ export type SubRoleUpdateWithoutEmployee_SubRole_createdByToEmployeeInput = {
 export type SubRoleUncheckedUpdateWithoutEmployee_SubRole_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -682,6 +761,7 @@ export type SubRoleUncheckedUpdateWithoutEmployee_SubRole_createdByToEmployeeInp
 export type SubRoleUncheckedUpdateManyWithoutEmployee_SubRole_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -691,6 +771,7 @@ export type SubRoleUncheckedUpdateManyWithoutEmployee_SubRole_createdByToEmploye
 export type SubRoleUpdateWithoutEmployee_SubRole_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -701,6 +782,7 @@ export type SubRoleUpdateWithoutEmployee_SubRole_deletedByToEmployeeInput = {
 export type SubRoleUncheckedUpdateWithoutEmployee_SubRole_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -711,6 +793,7 @@ export type SubRoleUncheckedUpdateWithoutEmployee_SubRole_deletedByToEmployeeInp
 export type SubRoleUncheckedUpdateManyWithoutEmployee_SubRole_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -751,6 +834,7 @@ export type SubRoleCountOutputTypeCountRoleLevelArgs<ExtArgs extends runtime.Typ
 export type SubRoleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  level?: boolean
   createdAt?: boolean
   deleted?: boolean
   deletedAt?: boolean
@@ -767,6 +851,7 @@ export type SubRoleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type SubRoleSelectScalar = {
   id?: boolean
   name?: boolean
+  level?: boolean
   createdAt?: boolean
   deleted?: boolean
   deletedAt?: boolean
@@ -774,7 +859,7 @@ export type SubRoleSelectScalar = {
   deletedBy?: boolean
 }
 
-export type SubRoleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "deleted" | "deletedAt" | "createdBy" | "deletedBy", ExtArgs["result"]["subRole"]>
+export type SubRoleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "level" | "createdAt" | "deleted" | "deletedAt" | "createdBy" | "deletedBy", ExtArgs["result"]["subRole"]>
 export type SubRoleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   RoleLevel?: boolean | Prisma.SubRole$RoleLevelArgs<ExtArgs>
   Employee_SubRole_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -792,6 +877,7 @@ export type $SubRolePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
+    level: number
     createdAt: Date
     deleted: boolean
     deletedAt: Date | null
@@ -1171,6 +1257,7 @@ export interface Prisma__SubRoleClient<T, Null = never, ExtArgs extends runtime.
 export interface SubRoleFieldRefs {
   readonly id: Prisma.FieldRef<"SubRole", 'String'>
   readonly name: Prisma.FieldRef<"SubRole", 'String'>
+  readonly level: Prisma.FieldRef<"SubRole", 'Int'>
   readonly createdAt: Prisma.FieldRef<"SubRole", 'DateTime'>
   readonly deleted: Prisma.FieldRef<"SubRole", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"SubRole", 'DateTime'>

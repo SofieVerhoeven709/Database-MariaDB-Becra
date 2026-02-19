@@ -154,6 +154,7 @@ export const seedDev = async (prisma: PrismaClient) => {
     data: {
       id: randomUUID(),
       name: 'Administrator',
+      level: 100,
       createdAt: now,
       createdBy: adminEmployee.id,
     },
@@ -163,7 +164,6 @@ export const seedDev = async (prisma: PrismaClient) => {
   const adminRoleLevel = await prisma.roleLevel.create({
     data: {
       id: randomUUID(),
-      level: 100,
       roleId: adminRole.id,
       subRoleId: adminSubRole.id,
       createdAt: now,
@@ -185,6 +185,7 @@ export const seedDev = async (prisma: PrismaClient) => {
       data: {
         id: randomUUID(),
         name: sub.name,
+        level: sub.level,
         createdAt: now,
         createdBy: adminEmployee.id,
       },
@@ -244,7 +245,6 @@ export const seedDev = async (prisma: PrismaClient) => {
       const roleLevel = await prisma.roleLevel.create({
         data: {
           id: randomUUID(),
-          level: sub.level,
           roleId: departmentRole.id,
           subRoleId: createdSubRoles[sub.name].id,
           createdAt: now,

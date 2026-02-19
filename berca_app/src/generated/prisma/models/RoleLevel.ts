@@ -20,23 +20,12 @@ export type RoleLevelModel = runtime.Types.Result.DefaultSelection<Prisma.$RoleL
 
 export type AggregateRoleLevel = {
   _count: RoleLevelCountAggregateOutputType | null
-  _avg: RoleLevelAvgAggregateOutputType | null
-  _sum: RoleLevelSumAggregateOutputType | null
   _min: RoleLevelMinAggregateOutputType | null
   _max: RoleLevelMaxAggregateOutputType | null
 }
 
-export type RoleLevelAvgAggregateOutputType = {
-  level: number | null
-}
-
-export type RoleLevelSumAggregateOutputType = {
-  level: number | null
-}
-
 export type RoleLevelMinAggregateOutputType = {
   id: string | null
-  level: number | null
   roleId: string | null
   subRoleId: string | null
   createdAt: Date | null
@@ -48,7 +37,6 @@ export type RoleLevelMinAggregateOutputType = {
 
 export type RoleLevelMaxAggregateOutputType = {
   id: string | null
-  level: number | null
   roleId: string | null
   subRoleId: string | null
   createdAt: Date | null
@@ -60,7 +48,6 @@ export type RoleLevelMaxAggregateOutputType = {
 
 export type RoleLevelCountAggregateOutputType = {
   id: number
-  level: number
   roleId: number
   subRoleId: number
   createdAt: number
@@ -72,17 +59,8 @@ export type RoleLevelCountAggregateOutputType = {
 }
 
 
-export type RoleLevelAvgAggregateInputType = {
-  level?: true
-}
-
-export type RoleLevelSumAggregateInputType = {
-  level?: true
-}
-
 export type RoleLevelMinAggregateInputType = {
   id?: true
-  level?: true
   roleId?: true
   subRoleId?: true
   createdAt?: true
@@ -94,7 +72,6 @@ export type RoleLevelMinAggregateInputType = {
 
 export type RoleLevelMaxAggregateInputType = {
   id?: true
-  level?: true
   roleId?: true
   subRoleId?: true
   createdAt?: true
@@ -106,7 +83,6 @@ export type RoleLevelMaxAggregateInputType = {
 
 export type RoleLevelCountAggregateInputType = {
   id?: true
-  level?: true
   roleId?: true
   subRoleId?: true
   createdAt?: true
@@ -155,18 +131,6 @@ export type RoleLevelAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inte
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: RoleLevelAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: RoleLevelSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: RoleLevelMinAggregateInputType
@@ -197,15 +161,12 @@ export type RoleLevelGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   _count?: RoleLevelCountAggregateInputType | true
-  _avg?: RoleLevelAvgAggregateInputType
-  _sum?: RoleLevelSumAggregateInputType
   _min?: RoleLevelMinAggregateInputType
   _max?: RoleLevelMaxAggregateInputType
 }
 
 export type RoleLevelGroupByOutputType = {
   id: string
-  level: number
   roleId: string
   subRoleId: string
   createdAt: Date
@@ -214,8 +175,6 @@ export type RoleLevelGroupByOutputType = {
   createdBy: string
   deletedBy: string | null
   _count: RoleLevelCountAggregateOutputType | null
-  _avg: RoleLevelAvgAggregateOutputType | null
-  _sum: RoleLevelSumAggregateOutputType | null
   _min: RoleLevelMinAggregateOutputType | null
   _max: RoleLevelMaxAggregateOutputType | null
 }
@@ -240,7 +199,6 @@ export type RoleLevelWhereInput = {
   OR?: Prisma.RoleLevelWhereInput[]
   NOT?: Prisma.RoleLevelWhereInput | Prisma.RoleLevelWhereInput[]
   id?: Prisma.StringFilter<"RoleLevel"> | string
-  level?: Prisma.IntFilter<"RoleLevel"> | number
   roleId?: Prisma.StringFilter<"RoleLevel"> | string
   subRoleId?: Prisma.StringFilter<"RoleLevel"> | string
   createdAt?: Prisma.DateTimeFilter<"RoleLevel"> | Date | string
@@ -258,7 +216,6 @@ export type RoleLevelWhereInput = {
 
 export type RoleLevelOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  level?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   subRoleId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -280,7 +237,6 @@ export type RoleLevelWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.RoleLevelWhereInput | Prisma.RoleLevelWhereInput[]
   OR?: Prisma.RoleLevelWhereInput[]
   NOT?: Prisma.RoleLevelWhereInput | Prisma.RoleLevelWhereInput[]
-  level?: Prisma.IntFilter<"RoleLevel"> | number
   roleId?: Prisma.StringFilter<"RoleLevel"> | string
   subRoleId?: Prisma.StringFilter<"RoleLevel"> | string
   createdAt?: Prisma.DateTimeFilter<"RoleLevel"> | Date | string
@@ -298,7 +254,6 @@ export type RoleLevelWhereUniqueInput = Prisma.AtLeast<{
 
 export type RoleLevelOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  level?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   subRoleId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -307,10 +262,8 @@ export type RoleLevelOrderByWithAggregationInput = {
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.RoleLevelCountOrderByAggregateInput
-  _avg?: Prisma.RoleLevelAvgOrderByAggregateInput
   _max?: Prisma.RoleLevelMaxOrderByAggregateInput
   _min?: Prisma.RoleLevelMinOrderByAggregateInput
-  _sum?: Prisma.RoleLevelSumOrderByAggregateInput
 }
 
 export type RoleLevelScalarWhereWithAggregatesInput = {
@@ -318,7 +271,6 @@ export type RoleLevelScalarWhereWithAggregatesInput = {
   OR?: Prisma.RoleLevelScalarWhereWithAggregatesInput[]
   NOT?: Prisma.RoleLevelScalarWhereWithAggregatesInput | Prisma.RoleLevelScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"RoleLevel"> | string
-  level?: Prisma.IntWithAggregatesFilter<"RoleLevel"> | number
   roleId?: Prisma.StringWithAggregatesFilter<"RoleLevel"> | string
   subRoleId?: Prisma.StringWithAggregatesFilter<"RoleLevel"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RoleLevel"> | Date | string
@@ -330,7 +282,6 @@ export type RoleLevelScalarWhereWithAggregatesInput = {
 
 export type RoleLevelCreateInput = {
   id: string
-  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -344,7 +295,6 @@ export type RoleLevelCreateInput = {
 
 export type RoleLevelUncheckedCreateInput = {
   id: string
-  level: number
   roleId: string
   subRoleId: string
   createdAt: Date | string
@@ -358,7 +308,6 @@ export type RoleLevelUncheckedCreateInput = {
 
 export type RoleLevelUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -372,7 +321,6 @@ export type RoleLevelUpdateInput = {
 
 export type RoleLevelUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   subRoleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -386,7 +334,6 @@ export type RoleLevelUncheckedUpdateInput = {
 
 export type RoleLevelCreateManyInput = {
   id: string
-  level: number
   roleId: string
   subRoleId: string
   createdAt: Date | string
@@ -398,7 +345,6 @@ export type RoleLevelCreateManyInput = {
 
 export type RoleLevelUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -406,7 +352,6 @@ export type RoleLevelUpdateManyMutationInput = {
 
 export type RoleLevelUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   subRoleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -444,7 +389,6 @@ export type RoleLevelOrderByRelevanceInput = {
 
 export type RoleLevelCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  level?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   subRoleId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -454,13 +398,8 @@ export type RoleLevelCountOrderByAggregateInput = {
   deletedBy?: Prisma.SortOrder
 }
 
-export type RoleLevelAvgOrderByAggregateInput = {
-  level?: Prisma.SortOrder
-}
-
 export type RoleLevelMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  level?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   subRoleId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -472,7 +411,6 @@ export type RoleLevelMaxOrderByAggregateInput = {
 
 export type RoleLevelMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  level?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   subRoleId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -480,10 +418,6 @@ export type RoleLevelMinOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-}
-
-export type RoleLevelSumOrderByAggregateInput = {
-  level?: Prisma.SortOrder
 }
 
 export type RoleLevelCreateNestedOneWithoutEmployee_Employee_roleLevelIdToRoleLevelInput = {
@@ -686,7 +620,6 @@ export type RoleLevelUncheckedUpdateManyWithoutSubRoleNestedInput = {
 
 export type RoleLevelCreateWithoutEmployee_Employee_roleLevelIdToRoleLevelInput = {
   id: string
-  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -699,7 +632,6 @@ export type RoleLevelCreateWithoutEmployee_Employee_roleLevelIdToRoleLevelInput 
 
 export type RoleLevelUncheckedCreateWithoutEmployee_Employee_roleLevelIdToRoleLevelInput = {
   id: string
-  level: number
   roleId: string
   subRoleId: string
   createdAt: Date | string
@@ -717,7 +649,6 @@ export type RoleLevelCreateOrConnectWithoutEmployee_Employee_roleLevelIdToRoleLe
 
 export type RoleLevelCreateWithoutEmployee_RoleLevel_createdByToEmployeeInput = {
   id: string
-  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -730,7 +661,6 @@ export type RoleLevelCreateWithoutEmployee_RoleLevel_createdByToEmployeeInput = 
 
 export type RoleLevelUncheckedCreateWithoutEmployee_RoleLevel_createdByToEmployeeInput = {
   id: string
-  level: number
   roleId: string
   subRoleId: string
   createdAt: Date | string
@@ -753,7 +683,6 @@ export type RoleLevelCreateManyEmployee_RoleLevel_createdByToEmployeeInputEnvelo
 
 export type RoleLevelCreateWithoutEmployee_RoleLevel_deletedByToEmployeeInput = {
   id: string
-  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -766,7 +695,6 @@ export type RoleLevelCreateWithoutEmployee_RoleLevel_deletedByToEmployeeInput = 
 
 export type RoleLevelUncheckedCreateWithoutEmployee_RoleLevel_deletedByToEmployeeInput = {
   id: string
-  level: number
   roleId: string
   subRoleId: string
   createdAt: Date | string
@@ -800,7 +728,6 @@ export type RoleLevelUpdateToOneWithWhereWithoutEmployee_Employee_roleLevelIdToR
 
 export type RoleLevelUpdateWithoutEmployee_Employee_roleLevelIdToRoleLevelInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -813,7 +740,6 @@ export type RoleLevelUpdateWithoutEmployee_Employee_roleLevelIdToRoleLevelInput 
 
 export type RoleLevelUncheckedUpdateWithoutEmployee_Employee_roleLevelIdToRoleLevelInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   subRoleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -845,7 +771,6 @@ export type RoleLevelScalarWhereInput = {
   OR?: Prisma.RoleLevelScalarWhereInput[]
   NOT?: Prisma.RoleLevelScalarWhereInput | Prisma.RoleLevelScalarWhereInput[]
   id?: Prisma.StringFilter<"RoleLevel"> | string
-  level?: Prisma.IntFilter<"RoleLevel"> | number
   roleId?: Prisma.StringFilter<"RoleLevel"> | string
   subRoleId?: Prisma.StringFilter<"RoleLevel"> | string
   createdAt?: Prisma.DateTimeFilter<"RoleLevel"> | Date | string
@@ -873,7 +798,6 @@ export type RoleLevelUpdateManyWithWhereWithoutEmployee_RoleLevel_deletedByToEmp
 
 export type RoleLevelCreateWithoutRoleInput = {
   id: string
-  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -886,7 +810,6 @@ export type RoleLevelCreateWithoutRoleInput = {
 
 export type RoleLevelUncheckedCreateWithoutRoleInput = {
   id: string
-  level: number
   subRoleId: string
   createdAt: Date | string
   deleted?: boolean
@@ -925,7 +848,6 @@ export type RoleLevelUpdateManyWithWhereWithoutRoleInput = {
 
 export type RoleLevelCreateWithoutVisibilityForRoleInput = {
   id: string
-  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -938,7 +860,6 @@ export type RoleLevelCreateWithoutVisibilityForRoleInput = {
 
 export type RoleLevelUncheckedCreateWithoutVisibilityForRoleInput = {
   id: string
-  level: number
   roleId: string
   subRoleId: string
   createdAt: Date | string
@@ -967,7 +888,6 @@ export type RoleLevelUpdateToOneWithWhereWithoutVisibilityForRoleInput = {
 
 export type RoleLevelUpdateWithoutVisibilityForRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -980,7 +900,6 @@ export type RoleLevelUpdateWithoutVisibilityForRoleInput = {
 
 export type RoleLevelUncheckedUpdateWithoutVisibilityForRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   subRoleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -993,7 +912,6 @@ export type RoleLevelUncheckedUpdateWithoutVisibilityForRoleInput = {
 
 export type RoleLevelCreateWithoutSubRoleInput = {
   id: string
-  level: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -1006,7 +924,6 @@ export type RoleLevelCreateWithoutSubRoleInput = {
 
 export type RoleLevelUncheckedCreateWithoutSubRoleInput = {
   id: string
-  level: number
   roleId: string
   createdAt: Date | string
   deleted?: boolean
@@ -1045,7 +962,6 @@ export type RoleLevelUpdateManyWithWhereWithoutSubRoleInput = {
 
 export type RoleLevelCreateManyEmployee_RoleLevel_createdByToEmployeeInput = {
   id: string
-  level: number
   roleId: string
   subRoleId: string
   createdAt: Date | string
@@ -1056,7 +972,6 @@ export type RoleLevelCreateManyEmployee_RoleLevel_createdByToEmployeeInput = {
 
 export type RoleLevelCreateManyEmployee_RoleLevel_deletedByToEmployeeInput = {
   id: string
-  level: number
   roleId: string
   subRoleId: string
   createdAt: Date | string
@@ -1067,7 +982,6 @@ export type RoleLevelCreateManyEmployee_RoleLevel_deletedByToEmployeeInput = {
 
 export type RoleLevelUpdateWithoutEmployee_RoleLevel_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1080,7 +994,6 @@ export type RoleLevelUpdateWithoutEmployee_RoleLevel_createdByToEmployeeInput = 
 
 export type RoleLevelUncheckedUpdateWithoutEmployee_RoleLevel_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   subRoleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1093,7 +1006,6 @@ export type RoleLevelUncheckedUpdateWithoutEmployee_RoleLevel_createdByToEmploye
 
 export type RoleLevelUncheckedUpdateManyWithoutEmployee_RoleLevel_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   subRoleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1104,7 +1016,6 @@ export type RoleLevelUncheckedUpdateManyWithoutEmployee_RoleLevel_createdByToEmp
 
 export type RoleLevelUpdateWithoutEmployee_RoleLevel_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1117,7 +1028,6 @@ export type RoleLevelUpdateWithoutEmployee_RoleLevel_deletedByToEmployeeInput = 
 
 export type RoleLevelUncheckedUpdateWithoutEmployee_RoleLevel_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   subRoleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1130,7 +1040,6 @@ export type RoleLevelUncheckedUpdateWithoutEmployee_RoleLevel_deletedByToEmploye
 
 export type RoleLevelUncheckedUpdateManyWithoutEmployee_RoleLevel_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   subRoleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1141,7 +1050,6 @@ export type RoleLevelUncheckedUpdateManyWithoutEmployee_RoleLevel_deletedByToEmp
 
 export type RoleLevelCreateManyRoleInput = {
   id: string
-  level: number
   subRoleId: string
   createdAt: Date | string
   deleted?: boolean
@@ -1152,7 +1060,6 @@ export type RoleLevelCreateManyRoleInput = {
 
 export type RoleLevelUpdateWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1165,7 +1072,6 @@ export type RoleLevelUpdateWithoutRoleInput = {
 
 export type RoleLevelUncheckedUpdateWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   subRoleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1178,7 +1084,6 @@ export type RoleLevelUncheckedUpdateWithoutRoleInput = {
 
 export type RoleLevelUncheckedUpdateManyWithoutRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   subRoleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1189,7 +1094,6 @@ export type RoleLevelUncheckedUpdateManyWithoutRoleInput = {
 
 export type RoleLevelCreateManySubRoleInput = {
   id: string
-  level: number
   roleId: string
   createdAt: Date | string
   deleted?: boolean
@@ -1200,7 +1104,6 @@ export type RoleLevelCreateManySubRoleInput = {
 
 export type RoleLevelUpdateWithoutSubRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1213,7 +1116,6 @@ export type RoleLevelUpdateWithoutSubRoleInput = {
 
 export type RoleLevelUncheckedUpdateWithoutSubRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1226,7 +1128,6 @@ export type RoleLevelUncheckedUpdateWithoutSubRoleInput = {
 
 export type RoleLevelUncheckedUpdateManyWithoutSubRoleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
   roleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1277,7 +1178,6 @@ export type RoleLevelCountOutputTypeCountVisibilityForRoleArgs<ExtArgs extends r
 
 export type RoleLevelSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  level?: boolean
   roleId?: boolean
   subRoleId?: boolean
   createdAt?: boolean
@@ -1298,7 +1198,6 @@ export type RoleLevelSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type RoleLevelSelectScalar = {
   id?: boolean
-  level?: boolean
   roleId?: boolean
   subRoleId?: boolean
   createdAt?: boolean
@@ -1308,7 +1207,7 @@ export type RoleLevelSelectScalar = {
   deletedBy?: boolean
 }
 
-export type RoleLevelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "level" | "roleId" | "subRoleId" | "createdAt" | "deleted" | "deletedAt" | "createdBy" | "deletedBy", ExtArgs["result"]["roleLevel"]>
+export type RoleLevelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roleId" | "subRoleId" | "createdAt" | "deleted" | "deletedAt" | "createdBy" | "deletedBy", ExtArgs["result"]["roleLevel"]>
 export type RoleLevelInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee_Employee_roleLevelIdToRoleLevel?: boolean | Prisma.RoleLevel$Employee_Employee_roleLevelIdToRoleLevelArgs<ExtArgs>
   Role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
@@ -1331,7 +1230,6 @@ export type $RoleLevelPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    level: number
     roleId: string
     subRoleId: string
     createdAt: Date
@@ -1715,7 +1613,6 @@ export interface Prisma__RoleLevelClient<T, Null = never, ExtArgs extends runtim
  */
 export interface RoleLevelFieldRefs {
   readonly id: Prisma.FieldRef<"RoleLevel", 'String'>
-  readonly level: Prisma.FieldRef<"RoleLevel", 'Int'>
   readonly roleId: Prisma.FieldRef<"RoleLevel", 'String'>
   readonly subRoleId: Prisma.FieldRef<"RoleLevel", 'String'>
   readonly createdAt: Prisma.FieldRef<"RoleLevel", 'DateTime'>

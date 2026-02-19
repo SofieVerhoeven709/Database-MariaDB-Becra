@@ -123,7 +123,8 @@ export const ModelName = {
   WorkOrderInvoice: 'WorkOrderInvoice',
   WorkOrderStructure: 'WorkOrderStructure',
   RoleLevel: 'RoleLevel',
-  SubRole: 'SubRole'
+  SubRole: 'SubRole',
+  DepartmentExtern: 'DepartmentExtern'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -272,7 +273,7 @@ export const ContactScalarFieldEnum = {
   participantTrainingAndAdvice: 'participantTrainingAndAdvice',
   createdBy: 'createdBy',
   functionId: 'functionId',
-  departmentId: 'departmentId',
+  departmentExternId: 'departmentExternId',
   titleId: 'titleId',
   businessCardId: 'businessCardId',
   targetId: 'targetId',
@@ -310,8 +311,8 @@ export const DepartmentScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   createdBy: 'createdBy',
-  targetId: 'targetId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
@@ -377,10 +378,7 @@ export const EmergencyContactScalarFieldEnum = {
   relationship: 'relationship',
   mail: 'mail',
   phoneNumber: 'phoneNumber',
-  employeeId: 'employeeId',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  employeeId: 'employeeId'
 } as const
 
 export type EmergencyContactScalarFieldEnum = (typeof EmergencyContactScalarFieldEnum)[keyof typeof EmergencyContactScalarFieldEnum]
@@ -411,8 +409,6 @@ export const EmployeeScalarFieldEnum = {
   passwordCreatedAt: 'passwordCreatedAt',
   createdBy: 'createdBy',
   roleLevelId: 'roleLevelId',
-  functionId: 'functionId',
-  departmentId: 'departmentId',
   titleId: 'titleId',
   pictureId: 'pictureId',
   deleted: 'deleted',
@@ -1335,10 +1331,7 @@ export type TimeRegistryScalarFieldEnum = (typeof TimeRegistryScalarFieldEnum)[k
 export const TimeRegistryEmployeeScalarFieldEnum = {
   id: 'id',
   employeeId: 'employeeId',
-  timeRegistryId: 'timeRegistryId',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  timeRegistryId: 'timeRegistryId'
 } as const
 
 export type TimeRegistryEmployeeScalarFieldEnum = (typeof TimeRegistryEmployeeScalarFieldEnum)[keyof typeof TimeRegistryEmployeeScalarFieldEnum]
@@ -1545,7 +1538,6 @@ export type WorkOrderStructureScalarFieldEnum = (typeof WorkOrderStructureScalar
 
 export const RoleLevelScalarFieldEnum = {
   id: 'id',
-  level: 'level',
   roleId: 'roleId',
   subRoleId: 'subRoleId',
   createdAt: 'createdAt',
@@ -1561,6 +1553,7 @@ export type RoleLevelScalarFieldEnum = (typeof RoleLevelScalarFieldEnum)[keyof t
 export const SubRoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  level: 'level',
   createdAt: 'createdAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -1569,6 +1562,20 @@ export const SubRoleScalarFieldEnum = {
 } as const
 
 export type SubRoleScalarFieldEnum = (typeof SubRoleScalarFieldEnum)[keyof typeof SubRoleScalarFieldEnum]
+
+
+export const DepartmentExternScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
+} as const
+
+export type DepartmentExternScalarFieldEnum = (typeof DepartmentExternScalarFieldEnum)[keyof typeof DepartmentExternScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1676,7 +1683,7 @@ export const ContactOrderByRelevanceFieldEnum = {
   description: 'description',
   createdBy: 'createdBy',
   functionId: 'functionId',
-  departmentId: 'departmentId',
+  departmentExternId: 'departmentExternId',
   titleId: 'titleId',
   businessCardId: 'businessCardId',
   targetId: 'targetId',
@@ -1705,8 +1712,8 @@ export const DepartmentOrderByRelevanceFieldEnum = {
   icon: 'icon',
   description: 'description',
   createdBy: 'createdBy',
-  targetId: 'targetId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type DepartmentOrderByRelevanceFieldEnum = (typeof DepartmentOrderByRelevanceFieldEnum)[keyof typeof DepartmentOrderByRelevanceFieldEnum]
@@ -1761,8 +1768,7 @@ export const EmergencyContactOrderByRelevanceFieldEnum = {
   relationship: 'relationship',
   mail: 'mail',
   phoneNumber: 'phoneNumber',
-  employeeId: 'employeeId',
-  deletedBy: 'deletedBy'
+  employeeId: 'employeeId'
 } as const
 
 export type EmergencyContactOrderByRelevanceFieldEnum = (typeof EmergencyContactOrderByRelevanceFieldEnum)[keyof typeof EmergencyContactOrderByRelevanceFieldEnum]
@@ -1784,8 +1790,6 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   username: 'username',
   createdBy: 'createdBy',
   roleLevelId: 'roleLevelId',
-  functionId: 'functionId',
-  departmentId: 'departmentId',
   titleId: 'titleId',
   pictureId: 'pictureId',
   deletedBy: 'deletedBy'
@@ -2469,8 +2473,7 @@ export type TimeRegistryOrderByRelevanceFieldEnum = (typeof TimeRegistryOrderByR
 export const TimeRegistryEmployeeOrderByRelevanceFieldEnum = {
   id: 'id',
   employeeId: 'employeeId',
-  timeRegistryId: 'timeRegistryId',
-  deletedBy: 'deletedBy'
+  timeRegistryId: 'timeRegistryId'
 } as const
 
 export type TimeRegistryEmployeeOrderByRelevanceFieldEnum = (typeof TimeRegistryEmployeeOrderByRelevanceFieldEnum)[keyof typeof TimeRegistryEmployeeOrderByRelevanceFieldEnum]
@@ -2643,4 +2646,15 @@ export const SubRoleOrderByRelevanceFieldEnum = {
 } as const
 
 export type SubRoleOrderByRelevanceFieldEnum = (typeof SubRoleOrderByRelevanceFieldEnum)[keyof typeof SubRoleOrderByRelevanceFieldEnum]
+
+
+export const DepartmentExternOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
+} as const
+
+export type DepartmentExternOrderByRelevanceFieldEnum = (typeof DepartmentExternOrderByRelevanceFieldEnum)[keyof typeof DepartmentExternOrderByRelevanceFieldEnum]
 

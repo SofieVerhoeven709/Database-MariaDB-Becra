@@ -392,3 +392,8 @@ export type RoleLevel = Prisma.RoleLevelModel
  * 
  */
 export type SubRole = Prisma.SubRoleModel
+/**
+ * Model DepartmentExtern
+ * 
+ */
+export type DepartmentExtern = Prisma.DepartmentExternModel

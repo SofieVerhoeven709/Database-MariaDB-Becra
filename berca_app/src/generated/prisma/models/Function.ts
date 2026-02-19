@@ -199,7 +199,6 @@ export type FunctionWhereInput = {
   createdBy?: Prisma.StringFilter<"Function"> | string
   deletedBy?: Prisma.StringNullableFilter<"Function"> | string | null
   Contact?: Prisma.ContactListRelationFilter
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeListRelationFilter
   Employee_Function_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_Function_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
@@ -213,7 +212,6 @@ export type FunctionOrderByWithRelationInput = {
   createdBy?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Contact?: Prisma.ContactOrderByRelationAggregateInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeOrderByRelationAggregateInput
   Employee_Function_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_Function_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.FunctionOrderByRelevanceInput
@@ -231,7 +229,6 @@ export type FunctionWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.StringFilter<"Function"> | string
   deletedBy?: Prisma.StringNullableFilter<"Function"> | string | null
   Contact?: Prisma.ContactListRelationFilter
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeListRelationFilter
   Employee_Function_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_Function_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
@@ -269,7 +266,6 @@ export type FunctionCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutFunctionInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeCreateNestedManyWithoutFunction_Employee_functionIdToFunctionInput
   Employee_Function_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_createdByToEmployeeInput
   Employee_Function_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_deletedByToEmployeeInput
 }
@@ -283,7 +279,6 @@ export type FunctionUncheckedCreateInput = {
   createdBy: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutFunctionInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedCreateNestedManyWithoutFunction_Employee_functionIdToFunctionInput
 }
 
 export type FunctionUpdateInput = {
@@ -293,7 +288,6 @@ export type FunctionUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutFunctionNestedInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUpdateManyWithoutFunction_Employee_functionIdToFunctionNestedInput
   Employee_Function_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFunction_Function_createdByToEmployeeNestedInput
   Employee_Function_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFunction_Function_deletedByToEmployeeNestedInput
 }
@@ -307,7 +301,6 @@ export type FunctionUncheckedUpdateInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutFunctionNestedInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedUpdateManyWithoutFunction_Employee_functionIdToFunctionNestedInput
 }
 
 export type FunctionCreateManyInput = {
@@ -405,12 +398,6 @@ export type FunctionUpdateOneWithoutContactNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FunctionUpdateToOneWithWhereWithoutContactInput, Prisma.FunctionUpdateWithoutContactInput>, Prisma.FunctionUncheckedUpdateWithoutContactInput>
 }
 
-export type FunctionCreateNestedOneWithoutEmployee_Employee_functionIdToFunctionInput = {
-  create?: Prisma.XOR<Prisma.FunctionCreateWithoutEmployee_Employee_functionIdToFunctionInput, Prisma.FunctionUncheckedCreateWithoutEmployee_Employee_functionIdToFunctionInput>
-  connectOrCreate?: Prisma.FunctionCreateOrConnectWithoutEmployee_Employee_functionIdToFunctionInput
-  connect?: Prisma.FunctionWhereUniqueInput
-}
-
 export type FunctionCreateNestedManyWithoutEmployee_Function_createdByToEmployeeInput = {
   create?: Prisma.XOR<Prisma.FunctionCreateWithoutEmployee_Function_createdByToEmployeeInput, Prisma.FunctionUncheckedCreateWithoutEmployee_Function_createdByToEmployeeInput> | Prisma.FunctionCreateWithoutEmployee_Function_createdByToEmployeeInput[] | Prisma.FunctionUncheckedCreateWithoutEmployee_Function_createdByToEmployeeInput[]
   connectOrCreate?: Prisma.FunctionCreateOrConnectWithoutEmployee_Function_createdByToEmployeeInput | Prisma.FunctionCreateOrConnectWithoutEmployee_Function_createdByToEmployeeInput[]
@@ -437,16 +424,6 @@ export type FunctionUncheckedCreateNestedManyWithoutEmployee_Function_deletedByT
   connectOrCreate?: Prisma.FunctionCreateOrConnectWithoutEmployee_Function_deletedByToEmployeeInput | Prisma.FunctionCreateOrConnectWithoutEmployee_Function_deletedByToEmployeeInput[]
   createMany?: Prisma.FunctionCreateManyEmployee_Function_deletedByToEmployeeInputEnvelope
   connect?: Prisma.FunctionWhereUniqueInput | Prisma.FunctionWhereUniqueInput[]
-}
-
-export type FunctionUpdateOneWithoutEmployee_Employee_functionIdToFunctionNestedInput = {
-  create?: Prisma.XOR<Prisma.FunctionCreateWithoutEmployee_Employee_functionIdToFunctionInput, Prisma.FunctionUncheckedCreateWithoutEmployee_Employee_functionIdToFunctionInput>
-  connectOrCreate?: Prisma.FunctionCreateOrConnectWithoutEmployee_Employee_functionIdToFunctionInput
-  upsert?: Prisma.FunctionUpsertWithoutEmployee_Employee_functionIdToFunctionInput
-  disconnect?: Prisma.FunctionWhereInput | boolean
-  delete?: Prisma.FunctionWhereInput | boolean
-  connect?: Prisma.FunctionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.FunctionUpdateToOneWithWhereWithoutEmployee_Employee_functionIdToFunctionInput, Prisma.FunctionUpdateWithoutEmployee_Employee_functionIdToFunctionInput>, Prisma.FunctionUncheckedUpdateWithoutEmployee_Employee_functionIdToFunctionInput>
 }
 
 export type FunctionUpdateManyWithoutEmployee_Function_createdByToEmployeeNestedInput = {
@@ -511,7 +488,6 @@ export type FunctionCreateWithoutContactInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeCreateNestedManyWithoutFunction_Employee_functionIdToFunctionInput
   Employee_Function_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_createdByToEmployeeInput
   Employee_Function_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_deletedByToEmployeeInput
 }
@@ -524,7 +500,6 @@ export type FunctionUncheckedCreateWithoutContactInput = {
   deletedAt?: Date | string | null
   createdBy: string
   deletedBy?: string | null
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedCreateNestedManyWithoutFunction_Employee_functionIdToFunctionInput
 }
 
 export type FunctionCreateOrConnectWithoutContactInput = {
@@ -549,7 +524,6 @@ export type FunctionUpdateWithoutContactInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUpdateManyWithoutFunction_Employee_functionIdToFunctionNestedInput
   Employee_Function_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFunction_Function_createdByToEmployeeNestedInput
   Employee_Function_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFunction_Function_deletedByToEmployeeNestedInput
 }
@@ -562,34 +536,6 @@ export type FunctionUncheckedUpdateWithoutContactInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedUpdateManyWithoutFunction_Employee_functionIdToFunctionNestedInput
-}
-
-export type FunctionCreateWithoutEmployee_Employee_functionIdToFunctionInput = {
-  id: string
-  name: string
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Contact?: Prisma.ContactCreateNestedManyWithoutFunctionInput
-  Employee_Function_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_createdByToEmployeeInput
-  Employee_Function_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_deletedByToEmployeeInput
-}
-
-export type FunctionUncheckedCreateWithoutEmployee_Employee_functionIdToFunctionInput = {
-  id: string
-  name: string
-  createdAt: Date | string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  createdBy: string
-  deletedBy?: string | null
-  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutFunctionInput
-}
-
-export type FunctionCreateOrConnectWithoutEmployee_Employee_functionIdToFunctionInput = {
-  where: Prisma.FunctionWhereUniqueInput
-  create: Prisma.XOR<Prisma.FunctionCreateWithoutEmployee_Employee_functionIdToFunctionInput, Prisma.FunctionUncheckedCreateWithoutEmployee_Employee_functionIdToFunctionInput>
 }
 
 export type FunctionCreateWithoutEmployee_Function_createdByToEmployeeInput = {
@@ -599,7 +545,6 @@ export type FunctionCreateWithoutEmployee_Function_createdByToEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutFunctionInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeCreateNestedManyWithoutFunction_Employee_functionIdToFunctionInput
   Employee_Function_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_deletedByToEmployeeInput
 }
 
@@ -611,7 +556,6 @@ export type FunctionUncheckedCreateWithoutEmployee_Function_createdByToEmployeeI
   deletedAt?: Date | string | null
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutFunctionInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedCreateNestedManyWithoutFunction_Employee_functionIdToFunctionInput
 }
 
 export type FunctionCreateOrConnectWithoutEmployee_Function_createdByToEmployeeInput = {
@@ -631,7 +575,6 @@ export type FunctionCreateWithoutEmployee_Function_deletedByToEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutFunctionInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeCreateNestedManyWithoutFunction_Employee_functionIdToFunctionInput
   Employee_Function_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_createdByToEmployeeInput
 }
 
@@ -643,7 +586,6 @@ export type FunctionUncheckedCreateWithoutEmployee_Function_deletedByToEmployeeI
   deletedAt?: Date | string | null
   createdBy: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutFunctionInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedCreateNestedManyWithoutFunction_Employee_functionIdToFunctionInput
 }
 
 export type FunctionCreateOrConnectWithoutEmployee_Function_deletedByToEmployeeInput = {
@@ -654,39 +596,6 @@ export type FunctionCreateOrConnectWithoutEmployee_Function_deletedByToEmployeeI
 export type FunctionCreateManyEmployee_Function_deletedByToEmployeeInputEnvelope = {
   data: Prisma.FunctionCreateManyEmployee_Function_deletedByToEmployeeInput | Prisma.FunctionCreateManyEmployee_Function_deletedByToEmployeeInput[]
   skipDuplicates?: boolean
-}
-
-export type FunctionUpsertWithoutEmployee_Employee_functionIdToFunctionInput = {
-  update: Prisma.XOR<Prisma.FunctionUpdateWithoutEmployee_Employee_functionIdToFunctionInput, Prisma.FunctionUncheckedUpdateWithoutEmployee_Employee_functionIdToFunctionInput>
-  create: Prisma.XOR<Prisma.FunctionCreateWithoutEmployee_Employee_functionIdToFunctionInput, Prisma.FunctionUncheckedCreateWithoutEmployee_Employee_functionIdToFunctionInput>
-  where?: Prisma.FunctionWhereInput
-}
-
-export type FunctionUpdateToOneWithWhereWithoutEmployee_Employee_functionIdToFunctionInput = {
-  where?: Prisma.FunctionWhereInput
-  data: Prisma.XOR<Prisma.FunctionUpdateWithoutEmployee_Employee_functionIdToFunctionInput, Prisma.FunctionUncheckedUpdateWithoutEmployee_Employee_functionIdToFunctionInput>
-}
-
-export type FunctionUpdateWithoutEmployee_Employee_functionIdToFunctionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Contact?: Prisma.ContactUpdateManyWithoutFunctionNestedInput
-  Employee_Function_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFunction_Function_createdByToEmployeeNestedInput
-  Employee_Function_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFunction_Function_deletedByToEmployeeNestedInput
-}
-
-export type FunctionUncheckedUpdateWithoutEmployee_Employee_functionIdToFunctionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  Contact?: Prisma.ContactUncheckedUpdateManyWithoutFunctionNestedInput
 }
 
 export type FunctionUpsertWithWhereUniqueWithoutEmployee_Function_createdByToEmployeeInput = {
@@ -759,7 +668,6 @@ export type FunctionUpdateWithoutEmployee_Function_createdByToEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutFunctionNestedInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUpdateManyWithoutFunction_Employee_functionIdToFunctionNestedInput
   Employee_Function_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFunction_Function_deletedByToEmployeeNestedInput
 }
 
@@ -771,7 +679,6 @@ export type FunctionUncheckedUpdateWithoutEmployee_Function_createdByToEmployeeI
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutFunctionNestedInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedUpdateManyWithoutFunction_Employee_functionIdToFunctionNestedInput
 }
 
 export type FunctionUncheckedUpdateManyWithoutEmployee_Function_createdByToEmployeeInput = {
@@ -790,7 +697,6 @@ export type FunctionUpdateWithoutEmployee_Function_deletedByToEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutFunctionNestedInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUpdateManyWithoutFunction_Employee_functionIdToFunctionNestedInput
   Employee_Function_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFunction_Function_createdByToEmployeeNestedInput
 }
 
@@ -802,7 +708,6 @@ export type FunctionUncheckedUpdateWithoutEmployee_Function_deletedByToEmployeeI
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutFunctionNestedInput
-  Employee_Employee_functionIdToFunction?: Prisma.EmployeeUncheckedUpdateManyWithoutFunction_Employee_functionIdToFunctionNestedInput
 }
 
 export type FunctionUncheckedUpdateManyWithoutEmployee_Function_deletedByToEmployeeInput = {
@@ -821,12 +726,10 @@ export type FunctionUncheckedUpdateManyWithoutEmployee_Function_deletedByToEmplo
 
 export type FunctionCountOutputType = {
   Contact: number
-  Employee_Employee_functionIdToFunction: number
 }
 
 export type FunctionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Contact?: boolean | FunctionCountOutputTypeCountContactArgs
-  Employee_Employee_functionIdToFunction?: boolean | FunctionCountOutputTypeCountEmployee_Employee_functionIdToFunctionArgs
 }
 
 /**
@@ -846,13 +749,6 @@ export type FunctionCountOutputTypeCountContactArgs<ExtArgs extends runtime.Type
   where?: Prisma.ContactWhereInput
 }
 
-/**
- * FunctionCountOutputType without action
- */
-export type FunctionCountOutputTypeCountEmployee_Employee_functionIdToFunctionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.EmployeeWhereInput
-}
-
 
 export type FunctionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -863,7 +759,6 @@ export type FunctionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdBy?: boolean
   deletedBy?: boolean
   Contact?: boolean | Prisma.Function$ContactArgs<ExtArgs>
-  Employee_Employee_functionIdToFunction?: boolean | Prisma.Function$Employee_Employee_functionIdToFunctionArgs<ExtArgs>
   Employee_Function_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_Function_deletedByToEmployee?: boolean | Prisma.Function$Employee_Function_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.FunctionCountOutputTypeDefaultArgs<ExtArgs>
@@ -884,7 +779,6 @@ export type FunctionSelectScalar = {
 export type FunctionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdAt" | "deleted" | "deletedAt" | "createdBy" | "deletedBy", ExtArgs["result"]["function"]>
 export type FunctionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Contact?: boolean | Prisma.Function$ContactArgs<ExtArgs>
-  Employee_Employee_functionIdToFunction?: boolean | Prisma.Function$Employee_Employee_functionIdToFunctionArgs<ExtArgs>
   Employee_Function_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_Function_deletedByToEmployee?: boolean | Prisma.Function$Employee_Function_deletedByToEmployeeArgs<ExtArgs>
   _count?: boolean | Prisma.FunctionCountOutputTypeDefaultArgs<ExtArgs>
@@ -894,7 +788,6 @@ export type $FunctionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Function"
   objects: {
     Contact: Prisma.$ContactPayload<ExtArgs>[]
-    Employee_Employee_functionIdToFunction: Prisma.$EmployeePayload<ExtArgs>[]
     Employee_Function_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Employee_Function_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
@@ -1247,7 +1140,6 @@ readonly fields: FunctionFieldRefs;
 export interface Prisma__FunctionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Contact<T extends Prisma.Function$ContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Function$ContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  Employee_Employee_functionIdToFunction<T extends Prisma.Function$Employee_Employee_functionIdToFunctionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Function$Employee_Employee_functionIdToFunctionArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee_Function_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_Function_deletedByToEmployee<T extends Prisma.Function$Employee_Function_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Function$Employee_Function_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1650,30 +1542,6 @@ export type Function$ContactArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.ContactScalarFieldEnum | Prisma.ContactScalarFieldEnum[]
-}
-
-/**
- * Function.Employee_Employee_functionIdToFunction
- */
-export type Function$Employee_Employee_functionIdToFunctionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Employee
-   */
-  select?: Prisma.EmployeeSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Employee
-   */
-  omit?: Prisma.EmployeeOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmployeeInclude<ExtArgs> | null
-  where?: Prisma.EmployeeWhereInput
-  orderBy?: Prisma.EmployeeOrderByWithRelationInput | Prisma.EmployeeOrderByWithRelationInput[]
-  cursor?: Prisma.EmployeeWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.EmployeeScalarFieldEnum | Prisma.EmployeeScalarFieldEnum[]
 }
 
 /**

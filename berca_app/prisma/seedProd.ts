@@ -1,4 +1,4 @@
-import type {Prisma, PrismaClient} from '@/generated/prisma/client'
+import type {PrismaClient} from '@/generated/prisma/client'
 import {randomUUID} from 'crypto'
 import {hashPassword} from '@/lib/passwordUtils'
 
@@ -47,7 +47,7 @@ const ALL_DEPARTMENTS = [
     number: 6,
   },
   {
-    name: 'Human Resources',
+    name: 'HR',
     description: 'Employee records, recruitment, and onboarding',
     icon: 'Users',
     color: '#7030a0',
@@ -78,35 +78,48 @@ const ALL_DEPARTMENTS = [
     name: 'Warehouse',
     description: 'Inventory storage, stock control, and goods handling',
     icon: 'Package',
-    color: '#ff9898',
+    color: '#e3c2e4',
     number: 11,
   },
   {
     name: 'Sales',
     description: 'Leads, deals, and customer acquisition',
     icon: 'TrendingUp',
-    color: '#e84393',
+    color: '#fe6f5e',
     number: 12,
   },
   {
     name: 'PR',
     description: 'Public relations, media, and communications',
     icon: 'Megaphone',
-    color: '#6c5ce7',
+    color: '#7800ef',
     number: 13,
   },
   {
     name: 'Product Quality',
     description: 'Product inspection, quality assurance, and standards compliance',
     icon: 'CheckCircle',
-    color: '#cc6040',
+    color: '#8c92ac',
     number: 14,
   },
 ]
 
+const SUB_ROLES = [
+  {name: 'user', level: 20},
+  {name: 'senior-user', level: 40},
+  {name: 'supervisor', level: 60},
+  {name: 'manager', level: 80},
+]
+
+type SubRoleName = (typeof SUB_ROLES)[number]['name']
+
+const createdSubRoles: Record<SubRoleName, {id: string; level: number}> = {} as Record<
+  SubRoleName,
+  {id: string; level: number}
+>
+
 export const seedProd = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
-
   const now = new Date()
 
   // 1. Create admin employee
@@ -126,7 +139,7 @@ export const seedProd = async (prisma: PrismaClient) => {
     },
   })
 
-  // 2. Create admin role
+  // 2. Create Administrator role
   const adminRole = await prisma.role.create({
     data: {
       id: randomUUID(),
@@ -136,7 +149,7 @@ export const seedProd = async (prisma: PrismaClient) => {
     },
   })
 
-  // 3. Create admin subRole
+  // 3. Create Administrator subRole
   const adminSubRole = await prisma.subRole.create({
     data: {
       id: randomUUID(),
@@ -146,11 +159,11 @@ export const seedProd = async (prisma: PrismaClient) => {
     },
   })
 
-  // 4. Create roleLevel linking Role and SubRole
+  // 4. Create Administrator roleLevel
   const adminRoleLevel = await prisma.roleLevel.create({
     data: {
       id: randomUUID(),
-      level: 100, // highest level for admin
+      level: 100,
       roleId: adminRole.id,
       subRoleId: adminSubRole.id,
       createdAt: now,
@@ -158,7 +171,7 @@ export const seedProd = async (prisma: PrismaClient) => {
     },
   })
 
-  // 5. Update employee with roleLevel
+  // 5. Attach admin roleLevel
   await prisma.employee.update({
     where: {id: adminEmployee.id},
     data: {roleLevelId: adminRoleLevel.id},
@@ -166,8 +179,42 @@ export const seedProd = async (prisma: PrismaClient) => {
 
   console.log('Administrator account created')
 
-  // Seed departments
+  // 6. Create shared subRoles
+  for (const sub of SUB_ROLES) {
+    const created = await prisma.subRole.create({
+      data: {
+        id: randomUUID(),
+        name: sub.name,
+        createdAt: now,
+        createdBy: adminEmployee.id,
+      },
+    })
+    createdSubRoles[sub.name] = {id: created.id, level: sub.level}
+  }
+
+  // 7. Create a default TargetType (needed for Departments)
+  const defaultTargetType = await prisma.targetType.create({
+    data: {
+      id: randomUUID(),
+      name: 'Department',
+      createdAt: now,
+      createdBy: adminEmployee.id,
+    },
+  })
+
+  // 8. Create Departments + Department Roles + RoleLevels + Target
   for (const dept of ALL_DEPARTMENTS) {
+    // Create Target for department
+    const deptTarget = await prisma.target.create({
+      data: {
+        id: randomUUID(),
+        createdAt: now,
+        createdBy: adminEmployee.id,
+        targetTypeId: defaultTargetType.id,
+      },
+    })
+
+    // Create Department
     await prisma.department.create({
       data: {
         id: randomUUID(),
@@ -178,9 +225,45 @@ export const seedProd = async (prisma: PrismaClient) => {
         number: dept.number,
         createdAt: now,
         createdBy: adminEmployee.id,
-      } as Prisma.DepartmentUncheckedCreateInput,
+        targetId: deptTarget.id,
+      },
     })
+
+    // Create Department Role
+    const departmentRole = await prisma.role.create({
+      data: {
+        id: randomUUID(),
+        name: `${dept.name} Role`,
+        createdAt: now,
+        createdBy: adminEmployee.id,
+      },
+    })
+
+    // Create 4 roleLevels per department role
+    for (const sub of SUB_ROLES) {
+      const roleLevel = await prisma.roleLevel.create({
+        data: {
+          id: randomUUID(),
+          level: sub.level,
+          roleId: departmentRole.id,
+          subRoleId: createdSubRoles[sub.name].id,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+        },
+      })
+
+      // ONLY Administrator sees all departments
+      await prisma.visibilityForRole.create({
+        data: {
+          id: randomUUID(),
+          visible: true,
+          roleLevelId: adminRoleLevel.id, // admin sees all departments
+          targetId: deptTarget.id,
+        },
+      })
+    }
   }
 
-  console.log('Departments seeded with colors and icons')
+  console.log('Departments, Roles, SubRoles, RoleLevels, Targets, and VisibilityForRole seeded')
+  console.log('Total roleLevels created: 57 (14 × 4 + 1 Administrator)')
 }

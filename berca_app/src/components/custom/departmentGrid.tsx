@@ -19,7 +19,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import {useEffect, useState} from 'react'
-import type {RoleContext, RoleContextInput} from '@/schemas/roleSchemas'
+import type {RoleContextInput} from '@/schemas/roleSchemas'
 
 interface Department {
   id: string
@@ -29,7 +29,7 @@ interface Department {
   color: string
 }
 
-const ICONS: Record<string, LucideIcon> = {
+export const ICONS: Record<string, LucideIcon> = {
   Clipboard,
   Users,
   Wrench,

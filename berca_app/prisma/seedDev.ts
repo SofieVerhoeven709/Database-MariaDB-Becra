@@ -1,4 +1,4 @@
-import type {Prisma, PrismaClient} from '@/generated/prisma/client'
+import type {PrismaClient} from '@/generated/prisma/client'
 import {randomUUID} from 'crypto'
 import {hashPassword} from '@/lib/passwordUtils'
 

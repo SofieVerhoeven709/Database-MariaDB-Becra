@@ -252,6 +252,9 @@ ADD CONSTRAINT fk_documentStructure_managedBy FOREIGN KEY (managedById) REFERENC
 ALTER TABLE DocumentStructure ADD targetId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
 
+ALTER TABLE Department ADD targetId CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_department_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
+
 ALTER TABLE Role ADD deletedBy CHAR(36) NULL,
 ADD CONSTRAINT fk_role_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
@@ -918,9 +921,9 @@ CREATE TABLE
       VisibilityForRole (
             id CHAR(36) NOT NULL PRIMARY KEY,
             visible BOOLEAN NOT NULL DEFAULT 0,
-            roleId CHAR(36) NOT NULL,
+            roleLevelId CHAR(36) NOT NULL,
             targetId CHAR(36) NOT NULL,
-            FOREIGN KEY (roleId) REFERENCES Role (id) ON DELETE RESTRICT,
+            FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT,
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,

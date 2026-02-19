@@ -19,7 +19,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import {useEffect, useState} from 'react'
-import type {RoleContext} from '@/schemas/roleSchemas'
+import type {RoleContext, RoleContextInput} from '@/schemas/roleSchemas'
 
 interface Department {
   id: string
@@ -47,10 +47,10 @@ const ICONS: Record<string, LucideIcon> = {
 }
 
 interface DepartmentGridProps {
-  roleContext: RoleContext
+  roleContextInput: RoleContextInput
 }
 
-export function DepartmentGrid({roleContext}: DepartmentGridProps) {
+export function DepartmentGrid({roleContextInput}: DepartmentGridProps) {
   const [departments, setDepartments] = useState<Department[]>([])
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export function DepartmentGrid({roleContext}: DepartmentGridProps) {
       const res = await fetch('/api/departments', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(roleContext),
+        body: JSON.stringify(roleContextInput),
       })
 
       if (!res.ok) {
@@ -71,7 +71,7 @@ export function DepartmentGrid({roleContext}: DepartmentGridProps) {
     }
 
     fetchDepartments()
-  }, [roleContext])
+  }, [roleContextInput])
 
   if (!departments.length) return <p>Loading departments...</p>
 

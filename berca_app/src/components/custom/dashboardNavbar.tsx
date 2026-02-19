@@ -14,15 +14,16 @@ import {
 } from '@/components/ui/dropdown-menu'
 import type {Department, Employee} from '@/generated/prisma/client'
 import {useEffect, useState} from 'react'
-import type {RoleContext} from '@/schemas/roleSchemas'
+import type {RoleContext, RoleContextInput} from '@/schemas/roleSchemas'
 
 interface DashboardNavbarProps {
   employee: EmployeeSafe
   roleContext: RoleContext
+  roleContextInput: RoleContextInput
 }
 export type EmployeeSafe = Omit<Employee, 'password_hash'>
 
-export function DashboardNavbar({employee, roleContext}: DashboardNavbarProps) {
+export function DashboardNavbar({employee, roleContext, roleContextInput}: DashboardNavbarProps) {
   const [departmentMap, setDepartmentMap] = useState<Record<string, string>>({})
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export function DashboardNavbar({employee, roleContext}: DashboardNavbarProps) {
         const res = await fetch('/api/departments', {
           method: 'POST', // match what DepartmentGrid does
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(roleContext), // send the full roleLevel object
+          body: JSON.stringify(roleContextInput), // send the rolelevelId
         })
         if (!res.ok) throw new Error('Failed to fetch departments')
         const data: Department[] = await res.json()
@@ -42,7 +43,7 @@ export function DashboardNavbar({employee, roleContext}: DashboardNavbarProps) {
       }
     }
     fetchDepartments()
-  }, [roleContext])
+  }, [roleContextInput])
 
   const pathname = usePathname()
 
@@ -52,6 +53,8 @@ export function DashboardNavbar({employee, roleContext}: DashboardNavbarProps) {
     .join('')
     .toUpperCase()
     .slice(0, 2)
+
+  const displayRole = roleContext.role.replace(/\sRole$/, '')
 
   const isHome = pathname === '/dashboard'
 
@@ -83,7 +86,7 @@ export function DashboardNavbar({employee, roleContext}: DashboardNavbarProps) {
           <button className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-secondary outline-none">
             <div className="flex flex-col items-end gap-0.5">
               <span className="text-sm font-medium text-foreground">{employee.username}</span>
-              <span className="text-xs text-muted-foreground capitalize">{roleContext.role}</span>
+              <span className="text-xs text-muted-foreground capitalize">{displayRole}</span>
             </div>
             <Avatar className="h-8 w-8">
               <AvatarFallback className="bg-secondary text-foreground text-xs font-medium">{initials}</AvatarFallback>

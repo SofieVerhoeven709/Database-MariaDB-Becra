@@ -231,14 +231,17 @@ model Department {
   deleted                                    Boolean    @default(false)
   deletedAt                                  DateTime?  @db.DateTime(0)
   createdBy                                  String     @db.Char(36)
+  targetId                                   String     @db.Char(36)
   deletedBy                                  String?    @db.Char(36)
   Contact                                    Contact[]
   Employee_Department_createdByToEmployee    Employee   @relation("Department_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_department_createdBy")
   Employee_Department_deletedByToEmployee    Employee?  @relation("Department_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_department_deletedBy")
+  Target                                     Target     @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_department_target")
   Employee_Employee_departmentIdToDepartment Employee[] @relation("Employee_departmentIdToDepartment")
 
   @@index([createdBy], map: "fk_department_createdBy")
   @@index([deletedBy], map: "fk_department_deletedBy")
+  @@index([targetId], map: "fk_department_target")
 }
 
 model DocumentGroup {
@@ -1578,7 +1581,6 @@ model Role {
   Employee_Role_createdByToEmployee Employee            @relation("Role_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_role_createdBy")
   Employee_Role_deletedByToEmployee Employee?           @relation("Role_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_role_deletedBy")
   RoleLevel                         RoleLevel[]
-  VisibilityForRole                 VisibilityForRole[]
 
   @@index([createdBy], map: "fk_role_createdBy")
   @@index([deletedBy], map: "fk_role_deletedBy")
@@ -1644,6 +1646,7 @@ model Target {
   Certificate                         Certificate[]
   Company                             Company[]
   Contact                             Contact[]
+  Department                          Department[]
   DocumentStructure                   DocumentStructure[]
   FollowUp                            FollowUp[]
   FollowUpStructure                   FollowUpStructure[]
@@ -1897,20 +1900,20 @@ model UrgencyType {
 }
 
 model VisibilityForRole {
-  id        String    @id @db.Char(36)
-  visible   Boolean   @default(false)
-  roleId    String    @db.Char(36)
-  targetId  String    @db.Char(36)
-  deleted   Boolean   @default(false)
-  deletedAt DateTime? @db.DateTime(0)
-  deletedBy String?   @db.Char(36)
-  Role      Role      @relation(fields: [roleId], references: [id], onUpdate: Restrict, map: "VisibilityForRole_ibfk_1")
-  Target    Target    @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "VisibilityForRole_ibfk_2")
-  Employee  Employee? @relation(fields: [deletedBy], references: [id], onUpdate: Restrict, map: "VisibilityForRole_ibfk_3")
+  id          String    @id @db.Char(36)
+  visible     Boolean   @default(false)
+  roleLevelId String    @db.Char(36)
+  targetId    String    @db.Char(36)
+  deleted     Boolean   @default(false)
+  deletedAt   DateTime? @db.DateTime(0)
+  deletedBy   String?   @db.Char(36)
+  RoleLevel   RoleLevel @relation(fields: [roleLevelId], references: [id], onUpdate: Restrict, map: "VisibilityForRole_ibfk_1")
+  Target      Target    @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "VisibilityForRole_ibfk_2")
+  Employee    Employee? @relation(fields: [deletedBy], references: [id], onUpdate: Restrict, map: "VisibilityForRole_ibfk_3")
 
-  @@index([roleId], map: "roleId")
   @@index([targetId], map: "targetId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([roleLevelId], map: "roleLevelId")
 }
 
 model WarehousePlace {
@@ -2013,20 +2016,21 @@ model WorkOrderStructure {
 }
 
 model RoleLevel {
-  id                                       String     @id @db.Char(36)
+  id                                       String              @id @db.Char(36)
   level                                    Int
-  roleId                                   String     @db.Char(36)
-  subRoleId                                String     @db.Char(36)
-  createdAt                                DateTime   @db.DateTime(0)
-  deleted                                  Boolean    @default(false)
-  deletedAt                                DateTime?  @db.DateTime(0)
-  createdBy                                String     @db.Char(36)
-  deletedBy                                String?    @db.Char(36)
-  Employee_Employee_roleLevelIdToRoleLevel Employee[] @relation("Employee_roleLevelIdToRoleLevel")
-  Role                                     Role       @relation(fields: [roleId], references: [id], onUpdate: Restrict, map: "RoleLevel_ibfk_1")
-  SubRole                                  SubRole    @relation(fields: [subRoleId], references: [id], onUpdate: Restrict, map: "RoleLevel_ibfk_2")
-  Employee_RoleLevel_createdByToEmployee   Employee   @relation("RoleLevel_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_roleLevel_createdBy")
-  Employee_RoleLevel_deletedByToEmployee   Employee?  @relation("RoleLevel_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_roleLevel_deletedBy")
+  roleId                                   String              @db.Char(36)
+  subRoleId                                String              @db.Char(36)
+  createdAt                                DateTime            @db.DateTime(0)
+  deleted                                  Boolean             @default(false)
+  deletedAt                                DateTime?           @db.DateTime(0)
+  createdBy                                String              @db.Char(36)
+  deletedBy                                String?             @db.Char(36)
+  Employee_Employee_roleLevelIdToRoleLevel Employee[]          @relation("Employee_roleLevelIdToRoleLevel")
+  Role                                     Role                @relation(fields: [roleId], references: [id], onUpdate: Restrict, map: "RoleLevel_ibfk_1")
+  SubRole                                  SubRole             @relation(fields: [subRoleId], references: [id], onUpdate: Restrict, map: "RoleLevel_ibfk_2")
+  Employee_RoleLevel_createdByToEmployee   Employee            @relation("RoleLevel_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_roleLevel_createdBy")
+  Employee_RoleLevel_deletedByToEmployee   Employee?           @relation("RoleLevel_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_roleLevel_deletedBy")
+  VisibilityForRole                        VisibilityForRole[]
 
   @@index([createdBy], map: "fk_roleLevel_createdBy")
   @@index([deletedBy], map: "fk_roleLevel_deletedBy")

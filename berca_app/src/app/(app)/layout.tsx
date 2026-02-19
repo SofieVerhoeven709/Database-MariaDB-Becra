@@ -18,14 +18,18 @@ export default async function DashboardLayout({children}: {children: React.React
   }
 
   const roleContext = {
-    role: roleLevel.Role.name,
-    subRole: roleLevel.SubRole?.name,
     level: roleLevel.level,
+    role: roleLevel.Role.name,
+    subRole: roleLevel.SubRole.name,
+  }
+
+  const roleContextInput = {
+    roleLevelId: roleLevel.id,
   }
 
   return (
     <div className="flex min-h-svh flex-col">
-      <DashboardNavbar employee={employee} roleContext={roleContext} />
+      <DashboardNavbar employee={employee} roleContext={roleContext} roleContextInput={roleContextInput} />
       <div className="flex-1">{children}</div>
     </div>
   )

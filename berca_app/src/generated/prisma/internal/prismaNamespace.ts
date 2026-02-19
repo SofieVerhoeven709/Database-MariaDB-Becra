@@ -88,12 +88,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.19.2
- * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
+ * Prisma Client JS version: 6.19.0
+ * Query Engine version: 2ba551f319ab1df4bc874a89965d8b3641056773
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.19.2",
-  engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
+  client: "6.19.0",
+  engine: "2ba551f319ab1df4bc874a89965d8b3641056773"
 }
 
 /**
@@ -5641,6 +5641,7 @@ export const DepartmentScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   createdBy: 'createdBy',
+  targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -6789,7 +6790,7 @@ export type UrgencyTypeScalarFieldEnum = (typeof UrgencyTypeScalarFieldEnum)[key
 export const VisibilityForRoleScalarFieldEnum = {
   id: 'id',
   visible: 'visible',
-  roleId: 'roleId',
+  roleLevelId: 'roleLevelId',
   targetId: 'targetId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -7035,6 +7036,7 @@ export const DepartmentOrderByRelevanceFieldEnum = {
   icon: 'icon',
   description: 'description',
   createdBy: 'createdBy',
+  targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -7889,7 +7891,7 @@ export type UrgencyTypeOrderByRelevanceFieldEnum = (typeof UrgencyTypeOrderByRel
 
 export const VisibilityForRoleOrderByRelevanceFieldEnum = {
   id: 'id',
-  roleId: 'roleId',
+  roleLevelId: 'roleLevelId',
   targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const

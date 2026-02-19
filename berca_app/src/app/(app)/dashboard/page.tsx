@@ -16,10 +16,8 @@ export default async function DashboardPage() {
     redirect('/')
   }
 
-  const roleContext = {
-    role: roleLevel.Role.name,
-    subRole: roleLevel.SubRole?.name,
-    level: roleLevel.level,
+  const roleContextInput = {
+    roleLevelId: roleLevel.id,
   }
 
   return (
@@ -30,7 +28,7 @@ export default async function DashboardPage() {
           <p className="mt-1 text-sm text-muted-foreground">Select a department to manage</p>
         </div>
 
-        <DepartmentGrid roleContext={roleContext} />
+        <DepartmentGrid roleContextInput={roleContextInput} />
       </div>
     </main>
   )

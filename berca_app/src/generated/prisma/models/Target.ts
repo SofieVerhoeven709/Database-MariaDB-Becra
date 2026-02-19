@@ -201,6 +201,7 @@ export type TargetWhereInput = {
   Certificate?: Prisma.CertificateListRelationFilter
   Company?: Prisma.CompanyListRelationFilter
   Contact?: Prisma.ContactListRelationFilter
+  Department?: Prisma.DepartmentListRelationFilter
   DocumentStructure?: Prisma.DocumentStructureListRelationFilter
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
@@ -230,6 +231,7 @@ export type TargetOrderByWithRelationInput = {
   Certificate?: Prisma.CertificateOrderByRelationAggregateInput
   Company?: Prisma.CompanyOrderByRelationAggregateInput
   Contact?: Prisma.ContactOrderByRelationAggregateInput
+  Department?: Prisma.DepartmentOrderByRelationAggregateInput
   DocumentStructure?: Prisma.DocumentStructureOrderByRelationAggregateInput
   FollowUp?: Prisma.FollowUpOrderByRelationAggregateInput
   FollowUpStructure?: Prisma.FollowUpStructureOrderByRelationAggregateInput
@@ -263,6 +265,7 @@ export type TargetWhereUniqueInput = Prisma.AtLeast<{
   Certificate?: Prisma.CertificateListRelationFilter
   Company?: Prisma.CompanyListRelationFilter
   Contact?: Prisma.ContactListRelationFilter
+  Department?: Prisma.DepartmentListRelationFilter
   DocumentStructure?: Prisma.DocumentStructureListRelationFilter
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
@@ -315,6 +318,7 @@ export type TargetCreateInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -344,6 +348,7 @@ export type TargetUncheckedCreateInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -367,6 +372,7 @@ export type TargetUpdateInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -396,6 +402,7 @@ export type TargetUncheckedUpdateInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -529,6 +536,20 @@ export type TargetUpdateOneRequiredWithoutContactNestedInput = {
   upsert?: Prisma.TargetUpsertWithoutContactInput
   connect?: Prisma.TargetWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TargetUpdateToOneWithWhereWithoutContactInput, Prisma.TargetUpdateWithoutContactInput>, Prisma.TargetUncheckedUpdateWithoutContactInput>
+}
+
+export type TargetCreateNestedOneWithoutDepartmentInput = {
+  create?: Prisma.XOR<Prisma.TargetCreateWithoutDepartmentInput, Prisma.TargetUncheckedCreateWithoutDepartmentInput>
+  connectOrCreate?: Prisma.TargetCreateOrConnectWithoutDepartmentInput
+  connect?: Prisma.TargetWhereUniqueInput
+}
+
+export type TargetUpdateOneRequiredWithoutDepartmentNestedInput = {
+  create?: Prisma.XOR<Prisma.TargetCreateWithoutDepartmentInput, Prisma.TargetUncheckedCreateWithoutDepartmentInput>
+  connectOrCreate?: Prisma.TargetCreateOrConnectWithoutDepartmentInput
+  upsert?: Prisma.TargetUpsertWithoutDepartmentInput
+  connect?: Prisma.TargetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TargetUpdateToOneWithWhereWithoutDepartmentInput, Prisma.TargetUpdateWithoutDepartmentInput>, Prisma.TargetUncheckedUpdateWithoutDepartmentInput>
 }
 
 export type TargetCreateNestedOneWithoutDocumentStructureInput = {
@@ -846,6 +867,7 @@ export type TargetCreateWithoutCertificateInput = {
   deletedAt?: Date | string | null
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -874,6 +896,7 @@ export type TargetUncheckedCreateWithoutCertificateInput = {
   deletedBy?: string | null
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -912,6 +935,7 @@ export type TargetUpdateWithoutCertificateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -940,6 +964,7 @@ export type TargetUncheckedUpdateWithoutCertificateInput = {
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -962,6 +987,7 @@ export type TargetCreateWithoutCompanyInput = {
   deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -990,6 +1016,7 @@ export type TargetUncheckedCreateWithoutCompanyInput = {
   deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -1028,6 +1055,7 @@ export type TargetUpdateWithoutCompanyInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -1056,6 +1084,7 @@ export type TargetUncheckedUpdateWithoutCompanyInput = {
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -1078,6 +1107,7 @@ export type TargetCreateWithoutContactInput = {
   deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -1106,6 +1136,7 @@ export type TargetUncheckedCreateWithoutContactInput = {
   deletedBy?: string | null
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -1144,6 +1175,7 @@ export type TargetUpdateWithoutContactInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -1172,6 +1204,127 @@ export type TargetUncheckedUpdateWithoutContactInput = {
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
+  FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
+  FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutTargetNestedInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
+  VisibilityForRole?: Prisma.VisibilityForRoleUncheckedUpdateManyWithoutTargetNestedInput
+  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutTargetNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTargetNestedInput
+}
+
+export type TargetCreateWithoutDepartmentInput = {
+  id: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
+  Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
+  Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
+  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
+  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
+  FollowUpTarget?: Prisma.FollowUpTargetCreateNestedManyWithoutTargetInput
+  InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
+  TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
+  TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
+  VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
+  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutTargetInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutTargetInput
+}
+
+export type TargetUncheckedCreateWithoutDepartmentInput = {
+  id: string
+  createdAt: Date | string
+  createdBy: string
+  targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
+  Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
+  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
+  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
+  FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutTargetInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
+  TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
+  VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutTargetInput
+  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutTargetInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTargetInput
+}
+
+export type TargetCreateOrConnectWithoutDepartmentInput = {
+  where: Prisma.TargetWhereUniqueInput
+  create: Prisma.XOR<Prisma.TargetCreateWithoutDepartmentInput, Prisma.TargetUncheckedCreateWithoutDepartmentInput>
+}
+
+export type TargetUpsertWithoutDepartmentInput = {
+  update: Prisma.XOR<Prisma.TargetUpdateWithoutDepartmentInput, Prisma.TargetUncheckedUpdateWithoutDepartmentInput>
+  create: Prisma.XOR<Prisma.TargetCreateWithoutDepartmentInput, Prisma.TargetUncheckedCreateWithoutDepartmentInput>
+  where?: Prisma.TargetWhereInput
+}
+
+export type TargetUpdateToOneWithWhereWithoutDepartmentInput = {
+  where?: Prisma.TargetWhereInput
+  data: Prisma.XOR<Prisma.TargetUpdateWithoutDepartmentInput, Prisma.TargetUncheckedUpdateWithoutDepartmentInput>
+}
+
+export type TargetUpdateWithoutDepartmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
+  Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
+  Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
+  FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
+  FollowUpTarget?: Prisma.FollowUpTargetUpdateManyWithoutTargetNestedInput
+  InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
+  TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
+  VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutTargetNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutTargetNestedInput
+}
+
+export type TargetUncheckedUpdateWithoutDepartmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
+  Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
+  Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -1195,6 +1348,7 @@ export type TargetCreateWithoutDocumentStructureInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
   FollowUpTarget?: Prisma.FollowUpTargetCreateNestedManyWithoutTargetInput
@@ -1223,6 +1377,7 @@ export type TargetUncheckedCreateWithoutDocumentStructureInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutTargetInput
@@ -1261,6 +1416,7 @@ export type TargetUpdateWithoutDocumentStructureInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUpdateManyWithoutTargetNestedInput
@@ -1289,6 +1445,7 @@ export type TargetUncheckedUpdateWithoutDocumentStructureInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutTargetNestedInput
@@ -1311,6 +1468,7 @@ export type TargetCreateWithoutEmployeeInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -1338,6 +1496,7 @@ export type TargetUncheckedCreateWithoutEmployeeInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -1371,6 +1530,7 @@ export type TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -1398,6 +1558,7 @@ export type TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -1476,6 +1637,7 @@ export type TargetCreateWithoutFollowUpInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
   FollowUpTarget?: Prisma.FollowUpTargetCreateNestedManyWithoutTargetInput
@@ -1504,6 +1666,7 @@ export type TargetUncheckedCreateWithoutFollowUpInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutTargetInput
@@ -1542,6 +1705,7 @@ export type TargetUpdateWithoutFollowUpInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUpdateManyWithoutTargetNestedInput
@@ -1570,6 +1734,7 @@ export type TargetUncheckedUpdateWithoutFollowUpInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutTargetNestedInput
@@ -1592,6 +1757,7 @@ export type TargetCreateWithoutFollowUpStructureInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpTarget?: Prisma.FollowUpTargetCreateNestedManyWithoutTargetInput
@@ -1620,6 +1786,7 @@ export type TargetUncheckedCreateWithoutFollowUpStructureInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutTargetInput
@@ -1658,6 +1825,7 @@ export type TargetUpdateWithoutFollowUpStructureInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUpdateManyWithoutTargetNestedInput
@@ -1686,6 +1854,7 @@ export type TargetUncheckedUpdateWithoutFollowUpStructureInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutTargetNestedInput
@@ -1708,6 +1877,7 @@ export type TargetCreateWithoutFollowUpTargetInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -1736,6 +1906,7 @@ export type TargetUncheckedCreateWithoutFollowUpTargetInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -1774,6 +1945,7 @@ export type TargetUpdateWithoutFollowUpTargetInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -1802,6 +1974,7 @@ export type TargetUncheckedUpdateWithoutFollowUpTargetInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -1824,6 +1997,7 @@ export type TargetCreateWithoutInvoiceInInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -1852,6 +2026,7 @@ export type TargetUncheckedCreateWithoutInvoiceInInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -1890,6 +2065,7 @@ export type TargetUpdateWithoutInvoiceInInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -1918,6 +2094,7 @@ export type TargetUncheckedUpdateWithoutInvoiceInInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -1940,6 +2117,7 @@ export type TargetCreateWithoutInvoiceInTargetInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -1968,6 +2146,7 @@ export type TargetUncheckedCreateWithoutInvoiceInTargetInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -2006,6 +2185,7 @@ export type TargetUpdateWithoutInvoiceInTargetInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -2034,6 +2214,7 @@ export type TargetUncheckedUpdateWithoutInvoiceInTargetInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -2056,6 +2237,7 @@ export type TargetCreateWithoutInvoiceOutInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -2084,6 +2266,7 @@ export type TargetUncheckedCreateWithoutInvoiceOutInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -2122,6 +2305,7 @@ export type TargetUpdateWithoutInvoiceOutInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -2150,6 +2334,7 @@ export type TargetUncheckedUpdateWithoutInvoiceOutInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -2172,6 +2357,7 @@ export type TargetCreateWithoutProjectInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -2200,6 +2386,7 @@ export type TargetUncheckedCreateWithoutProjectInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -2238,6 +2425,7 @@ export type TargetUpdateWithoutProjectInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -2266,6 +2454,7 @@ export type TargetUncheckedUpdateWithoutProjectInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -2288,6 +2477,7 @@ export type TargetCreateWithoutTargetTypeInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -2315,6 +2505,7 @@ export type TargetUncheckedCreateWithoutTargetTypeInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -2364,6 +2555,7 @@ export type TargetCreateWithoutTrainingInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -2392,6 +2584,7 @@ export type TargetUncheckedCreateWithoutTrainingInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -2430,6 +2623,7 @@ export type TargetUpdateWithoutTrainingInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -2458,6 +2652,7 @@ export type TargetUncheckedUpdateWithoutTrainingInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -2480,6 +2675,7 @@ export type TargetCreateWithoutTrainingStandardInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -2508,6 +2704,7 @@ export type TargetUncheckedCreateWithoutTrainingStandardInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -2546,6 +2743,7 @@ export type TargetUpdateWithoutTrainingStandardInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -2574,6 +2772,7 @@ export type TargetUncheckedUpdateWithoutTrainingStandardInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -2596,6 +2795,7 @@ export type TargetCreateWithoutVisibilityForRoleInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -2624,6 +2824,7 @@ export type TargetUncheckedCreateWithoutVisibilityForRoleInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -2662,6 +2863,7 @@ export type TargetUpdateWithoutVisibilityForRoleInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -2690,6 +2892,7 @@ export type TargetUncheckedUpdateWithoutVisibilityForRoleInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -2712,6 +2915,7 @@ export type TargetCreateWithoutWorkOrderInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -2740,6 +2944,7 @@ export type TargetUncheckedCreateWithoutWorkOrderInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -2778,6 +2983,7 @@ export type TargetUpdateWithoutWorkOrderInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -2806,6 +3012,7 @@ export type TargetUncheckedUpdateWithoutWorkOrderInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -2828,6 +3035,7 @@ export type TargetCreateWithoutWorkOrderStructureInput = {
   Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
@@ -2856,6 +3064,7 @@ export type TargetUncheckedCreateWithoutWorkOrderStructureInput = {
   Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
   Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
@@ -2894,6 +3103,7 @@ export type TargetUpdateWithoutWorkOrderStructureInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -2922,6 +3132,7 @@ export type TargetUncheckedUpdateWithoutWorkOrderStructureInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -2962,6 +3173,7 @@ export type TargetUpdateWithoutEmployeeInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -2989,6 +3201,7 @@ export type TargetUncheckedUpdateWithoutEmployeeInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -3021,6 +3234,7 @@ export type TargetUpdateWithoutEmployee_Target_deletedByToEmployeeInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -3048,6 +3262,7 @@ export type TargetUncheckedUpdateWithoutEmployee_Target_deletedByToEmployeeInput
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -3089,6 +3304,7 @@ export type TargetUpdateWithoutTargetTypeInput = {
   Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
@@ -3116,6 +3332,7 @@ export type TargetUncheckedUpdateWithoutTargetTypeInput = {
   Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -3149,6 +3366,7 @@ export type TargetCountOutputType = {
   Certificate: number
   Company: number
   Contact: number
+  Department: number
   DocumentStructure: number
   FollowUp: number
   FollowUpStructure: number
@@ -3168,6 +3386,7 @@ export type TargetCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   Certificate?: boolean | TargetCountOutputTypeCountCertificateArgs
   Company?: boolean | TargetCountOutputTypeCountCompanyArgs
   Contact?: boolean | TargetCountOutputTypeCountContactArgs
+  Department?: boolean | TargetCountOutputTypeCountDepartmentArgs
   DocumentStructure?: boolean | TargetCountOutputTypeCountDocumentStructureArgs
   FollowUp?: boolean | TargetCountOutputTypeCountFollowUpArgs
   FollowUpStructure?: boolean | TargetCountOutputTypeCountFollowUpStructureArgs
@@ -3212,6 +3431,13 @@ export type TargetCountOutputTypeCountCompanyArgs<ExtArgs extends runtime.Types.
  */
 export type TargetCountOutputTypeCountContactArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ContactWhereInput
+}
+
+/**
+ * TargetCountOutputType without action
+ */
+export type TargetCountOutputTypeCountDepartmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DepartmentWhereInput
 }
 
 /**
@@ -3317,6 +3543,7 @@ export type TargetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   Certificate?: boolean | Prisma.Target$CertificateArgs<ExtArgs>
   Company?: boolean | Prisma.Target$CompanyArgs<ExtArgs>
   Contact?: boolean | Prisma.Target$ContactArgs<ExtArgs>
+  Department?: boolean | Prisma.Target$DepartmentArgs<ExtArgs>
   DocumentStructure?: boolean | Prisma.Target$DocumentStructureArgs<ExtArgs>
   FollowUp?: boolean | Prisma.Target$FollowUpArgs<ExtArgs>
   FollowUpStructure?: boolean | Prisma.Target$FollowUpStructureArgs<ExtArgs>
@@ -3353,6 +3580,7 @@ export type TargetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   Certificate?: boolean | Prisma.Target$CertificateArgs<ExtArgs>
   Company?: boolean | Prisma.Target$CompanyArgs<ExtArgs>
   Contact?: boolean | Prisma.Target$ContactArgs<ExtArgs>
+  Department?: boolean | Prisma.Target$DepartmentArgs<ExtArgs>
   DocumentStructure?: boolean | Prisma.Target$DocumentStructureArgs<ExtArgs>
   FollowUp?: boolean | Prisma.Target$FollowUpArgs<ExtArgs>
   FollowUpStructure?: boolean | Prisma.Target$FollowUpStructureArgs<ExtArgs>
@@ -3378,6 +3606,7 @@ export type $TargetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     Certificate: Prisma.$CertificatePayload<ExtArgs>[]
     Company: Prisma.$CompanyPayload<ExtArgs>[]
     Contact: Prisma.$ContactPayload<ExtArgs>[]
+    Department: Prisma.$DepartmentPayload<ExtArgs>[]
     DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs>[]
     FollowUp: Prisma.$FollowUpPayload<ExtArgs>[]
     FollowUpStructure: Prisma.$FollowUpStructurePayload<ExtArgs>[]
@@ -3746,6 +3975,7 @@ export interface Prisma__TargetClient<T, Null = never, ExtArgs extends runtime.T
   Certificate<T extends Prisma.Target$CertificateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$CertificateArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Company<T extends Prisma.Target$CompanyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$CompanyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Contact<T extends Prisma.Target$ContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$ContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Department<T extends Prisma.Target$DepartmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$DepartmentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   DocumentStructure<T extends Prisma.Target$DocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$DocumentStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   FollowUp<T extends Prisma.Target$FollowUpArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$FollowUpArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   FollowUpStructure<T extends Prisma.Target$FollowUpStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$FollowUpStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4210,6 +4440,30 @@ export type Target$ContactArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.ContactScalarFieldEnum | Prisma.ContactScalarFieldEnum[]
+}
+
+/**
+ * Target.Department
+ */
+export type Target$DepartmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Department
+   */
+  select?: Prisma.DepartmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Department
+   */
+  omit?: Prisma.DepartmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DepartmentInclude<ExtArgs> | null
+  where?: Prisma.DepartmentWhereInput
+  orderBy?: Prisma.DepartmentOrderByWithRelationInput | Prisma.DepartmentOrderByWithRelationInput[]
+  cursor?: Prisma.DepartmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DepartmentScalarFieldEnum | Prisma.DepartmentScalarFieldEnum[]
 }
 
 /**

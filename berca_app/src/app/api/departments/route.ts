@@ -5,7 +5,48 @@ import {NextResponse} from 'next/server'
 
 // Helper function to get departments by role
 async function getDepartmentsByRoleContext(context: RoleContextInput) {
-  const allDepartments = await prismaClient.department.findMany({
+  const {roleLevelId} = context
+
+  // 1️⃣ Find TargetType for Department
+  const departmentTargetType = await prismaClient.targetType.findFirst({
+    where: {
+      name: 'Department',
+      deleted: false,
+    },
+    select: {id: true},
+  })
+
+  if (!departmentTargetType) {
+    return []
+  }
+
+  // 2️⃣ Get visible department targets for this roleLevel
+  const visibleDepartmentTargets = await prismaClient.visibilityForRole.findMany({
+    where: {
+      roleLevelId,
+      visible: true,
+      deleted: false,
+      Target: {
+        deleted: false,
+        targetTypeId: departmentTargetType.id,
+      },
+    },
+    select: {
+      targetId: true,
+    },
+  })
+
+  const targetIds = visibleDepartmentTargets.map(v => v.targetId)
+
+  if (targetIds.length === 0) {
+    return []
+  }
+
+  // 3️⃣ Fetch departments linked to those targets
+  return prismaClient.department.findMany({
+    where: {
+      targetId: {in: targetIds},
+    },
     select: {
       id: true,
       name: true,
@@ -16,41 +57,6 @@ async function getDepartmentsByRoleContext(context: RoleContextInput) {
     },
     orderBy: {number: 'asc'},
   })
-
-  const role = context.role.toLowerCase()
-  const subRole = context.subRole?.toLowerCase()
-  const level = context.level
-
-  // ADMIN → everything
-  if (role === 'administrator') {
-    return allDepartments
-  }
-
-  // MANAGER rules
-  if (role === 'manager') {
-    if (level >= 2) {
-      return allDepartments.filter(d => ['finance', 'hr', 'marketing', 'analytics', 'operations'].includes(d.id))
-    }
-
-    return allDepartments.filter(d => ['hr', 'operations'].includes(d.id))
-  }
-
-  // SUPPORT rules
-  if (role === 'support') {
-    if (subRole === 'hr') {
-      return allDepartments.filter(d => ['support', 'hr'].includes(d.id))
-    }
-
-    return allDepartments.filter(d => d.id === 'support')
-  }
-
-  // DEVELOPER rules
-  if (role === 'developer') {
-    return allDepartments.filter(d => ['engineering', 'analytics', 'security'].includes(d.id))
-  }
-
-  // fallback: nothing
-  return []
 }
 
 export const POST = publicApiRoute<{}, typeof roleContextInputSchema>({
@@ -58,9 +64,7 @@ export const POST = publicApiRoute<{}, typeof roleContextInputSchema>({
   schema: roleContextInputSchema,
   routeFn: async ({data}) => {
     const departments = await getDepartmentsByRoleContext({
-      role: data.role,
-      subRole: data.subRole,
-      level: data.level,
+      roleLevelId: data.roleLevelId,
     })
 
     return NextResponse.json(departments)

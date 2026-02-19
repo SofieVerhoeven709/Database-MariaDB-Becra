@@ -310,6 +310,7 @@ export const DepartmentScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   createdBy: 'createdBy',
+  targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -1458,7 +1459,7 @@ export type UrgencyTypeScalarFieldEnum = (typeof UrgencyTypeScalarFieldEnum)[key
 export const VisibilityForRoleScalarFieldEnum = {
   id: 'id',
   visible: 'visible',
-  roleId: 'roleId',
+  roleLevelId: 'roleLevelId',
   targetId: 'targetId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -1704,6 +1705,7 @@ export const DepartmentOrderByRelevanceFieldEnum = {
   icon: 'icon',
   description: 'description',
   createdBy: 'createdBy',
+  targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -2558,7 +2560,7 @@ export type UrgencyTypeOrderByRelevanceFieldEnum = (typeof UrgencyTypeOrderByRel
 
 export const VisibilityForRoleOrderByRelevanceFieldEnum = {
   id: 'id',
-  roleId: 'roleId',
+  roleLevelId: 'roleLevelId',
   targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const

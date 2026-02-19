@@ -1,6 +1,7 @@
 import {redirect} from 'next/navigation'
 import {DepartmentGrid} from '@/components/custom/departmentGrid'
 import {getSessionFromCookie} from '@/lib/sessionUtils'
+import {getRolelevelById} from '@/dal/roleLevel'
 
 export default async function DashboardPage() {
   const session = await getSessionFromCookie()
@@ -10,7 +11,8 @@ export default async function DashboardPage() {
     redirect('/')
   }
 
-  const roleLevel = employee.RoleLevel_Employee_roleLevelIdToRoleLevel
+  const roleLevel =
+    employee.RoleLevel_Employee_roleLevelIdToRoleLevel ?? (await getRolelevelById(employee.roleLevelId!))
 
   if (!roleLevel || !roleLevel.Role) {
     redirect('/')

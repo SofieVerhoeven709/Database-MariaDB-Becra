@@ -196,7 +196,7 @@ export const seedDev = async (prisma: PrismaClient) => {
   const defaultTargetType = await prisma.targetType.create({
     data: {
       id: randomUUID(),
-      name: 'DepartmentTargetType',
+      name: 'Department',
       createdAt: now,
       createdBy: adminEmployee.id,
     },
@@ -253,16 +253,14 @@ export const seedDev = async (prisma: PrismaClient) => {
       })
 
       // ONLY Administrator sees all departments
-      if (sub.name === 'Administrator') {
-        await prisma.visibilityForRole.create({
-          data: {
-            id: randomUUID(),
-            visible: true,
-            roleLevelId: roleLevel.id,
-            targetId: deptTarget.id,
-          },
-        })
-      }
+      await prisma.visibilityForRole.create({
+        data: {
+          id: randomUUID(),
+          visible: true,
+          roleLevelId: adminRoleLevel.id, // admin sees all departments
+          targetId: deptTarget.id,
+        },
+      })
     }
   }
 

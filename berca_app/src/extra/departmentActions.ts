@@ -1,9 +1,8 @@
-// departmentActions.ts
 export interface DepartmentAction {
   id: string
   name: string
   description: string
-  icon: string // or LucideIcon if you prefer icons from lucide-react
+  icon: string
 }
 
 export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {

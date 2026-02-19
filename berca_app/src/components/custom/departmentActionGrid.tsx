@@ -1,10 +1,10 @@
 'use client'
 
 import {DEPARTMENT_ACTIONS, type DepartmentAction} from '@/extra/departmentActions'
-import {ICONS} from './departmentGrid' // reuse your ICONS map
 import Link from 'next/link'
 import type {Department} from '@/generated/prisma/client'
-import camelCase from 'next/dist/build/webpack/loaders/css-loader/src/camelcase'
+import camelCase from 'lodash/camelCase'
+import {getIconByName} from '@/extra/icons'
 
 interface DepartmentActionGridProps {
   department: Department
@@ -20,7 +20,7 @@ export function DepartmentActionGrid({department}: DepartmentActionGridProps) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {actions.map(action => {
-        const Icon = ICONS[action.icon]
+        const Icon = getIconByName(action.icon)
         const accentColor = department.color
         const accentBg = `${accentColor}1F`
         const accentBgHover = `${accentColor}2E`

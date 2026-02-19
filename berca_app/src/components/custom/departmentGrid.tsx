@@ -1,25 +1,9 @@
 'use client'
 
-import {
-  Clipboard,
-  Users,
-  Wrench,
-  Megaphone,
-  ShieldCheck,
-  Calculator,
-  BookOpen,
-  ClipboardList,
-  Briefcase,
-  Database,
-  ShoppingCart,
-  TrendingUp,
-  Package,
-  CheckCircle,
-  type LucideIcon,
-} from 'lucide-react'
 import Link from 'next/link'
 import {useEffect, useState} from 'react'
 import type {RoleContextInput} from '@/schemas/roleSchemas'
+import {getIconByName} from '@/extra/icons'
 
 interface Department {
   id: string
@@ -27,23 +11,6 @@ interface Department {
   description: string
   icon: string
   color: string
-}
-
-export const ICONS: Record<string, LucideIcon> = {
-  Clipboard,
-  Users,
-  Wrench,
-  Megaphone,
-  ShieldCheck,
-  Calculator,
-  BookOpen,
-  ClipboardList,
-  Briefcase,
-  Database,
-  ShoppingCart,
-  TrendingUp,
-  Package,
-  CheckCircle,
 }
 
 interface DepartmentGridProps {
@@ -78,7 +45,7 @@ export function DepartmentGrid({roleContextInput}: DepartmentGridProps) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {departments.map(dept => {
-        const Icon = ICONS[dept.icon]
+        const Icon = getIconByName(dept.icon)
         const accentColor = dept.color
         const accentBg = `${accentColor}1F`
         const accentBgHover = `${accentColor}2E`

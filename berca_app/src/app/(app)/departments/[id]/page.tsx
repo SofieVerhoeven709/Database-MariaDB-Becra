@@ -1,12 +1,16 @@
 import {DepartmentActionGrid} from '@/components/custom/departmentActionGrid'
 import {getDepartmentById} from '@/dal/department'
+import {logger} from '@/lib/logger'
+
+export const dynamic = 'force-dynamic'
 
 interface PageProps {
-  params: {id: string}
+  params: Promise<{id: string}>
 }
 
 export default async function DepartmentPage({params}: PageProps) {
-  const {id} = params
+  const {id} = await params
+  logger.warn(`Department Page loaded for ${id}`)
   const department = await getDepartmentById(id)
 
   if (!department) return <p>Department not found</p>

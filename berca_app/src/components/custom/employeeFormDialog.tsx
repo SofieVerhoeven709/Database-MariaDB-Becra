@@ -434,29 +434,6 @@ export function EmployeeFormDialog({open, onOpenChange, employee, employees, onS
                   className="data-[state=checked]:bg-accent"
                 />
               </div>
-
-              <div className="flex items-center justify-between rounded-lg border border-border/60 bg-secondary/50 p-4">
-                <div className="flex flex-col gap-0.5">
-                  <Label htmlFor="deleted" className="text-sm font-medium text-destructive">
-                    Soft Deleted
-                  </Label>
-                  <span className="text-xs text-muted-foreground">Mark this employee as deleted</span>
-                </div>
-                <Switch
-                  id="deleted"
-                  checked={form.deleted}
-                  onCheckedChange={v => {
-                    update('deleted', v)
-                    if (v) {
-                      update('deletedAt', new Date().toISOString().split('T')[0])
-                    } else {
-                      update('deletedAt', null)
-                      update('deletedBy', null)
-                    }
-                  }}
-                  className="data-[state=checked]:bg-destructive"
-                />
-              </div>
             </TabsContent>
 
             {/* ---- Meta tab (edit only) ---- */}

@@ -1,6 +1,6 @@
 import 'server-only'
 import {prismaClient} from './prismaClient'
-import type {Prisma, Employee} from '@/generated/prisma/client'
+import type {Prisma, Employee, EmergencyContact} from '@/generated/prisma/client'
 import {cache} from 'react'
 import {hashPassword} from '@/lib/passwordUtils'
 import type {Profile, SessionWithProfile} from '@/models/employees'
@@ -38,10 +38,42 @@ export async function createEmployee(data: CreateEmployeeParams): Promise<Profil
  * Retrieve a user's information based on their email.
  * DO NOT USE ON THE CLIENT, the response includes the user's hashed password.
  *
- * @param mail The email of the user to retrieve.
+ * @param username The email of the user to retrieve.
  */
 export async function getEmployeeByUsername(username: string): Promise<Employee | null> {
   return prismaClient.employee.findFirst({where: {username}})
+}
+
+export async function getEmployeeById(id: string): Promise<Employee | null> {
+  return prismaClient.employee.findFirst({where: {id}})
+}
+
+export async function getEmployees(): Promise<
+  (Employee & {
+    RoleLevel_Employee_roleLevelIdToRoleLevel: {
+      Role: {name: string}
+      SubRole: {name: string}
+    } | null
+    Title_Employee_titleIdToTitle: {name: string} | null
+    EmergencyContact: EmergencyContact[]
+    Employee: {id: string} | null // createdBy
+    Employee_Employee_deletedByToEmployee: {id: string} | null
+  })[]
+> {
+  return prismaClient.employee.findMany({
+    include: {
+      RoleLevel_Employee_roleLevelIdToRoleLevel: {
+        include: {
+          Role: true,
+          SubRole: true,
+        },
+      },
+      Title_Employee_titleIdToTitle: true,
+      EmergencyContact: true,
+      Employee: true, // createdBy
+      Employee_Employee_deletedByToEmployee: true, // deletedBy
+    },
+  })
 }
 
 /**

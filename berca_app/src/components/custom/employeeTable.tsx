@@ -2,13 +2,13 @@
 
 import {useState} from 'react'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2} from 'lucide-react'
-import {MOCK_EMPLOYEES, MOCK_ROLE_LEVELS, MOCK_TITLES, type Employee} from '@/lib/mock-employees'
 import {EmployeeFormDialog} from '@/components/custom/employeeFormDialog'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
+import type {MappedEmployee} from '@/types/employee'
 
 type SortField =
   | 'name'
@@ -61,18 +61,16 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
   )
 }
 
-export function EmployeeTable() {
-  const [employees, setEmployees] = useState<Employee[]>(MOCK_EMPLOYEES)
+export function EmployeeTable({initialEmployees}: {initialEmployees: MappedEmployee[]}) {
+  const [employees, setEmployees] = useState<MappedEmployee[]>(initialEmployees)
   const [search, setSearch] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null)
+  const [editingEmployee, setEditingEmployee] = useState<MappedEmployee | null>(null)
   const [sortField, setSortField] = useState<SortField>('name')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
 
-  const getRoleName = (id: string | null) => MOCK_ROLE_LEVELS.find(r => r.id === id)?.name ?? '-'
-  const getTitleName = (id: string | null) => MOCK_TITLES.find(t => t.id === id)?.name ?? '-'
   const getEmployeeName = (id: string | null) => {
     if (!id) return '-'
     const emp = employees.find(e => e.id === id)
@@ -103,13 +101,13 @@ export function EmployeeTable() {
       const cmpBool = (x: boolean, y: boolean) => dir * (Number(x) - Number(y))
       switch (sortField) {
         case 'name':
-          return dir * `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`)
+          return dir * (a.lastName + a.firstName).localeCompare(b.lastName + b.firstName)
         case 'username':
           return cmpStr(a.username, b.username)
         case 'role':
-          return cmpStr(getRoleName(a.roleLevelId), getRoleName(b.roleLevelId))
+          return cmpStr(a.roleName, b.roleName)
         case 'title':
-          return cmpStr(getTitleName(a.titleId), getTitleName(b.titleId))
+          return cmpStr(a.titleName, b.titleName)
         case 'mail':
           return cmpStr(a.mail, b.mail)
         case 'phoneNumber':
@@ -169,12 +167,12 @@ export function EmployeeTable() {
     setDialogOpen(true)
   }
 
-  function handleEdit(emp: Employee) {
+  function handleEdit(emp: MappedEmployee) {
     setEditingEmployee(emp)
     setDialogOpen(true)
   }
 
-  function handleSave(emp: Employee) {
+  function handleSave(emp: MappedEmployee) {
     setEmployees(prev => {
       const exists = prev.find(e => e.id === emp.id)
       if (exists) {
@@ -185,7 +183,7 @@ export function EmployeeTable() {
     setDialogOpen(false)
   }
 
-  function handleSoftDelete(emp: Employee) {
+  function handleSoftDelete(emp: MappedEmployee) {
     setEmployees(prev =>
       prev.map(e =>
         e.id === emp.id
@@ -346,19 +344,19 @@ export function EmployeeTable() {
                   key={emp.id}
                   className={`border-border/40 hover:bg-secondary/50 ${emp.deleted ? 'opacity-50' : ''}`}>
                   {/* titleId */}
-                  <TableCell className={tdClass}>{getTitleName(emp.titleId)}</TableCell>
+                  <TableCell className={tdClass}>{emp.titleId}</TableCell>
                   {/* firstName */}
                   <TableCell className={`${tdClass} text-foreground font-medium`}>{emp.firstName}</TableCell>
                   {/* lastName */}
                   <TableCell className={`${tdClass} text-foreground font-medium`}>{emp.lastName}</TableCell>
                   {/* username */}
                   <TableCell className={tdClass}>{emp.username}</TableCell>
-                  {/* roleLevelId */}
+                  {/* role subrole Name */}
                   <TableCell>
                     <Badge
                       variant="outline"
                       className="border-border text-muted-foreground font-normal whitespace-nowrap">
-                      {getRoleName(emp.roleLevelId)}
+                      {emp.roleName}
                     </Badge>
                   </TableCell>
                   {/* mail */}

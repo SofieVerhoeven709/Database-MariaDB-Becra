@@ -61,7 +61,18 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
   )
 }
 
-export function EmployeeTable({initialEmployees}: {initialEmployees: MappedEmployee[]}) {
+interface EmployeeOption {
+  id: string
+  name: string
+}
+
+interface EmployeeTableProps {
+  initialEmployees: MappedEmployee[]
+  roleOptions: EmployeeOption[]
+  titleOptions: EmployeeOption[]
+}
+
+export function EmployeeTable({initialEmployees, roleOptions, titleOptions}: EmployeeTableProps) {
   const [employees, setEmployees] = useState<MappedEmployee[]>(initialEmployees)
   const [search, setSearch] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -474,6 +485,8 @@ export function EmployeeTable({initialEmployees}: {initialEmployees: MappedEmplo
         onOpenChange={setDialogOpen}
         employee={editingEmployee}
         employees={employees}
+        titles={titleOptions}
+        roles={roleOptions}
         onSave={handleSave}
       />
     </div>

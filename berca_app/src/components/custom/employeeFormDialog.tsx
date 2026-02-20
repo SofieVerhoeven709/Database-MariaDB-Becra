@@ -8,18 +8,20 @@ import {Textarea} from '@/components/ui/textarea'
 import {Switch} from '@/components/ui/switch'
 
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
-import {MOCK_ROLE_LEVELS, MOCK_TITLES, type Employee} from '@/lib/mock-employees'
 import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
+import type {MappedEmployee} from '@/types/employee'
 
 interface EmployeeFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  employee: Employee | null
-  employees: Employee[]
-  onSave: (employee: Employee) => void
+  employee: MappedEmployee | null
+  employees: MappedEmployee[]
+  roles: {id: string; name: string}[]
+  titles: {id: string; name: string}[]
+  onSave: (employee: MappedEmployee) => void
 }
 
 const EMPTY_EMPLOYEE: Employee = {
@@ -66,9 +68,17 @@ function ReadOnlyField({label, value}: {label: string; value: string}) {
   )
 }
 
-export function EmployeeFormDialog({open, onOpenChange, employee, employees, onSave}: EmployeeFormDialogProps) {
+export function EmployeeFormDialog({
+  open,
+  onOpenChange,
+  employee,
+  employees,
+  onSave,
+  titles,
+  roles,
+}: EmployeeFormDialogProps) {
   const isEditing = employee !== null
-  const [form, setForm] = useState<Employee>(EMPTY_EMPLOYEE)
+  const [form, setForm] = useState<MappedEmployee>(EMPTY_EMPLOYEE)
   const [password, setPassword] = useState('')
 
   useEffect(() => {
@@ -99,7 +109,12 @@ export function EmployeeFormDialog({open, onOpenChange, employee, employees, onS
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    onSave(form)
+
+    onSave({
+      ...form,
+      roleLevelId: form.roleLevelId,
+      titleId: form.titleId,
+    })
   }
 
   return (
@@ -141,12 +156,18 @@ export function EmployeeFormDialog({open, onOpenChange, employee, employees, onS
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="titleId">Title</Label>
-                  <Select value={form.titleId ?? ''} onValueChange={v => update('titleId', v || null)}>
+                  <Select
+                    value={form.titleId ?? ''}
+                    onValueChange={v => {
+                      const title = titles.find(t => t.id === v)
+                      update('titleId', v || null)
+                      update('titleName', title?.name ?? '-')
+                    }}>
                     <SelectTrigger className={inputStyles}>
                       <SelectValue placeholder="Select title" />
                     </SelectTrigger>
                     <SelectContent className="bg-card border-border">
-                      {MOCK_TITLES.map(t => (
+                      {titles.map(t => (
                         <SelectItem key={t.id} value={t.id}>
                           {t.name}
                         </SelectItem>
@@ -155,13 +176,19 @@ export function EmployeeFormDialog({open, onOpenChange, employee, employees, onS
                   </Select>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="roleLevelId">Role Level</Label>
-                  <Select value={form.roleLevelId ?? ''} onValueChange={v => update('roleLevelId', v || null)}>
+                  <Label htmlFor="roleLevelId">Role</Label>
+                  <Select
+                    value={form.roleLevelId ?? ''}
+                    onValueChange={v => {
+                      const role = roles.find(r => r.id === v)
+                      update('roleLevelId', v || null)
+                      update('roleName', role?.name ?? '-')
+                    }}>
                     <SelectTrigger className={inputStyles}>
                       <SelectValue placeholder="Select role" />
                     </SelectTrigger>
                     <SelectContent className="bg-card border-border">
-                      {MOCK_ROLE_LEVELS.map(r => (
+                      {roles.map(r => (
                         <SelectItem key={r.id} value={r.id}>
                           {r.name}
                         </SelectItem>

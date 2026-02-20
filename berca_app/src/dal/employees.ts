@@ -44,10 +44,6 @@ export async function getEmployeeByUsername(username: string): Promise<Employee 
   return prismaClient.employee.findFirst({where: {username}})
 }
 
-export async function getEmployeeById(id: string): Promise<Employee | null> {
-  return prismaClient.employee.findFirst({where: {id}})
-}
-
 export async function getEmployees(): Promise<
   (Employee & {
     RoleLevel_Employee_roleLevelIdToRoleLevel: {

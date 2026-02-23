@@ -18,6 +18,7 @@ export default async function RecordPage() {
       id: r.id,
       name: `${r.Role.name.replace(' Role', '')} / ${r.SubRole.name}`,
     }))
+    .sort((a, b) => a.name.localeCompare(b.name))
 
   const titleOptions = titles!
     .filter(t => !t.deleted)

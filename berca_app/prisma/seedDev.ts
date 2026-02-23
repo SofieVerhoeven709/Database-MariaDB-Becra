@@ -264,6 +264,23 @@ export const seedDev = async (prisma: PrismaClient) => {
     }
   }
 
+  // 9. Create default Titles
+  const DEFAULT_TITLES = ['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.', 'Ir.']
+
+  for (const titleName of DEFAULT_TITLES) {
+    await prisma.title.create({
+      data: {
+        id: randomUUID(),
+        name: titleName,
+        createdAt: now,
+        createdBy: adminEmployee.id,
+        deleted: false,
+      },
+    })
+  }
+
+  console.log('Default titles seeded')
+
   console.log('Departments, Roles, SubRoles, RoleLevels, Targets, and VisibilityForRole seeded')
   console.log('Total roleLevels created: 57 (14 × 4 + 1 Administrator)')
 }

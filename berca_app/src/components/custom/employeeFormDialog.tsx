@@ -344,6 +344,105 @@ export function EmployeeFormDialog({
                   placeholder="+32 471 123 456"
                 />
               </div>
+
+              {/* Emergency Contacts */}
+              <div className="flex flex-col gap-3 mt-4">
+                <div className="flex items-center justify-between">
+                  <Label>Emergency Contacts</Label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() =>
+                      update('emergencyContacts', [
+                        ...(form.emergencyContacts ?? []),
+                        {
+                          id: crypto.randomUUID(),
+                          name: '',
+                          relationship: '',
+                          mail: '',
+                          phoneNumber: '',
+                          employeeId: '', // temporary for UI
+                        },
+                      ])
+                    }>
+                    + Add contact
+                  </Button>
+                </div>
+
+                {(form.emergencyContacts ?? []).length === 0 && (
+                  <p className="text-sm text-muted-foreground">No emergency contacts added.</p>
+                )}
+
+                {(form.emergencyContacts ?? []).map((contact, index) => (
+                  <div key={contact.id ?? index} className="flex flex-col gap-3 p-3 border border-border rounded-lg">
+                    <div className="text-sm font-medium text-muted-foreground">Contact #{index + 1}</div>
+                    {/* ROW 1 */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      <Input
+                        placeholder="Name"
+                        value={contact.name ?? ''}
+                        onChange={e => {
+                          const updated = [...(form.emergencyContacts ?? [])]
+                          updated[index] = {...updated[index], name: e.target.value}
+                          update('emergencyContacts', updated)
+                        }}
+                        className={inputStyles}
+                      />
+
+                      <Input
+                        placeholder="Relationship"
+                        value={contact.relationship ?? ''}
+                        onChange={e => {
+                          const updated = [...(form.emergencyContacts ?? [])]
+                          updated[index] = {...updated[index], relationship: e.target.value}
+                          update('emergencyContacts', updated)
+                        }}
+                        className={inputStyles}
+                      />
+                    </div>
+
+                    {/* ROW 2 */}
+                    <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-2">
+                      <Input
+                        type="email"
+                        placeholder="contact@email.com"
+                        value={contact.mail ?? ''}
+                        onChange={e => {
+                          const updated = [...(form.emergencyContacts ?? [])]
+                          updated[index] = {...updated[index], mail: e.target.value}
+                          update('emergencyContacts', updated)
+                        }}
+                        className={inputStyles}
+                      />
+
+                      <Input
+                        placeholder="+32 471 123 456"
+                        value={contact.phoneNumber ?? ''}
+                        onChange={e => {
+                          const updated = [...(form.emergencyContacts ?? [])]
+                          updated[index] = {...updated[index], phoneNumber: e.target.value}
+                          update('emergencyContacts', updated)
+                        }}
+                        className={inputStyles}
+                      />
+
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        onClick={() =>
+                          update(
+                            'emergencyContacts',
+                            (form.emergencyContacts ?? []).filter((_, i) => i !== index),
+                          )
+                        }>
+                        ✕
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </TabsContent>
 
             {/* ---- Address tab ---- */}

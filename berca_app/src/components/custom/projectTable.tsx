@@ -16,11 +16,14 @@ import {
   updateProjectAction,
 } from '@/serverFunctions/projects'
 import {useRouter} from 'next/navigation'
+import Link from 'next/link'
+import type {Route} from 'next'
 
 type SortField =
   | 'projectNumber'
   | 'company'
   | 'projectType'
+  | 'target'
   | 'parentProject'
   | 'startDate'
   | 'endDate'
@@ -225,7 +228,7 @@ export function ProjectTable({
           <div className="relative max-w-sm flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search project number, company, type..."
+              placeholder="Search project number, company, type, target..."
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
@@ -271,6 +274,9 @@ export function ProjectTable({
               </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('projectType')}>
                 Type <SortIcon field="projectType" sortField={sortField} sortDir={sortDir} />
+              </TableHead>
+              <TableHead className={thClass} onClick={() => toggleSort('target')}>
+                Target <SortIcon field="target" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('parentProject')}>
                 Parent Project <SortIcon field="parentProject" sortField={sortField} sortDir={sortDir} />
@@ -332,7 +338,13 @@ export function ProjectTable({
                 <TableRow
                   key={p.id}
                   className={`border-border/40 hover:bg-secondary/50 ${p.deleted ? 'opacity-50' : ''}`}>
-                  <TableCell className={`${tdClass} text-foreground font-medium`}>{p.projectNumber}</TableCell>
+                  <TableCell className={`${tdClass} text-foreground font-medium`}>
+                    <Link
+                      href={`/departments/project/project/${p.id}` as Route}
+                      className="hover:text-accent hover:underline transition-colors">
+                      {p.projectNumber}
+                    </Link>
+                  </TableCell>
                   <TableCell className={tdClass}>{p.companyName}</TableCell>
                   <TableCell>
                     <Badge

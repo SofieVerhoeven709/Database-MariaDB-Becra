@@ -183,7 +183,10 @@ async function handleServerFunction<Schema extends ZodType, ReturnType, Auth ext
     const submittedData = generateSubmittedData(unvalidatedData)
 
     if (errors) {
-      logger.warn(`Validation of submitted data failed for ${functionName}.`)
+      logger.warn({
+        msg: `Validation of submitted data failed for ${functionName}.`,
+        errors,
+      })
       return {
         errors,
         success: false,

@@ -11,10 +11,10 @@
 import {redirect} from 'next/navigation'
 import {revalidatePath} from 'next/cache'
 import {createEmployee, getEmployeeByUsername, startSession, stopSession, updateEmployee} from '@/dal/employees'
-import {getSalt, hashOptions, verifyPassword} from '@/lib/passwordUtils'
+import {getSalt, hashOptions, hashPassword, verifyPassword} from '@/lib/passwordUtils'
 import {clearSessionCookie, getSessionId, setSessionCookie} from '@/lib/sessionUtils'
 import {protectedFormAction, protectedServerFunction, publicFormAction} from '@/lib/serverFunctions'
-import {registerSchema, signInSchema, updateEmployeeSchema} from '@/schemas/employeeSchemas'
+import {registerSchema, signInSchema, updateEmployeeSchema, upsertEmployeeSchema} from '@/schemas/employeeSchemas'
 import {prismaClient} from '@/dal/prismaClient'
 
 export const registerAction = publicFormAction({
@@ -132,4 +132,98 @@ export const signOutServerFunction = protectedServerFunction({
     redirect('/')
   },
   functionName: 'Sign out action',
+})
+
+export const createEmployeeAction = protectedServerFunction({
+  schema: upsertEmployeeSchema,
+  functionName: 'Create employee action',
+  serverFn: async ({data: {emergencyContacts, password_hash, ...data}, logger, profile}) => {
+    if (!password_hash) throw new Error('Password is required when creating an employee.')
+
+    logger.info(`Creating employee, createdBy: ${profile.id}`)
+
+    const employee = await prismaClient.employee.create({
+      data: {
+        ...data,
+        id: crypto.randomUUID(),
+        password_hash: hashPassword(password_hash),
+        createdBy: profile.id,
+        createdAt: new Date(),
+        passwordCreatedAt: new Date(),
+        EmergencyContact: emergencyContacts?.length
+          ? {
+              create: emergencyContacts.map(c => ({
+                id: crypto.randomUUID(),
+                name: c.name,
+                relationship: c.relationship,
+                mail: c.mail,
+                phoneNumber: c.phoneNumber,
+              })),
+            }
+          : undefined,
+      },
+    })
+
+    logger.info(`Employee created: ${employee.id}`)
+    revalidatePath('/employees')
+  },
+})
+
+export const updateEmployeeAdminAction = protectedServerFunction({
+  schema: upsertEmployeeSchema,
+  functionName: 'Update employee admin action',
+  serverFn: async ({data: {emergencyContacts, password_hash, id, ...data}, logger}) => {
+    await prismaClient.employee.update({
+      where: {id},
+      data: {
+        ...data,
+        ...(password_hash ? {password_hash: hashPassword(password_hash), passwordCreatedAt: new Date()} : {}),
+        EmergencyContact: {
+          deleteMany: {employeeId: id},
+          ...(emergencyContacts?.length
+            ? {
+                create: emergencyContacts.map(c => ({
+                  id: c.id ?? crypto.randomUUID(),
+                  name: c.name,
+                  relationship: c.relationship,
+                  mail: c.mail,
+                  phoneNumber: c.phoneNumber,
+                })),
+              }
+            : {}),
+        },
+      },
+    })
+
+    logger.info(`Employee updated: ${id}`)
+    revalidatePath('/employees')
+  },
+})
+
+export const softDeleteEmployeeAction = protectedServerFunction({
+  schema: updateEmployeeSchema,
+  functionName: 'Soft delete employee action',
+  serverFn: async ({data: {id}, profile, logger}) => {
+    await prismaClient.employee.update({
+      where: {id},
+      data: {
+        deleted: true,
+        deletedAt: new Date(),
+        deletedBy: profile.id,
+      },
+    })
+    logger.info(`Employee soft deleted: ${id} by ${profile.id}`)
+    revalidatePath('/employees')
+  },
+})
+
+export const hardDeleteEmployeeAction = protectedServerFunction({
+  schema: updateEmployeeSchema,
+  functionName: 'Hard delete employee action',
+  serverFn: async ({data: {id}, logger}) => {
+    await prismaClient.emergencyContact.deleteMany({where: {employeeId: id}})
+    await prismaClient.employee.delete({where: {id}})
+    logger.info(`Employee hard deleted: ${id}`)
+    revalidatePath('/employees')
+  },
 })

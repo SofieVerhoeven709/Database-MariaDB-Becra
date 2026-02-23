@@ -9,6 +9,13 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
 import type {MappedEmployee} from '@/types/employee'
+import {
+  createEmployeeAction,
+  hardDeleteEmployeeAction,
+  softDeleteEmployeeAction,
+  updateEmployeeAdminAction,
+} from '@/serverFunctions/employees'
+import {useRouter} from 'next/navigation'
 
 type SortField =
   | 'name'
@@ -70,10 +77,19 @@ interface EmployeeTableProps {
   initialEmployees: MappedEmployee[]
   roleOptions: EmployeeOption[]
   titleOptions: EmployeeOption[]
+  currentUserRole: string
+  currentUserLevel: number
 }
 
-export function EmployeeTable({initialEmployees, roleOptions, titleOptions}: EmployeeTableProps) {
-  const [employees, setEmployees] = useState<MappedEmployee[]>(initialEmployees)
+export function EmployeeTable({
+  initialEmployees,
+  roleOptions,
+  titleOptions,
+  currentUserRole,
+  currentUserLevel,
+}: EmployeeTableProps) {
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const employees = initialEmployees
   const [search, setSearch] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingEmployee, setEditingEmployee] = useState<MappedEmployee | null>(null)
@@ -81,6 +97,8 @@ export function EmployeeTable({initialEmployees, roleOptions, titleOptions}: Emp
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
+
+  const router = useRouter()
 
   const getEmployeeName = (id: string | null) => {
     if (!id) return '-'
@@ -183,25 +201,41 @@ export function EmployeeTable({initialEmployees, roleOptions, titleOptions}: Emp
     setDialogOpen(true)
   }
 
-  function handleSave(emp: MappedEmployee) {
-    setEmployees(prev => {
-      const exists = prev.find(e => e.id === emp.id)
-      if (exists) {
-        return prev.map(e => (e.id === emp.id ? emp : e))
-      }
-      return [...prev, emp]
-    })
+  async function handleSave(emp: MappedEmployee, password: string) {
+    const payload = {
+      ...emp,
+      password_hash: password || undefined,
+      startDate: new Date(emp.startDate),
+      createdAt: new Date(emp.createdAt),
+      passwordCreatedAt: new Date(emp.passwordCreatedAt),
+      birthDate: emp.birthDate ? new Date(emp.birthDate) : null,
+      endDate: emp.endDate ? new Date(emp.endDate) : null,
+      deletedAt: emp.deletedAt ? new Date(emp.deletedAt) : null,
+      // strip UI-only fields the schema doesn't know about
+      roleName: undefined,
+      titleName: undefined,
+      createdBy: undefined,
+      deletedBy: undefined,
+    }
+
+    if (editingEmployee) {
+      await updateEmployeeAdminAction(payload)
+    } else {
+      await createEmployeeAction(payload)
+    }
+
     setDialogOpen(false)
+    router.refresh()
   }
 
-  function handleSoftDelete(emp: MappedEmployee) {
-    setEmployees(prev =>
-      prev.map(e =>
-        e.id === emp.id
-          ? {...e, deleted: true, deletedAt: new Date().toISOString().split('T')[0], deletedBy: 'e-001'}
-          : e,
-      ),
-    )
+  async function handleSoftDelete(emp: MappedEmployee) {
+    await softDeleteEmployeeAction({id: emp.id})
+    router.refresh()
+  }
+
+  async function handleHardDelete(emp: MappedEmployee) {
+    await hardDeleteEmployeeAction({id: emp.id})
+    router.refresh()
   }
 
   const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -355,7 +389,7 @@ export function EmployeeTable({initialEmployees, roleOptions, titleOptions}: Emp
                   key={emp.id}
                   className={`border-border/40 hover:bg-secondary/50 ${emp.deleted ? 'opacity-50' : ''}`}>
                   {/* titleId */}
-                  <TableCell className={tdClass}>{emp.titleId}</TableCell>
+                  <TableCell className={tdClass}>{emp.titleName}</TableCell>
                   {/* firstName */}
                   <TableCell className={`${tdClass} text-foreground font-medium`}>{emp.firstName}</TableCell>
                   {/* lastName */}
@@ -464,6 +498,19 @@ export function EmployeeTable({initialEmployees, roleOptions, titleOptions}: Emp
                           <Trash2 className="h-3.5 w-3.5" />
                           <span className="sr-only">
                             Delete {emp.firstName} {emp.lastName}
+                          </span>
+                        </Button>
+                      )}
+
+                      {emp.deleted && isAdmin && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                          onClick={() => handleHardDelete(emp)}>
+                          <Trash2 className="h-3.5 w-3.5" />
+                          <span className="sr-only">
+                            Permanently delete {emp.firstName} {emp.lastName}
                           </span>
                         </Button>
                       )}

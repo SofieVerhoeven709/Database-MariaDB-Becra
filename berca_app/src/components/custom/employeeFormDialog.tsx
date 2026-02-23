@@ -21,38 +21,41 @@ interface EmployeeFormDialogProps {
   employees: MappedEmployee[]
   roles: {id: string; name: string}[]
   titles: {id: string; name: string}[]
-  onSave: (employee: MappedEmployee) => void
+  onSave: (employee: MappedEmployee, password: string) => void
 }
 
-const EMPTY_EMPLOYEE: Employee = {
-  id: '',
+export const EMPTY_EMPLOYEE: MappedEmployee = {
+  id: crypto.randomUUID(),
   firstName: '',
   lastName: '',
   mail: null,
+  username: '',
   phoneNumber: null,
+  birthDate: null,
   startDate: new Date().toISOString().split('T')[0],
   endDate: null,
   info: null,
-  birthDate: null,
   street: null,
   houseNumber: null,
   busNumber: null,
   zipCode: null,
   place: null,
-  username: '',
-  createdAt: new Date().toISOString().split('T')[0],
   permanentEmployee: false,
   checkInfo: false,
   newYearCard: false,
   active: true,
-  passwordCreatedAt: new Date().toISOString().split('T')[0],
+  createdAt: new Date().toISOString().split('T')[0],
   createdBy: null,
-  roleLevelId: null,
-  titleId: null,
+  passwordCreatedAt: new Date().toISOString().split('T')[0],
   pictureId: null,
   deleted: false,
   deletedAt: null,
   deletedBy: null,
+  roleLevelId: null,
+  titleId: null,
+  roleName: '-',
+  titleName: '-',
+  emergencyContacts: [],
 }
 
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
@@ -83,12 +86,22 @@ export function EmployeeFormDialog({
 
   useEffect(() => {
     if (open) {
-      setForm(employee ?? {...EMPTY_EMPLOYEE, id: `e-${Date.now()}`})
+      if (employee) {
+        setForm({
+          ...employee,
+          startDate: employee.startDate ? employee.startDate.split('T')[0] : '',
+          endDate: employee.endDate ? employee.endDate.split('T')[0] : null,
+          birthDate: employee.birthDate ? employee.birthDate.split('T')[0] : null,
+          deletedAt: employee.deletedAt ? employee.deletedAt.split('T')[0] : null,
+        })
+      } else {
+        setForm({...EMPTY_EMPLOYEE, id: `e-${Date.now()}`})
+      }
       setPassword('')
     }
   }, [open, employee])
 
-  function update(field: keyof Employee, value: unknown) {
+  function update<K extends keyof MappedEmployee>(field: K, value: MappedEmployee[K]) {
     setForm(prev => ({...prev, [field]: value}))
   }
 
@@ -107,16 +120,6 @@ export function EmployeeFormDialog({
     })
   }
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-
-    onSave({
-      ...form,
-      roleLevelId: form.roleLevelId,
-      titleId: form.titleId,
-    })
-  }
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-card border-border max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -129,7 +132,12 @@ export function EmployeeFormDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            onSave(form, password)
+          }}
+          className="flex flex-col gap-6">
           <Tabs defaultValue="general" className="w-full">
             <TabsList className="w-full bg-secondary">
               <TabsTrigger value="general" className="flex-1 data-[state=active]:bg-card">

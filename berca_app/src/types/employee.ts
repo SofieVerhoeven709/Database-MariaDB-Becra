@@ -31,5 +31,5 @@ export interface MappedEmployee {
   titleId: string | null
   roleName: string
   titleName: string
-  emergencyContacts: EmergencyContact[] // can type this more precisely later
+  emergencyContacts: EmergencyContact[]
 }

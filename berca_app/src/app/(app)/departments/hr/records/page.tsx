@@ -2,16 +2,19 @@ import {EmployeeTable} from '@/components/custom/employeeTable'
 import {getEmployees} from '@/dal/employees'
 import {mapEmployee} from '@/extra/employees'
 import {getTitles} from '@/dal/titles'
+import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getRoleLevels} from '@/dal/roleLevel'
 
 export default async function RecordPage() {
-  // Fetch employees, roles, and titles
-  const [employeesFromDAL, roleLevels, titles] = await Promise.all([getEmployees(), getRoleLevels(), getTitles()])
+  const [employeesFromDAL, roleLevels, titles, profile] = await Promise.all([
+    getEmployees(),
+    getRoleLevels(),
+    getTitles(),
+    getSessionProfileFromCookieOrThrow(),
+  ])
 
-  // Map employees to include roleName/titleName
   const employees = employeesFromDAL.map(mapEmployee)
 
-  // Prepare select options for forms
   const roleOptions = roleLevels!
     .filter(t => !t.deleted)
     .map(r => ({
@@ -27,6 +30,9 @@ export default async function RecordPage() {
       name: t.name,
     }))
 
+  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
+  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-6xl">
@@ -35,7 +41,13 @@ export default async function RecordPage() {
           <p className="mt-1 text-sm text-muted-foreground">Manage employee records and onboarding</p>
         </div>
 
-        <EmployeeTable initialEmployees={employees} roleOptions={roleOptions} titleOptions={titleOptions} />
+        <EmployeeTable
+          initialEmployees={employees}
+          roleOptions={roleOptions}
+          titleOptions={titleOptions}
+          currentUserRole={currentUserRole}
+          currentUserLevel={currentUserLevel}
+        />
       </div>
     </main>
   )

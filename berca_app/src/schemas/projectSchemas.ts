@@ -28,7 +28,6 @@ export const projectSchema = z.object({
   companyId: z.string(),
   projectTypeId: z.string(),
   parentProjectId: z.string().nullable().optional(),
-  targetId: z.string(),
   deleted: z.boolean().default(false),
   deletedAt: dateSchema.optional(),
   deletedBy: z.string().nullable().optional(),

@@ -1,12 +1,9 @@
-import type {Project, Company, ProjectType, Target, TargetType} from '@/generated/prisma/client'
+import type {Project, Company, ProjectType} from '@/generated/prisma/client'
 import type {MappedProject} from '@/types/project'
 
 type ProjectWithRelations = Project & {
   Company: Company
   ProjectType: ProjectType
-  Target: Target & {
-    TargetType: TargetType
-  }
 }
 
 export function mapProject(p: ProjectWithRelations): MappedProject {
@@ -30,8 +27,6 @@ export function mapProject(p: ProjectWithRelations): MappedProject {
     projectTypeId: p.projectTypeId,
     projectTypeName: p.ProjectType.name,
     parentProjectId: p.parentProjectId,
-    targetId: p.targetId,
-    targetName: p.Target.TargetType.name,
     deleted: p.deleted,
     deletedAt: p.deletedAt?.toISOString() ?? null,
     deletedBy: p.deletedBy,

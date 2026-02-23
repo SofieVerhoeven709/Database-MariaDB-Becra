@@ -6,11 +6,6 @@ export async function getProjects() {
     include: {
       Company: true,
       ProjectType: true,
-      Target: {
-        include: {
-          TargetType: true,
-        },
-      },
     },
   })
 }

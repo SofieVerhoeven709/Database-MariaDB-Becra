@@ -3,6 +3,7 @@ import {revalidatePath} from 'next/cache'
 import {prismaClient} from '@/dal/prismaClient'
 import {upsertProjectSchema, updateProjectSchema} from '@/schemas/projectSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
+import {createTargetForType} from '@/dal/targets'
 
 export const createProjectAction = protectedServerFunction({
   schema: upsertProjectSchema,
@@ -10,12 +11,15 @@ export const createProjectAction = protectedServerFunction({
   serverFn: async ({data, logger, profile}) => {
     logger.info(`Creating project, createdBy: ${profile.id}`)
 
+    const target = await createTargetForType('Project', profile.id)
+
     const project = await prismaClient.project.create({
       data: {
         ...data,
         id: crypto.randomUUID(),
         createdBy: profile.id,
         createdAt: new Date(),
+        targetId: target.id,
       },
     })
 

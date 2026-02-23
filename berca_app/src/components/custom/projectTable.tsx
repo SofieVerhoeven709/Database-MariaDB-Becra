@@ -21,7 +21,6 @@ type SortField =
   | 'projectNumber'
   | 'company'
   | 'projectType'
-  | 'target'
   | 'parentProject'
   | 'startDate'
   | 'endDate'
@@ -66,7 +65,6 @@ interface ProjectTableProps {
   initialProjects: MappedProject[]
   projectTypes: Option[]
   companies: Option[]
-  targets: Option[]
   currentUserRole: string
   currentUserLevel: number
   employees: Option[]
@@ -76,7 +74,6 @@ export function ProjectTable({
   initialProjects,
   projectTypes,
   companies,
-  targets,
   currentUserRole,
   currentUserLevel,
   employees,
@@ -118,7 +115,6 @@ export function ProjectTable({
         p.projectNumber.toLowerCase().includes(q) ||
         p.companyName.toLowerCase().includes(q) ||
         p.projectTypeName.toLowerCase().includes(q) ||
-        p.targetName.toLowerCase().includes(q) ||
         (p.description?.toLowerCase().includes(q) ?? false) ||
         (p.extraInfo?.toLowerCase().includes(q) ?? false)
       )
@@ -134,8 +130,6 @@ export function ProjectTable({
           return cmpStr(a.companyName, b.companyName)
         case 'projectType':
           return cmpStr(a.projectTypeName, b.projectTypeName)
-        case 'target':
-          return cmpStr(a.targetName, b.targetName)
         case 'parentProject':
           return cmpStr(getProjectLabel(a.parentProjectId), getProjectLabel(b.parentProjectId))
         case 'startDate':
@@ -231,7 +225,7 @@ export function ProjectTable({
           <div className="relative max-w-sm flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search project number, company, type, target..."
+              placeholder="Search project number, company, type..."
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
@@ -277,9 +271,6 @@ export function ProjectTable({
               </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('projectType')}>
                 Type <SortIcon field="projectType" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('target')}>
-                Target <SortIcon field="target" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('parentProject')}>
                 Parent Project <SortIcon field="parentProject" sortField={sortField} sortDir={sortDir} />
@@ -350,7 +341,6 @@ export function ProjectTable({
                       {p.projectTypeName}
                     </Badge>
                   </TableCell>
-                  <TableCell className={tdClass}>{p.targetName}</TableCell>
                   <TableCell className={tdClass}>{getProjectLabel(p.parentProjectId)}</TableCell>
                   <TableCell className={tdClass}>{formatDate(p.startDate)}</TableCell>
                   <TableCell className={tdClass}>{formatDate(p.endDate)}</TableCell>
@@ -464,7 +454,6 @@ export function ProjectTable({
         projects={projects}
         projectTypes={projectTypes}
         companies={companies}
-        targets={targets}
         onSave={handleSave}
       />
     </div>

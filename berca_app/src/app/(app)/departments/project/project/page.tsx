@@ -5,15 +5,13 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getEmployees} from '@/dal/employees'
 import {mapEmployee} from '@/extra/employees'
 import {getCompanies} from '@/dal/companies'
-import {getTargets} from '@/dal/targets'
 
 export default async function ProjectsPage() {
-  const [projectsFromDAL, employeesFromDAL, projectTypes, companies, targets, profile] = await Promise.all([
+  const [projectsFromDAL, employeesFromDAL, projectTypes, companies, profile] = await Promise.all([
     getProjects(),
     getEmployees(),
     getProjectTypes(),
     getCompanies(),
-    getTargets(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
@@ -21,7 +19,6 @@ export default async function ProjectsPage() {
 
   const projectTypeOptions = projectTypes.map(t => ({id: t.id, name: t.name}))
   const companyOptions = companies.map(c => ({id: c.id, name: c.name}))
-  const targetOptions = targets.map(t => ({id: t.id, name: t.TargetType.name}))
 
   const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
@@ -44,7 +41,6 @@ export default async function ProjectsPage() {
           initialProjects={projects}
           projectTypes={projectTypeOptions}
           companies={companyOptions}
-          targets={targetOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           employees={employeeOptions}

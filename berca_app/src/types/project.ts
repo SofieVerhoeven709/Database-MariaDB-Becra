@@ -18,8 +18,6 @@ export interface MappedProject {
   projectTypeId: string
   projectTypeName: string
   parentProjectId: string | null
-  targetId: string
-  targetName: string
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null

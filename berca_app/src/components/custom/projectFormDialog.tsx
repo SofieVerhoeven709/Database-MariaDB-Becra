@@ -22,7 +22,6 @@ interface ProjectFormDialogProps {
   projects: MappedProject[]
   projectTypes: Option[]
   companies: Option[]
-  targets: Option[]
   onSave: (project: MappedProject) => Promise<void>
 }
 
@@ -51,8 +50,6 @@ const emptyProject = (): MappedProject => ({
   projectTypeId: '',
   projectTypeName: '',
   parentProjectId: null,
-  targetId: '',
-  targetName: '',
   deleted: false,
   deletedAt: null,
   deletedBy: null,
@@ -65,7 +62,6 @@ export function ProjectFormDialog({
   projects,
   projectTypes,
   companies,
-  targets,
   onSave,
 }: ProjectFormDialogProps) {
   const [form, setForm] = useState<MappedProject>(emptyProject())
@@ -141,23 +137,6 @@ export function ProjectFormDialog({
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
                 {projectTypes.map(t => (
-                  <SelectItem key={t.id} value={t.id}>
-                    {t.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Target */}
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Target *</Label>
-            <Select value={form.targetId} onValueChange={v => set('targetId', v)}>
-              <SelectTrigger className="bg-secondary border-border">
-                <SelectValue placeholder="Select target" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                {targets.map(t => (
                   <SelectItem key={t.id} value={t.id}>
                     {t.name}
                   </SelectItem>
@@ -278,7 +257,7 @@ export function ProjectFormDialog({
           </Button>
           <Button
             onClick={handleSubmit}
-            disabled={saving || !form.projectNumber || !form.companyId || !form.projectTypeId || !form.targetId}
+            disabled={saving || !form.projectNumber || !form.companyId || !form.projectTypeId}
             className="bg-accent text-accent-foreground hover:bg-accent/80">
             {saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Create Project'}
           </Button>

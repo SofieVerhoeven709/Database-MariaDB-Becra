@@ -196,23 +196,17 @@ export const seedDev = async (prisma: PrismaClient) => {
   }
 
   // 7. Create default TargetType for Departments
-  const defaultTargetType = await prisma.targetType.create({
-    data: {
-      id: randomUUID(),
-      name: 'Department',
-      createdAt: now,
-      createdBy: adminEmployee.id,
-    },
+  // 7. Create one TargetType per table — reused for every target of that table
+  const departmentTargetType = await prisma.targetType.create({
+    data: {id: randomUUID(), name: 'Department', createdAt: now, createdBy: adminEmployee.id},
   })
 
-  // 8. Create a TargetType for Companies
   const companyTargetType = await prisma.targetType.create({
-    data: {
-      id: randomUUID(),
-      name: 'Company',
-      createdAt: now,
-      createdBy: adminEmployee.id,
-    },
+    data: {id: randomUUID(), name: 'Company', createdAt: now, createdBy: adminEmployee.id},
+  })
+
+  const projectTargetType = await prisma.targetType.create({
+    data: {id: randomUUID(), name: 'Project', createdAt: now, createdBy: adminEmployee.id},
   })
 
   // 9. Create Departments + Department Roles + RoleLevels + Target
@@ -222,7 +216,7 @@ export const seedDev = async (prisma: PrismaClient) => {
         id: randomUUID(),
         createdAt: now,
         createdBy: adminEmployee.id,
-        targetTypeId: defaultTargetType.id,
+        targetTypeId: departmentTargetType.id,
       },
     })
 

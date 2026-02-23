@@ -118,6 +118,8 @@ const createdSubRoles: Record<SubRoleName, {id: string; level: number}> = {} as 
   {id: string; level: number}
 >
 
+const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}, {name: 'Internal'}]
+
 export const seedDev = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
   const now = new Date()
@@ -193,7 +195,7 @@ export const seedDev = async (prisma: PrismaClient) => {
     createdSubRoles[sub.name] = {id: created.id, level: sub.level}
   }
 
-  // 7. Create a default TargetType (needed for Departments)
+  // 7. Create default TargetType for Departments
   const defaultTargetType = await prisma.targetType.create({
     data: {
       id: randomUUID(),
@@ -203,9 +205,18 @@ export const seedDev = async (prisma: PrismaClient) => {
     },
   })
 
-  // 8. Create Departments + Department Roles + RoleLevels + Target
+  // 8. Create a TargetType for Companies
+  const companyTargetType = await prisma.targetType.create({
+    data: {
+      id: randomUUID(),
+      name: 'Company',
+      createdAt: now,
+      createdBy: adminEmployee.id,
+    },
+  })
+
+  // 9. Create Departments + Department Roles + RoleLevels + Target
   for (const dept of ALL_DEPARTMENTS) {
-    // Create Target for department
     const deptTarget = await prisma.target.create({
       data: {
         id: randomUUID(),
@@ -215,7 +226,6 @@ export const seedDev = async (prisma: PrismaClient) => {
       },
     })
 
-    // Create Department
     await prisma.department.create({
       data: {
         id: randomUUID(),
@@ -230,7 +240,6 @@ export const seedDev = async (prisma: PrismaClient) => {
       },
     })
 
-    // Create Department Role
     const departmentRole = await prisma.role.create({
       data: {
         id: randomUUID(),
@@ -240,9 +249,8 @@ export const seedDev = async (prisma: PrismaClient) => {
       },
     })
 
-    // Create 4 roleLevels per department role
     for (const sub of SUB_ROLES) {
-      const roleLevel = await prisma.roleLevel.create({
+      await prisma.roleLevel.create({
         data: {
           id: randomUUID(),
           roleId: departmentRole.id,
@@ -252,19 +260,18 @@ export const seedDev = async (prisma: PrismaClient) => {
         },
       })
 
-      // ONLY Administrator sees all departments
       await prisma.visibilityForRole.create({
         data: {
           id: randomUUID(),
           visible: true,
-          roleLevelId: adminRoleLevel.id, // admin sees all departments
+          roleLevelId: adminRoleLevel.id,
           targetId: deptTarget.id,
         },
       })
     }
   }
 
-  // 9. Create default Titles
+  // 10. Create default Titles
   const DEFAULT_TITLES = ['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.', 'Ir.']
 
   for (const titleName of DEFAULT_TITLES) {
@@ -280,6 +287,67 @@ export const seedDev = async (prisma: PrismaClient) => {
   }
 
   console.log('Default titles seeded')
+
+  // 11. Create Becra company target
+  const becraTarget = await prisma.target.create({
+    data: {
+      id: randomUUID(),
+      createdAt: now,
+      createdBy: adminEmployee.id,
+      targetTypeId: companyTargetType.id,
+    },
+  })
+
+  // 12. Create Becra company
+  const becraCompany = await prisma.company.create({
+    data: {
+      id: randomUUID(),
+      name: 'Becra BV',
+      number: 'BECRA-001',
+      mail: 'info@becra.be',
+      businessPhone: '+32 495 19 43 68',
+      website: 'https://www.becra.be',
+      companyActive: true,
+      headQuarters: true,
+      customer: false,
+      supplier: false,
+      createdAt: now,
+      createdBy: adminEmployee.id,
+      targetId: becraTarget.id,
+    },
+  })
+
+  // 13. Create Becra company address
+  await prisma.companyAdress.create({
+    data: {
+      id: randomUUID(),
+      street: 'Nijverheidsstraat',
+      houseNumber: '14',
+      zipCode: '2400',
+      place: 'Mol',
+      typeAdress: 'headquarters',
+      createdAt: now,
+      createdBy: adminEmployee.id,
+      companyId: becraCompany.id,
+    },
+  })
+
+  console.log('Becra company and address seeded')
+
+  // 14. Create project types
+  for (const pt of PROJECT_TYPES) {
+    await prisma.projectType.create({
+      data: {
+        id: randomUUID(),
+        name: pt.name,
+        createdAt: now,
+        createdBy: adminEmployee.id,
+        deleted: false,
+      },
+    })
+  }
+
+  console.log('Project types seeded')
 
   console.log('Departments, Roles, SubRoles, RoleLevels, Targets, and VisibilityForRole seeded')
   console.log('Total roleLevels created: 57 (14 × 4 + 1 Administrator)')

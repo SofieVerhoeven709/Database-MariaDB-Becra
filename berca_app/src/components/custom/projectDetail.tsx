@@ -505,6 +505,12 @@ export function ProjectDetail({
               {project.MaterialSerialTrack.length}
             </Badge>
           </TabsTrigger>
+          <TabsTrigger value="subprojects">
+            Sub-projects
+            <Badge variant="secondary" className="ml-2 text-xs">
+              {project.other_Project.length}
+            </Badge>
+          </TabsTrigger>
         </TabsList>
 
         {/* ── Contacts ─────────────────────────────────────────────────────────── */}
@@ -935,6 +941,79 @@ export function ProjectDetail({
                       <TableCell className={tdClass}>{m.Company?.name ?? '-'}</TableCell>
                       <TableCell className={tdClass}>
                         {m.Employee ? `${m.Employee.firstName} ${m.Employee.lastName}` : '-'}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+
+        {/* ── Sub-projects ─────────────────────────────────────────────────────── */}
+        <TabsContent value="subprojects" className="mt-3">
+          <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent border-border/60">
+                  <TableHead className={thClass}>Project #</TableHead>
+                  <TableHead className={thClass}>Company</TableHead>
+                  <TableHead className={thClass}>Type</TableHead>
+                  <TableHead className={thClass}>Start Date</TableHead>
+                  <TableHead className={thClass}>End Date</TableHead>
+                  <TableHead className={thClass}>Open</TableHead>
+                  <TableHead className={thClass}>Closed</TableHead>
+                  <TableHead className="w-10">
+                    <span className="sr-only">Open</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {project.other_Project.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={8} className="h-24 text-center text-muted-foreground">
+                      No sub-projects found.
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  project.other_Project.map(sp => (
+                    <TableRow key={sp.id} className="border-border/40 hover:bg-secondary/50">
+                      <TableCell className={`${tdClass} text-foreground font-medium`}>{sp.projectNumber}</TableCell>
+                      <TableCell className={tdClass}>{sp.Company.name}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className="border-border text-muted-foreground font-normal">
+                          {sp.ProjectType.name}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className={tdClass}>{formatDate(sp.startDate)}</TableCell>
+                      <TableCell className={tdClass}>{formatDate(sp.endDate)}</TableCell>
+                      <TableCell>
+                        {sp.isOpen ? (
+                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                        ) : (
+                          <Badge variant="secondary" className="text-muted-foreground font-medium">
+                            No
+                          </Badge>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {sp.isClosed ? (
+                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                        ) : (
+                          <Badge variant="secondary" className="text-muted-foreground font-medium">
+                            No
+                          </Badge>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <Link href={`/departments/project/project/${sp.id}` as Route}>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </Button>
+                        </Link>
                       </TableCell>
                     </TableRow>
                   ))

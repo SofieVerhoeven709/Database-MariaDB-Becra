@@ -29,5 +29,11 @@ export type ProjectDetailData = Prisma.ProjectGetPayload<{
         Employee: true
       }
     }
+    other_Project: {
+      include: {
+        Company: true
+        ProjectType: true
+      }
+    }
   }
 }>

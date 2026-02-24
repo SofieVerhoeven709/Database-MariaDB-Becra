@@ -18,6 +18,13 @@ export async function getProjectById(id: string) {
       ProjectType: true,
       Employee: true,
       Project: true,
+      other_Project: {
+        where: {deleted: false},
+        include: {
+          Company: true,
+          ProjectType: true,
+        },
+      },
       ProjectContact: {
         where: {deleted: false},
         include: {

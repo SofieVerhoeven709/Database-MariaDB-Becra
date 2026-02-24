@@ -81,6 +81,7 @@ export function ProjectDetail({
   // ─── Project edit form ──────────────────────────────────────────────────────
   const [form, setForm] = useState({
     projectNumber: project.projectNumber,
+    projectName: project.projectName,
     description: project.description ?? '',
     extraInfo: project.extraInfo ?? '',
     companyId: project.companyId,
@@ -128,6 +129,7 @@ export function ProjectDetail({
   function handleCancel() {
     setForm({
       projectNumber: project.projectNumber,
+      projectName: project.projectName,
       description: project.description ?? '',
       extraInfo: project.extraInfo ?? '',
       companyId: project.companyId,
@@ -150,6 +152,7 @@ export function ProjectDetail({
       await updateProjectAction({
         id: project.id,
         projectNumber: form.projectNumber,
+        projectName: form.projectName,
         description: form.description || null,
         extraInfo: form.extraInfo || null,
         companyId: form.companyId,
@@ -261,7 +264,9 @@ export function ProjectDetail({
             </Button>
           </Link>
           <div>
-            <h1 className="text-lg font-semibold text-foreground">{project.projectNumber}</h1>
+            <h1 className="text-lg font-semibold text-foreground">
+              {project.projectNumber} {project.projectName}
+            </h1>
             <p className="text-sm text-muted-foreground">
               {project.Company.name} · {project.ProjectType.name}
             </p>
@@ -304,6 +309,19 @@ export function ProjectDetail({
               />
             ) : (
               <p className="text-sm text-foreground font-medium">{project.projectNumber}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Project Name</Label>
+            {editing ? (
+              <Input
+                value={form.projectName}
+                onChange={e => setForm(f => ({...f, projectName: e.target.value}))}
+                className="bg-secondary border-border"
+              />
+            ) : (
+              <p className="text-sm text-foreground font-medium">{project.projectName}</p>
             )}
           </div>
 

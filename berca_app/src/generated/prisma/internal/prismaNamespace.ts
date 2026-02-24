@@ -6460,6 +6460,7 @@ export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeo
 export const ProjectScalarFieldEnum = {
   id: 'id',
   projectNumber: 'projectNumber',
+  projectName: 'projectName',
   description: 'description',
   extraInfo: 'extraInfo',
   startDate: 'startDate',
@@ -7675,6 +7676,7 @@ export type ProductOrderByRelevanceFieldEnum = (typeof ProductOrderByRelevanceFi
 export const ProjectOrderByRelevanceFieldEnum = {
   id: 'id',
   projectNumber: 'projectNumber',
+  projectName: 'projectName',
   description: 'description',
   extraInfo: 'extraInfo',
   createdBy: 'createdBy',

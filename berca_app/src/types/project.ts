@@ -1,6 +1,7 @@
 export interface MappedProject {
   id: string
   projectNumber: string
+  projectName: string
   description: string | null
   extraInfo: string | null
   startDate: string | null

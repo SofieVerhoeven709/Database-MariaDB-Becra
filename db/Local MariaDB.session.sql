@@ -516,7 +516,8 @@ CREATE TABLE
 CREATE TABLE
       Project (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            projectNumber VARCHAR(100) NOT NULL,
+            projectNumber VARCHAR(255) NOT NULL,
+            projectName VARCHAR(255) NOT NULL
             description TEXT,
             extraInfo TEXT,
             startDate DATETIME,

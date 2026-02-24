@@ -10,6 +10,7 @@ export function mapProject(p: ProjectWithRelations): MappedProject {
   return {
     id: p.id,
     projectNumber: p.projectNumber,
+    projectName: p.projectName,
     description: p.description,
     extraInfo: p.extraInfo,
     startDate: p.startDate?.toISOString() ?? null,

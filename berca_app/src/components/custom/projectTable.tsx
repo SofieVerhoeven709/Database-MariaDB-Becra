@@ -21,6 +21,7 @@ import type {Route} from 'next'
 
 type SortField =
   | 'projectNumber'
+  | 'projectName'
   | 'company'
   | 'projectType'
   | 'parentProject'
@@ -128,6 +129,8 @@ export function ProjectTable({
       switch (sortField) {
         case 'projectNumber':
           return cmpStr(a.projectNumber, b.projectNumber)
+        case 'projectName':
+          return cmpStr(a.projectName, b.projectName)
         case 'company':
           return cmpStr(a.companyName, b.companyName)
         case 'projectType':
@@ -267,6 +270,9 @@ export function ProjectTable({
               <TableHead className={thClass} onClick={() => toggleSort('projectNumber')}>
                 Project # <SortIcon field="projectNumber" sortField={sortField} sortDir={sortDir} />
               </TableHead>
+              <TableHead className={thClass} onClick={() => toggleSort('projectName')}>
+                Project Name <SortIcon field="projectName" sortField={sortField} sortDir={sortDir} />
+              </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('company')}>
                 Company <SortIcon field="company" sortField={sortField} sortDir={sortDir} />
               </TableHead>
@@ -340,6 +346,8 @@ export function ProjectTable({
                       {p.projectNumber}
                     </Link>
                   </TableCell>
+                  <TableCell className={tdClass}>{p.projectName}</TableCell>
+
                   <TableCell className={tdClass}>{p.companyName}</TableCell>
                   <TableCell>
                     <Badge

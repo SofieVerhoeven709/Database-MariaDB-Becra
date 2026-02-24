@@ -12,7 +12,8 @@ const requiredDateSchema = z.preprocess(
 
 export const projectSchema = z.object({
   id: z.string(),
-  projectNumber: z.string().min(1).max(100),
+  projectNumber: z.string().min(1).max(255),
+  projectName: z.string().min(1).max(255),
   description: z.string().nullable().optional(),
   extraInfo: z.string().nullable().optional(),
   startDate: dateSchema.optional(),

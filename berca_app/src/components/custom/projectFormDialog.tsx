@@ -33,6 +33,7 @@ function toInputDate(iso: string | null) {
 const emptyProject = (): MappedProject => ({
   id: '',
   projectNumber: '',
+  projectName: '',
   description: null,
   extraInfo: null,
   startDate: null,
@@ -125,6 +126,14 @@ export function ProjectFormDialog({
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project Number *</Label>
             <Input value={form.projectNumber} readOnly className="bg-secondary border-border" />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Project Name *</Label>
+            <Input
+              value={form.projectName}
+              onChange={e => set('projectName', e.target.value)}
+              className="bg-secondary border-border"
+            />
           </div>
 
           {/* Company */}

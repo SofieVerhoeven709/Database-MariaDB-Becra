@@ -1353,7 +1353,8 @@ model Product {
 
 model Project {
   id                                   String                @id @db.Char(36)
-  projectNumber                        String                @db.VarChar(100)
+  projectNumber                        String                @db.VarChar(255)
+  projectName                          String                @db.VarChar(255)
   description                          String?               @db.Text
   extraInfo                            String?               @db.Text
   startDate                            DateTime?             @db.DateTime(0)

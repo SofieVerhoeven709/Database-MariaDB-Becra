@@ -208,6 +208,12 @@ export const seedDev = async (prisma: PrismaClient) => {
   const projectTargetType = await prisma.targetType.create({
     data: {id: randomUUID(), name: 'Project', createdAt: now, createdBy: adminEmployee.id},
   })
+  const workOrderTargetType = await prisma.targetType.create({
+    data: {id: randomUUID(), name: 'WorkOrder', createdAt: now, createdBy: adminEmployee.id},
+  })
+  const workOrderStructureTargetType = await prisma.targetType.create({
+    data: {id: randomUUID(), name: 'WorkOrderStructure', createdAt: now, createdBy: adminEmployee.id},
+  })
 
   // 9. Create Departments + Department Roles + RoleLevels + Target
   for (const dept of ALL_DEPARTMENTS) {

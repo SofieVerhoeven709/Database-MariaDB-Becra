@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type {Department} from '@/generated/prisma/client'
 import camelCase from 'lodash/camelCase'
 import {getIconByName} from '@/extra/icons'
+import React from 'react'
 
 interface DepartmentActionGridProps {
   department: Department

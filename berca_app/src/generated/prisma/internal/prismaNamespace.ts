@@ -6817,8 +6817,8 @@ export type TrainingStandardScalarFieldEnum = (typeof TrainingStandardScalarFiel
 
 export const UnitScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  quantity: 'quantity',
+  unit: 'unit',
+  physicalQuantity: 'physicalQuantity',
   abbreviation: 'abbreviation',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -7937,7 +7937,7 @@ export type TrainingStandardOrderByRelevanceFieldEnum = (typeof TrainingStandard
 
 export const UnitOrderByRelevanceFieldEnum = {
   id: 'id',
-  name: 'name',
+  unit: 'unit',
   abbreviation: 'abbreviation',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',

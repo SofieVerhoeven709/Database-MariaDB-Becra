@@ -1845,8 +1845,8 @@ model TrainingStandard {
 
 model Unit {
   id                                String     @id @db.Char(36)
-  name                              String     @db.VarChar(255)
-  quantity                          Int
+  unit                              String     @db.VarChar(255) @map("name")
+  physicalQuantity                  Int        @map("quantity")
   abbreviation                      String     @db.VarChar(255)
   shortDescription                  String?    @db.VarChar(255)
   longDescription                   String?    @db.Text

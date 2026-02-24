@@ -158,8 +158,8 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS Unit (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            quantity INT NOT NULL,
+            unit VARCHAR(255) NOT NULL,
+            physicalQuantity INT NOT NULL,
             abbreviation VARCHAR(255) NOT NULL,
             shortDescription VARCHAR(255),
             longDescription TEXT,

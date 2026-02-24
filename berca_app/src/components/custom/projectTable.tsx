@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2} from 'lucide-react'
+import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
 import {ProjectFormDialog} from '@/components/custom/projectFormDialog'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
@@ -23,7 +23,6 @@ type SortField =
   | 'projectNumber'
   | 'company'
   | 'projectType'
-  | 'target'
   | 'parentProject'
   | 'startDate'
   | 'endDate'
@@ -193,7 +192,6 @@ export function ProjectTable({
       // strip UI-only fields
       companyName: undefined,
       projectTypeName: undefined,
-      targetName: undefined,
     }
 
     if (editingProject) {
@@ -218,7 +216,7 @@ export function ProjectTable({
 
   const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
   const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
-  const totalCols = filterDeleted !== 'not-deleted' ? 21 : 17
+  const totalCols = filterDeleted !== 'not-deleted' ? 20 : 16
 
   return (
     <div className="flex flex-col gap-6">
@@ -228,7 +226,7 @@ export function ProjectTable({
           <div className="relative max-w-sm flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search project number, company, type, target..."
+              placeholder="Search project number, company, type..."
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
@@ -274,9 +272,6 @@ export function ProjectTable({
               </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('projectType')}>
                 Type <SortIcon field="projectType" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('target')}>
-                Target <SortIcon field="target" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('parentProject')}>
                 Parent Project <SortIcon field="parentProject" sortField={sortField} sortDir={sortDir} />
@@ -418,6 +413,15 @@ export function ProjectTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
+                      <Link href={`/departments/project/project/${p.id}` as Route}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                          <ExternalLink className="h-3.5 w-3.5" />
+                          <span className="sr-only">View {p.projectNumber}</span>
+                        </Button>
+                      </Link>
                       <Button
                         variant="ghost"
                         size="icon"

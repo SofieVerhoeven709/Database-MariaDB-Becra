@@ -1,6 +1,7 @@
 import {getProjectById} from '@/dal/projects'
 import {getProjectTypes} from '@/dal/projects'
 import {getEmployees} from '@/dal/employees'
+import {getContacts} from '@/dal/contacts'
 import {mapEmployee} from '@/extra/employees'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {ProjectDetail} from '@/components/custom/projectDetail'
@@ -13,11 +14,12 @@ interface ProjectDetailPageProps {
 
 export default async function ProjectDetailPage({params}: ProjectDetailPageProps) {
   const {id} = await params
-  const [project, projectTypes, companies, employeesFromDAL, profile] = await Promise.all([
+  const [project, projectTypes, companies, employeesFromDAL, contactsFromDAL, profile] = await Promise.all([
     getProjectById(id).catch(() => null),
     getProjectTypes(),
     getCompanies(),
     getEmployees(),
+    getContacts(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
@@ -29,6 +31,11 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
     id: e.id,
     firstName: e.firstName,
     lastName: e.lastName,
+  }))
+
+  const contactOptions = contactsFromDAL.map(c => ({
+    id: c.id,
+    name: `${c.firstName} ${c.lastName}`,
   }))
 
   const projectTypeOptions = projectTypes.map(t => ({id: t.id, name: t.name}))
@@ -45,6 +52,7 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
           projectTypes={projectTypeOptions}
           companies={companyOptions}
           employees={employeeOptions}
+          contacts={contactOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
         />

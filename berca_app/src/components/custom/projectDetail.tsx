@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Pencil, X, Save} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, Plus, ExternalLink} from 'lucide-react'
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
@@ -13,6 +13,7 @@ import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog'
 import {updateProjectAction} from '@/serverFunctions/projects'
 import type {Route} from 'next'
 import type {ProjectDetailData} from '@/extra/projectDetails'
@@ -33,6 +34,7 @@ interface ProjectDetailProps {
   projectTypes: Option[]
   companies: Option[]
   employees: EmployeeOption[]
+  contacts: Option[]
   currentUserRole: string
   currentUserLevel: number
 }
@@ -50,11 +52,25 @@ function toInputDate(date: Date | null) {
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 const thClass = 'whitespace-nowrap text-xs'
 
+// ─── Permission thresholds ────────────────────────────────────────────────────
+const PERM = {
+  contacts: 20,
+  purchases: 60,
+  materials: 80,
+  workOrders: 80,
+} as const
+
+// ─── Empty form states ────────────────────────────────────────────────────────
+const emptyContact = () => ({contactId: '', description: ''})
+const emptyPurchase = () => ({orderNumber: '', shortDescription: '', status: '', companyId: ''})
+const emptyMaterial = () => ({becraCode: '', shortDescription: '', brandName: '', transactionType: ''})
+
 export function ProjectDetail({
   project,
   projectTypes,
   companies,
   employees,
+  contacts,
   currentUserRole,
   currentUserLevel,
 }: ProjectDetailProps) {
@@ -62,13 +78,7 @@ export function ProjectDetail({
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
 
-  const getEmployeeName = (id: string | null) => {
-    if (!id) return '-'
-    const emp = employees.find(e => e.id === id)
-    return emp ? `${emp.firstName} ${emp.lastName}` : '-'
-  }
-
-  // Form state mirrors editable project fields
+  // ─── Project edit form ──────────────────────────────────────────────────────
   const [form, setForm] = useState({
     projectNumber: project.projectNumber,
     description: project.description ?? '',
@@ -84,6 +94,36 @@ export function ProjectDetail({
     isOpen: project.isOpen,
     isClosed: project.isClosed,
   })
+
+  // ─── Inline row visibility ──────────────────────────────────────────────────
+  const [showInlineContact, setShowInlineContact] = useState(false)
+  const [showInlinePurchase, setShowInlinePurchase] = useState(false)
+  const [showInlineMaterial, setShowInlineMaterial] = useState(false)
+
+  // ─── Inline row form states ─────────────────────────────────────────────────
+  const [inlineContact, setInlineContact] = useState(emptyContact())
+  const [inlinePurchase, setInlinePurchase] = useState(emptyPurchase())
+  const [inlineMaterial, setInlineMaterial] = useState(emptyMaterial())
+
+  // ─── Dialog visibility ──────────────────────────────────────────────────────
+  const [dialogContact, setDialogContact] = useState(false)
+  const [dialogPurchase, setDialogPurchase] = useState(false)
+  const [dialogMaterial, setDialogMaterial] = useState(false)
+
+  // ─── Dialog form states ─────────────────────────────────────────────────────
+  const [dialogContactForm, setDialogContactForm] = useState(emptyContact())
+  const [dialogPurchaseForm, setDialogPurchaseForm] = useState(emptyPurchase())
+  const [dialogMaterialForm, setDialogMaterialForm] = useState(emptyMaterial())
+
+  const can = (level: number) => currentUserLevel >= level
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canManageWorkOrders = isAdmin || (currentUserLevel >= PERM.workOrders && currentUserRole === 'Management Role')
+
+  const getEmployeeName = (id: string | null) => {
+    if (!id) return '-'
+    const emp = employees.find(e => e.id === id)
+    return emp ? `${emp.firstName} ${emp.lastName}` : '-'
+  }
 
   function handleCancel() {
     setForm({
@@ -136,6 +176,80 @@ export function ProjectDetail({
     }
   }
 
+  // ─── Inline submit handlers ──────────────────────────────────────────────────
+  async function handleInlineContactSave() {
+    // TODO: await createProjectContactAction({...inlineContact, projectId: project.id})
+    setInlineContact(emptyContact())
+    setShowInlineContact(false)
+    router.refresh()
+  }
+
+  async function handleInlinePurchaseSave() {
+    // TODO: await createPurchaseAction({...inlinePurchase, projectId: project.id})
+    setInlinePurchase(emptyPurchase())
+    setShowInlinePurchase(false)
+    router.refresh()
+  }
+
+  async function handleInlineMaterialSave() {
+    // TODO: await createMaterialSerialTrackAction({...inlineMaterial, projectId: project.id})
+    setInlineMaterial(emptyMaterial())
+    setShowInlineMaterial(false)
+    router.refresh()
+  }
+
+  // ─── Dialog submit handlers ──────────────────────────────────────────────────
+  async function handleDialogContactSave() {
+    // TODO: await createProjectContactAction({...dialogContactForm, projectId: project.id})
+    setDialogContactForm(emptyContact())
+    setDialogContact(false)
+    router.refresh()
+  }
+
+  async function handleDialogPurchaseSave() {
+    // TODO: await createPurchaseAction({...dialogPurchaseForm, projectId: project.id})
+    setDialogPurchaseForm(emptyPurchase())
+    setDialogPurchase(false)
+    router.refresh()
+  }
+
+  async function handleDialogMaterialSave() {
+    // TODO: await createMaterialSerialTrackAction({...dialogMaterialForm, projectId: project.id})
+    setDialogMaterialForm(emptyMaterial())
+    setDialogMaterial(false)
+    router.refresh()
+  }
+
+  // ─── Reusable tab action bar ─────────────────────────────────────────────────
+  function TabActions({
+    canAdd,
+    onInline,
+    onDialog,
+    showInline,
+  }: {
+    canAdd: boolean
+    onInline: () => void
+    onDialog: () => void
+    showInline: boolean
+  }) {
+    if (!canAdd) return null
+    return (
+      <div className="flex items-center gap-2 mb-3">
+        <Button size="sm" variant="outline" className="gap-1.5 border-border text-xs h-7" onClick={onInline}>
+          <Plus className="h-3 w-3" />
+          {showInline ? 'Cancel inline' : 'Add inline'}
+        </Button>
+        <Button
+          size="sm"
+          className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7"
+          onClick={onDialog}>
+          <Plus className="h-3 w-3" />
+          Add via dialog
+        </Button>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
@@ -180,7 +294,6 @@ export function ProjectDetail({
       {/* Project info */}
       <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Project Number */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project Number</Label>
             {editing ? (
@@ -194,7 +307,6 @@ export function ProjectDetail({
             )}
           </div>
 
-          {/* Company */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Company</Label>
             {editing ? (
@@ -215,7 +327,6 @@ export function ProjectDetail({
             )}
           </div>
 
-          {/* Project Type */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project Type</Label>
             {editing ? (
@@ -238,13 +349,11 @@ export function ProjectDetail({
             )}
           </div>
 
-          {/* Parent Project */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Parent Project</Label>
             <p className="text-sm text-muted-foreground">{project.Project?.projectNumber ?? '-'}</p>
           </div>
 
-          {/* Start Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Start Date</Label>
             {editing ? (
@@ -259,7 +368,6 @@ export function ProjectDetail({
             )}
           </div>
 
-          {/* End Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">End Date</Label>
             {editing ? (
@@ -274,7 +382,6 @@ export function ProjectDetail({
             )}
           </div>
 
-          {/* Engineering Start Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Engineering Start</Label>
             {editing ? (
@@ -289,7 +396,6 @@ export function ProjectDetail({
             )}
           </div>
 
-          {/* Closing Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Closing Date</Label>
             {editing ? (
@@ -304,7 +410,6 @@ export function ProjectDetail({
             )}
           </div>
 
-          {/* Created By */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created By</Label>
             <p className="text-sm text-muted-foreground">
@@ -312,13 +417,11 @@ export function ProjectDetail({
             </p>
           </div>
 
-          {/* Created At */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created At</Label>
             <p className="text-sm text-muted-foreground">{formatDate(project.createdAt)}</p>
           </div>
 
-          {/* Toggles */}
           <div className="sm:col-span-2 lg:col-span-3 grid grid-cols-2 sm:grid-cols-4 gap-4">
             {(
               [
@@ -345,7 +448,6 @@ export function ProjectDetail({
             ))}
           </div>
 
-          {/* Description */}
           <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-3">
             <Label className="text-xs text-muted-foreground">Description</Label>
             {editing ? (
@@ -360,7 +462,6 @@ export function ProjectDetail({
             )}
           </div>
 
-          {/* Extra Info */}
           <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-3">
             <Label className="text-xs text-muted-foreground">Extra Info</Label>
             {editing ? (
@@ -377,7 +478,7 @@ export function ProjectDetail({
         </div>
       </div>
 
-      {/* Tabs for related data */}
+      {/* Tabs */}
       <Tabs defaultValue="contacts">
         <TabsList className="bg-secondary border border-border/60">
           <TabsTrigger value="contacts">
@@ -406,8 +507,20 @@ export function ProjectDetail({
           </TabsTrigger>
         </TabsList>
 
-        {/* Contacts */}
-        <TabsContent value="contacts">
+        {/* ── Contacts ─────────────────────────────────────────────────────────── */}
+        <TabsContent value="contacts" className="mt-3">
+          <TabActions
+            canAdd={can(PERM.contacts)}
+            onInline={() => {
+              setShowInlineContact(v => !v)
+              setInlineContact(emptyContact())
+            }}
+            onDialog={() => {
+              setDialogContactForm(emptyContact())
+              setDialogContact(true)
+            }}
+            showInline={showInlineContact}
+          />
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -422,7 +535,52 @@ export function ProjectDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {project.ProjectContact.length === 0 ? (
+                {showInlineContact && (
+                  <TableRow className="bg-secondary/30 border-border/40">
+                    <TableCell colSpan={2}>
+                      <Select
+                        value={inlineContact.contactId}
+                        onValueChange={v => setInlineContact(f => ({...f, contactId: v}))}>
+                        <SelectTrigger className="h-7 text-xs bg-secondary border-border">
+                          <SelectValue placeholder="Select contact" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-card border-border">
+                          {contacts.map(c => (
+                            <SelectItem key={c.id} value={c.id}>
+                              {c.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
+                    <TableCell colSpan={2}>
+                      <Input
+                        placeholder="Description"
+                        value={inlineContact.description}
+                        onChange={e => setInlineContact(f => ({...f, description: e.target.value}))}
+                        className="h-7 text-xs bg-secondary border-border"
+                      />
+                    </TableCell>
+                    <TableCell colSpan={3}>
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          className="h-7 text-xs bg-accent text-accent-foreground hover:bg-accent/80"
+                          onClick={handleInlineContactSave}>
+                          Save
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="h-7 text-xs border-border"
+                          onClick={() => setShowInlineContact(false)}>
+                          Cancel
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+                {project.ProjectContact.length === 0 && !showInlineContact ? (
                   <TableRow>
                     <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">
                       No contacts linked.
@@ -461,8 +619,18 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* Work Orders */}
-        <TabsContent value="workorders">
+        {/* ── Work Orders ───────────────────────────────────────────────────────── */}
+        <TabsContent value="workorders" className="mt-3">
+          {canManageWorkOrders && (
+            <div className="flex items-center gap-2 mb-3">
+              <Link href={`/departments/project/project/${project.id}/workOrder/new` as Route}>
+                <Button size="sm" className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7">
+                  <Plus className="h-3 w-3" />
+                  New Work Order
+                </Button>
+              </Link>
+            </div>
+          )}
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -475,12 +643,15 @@ export function ProjectDetail({
                   <TableHead className={thClass}>Invoice Sent</TableHead>
                   <TableHead className={thClass}>Hours/Material Closed</TableHead>
                   <TableHead className={thClass}>Created By</TableHead>
+                  <TableHead className="w-10">
+                    <span className="sr-only">Open</span>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {project.WorkOrder.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={8} className="h-24 text-center text-muted-foreground">
+                    <TableCell colSpan={9} className="h-24 text-center text-muted-foreground">
                       No work orders found.
                     </TableCell>
                   </TableRow>
@@ -525,6 +696,16 @@ export function ProjectDetail({
                       <TableCell className={tdClass}>
                         {wo.Employee.firstName} {wo.Employee.lastName}
                       </TableCell>
+                      <TableCell>
+                        <Link href={`/departments/project/project/${project.id}/workOrder/${wo.id}` as Route}>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </Button>
+                        </Link>
+                      </TableCell>
                     </TableRow>
                   ))
                 )}
@@ -533,8 +714,20 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* Purchases */}
-        <TabsContent value="purchases">
+        {/* ── Purchases ─────────────────────────────────────────────────────────── */}
+        <TabsContent value="purchases" className="mt-3">
+          <TabActions
+            canAdd={can(PERM.purchases)}
+            onInline={() => {
+              setShowInlinePurchase(v => !v)
+              setInlinePurchase(emptyPurchase())
+            }}
+            onDialog={() => {
+              setDialogPurchaseForm(emptyPurchase())
+              setDialogPurchase(true)
+            }}
+            showInline={showInlinePurchase}
+          />
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -548,7 +741,68 @@ export function ProjectDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {project.Purchase.length === 0 ? (
+                {showInlinePurchase && (
+                  <TableRow className="bg-secondary/30 border-border/40">
+                    <TableCell>
+                      <Input
+                        placeholder="Order #"
+                        value={inlinePurchase.orderNumber}
+                        onChange={e => setInlinePurchase(f => ({...f, orderNumber: e.target.value}))}
+                        className="h-7 text-xs bg-secondary border-border"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        placeholder="Description"
+                        value={inlinePurchase.shortDescription}
+                        onChange={e => setInlinePurchase(f => ({...f, shortDescription: e.target.value}))}
+                        className="h-7 text-xs bg-secondary border-border"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        placeholder="Status"
+                        value={inlinePurchase.status}
+                        onChange={e => setInlinePurchase(f => ({...f, status: e.target.value}))}
+                        className="h-7 text-xs bg-secondary border-border"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Select
+                        value={inlinePurchase.companyId}
+                        onValueChange={v => setInlinePurchase(f => ({...f, companyId: v}))}>
+                        <SelectTrigger className="h-7 text-xs bg-secondary border-border">
+                          <SelectValue placeholder="Supplier" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-card border-border">
+                          {companies.map(c => (
+                            <SelectItem key={c.id} value={c.id}>
+                              {c.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
+                    <TableCell colSpan={2}>
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          className="h-7 text-xs bg-accent text-accent-foreground hover:bg-accent/80"
+                          onClick={handleInlinePurchaseSave}>
+                          Save
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="h-7 text-xs border-border"
+                          onClick={() => setShowInlinePurchase(false)}>
+                          Cancel
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+                {project.Purchase.length === 0 && !showInlinePurchase ? (
                   <TableRow>
                     <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
                       No purchases found.
@@ -562,12 +816,13 @@ export function ProjectDetail({
                         <span className="max-w-[200px] truncate inline-block">{p.shortDescription ?? '-'}</span>
                       </TableCell>
                       <TableCell>
-                        {p.status && (
+                        {p.status ? (
                           <Badge variant="outline" className="border-border text-muted-foreground font-normal">
                             {p.status}
                           </Badge>
+                        ) : (
+                          <span className="text-muted-foreground text-sm">-</span>
                         )}
-                        {!p.status && <span className="text-muted-foreground text-sm">-</span>}
                       </TableCell>
                       <TableCell className={tdClass}>{p.Company?.name ?? '-'}</TableCell>
                       <TableCell className={tdClass}>{formatDate(p.purchaseDate)}</TableCell>
@@ -582,8 +837,20 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* Material Serial Tracks */}
-        <TabsContent value="materials">
+        {/* ── Material Tracks ───────────────────────────────────────────────────── */}
+        <TabsContent value="materials" className="mt-3">
+          <TabActions
+            canAdd={can(PERM.materials)}
+            onInline={() => {
+              setShowInlineMaterial(v => !v)
+              setInlineMaterial(emptyMaterial())
+            }}
+            onDialog={() => {
+              setDialogMaterialForm(emptyMaterial())
+              setDialogMaterial(true)
+            }}
+            showInline={showInlineMaterial}
+          />
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -597,7 +864,60 @@ export function ProjectDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {project.MaterialSerialTrack.length === 0 ? (
+                {showInlineMaterial && (
+                  <TableRow className="bg-secondary/30 border-border/40">
+                    <TableCell>
+                      <Input
+                        placeholder="Becra code"
+                        value={inlineMaterial.becraCode}
+                        onChange={e => setInlineMaterial(f => ({...f, becraCode: e.target.value}))}
+                        className="h-7 text-xs bg-secondary border-border"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        placeholder="Description"
+                        value={inlineMaterial.shortDescription}
+                        onChange={e => setInlineMaterial(f => ({...f, shortDescription: e.target.value}))}
+                        className="h-7 text-xs bg-secondary border-border"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        placeholder="Brand"
+                        value={inlineMaterial.brandName}
+                        onChange={e => setInlineMaterial(f => ({...f, brandName: e.target.value}))}
+                        className="h-7 text-xs bg-secondary border-border"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        placeholder="Transaction type"
+                        value={inlineMaterial.transactionType}
+                        onChange={e => setInlineMaterial(f => ({...f, transactionType: e.target.value}))}
+                        className="h-7 text-xs bg-secondary border-border"
+                      />
+                    </TableCell>
+                    <TableCell colSpan={2}>
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          className="h-7 text-xs bg-accent text-accent-foreground hover:bg-accent/80"
+                          onClick={handleInlineMaterialSave}>
+                          Save
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="h-7 text-xs border-border"
+                          onClick={() => setShowInlineMaterial(false)}>
+                          Cancel
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+                {project.MaterialSerialTrack.length === 0 && !showInlineMaterial ? (
                   <TableRow>
                     <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
                       No material tracks found.
@@ -624,6 +944,162 @@ export function ProjectDetail({
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* ── Contact Dialog ──────────────────────────────────────────────────────── */}
+      <Dialog open={dialogContact} onOpenChange={setDialogContact}>
+        <DialogContent className="bg-card border-border max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">Add Contact</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 py-2">
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Contact</Label>
+              <Select
+                value={dialogContactForm.contactId}
+                onValueChange={v => setDialogContactForm(f => ({...f, contactId: v}))}>
+                <SelectTrigger className="bg-secondary border-border">
+                  <SelectValue placeholder="Select contact" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {contacts.map(c => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Description</Label>
+              <Textarea
+                value={dialogContactForm.description}
+                onChange={e => setDialogContactForm(f => ({...f, description: e.target.value}))}
+                rows={3}
+                className="bg-secondary border-border resize-none"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDialogContact(false)} className="border-border">
+              Cancel
+            </Button>
+            <Button onClick={handleDialogContactSave} className="bg-accent text-accent-foreground hover:bg-accent/80">
+              Add Contact
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Purchase Dialog ─────────────────────────────────────────────────────── */}
+      <Dialog open={dialogPurchase} onOpenChange={setDialogPurchase}>
+        <DialogContent className="bg-card border-border max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">Add Purchase</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 py-2">
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Order Number</Label>
+              <Input
+                value={dialogPurchaseForm.orderNumber}
+                onChange={e => setDialogPurchaseForm(f => ({...f, orderNumber: e.target.value}))}
+                className="bg-secondary border-border"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Description</Label>
+              <Input
+                value={dialogPurchaseForm.shortDescription}
+                onChange={e => setDialogPurchaseForm(f => ({...f, shortDescription: e.target.value}))}
+                className="bg-secondary border-border"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Status</Label>
+              <Input
+                value={dialogPurchaseForm.status}
+                onChange={e => setDialogPurchaseForm(f => ({...f, status: e.target.value}))}
+                className="bg-secondary border-border"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Supplier</Label>
+              <Select
+                value={dialogPurchaseForm.companyId}
+                onValueChange={v => setDialogPurchaseForm(f => ({...f, companyId: v}))}>
+                <SelectTrigger className="bg-secondary border-border">
+                  <SelectValue placeholder="Select supplier" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {companies.map(c => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDialogPurchase(false)} className="border-border">
+              Cancel
+            </Button>
+            <Button onClick={handleDialogPurchaseSave} className="bg-accent text-accent-foreground hover:bg-accent/80">
+              Add Purchase
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Material Dialog ─────────────────────────────────────────────────────── */}
+      <Dialog open={dialogMaterial} onOpenChange={setDialogMaterial}>
+        <DialogContent className="bg-card border-border max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">Add Material Track</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 py-2">
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Becra Code</Label>
+              <Input
+                value={dialogMaterialForm.becraCode}
+                onChange={e => setDialogMaterialForm(f => ({...f, becraCode: e.target.value}))}
+                className="bg-secondary border-border"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Description</Label>
+              <Input
+                value={dialogMaterialForm.shortDescription}
+                onChange={e => setDialogMaterialForm(f => ({...f, shortDescription: e.target.value}))}
+                className="bg-secondary border-border"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Brand</Label>
+              <Input
+                value={dialogMaterialForm.brandName}
+                onChange={e => setDialogMaterialForm(f => ({...f, brandName: e.target.value}))}
+                className="bg-secondary border-border"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Transaction Type</Label>
+              <Input
+                value={dialogMaterialForm.transactionType}
+                onChange={e => setDialogMaterialForm(f => ({...f, transactionType: e.target.value}))}
+                className="bg-secondary border-border"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDialogMaterial(false)} className="border-border">
+              Cancel
+            </Button>
+            <Button onClick={handleDialogMaterialSave} className="bg-accent text-accent-foreground hover:bg-accent/80">
+              Add Material Track
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

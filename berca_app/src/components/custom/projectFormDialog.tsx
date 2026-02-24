@@ -55,6 +55,20 @@ const emptyProject = (): MappedProject => ({
   deletedBy: null,
 })
 
+function generateProjectNumber() {
+  const now = new Date()
+
+  const year = now.getFullYear().toString().slice(-2) // 26
+  const month = String(now.getMonth() + 1).padStart(2, '0') // 02
+  const day = String(now.getDate()).padStart(2, '0') // 24
+
+  const random = Math.floor(Math.random() * 100)
+    .toString()
+    .padStart(2, '0') // two random digits
+
+  return `P${year}${month}${day}${random}`
+}
+
 export function ProjectFormDialog({
   open,
   onOpenChange,
@@ -68,7 +82,13 @@ export function ProjectFormDialog({
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    setForm(project ?? emptyProject())
+    if (project) {
+      setForm(project)
+    } else if (open) {
+      const newProject = emptyProject()
+      newProject.projectNumber = generateProjectNumber()
+      setForm(newProject)
+    }
   }, [project, open])
 
   function set<K extends keyof MappedProject>(key: K, value: MappedProject[K]) {
@@ -104,11 +124,7 @@ export function ProjectFormDialog({
           {/* Project Number */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project Number *</Label>
-            <Input
-              value={form.projectNumber}
-              onChange={e => set('projectNumber', e.target.value)}
-              className="bg-secondary border-border"
-            />
+            <Input value={form.projectNumber} readOnly className="bg-secondary border-border" />
           </div>
 
           {/* Company */}

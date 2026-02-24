@@ -1,5 +1,5 @@
 import {prismaClient} from '@/dal/prismaClient'
-import {publicApiRoute} from '@/lib/apiRoute'
+import {protectedApiRoute, publicApiRoute} from '@/lib/apiRoute'
 import {type RoleContextInput, roleContextInputSchema} from '@/schemas/roleSchemas'
 import {NextResponse} from 'next/server'
 
@@ -58,6 +58,16 @@ async function getDepartmentsByRoleContext(context: RoleContextInput) {
     orderBy: {number: 'asc'},
   })
 }
+
+export const GET = protectedApiRoute({
+  authenticationType: 'cookie',
+  routeFn: async ({profile}) => {
+    const departments = await getDepartmentsByRoleContext({
+      roleLevelId: profile.roleLevelId!,
+    })
+    return NextResponse.json(departments)
+  },
+})
 
 export const POST = publicApiRoute<{}, typeof roleContextInputSchema>({
   type: 'body',

@@ -25,7 +25,6 @@ async function getDepartmentsByRoleContext(context: RoleContextInput) {
     where: {
       roleLevelId,
       visible: true,
-      deleted: false,
       Target: {
         deleted: false,
         targetTypeId: departmentTargetType.id,

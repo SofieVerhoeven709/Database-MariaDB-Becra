@@ -2,13 +2,7 @@
 import {revalidatePath} from 'next/cache'
 import {redirect} from 'next/navigation'
 import {prismaClient} from '@/dal/prismaClient'
-import {
-  updateWorkOrderSchema,
-  createWorkOrderSchema,
-  workOrderIdSchema,
-  createTimeRegistrySchema,
-  createWorkOrderStructureSchema,
-} from '@/schemas/workOrderSchemas'
+import {updateWorkOrderSchema, createWorkOrderSchema, workOrderIdSchema} from '@/schemas/workOrderSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
 import type {Route} from 'next'
@@ -65,49 +59,12 @@ export const softDeleteWorkOrderAction = protectedServerFunction({
   },
 })
 
-// ─── Time Registry ────────────────────────────────────────────────────────────
-export const createTimeRegistryAction = protectedServerFunction({
-  schema: createTimeRegistrySchema,
-  functionName: 'Create time registry action',
-  serverFn: async ({data: {employeeIds, ...data}, logger, profile}) => {
-    const timeRegistry = await prismaClient.timeRegistry.create({
-      data: {
-        ...data,
-        id: crypto.randomUUID(),
-        createdBy: profile.id,
-        createdAt: new Date(),
-        TimeRegistryEmployee: {
-          create: employeeIds.map(employeeId => ({
-            id: crypto.randomUUID(),
-            employeeId,
-          })),
-        },
-      },
-    })
+export const hardDeleteWorkOrderAction = protectedServerFunction({
+  schema: workOrderIdSchema,
+  functionName: 'Hard delete work order action',
+  serverFn: async ({data: {id}, logger}) => {
+    await prismaClient.workOrder.delete({where: {id}})
 
-    logger.info(`Time registry created: ${timeRegistry.id}`)
-    revalidatePath(`/departments/project/project/${data.workOrderId}`)
-  },
-})
-
-// ─── Work Order Structure ─────────────────────────────────────────────────────
-export const createWorkOrderStructureAction = protectedServerFunction({
-  schema: createWorkOrderStructureSchema,
-  functionName: 'Create work order structure action',
-  serverFn: async ({data, logger, profile}) => {
-    const target = await createTargetForType('WorkOrderStructure', profile.id)
-
-    const structure = await prismaClient.workOrderStructure.create({
-      data: {
-        ...data,
-        id: crypto.randomUUID(),
-        createdBy: profile.id,
-        createdAt: new Date(),
-        targetId: target.id,
-      },
-    })
-
-    logger.info(`Work order structure created: ${structure.id}`)
-    revalidatePath(`/departments/project/project/${data.workOrderId}`)
+    logger.info(`Work order hard deleted: ${id}`)
   },
 })

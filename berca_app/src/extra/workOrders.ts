@@ -22,7 +22,7 @@ export function mapWorkOrder(wo: WorkOrderWithRelations): MappedWorkOrder {
     id: wo.id,
     workOrderNumber: wo.workOrderNumber,
     description: wo.description,
-    aditionalInfo: wo.aditionalInfo,
+    additionalInfo: wo.additionalInfo,
     startDate: wo.startDate.toISOString(),
     endDate: wo.endDate?.toISOString() ?? null,
     createdAt: wo.createdAt.toISOString(),
@@ -46,15 +46,15 @@ export type WorkOrderDetailData = WorkOrder & {
   Employee: Pick<Employee, 'firstName' | 'lastName'>
   Project: Pick<Project, 'projectNumber' | 'projectName'>
   TimeRegistry: (TimeRegistry & {
-    Employee: Pick<Employee, 'firstName' | 'lastName'>
-    HourType: Pick<HourType, 'name'>
+    Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
+    HourType: Pick<HourType, 'id' | 'name'>
     TimeRegistryEmployee: (TimeRegistryEmployee & {
-      Employee: Pick<Employee, 'firstName' | 'lastName'>
+      Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
     })[]
   })[]
   WorkOrderStructure: (WorkOrderStructure & {
-    Employee: Pick<Employee, 'firstName' | 'lastName'>
-    Material: Pick<Material, 'name'>
+    Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
+    Material: Pick<Material, 'id' | 'name' | 'beNumber'>
   })[]
   Training: Training[]
 }

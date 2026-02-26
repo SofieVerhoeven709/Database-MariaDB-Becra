@@ -48,7 +48,7 @@ export type InvoiceOutMinAggregateOutputType = {
   purchaseOrder: string | null
   transactionNumber: string | null
   deliveryInvoiceInfo: string | null
-  aditionalInfo: string | null
+  additionalInfo: string | null
   info: string | null
   deliveryInvoiceCode: string | null
   vatMargin: number | null
@@ -77,7 +77,7 @@ export type InvoiceOutMaxAggregateOutputType = {
   purchaseOrder: string | null
   transactionNumber: string | null
   deliveryInvoiceInfo: string | null
-  aditionalInfo: string | null
+  additionalInfo: string | null
   info: string | null
   deliveryInvoiceCode: string | null
   vatMargin: number | null
@@ -106,7 +106,7 @@ export type InvoiceOutCountAggregateOutputType = {
   purchaseOrder: number
   transactionNumber: number
   deliveryInvoiceInfo: number
-  aditionalInfo: number
+  additionalInfo: number
   info: number
   deliveryInvoiceCode: number
   vatMargin: number
@@ -147,7 +147,7 @@ export type InvoiceOutMinAggregateInputType = {
   purchaseOrder?: true
   transactionNumber?: true
   deliveryInvoiceInfo?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   info?: true
   deliveryInvoiceCode?: true
   vatMargin?: true
@@ -176,7 +176,7 @@ export type InvoiceOutMaxAggregateInputType = {
   purchaseOrder?: true
   transactionNumber?: true
   deliveryInvoiceInfo?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   info?: true
   deliveryInvoiceCode?: true
   vatMargin?: true
@@ -205,7 +205,7 @@ export type InvoiceOutCountAggregateInputType = {
   purchaseOrder?: true
   transactionNumber?: true
   deliveryInvoiceInfo?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   info?: true
   deliveryInvoiceCode?: true
   vatMargin?: true
@@ -321,7 +321,7 @@ export type InvoiceOutGroupByOutputType = {
   purchaseOrder: string | null
   transactionNumber: string | null
   deliveryInvoiceInfo: string | null
-  aditionalInfo: string | null
+  additionalInfo: string | null
   info: string | null
   deliveryInvoiceCode: string | null
   vatMargin: number
@@ -373,7 +373,7 @@ export type InvoiceOutWhereInput = {
   purchaseOrder?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   transactionNumber?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   deliveryInvoiceInfo?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
-  aditionalInfo?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   info?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   deliveryInvoiceCode?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   vatMargin?: Prisma.FloatFilter<"InvoiceOut"> | number
@@ -407,7 +407,7 @@ export type InvoiceOutOrderByWithRelationInput = {
   purchaseOrder?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryInvoiceInfo?: Prisma.SortOrderInput | Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   info?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryInvoiceCode?: Prisma.SortOrderInput | Prisma.SortOrder
   vatMargin?: Prisma.SortOrder
@@ -445,7 +445,7 @@ export type InvoiceOutWhereUniqueInput = Prisma.AtLeast<{
   purchaseOrder?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   transactionNumber?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   deliveryInvoiceInfo?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
-  aditionalInfo?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   info?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   deliveryInvoiceCode?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   vatMargin?: Prisma.FloatFilter<"InvoiceOut"> | number
@@ -479,7 +479,7 @@ export type InvoiceOutOrderByWithAggregationInput = {
   purchaseOrder?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryInvoiceInfo?: Prisma.SortOrderInput | Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   info?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryInvoiceCode?: Prisma.SortOrderInput | Prisma.SortOrder
   vatMargin?: Prisma.SortOrder
@@ -516,7 +516,7 @@ export type InvoiceOutScalarWhereWithAggregatesInput = {
   purchaseOrder?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
   transactionNumber?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
   deliveryInvoiceInfo?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
-  aditionalInfo?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
+  additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
   info?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
   deliveryInvoiceCode?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
   vatMargin?: Prisma.FloatWithAggregatesFilter<"InvoiceOut"> | number
@@ -545,7 +545,7 @@ export type InvoiceOutCreateInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -575,7 +575,7 @@ export type InvoiceOutUncheckedCreateInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -605,7 +605,7 @@ export type InvoiceOutUpdateInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -635,7 +635,7 @@ export type InvoiceOutUncheckedUpdateInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -665,7 +665,7 @@ export type InvoiceOutCreateManyInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -694,7 +694,7 @@ export type InvoiceOutUpdateManyMutationInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -719,7 +719,7 @@ export type InvoiceOutUncheckedUpdateManyInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -764,7 +764,7 @@ export type InvoiceOutCountOrderByAggregateInput = {
   purchaseOrder?: Prisma.SortOrder
   transactionNumber?: Prisma.SortOrder
   deliveryInvoiceInfo?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   info?: Prisma.SortOrder
   deliveryInvoiceCode?: Prisma.SortOrder
   vatMargin?: Prisma.SortOrder
@@ -798,7 +798,7 @@ export type InvoiceOutMaxOrderByAggregateInput = {
   purchaseOrder?: Prisma.SortOrder
   transactionNumber?: Prisma.SortOrder
   deliveryInvoiceInfo?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   info?: Prisma.SortOrder
   deliveryInvoiceCode?: Prisma.SortOrder
   vatMargin?: Prisma.SortOrder
@@ -827,7 +827,7 @@ export type InvoiceOutMinOrderByAggregateInput = {
   purchaseOrder?: Prisma.SortOrder
   transactionNumber?: Prisma.SortOrder
   deliveryInvoiceInfo?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   info?: Prisma.SortOrder
   deliveryInvoiceCode?: Prisma.SortOrder
   vatMargin?: Prisma.SortOrder
@@ -1048,7 +1048,7 @@ export type InvoiceOutCreateWithoutEmployeeInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1077,7 +1077,7 @@ export type InvoiceOutUncheckedCreateWithoutEmployeeInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1116,7 +1116,7 @@ export type InvoiceOutCreateWithoutEmployee_InvoiceOut_deletedByToEmployeeInput 
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1145,7 +1145,7 @@ export type InvoiceOutUncheckedCreateWithoutEmployee_InvoiceOut_deletedByToEmplo
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1203,7 +1203,7 @@ export type InvoiceOutScalarWhereInput = {
   purchaseOrder?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   transactionNumber?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   deliveryInvoiceInfo?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
-  aditionalInfo?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   info?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   deliveryInvoiceCode?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   vatMargin?: Prisma.FloatFilter<"InvoiceOut"> | number
@@ -1248,7 +1248,7 @@ export type InvoiceOutCreateWithoutInvoiceTypeInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1277,7 +1277,7 @@ export type InvoiceOutUncheckedCreateWithoutInvoiceTypeInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1332,7 +1332,7 @@ export type InvoiceOutCreateWithoutTargetInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1361,7 +1361,7 @@ export type InvoiceOutUncheckedCreateWithoutTargetInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1416,7 +1416,7 @@ export type InvoiceOutCreateWithoutWorkOrderInvoiceInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1445,7 +1445,7 @@ export type InvoiceOutUncheckedCreateWithoutWorkOrderInvoiceInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1490,7 +1490,7 @@ export type InvoiceOutUpdateWithoutWorkOrderInvoiceInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1519,7 +1519,7 @@ export type InvoiceOutUncheckedUpdateWithoutWorkOrderInvoiceInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1548,7 +1548,7 @@ export type InvoiceOutCreateManyEmployeeInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1576,7 +1576,7 @@ export type InvoiceOutCreateManyEmployee_InvoiceOut_deletedByToEmployeeInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1604,7 +1604,7 @@ export type InvoiceOutUpdateWithoutEmployeeInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1633,7 +1633,7 @@ export type InvoiceOutUncheckedUpdateWithoutEmployeeInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1662,7 +1662,7 @@ export type InvoiceOutUncheckedUpdateManyWithoutEmployeeInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1690,7 +1690,7 @@ export type InvoiceOutUpdateWithoutEmployee_InvoiceOut_deletedByToEmployeeInput 
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1719,7 +1719,7 @@ export type InvoiceOutUncheckedUpdateWithoutEmployee_InvoiceOut_deletedByToEmplo
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1748,7 +1748,7 @@ export type InvoiceOutUncheckedUpdateManyWithoutEmployee_InvoiceOut_deletedByToE
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1776,7 +1776,7 @@ export type InvoiceOutCreateManyInvoiceTypeInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1804,7 +1804,7 @@ export type InvoiceOutUpdateWithoutInvoiceTypeInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1833,7 +1833,7 @@ export type InvoiceOutUncheckedUpdateWithoutInvoiceTypeInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1862,7 +1862,7 @@ export type InvoiceOutUncheckedUpdateManyWithoutInvoiceTypeInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1890,7 +1890,7 @@ export type InvoiceOutCreateManyTargetInput = {
   purchaseOrder?: string | null
   transactionNumber?: string | null
   deliveryInvoiceInfo?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   info?: string | null
   deliveryInvoiceCode?: string | null
   vatMargin: number
@@ -1918,7 +1918,7 @@ export type InvoiceOutUpdateWithoutTargetInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1947,7 +1947,7 @@ export type InvoiceOutUncheckedUpdateWithoutTargetInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1976,7 +1976,7 @@ export type InvoiceOutUncheckedUpdateManyWithoutTargetInput = {
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryInvoiceCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatMargin?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2035,7 +2035,7 @@ export type InvoiceOutSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   purchaseOrder?: boolean
   transactionNumber?: boolean
   deliveryInvoiceInfo?: boolean
-  aditionalInfo?: boolean
+  additionalInfo?: boolean
   info?: boolean
   deliveryInvoiceCode?: boolean
   vatMargin?: boolean
@@ -2072,7 +2072,7 @@ export type InvoiceOutSelectScalar = {
   purchaseOrder?: boolean
   transactionNumber?: boolean
   deliveryInvoiceInfo?: boolean
-  aditionalInfo?: boolean
+  additionalInfo?: boolean
   info?: boolean
   deliveryInvoiceCode?: boolean
   vatMargin?: boolean
@@ -2089,7 +2089,7 @@ export type InvoiceOutSelectScalar = {
   deletedBy?: boolean
 }
 
-export type InvoiceOutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "invoiceDate" | "expireDate" | "payDate" | "invoiceReference" | "invoiceInAttachement" | "deliveryNote" | "purchaseOrder" | "transactionNumber" | "deliveryInvoiceInfo" | "aditionalInfo" | "info" | "deliveryInvoiceCode" | "vatMargin" | "amountWithoutVat" | "sentDate" | "createdAt" | "materialCost" | "completed" | "createdBy" | "invoiceTypeId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["invoiceOut"]>
+export type InvoiceOutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "invoiceDate" | "expireDate" | "payDate" | "invoiceReference" | "invoiceInAttachement" | "deliveryNote" | "purchaseOrder" | "transactionNumber" | "deliveryInvoiceInfo" | "additionalInfo" | "info" | "deliveryInvoiceCode" | "vatMargin" | "amountWithoutVat" | "sentDate" | "createdAt" | "materialCost" | "completed" | "createdBy" | "invoiceTypeId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["invoiceOut"]>
 export type InvoiceOutInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   InvoiceType?: boolean | Prisma.InvoiceTypeDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -2120,7 +2120,7 @@ export type $InvoiceOutPayload<ExtArgs extends runtime.Types.Extensions.Internal
     purchaseOrder: string | null
     transactionNumber: string | null
     deliveryInvoiceInfo: string | null
-    aditionalInfo: string | null
+    additionalInfo: string | null
     info: string | null
     deliveryInvoiceCode: string | null
     vatMargin: number
@@ -2520,7 +2520,7 @@ export interface InvoiceOutFieldRefs {
   readonly purchaseOrder: Prisma.FieldRef<"InvoiceOut", 'String'>
   readonly transactionNumber: Prisma.FieldRef<"InvoiceOut", 'String'>
   readonly deliveryInvoiceInfo: Prisma.FieldRef<"InvoiceOut", 'String'>
-  readonly aditionalInfo: Prisma.FieldRef<"InvoiceOut", 'String'>
+  readonly additionalInfo: Prisma.FieldRef<"InvoiceOut", 'String'>
   readonly info: Prisma.FieldRef<"InvoiceOut", 'String'>
   readonly deliveryInvoiceCode: Prisma.FieldRef<"InvoiceOut", 'String'>
   readonly vatMargin: Prisma.FieldRef<"InvoiceOut", 'Float'>

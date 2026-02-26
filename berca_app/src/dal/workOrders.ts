@@ -5,32 +5,26 @@ export async function getWorkOrderById(id: string) {
   return prismaClient.workOrder.findUniqueOrThrow({
     where: {id},
     include: {
-      Employee: true,
-      Project: true,
-      Target: true,
+      Employee: {select: {id: true, firstName: true, lastName: true}},
+      Project: {select: {projectNumber: true, projectName: true}},
       TimeRegistry: {
-        where: {deleted: false},
         include: {
-          Employee: true,
-          HourType: true,
+          Employee: {select: {id: true, firstName: true, lastName: true}},
+          HourType: {select: {id: true, name: true}},
           TimeRegistryEmployee: {
             include: {
-              Employee: true,
+              Employee: {select: {id: true, firstName: true, lastName: true}},
             },
           },
         },
       },
       WorkOrderStructure: {
-        where: {deleted: false},
         include: {
-          Employee: true,
-          Material: true,
-          Target: true,
+          Employee: {select: {id: true, firstName: true, lastName: true}},
+          Material: {select: {id: true, name: true, beNumber: true}},
         },
       },
-      Training: {
-        where: {deleted: false},
-      },
+      Training: {},
     },
   })
 }
@@ -41,7 +35,6 @@ export async function getWorkOrdersByProjectId(projectId: string) {
     include: {
       Employee: true,
       Project: true,
-      Target: true,
     },
   })
 }

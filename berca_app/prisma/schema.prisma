@@ -282,7 +282,7 @@ model DocumentStructure {
   revisionDetail                                                                                  String?                          @db.Text
   valid                                                                                           Boolean                          @default(true)
   process                                                                                         Boolean                          @default(false)
-  aditionalInfo                                                                                   String?                          @db.Text
+  additionalInfo                                                                                  String?                          @db.Text
   referenceDocId                                                                                  String?                          @db.Char(36)
   roleId                                                                                          String?                          @db.Char(36)
   deleted                                                                                         Boolean                          @default(false)
@@ -506,7 +506,6 @@ model Employee {
   Unit_Unit_deletedByToEmployee                                                     Unit[]                           @relation("Unit_deletedByToEmployee")
   UrgencyType                                                                       UrgencyType[]
   UrgencyType_UrgencyType_deletedByToEmployee                                       UrgencyType[]                    @relation("UrgencyType_deletedByToEmployee")
-  VisibilityForRole                                                                 VisibilityForRole[]
   WarehousePlace                                                                    WarehousePlace[]
   WarehousePlace_WarehousePlace_deletedByToEmployee                                 WarehousePlace[]                 @relation("WarehousePlace_deletedByToEmployee")
   WorkOrder                                                                         WorkOrder[]
@@ -525,7 +524,7 @@ model Employee {
 model FollowUp {
   id                                     String              @id @db.Char(36)
   activityDescription                    String?             @db.Text
-  aditionalInfo                          String?             @db.Text
+  additionalInfo                         String?             @db.Text
   actionAgenda                           DateTime?           @db.DateTime(0)
   closedAgenda                           DateTime?           @db.DateTime(0)
   recurringCallDays                      Int?
@@ -573,7 +572,7 @@ model FollowUp {
 model FollowUpStructure {
   id                                              String            @id @db.Char(36)
   activityDescription                             String?           @db.Text
-  aditionalInfo                                   String?           @db.Text
+  additionalInfo                                  String?           @db.Text
   actionAgenda                                    DateTime?         @db.DateTime(0)
   closedAgenda                                    DateTime?         @db.DateTime(0)
   recurringItem                                   String?           @db.VarChar(100)
@@ -872,7 +871,7 @@ model InvoiceOut {
   purchaseOrder                           String?            @db.Text
   transactionNumber                       String?            @db.VarChar(100)
   deliveryInvoiceInfo                     String?            @db.Text
-  aditionalInfo                           String?            @db.Text
+  additionalInfo                          String?            @db.Text
   info                                    String?            @db.Text
   deliveryInvoiceCode                     String?            @db.VarChar(100)
   vatMargin                               Float              @db.Float
@@ -1693,7 +1692,7 @@ model TestProcedure {
 model TimeRegistry {
   id                                        String                 @id @db.Char(36)
   activityDescription                       String?                @db.Text
-  aditionalInfo                             String?                @db.Text
+  additionalInfo                            String?                @db.Text
   invoiceInfo                               String?                @db.Text
   startTime                                 DateTime               @db.DateTime(0)
   endTime                                   DateTime?              @db.DateTime(0)
@@ -1705,20 +1704,20 @@ model TimeRegistry {
   onSite                                    Boolean                @default(false)
   createdBy                                 String                 @db.Char(36)
   workOrderId                               String                 @db.Char(36)
-  hourtypeId                                String                 @db.Char(36)
+  hourTypeId                                String                 @db.Char(36)
   deleted                                   Boolean                @default(false)
   deletedAt                                 DateTime?              @db.DateTime(0)
   deletedBy                                 String?                @db.Char(36)
   Employee                                  Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_1")
-  HourType                                  HourType               @relation(fields: [hourtypeId], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_2")
+  HourType                                  HourType               @relation(fields: [hourTypeId], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_2")
   WorkOrder                                 WorkOrder              @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_3")
   Employee_TimeRegistry_deletedByToEmployee Employee?              @relation("TimeRegistry_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "TimeRegistry_ibfk_4")
   TimeRegistryEmployee                      TimeRegistryEmployee[]
 
   @@index([createdBy], map: "createdBy")
-  @@index([hourtypeId], map: "hourtypeId")
   @@index([workOrderId], map: "workOrderId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([hourTypeId], map: "hourTypeId")
 }
 
 model TimeRegistryEmployee {
@@ -1887,15 +1886,10 @@ model VisibilityForRole {
   visible     Boolean   @default(false)
   roleLevelId String    @db.Char(36)
   targetId    String    @db.Char(36)
-  deleted     Boolean   @default(false)
-  deletedAt   DateTime? @db.DateTime(0)
-  deletedBy   String?   @db.Char(36)
   RoleLevel   RoleLevel @relation(fields: [roleLevelId], references: [id], onUpdate: Restrict, map: "VisibilityForRole_ibfk_1")
   Target      Target    @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "VisibilityForRole_ibfk_2")
-  Employee    Employee? @relation(fields: [deletedBy], references: [id], onUpdate: Restrict, map: "VisibilityForRole_ibfk_3")
 
   @@index([targetId], map: "targetId")
-  @@index([deletedBy], map: "deletedBy")
   @@index([roleLevelId], map: "roleLevelId")
 }
 
@@ -1924,7 +1918,7 @@ model WorkOrder {
   id                                     String               @id @db.Char(36)
   workOrderNumber                        String?              @db.VarChar(100)
   description                            String?              @db.Text
-  aditionalInfo                          String?              @db.Text
+  additionalInfo                         String?              @db.Text
   startDate                              DateTime             @db.DateTime(0)
   endDate                                DateTime?            @db.DateTime(0)
   createdAt                              DateTime             @db.DateTime(0)
@@ -1973,8 +1967,8 @@ model WorkOrderStructure {
   clientNumber                                    String?                        @db.VarChar(100)
   tag                                             String?                        @db.VarChar(100)
   quantity                                        Int?
-  aditionalInfo                                   String?                        @db.Text
-  shortDesciption                                 String?                        @db.VarChar(100)
+  additionalInfo                                  String?                        @db.Text
+  shortDescription                                String?                        @db.VarChar(100)
   longDescription                                 String?                        @db.Text
   createdAt                                       DateTime                       @db.DateTime(0)
   createdBy                                       String                         @db.Char(36)

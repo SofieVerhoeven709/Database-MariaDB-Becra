@@ -37,7 +37,7 @@ export type FollowUpSumAggregateOutputType = {
 export type FollowUpMinAggregateOutputType = {
   id: string | null
   activityDescription: string | null
-  aditionalInfo: string | null
+  additionalInfo: string | null
   actionAgenda: Date | null
   closedAgenda: Date | null
   recurringCallDays: number | null
@@ -64,7 +64,7 @@ export type FollowUpMinAggregateOutputType = {
 export type FollowUpMaxAggregateOutputType = {
   id: string | null
   activityDescription: string | null
-  aditionalInfo: string | null
+  additionalInfo: string | null
   actionAgenda: Date | null
   closedAgenda: Date | null
   recurringCallDays: number | null
@@ -91,7 +91,7 @@ export type FollowUpMaxAggregateOutputType = {
 export type FollowUpCountAggregateOutputType = {
   id: number
   activityDescription: number
-  aditionalInfo: number
+  additionalInfo: number
   actionAgenda: number
   closedAgenda: number
   recurringCallDays: number
@@ -128,7 +128,7 @@ export type FollowUpSumAggregateInputType = {
 export type FollowUpMinAggregateInputType = {
   id?: true
   activityDescription?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   actionAgenda?: true
   closedAgenda?: true
   recurringCallDays?: true
@@ -155,7 +155,7 @@ export type FollowUpMinAggregateInputType = {
 export type FollowUpMaxAggregateInputType = {
   id?: true
   activityDescription?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   actionAgenda?: true
   closedAgenda?: true
   recurringCallDays?: true
@@ -182,7 +182,7 @@ export type FollowUpMaxAggregateInputType = {
 export type FollowUpCountAggregateInputType = {
   id?: true
   activityDescription?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   actionAgenda?: true
   closedAgenda?: true
   recurringCallDays?: true
@@ -296,7 +296,7 @@ export type FollowUpGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type FollowUpGroupByOutputType = {
   id: string
   activityDescription: string | null
-  aditionalInfo: string | null
+  additionalInfo: string | null
   actionAgenda: Date | null
   closedAgenda: Date | null
   recurringCallDays: number | null
@@ -346,7 +346,7 @@ export type FollowUpWhereInput = {
   NOT?: Prisma.FollowUpWhereInput | Prisma.FollowUpWhereInput[]
   id?: Prisma.StringFilter<"FollowUp"> | string
   activityDescription?: Prisma.StringNullableFilter<"FollowUp"> | string | null
-  aditionalInfo?: Prisma.StringNullableFilter<"FollowUp"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"FollowUp"> | string | null
   actionAgenda?: Prisma.DateTimeNullableFilter<"FollowUp"> | Date | string | null
   closedAgenda?: Prisma.DateTimeNullableFilter<"FollowUp"> | Date | string | null
   recurringCallDays?: Prisma.IntNullableFilter<"FollowUp"> | number | null
@@ -384,7 +384,7 @@ export type FollowUpWhereInput = {
 export type FollowUpOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   activityDescription?: Prisma.SortOrderInput | Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   actionAgenda?: Prisma.SortOrderInput | Prisma.SortOrder
   closedAgenda?: Prisma.SortOrderInput | Prisma.SortOrder
   recurringCallDays?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -426,7 +426,7 @@ export type FollowUpWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.FollowUpWhereInput[]
   NOT?: Prisma.FollowUpWhereInput | Prisma.FollowUpWhereInput[]
   activityDescription?: Prisma.StringNullableFilter<"FollowUp"> | string | null
-  aditionalInfo?: Prisma.StringNullableFilter<"FollowUp"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"FollowUp"> | string | null
   actionAgenda?: Prisma.DateTimeNullableFilter<"FollowUp"> | Date | string | null
   closedAgenda?: Prisma.DateTimeNullableFilter<"FollowUp"> | Date | string | null
   recurringCallDays?: Prisma.IntNullableFilter<"FollowUp"> | number | null
@@ -464,7 +464,7 @@ export type FollowUpWhereUniqueInput = Prisma.AtLeast<{
 export type FollowUpOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   activityDescription?: Prisma.SortOrderInput | Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   actionAgenda?: Prisma.SortOrderInput | Prisma.SortOrder
   closedAgenda?: Prisma.SortOrderInput | Prisma.SortOrder
   recurringCallDays?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -499,7 +499,7 @@ export type FollowUpScalarWhereWithAggregatesInput = {
   NOT?: Prisma.FollowUpScalarWhereWithAggregatesInput | Prisma.FollowUpScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
   activityDescription?: Prisma.StringNullableWithAggregatesFilter<"FollowUp"> | string | null
-  aditionalInfo?: Prisma.StringNullableWithAggregatesFilter<"FollowUp"> | string | null
+  additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"FollowUp"> | string | null
   actionAgenda?: Prisma.DateTimeNullableWithAggregatesFilter<"FollowUp"> | Date | string | null
   closedAgenda?: Prisma.DateTimeNullableWithAggregatesFilter<"FollowUp"> | Date | string | null
   recurringCallDays?: Prisma.IntNullableWithAggregatesFilter<"FollowUp"> | number | null
@@ -526,7 +526,7 @@ export type FollowUpScalarWhereWithAggregatesInput = {
 export type FollowUpCreateInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -555,7 +555,7 @@ export type FollowUpCreateInput = {
 export type FollowUpUncheckedCreateInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -584,7 +584,7 @@ export type FollowUpUncheckedCreateInput = {
 export type FollowUpUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -613,7 +613,7 @@ export type FollowUpUpdateInput = {
 export type FollowUpUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -642,7 +642,7 @@ export type FollowUpUncheckedUpdateInput = {
 export type FollowUpCreateManyInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -669,7 +669,7 @@ export type FollowUpCreateManyInput = {
 export type FollowUpUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -687,7 +687,7 @@ export type FollowUpUpdateManyMutationInput = {
 export type FollowUpUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -730,7 +730,7 @@ export type FollowUpOrderByRelevanceInput = {
 export type FollowUpCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   activityDescription?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   actionAgenda?: Prisma.SortOrder
   closedAgenda?: Prisma.SortOrder
   recurringCallDays?: Prisma.SortOrder
@@ -761,7 +761,7 @@ export type FollowUpAvgOrderByAggregateInput = {
 export type FollowUpMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   activityDescription?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   actionAgenda?: Prisma.SortOrder
   closedAgenda?: Prisma.SortOrder
   recurringCallDays?: Prisma.SortOrder
@@ -788,7 +788,7 @@ export type FollowUpMaxOrderByAggregateInput = {
 export type FollowUpMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   activityDescription?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   actionAgenda?: Prisma.SortOrder
   closedAgenda?: Prisma.SortOrder
   recurringCallDays?: Prisma.SortOrder
@@ -1230,7 +1230,7 @@ export type FollowUpUncheckedUpdateManyWithoutUrgencyTypeNestedInput = {
 export type FollowUpCreateWithoutDocumentStructureInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1258,7 +1258,7 @@ export type FollowUpCreateWithoutDocumentStructureInput = {
 export type FollowUpUncheckedCreateWithoutDocumentStructureInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1315,7 +1315,7 @@ export type FollowUpScalarWhereInput = {
   NOT?: Prisma.FollowUpScalarWhereInput | Prisma.FollowUpScalarWhereInput[]
   id?: Prisma.StringFilter<"FollowUp"> | string
   activityDescription?: Prisma.StringNullableFilter<"FollowUp"> | string | null
-  aditionalInfo?: Prisma.StringNullableFilter<"FollowUp"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"FollowUp"> | string | null
   actionAgenda?: Prisma.DateTimeNullableFilter<"FollowUp"> | Date | string | null
   closedAgenda?: Prisma.DateTimeNullableFilter<"FollowUp"> | Date | string | null
   recurringCallDays?: Prisma.IntNullableFilter<"FollowUp"> | number | null
@@ -1342,7 +1342,7 @@ export type FollowUpScalarWhereInput = {
 export type FollowUpCreateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1370,7 +1370,7 @@ export type FollowUpCreateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
 export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1408,7 +1408,7 @@ export type FollowUpCreateManyEmployee_FollowUp_ownedByToEmployeeInputEnvelope =
 export type FollowUpCreateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1436,7 +1436,7 @@ export type FollowUpCreateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
 export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1474,7 +1474,7 @@ export type FollowUpCreateManyEmployee_FollowUp_executedByToEmployeeInputEnvelop
 export type FollowUpCreateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1502,7 +1502,7 @@ export type FollowUpCreateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
 export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1540,7 +1540,7 @@ export type FollowUpCreateManyEmployee_FollowUp_createdByToEmployeeInputEnvelope
 export type FollowUpCreateWithoutEmployee_FollowUp_deletedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1568,7 +1568,7 @@ export type FollowUpCreateWithoutEmployee_FollowUp_deletedByToEmployeeInput = {
 export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_deletedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1670,7 +1670,7 @@ export type FollowUpUpdateManyWithWhereWithoutEmployee_FollowUp_deletedByToEmplo
 export type FollowUpCreateWithoutFollowUpStructureInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1698,7 +1698,7 @@ export type FollowUpCreateWithoutFollowUpStructureInput = {
 export type FollowUpUncheckedCreateWithoutFollowUpStructureInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1742,7 +1742,7 @@ export type FollowUpUpdateToOneWithWhereWithoutFollowUpStructureInput = {
 export type FollowUpUpdateWithoutFollowUpStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1770,7 +1770,7 @@ export type FollowUpUpdateWithoutFollowUpStructureInput = {
 export type FollowUpUncheckedUpdateWithoutFollowUpStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1798,7 +1798,7 @@ export type FollowUpUncheckedUpdateWithoutFollowUpStructureInput = {
 export type FollowUpCreateWithoutFollowUpTargetInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1826,7 +1826,7 @@ export type FollowUpCreateWithoutFollowUpTargetInput = {
 export type FollowUpUncheckedCreateWithoutFollowUpTargetInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1870,7 +1870,7 @@ export type FollowUpUpdateToOneWithWhereWithoutFollowUpTargetInput = {
 export type FollowUpUpdateWithoutFollowUpTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1898,7 +1898,7 @@ export type FollowUpUpdateWithoutFollowUpTargetInput = {
 export type FollowUpUncheckedUpdateWithoutFollowUpTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1926,7 +1926,7 @@ export type FollowUpUncheckedUpdateWithoutFollowUpTargetInput = {
 export type FollowUpCreateWithoutFollowUpTypeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -1954,7 +1954,7 @@ export type FollowUpCreateWithoutFollowUpTypeInput = {
 export type FollowUpUncheckedCreateWithoutFollowUpTypeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2008,7 +2008,7 @@ export type FollowUpUpdateManyWithWhereWithoutFollowUpTypeInput = {
 export type FollowUpCreateWithoutStatusInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2036,7 +2036,7 @@ export type FollowUpCreateWithoutStatusInput = {
 export type FollowUpUncheckedCreateWithoutStatusInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2090,7 +2090,7 @@ export type FollowUpUpdateManyWithWhereWithoutStatusInput = {
 export type FollowUpCreateWithoutTargetInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2118,7 +2118,7 @@ export type FollowUpCreateWithoutTargetInput = {
 export type FollowUpUncheckedCreateWithoutTargetInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2172,7 +2172,7 @@ export type FollowUpUpdateManyWithWhereWithoutTargetInput = {
 export type FollowUpCreateWithoutUrgencyTypeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2200,7 +2200,7 @@ export type FollowUpCreateWithoutUrgencyTypeInput = {
 export type FollowUpUncheckedCreateWithoutUrgencyTypeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2254,7 +2254,7 @@ export type FollowUpUpdateManyWithWhereWithoutUrgencyTypeInput = {
 export type FollowUpCreateManyDocumentStructureInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2280,7 +2280,7 @@ export type FollowUpCreateManyDocumentStructureInput = {
 export type FollowUpUpdateWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2308,7 +2308,7 @@ export type FollowUpUpdateWithoutDocumentStructureInput = {
 export type FollowUpUncheckedUpdateWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2336,7 +2336,7 @@ export type FollowUpUncheckedUpdateWithoutDocumentStructureInput = {
 export type FollowUpUncheckedUpdateManyWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2362,7 +2362,7 @@ export type FollowUpUncheckedUpdateManyWithoutDocumentStructureInput = {
 export type FollowUpCreateManyEmployee_FollowUp_ownedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2388,7 +2388,7 @@ export type FollowUpCreateManyEmployee_FollowUp_ownedByToEmployeeInput = {
 export type FollowUpCreateManyEmployee_FollowUp_executedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2414,7 +2414,7 @@ export type FollowUpCreateManyEmployee_FollowUp_executedByToEmployeeInput = {
 export type FollowUpCreateManyEmployee_FollowUp_createdByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2440,7 +2440,7 @@ export type FollowUpCreateManyEmployee_FollowUp_createdByToEmployeeInput = {
 export type FollowUpCreateManyEmployee_FollowUp_deletedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2466,7 +2466,7 @@ export type FollowUpCreateManyEmployee_FollowUp_deletedByToEmployeeInput = {
 export type FollowUpUpdateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2494,7 +2494,7 @@ export type FollowUpUpdateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
 export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2522,7 +2522,7 @@ export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_ownedByToEmployeeInp
 export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2548,7 +2548,7 @@ export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_ownedByToEmploye
 export type FollowUpUpdateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2576,7 +2576,7 @@ export type FollowUpUpdateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
 export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2604,7 +2604,7 @@ export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_executedByToEmployee
 export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_executedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2630,7 +2630,7 @@ export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_executedByToEmpl
 export type FollowUpUpdateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2658,7 +2658,7 @@ export type FollowUpUpdateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
 export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2686,7 +2686,7 @@ export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_createdByToEmployeeI
 export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2712,7 +2712,7 @@ export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_createdByToEmplo
 export type FollowUpUpdateWithoutEmployee_FollowUp_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2740,7 +2740,7 @@ export type FollowUpUpdateWithoutEmployee_FollowUp_deletedByToEmployeeInput = {
 export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2768,7 +2768,7 @@ export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_deletedByToEmployeeI
 export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2794,7 +2794,7 @@ export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_deletedByToEmplo
 export type FollowUpCreateManyFollowUpTypeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2820,7 +2820,7 @@ export type FollowUpCreateManyFollowUpTypeInput = {
 export type FollowUpUpdateWithoutFollowUpTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2848,7 +2848,7 @@ export type FollowUpUpdateWithoutFollowUpTypeInput = {
 export type FollowUpUncheckedUpdateWithoutFollowUpTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2876,7 +2876,7 @@ export type FollowUpUncheckedUpdateWithoutFollowUpTypeInput = {
 export type FollowUpUncheckedUpdateManyWithoutFollowUpTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2902,7 +2902,7 @@ export type FollowUpUncheckedUpdateManyWithoutFollowUpTypeInput = {
 export type FollowUpCreateManyStatusInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -2928,7 +2928,7 @@ export type FollowUpCreateManyStatusInput = {
 export type FollowUpUpdateWithoutStatusInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2956,7 +2956,7 @@ export type FollowUpUpdateWithoutStatusInput = {
 export type FollowUpUncheckedUpdateWithoutStatusInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2984,7 +2984,7 @@ export type FollowUpUncheckedUpdateWithoutStatusInput = {
 export type FollowUpUncheckedUpdateManyWithoutStatusInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3010,7 +3010,7 @@ export type FollowUpUncheckedUpdateManyWithoutStatusInput = {
 export type FollowUpCreateManyTargetInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -3036,7 +3036,7 @@ export type FollowUpCreateManyTargetInput = {
 export type FollowUpUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3064,7 +3064,7 @@ export type FollowUpUpdateWithoutTargetInput = {
 export type FollowUpUncheckedUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3092,7 +3092,7 @@ export type FollowUpUncheckedUpdateWithoutTargetInput = {
 export type FollowUpUncheckedUpdateManyWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3118,7 +3118,7 @@ export type FollowUpUncheckedUpdateManyWithoutTargetInput = {
 export type FollowUpCreateManyUrgencyTypeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringCallDays?: number | null
@@ -3144,7 +3144,7 @@ export type FollowUpCreateManyUrgencyTypeInput = {
 export type FollowUpUpdateWithoutUrgencyTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3172,7 +3172,7 @@ export type FollowUpUpdateWithoutUrgencyTypeInput = {
 export type FollowUpUncheckedUpdateWithoutUrgencyTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3200,7 +3200,7 @@ export type FollowUpUncheckedUpdateWithoutUrgencyTypeInput = {
 export type FollowUpUncheckedUpdateManyWithoutUrgencyTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringCallDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3266,7 +3266,7 @@ export type FollowUpCountOutputTypeCountFollowUpTargetArgs<ExtArgs extends runti
 export type FollowUpSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   activityDescription?: boolean
-  aditionalInfo?: boolean
+  additionalInfo?: boolean
   actionAgenda?: boolean
   closedAgenda?: boolean
   recurringCallDays?: boolean
@@ -3307,7 +3307,7 @@ export type FollowUpSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type FollowUpSelectScalar = {
   id?: boolean
   activityDescription?: boolean
-  aditionalInfo?: boolean
+  additionalInfo?: boolean
   actionAgenda?: boolean
   closedAgenda?: boolean
   recurringCallDays?: boolean
@@ -3331,7 +3331,7 @@ export type FollowUpSelectScalar = {
   deletedBy?: boolean
 }
 
-export type FollowUpOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activityDescription" | "aditionalInfo" | "actionAgenda" | "closedAgenda" | "recurringCallDays" | "createdAt" | "itemClosed" | "salesFollowUp" | "nonConform" | "periodicControl" | "recurringActive" | "review" | "createdBy" | "ownedBy" | "statusId" | "executedBy" | "urgencyTypeId" | "documentId" | "targetId" | "followUpTypeId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["followUp"]>
+export type FollowUpOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activityDescription" | "additionalInfo" | "actionAgenda" | "closedAgenda" | "recurringCallDays" | "createdAt" | "itemClosed" | "salesFollowUp" | "nonConform" | "periodicControl" | "recurringActive" | "review" | "createdBy" | "ownedBy" | "statusId" | "executedBy" | "urgencyTypeId" | "documentId" | "targetId" | "followUpTypeId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["followUp"]>
 export type FollowUpInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   UrgencyType?: boolean | Prisma.UrgencyTypeDefaultArgs<ExtArgs>
   Employee_FollowUp_ownedByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -3365,7 +3365,7 @@ export type $FollowUpPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     activityDescription: string | null
-    aditionalInfo: string | null
+    additionalInfo: string | null
     actionAgenda: Date | null
     closedAgenda: Date | null
     recurringCallDays: number | null
@@ -3769,7 +3769,7 @@ export interface Prisma__FollowUpClient<T, Null = never, ExtArgs extends runtime
 export interface FollowUpFieldRefs {
   readonly id: Prisma.FieldRef<"FollowUp", 'String'>
   readonly activityDescription: Prisma.FieldRef<"FollowUp", 'String'>
-  readonly aditionalInfo: Prisma.FieldRef<"FollowUp", 'String'>
+  readonly additionalInfo: Prisma.FieldRef<"FollowUp", 'String'>
   readonly actionAgenda: Prisma.FieldRef<"FollowUp", 'DateTime'>
   readonly closedAgenda: Prisma.FieldRef<"FollowUp", 'DateTime'>
   readonly recurringCallDays: Prisma.FieldRef<"FollowUp", 'Int'>

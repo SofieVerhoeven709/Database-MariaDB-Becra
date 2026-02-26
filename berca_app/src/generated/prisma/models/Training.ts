@@ -270,10 +270,10 @@ export type TrainingOrderByWithRelationInput = {
 
 export type TrainingWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  trainingNumber?: string
   AND?: Prisma.TrainingWhereInput | Prisma.TrainingWhereInput[]
   OR?: Prisma.TrainingWhereInput[]
   NOT?: Prisma.TrainingWhereInput | Prisma.TrainingWhereInput[]
-  trainingNumber?: Prisma.StringNullableFilter<"Training"> | string | null
   trainingDate?: Prisma.DateTimeFilter<"Training"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Training"> | Date | string
   closed?: Prisma.BoolFilter<"Training"> | boolean
@@ -290,7 +290,7 @@ export type TrainingWhereUniqueInput = Prisma.AtLeast<{
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   Employee_Training_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   TrainingContact?: Prisma.TrainingContactListRelationFilter
-}, "id">
+}, "id" | "trainingNumber">
 
 export type TrainingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

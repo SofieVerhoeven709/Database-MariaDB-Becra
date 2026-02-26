@@ -39,8 +39,8 @@ export type WorkOrderStructureMinAggregateOutputType = {
   clientNumber: string | null
   tag: string | null
   quantity: number | null
-  aditionalInfo: string | null
-  shortDesciption: string | null
+  additionalInfo: string | null
+  shortDescription: string | null
   longDescription: string | null
   createdAt: Date | null
   createdBy: string | null
@@ -57,8 +57,8 @@ export type WorkOrderStructureMaxAggregateOutputType = {
   clientNumber: string | null
   tag: string | null
   quantity: number | null
-  aditionalInfo: string | null
-  shortDesciption: string | null
+  additionalInfo: string | null
+  shortDescription: string | null
   longDescription: string | null
   createdAt: Date | null
   createdBy: string | null
@@ -75,8 +75,8 @@ export type WorkOrderStructureCountAggregateOutputType = {
   clientNumber: number
   tag: number
   quantity: number
-  aditionalInfo: number
-  shortDesciption: number
+  additionalInfo: number
+  shortDescription: number
   longDescription: number
   createdAt: number
   createdBy: number
@@ -103,8 +103,8 @@ export type WorkOrderStructureMinAggregateInputType = {
   clientNumber?: true
   tag?: true
   quantity?: true
-  aditionalInfo?: true
-  shortDesciption?: true
+  additionalInfo?: true
+  shortDescription?: true
   longDescription?: true
   createdAt?: true
   createdBy?: true
@@ -121,8 +121,8 @@ export type WorkOrderStructureMaxAggregateInputType = {
   clientNumber?: true
   tag?: true
   quantity?: true
-  aditionalInfo?: true
-  shortDesciption?: true
+  additionalInfo?: true
+  shortDescription?: true
   longDescription?: true
   createdAt?: true
   createdBy?: true
@@ -139,8 +139,8 @@ export type WorkOrderStructureCountAggregateInputType = {
   clientNumber?: true
   tag?: true
   quantity?: true
-  aditionalInfo?: true
-  shortDesciption?: true
+  additionalInfo?: true
+  shortDescription?: true
   longDescription?: true
   createdAt?: true
   createdBy?: true
@@ -244,8 +244,8 @@ export type WorkOrderStructureGroupByOutputType = {
   clientNumber: string | null
   tag: string | null
   quantity: number | null
-  aditionalInfo: string | null
-  shortDesciption: string | null
+  additionalInfo: string | null
+  shortDescription: string | null
   longDescription: string | null
   createdAt: Date
   createdBy: string
@@ -285,8 +285,8 @@ export type WorkOrderStructureWhereInput = {
   clientNumber?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   quantity?: Prisma.IntNullableFilter<"WorkOrderStructure"> | number | null
-  aditionalInfo?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
-  shortDesciption?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   longDescription?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   createdAt?: Prisma.DateTimeFilter<"WorkOrderStructure"> | Date | string
   createdBy?: Prisma.StringFilter<"WorkOrderStructure"> | string
@@ -309,8 +309,8 @@ export type WorkOrderStructureOrderByWithRelationInput = {
   clientNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrderInput | Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
-  shortDesciption?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -337,8 +337,8 @@ export type WorkOrderStructureWhereUniqueInput = Prisma.AtLeast<{
   clientNumber?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   quantity?: Prisma.IntNullableFilter<"WorkOrderStructure"> | number | null
-  aditionalInfo?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
-  shortDesciption?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   longDescription?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   createdAt?: Prisma.DateTimeFilter<"WorkOrderStructure"> | Date | string
   createdBy?: Prisma.StringFilter<"WorkOrderStructure"> | string
@@ -361,8 +361,8 @@ export type WorkOrderStructureOrderByWithAggregationInput = {
   clientNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrderInput | Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
-  shortDesciption?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -387,8 +387,8 @@ export type WorkOrderStructureScalarWhereWithAggregatesInput = {
   clientNumber?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderStructure"> | string | null
   tag?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderStructure"> | string | null
   quantity?: Prisma.IntNullableWithAggregatesFilter<"WorkOrderStructure"> | number | null
-  aditionalInfo?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderStructure"> | string | null
-  shortDesciption?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderStructure"> | string | null
+  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderStructure"> | string | null
   longDescription?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderStructure"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"WorkOrderStructure"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"WorkOrderStructure"> | string
@@ -405,8 +405,8 @@ export type WorkOrderStructureCreateInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   deleted?: boolean
@@ -424,8 +424,8 @@ export type WorkOrderStructureUncheckedCreateInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
@@ -443,8 +443,8 @@ export type WorkOrderStructureUpdateInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -462,8 +462,8 @@ export type WorkOrderStructureUncheckedUpdateInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -481,8 +481,8 @@ export type WorkOrderStructureCreateManyInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
@@ -499,8 +499,8 @@ export type WorkOrderStructureUpdateManyMutationInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -512,8 +512,8 @@ export type WorkOrderStructureUncheckedUpdateManyInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -551,8 +551,8 @@ export type WorkOrderStructureCountOrderByAggregateInput = {
   clientNumber?: Prisma.SortOrder
   tag?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
-  shortDesciption?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -573,8 +573,8 @@ export type WorkOrderStructureMaxOrderByAggregateInput = {
   clientNumber?: Prisma.SortOrder
   tag?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
-  shortDesciption?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -591,8 +591,8 @@ export type WorkOrderStructureMinOrderByAggregateInput = {
   clientNumber?: Prisma.SortOrder
   tag?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
-  shortDesciption?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -837,8 +837,8 @@ export type WorkOrderStructureCreateWithoutEmployeeInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   deleted?: boolean
@@ -855,8 +855,8 @@ export type WorkOrderStructureUncheckedCreateWithoutEmployeeInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   workOrderId: string
@@ -883,8 +883,8 @@ export type WorkOrderStructureCreateWithoutEmployee_WorkOrderStructure_deletedBy
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   deleted?: boolean
@@ -901,8 +901,8 @@ export type WorkOrderStructureUncheckedCreateWithoutEmployee_WorkOrderStructure_
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
@@ -948,8 +948,8 @@ export type WorkOrderStructureScalarWhereInput = {
   clientNumber?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   quantity?: Prisma.IntNullableFilter<"WorkOrderStructure"> | number | null
-  aditionalInfo?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
-  shortDesciption?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   longDescription?: Prisma.StringNullableFilter<"WorkOrderStructure"> | string | null
   createdAt?: Prisma.DateTimeFilter<"WorkOrderStructure"> | Date | string
   createdBy?: Prisma.StringFilter<"WorkOrderStructure"> | string
@@ -982,8 +982,8 @@ export type WorkOrderStructureCreateWithoutMaterialInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   deleted?: boolean
@@ -1000,8 +1000,8 @@ export type WorkOrderStructureUncheckedCreateWithoutMaterialInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
@@ -1044,8 +1044,8 @@ export type WorkOrderStructureCreateWithoutSupplierDeliveryNoteFollowUpInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   deleted?: boolean
@@ -1062,8 +1062,8 @@ export type WorkOrderStructureUncheckedCreateWithoutSupplierDeliveryNoteFollowUp
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
@@ -1096,8 +1096,8 @@ export type WorkOrderStructureUpdateWithoutSupplierDeliveryNoteFollowUpInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1114,8 +1114,8 @@ export type WorkOrderStructureUncheckedUpdateWithoutSupplierDeliveryNoteFollowUp
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1132,8 +1132,8 @@ export type WorkOrderStructureCreateWithoutTargetInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   deleted?: boolean
@@ -1150,8 +1150,8 @@ export type WorkOrderStructureUncheckedCreateWithoutTargetInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
@@ -1194,8 +1194,8 @@ export type WorkOrderStructureCreateWithoutWorkOrderInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   deleted?: boolean
@@ -1212,8 +1212,8 @@ export type WorkOrderStructureUncheckedCreateWithoutWorkOrderInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
@@ -1256,8 +1256,8 @@ export type WorkOrderStructureCreateManyEmployeeInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   workOrderId: string
@@ -1273,8 +1273,8 @@ export type WorkOrderStructureCreateManyEmployee_WorkOrderStructure_deletedByToE
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
@@ -1290,8 +1290,8 @@ export type WorkOrderStructureUpdateWithoutEmployeeInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1308,8 +1308,8 @@ export type WorkOrderStructureUncheckedUpdateWithoutEmployeeInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1326,8 +1326,8 @@ export type WorkOrderStructureUncheckedUpdateManyWithoutEmployeeInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1343,8 +1343,8 @@ export type WorkOrderStructureUpdateWithoutEmployee_WorkOrderStructure_deletedBy
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1361,8 +1361,8 @@ export type WorkOrderStructureUncheckedUpdateWithoutEmployee_WorkOrderStructure_
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1379,8 +1379,8 @@ export type WorkOrderStructureUncheckedUpdateManyWithoutEmployee_WorkOrderStruct
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1396,8 +1396,8 @@ export type WorkOrderStructureCreateManyMaterialInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
@@ -1413,8 +1413,8 @@ export type WorkOrderStructureUpdateWithoutMaterialInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1431,8 +1431,8 @@ export type WorkOrderStructureUncheckedUpdateWithoutMaterialInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1449,8 +1449,8 @@ export type WorkOrderStructureUncheckedUpdateManyWithoutMaterialInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1466,8 +1466,8 @@ export type WorkOrderStructureCreateManyTargetInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
@@ -1483,8 +1483,8 @@ export type WorkOrderStructureUpdateWithoutTargetInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1501,8 +1501,8 @@ export type WorkOrderStructureUncheckedUpdateWithoutTargetInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1519,8 +1519,8 @@ export type WorkOrderStructureUncheckedUpdateManyWithoutTargetInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1536,8 +1536,8 @@ export type WorkOrderStructureCreateManyWorkOrderInput = {
   clientNumber?: string | null
   tag?: string | null
   quantity?: number | null
-  aditionalInfo?: string | null
-  shortDesciption?: string | null
+  additionalInfo?: string | null
+  shortDescription?: string | null
   longDescription?: string | null
   createdAt: Date | string
   createdBy: string
@@ -1553,8 +1553,8 @@ export type WorkOrderStructureUpdateWithoutWorkOrderInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1571,8 +1571,8 @@ export type WorkOrderStructureUncheckedUpdateWithoutWorkOrderInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1589,8 +1589,8 @@ export type WorkOrderStructureUncheckedUpdateManyWithoutWorkOrderInput = {
   clientNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDesciption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1637,8 +1637,8 @@ export type WorkOrderStructureSelect<ExtArgs extends runtime.Types.Extensions.In
   clientNumber?: boolean
   tag?: boolean
   quantity?: boolean
-  aditionalInfo?: boolean
-  shortDesciption?: boolean
+  additionalInfo?: boolean
+  shortDescription?: boolean
   longDescription?: boolean
   createdAt?: boolean
   createdBy?: boolean
@@ -1664,8 +1664,8 @@ export type WorkOrderStructureSelectScalar = {
   clientNumber?: boolean
   tag?: boolean
   quantity?: boolean
-  aditionalInfo?: boolean
-  shortDesciption?: boolean
+  additionalInfo?: boolean
+  shortDescription?: boolean
   longDescription?: boolean
   createdAt?: boolean
   createdBy?: boolean
@@ -1677,7 +1677,7 @@ export type WorkOrderStructureSelectScalar = {
   deletedBy?: boolean
 }
 
-export type WorkOrderStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientNumber" | "tag" | "quantity" | "aditionalInfo" | "shortDesciption" | "longDescription" | "createdAt" | "createdBy" | "workOrderId" | "materialId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["workOrderStructure"]>
+export type WorkOrderStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientNumber" | "tag" | "quantity" | "additionalInfo" | "shortDescription" | "longDescription" | "createdAt" | "createdBy" | "workOrderId" | "materialId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["workOrderStructure"]>
 export type WorkOrderStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   SupplierDeliveryNoteFollowUp?: boolean | Prisma.WorkOrderStructure$SupplierDeliveryNoteFollowUpArgs<ExtArgs>
   WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
@@ -1703,8 +1703,8 @@ export type $WorkOrderStructurePayload<ExtArgs extends runtime.Types.Extensions.
     clientNumber: string | null
     tag: string | null
     quantity: number | null
-    aditionalInfo: string | null
-    shortDesciption: string | null
+    additionalInfo: string | null
+    shortDescription: string | null
     longDescription: string | null
     createdAt: Date
     createdBy: string
@@ -2093,8 +2093,8 @@ export interface WorkOrderStructureFieldRefs {
   readonly clientNumber: Prisma.FieldRef<"WorkOrderStructure", 'String'>
   readonly tag: Prisma.FieldRef<"WorkOrderStructure", 'String'>
   readonly quantity: Prisma.FieldRef<"WorkOrderStructure", 'Int'>
-  readonly aditionalInfo: Prisma.FieldRef<"WorkOrderStructure", 'String'>
-  readonly shortDesciption: Prisma.FieldRef<"WorkOrderStructure", 'String'>
+  readonly additionalInfo: Prisma.FieldRef<"WorkOrderStructure", 'String'>
+  readonly shortDescription: Prisma.FieldRef<"WorkOrderStructure", 'String'>
   readonly longDescription: Prisma.FieldRef<"WorkOrderStructure", 'String'>
   readonly createdAt: Prisma.FieldRef<"WorkOrderStructure", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"WorkOrderStructure", 'String'>

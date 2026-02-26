@@ -27,7 +27,7 @@ export type AggregateFollowUpStructure = {
 export type FollowUpStructureMinAggregateOutputType = {
   id: string | null
   activityDescription: string | null
-  aditionalInfo: string | null
+  additionalInfo: string | null
   actionAgenda: Date | null
   closedAgenda: Date | null
   recurringItem: string | null
@@ -56,7 +56,7 @@ export type FollowUpStructureMinAggregateOutputType = {
 export type FollowUpStructureMaxAggregateOutputType = {
   id: string | null
   activityDescription: string | null
-  aditionalInfo: string | null
+  additionalInfo: string | null
   actionAgenda: Date | null
   closedAgenda: Date | null
   recurringItem: string | null
@@ -85,7 +85,7 @@ export type FollowUpStructureMaxAggregateOutputType = {
 export type FollowUpStructureCountAggregateOutputType = {
   id: number
   activityDescription: number
-  aditionalInfo: number
+  additionalInfo: number
   actionAgenda: number
   closedAgenda: number
   recurringItem: number
@@ -116,7 +116,7 @@ export type FollowUpStructureCountAggregateOutputType = {
 export type FollowUpStructureMinAggregateInputType = {
   id?: true
   activityDescription?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   actionAgenda?: true
   closedAgenda?: true
   recurringItem?: true
@@ -145,7 +145,7 @@ export type FollowUpStructureMinAggregateInputType = {
 export type FollowUpStructureMaxAggregateInputType = {
   id?: true
   activityDescription?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   actionAgenda?: true
   closedAgenda?: true
   recurringItem?: true
@@ -174,7 +174,7 @@ export type FollowUpStructureMaxAggregateInputType = {
 export type FollowUpStructureCountAggregateInputType = {
   id?: true
   activityDescription?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   actionAgenda?: true
   closedAgenda?: true
   recurringItem?: true
@@ -276,7 +276,7 @@ export type FollowUpStructureGroupByArgs<ExtArgs extends runtime.Types.Extension
 export type FollowUpStructureGroupByOutputType = {
   id: string
   activityDescription: string | null
-  aditionalInfo: string | null
+  additionalInfo: string | null
   actionAgenda: Date | null
   closedAgenda: Date | null
   recurringItem: string | null
@@ -326,7 +326,7 @@ export type FollowUpStructureWhereInput = {
   NOT?: Prisma.FollowUpStructureWhereInput | Prisma.FollowUpStructureWhereInput[]
   id?: Prisma.StringFilter<"FollowUpStructure"> | string
   activityDescription?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
-  aditionalInfo?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
   actionAgenda?: Prisma.DateTimeNullableFilter<"FollowUpStructure"> | Date | string | null
   closedAgenda?: Prisma.DateTimeNullableFilter<"FollowUpStructure"> | Date | string | null
   recurringItem?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
@@ -366,7 +366,7 @@ export type FollowUpStructureWhereInput = {
 export type FollowUpStructureOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   activityDescription?: Prisma.SortOrderInput | Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   actionAgenda?: Prisma.SortOrderInput | Prisma.SortOrder
   closedAgenda?: Prisma.SortOrderInput | Prisma.SortOrder
   recurringItem?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -410,7 +410,7 @@ export type FollowUpStructureWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.FollowUpStructureWhereInput[]
   NOT?: Prisma.FollowUpStructureWhereInput | Prisma.FollowUpStructureWhereInput[]
   activityDescription?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
-  aditionalInfo?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
   actionAgenda?: Prisma.DateTimeNullableFilter<"FollowUpStructure"> | Date | string | null
   closedAgenda?: Prisma.DateTimeNullableFilter<"FollowUpStructure"> | Date | string | null
   recurringItem?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
@@ -450,7 +450,7 @@ export type FollowUpStructureWhereUniqueInput = Prisma.AtLeast<{
 export type FollowUpStructureOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   activityDescription?: Prisma.SortOrderInput | Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   actionAgenda?: Prisma.SortOrderInput | Prisma.SortOrder
   closedAgenda?: Prisma.SortOrderInput | Prisma.SortOrder
   recurringItem?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -485,7 +485,7 @@ export type FollowUpStructureScalarWhereWithAggregatesInput = {
   NOT?: Prisma.FollowUpStructureScalarWhereWithAggregatesInput | Prisma.FollowUpStructureScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"FollowUpStructure"> | string
   activityDescription?: Prisma.StringNullableWithAggregatesFilter<"FollowUpStructure"> | string | null
-  aditionalInfo?: Prisma.StringNullableWithAggregatesFilter<"FollowUpStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"FollowUpStructure"> | string | null
   actionAgenda?: Prisma.DateTimeNullableWithAggregatesFilter<"FollowUpStructure"> | Date | string | null
   closedAgenda?: Prisma.DateTimeNullableWithAggregatesFilter<"FollowUpStructure"> | Date | string | null
   recurringItem?: Prisma.StringNullableWithAggregatesFilter<"FollowUpStructure"> | string | null
@@ -514,7 +514,7 @@ export type FollowUpStructureScalarWhereWithAggregatesInput = {
 export type FollowUpStructureCreateInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -543,7 +543,7 @@ export type FollowUpStructureCreateInput = {
 export type FollowUpStructureUncheckedCreateInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -572,7 +572,7 @@ export type FollowUpStructureUncheckedCreateInput = {
 export type FollowUpStructureUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -601,7 +601,7 @@ export type FollowUpStructureUpdateInput = {
 export type FollowUpStructureUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -630,7 +630,7 @@ export type FollowUpStructureUncheckedUpdateInput = {
 export type FollowUpStructureCreateManyInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -659,7 +659,7 @@ export type FollowUpStructureCreateManyInput = {
 export type FollowUpStructureUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -677,7 +677,7 @@ export type FollowUpStructureUpdateManyMutationInput = {
 export type FollowUpStructureUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -722,7 +722,7 @@ export type FollowUpStructureOrderByRelevanceInput = {
 export type FollowUpStructureCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   activityDescription?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   actionAgenda?: Prisma.SortOrder
   closedAgenda?: Prisma.SortOrder
   recurringItem?: Prisma.SortOrder
@@ -751,7 +751,7 @@ export type FollowUpStructureCountOrderByAggregateInput = {
 export type FollowUpStructureMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   activityDescription?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   actionAgenda?: Prisma.SortOrder
   closedAgenda?: Prisma.SortOrder
   recurringItem?: Prisma.SortOrder
@@ -780,7 +780,7 @@ export type FollowUpStructureMaxOrderByAggregateInput = {
 export type FollowUpStructureMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   activityDescription?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   actionAgenda?: Prisma.SortOrder
   closedAgenda?: Prisma.SortOrder
   recurringItem?: Prisma.SortOrder
@@ -1271,7 +1271,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutUrgencyTypeNestedInput = 
 export type FollowUpStructureCreateWithoutContactInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1299,7 +1299,7 @@ export type FollowUpStructureCreateWithoutContactInput = {
 export type FollowUpStructureUncheckedCreateWithoutContactInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1356,7 +1356,7 @@ export type FollowUpStructureScalarWhereInput = {
   NOT?: Prisma.FollowUpStructureScalarWhereInput | Prisma.FollowUpStructureScalarWhereInput[]
   id?: Prisma.StringFilter<"FollowUpStructure"> | string
   activityDescription?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
-  aditionalInfo?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
   actionAgenda?: Prisma.DateTimeNullableFilter<"FollowUpStructure"> | Date | string | null
   closedAgenda?: Prisma.DateTimeNullableFilter<"FollowUpStructure"> | Date | string | null
   recurringItem?: Prisma.StringNullableFilter<"FollowUpStructure"> | string | null
@@ -1385,7 +1385,7 @@ export type FollowUpStructureScalarWhereInput = {
 export type FollowUpStructureCreateWithoutDocumentStructureInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1413,7 +1413,7 @@ export type FollowUpStructureCreateWithoutDocumentStructureInput = {
 export type FollowUpStructureUncheckedCreateWithoutDocumentStructureInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1467,7 +1467,7 @@ export type FollowUpStructureUpdateManyWithWhereWithoutDocumentStructureInput = 
 export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_deletedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1495,7 +1495,7 @@ export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_deletedByTo
 export type FollowUpStructureUncheckedCreateWithoutEmployee_FollowUpStructure_deletedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1533,7 +1533,7 @@ export type FollowUpStructureCreateManyEmployee_FollowUpStructure_deletedByToEmp
 export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_ownedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1561,7 +1561,7 @@ export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_ownedByToEm
 export type FollowUpStructureUncheckedCreateWithoutEmployee_FollowUpStructure_ownedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1599,7 +1599,7 @@ export type FollowUpStructureCreateManyEmployee_FollowUpStructure_ownedByToEmplo
 export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_executedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1627,7 +1627,7 @@ export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_executedByT
 export type FollowUpStructureUncheckedCreateWithoutEmployee_FollowUpStructure_executedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1665,7 +1665,7 @@ export type FollowUpStructureCreateManyEmployee_FollowUpStructure_executedByToEm
 export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_taskForToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1693,7 +1693,7 @@ export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_taskForToEm
 export type FollowUpStructureUncheckedCreateWithoutEmployee_FollowUpStructure_taskForToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1731,7 +1731,7 @@ export type FollowUpStructureCreateManyEmployee_FollowUpStructure_taskForToEmplo
 export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_createdByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1759,7 +1759,7 @@ export type FollowUpStructureCreateWithoutEmployee_FollowUpStructure_createdByTo
 export type FollowUpStructureUncheckedCreateWithoutEmployee_FollowUpStructure_createdByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1877,7 +1877,7 @@ export type FollowUpStructureUpdateManyWithWhereWithoutEmployee_FollowUpStructur
 export type FollowUpStructureCreateWithoutFollowUpInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1905,7 +1905,7 @@ export type FollowUpStructureCreateWithoutFollowUpInput = {
 export type FollowUpStructureUncheckedCreateWithoutFollowUpInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1959,7 +1959,7 @@ export type FollowUpStructureUpdateManyWithWhereWithoutFollowUpInput = {
 export type FollowUpStructureCreateWithoutStatusInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -1987,7 +1987,7 @@ export type FollowUpStructureCreateWithoutStatusInput = {
 export type FollowUpStructureUncheckedCreateWithoutStatusInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2041,7 +2041,7 @@ export type FollowUpStructureUpdateManyWithWhereWithoutStatusInput = {
 export type FollowUpStructureCreateWithoutTargetInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2069,7 +2069,7 @@ export type FollowUpStructureCreateWithoutTargetInput = {
 export type FollowUpStructureUncheckedCreateWithoutTargetInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2123,7 +2123,7 @@ export type FollowUpStructureUpdateManyWithWhereWithoutTargetInput = {
 export type FollowUpStructureCreateWithoutUrgencyTypeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2151,7 +2151,7 @@ export type FollowUpStructureCreateWithoutUrgencyTypeInput = {
 export type FollowUpStructureUncheckedCreateWithoutUrgencyTypeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2205,7 +2205,7 @@ export type FollowUpStructureUpdateManyWithWhereWithoutUrgencyTypeInput = {
 export type FollowUpStructureCreateManyContactInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2233,7 +2233,7 @@ export type FollowUpStructureCreateManyContactInput = {
 export type FollowUpStructureUpdateWithoutContactInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2261,7 +2261,7 @@ export type FollowUpStructureUpdateWithoutContactInput = {
 export type FollowUpStructureUncheckedUpdateWithoutContactInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2289,7 +2289,7 @@ export type FollowUpStructureUncheckedUpdateWithoutContactInput = {
 export type FollowUpStructureUncheckedUpdateManyWithoutContactInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2317,7 +2317,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutContactInput = {
 export type FollowUpStructureCreateManyDocumentStructureInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2345,7 +2345,7 @@ export type FollowUpStructureCreateManyDocumentStructureInput = {
 export type FollowUpStructureUpdateWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2373,7 +2373,7 @@ export type FollowUpStructureUpdateWithoutDocumentStructureInput = {
 export type FollowUpStructureUncheckedUpdateWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2401,7 +2401,7 @@ export type FollowUpStructureUncheckedUpdateWithoutDocumentStructureInput = {
 export type FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2429,7 +2429,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureInput = 
 export type FollowUpStructureCreateManyEmployee_FollowUpStructure_deletedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2457,7 +2457,7 @@ export type FollowUpStructureCreateManyEmployee_FollowUpStructure_deletedByToEmp
 export type FollowUpStructureCreateManyEmployee_FollowUpStructure_ownedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2485,7 +2485,7 @@ export type FollowUpStructureCreateManyEmployee_FollowUpStructure_ownedByToEmplo
 export type FollowUpStructureCreateManyEmployee_FollowUpStructure_executedByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2513,7 +2513,7 @@ export type FollowUpStructureCreateManyEmployee_FollowUpStructure_executedByToEm
 export type FollowUpStructureCreateManyEmployee_FollowUpStructure_taskForToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2541,7 +2541,7 @@ export type FollowUpStructureCreateManyEmployee_FollowUpStructure_taskForToEmplo
 export type FollowUpStructureCreateManyEmployee_FollowUpStructure_createdByToEmployeeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -2569,7 +2569,7 @@ export type FollowUpStructureCreateManyEmployee_FollowUpStructure_createdByToEmp
 export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2597,7 +2597,7 @@ export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_deletedByTo
 export type FollowUpStructureUncheckedUpdateWithoutEmployee_FollowUpStructure_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2625,7 +2625,7 @@ export type FollowUpStructureUncheckedUpdateWithoutEmployee_FollowUpStructure_de
 export type FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2653,7 +2653,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructur
 export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_ownedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2681,7 +2681,7 @@ export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_ownedByToEm
 export type FollowUpStructureUncheckedUpdateWithoutEmployee_FollowUpStructure_ownedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2709,7 +2709,7 @@ export type FollowUpStructureUncheckedUpdateWithoutEmployee_FollowUpStructure_ow
 export type FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_ownedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2737,7 +2737,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructur
 export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_executedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2765,7 +2765,7 @@ export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_executedByT
 export type FollowUpStructureUncheckedUpdateWithoutEmployee_FollowUpStructure_executedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2793,7 +2793,7 @@ export type FollowUpStructureUncheckedUpdateWithoutEmployee_FollowUpStructure_ex
 export type FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_executedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2821,7 +2821,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructur
 export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_taskForToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2849,7 +2849,7 @@ export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_taskForToEm
 export type FollowUpStructureUncheckedUpdateWithoutEmployee_FollowUpStructure_taskForToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2877,7 +2877,7 @@ export type FollowUpStructureUncheckedUpdateWithoutEmployee_FollowUpStructure_ta
 export type FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_taskForToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2905,7 +2905,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructur
 export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2933,7 +2933,7 @@ export type FollowUpStructureUpdateWithoutEmployee_FollowUpStructure_createdByTo
 export type FollowUpStructureUncheckedUpdateWithoutEmployee_FollowUpStructure_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2961,7 +2961,7 @@ export type FollowUpStructureUncheckedUpdateWithoutEmployee_FollowUpStructure_cr
 export type FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructure_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2989,7 +2989,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutEmployee_FollowUpStructur
 export type FollowUpStructureCreateManyFollowUpInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -3017,7 +3017,7 @@ export type FollowUpStructureCreateManyFollowUpInput = {
 export type FollowUpStructureUpdateWithoutFollowUpInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3045,7 +3045,7 @@ export type FollowUpStructureUpdateWithoutFollowUpInput = {
 export type FollowUpStructureUncheckedUpdateWithoutFollowUpInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3073,7 +3073,7 @@ export type FollowUpStructureUncheckedUpdateWithoutFollowUpInput = {
 export type FollowUpStructureUncheckedUpdateManyWithoutFollowUpInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3101,7 +3101,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutFollowUpInput = {
 export type FollowUpStructureCreateManyStatusInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -3129,7 +3129,7 @@ export type FollowUpStructureCreateManyStatusInput = {
 export type FollowUpStructureUpdateWithoutStatusInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3157,7 +3157,7 @@ export type FollowUpStructureUpdateWithoutStatusInput = {
 export type FollowUpStructureUncheckedUpdateWithoutStatusInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3185,7 +3185,7 @@ export type FollowUpStructureUncheckedUpdateWithoutStatusInput = {
 export type FollowUpStructureUncheckedUpdateManyWithoutStatusInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3213,7 +3213,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutStatusInput = {
 export type FollowUpStructureCreateManyTargetInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -3241,7 +3241,7 @@ export type FollowUpStructureCreateManyTargetInput = {
 export type FollowUpStructureUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3269,7 +3269,7 @@ export type FollowUpStructureUpdateWithoutTargetInput = {
 export type FollowUpStructureUncheckedUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3297,7 +3297,7 @@ export type FollowUpStructureUncheckedUpdateWithoutTargetInput = {
 export type FollowUpStructureUncheckedUpdateManyWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3325,7 +3325,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutTargetInput = {
 export type FollowUpStructureCreateManyUrgencyTypeInput = {
   id: string
   activityDescription?: string | null
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   actionAgenda?: Date | string | null
   closedAgenda?: Date | string | null
   recurringItem?: string | null
@@ -3353,7 +3353,7 @@ export type FollowUpStructureCreateManyUrgencyTypeInput = {
 export type FollowUpStructureUpdateWithoutUrgencyTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3381,7 +3381,7 @@ export type FollowUpStructureUpdateWithoutUrgencyTypeInput = {
 export type FollowUpStructureUncheckedUpdateWithoutUrgencyTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3409,7 +3409,7 @@ export type FollowUpStructureUncheckedUpdateWithoutUrgencyTypeInput = {
 export type FollowUpStructureUncheckedUpdateManyWithoutUrgencyTypeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   activityDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAgenda?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   recurringItem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3439,7 +3439,7 @@ export type FollowUpStructureUncheckedUpdateManyWithoutUrgencyTypeInput = {
 export type FollowUpStructureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   activityDescription?: boolean
-  aditionalInfo?: boolean
+  additionalInfo?: boolean
   actionAgenda?: boolean
   closedAgenda?: boolean
   recurringItem?: boolean
@@ -3481,7 +3481,7 @@ export type FollowUpStructureSelect<ExtArgs extends runtime.Types.Extensions.Int
 export type FollowUpStructureSelectScalar = {
   id?: boolean
   activityDescription?: boolean
-  aditionalInfo?: boolean
+  additionalInfo?: boolean
   actionAgenda?: boolean
   closedAgenda?: boolean
   recurringItem?: boolean
@@ -3507,7 +3507,7 @@ export type FollowUpStructureSelectScalar = {
   deletedBy?: boolean
 }
 
-export type FollowUpStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activityDescription" | "aditionalInfo" | "actionAgenda" | "closedAgenda" | "recurringItem" | "item" | "contactDate" | "taskDescription" | "taskStartDate" | "taskCompleteDate" | "createdAt" | "recurringActive" | "createdBy" | "ownedBy" | "statusId" | "executedBy" | "urgencyTypeId" | "followUpId" | "documentId" | "contactId" | "taskFor" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["followUpStructure"]>
+export type FollowUpStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activityDescription" | "additionalInfo" | "actionAgenda" | "closedAgenda" | "recurringItem" | "item" | "contactDate" | "taskDescription" | "taskStartDate" | "taskCompleteDate" | "createdAt" | "recurringActive" | "createdBy" | "ownedBy" | "statusId" | "executedBy" | "urgencyTypeId" | "followUpId" | "documentId" | "contactId" | "taskFor" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["followUpStructure"]>
 export type FollowUpStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   UrgencyType?: boolean | Prisma.UrgencyTypeDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
@@ -3540,7 +3540,7 @@ export type $FollowUpStructurePayload<ExtArgs extends runtime.Types.Extensions.I
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     activityDescription: string | null
-    aditionalInfo: string | null
+    additionalInfo: string | null
     actionAgenda: Date | null
     closedAgenda: Date | null
     recurringItem: string | null
@@ -3946,7 +3946,7 @@ export interface Prisma__FollowUpStructureClient<T, Null = never, ExtArgs extend
 export interface FollowUpStructureFieldRefs {
   readonly id: Prisma.FieldRef<"FollowUpStructure", 'String'>
   readonly activityDescription: Prisma.FieldRef<"FollowUpStructure", 'String'>
-  readonly aditionalInfo: Prisma.FieldRef<"FollowUpStructure", 'String'>
+  readonly additionalInfo: Prisma.FieldRef<"FollowUpStructure", 'String'>
   readonly actionAgenda: Prisma.FieldRef<"FollowUpStructure", 'DateTime'>
   readonly closedAgenda: Prisma.FieldRef<"FollowUpStructure", 'DateTime'>
   readonly recurringItem: Prisma.FieldRef<"FollowUpStructure", 'String'>

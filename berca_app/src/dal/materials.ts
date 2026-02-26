@@ -45,7 +45,7 @@ export async function getMaterialGroups() {
 export async function getUnits() {
   return prismaClient.unit.findMany({
     where: {deleted: false, valid: true},
-    orderBy: {name: 'asc'},
+    orderBy: {unitName: 'asc'},
   })
 }
 
@@ -56,7 +56,7 @@ export async function createMaterial(data: {
   brandOrderNr: number
   shortDescription: string
   longDescription?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: number | null
@@ -76,7 +76,7 @@ export async function updateMaterial(
     brandOrderNr?: number
     shortDescription?: string
     longDescription?: string | null
-    preferedSupplier?: string | null
+    preferredSupplier?: string | null
     brandName?: string | null
     documentationPlace?: string | null
     bePartDoc?: number | null

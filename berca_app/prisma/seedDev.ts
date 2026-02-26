@@ -204,17 +204,15 @@ export const seedDev = async (prisma: PrismaClient) => {
   const companyTargetType = await prisma.targetType.create({
     data: {id: randomUUID(), name: 'Company', createdAt: now, createdBy: adminEmployee.id},
   })
-
-  const projectTargetType = await prisma.targetType.create({
+  await prisma.targetType.create({
     data: {id: randomUUID(), name: 'Project', createdAt: now, createdBy: adminEmployee.id},
   })
-  const workOrderTargetType = await prisma.targetType.create({
+  await prisma.targetType.create({
     data: {id: randomUUID(), name: 'WorkOrder', createdAt: now, createdBy: adminEmployee.id},
   })
-  const workOrderStructureTargetType = await prisma.targetType.create({
+  await prisma.targetType.create({
     data: {id: randomUUID(), name: 'WorkOrderStructure', createdAt: now, createdBy: adminEmployee.id},
   })
-
   // 9. Create Departments + Department Roles + RoleLevels + Target
   for (const dept of ALL_DEPARTMENTS) {
     const deptTarget = await prisma.target.create({
@@ -431,8 +429,8 @@ export const seedDev = async (prisma: PrismaClient) => {
     const created = await prisma.unit.create({
       data: {
         id: randomUUID(),
-        name: unit.name,
-        quantity: unit.quantity,
+        unitName: unit.name,
+        physicalQuantity: unit.quantity.toString(),
         abbreviation: unit.abbreviation,
         shortDescription: unit.shortDescription,
         longDescription: unit.shortDescription,
@@ -455,7 +453,7 @@ export const seedDev = async (prisma: PrismaClient) => {
       shortDescription: 'M10 hex bolt galvanized',
       longDescription: 'Standard galvanized hex bolt M10 x 30mm',
       brandName: 'Fabory',
-      preferedSupplier: 'Fabory',
+      preferredSupplier: 'Fabory',
     },
     {
       beNumber: 'BE-MAT-0002',
@@ -463,7 +461,7 @@ export const seedDev = async (prisma: PrismaClient) => {
       shortDescription: 'M10 hex nut',
       longDescription: 'Standard steel hex nut M10',
       brandName: 'Fabory',
-      preferedSupplier: 'Fabory',
+      preferredSupplier: 'Fabory',
     },
     {
       beNumber: 'BE-MAT-0003',
@@ -471,7 +469,7 @@ export const seedDev = async (prisma: PrismaClient) => {
       shortDescription: 'Power cable 3G2.5mm²',
       longDescription: 'Flexible copper power cable',
       brandName: 'Nexans',
-      preferedSupplier: 'Nexans',
+      preferredSupplier: 'Nexans',
     },
     {
       beNumber: 'BE-MAT-0004',
@@ -479,7 +477,7 @@ export const seedDev = async (prisma: PrismaClient) => {
       shortDescription: '24V industrial switch',
       longDescription: 'Heavy duty industrial control switch',
       brandName: 'Siemens',
-      preferedSupplier: 'Siemens',
+      preferredSupplier: 'Siemens',
     },
     {
       beNumber: 'BE-MAT-0005',
@@ -487,7 +485,7 @@ export const seedDev = async (prisma: PrismaClient) => {
       shortDescription: 'Quick hydraulic coupling',
       longDescription: 'High pressure quick connect coupling',
       brandName: 'Parker',
-      preferedSupplier: 'Parker',
+      preferredSupplier: 'Parker',
     },
   ]
 
@@ -504,7 +502,7 @@ export const seedDev = async (prisma: PrismaClient) => {
         brandOrderNr: brandOrderCounter++,
         shortDescription: mat.shortDescription,
         longDescription: mat.longDescription,
-        preferedSupplier: mat.preferedSupplier,
+        preferredSupplier: mat.preferredSupplier,
         brandName: mat.brandName,
         documentationPlace: 'SharePoint',
         bePartDoc: null,

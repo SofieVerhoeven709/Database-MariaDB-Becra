@@ -46,7 +46,7 @@ export async function softDeleteMaterialGroup(id: string, deletedBy: string) {
 export async function getUnits(): Promise<Unit[]> {
   return prismaClient.unit.findMany({
     where: {deleted: false},
-    orderBy: {unit: 'asc'},
+    orderBy: {unitName: 'asc'},
   })
 }
 

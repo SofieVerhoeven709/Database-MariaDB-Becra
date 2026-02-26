@@ -14,7 +14,7 @@ export default async function SpecPage() {
 
   const mappedUnits = units.map(u => ({
     id: u.id,
-    unit: u.unit,
+    unitName: u.unitName,
     physicalQuantity: u.physicalQuantity,
     abbreviation: u.abbreviation,
     shortDescription: u.shortDescription ?? null,

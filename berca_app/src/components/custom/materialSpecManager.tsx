@@ -32,8 +32,8 @@ export interface MappedMaterialGroup {
 
 export interface MappedUnit {
   id: string
-  unit: string
-  physicalQuantity: number
+  unitName: string
+  physicalQuantity: string
   abbreviation: string
   shortDescription: string | null
   longDescription: string | null
@@ -244,12 +244,12 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
 
 // ─── Unit Tab ─────────────────────────────────────────────────────────────────
 
-type UnitSortField = 'unit' | 'abbreviation' | 'physicalQuantity' | 'valid'
+type UnitSortField = 'unitName' | 'abbreviation' | 'physicalQuantity' | 'valid'
 
 const EMPTY_UNIT: MappedUnit = {
   id: '',
-  unit: '',
-  physicalQuantity: 0,
+  unitName: '',
+  physicalQuantity: '',
   abbreviation: '',
   shortDescription: null,
   longDescription: null,
@@ -259,7 +259,7 @@ const EMPTY_UNIT: MappedUnit = {
 function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
   const [units, setUnits] = useState(initialUnits)
   const [search, setSearch] = useState('')
-  const [sortField, setSortField] = useState<UnitSortField>('unit')
+  const [sortField, setSortField] = useState<UnitSortField>('unitName')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<MappedUnit | null>(null)
@@ -290,7 +290,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
     setSaving(true)
     const fd = new FormData()
     fd.append('id', form.id)
-    fd.append('unit', form.unit)
+    fd.append('unitName', form.unitName)
     fd.append('physicalQuantity', String(form.physicalQuantity))
     fd.append('abbreviation', form.abbreviation)
     if (form.shortDescription) fd.append('shortDescription', form.shortDescription)
@@ -320,18 +320,17 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
     .filter(u => {
       if (!search) return true
       const q = search.toLowerCase()
-      return u.unit.toLowerCase().includes(q) || u.abbreviation.toLowerCase().includes(q)
+      return u.unitName.toLowerCase().includes(q) || u.abbreviation.toLowerCase().includes(q)
     })
     .sort((a, b) => {
       let cmp: number
       if (sortField === 'physicalQuantity') cmp = a.physicalQuantity.localeCompare(b.physicalQuantity)
-      else if (sortField === 'valid') cmp = Number(a.valid) - Number(b.valid)
       else cmp = String(a[sortField]).localeCompare(String(b[sortField]))
       return sortDir === 'asc' ? cmp : -cmp
     })
 
   const cols: {key: UnitSortField; label: string}[] = [
-    {key: 'unit', label: 'Unit'},
+    {key: 'unitName', label: 'Unit Name'},
     {key: 'abbreviation', label: 'Abbreviation'},
     {key: 'physicalQuantity', label: 'Physical Quantity'},
     {key: 'valid', label: 'Valid'},
@@ -386,7 +385,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
             ) : (
               filtered.map(u => (
                 <TableRow key={u.id} className="hover:bg-secondary/50 transition-colors">
-                  <TableCell className="font-medium text-sm">{u.unit}</TableCell>
+                  <TableCell className="font-medium text-sm">{u.unitName}</TableCell>
                   <TableCell className="font-mono text-sm">{u.abbreviation}</TableCell>
                   <TableCell className="text-sm">{u.physicalQuantity}</TableCell>
                   <TableCell>
@@ -451,8 +450,8 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
                 <Input
                   id="unit-name"
                   className={inputStyles}
-                  value={form.unit}
-                  onChange={e => setForm(prev => ({...prev, unit: e.target.value}))}
+                  value={form.unitName}
+                  onChange={e => setForm(prev => ({...prev, unitName: e.target.value}))}
                   placeholder="e.g. Kilogram"
                   required
                 />
@@ -478,10 +477,10 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
               </Label>
               <Input
                 id="unit-physicalQuantity"
-                type="number"
+                type="string"
                 className={inputStyles}
                 value={form.physicalQuantity}
-                onChange={e => setForm(prev => ({...prev, physicalQuantity: Number(e.target.value)}))}
+                onChange={e => setForm(prev => ({...prev, physicalQuantity: e.target.value}))}
                 placeholder="e.g. 1"
                 required
               />
@@ -528,7 +527,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
             <Button variant="outline" onClick={() => setDialogOpen(false)} disabled={saving}>
               Cancel
             </Button>
-            <Button onClick={handleSave} disabled={!form.unit || !form.abbreviation || saving}>
+            <Button onClick={handleSave} disabled={!form.unitName || !form.abbreviation || saving}>
               {saving ? 'Saving…' : editing ? 'Save changes' : 'Create unit'}
             </Button>
           </DialogFooter>

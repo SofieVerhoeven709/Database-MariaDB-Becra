@@ -24,8 +24,8 @@ export const deleteMaterialGroupSchema = z.object({
 
 export const unitSchema = z.object({
   id: z.string().uuid(),
-  unit: z.string().min(1).max(255),
-  physicalQuantity: z.coerce.number().int(),
+  unitName: z.string().min(1).max(255),
+  physicalQuantity: z.string().min(1).max(255),
   abbreviation: z.string().min(1).max(255),
   shortDescription: z.string().max(255).nullable().optional(),
   longDescription: z.string().nullable().optional(),

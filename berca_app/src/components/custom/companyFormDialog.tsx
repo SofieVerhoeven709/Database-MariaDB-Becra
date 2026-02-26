@@ -20,6 +20,7 @@ import {
   undeleteCompanyAddressAction,
 } from '@/serverFunctions/companies'
 import {useRouter} from 'next/navigation'
+import {generateCompanyNumber} from '@/lib/utils'
 
 interface Option {
   id: string
@@ -39,7 +40,7 @@ interface CompanyFormDialogProps {
 const emptyCompany = (): MappedCompany => ({
   id: '',
   name: '',
-  number: '',
+  number: generateCompanyNumber(),
   mail: null,
   businessPhone: null,
   website: null,
@@ -290,11 +291,7 @@ export function CompanyFormDialog({
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Number *</Label>
-                <Input
-                  value={form.number}
-                  onChange={e => set('number', e.target.value)}
-                  className="bg-secondary border-border"
-                />
+                <Input value={form.number} readOnly className="bg-secondary border-border" />
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Email</Label>

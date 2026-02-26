@@ -4,38 +4,62 @@ import {prismaClient} from '@/dal/prismaClient'
 import {createCompanySchema, updateCompanySchema, companyIdSchema} from '@/schemas/companySchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
-
 export const createCompanyAction = protectedServerFunction({
   schema: createCompanySchema,
   functionName: 'Create company action',
   serverFn: async ({data: {addresses, ...data}, logger, profile}) => {
     logger.info(`Creating company, createdBy: ${profile.id}`)
+
     const target = await createTargetForType('Company', profile.id)
     const companyId = crypto.randomUUID()
     const now = new Date()
 
-    await prismaClient.$transaction([
-      prismaClient.company.create({
-        data: {
-          ...data,
-          id: companyId,
-          createdBy: profile.id,
-          createdAt: now,
-          targetId: target.id,
-        },
-      }),
-      ...addresses.map(a =>
-        prismaClient.companyAdress.create({
-          data: {
-            ...a,
-            id: crypto.randomUUID(),
-            companyId,
-            createdBy: profile.id,
-            createdAt: now,
-          },
-        }),
-      ),
-    ])
+    let companyNumber = data.number || generateCompanyNumber()
+
+    let attempts = 0
+    let created = false
+
+    while (!created && attempts < 5) {
+      try {
+        await prismaClient.$transaction([
+          prismaClient.company.create({
+            data: {
+              ...data,
+              number: companyNumber,
+              id: companyId,
+              createdBy: profile.id,
+              createdAt: now,
+              targetId: target.id,
+            },
+          }),
+          ...addresses.map(a =>
+            prismaClient.companyAdress.create({
+              data: {
+                ...a,
+                id: crypto.randomUUID(),
+                companyId,
+                createdBy: profile.id,
+                createdAt: now,
+              },
+            }),
+          ),
+        ])
+
+        created = true
+      } catch (err: any) {
+        // Prisma unique violation
+        if (err.code === 'P2002') {
+          attempts++
+          companyNumber = generateCompanyNumber()
+          continue
+        }
+        throw err
+      }
+    }
+
+    if (!created) {
+      throw new Error('Failed to generate unique company number')
+    }
 
     logger.info(`Company created: ${companyId} with ${addresses.length} address(es)`)
     revalidatePath('/companies')
@@ -90,6 +114,7 @@ export const undeleteCompanyAction = protectedServerFunction({
 
 // ─── Company Address actions ──────────────────────────────────────────────────
 import {createCompanyAddressSchema, updateCompanyAddressSchema, companyAddressIdSchema} from '@/schemas/companySchemas'
+import {generateCompanyNumber} from '@/lib/utils'
 
 export const createCompanyAddressAction = protectedServerFunction({
   schema: createCompanyAddressSchema,

@@ -310,10 +310,10 @@ export type WorkOrderOrderByWithRelationInput = {
 
 export type WorkOrderWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  workOrderNumber?: string
   AND?: Prisma.WorkOrderWhereInput | Prisma.WorkOrderWhereInput[]
   OR?: Prisma.WorkOrderWhereInput[]
   NOT?: Prisma.WorkOrderWhereInput | Prisma.WorkOrderWhereInput[]
-  workOrderNumber?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   description?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   startDate?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
@@ -336,7 +336,7 @@ export type WorkOrderWhereUniqueInput = Prisma.AtLeast<{
   Employee_WorkOrder_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceListRelationFilter
   WorkOrderStructure?: Prisma.WorkOrderStructureListRelationFilter
-}, "id">
+}, "id" | "workOrderNumber">
 
 export type WorkOrderOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

@@ -432,10 +432,10 @@ export type InvoiceOutOrderByWithRelationInput = {
 
 export type InvoiceOutWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  invoiceNumber?: string
   AND?: Prisma.InvoiceOutWhereInput | Prisma.InvoiceOutWhereInput[]
   OR?: Prisma.InvoiceOutWhereInput[]
   NOT?: Prisma.InvoiceOutWhereInput | Prisma.InvoiceOutWhereInput[]
-  invoiceNumber?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   invoiceDate?: Prisma.DateTimeFilter<"InvoiceOut"> | Date | string
   expireDate?: Prisma.DateTimeFilter<"InvoiceOut"> | Date | string
   payDate?: Prisma.DateTimeNullableFilter<"InvoiceOut"> | Date | string | null
@@ -465,7 +465,7 @@ export type InvoiceOutWhereUniqueInput = Prisma.AtLeast<{
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   Employee_InvoiceOut_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   WorkOrderInvoice?: Prisma.WorkOrderInvoiceListRelationFilter
-}, "id">
+}, "id" | "invoiceNumber">
 
 export type InvoiceOutOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

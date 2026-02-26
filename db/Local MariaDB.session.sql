@@ -49,7 +49,8 @@ CREATE TABLE
             FOREIGN KEY (referenceDocId) REFERENCES DocumentStructure (id) ON DELETE SET NULL,
             FOREIGN KEY (roleId) REFERENCES Role (id) ON DELETE SET NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME
+            deletedAt DATETIME,
+            UNIQUE (documentNumber)
       ) ENGINE = InnoDB;
 
  CREATE TABLE
@@ -542,7 +543,8 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            UNIQUE (projectNumber)
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -618,7 +620,8 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            UNIQUE (workOrderNumber)
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -696,7 +699,8 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            UNIQUE (trainingNumber)
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -775,7 +779,8 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            UNIQUE (invoiceNumber)
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -813,7 +818,8 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            UNIQUE (invoiceNumber)
       ) ENGINE = InnoDB;
 
 CREATE TABLE

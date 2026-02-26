@@ -273,7 +273,7 @@ model DocumentPlace {
 
 model DocumentStructure {
   id                                                                                              String                           @id @db.Char(36)
-  documentNumber                                                                                  String                           @db.VarChar(100)
+  documentNumber                                                                                  String                           @unique(map: "documentNumber") @db.VarChar(100)
   description                                                                                     String?                          @db.Text
   descriptionShort                                                                                String                           @db.VarChar(100)
   createdAt                                                                                       DateTime                         @db.DateTime(0)
@@ -802,7 +802,7 @@ model InventoryStructure {
 
 model InvoiceIn {
   id                                     String            @id @db.Char(36)
-  invoiceNumber                          String?           @db.VarChar(100)
+  invoiceNumber                          String?           @unique(map: "invoiceNumber") @db.VarChar(100)
   invoiceDate                            DateTime          @db.DateTime(0)
   expireDate                             DateTime          @db.DateTime(0)
   payDate                                DateTime?         @db.DateTime(0)
@@ -861,7 +861,7 @@ model InvoiceInTarget {
 
 model InvoiceOut {
   id                                      String             @id @db.Char(36)
-  invoiceNumber                           String?            @db.VarChar(100)
+  invoiceNumber                           String?            @unique(map: "invoiceNumber") @db.VarChar(100)
   invoiceDate                             DateTime           @db.DateTime(0)
   expireDate                              DateTime           @db.DateTime(0)
   payDate                                 DateTime?          @db.DateTime(0)
@@ -1352,7 +1352,7 @@ model Product {
 
 model Project {
   id                                   String                @id @db.Char(36)
-  projectNumber                        String                @db.VarChar(255)
+  projectNumber                        String                @unique(map: "projectNumber") @db.VarChar(255)
   projectName                          String                @db.VarChar(255)
   description                          String?               @db.Text
   extraInfo                            String?               @db.Text
@@ -1750,7 +1750,7 @@ model Title {
 
 model Training {
   id                                    String            @id @db.Char(36)
-  trainingNumber                        String?           @db.VarChar(100)
+  trainingNumber                        String?           @unique(map: "trainingNumber") @db.VarChar(100)
   trainingDate                          DateTime          @db.DateTime(0)
   createdAt                             DateTime          @db.DateTime(0)
   closed                                Boolean           @default(true)
@@ -1916,7 +1916,7 @@ model WarehousePlace {
 
 model WorkOrder {
   id                                     String               @id @db.Char(36)
-  workOrderNumber                        String?              @db.VarChar(100)
+  workOrderNumber                        String?              @unique(map: "workOrderNumber") @db.VarChar(100)
   description                            String?              @db.Text
   additionalInfo                         String?              @db.Text
   startDate                              DateTime             @db.DateTime(0)

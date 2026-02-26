@@ -396,10 +396,10 @@ export type DocumentStructureOrderByWithRelationInput = {
 
 export type DocumentStructureWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  documentNumber?: string
   AND?: Prisma.DocumentStructureWhereInput | Prisma.DocumentStructureWhereInput[]
   OR?: Prisma.DocumentStructureWhereInput[]
   NOT?: Prisma.DocumentStructureWhereInput | Prisma.DocumentStructureWhereInput[]
-  documentNumber?: Prisma.StringFilter<"DocumentStructure"> | string
   description?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   descriptionShort?: Prisma.StringFilter<"DocumentStructure"> | string
   createdAt?: Prisma.DateTimeFilter<"DocumentStructure"> | Date | string
@@ -434,7 +434,7 @@ export type DocumentStructureWhereUniqueInput = Prisma.AtLeast<{
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
   MaterialStructure?: Prisma.MaterialStructureListRelationFilter
   TrainingDocument?: Prisma.TrainingDocumentListRelationFilter
-}, "id">
+}, "id" | "documentNumber">
 
 export type DocumentStructureOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

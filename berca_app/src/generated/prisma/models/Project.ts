@@ -374,10 +374,10 @@ export type ProjectOrderByWithRelationInput = {
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  projectNumber?: string
   AND?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   OR?: Prisma.ProjectWhereInput[]
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
-  projectNumber?: Prisma.StringFilter<"Project"> | string
   projectName?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringNullableFilter<"Project"> | string | null
   extraInfo?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -411,7 +411,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   PurchaseDetail?: Prisma.PurchaseDetailListRelationFilter
   QuoteSupplier?: Prisma.QuoteSupplierListRelationFilter
   WorkOrder?: Prisma.WorkOrderListRelationFilter
-}, "id">
+}, "id" | "projectNumber">
 
 export type ProjectOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

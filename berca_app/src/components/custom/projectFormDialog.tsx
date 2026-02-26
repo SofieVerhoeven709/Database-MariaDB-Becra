@@ -9,6 +9,7 @@ import {Textarea} from '@/components/ui/textarea'
 import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedProject} from '@/types/project'
+import {generateProjectNumber} from '@/lib/utils'
 
 interface Option {
   id: string
@@ -55,20 +56,6 @@ const emptyProject = (): MappedProject => ({
   deletedAt: null,
   deletedBy: null,
 })
-
-function generateProjectNumber() {
-  const now = new Date()
-
-  const year = now.getFullYear().toString().slice(-2) // 26
-  const month = String(now.getMonth() + 1).padStart(2, '0') // 02
-  const day = String(now.getDate()).padStart(2, '0') // 24
-
-  const random = Math.floor(Math.random() * 100)
-    .toString()
-    .padStart(2, '0') // two random digits
-
-  return `P${year}${month}${day}${random}`
-}
 
 export function ProjectFormDialog({
   open,

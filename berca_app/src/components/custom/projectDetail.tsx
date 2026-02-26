@@ -302,11 +302,7 @@ export function ProjectDetail({
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project Number</Label>
             {editing ? (
-              <Input
-                value={form.projectNumber}
-                onChange={e => setForm(f => ({...f, projectNumber: e.target.value}))}
-                className="bg-secondary border-border"
-              />
+              <Input value={form.projectNumber} readOnly className="bg-secondary border-border" />
             ) : (
               <p className="text-sm text-foreground font-medium">{project.projectNumber}</p>
             )}

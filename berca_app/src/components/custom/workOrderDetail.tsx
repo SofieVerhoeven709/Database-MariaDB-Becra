@@ -19,6 +19,7 @@ import {formatDate, thClass, toInputDate} from '@/extra/workOrderHelpers'
 import type {EmployeeOption, HourTypeOption, MaterialOption} from '@/types/workOrder'
 import {WorkOrderTimeRegistries} from '@/components/custom/workOrderTimeRegistries'
 import {WorkOrderStructures} from '@/components/custom/workOrderStructures'
+import {generateWorkOrderNumber} from '@/lib/utils'
 
 interface WorkOrderDetailProps {
   workOrder: WorkOrderDetailData | null
@@ -46,7 +47,7 @@ export function WorkOrderDetail({
   const [saving, setSaving] = useState(false)
 
   const [form, setForm] = useState({
-    workOrderNumber: workOrder?.workOrderNumber ?? '',
+    workOrderNumber: workOrder?.workOrderNumber ?? (isNew ? generateWorkOrderNumber() : ''),
     description: workOrder?.description ?? '',
     additionalInfo: workOrder?.additionalInfo ?? '',
     startDate: toInputDate(workOrder?.startDate) || new Date().toISOString().slice(0, 10),
@@ -162,7 +163,7 @@ export function WorkOrderDetail({
             {editing ? (
               <Input
                 value={form.workOrderNumber}
-                onChange={e => setForm(f => ({...f, workOrderNumber: e.target.value}))}
+                readOnly
                 className="bg-secondary border-border"
                 placeholder="e.g. WO-2024-001"
               />

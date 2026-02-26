@@ -4,6 +4,7 @@ import {prismaClient} from '@/dal/prismaClient'
 import {upsertProjectSchema, updateProjectSchema} from '@/schemas/projectSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
+import {generateProjectNumber} from '@/lib/utils'
 
 export const createProjectAction = protectedServerFunction({
   schema: upsertProjectSchema,
@@ -13,15 +14,38 @@ export const createProjectAction = protectedServerFunction({
 
     const target = await createTargetForType('Project', profile.id)
 
-    const project = await prismaClient.project.create({
-      data: {
-        ...data,
-        id: crypto.randomUUID(),
-        createdBy: profile.id,
-        createdAt: new Date(),
-        targetId: target.id,
-      },
-    })
+    let projectNumber = data.projectNumber || generateProjectNumber()
+
+    let attempts = 0
+    let project
+
+    while (attempts < 5) {
+      try {
+        project = await prismaClient.project.create({
+          data: {
+            ...data,
+            projectNumber,
+            id: crypto.randomUUID(),
+            createdBy: profile.id,
+            createdAt: new Date(),
+            targetId: target.id,
+          },
+        })
+        break
+      } catch (err: any) {
+        // Prisma unique constraint
+        if (err.code === 'P2002') {
+          attempts++
+          projectNumber = generateProjectNumber()
+          continue
+        }
+        throw err
+      }
+    }
+
+    if (!project) {
+      throw new Error('Failed to generate unique project number')
+    }
 
     logger.info(`Project created: ${project.id}`)
     revalidatePath('/projects')

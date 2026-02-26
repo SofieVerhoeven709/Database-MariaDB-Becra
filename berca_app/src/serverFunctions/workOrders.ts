@@ -6,6 +6,7 @@ import {updateWorkOrderSchema, createWorkOrderSchema, workOrderIdSchema} from '@
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
 import type {Route} from 'next'
+import {generateWorkOrderNumber} from '@/lib/utils'
 
 export const createWorkOrderAction = protectedServerFunction({
   schema: createWorkOrderSchema,
@@ -15,17 +16,41 @@ export const createWorkOrderAction = protectedServerFunction({
 
     const target = await createTargetForType('WorkOrder', profile.id)
 
-    const workOrder = await prismaClient.workOrder.create({
-      data: {
-        ...data,
-        id: crypto.randomUUID(),
-        createdBy: profile.id,
-        createdAt: new Date(),
-        targetId: target.id,
-      },
-    })
+    let workOrderNumber = data.workOrderNumber || generateWorkOrderNumber()
+
+    let attempts = 0
+    let workOrder
+
+    while (attempts < 5) {
+      try {
+        workOrder = await prismaClient.workOrder.create({
+          data: {
+            ...data,
+            workOrderNumber,
+            id: crypto.randomUUID(),
+            createdBy: profile.id,
+            createdAt: new Date(),
+            targetId: target.id,
+          },
+        })
+        break
+      } catch (err: any) {
+        // Prisma unique constraint
+        if (err.code === 'P2002') {
+          attempts++
+          workOrderNumber = generateWorkOrderNumber()
+          continue
+        }
+        throw err
+      }
+    }
+
+    if (!workOrder) {
+      throw new Error('Failed to generate unique work order number')
+    }
 
     logger.info(`Work order created: ${workOrder.id}`)
+
     redirect(`/departments/project/project/${data.projectId}/workOrder/${workOrder.id}` as Route)
   },
 })

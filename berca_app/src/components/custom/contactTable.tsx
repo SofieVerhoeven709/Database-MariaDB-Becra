@@ -63,7 +63,7 @@ interface Option {
 }
 
 interface ProjectTableProps {
-  initialContacts: MappedProject[]
+  initialContacts: MappedContact[]
   companies: Option[]
   currentUserRole: string
   currentUserLevel: number
@@ -82,7 +82,7 @@ export function ContacttTable({
 
   const [search, setSearch] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [editingProject, setEditingProject] = useState<MappedProject | null>(null)
+  const [editingContact, setEditingProject] = useState<MappedContact | null>(null)
   const [sortField, setSortField] = useState<SortField>('projectNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [filterOpen, setFilterOpen] = useState<FilterOpen>('all')

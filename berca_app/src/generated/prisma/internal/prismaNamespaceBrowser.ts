@@ -357,7 +357,7 @@ export const DocumentStructureScalarFieldEnum = {
   revisionDetail: 'revisionDetail',
   valid: 'valid',
   process: 'process',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   referenceDocId: 'referenceDocId',
   roleId: 'roleId',
   deleted: 'deleted',
@@ -422,7 +422,7 @@ export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typ
 export const FollowUpScalarFieldEnum = {
   id: 'id',
   activityDescription: 'activityDescription',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   actionAgenda: 'actionAgenda',
   closedAgenda: 'closedAgenda',
   recurringCallDays: 'recurringCallDays',
@@ -452,7 +452,7 @@ export type FollowUpScalarFieldEnum = (typeof FollowUpScalarFieldEnum)[keyof typ
 export const FollowUpStructureScalarFieldEnum = {
   id: 'id',
   activityDescription: 'activityDescription',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   actionAgenda: 'actionAgenda',
   closedAgenda: 'closedAgenda',
   recurringItem: 'recurringItem',
@@ -687,7 +687,7 @@ export const InvoiceOutScalarFieldEnum = {
   purchaseOrder: 'purchaseOrder',
   transactionNumber: 'transactionNumber',
   deliveryInvoiceInfo: 'deliveryInvoiceInfo',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   info: 'info',
   deliveryInvoiceCode: 'deliveryInvoiceCode',
   vatMargin: 'vatMargin',
@@ -1063,6 +1063,7 @@ export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeo
 export const ProjectScalarFieldEnum = {
   id: 'id',
   projectNumber: 'projectNumber',
+  projectName: 'projectName',
   description: 'description',
   extraInfo: 'extraInfo',
   startDate: 'startDate',
@@ -1307,7 +1308,7 @@ export type TestProcedureScalarFieldEnum = (typeof TestProcedureScalarFieldEnum)
 export const TimeRegistryScalarFieldEnum = {
   id: 'id',
   activityDescription: 'activityDescription',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   invoiceInfo: 'invoiceInfo',
   startTime: 'startTime',
   endTime: 'endTime',
@@ -1319,7 +1320,7 @@ export const TimeRegistryScalarFieldEnum = {
   onSite: 'onSite',
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',
-  hourtypeId: 'hourtypeId',
+  hourTypeId: 'hourTypeId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -1453,10 +1454,7 @@ export const VisibilityForRoleScalarFieldEnum = {
   id: 'id',
   visible: 'visible',
   roleLevelId: 'roleLevelId',
-  targetId: 'targetId',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  targetId: 'targetId'
 } as const
 
 export type VisibilityForRoleScalarFieldEnum = (typeof VisibilityForRoleScalarFieldEnum)[keyof typeof VisibilityForRoleScalarFieldEnum]
@@ -1485,7 +1483,7 @@ export const WorkOrderScalarFieldEnum = {
   id: 'id',
   workOrderNumber: 'workOrderNumber',
   description: 'description',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   startDate: 'startDate',
   endDate: 'endDate',
   createdAt: 'createdAt',
@@ -1520,8 +1518,8 @@ export const WorkOrderStructureScalarFieldEnum = {
   clientNumber: 'clientNumber',
   tag: 'tag',
   quantity: 'quantity',
-  aditionalInfo: 'aditionalInfo',
-  shortDesciption: 'shortDesciption',
+  additionalInfo: 'additionalInfo',
+  shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
@@ -1749,7 +1747,7 @@ export const DocumentStructureOrderByRelevanceFieldEnum = {
   description: 'description',
   descriptionShort: 'descriptionShort',
   revisionDetail: 'revisionDetail',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   referenceDocId: 'referenceDocId',
   roleId: 'roleId',
   createdBy: 'createdBy',
@@ -1801,7 +1799,7 @@ export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevance
 export const FollowUpOrderByRelevanceFieldEnum = {
   id: 'id',
   activityDescription: 'activityDescription',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',
   ownedBy: 'ownedBy',
   statusId: 'statusId',
@@ -1819,7 +1817,7 @@ export type FollowUpOrderByRelevanceFieldEnum = (typeof FollowUpOrderByRelevance
 export const FollowUpStructureOrderByRelevanceFieldEnum = {
   id: 'id',
   activityDescription: 'activityDescription',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   recurringItem: 'recurringItem',
   item: 'item',
   taskDescription: 'taskDescription',
@@ -1988,7 +1986,7 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   purchaseOrder: 'purchaseOrder',
   transactionNumber: 'transactionNumber',
   deliveryInvoiceInfo: 'deliveryInvoiceInfo',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   info: 'info',
   deliveryInvoiceCode: 'deliveryInvoiceCode',
   createdBy: 'createdBy',
@@ -2278,6 +2276,7 @@ export type ProductOrderByRelevanceFieldEnum = (typeof ProductOrderByRelevanceFi
 export const ProjectOrderByRelevanceFieldEnum = {
   id: 'id',
   projectNumber: 'projectNumber',
+  projectName: 'projectName',
   description: 'description',
   extraInfo: 'extraInfo',
   createdBy: 'createdBy',
@@ -2459,11 +2458,11 @@ export type TestProcedureOrderByRelevanceFieldEnum = (typeof TestProcedureOrderB
 export const TimeRegistryOrderByRelevanceFieldEnum = {
   id: 'id',
   activityDescription: 'activityDescription',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   invoiceInfo: 'invoiceInfo',
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',
-  hourtypeId: 'hourtypeId',
+  hourTypeId: 'hourTypeId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -2564,8 +2563,7 @@ export type UrgencyTypeOrderByRelevanceFieldEnum = (typeof UrgencyTypeOrderByRel
 export const VisibilityForRoleOrderByRelevanceFieldEnum = {
   id: 'id',
   roleLevelId: 'roleLevelId',
-  targetId: 'targetId',
-  deletedBy: 'deletedBy'
+  targetId: 'targetId'
 } as const
 
 export type VisibilityForRoleOrderByRelevanceFieldEnum = (typeof VisibilityForRoleOrderByRelevanceFieldEnum)[keyof typeof VisibilityForRoleOrderByRelevanceFieldEnum]
@@ -2590,7 +2588,7 @@ export const WorkOrderOrderByRelevanceFieldEnum = {
   id: 'id',
   workOrderNumber: 'workOrderNumber',
   description: 'description',
-  aditionalInfo: 'aditionalInfo',
+  additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',
   projectId: 'projectId',
   targetId: 'targetId',
@@ -2614,8 +2612,8 @@ export const WorkOrderStructureOrderByRelevanceFieldEnum = {
   id: 'id',
   clientNumber: 'clientNumber',
   tag: 'tag',
-  aditionalInfo: 'aditionalInfo',
-  shortDesciption: 'shortDesciption',
+  additionalInfo: 'additionalInfo',
+  shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',

@@ -22,7 +22,7 @@ interface MaterialGroup {
 
 interface Unit {
   id: string
-  name: string
+  unitName: string
   abbreviation: string
 }
 
@@ -54,7 +54,7 @@ interface MaterialTableProps {
 }
 
 export function MaterialTable({initialMaterials, materialGroups, units}: MaterialTableProps) {
-  const router = useRouter()
+  const router = useRouter() as unknown as {refresh: () => void; push: (href: string) => void}
   const [materials] = useState(initialMaterials)
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState<SortField>('beNumber')
@@ -62,6 +62,8 @@ export function MaterialTable({initialMaterials, materialGroups, units}: Materia
   const [filterRejected, setFilterRejected] = useState<FilterRejected>('all')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -88,7 +90,7 @@ export function MaterialTable({initialMaterials, materialGroups, units}: Materia
         (m.brandName ?? '').toLowerCase().includes(q) ||
         m.materialGroupLabel.toLowerCase().includes(q) ||
         m.unitName.toLowerCase().includes(q) ||
-        (m.preferedSupplier ?? '').toLowerCase().includes(q)
+        (m.preferredSupplier ?? '').toLowerCase().includes(q)
       )
     })
     .sort((a, b) => {
@@ -98,23 +100,54 @@ export function MaterialTable({initialMaterials, materialGroups, units}: Materia
     })
 
   async function handleSave(form: Partial<MappedMaterial> & {id: string}) {
+    setSaving(true)
+    setSaveError(null)
     try {
+      // Only send fields that belong to the schema — exclude display-only fields
+      const schemaFields = new Set([
+        'id',
+        'beNumber',
+        'name',
+        'brandOrderNr',
+        'shortDescription',
+        'longDescription',
+        'preferredSupplier',
+        'brandName',
+        'documentationPlace',
+        'bePartDoc',
+        'rejected',
+        'materialGroupId',
+        'unitId',
+      ])
+
       const fd = new FormData()
       Object.entries(form).forEach(([k, v]) => {
-        if (v !== null && v !== undefined) fd.append(k, String(v))
+        if (!schemaFields.has(k)) return
+        // Skip nulls and empty strings — optional fields are simply absent from FormData
+        if (v === null || v === undefined || v === '') return
+        fd.append(k, String(v))
       })
 
-      if (editingMaterial) {
-        await updateMaterialAction({success: false}, fd)
-      } else {
-        await createMaterialAction({success: false}, fd)
+      const result = editingMaterial
+        ? await updateMaterialAction({success: false}, fd)
+        : await createMaterialAction({success: false}, fd)
+
+      if (result && !result.success) {
+        console.error('Material save failed:', result.errors)
+        const msgs = Object.entries(result.errors ?? {}).flatMap(([field, errs]) =>
+          (errs ?? []).map(e => `${field}: ${e}`),
+        )
+        setSaveError(msgs.length ? msgs.join(' | ') : 'Could not save the material. Please check all required fields.')
+        return
       }
 
       setDialogOpen(false)
       setEditingMaterial(null)
       router.refresh()
     } catch (_e) {
-      // errors handled by server actions
+      setSaveError('An unexpected error occurred. Please try again.')
+    } finally {
+      setSaving(false)
     }
   }
 
@@ -263,12 +296,17 @@ export function MaterialTable({initialMaterials, materialGroups, units}: Materia
         open={dialogOpen}
         onOpenChange={open => {
           setDialogOpen(open)
-          if (!open) setEditingMaterial(null)
+          if (!open) {
+            setEditingMaterial(null)
+            setSaveError(null)
+          }
         }}
         material={editingMaterial}
         materialGroups={materialGroups}
         units={units}
         onSave={handleSave}
+        saving={saving}
+        saveError={saveError}
       />
     </div>
   )

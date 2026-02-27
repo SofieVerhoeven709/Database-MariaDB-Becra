@@ -15,7 +15,6 @@ import {
   softDeleteEmployeeAction,
   updateEmployeeAdminAction,
 } from '@/serverFunctions/employees'
-import {useRouter} from 'next/navigation'
 
 type SortField =
   | 'name'
@@ -89,7 +88,7 @@ export function EmployeeTable({
   currentUserLevel,
 }: EmployeeTableProps) {
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const employees = initialEmployees
+  const [employees, setEmployees] = useState(initialEmployees)
   const [search, setSearch] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingEmployee, setEditingEmployee] = useState<MappedEmployee | null>(null)
@@ -97,8 +96,6 @@ export function EmployeeTable({
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
-
-  const router = useRouter()
 
   const getEmployeeName = (id: string | null) => {
     if (!id) return '-'
@@ -220,22 +217,25 @@ export function EmployeeTable({
 
     if (editingEmployee) {
       await updateEmployeeAdminAction(payload)
+      setEmployees(prev => prev.map(e => (e.id === emp.id ? emp : e)))
     } else {
       await createEmployeeAction(payload)
+      setEmployees(prev => [...prev, emp])
     }
 
     setDialogOpen(false)
-    router.refresh()
   }
 
   async function handleSoftDelete(emp: MappedEmployee) {
     await softDeleteEmployeeAction({id: emp.id})
-    router.refresh()
+    setEmployees(prev =>
+      prev.map(e => (e.id === emp.id ? {...e, deleted: true, deletedAt: new Date().toISOString()} : e)),
+    )
   }
 
   async function handleHardDelete(emp: MappedEmployee) {
     await hardDeleteEmployeeAction({id: emp.id})
-    router.refresh()
+    setEmployees(prev => prev.filter(e => e.id !== emp.id))
   }
 
   const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'

@@ -6,6 +6,9 @@ import {createMaterial, updateMaterial, softDeleteMaterial} from '@/dal/material
 import {protectedFormAction} from '@/lib/serverFunctions'
 import {createMaterialSchema, updateMaterialSchema, deleteMaterialSchema} from '@/schemas/materialSchemas'
 
+const REVALIDATE_MATERIAL = '/departments/engineering/material'
+const REVALIDATE_INVENTORY = '/departments/warehouse/inventory'
+
 export const createMaterialAction = protectedFormAction({
   schema: createMaterialSchema,
   functionName: 'Create material',
@@ -19,7 +22,8 @@ export const createMaterialAction = protectedFormAction({
       createdBy: profile.id,
     })
     logger.info(`Material created: ${material.id}`)
-    revalidatePath('/departments/engineering/material')
+    revalidatePath(REVALIDATE_MATERIAL)
+    revalidatePath(REVALIDATE_INVENTORY)
   },
 })
 
@@ -35,7 +39,8 @@ export const updateMaterialAction = protectedFormAction({
       bePartDoc: rest.bePartDoc != null ? Number(rest.bePartDoc) : rest.bePartDoc,
     })
     logger.info(`Material updated: ${updated.id}`)
-    revalidatePath('/departments/engineering/material')
+    revalidatePath(REVALIDATE_MATERIAL)
+    revalidatePath(REVALIDATE_INVENTORY)
   },
 })
 
@@ -46,6 +51,7 @@ export const deleteMaterialAction = protectedFormAction({
   serverFn: async ({data, profile, logger}) => {
     await softDeleteMaterial(data.id, profile.id)
     logger.info(`Material soft-deleted: ${data.id}`)
-    revalidatePath('/departments/engineering/material')
+    revalidatePath(REVALIDATE_MATERIAL)
+    revalidatePath(REVALIDATE_INVENTORY)
   },
 })

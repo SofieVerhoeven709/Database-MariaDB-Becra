@@ -20,7 +20,7 @@ interface MaterialGroup {
 
 interface Unit {
   id: string
-  name: string
+  unitName: string
   abbreviation: string
 }
 
@@ -31,6 +31,8 @@ interface MaterialFormDialogProps {
   materialGroups: MaterialGroup[]
   units: Unit[]
   onSave: (material: Partial<MappedMaterial> & {id: string}) => void
+  saving?: boolean
+  saveError?: string | null
 }
 
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
@@ -46,7 +48,7 @@ const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string} = {
   brandOrderNr: 0,
   shortDescription: '',
   longDescription: null,
-  preferedSupplier: null,
+  preferredSupplier: null,
   brandName: null,
   documentationPlace: null,
   bePartDoc: null,
@@ -62,6 +64,8 @@ export function MaterialFormDialog({
   materialGroups,
   units,
   onSave,
+  saving = false,
+  saveError = null,
 }: MaterialFormDialogProps) {
   const isEditing = material !== null
 
@@ -215,7 +219,7 @@ export function MaterialFormDialog({
                 <SelectContent>
                   {units.map(u => (
                     <SelectItem key={u.id} value={u.id}>
-                      {u.name} ({u.abbreviation})
+                      {u.unitName} ({u.abbreviation})
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -226,14 +230,14 @@ export function MaterialFormDialog({
           {/* Row 4: Preferred Supplier + Documentation Place */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="preferedSupplier" className="text-xs text-muted-foreground">
+              <Label htmlFor="preferredSupplier" className="text-xs text-muted-foreground">
                 Preferred Supplier
               </Label>
               <Input
-                id="preferedSupplier"
+                id="preferredSupplier"
                 className={inputStyles}
-                value={form.preferedSupplier ?? ''}
-                onChange={e => update('preferedSupplier', e.target.value || null)}
+                value={form.preferredSupplier ?? ''}
+                onChange={e => update('preferredSupplier', e.target.value || null)}
                 placeholder="Supplier name"
               />
             </div>
@@ -275,11 +279,19 @@ export function MaterialFormDialog({
             </div>
           </div>
 
+          {saveError && (
+            <div className="rounded-md bg-destructive/10 border border-destructive/30 px-3 py-2 text-sm text-destructive">
+              {saveError}
+            </div>
+          )}
+
           <DialogFooter className="pt-2">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>
               Cancel
             </Button>
-            <Button type="submit">{isEditing ? 'Save changes' : 'Create material'}</Button>
+            <Button type="submit" disabled={saving}>
+              {saving ? 'Saving…' : isEditing ? 'Save changes' : 'Create material'}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

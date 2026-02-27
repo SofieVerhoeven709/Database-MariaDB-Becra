@@ -3,6 +3,7 @@
 import {useState} from 'react'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
 import {CompanyFormDialog} from '@/components/custom/companyFormDialog'
+import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -206,7 +207,7 @@ export function CompanyTable({
       }
     })
 
-  async function handleSave(c: MappedCompany) {
+  async function handleSave(c: MappedCompany, visibilityRows: VisibilityRow[]) {
     // Core editable fields — present in both schemas
     const core = {
       name: c.name,
@@ -234,12 +235,8 @@ export function CompanyTable({
     }
 
     if (editingCompany) {
-      // updateCompanySchema = companySchema.omit({createdAt, createdBy, deleted, deletedAt, deletedBy})
-      // → needs id, all core fields
-      await updateCompanyAction({id: c.id, ...core})
+      await updateCompanyAction({id: c.id, ...core, visibilityForRoles: visibilityRows})
     } else {
-      // createCompanySchema = companySchema.omit({id, createdAt, createdBy, deleted, deletedAt, deletedBy}) + addresses
-      // → needs core fields + addresses, no id
       await createCompanyAction({
         ...core,
         addresses: c.addresses.map(a => ({
@@ -250,6 +247,7 @@ export function CompanyTable({
           place: a.place,
           typeAdress: a.typeAdress,
         })),
+        visibilityForRoles: visibilityRows,
       })
     }
     setDialogOpen(false)

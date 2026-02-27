@@ -123,4 +123,5 @@ export interface CompanyDetailData {
   contacts: MappedCompanyContact[]
   projects: MappedCompanyProject[]
   subsidiaries: {id: string; name: string; number: string; companyActive: boolean}[]
+  visibilityForRoles: MappedVisibilityForRole[]
 }

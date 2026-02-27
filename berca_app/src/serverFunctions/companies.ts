@@ -1,19 +1,53 @@
 'use server'
 import {revalidatePath} from 'next/cache'
 import {prismaClient} from '@/dal/prismaClient'
-import {createCompanySchema, updateCompanySchema, companyIdSchema} from '@/schemas/companySchemas'
+import {
+  createCompanySchema,
+  updateCompanySchema,
+  companyIdSchema,
+  createCompanyAddressSchema,
+  updateCompanyAddressSchema,
+  companyAddressIdSchema,
+} from '@/schemas/companySchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
 
+// ─── Visibility helper (not exported — internal use only) ─────────────────────
+async function upsertVisibilityRows(targetId: string, rows: {roleLevelId: string; visible: boolean}[]) {
+  await Promise.all(
+    rows.map(async ({roleLevelId, visible}) => {
+      const existing = await prismaClient.visibilityForRole.findFirst({
+        where: {targetId, roleLevelId},
+        select: {id: true},
+      })
+      if (existing) {
+        await prismaClient.visibilityForRole.update({
+          where: {id: existing.id},
+          data: {visible},
+        })
+      } else if (visible) {
+        // Only create a row when visible=true; absence means hidden
+        await prismaClient.visibilityForRole.create({
+          data: {id: crypto.randomUUID(), targetId, roleLevelId, visible: true},
+        })
+      }
+    }),
+  )
+}
+
+// ─── Company ──────────────────────────────────────────────────────────────────
 export const createCompanyAction = protectedServerFunction({
   schema: createCompanySchema,
   functionName: 'Create company action',
-  serverFn: async ({data: {addresses, ...data}, logger, profile}) => {
+  serverFn: async ({data: {addresses, visibilityForRoles, ...data}, logger, profile}) => {
     logger.info(`Creating company, createdBy: ${profile.id}`)
+
+    // Target must exist before visibility rows reference it
     const target = await createTargetForType('Company', profile.id)
     const companyId = crypto.randomUUID()
     const now = new Date()
 
+    // Company + addresses in one transaction
     await prismaClient.$transaction([
       prismaClient.company.create({
         data: {
@@ -37,7 +71,15 @@ export const createCompanyAction = protectedServerFunction({
       ),
     ])
 
-    logger.info(`Company created: ${companyId} with ${addresses.length} address(es)`)
+    // Visibility rows after the transaction — they reference target.id which now exists
+    if (visibilityForRoles.length > 0) {
+      await upsertVisibilityRows(target.id, visibilityForRoles)
+    }
+
+    logger.info(
+      `Company created: ${companyId} with ${addresses.length} address(es) ` +
+        `and ${visibilityForRoles.length} visibility row(s)`,
+    )
     revalidatePath('/companies')
   },
 })
@@ -45,9 +87,18 @@ export const createCompanyAction = protectedServerFunction({
 export const updateCompanyAction = protectedServerFunction({
   schema: updateCompanySchema,
   functionName: 'Update company action',
-  serverFn: async ({data: {id, ...data}, logger}) => {
-    await prismaClient.company.update({where: {id}, data})
-    logger.info(`Company updated: ${id}`)
+  serverFn: async ({data: {id, visibilityForRoles, ...data}, logger}) => {
+    const {targetId} = await prismaClient.company.findUniqueOrThrow({
+      where: {id},
+      select: {targetId: true},
+    })
+
+    await Promise.all([
+      prismaClient.company.update({where: {id}, data}),
+      upsertVisibilityRows(targetId, visibilityForRoles),
+    ])
+
+    logger.info(`Company updated: ${id} with ${visibilityForRoles.length} visibility row(s)`)
     revalidatePath('/companies')
   },
 })
@@ -60,7 +111,7 @@ export const softDeleteCompanyAction = protectedServerFunction({
       where: {id},
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
     })
-    logger.info(`Company soft deleted: ${id} by ${profile.id}`)
+    logger.info(`Company soft deleted: ${id}`)
     revalidatePath('/companies')
   },
 })
@@ -79,29 +130,19 @@ export const undeleteCompanyAction = protectedServerFunction({
   schema: companyIdSchema,
   functionName: 'Undelete company action',
   serverFn: async ({data: {id}, logger}) => {
-    await prismaClient.company.update({
-      where: {id},
-      data: {deleted: false},
-    })
+    await prismaClient.company.update({where: {id}, data: {deleted: false}})
     logger.info(`Company undeleted: ${id}`)
     revalidatePath('/companies')
   },
 })
 
-// ─── Company Address actions ──────────────────────────────────────────────────
-import {createCompanyAddressSchema, updateCompanyAddressSchema, companyAddressIdSchema} from '@/schemas/companySchemas'
-
+// ─── Company Address ──────────────────────────────────────────────────────────
 export const createCompanyAddressAction = protectedServerFunction({
   schema: createCompanyAddressSchema,
   functionName: 'Create company address action',
   serverFn: async ({data, logger, profile}) => {
     const address = await prismaClient.companyAdress.create({
-      data: {
-        ...data,
-        id: crypto.randomUUID(),
-        createdBy: profile.id,
-        createdAt: new Date(),
-      },
+      data: {...data, id: crypto.randomUUID(), createdBy: profile.id, createdAt: new Date()},
     })
     logger.info(`Company address created: ${address.id}`)
     revalidatePath('/companies')
@@ -145,10 +186,7 @@ export const undeleteCompanyAddressAction = protectedServerFunction({
   schema: companyAddressIdSchema,
   functionName: 'Undelete company address action',
   serverFn: async ({data: {id}, logger}) => {
-    await prismaClient.companyAdress.update({
-      where: {id},
-      data: {deleted: false},
-    })
+    await prismaClient.companyAdress.update({where: {id}, data: {deleted: false}})
     logger.info(`Company address undeleted: ${id}`)
     revalidatePath('/companies')
   },

@@ -218,5 +218,14 @@ export function mapCompanyDetail(c: CompanyDetailPayload): CompanyDetailData {
       number: s.number,
       companyActive: s.companyActive,
     })),
+    visibilityForRoles: c.Target.VisibilityForRole.map(v => ({
+      id: v.id,
+      visible: v.visible,
+      roleLevelId: v.roleLevelId,
+      targetId: v.targetId,
+      roleName: v.RoleLevel.Role.name,
+      subRoleName: v.RoleLevel.SubRole.name,
+      subRoleLevel: v.RoleLevel.SubRole.level,
+    })),
   }
 }

@@ -20,7 +20,8 @@ import {
   undeleteCompanyAddressAction,
 } from '@/serverFunctions/companies'
 import type {RoleLevelOption} from '@/types/roleLevel'
-import {VisibilityForRoleTab} from '@/components/custom/visibilityForRoleTab'
+import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
+import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {useRouter} from 'next/navigation'
 
 interface Option {
@@ -33,7 +34,7 @@ interface CompanyFormDialogProps {
   onOpenChange: (open: boolean) => void
   company: MappedCompany | null
   companies: Option[]
-  onSave: (company: MappedCompany) => Promise<void>
+  onSave: (company: MappedCompany, visibilityRows: VisibilityRow[]) => Promise<void>
   isAdmin: boolean
   canDelete: boolean
   roleLevelOptions: RoleLevelOption[]
@@ -175,19 +176,25 @@ export function CompanyFormDialog({
   const [editingAddrId, setEditingAddrId] = useState<string | null>(null)
   const [editingAddrForm, setEditingAddrForm] = useState<AddrForm>(emptyAddrForm(''))
   const [showDeletedAddrs, setShowDeletedAddrs] = useState(false)
+  const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
+    buildInitialVisibilityRows(company?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
+  )
 
-  // Reset everything when the dialog opens or the target company changes
+  // Reset everything when the dialog opens or switches to a different company
   useEffect(() => {
-    setForm(company ?? emptyCompany())
+    const next = company ?? emptyCompany()
+    setForm(next)
     setAddingAddr(false)
     setEditingAddrId(null)
     setShowDeletedAddrs(false)
+    setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
   }, [company?.id, open])
 
-  // Sync addresses/visibility from refreshed company prop without resetting the form
+  // Sync addresses from refreshed company prop without resetting the rest of the form
   useEffect(() => {
     if (!open || !company) return
     setForm(prev => ({...prev, addresses: company.addresses, visibilityForRoles: company.visibilityForRoles}))
+    setVisibilityRows(buildInitialVisibilityRows(company.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(company?.addresses), JSON.stringify(company?.visibilityForRoles)])
 
@@ -198,7 +205,7 @@ export function CompanyFormDialog({
   async function handleSubmit() {
     setSaving(true)
     try {
-      await onSave(form)
+      await onSave(form, visibilityRows)
     } finally {
       setSaving(false)
     }
@@ -599,11 +606,9 @@ export function CompanyFormDialog({
           <TabsContent value="visibility">
             <div className="py-3">
               <VisibilityForRoleTab
-                targetId={form.targetId || null}
-                visibilityForRoles={form.visibilityForRoles}
                 roleLevelOptions={roleLevelOptions}
-                defaultVisibleRoleNames={defaultVisibleRoleNames}
-                revalidatePath="/companies"
+                value={visibilityRows}
+                onChange={setVisibilityRows}
               />
             </div>
           </TabsContent>

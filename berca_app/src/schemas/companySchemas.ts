@@ -1,5 +1,6 @@
 import {z} from 'zod/v4'
 import {dateSchema, requiredDateSchema} from '@/schemas/schemaHelpers'
+import {visibilityInputSchema} from '@/schemas/visibilityForRoleSchemas'
 
 export const companySchema = z.object({
   id: z.string(),
@@ -52,15 +53,20 @@ export const createCompanySchema = companySchema
   })
   .extend({
     addresses: z.array(addressInputSchema).default([]),
+    visibilityForRoles: z.array(visibilityInputSchema).default([]),
   })
 
-export const updateCompanySchema = companySchema.omit({
-  createdAt: true,
-  createdBy: true,
-  deleted: true,
-  deletedAt: true,
-  deletedBy: true,
-})
+export const updateCompanySchema = companySchema
+  .omit({
+    createdAt: true,
+    createdBy: true,
+    deleted: true,
+    deletedAt: true,
+    deletedBy: true,
+  })
+  .extend({
+    visibilityForRoles: z.array(visibilityInputSchema).default([]),
+  })
 
 export const companyIdSchema = companySchema.pick({id: true})
 

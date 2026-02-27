@@ -14,7 +14,8 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {updateCompanyAction} from '@/serverFunctions/companies'
-import {VisibilityForRoleTab} from '@/components/custom/visibilityForRoleTab'
+import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
+import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import type {Route} from 'next'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import type {CompanyDetailData} from '@/types/company'
@@ -33,7 +34,6 @@ interface CompanyDetailProps {
   defaultVisibleRoleNames: string[]
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
@@ -57,7 +57,6 @@ function isActiveContact(endDate: string | null) {
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 const thClass = 'whitespace-nowrap text-xs'
 
-// ─── Component ────────────────────────────────────────────────────────────────
 export function CompanyDetail({
   company,
   companies,
@@ -103,8 +102,15 @@ export function CompanyDetail({
   const s = <K extends keyof ReturnType<typeof buildForm>>(key: K, v: ReturnType<typeof buildForm>[K]) =>
     setForm(f => ({...f, [key]: v}))
 
+  // ─── Visibility state (controlled, flushed on save) ────────────────────────
+  const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
+    buildInitialVisibilityRows(company.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
+  )
+
   function handleCancel() {
     setForm(buildForm())
+    // Reset visibility back to what the server has
+    setVisibilityRows(buildInitialVisibilityRows(company.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
     setEditing(false)
   }
 
@@ -135,6 +141,8 @@ export function CompanyDetail({
         headQuarters: form.headQuarters,
         potentialSubContractor: form.potentialSubContractor,
         subContractor: form.subContractor,
+        // Visibility flushed here, not on every toggle
+        visibilityForRoles: visibilityRows,
       })
       setEditing(false)
       router.refresh()
@@ -143,7 +151,6 @@ export function CompanyDetail({
     }
   }
 
-  // ─── Derived data ──────────────────────────────────────────────────────────
   const activeContacts = company.contacts.filter(c => isActiveContact(c.endDate))
   const visibleContacts = showAllContacts ? company.contacts : activeContacts
   const activeProjects = company.projects.filter(p => p.isOpen && !p.isClosed)
@@ -196,7 +203,6 @@ export function CompanyDetail({
       {/* ── Info card ──────────────────────────────────────────────────────── */}
       <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Text fields */}
           {(
             [
               {key: 'name', label: 'Name'},
@@ -239,7 +245,6 @@ export function CompanyDetail({
             </div>
           ))}
 
-          {/* Parent company */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Parent Company</Label>
             {editing ? (
@@ -271,7 +276,6 @@ export function CompanyDetail({
             )}
           </div>
 
-          {/* Read-only metadata */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created By</Label>
             <p className="text-sm text-muted-foreground">{company.createdByName}</p>
@@ -281,7 +285,6 @@ export function CompanyDetail({
             <p className="text-sm text-muted-foreground">{formatDate(company.createdAt)}</p>
           </div>
 
-          {/* Toggle flags */}
           <div className="sm:col-span-2 lg:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-3">
             {(
               [
@@ -309,7 +312,6 @@ export function CompanyDetail({
             ))}
           </div>
 
-          {/* Notes */}
           <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-3">
             <Label className="text-xs text-muted-foreground">Notes</Label>
             {editing ? (
@@ -637,13 +639,36 @@ export function CompanyDetail({
         {/* ── Visibility ───────────────────────────────────────────────────── */}
         {isAdmin && (
           <TabsContent value="visibility" className="mt-3">
-            <VisibilityForRoleTab
-              targetId={company.targetId}
-              visibilityForRoles={[]}
-              roleLevelOptions={roleLevelOptions}
-              defaultVisibleRoleNames={defaultVisibleRoleNames}
-              revalidatePath={`/companies/${company.id}`}
-            />
+            {editing ? (
+              <VisibilityForRoleTab
+                roleLevelOptions={roleLevelOptions}
+                value={visibilityRows}
+                onChange={setVisibilityRows}
+              />
+            ) : (
+              // Read-only summary when not editing
+              <div className="flex flex-col gap-3">
+                <p className="text-xs text-muted-foreground">Click Edit to change visibility settings.</p>
+                <div className="flex flex-wrap gap-3">
+                  {roleLevelOptions.map(rl => {
+                    const visible = visibilityRows.find(r => r.roleLevelId === rl.id)?.visible ?? false
+                    return (
+                      <div
+                        key={rl.id}
+                        className="flex flex-col items-start gap-2 rounded-lg border border-border bg-secondary px-4 py-2.5 w-60">
+                        <div>
+                          <p className="text-sm text-foreground">{rl.roleName}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {rl.subRoleName} — level {rl.subRoleLevel}
+                          </p>
+                        </div>
+                        <YesNoBadge value={visible} />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
           </TabsContent>
         )}
       </Tabs>

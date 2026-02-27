@@ -33,3 +33,26 @@ export const upsertVisibilityForRoleAction = protectedServerFunction({
     revalidatePath(revalidate)
   },
 })
+
+// ─── Visibility helper (not exported — internal use only) ─────────────────────
+export async function upsertVisibilityRows(targetId: string, rows: {roleLevelId: string; visible: boolean}[]) {
+  await Promise.all(
+    rows.map(async ({roleLevelId, visible}) => {
+      const existing = await prismaClient.visibilityForRole.findFirst({
+        where: {targetId, roleLevelId},
+        select: {id: true},
+      })
+      if (existing) {
+        await prismaClient.visibilityForRole.update({
+          where: {id: existing.id},
+          data: {visible},
+        })
+      } else if (visible) {
+        // Only create a row when visible=true; absence means hidden
+        await prismaClient.visibilityForRole.create({
+          data: {id: crypto.randomUUID(), targetId, roleLevelId, visible: true},
+        })
+      }
+    }),
+  )
+}

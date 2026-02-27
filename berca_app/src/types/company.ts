@@ -1,3 +1,5 @@
+import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
+
 export interface MappedCompanyAddress {
   id: string
   street: string | null
@@ -47,4 +49,6 @@ export interface MappedCompany {
   deletedBy: string | null
   deletedByName: string | null
   addresses: MappedCompanyAddress[]
+  targetId: string
+  visibilityForRoles: MappedVisibilityForRole[]
 }

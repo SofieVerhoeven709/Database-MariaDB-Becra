@@ -1,15 +1,36 @@
 import {CompanyTable} from '@/components/custom/companyTable'
 import {getCompanies} from '@/dal/companies'
+import {getAllRoleLevels} from '@/dal/roleLevel'
 import {mapCompany} from '@/extra/companies'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+import {mapRoleLevelOptions} from '@/types/roleLevel'
 
 export default async function CompaniesPage() {
-  const [companiesFromDAL, profile] = await Promise.all([getCompanies(), getSessionProfileFromCookieOrThrow()])
-
-  const companies = companiesFromDAL.map(mapCompany)
+  const [companiesFromDAL, roleLevels, profile] = await Promise.all([
+    getCompanies(),
+    getAllRoleLevels(),
+    getSessionProfileFromCookieOrThrow(),
+  ])
 
   const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+  const currentUserRoleLevelId = profile.roleLevelId ?? ''
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+
+  const allCompanies = companiesFromDAL.map(mapCompany)
+  const companies = isAdmin
+    ? allCompanies
+    : allCompanies.filter(c => {
+        const rows = c.visibilityForRoles
+        if (rows.length === 0) return true
+        const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
+        return myRow?.visible ?? false
+      })
+
+  const roleLevelOptions = mapRoleLevelOptions(roleLevels)
+
+  // Roles visible by default for this department
+  const defaultVisibleRoleNames = ['SHEQ']
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -23,6 +44,8 @@ export default async function CompaniesPage() {
           initialCompanies={companies}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          roleLevelOptions={roleLevelOptions}
+          defaultVisibleRoleNames={defaultVisibleRoleNames}
         />
       </div>
     </main>

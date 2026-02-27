@@ -9,6 +9,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
 import type {MappedCompany} from '@/types/company'
+import type {RoleLevelOption} from '@/types/roleLevel'
 import {
   createCompanyAction,
   updateCompanyAction,
@@ -76,6 +77,8 @@ interface CompanyTableProps {
   initialCompanies: MappedCompany[]
   currentUserRole: string
   currentUserLevel: number
+  roleLevelOptions: RoleLevelOption[]
+  defaultVisibleRoleNames: string[]
 }
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -101,7 +104,13 @@ function Th({
   )
 }
 
-export function CompanyTable({initialCompanies, currentUserRole, currentUserLevel}: CompanyTableProps) {
+export function CompanyTable({
+  initialCompanies,
+  currentUserRole,
+  currentUserLevel,
+  roleLevelOptions,
+  defaultVisibleRoleNames,
+}: CompanyTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
@@ -196,31 +205,41 @@ export function CompanyTable({initialCompanies, currentUserRole, currentUserLeve
     })
 
   async function handleSave(c: MappedCompany) {
-    const payload = {
-      ...c,
-      createdAt: new Date(c.createdAt),
-      deletedAt: c.deletedAt ? new Date(c.deletedAt) : null,
-      createdByName: undefined,
-      parentCompanyName: undefined,
-      deletedByName: undefined,
-      // for new companies, pass temp addresses so the server creates them
-      // for updates, addresses are managed individually in the dialog
-      addresses: editingCompany
-        ? undefined
-        : c.addresses.map(a => ({
-            street: a.street,
-            houseNumber: a.houseNumber,
-            busNumber: a.busNumber,
-            zipCode: a.zipCode,
-            place: a.place,
-            typeAdress: a.typeAdress,
-          })),
+    // Core editable fields — present in both schemas
+    const core = {
+      name: c.name,
+      number: c.number,
+      mail: c.mail,
+      businessPhone: c.businessPhone,
+      website: c.website,
+      vatNumber: c.vatNumber,
+      bankNumber: c.bankNumber,
+      iban: c.iban,
+      bic: c.bic,
+      becraCustomerNumber: c.becraCustomerNumber,
+      becraWebsiteLogin: c.becraWebsiteLogin,
+      supplier: c.supplier,
+      prefferedSupplier: c.prefferedSupplier,
+      companyActive: c.companyActive,
+      newsLetter: c.newsLetter,
+      customer: c.customer,
+      potentialCustomer: c.potentialCustomer,
+      headQuarters: c.headQuarters,
+      potentialSubContractor: c.potentialSubContractor,
+      subContractor: c.subContractor,
+      notes: c.notes,
+      companyId: c.companyId,
     }
+
     if (editingCompany) {
-      await updateCompanyAction(payload)
+      // updateCompanySchema = companySchema.omit({createdAt, createdBy, deleted, deletedAt, deletedBy})
+      // → needs id, all core fields
+      await updateCompanyAction({id: c.id, ...core})
     } else {
+      // createCompanySchema = companySchema.omit({id, createdAt, createdBy, deleted, deletedAt, deletedBy}) + addresses
+      // → needs core fields + addresses, no id
       await createCompanyAction({
-        ...payload,
+        ...core,
         addresses: c.addresses.map(a => ({
           street: a.street,
           houseNumber: a.houseNumber,
@@ -516,6 +535,8 @@ export function CompanyTable({initialCompanies, currentUserRole, currentUserLeve
         onSave={handleSave}
         isAdmin={isAdmin}
         canDelete={canDelete}
+        roleLevelOptions={roleLevelOptions}
+        defaultVisibleRoleNames={defaultVisibleRoleNames}
       />
     </div>
   )

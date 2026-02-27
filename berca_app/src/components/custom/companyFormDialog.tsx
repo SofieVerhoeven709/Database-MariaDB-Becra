@@ -19,8 +19,9 @@ import {
   hardDeleteCompanyAddressAction,
   undeleteCompanyAddressAction,
 } from '@/serverFunctions/companies'
+import type {RoleLevelOption} from '@/types/roleLevel'
+import {VisibilityForRoleTab} from '@/components/custom/visibilityForRoleTab'
 import {useRouter} from 'next/navigation'
-import {generateCompanyNumber} from '@/lib/utils'
 
 interface Option {
   id: string
@@ -35,12 +36,14 @@ interface CompanyFormDialogProps {
   onSave: (company: MappedCompany) => Promise<void>
   isAdmin: boolean
   canDelete: boolean
+  roleLevelOptions: RoleLevelOption[]
+  defaultVisibleRoleNames: string[]
 }
 
 const emptyCompany = (): MappedCompany => ({
   id: '',
   name: '',
-  number: generateCompanyNumber(),
+  number: '',
   mail: null,
   businessPhone: null,
   website: null,
@@ -70,6 +73,8 @@ const emptyCompany = (): MappedCompany => ({
   deletedBy: null,
   deletedByName: null,
   addresses: [],
+  targetId: '',
+  visibilityForRoles: [],
 })
 
 type AddrForm = {
@@ -159,6 +164,8 @@ export function CompanyFormDialog({
   onSave,
   isAdmin,
   canDelete,
+  roleLevelOptions,
+  defaultVisibleRoleNames,
 }: CompanyFormDialogProps) {
   const router = useRouter()
   const [form, setForm] = useState<MappedCompany>(emptyCompany())
@@ -177,13 +184,12 @@ export function CompanyFormDialog({
     setShowDeletedAddrs(false)
   }, [company?.id, open])
 
-  // When the parent passes a refreshed company (after router.refresh()),
-  // sync addresses into the live form without resetting the rest of the form
+  // Sync addresses/visibility from refreshed company prop without resetting the form
   useEffect(() => {
     if (!open || !company) return
-    setForm(prev => ({...prev, addresses: company.addresses}))
+    setForm(prev => ({...prev, addresses: company.addresses, visibilityForRoles: company.visibilityForRoles}))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(company?.addresses)])
+  }, [JSON.stringify(company?.addresses), JSON.stringify(company?.visibilityForRoles)])
 
   function set<K extends keyof MappedCompany>(key: K, value: MappedCompany[K]) {
     setForm(prev => ({...prev, [key]: value}))
@@ -276,6 +282,7 @@ export function CompanyFormDialog({
                 {activeAddrCount}
               </Badge>
             </TabsTrigger>
+            <TabsTrigger value="visibility">Visibility</TabsTrigger>
           </TabsList>
 
           {/* ── Details ───────────────────────────────────────────────────── */}
@@ -291,7 +298,11 @@ export function CompanyFormDialog({
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Number *</Label>
-                <Input value={form.number} readOnly className="bg-secondary border-border" />
+                <Input
+                  value={form.number}
+                  onChange={e => set('number', e.target.value)}
+                  className="bg-secondary border-border"
+                />
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Email</Label>
@@ -581,6 +592,19 @@ export function CompanyFormDialog({
                   ))}
                 </div>
               )}
+            </div>
+          </TabsContent>
+
+          {/* ── Visibility ────────────────────────────────────────────────── */}
+          <TabsContent value="visibility">
+            <div className="py-3">
+              <VisibilityForRoleTab
+                targetId={form.targetId || null}
+                visibilityForRoles={form.visibilityForRoles}
+                roleLevelOptions={roleLevelOptions}
+                defaultVisibleRoleNames={defaultVisibleRoleNames}
+                revalidatePath="/companies"
+              />
             </div>
           </TabsContent>
         </Tabs>

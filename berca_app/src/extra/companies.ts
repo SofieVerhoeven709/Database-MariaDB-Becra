@@ -1,11 +1,17 @@
 import type {Company, CompanyAdress, Employee} from '@/generated/prisma/client'
 import type {MappedCompany, MappedCompanyAddress} from '@/types/company'
+import type {VisibilityWithRoleLevel} from '@/extra/visibilityForRole'
+import {mapVisibility} from '@/extra/visibilityForRole'
 
 type CompanyWithRelations = Company & {
   Company: Company | null
   Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
   Employee_Company_deletedByToEmployee: Pick<Employee, 'id' | 'firstName' | 'lastName'> | null
   CompanyAdress: CompanyAdress[]
+  Target: {
+    id: string
+    VisibilityForRole: VisibilityWithRoleLevel[]
+  }
 }
 
 function mapAddress(a: CompanyAdress): MappedCompanyAddress {
@@ -62,5 +68,7 @@ export function mapCompany(c: CompanyWithRelations): MappedCompany {
       ? `${c.Employee_Company_deletedByToEmployee.firstName} ${c.Employee_Company_deletedByToEmployee.lastName}`
       : null,
     addresses: c.CompanyAdress.map(mapAddress),
+    targetId: c.Target.id,
+    visibilityForRoles: c.Target.VisibilityForRole.map(mapVisibility),
   }
 }

@@ -31,6 +31,7 @@ export default async function CompaniesPage() {
 
   // Roles visible by default for this department
   const defaultVisibleRoleNames = ['Management']
+  const department = 'management'
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -46,6 +47,7 @@ export default async function CompaniesPage() {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
+          department={department}
         />
       </div>
     </main>

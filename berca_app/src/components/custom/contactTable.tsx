@@ -2,50 +2,51 @@
 
 import {useState} from 'react'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
+import {ContactFormDialog} from '@/components/custom/contactFormDialog'
+import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
 import type {MappedContact} from '@/types/contact'
+import type {RoleLevelOption} from '@/types/roleLevel'
 import {
-  createProjectAction,
-  hardDeleteProjectAction,
-  softDeleteProjectAction,
-  updateProjectAction,
-} from '@/serverFunctions/projects'
+  createContactAction,
+  updateContactAction,
+  softDeleteContactAction,
+  hardDeleteContactAction,
+  undeleteContactAction,
+} from '@/serverFunctions/contacts'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
 
 type SortField =
-  | 'projectNumber'
-  | 'company'
-  | 'projectType'
-  | 'parentProject'
-  | 'startDate'
-  | 'endDate'
-  | 'engineeringStartDate'
-  | 'closingDate'
-  | 'isMainProject'
-  | 'isIntern'
-  | 'isOpen'
-  | 'isClosed'
+  | 'lastName'
+  | 'firstName'
+  | 'mail1'
+  | 'generalPhone'
+  | 'mobilePhone'
+  | 'active'
+  | 'functionName'
+  | 'departmentExternName'
+  | 'titleName'
   | 'createdAt'
   | 'createdBy'
   | 'deleted'
 
 type SortDir = 'asc' | 'desc'
-type FilterOpen = 'all' | 'open' | 'closed'
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
+
+interface SelectOption {
+  id: string
+  name: string
+}
 
 function formatDate(date: string | null) {
   if (!date) return '-'
-  return new Date(date).toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  })
+  return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -57,188 +58,204 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
   )
 }
 
-interface Option {
-  id: string
-  name: string
+function YesNoBadge({value}: {value: boolean}) {
+  return value ? (
+    <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+  ) : (
+    <Badge variant="secondary" className="text-muted-foreground font-medium">
+      No
+    </Badge>
+  )
 }
 
-interface ProjectTableProps {
+const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
+const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
+
+function Th({
+  field,
+  label,
+  sortField,
+  sortDir,
+  onSort,
+}: {
+  field: SortField
+  label: string
+  sortField: SortField
+  sortDir: SortDir
+  onSort: (f: SortField) => void
+}) {
+  return (
+    <TableHead className={thClass} onClick={() => onSort(field)}>
+      {label} <SortIcon field={field} sortField={sortField} sortDir={sortDir} />
+    </TableHead>
+  )
+}
+
+interface ContactTableProps {
   initialContacts: MappedContact[]
-  companies: Option[]
   currentUserRole: string
   currentUserLevel: number
-  employees: Option[]
+  roleLevelOptions: RoleLevelOption[]
+  defaultVisibleRoleNames: string[]
+  department: string
+  functionOptions: SelectOption[]
+  departmentExternOptions: SelectOption[]
+  titleOptions: SelectOption[]
 }
 
-export function ContacttTable({
+export function ContactTable({
   initialContacts,
-  companies,
   currentUserRole,
   currentUserLevel,
-  employees,
-}: ProjectTableProps) {
+  roleLevelOptions,
+  defaultVisibleRoleNames,
+  department,
+  functionOptions,
+  departmentExternOptions,
+  titleOptions,
+}: ContactTableProps) {
+  const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const projects = initialContacts
+  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
 
   const [search, setSearch] = useState('')
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [editingContact, setEditingProject] = useState<MappedContact | null>(null)
-  const [sortField, setSortField] = useState<SortField>('projectNumber')
-  const [sortDir, setSortDir] = useState<SortDir>('asc')
-  const [filterOpen, setFilterOpen] = useState<FilterOpen>('all')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
-
-  const router = useRouter()
-
-  const getEmployeeName = (id: string | null) => {
-    if (!id) return '-'
-    const emp = employees.find(e => e.id === id)
-    return emp ? emp.name : '-'
-  }
-
-  const getProjectLabel = (id: string | null) => {
-    if (!id) return '-'
-    const p = projects.find(p => p.id === id)
-    return p ? p.projectNumber : '-'
-  }
-
-  const filtered = projects
-    .filter(p => {
-      if (filterOpen === 'open' && !p.isOpen) return false
-      if (filterOpen === 'closed' && !p.isClosed) return false
-      if (filterDeleted === 'not-deleted' && p.deleted) return false
-      if (filterDeleted === 'deleted' && !p.deleted) return false
-      if (!search) return true
-      const q = search.toLowerCase()
-      return (
-        p.projectNumber.toLowerCase().includes(q) ||
-        p.companyName.toLowerCase().includes(q) ||
-        p.projectTypeName.toLowerCase().includes(q) ||
-        (p.description?.toLowerCase().includes(q) ?? false) ||
-        (p.extraInfo?.toLowerCase().includes(q) ?? false)
-      )
-    })
-    .sort((a, b) => {
-      const dir = sortDir === 'asc' ? 1 : -1
-      const cmpStr = (x: string | null, y: string | null) => dir * (x ?? '').localeCompare(y ?? '')
-      const cmpBool = (x: boolean, y: boolean) => dir * (Number(x) - Number(y))
-      switch (sortField) {
-        case 'projectNumber':
-          return cmpStr(a.projectNumber, b.projectNumber)
-        case 'company':
-          return cmpStr(a.companyName, b.companyName)
-        case 'projectType':
-          return cmpStr(a.projectTypeName, b.projectTypeName)
-        case 'parentProject':
-          return cmpStr(getProjectLabel(a.parentProjectId), getProjectLabel(b.parentProjectId))
-        case 'startDate':
-          return cmpStr(a.startDate, b.startDate)
-        case 'endDate':
-          return cmpStr(a.endDate, b.endDate)
-        case 'engineeringStartDate':
-          return cmpStr(a.engineeringStartDate, b.engineeringStartDate)
-        case 'closingDate':
-          return cmpStr(a.closingDate, b.closingDate)
-        case 'isMainProject':
-          return cmpBool(a.isMainProject, b.isMainProject)
-        case 'isIntern':
-          return cmpBool(a.isIntern, b.isIntern)
-        case 'isOpen':
-          return cmpBool(a.isOpen, b.isOpen)
-        case 'isClosed':
-          return cmpBool(a.isClosed, b.isClosed)
-        case 'createdAt':
-          return cmpStr(a.createdAt, b.createdAt)
-        case 'createdBy':
-          return cmpStr(getEmployeeName(a.createdBy), getEmployeeName(b.createdBy))
-        case 'deleted':
-          return cmpBool(a.deleted, b.deleted)
-        default:
-          return 0
-      }
-    })
+  const [sortField, setSortField] = useState<SortField>('lastName')
+  const [sortDir, setSortDir] = useState<SortDir>('asc')
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [editingContact, setEditingContact] = useState<MappedContact | null>(null)
 
   function toggleSort(field: SortField) {
-    if (sortField === field) {
-      setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
-    } else {
+    if (sortField === field) setSortDir(d => (d === 'asc' ? 'desc' : 'asc'))
+    else {
       setSortField(field)
       setSortDir('asc')
     }
   }
 
-  function handleCreate() {
-    setEditingProject(null)
-    setDialogOpen(true)
-  }
+  const filtered = initialContacts
+    .filter(c => {
+      if (filterDeleted === 'not-deleted' && c.deleted) return false
+      if (filterDeleted === 'deleted' && !c.deleted) return false
+      if (!search) return true
+      const q = search.toLowerCase()
+      return (
+        c.firstName.toLowerCase().includes(q) ||
+        c.lastName.toLowerCase().includes(q) ||
+        (c.mail1?.toLowerCase().includes(q) ?? false) ||
+        (c.mail2?.toLowerCase().includes(q) ?? false) ||
+        (c.generalPhone?.toLowerCase().includes(q) ?? false) ||
+        (c.mobilePhone?.toLowerCase().includes(q) ?? false) ||
+        (c.functionName?.toLowerCase().includes(q) ?? false)
+      )
+    })
+    .sort((a, b) => {
+      const dir = sortDir === 'asc' ? 1 : -1
+      const s = (x: string | null, y: string | null) => dir * (x ?? '').localeCompare(y ?? '')
+      const n = (x: boolean, y: boolean) => dir * (Number(x) - Number(y))
+      switch (sortField) {
+        case 'lastName':
+          return s(a.lastName, b.lastName)
+        case 'firstName':
+          return s(a.firstName, b.firstName)
+        case 'mail1':
+          return s(a.mail1, b.mail1)
+        case 'generalPhone':
+          return s(a.generalPhone, b.generalPhone)
+        case 'mobilePhone':
+          return s(a.mobilePhone, b.mobilePhone)
+        case 'active':
+          return n(a.active, b.active)
+        case 'functionName':
+          return s(a.functionName, b.functionName)
+        case 'departmentExternName':
+          return s(a.departmentExternName, b.departmentExternName)
+        case 'titleName':
+          return s(a.titleName, b.titleName)
+        case 'createdAt':
+          return s(a.createdAt, b.createdAt)
+        case 'createdBy':
+          return s(a.createdByName, b.createdByName)
+        case 'deleted':
+          return n(a.deleted, b.deleted)
+        default:
+          return 0
+      }
+    })
 
-  function handleEdit(p: MappedProject) {
-    setEditingProject(p)
-    setDialogOpen(true)
-  }
-
-  async function handleSave(p: MappedProject) {
-    const payload = {
-      ...p,
-      startDate: p.startDate ? new Date(p.startDate) : null,
-      endDate: p.endDate ? new Date(p.endDate) : null,
-      closingDate: p.closingDate ? new Date(p.closingDate) : null,
-      engineeringStartDate: p.engineeringStartDate ? new Date(p.engineeringStartDate) : null,
-      createdAt: new Date(p.createdAt),
-      deletedAt: p.deletedAt ? new Date(p.deletedAt) : null,
-      // strip UI-only fields
-      companyName: undefined,
-      projectTypeName: undefined,
+  async function handleSave(c: MappedContact, visibilityRows: VisibilityRow[]) {
+    const core = {
+      firstName: c.firstName,
+      lastName: c.lastName,
+      mail1: c.mail1,
+      mail2: c.mail2,
+      mail3: c.mail3,
+      generalPhone: c.generalPhone,
+      homePhone: c.homePhone,
+      mobilePhone: c.mobilePhone,
+      info: c.info,
+      birthDate: c.birthDate ? new Date(c.birthDate) : null,
+      trough: c.trough,
+      description: c.description,
+      infoCorrect: c.infoCorrect,
+      checkInfo: c.checkInfo,
+      newYearCard: c.newYearCard,
+      active: c.active,
+      newsLetter: c.newsLetter,
+      mailing: c.mailing,
+      trainingAdvice: c.trainingAdvice,
+      contactForTrainingAndAdvice: c.contactForTrainingAndAdvice,
+      customerTrainingAndAdvice: c.customerTrainingAndAdvice,
+      potentialCustomerTrainingAndAdvice: c.potentialCustomerTrainingAndAdvice,
+      potentialTeacherTrainingAndAdvice: c.potentialTeacherTrainingAndAdvice,
+      teacherTrainingAndAdvice: c.teacherTrainingAndAdvice,
+      participantTrainingAndAdvice: c.participantTrainingAndAdvice,
+      functionId: c.functionId,
+      departmentExternId: c.departmentExternId,
+      titleId: c.titleId,
+      businessCardId: c.businessCardId,
     }
 
-    if (editingProject) {
-      await updateProjectAction(payload)
+    if (editingContact) {
+      await updateContactAction({id: c.id, ...core, visibilityForRoles: visibilityRows})
     } else {
-      await createProjectAction(payload)
+      await createContactAction({...core, visibilityForRoles: visibilityRows})
     }
-
     setDialogOpen(false)
     router.refresh()
   }
 
-  async function handleSoftDelete(p: MappedProject) {
-    await softDeleteProjectAction({id: p.id})
+  async function handleSoftDelete(c: MappedContact) {
+    await softDeleteContactAction({id: c.id})
     router.refresh()
   }
 
-  async function handleHardDelete(p: MappedProject) {
-    await hardDeleteProjectAction({id: p.id})
+  async function handleHardDelete(c: MappedContact) {
+    await hardDeleteContactAction({id: c.id})
     router.refresh()
   }
 
-  const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
-  const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
-  const totalCols = filterDeleted !== 'not-deleted' ? 20 : 16
+  async function handleUndelete(c: MappedContact) {
+    await undeleteContactAction({id: c.id})
+    router.refresh()
+  }
+
+  const showDeletedCols = filterDeleted !== 'not-deleted'
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Search + filters + create */}
+      {/* Toolbar */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center flex-1">
           <div className="relative max-w-sm flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search project number, company, type..."
+              placeholder="Search name, email, phone…"
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
             />
           </div>
-          <Select value={filterOpen} onValueChange={v => setFilterOpen(v as FilterOpen)}>
-            <SelectTrigger className="w-[140px] bg-secondary border-border">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-card border-border">
-              <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="open">Open</SelectItem>
-              <SelectItem value="closed">Closed</SelectItem>
-            </SelectContent>
-          </Select>
           <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
             <SelectTrigger className="w-[150px] bg-secondary border-border">
               <SelectValue />
@@ -250,9 +267,14 @@ export function ContacttTable({
             </SelectContent>
           </Select>
         </div>
-        <Button onClick={handleCreate} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+        <Button
+          onClick={() => {
+            setEditingContact(null)
+            setDialogOpen(true)
+          }}
+          className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
           <Plus className="h-4 w-4" />
-          New contact
+          New Contact
         </Button>
       </div>
 
@@ -261,59 +283,31 @@ export function ContacttTable({
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
-              <TableHead className={thClass} onClick={() => toggleSort('projectNumber')}>
-                Project # <SortIcon field="projectNumber" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('company')}>
-                Company <SortIcon field="company" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('projectType')}>
-                Type <SortIcon field="projectType" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('parentProject')}>
-                Parent Project <SortIcon field="parentProject" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('startDate')}>
-                Start Date <SortIcon field="startDate" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('endDate')}>
-                End Date <SortIcon field="endDate" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('engineeringStartDate')}>
-                Eng. Start <SortIcon field="engineeringStartDate" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('closingDate')}>
-                Closing Date <SortIcon field="closingDate" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('isMainProject')}>
-                Main <SortIcon field="isMainProject" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('isIntern')}>
-                Internal <SortIcon field="isIntern" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('isOpen')}>
-                Open <SortIcon field="isOpen" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('isClosed')}>
-                Closed <SortIcon field="isClosed" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass}>Description</TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('createdAt')}>
-                Created At <SortIcon field="createdAt" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('createdBy')}>
-                Created By <SortIcon field="createdBy" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              {filterDeleted !== 'not-deleted' && (
+              <Th field="lastName" label="Last Name" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="firstName" label="First Name" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="titleName" label="Title" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="functionName" label="Function" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th
+                field="departmentExternName"
+                label="Ext. Dept"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
+              <Th field="mail1" label="Email" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="generalPhone" label="Phone" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="mobilePhone" label="Mobile" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="active" label="Active" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="createdAt" label="Created At" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="createdBy" label="Created By" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              {showDeletedCols && (
                 <>
-                  <TableHead className={thClass} onClick={() => toggleSort('deleted')}>
-                    Deleted <SortIcon field="deleted" sortField={sortField} sortDir={sortDir} />
-                  </TableHead>
-                  <TableHead className={thClass}>Deleted At</TableHead>
-                  <TableHead className={thClass}>Deleted By</TableHead>
+                  <Th field="deleted" label="Deleted" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+                  <TableHead className="whitespace-nowrap text-xs">Deleted At</TableHead>
+                  <TableHead className="whitespace-nowrap text-xs">Deleted By</TableHead>
                 </>
               )}
-              <TableHead className="w-20">
+              <TableHead className="w-24">
                 <span className="sr-only">Actions</span>
               </TableHead>
             </TableRow>
@@ -321,82 +315,38 @@ export function ContacttTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={totalCols} className="h-32 text-center text-muted-foreground">
-                  No projects found.
+                <TableCell colSpan={showDeletedCols ? 15 : 12} className="h-32 text-center text-muted-foreground">
+                  No contacts found.
                 </TableCell>
               </TableRow>
             ) : (
-              filtered.map(p => (
+              filtered.map(c => (
                 <TableRow
-                  key={p.id}
-                  className={`border-border/40 hover:bg-secondary/50 ${p.deleted ? 'opacity-50' : ''}`}>
+                  key={c.id}
+                  className={`border-border/40 hover:bg-secondary/50 ${c.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/project/project/${p.id}` as Route}
+                      href={`/departments/${department}/contact/${c.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
-                      {p.projectNumber}
+                      {c.lastName}
                     </Link>
                   </TableCell>
-                  <TableCell className={tdClass}>{p.companyName}</TableCell>
+                  <TableCell className={tdClass}>{c.firstName}</TableCell>
+                  <TableCell className={tdClass}>{c.titleName ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{c.functionName ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{c.departmentExternName ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{c.mail1 ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{c.generalPhone ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{c.mobilePhone ?? '-'}</TableCell>
                   <TableCell>
-                    <Badge
-                      variant="outline"
-                      className="border-border text-muted-foreground font-normal whitespace-nowrap">
-                      {p.projectTypeName}
-                    </Badge>
+                    <YesNoBadge value={c.active} />
                   </TableCell>
-                  <TableCell className={tdClass}>{getProjectLabel(p.parentProjectId)}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(p.startDate)}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(p.endDate)}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(p.engineeringStartDate)}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(p.closingDate)}</TableCell>
-                  <TableCell>
-                    {p.isMainProject ? (
-                      <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
-                    ) : (
-                      <Badge variant="secondary" className="text-muted-foreground font-medium">
-                        No
-                      </Badge>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {p.isIntern ? (
-                      <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
-                    ) : (
-                      <Badge variant="secondary" className="text-muted-foreground font-medium">
-                        No
-                      </Badge>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {p.isOpen ? (
-                      <Badge className="bg-accent/15 text-accent border-0 font-medium">Open</Badge>
-                    ) : (
-                      <Badge variant="secondary" className="text-muted-foreground font-medium">
-                        Closed
-                      </Badge>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {p.isClosed ? (
-                      <Badge variant="destructive" className="font-medium">
-                        Closed
-                      </Badge>
-                    ) : (
-                      <Badge variant="secondary" className="text-muted-foreground font-medium">
-                        No
-                      </Badge>
-                    )}
-                  </TableCell>
-                  <TableCell className={tdClass}>
-                    <span className="max-w-[200px] truncate inline-block">{p.description ?? '-'}</span>
-                  </TableCell>
-                  <TableCell className={tdClass}>{formatDate(p.createdAt)}</TableCell>
-                  <TableCell className={tdClass}>{getEmployeeName(p.createdBy)}</TableCell>
-                  {filterDeleted !== 'not-deleted' && (
+                  <TableCell className={tdClass}>{formatDate(c.createdAt)}</TableCell>
+                  <TableCell className={tdClass}>{c.createdByName}</TableCell>
+                  {showDeletedCols && (
                     <>
                       <TableCell>
-                        {p.deleted ? (
+                        {c.deleted ? (
                           <Badge variant="destructive" className="font-medium">
                             Yes
                           </Badge>
@@ -404,48 +354,76 @@ export function ContacttTable({
                           <span className="text-muted-foreground text-sm">No</span>
                         )}
                       </TableCell>
-                      <TableCell className={tdClass}>{formatDate(p.deletedAt)}</TableCell>
-                      <TableCell className={tdClass}>{getEmployeeName(p.deletedBy)}</TableCell>
+                      <TableCell className={tdClass}>{formatDate(c.deletedAt)}</TableCell>
+                      <TableCell className={tdClass}>{c.deletedByName ?? '-'}</TableCell>
                     </>
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/project/project/${p.id}` as Route}>
+                      <Link href={`/departments/${department}/contact/${c.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"
                           className="h-8 w-8 text-muted-foreground hover:text-accent hover:bg-accent/10">
                           <ExternalLink className="h-3.5 w-3.5" />
-                          <span className="sr-only">View {p.projectNumber}</span>
+                          <span className="sr-only">
+                            View {c.firstName} {c.lastName}
+                          </span>
                         </Button>
                       </Link>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                        onClick={() => handleEdit(p)}>
-                        <Pencil className="h-3.5 w-3.5" />
-                        <span className="sr-only">Edit {p.projectNumber}</span>
-                      </Button>
-                      {!p.deleted && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                          onClick={() => handleSoftDelete(p)}>
-                          <Trash2 className="h-3.5 w-3.5" />
-                          <span className="sr-only">Delete {p.projectNumber}</span>
-                        </Button>
+                      {!c.deleted && (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                            onClick={() => {
+                              setEditingContact(c)
+                              setDialogOpen(true)
+                            }}>
+                            <Pencil className="h-3.5 w-3.5" />
+                            <span className="sr-only">
+                              Edit {c.firstName} {c.lastName}
+                            </span>
+                          </Button>
+                          {canDelete && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                              onClick={() => handleSoftDelete(c)}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                              <span className="sr-only">
+                                Delete {c.firstName} {c.lastName}
+                              </span>
+                            </Button>
+                          )}
+                        </>
                       )}
-                      {p.deleted && isAdmin && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                          onClick={() => handleHardDelete(p)}>
-                          <Trash2 className="h-3.5 w-3.5" />
-                          <span className="sr-only">Permanently delete {p.projectNumber}</span>
-                        </Button>
+                      {c.deleted && (
+                        <>
+                          {canDelete && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary px-2"
+                              onClick={() => handleUndelete(c)}>
+                              Restore
+                            </Button>
+                          )}
+                          {isAdmin && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-destructive hover:bg-destructive/10"
+                              onClick={() => handleHardDelete(c)}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                              <span className="sr-only">
+                                Permanently delete {c.firstName} {c.lastName}
+                              </span>
+                            </Button>
+                          )}
+                        </>
                       )}
                     </div>
                   </TableCell>
@@ -457,16 +435,20 @@ export function ContacttTable({
       </div>
 
       <div className="text-xs text-muted-foreground">
-        Showing {filtered.length} of {contacts.length} contacts
+        Showing {filtered.length} of {initialContacts.length} contacts
       </div>
 
       <ContactFormDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         contact={editingContact}
-        contacts={contacts}
-        companies={companies}
         onSave={handleSave}
+        isAdmin={isAdmin}
+        roleLevelOptions={roleLevelOptions}
+        defaultVisibleRoleNames={defaultVisibleRoleNames}
+        functionOptions={functionOptions}
+        departmentExternOptions={departmentExternOptions}
+        titleOptions={titleOptions}
       />
     </div>
   )

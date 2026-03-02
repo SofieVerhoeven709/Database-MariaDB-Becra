@@ -1818,7 +1818,7 @@ model TrainingDocument {
 
 model TrainingStandard {
   id                                            String             @id @db.Char(36)
-  description                                   String?            @db.Text
+  description                                   String             @db.Text
   descriptionShort                              String?            @db.Text
   location                                      String?            @db.VarChar(100)
   createdAt                                     DateTime           @db.DateTime(0)

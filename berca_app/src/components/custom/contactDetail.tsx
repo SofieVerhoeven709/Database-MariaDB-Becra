@@ -194,7 +194,14 @@ export function ContactDetail({
     }
   }
 
+  console.log({
+    total: contact.companies.length,
+    deletedCount: contact.companies.filter(c => c.deleted === true).length,
+    showDeletedCompanies,
+  })
+
   // ─── Derived ───────────────────────────────────────────────────────────────
+  const hasDeletedCompanies = contact.companies.some(cc => cc.deleted)
   const nonDeletedCompanies = contact.companies.filter(cc => !cc.deleted)
   const activeCompanies = nonDeletedCompanies.filter(cc => isActiveCompanyLink(cc.endDate))
   const visibleCompanies = showDeletedCompanies
@@ -202,9 +209,14 @@ export function ContactDetail({
     : showAllCompanies
       ? nonDeletedCompanies
       : activeCompanies
-  const hasDeletedCompanies = contact.companies.some(cc => cc.deleted)
   const activeProjects = contact.projects.filter(p => p.project.isOpen && !p.project.isClosed)
   const closedProjects = contact.projects.filter(p => p.project.isClosed || !p.project.isOpen)
+
+  console.log({
+    total: contact.companies.length,
+    deletedCount: contact.companies.filter(c => c.deleted === true).length,
+    showDeletedCompanies,
+  })
 
   // ─── Reusable field renderers ──────────────────────────────────────────────
   const textRow = (label: string, val: string | null, formKey?: keyof typeof form, opts?: {type?: string}) => (

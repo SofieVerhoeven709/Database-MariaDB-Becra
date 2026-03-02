@@ -41,7 +41,6 @@ export async function getContactDetail(id: string) {
 
       // Companies tab
       CompanyContact: {
-        where: {deleted: false},
         orderBy: {startedDate: 'desc'},
         include: {
           Company: {select: {id: true, name: true, number: true, companyActive: true}},

@@ -18,13 +18,15 @@ import {
   addCompanyContactAction,
   updateCompanyContactAction,
   endCompanyContactAction,
-  deleteCompanyContactAction,
+  softDeleteCompanyContactAction,
+  undeleteCompanyContactAction,
+  hardDeleteCompanyContactAction,
 } from '@/serverFunctions/companyContact'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import type {Route} from 'next'
 import type {RoleLevelOption} from '@/types/roleLevel'
-import type {ContactDetailData, MappedContactCompany} from '@/types/contact'
+import type {ContactDetailData} from '@/types/contact'
 
 interface SelectOption {
   id: string
@@ -86,6 +88,7 @@ export function ContactDetail({
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [showAllCompanies, setShowAllCompanies] = useState(false)
+  const [showDeletedCompanies, setShowDeletedCompanies] = useState(false)
 
   // ─── Company link state ────────────────────────────────────────────────────
   type CompanyForm = {companyId: string; roleWithCompany: string; startedDate: string; endDate: string}
@@ -192,8 +195,14 @@ export function ContactDetail({
   }
 
   // ─── Derived ───────────────────────────────────────────────────────────────
-  const activeCompanies = contact.companies.filter(cc => isActiveCompanyLink(cc.endDate))
-  const visibleCompanies = showAllCompanies ? contact.companies : activeCompanies
+  const nonDeletedCompanies = contact.companies.filter(cc => !cc.deleted)
+  const activeCompanies = nonDeletedCompanies.filter(cc => isActiveCompanyLink(cc.endDate))
+  const visibleCompanies = showDeletedCompanies
+    ? contact.companies
+    : showAllCompanies
+      ? nonDeletedCompanies
+      : activeCompanies
+  const hasDeletedCompanies = contact.companies.some(cc => cc.deleted)
   const activeProjects = contact.projects.filter(p => p.project.isOpen && !p.project.isClosed)
   const closedProjects = contact.projects.filter(p => p.project.isClosed || !p.project.isOpen)
 
@@ -451,7 +460,7 @@ export function ContactDetail({
         <TabsContent value="companies" className="mt-3">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              {contact.companies.length > activeCompanies.length && (
+              {nonDeletedCompanies.length > activeCompanies.length && !showDeletedCompanies && (
                 <Button
                   size="sm"
                   variant="outline"
@@ -459,7 +468,16 @@ export function ContactDetail({
                   onClick={() => setShowAllCompanies(v => !v)}>
                   {showAllCompanies
                     ? `Active only (${activeCompanies.length})`
-                    : `Show all incl. ended (${contact.companies.length})`}
+                    : `Show all incl. ended (${nonDeletedCompanies.length})`}
+                </Button>
+              )}
+              {hasDeletedCompanies && (
+                <Button
+                  size="sm"
+                  variant={showDeletedCompanies ? 'secondary' : 'outline'}
+                  className="text-xs h-7 border-border"
+                  onClick={() => setShowDeletedCompanies(v => !v)}>
+                  {showDeletedCompanies ? 'Hide deleted' : 'Show deleted'}
                 </Button>
               )}
             </div>
@@ -596,7 +614,7 @@ export function ContactDetail({
                     return (
                       <TableRow
                         key={cc.id}
-                        className={`border-border/40 hover:bg-secondary/50 ${!active ? 'opacity-60' : ''}`}>
+                        className={`border-border/40 hover:bg-secondary/50 ${cc.deleted ? 'opacity-40' : !active ? 'opacity-60' : ''}`}>
                         {isEditingThis ? (
                           <>
                             <TableCell colSpan={2}>
@@ -682,7 +700,11 @@ export function ContactDetail({
                             <TableCell className={tdClass}>{formatDate(cc.endDate)}</TableCell>
                             <TableCell />
                             <TableCell>
-                              {active ? (
+                              {cc.deleted ? (
+                                <Badge variant="destructive" className="font-medium text-xs">
+                                  Deleted
+                                </Badge>
+                              ) : active ? (
                                 <Badge className="bg-accent/15 text-accent border-0 font-medium">Active</Badge>
                               ) : (
                                 <Badge variant="secondary" className="text-muted-foreground font-medium">
@@ -692,55 +714,88 @@ export function ContactDetail({
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center gap-1">
-                                {canEdit && (
-                                  <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                                    onClick={() => {
-                                      setEditingCompanyId(cc.id)
-                                      setEditCompanyForm({
-                                        companyId: cc.company.id,
-                                        roleWithCompany: cc.roleWithCompany ?? '',
-                                        startedDate: cc.startedDate.slice(0, 10),
-                                        endDate: cc.endDate ? cc.endDate.slice(0, 10) : '',
-                                      })
-                                    }}>
-                                    <Pencil className="h-3.5 w-3.5" />
-                                  </Button>
-                                )}
-                                {canEdit && active && (
-                                  <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-7 w-7 text-muted-foreground hover:text-amber-500 hover:bg-amber-500/10"
-                                    title="End today"
-                                    onClick={async () => {
-                                      await endCompanyContactAction({id: cc.id})
-                                      router.refresh()
-                                    }}>
-                                    <CalendarOff className="h-3.5 w-3.5" />
-                                  </Button>
-                                )}
-                                <Link href={`/companies/${cc.company.id}` as Route}>
-                                  <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
-                                    <ExternalLink className="h-3.5 w-3.5" />
-                                  </Button>
-                                </Link>
-                                {isAdmin && (
-                                  <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                                    onClick={async () => {
-                                      await deleteCompanyContactAction({id: cc.id})
-                                      router.refresh()
-                                    }}>
-                                    <Trash2 className="h-3.5 w-3.5" />
-                                  </Button>
+                                {cc.deleted ? (
+                                  <>
+                                    {canEdit && (
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-7 text-xs px-2 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                        onClick={async () => {
+                                          await undeleteCompanyContactAction({id: cc.id})
+                                          router.refresh()
+                                        }}>
+                                        Restore
+                                      </Button>
+                                    )}
+                                    {isAdmin && (
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                        title="Permanently delete"
+                                        onClick={async () => {
+                                          await hardDeleteCompanyContactAction({id: cc.id})
+                                          router.refresh()
+                                        }}>
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                      </Button>
+                                    )}
+                                  </>
+                                ) : (
+                                  <>
+                                    {canEdit && (
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                        onClick={() => {
+                                          setEditingCompanyId(cc.id)
+                                          setEditCompanyForm({
+                                            companyId: cc.company.id,
+                                            roleWithCompany: cc.roleWithCompany ?? '',
+                                            startedDate: cc.startedDate.slice(0, 10),
+                                            endDate: cc.endDate ? cc.endDate.slice(0, 10) : '',
+                                          })
+                                        }}>
+                                        <Pencil className="h-3.5 w-3.5" />
+                                      </Button>
+                                    )}
+                                    {canEdit && active && (
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-muted-foreground hover:text-amber-500 hover:bg-amber-500/10"
+                                        title="End today"
+                                        onClick={async () => {
+                                          await endCompanyContactAction({id: cc.id})
+                                          router.refresh()
+                                        }}>
+                                        <CalendarOff className="h-3.5 w-3.5" />
+                                      </Button>
+                                    )}
+                                    <Link href={`/companies/${cc.company.id}` as Route}>
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                                        <ExternalLink className="h-3.5 w-3.5" />
+                                      </Button>
+                                    </Link>
+                                    {canEdit && (
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                        title="Delete"
+                                        onClick={async () => {
+                                          await softDeleteCompanyContactAction({id: cc.id})
+                                          router.refresh()
+                                        }}>
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                      </Button>
+                                    )}
+                                  </>
                                 )}
                               </div>
                             </TableCell>

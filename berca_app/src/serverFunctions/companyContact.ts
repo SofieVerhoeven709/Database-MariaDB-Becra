@@ -78,13 +78,36 @@ export const endCompanyContactAction = protectedServerFunction({
   },
 })
 
-export const deleteCompanyContactAction = protectedServerFunction({
+export const softDeleteCompanyContactAction = protectedServerFunction({
   schema: companyContactIdSchema,
-  functionName: 'Delete company contact action',
+  functionName: 'Soft delete company contact action',
   serverFn: async ({data, profile}) => {
     await prismaClient.companyContact.update({
       where: {id: data.id},
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
+    })
+    revalidatePath(`/departments`)
+  },
+})
+
+export const undeleteCompanyContactAction = protectedServerFunction({
+  schema: companyContactIdSchema,
+  functionName: 'Undelete company contact action',
+  serverFn: async ({data}) => {
+    await prismaClient.companyContact.update({
+      where: {id: data.id},
+      data: {deleted: false, deletedAt: null, deletedBy: null},
+    })
+    revalidatePath(`/departments`)
+  },
+})
+
+export const hardDeleteCompanyContactAction = protectedServerFunction({
+  schema: companyContactIdSchema,
+  functionName: 'Hard delete company contact action',
+  serverFn: async ({data}) => {
+    await prismaClient.companyContact.delete({
+      where: {id: data.id},
     })
     revalidatePath(`/departments`)
   },

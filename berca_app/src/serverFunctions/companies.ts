@@ -12,6 +12,7 @@ import {
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
 import {upsertVisibilityRows} from '@/serverFunctions/visibilityForRoles'
+import {generateCompanyNumber} from '@/lib/utils'
 
 // ─── Company ──────────────────────────────────────────────────────────────────
 export const createCompanyAction = protectedServerFunction({
@@ -20,36 +21,55 @@ export const createCompanyAction = protectedServerFunction({
   serverFn: async ({data: {addresses, visibilityForRoles, ...data}, logger, profile}) => {
     logger.info(`Creating company, createdBy: ${profile.id}`)
 
-    // Target must exist before visibility rows reference it
     const target = await createTargetForType('Company', profile.id)
     const companyId = crypto.randomUUID()
     const now = new Date()
 
-    // Company + addresses in one transaction
-    await prismaClient.$transaction([
-      prismaClient.company.create({
-        data: {
-          ...data,
-          id: companyId,
-          createdBy: profile.id,
-          createdAt: now,
-          targetId: target.id,
-        },
-      }),
-      ...addresses.map(a =>
-        prismaClient.companyAdress.create({
-          data: {
-            ...a,
-            id: crypto.randomUUID(),
-            companyId,
-            createdBy: profile.id,
-            createdAt: now,
-          },
-        }),
-      ),
-    ])
+    // Retry loop — regenerate number on unique constraint collision (P2002)
+    let companyNumber = data.number || generateCompanyNumber()
+    let attempts = 0
 
-    // Visibility rows after the transaction — they reference target.id which now exists
+    while (attempts < 5) {
+      try {
+        await prismaClient.$transaction([
+          prismaClient.company.create({
+            data: {
+              ...data,
+              number: companyNumber,
+              id: companyId,
+              createdBy: profile.id,
+              createdAt: now,
+              targetId: target.id,
+            },
+          }),
+          ...addresses.map(a =>
+            prismaClient.companyAdress.create({
+              data: {
+                ...a,
+                id: crypto.randomUUID(),
+                companyId,
+                createdBy: profile.id,
+                createdAt: now,
+              },
+            }),
+          ),
+        ])
+        break
+      } catch (err: unknown) {
+        const prismaErr = err as {code?: string}
+        if (prismaErr.code === 'P2002') {
+          attempts++
+          companyNumber = generateCompanyNumber()
+          continue
+        }
+        throw err
+      }
+    }
+
+    if (attempts >= 5) {
+      throw new Error('Failed to generate a unique company number after 5 attempts')
+    }
+
     if (visibilityForRoles.length > 0) {
       await upsertVisibilityRows(target.id, visibilityForRoles)
     }

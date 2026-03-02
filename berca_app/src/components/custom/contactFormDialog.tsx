@@ -80,6 +80,8 @@ const emptyContact = (): MappedContact => ({
   deletedAt: null,
   deletedBy: null,
   deletedByName: null,
+  currentCompanyName: null,
+  currentRoleWithCompany: null,
   visibilityForRoles: [],
 })
 

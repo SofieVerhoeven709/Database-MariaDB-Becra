@@ -14,13 +14,14 @@ interface ContactDetailPageProps {
 export default async function ContactDetailPage({params}: ContactDetailPageProps) {
   const {department, id} = await params
 
-  const [contactFromDAL, roleLevels, profile, functions, departmentExterns, titles] = await Promise.all([
+  const [contactFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies] = await Promise.all([
     getContactDetail(id).catch(() => null),
     getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
     prismaClient.function.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
     prismaClient.departmentExtern.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
     prismaClient.title.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+    prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
   ])
 
   if (!contactFromDAL) notFound()
@@ -45,6 +46,7 @@ export default async function ContactDetailPage({params}: ContactDetailPageProps
           functionOptions={functions}
           departmentExternOptions={departmentExterns}
           titleOptions={titles}
+          companyOptions={companies}
         />
       </div>
     </main>

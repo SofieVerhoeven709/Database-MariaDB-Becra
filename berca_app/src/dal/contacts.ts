@@ -8,6 +8,15 @@ export async function getContacts() {
       Function: {select: {id: true, name: true}},
       DepartmentExtern: {select: {id: true, name: true}},
       Title: {select: {id: true, name: true}},
+      // Current company: active link = no endDate or endDate in future
+      CompanyContact: {
+        where: {deleted: false},
+        select: {
+          endDate: true,
+          roleWithCompany: true,
+          Company: {select: {name: true}},
+        },
+      },
       Target: {
         select: {
           id: true,

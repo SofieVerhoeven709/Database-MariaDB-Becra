@@ -10,6 +10,12 @@ import type {
 import type {VisibilityWithRoleLevel} from '@/extra/visibilityForRole'
 import {mapVisibility} from '@/extra/visibilityForRole'
 
+type CompanyContactLink = {
+  endDate: Date | null
+  roleWithCompany: string | null
+  Company: {name: string}
+}
+
 type ContactWithRelations = Contact & {
   Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
   Employee_Contact_deletedByToEmployee: Pick<Employee, 'id' | 'firstName' | 'lastName'> | null
@@ -20,9 +26,16 @@ type ContactWithRelations = Contact & {
     id: string
     VisibilityForRole: VisibilityWithRoleLevel[]
   }
+  CompanyContact: CompanyContactLink[]
+}
+
+function getCurrentCompany(links: CompanyContactLink[]): CompanyContactLink | null {
+  const now = new Date()
+  return links.find(cc => cc.endDate === null || cc.endDate > now) ?? null
 }
 
 export function mapContact(c: ContactWithRelations): MappedContact {
+  const current = getCurrentCompany(c.CompanyContact)
   return {
     id: c.id,
     firstName: c.firstName,
@@ -67,6 +80,8 @@ export function mapContact(c: ContactWithRelations): MappedContact {
     deletedByName: c.Employee_Contact_deletedByToEmployee
       ? `${c.Employee_Contact_deletedByToEmployee.firstName} ${c.Employee_Contact_deletedByToEmployee.lastName}`
       : null,
+    currentCompanyName: current?.Company.name ?? null,
+    currentRoleWithCompany: current?.roleWithCompany ?? null,
     visibilityForRoles: c.Target.VisibilityForRole.map(mapVisibility),
   }
 }

@@ -25,6 +25,8 @@ import type {Route} from 'next'
 type SortField =
   | 'lastName'
   | 'firstName'
+  | 'currentCompanyName'
+  | 'currentRoleWithCompany'
   | 'titleName'
   | 'functionName'
   | 'departmentExternName'
@@ -178,6 +180,10 @@ export function ContactTable({
           return s(a.lastName, b.lastName)
         case 'firstName':
           return s(a.firstName, b.firstName)
+        case 'currentCompanyName':
+          return s(a.currentCompanyName, b.currentCompanyName)
+        case 'currentRoleWithCompany':
+          return s(a.currentRoleWithCompany, b.currentRoleWithCompany)
         case 'titleName':
           return s(a.titleName, b.titleName)
         case 'functionName':
@@ -306,7 +312,7 @@ export function ContactTable({
 
   const showDeletedCols = filterDeleted !== 'not-deleted'
   // base col count: 27 data cols + 1 actions = 28
-  const baseColCount = 28
+  const baseColCount = 30
   const colCount = showDeletedCols ? baseColCount + 3 : baseColCount
 
   return (
@@ -352,6 +358,20 @@ export function ContactTable({
             <TableRow className="hover:bg-transparent border-border/60">
               <Th field="lastName" label="Last Name" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="firstName" label="First Name" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th
+                field="currentCompanyName"
+                label="Company"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
+              <Th
+                field="currentRoleWithCompany"
+                label="Role at Company"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
               <Th field="titleName" label="Title" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="functionName" label="Function" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th
@@ -452,6 +472,8 @@ export function ContactTable({
                     </Link>
                   </TableCell>
                   <TableCell className={tdClass}>{c.firstName}</TableCell>
+                  <TableCell className={tdClass}>{c.currentCompanyName ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{c.currentRoleWithCompany ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{c.titleName ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{c.functionName ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{c.departmentExternName ?? '-'}</TableCell>

@@ -23,6 +23,7 @@ import type {RoleLevelOption} from '@/types/roleLevel'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {useRouter} from 'next/navigation'
+import {generateCompanyNumber} from '@/lib/utils'
 
 interface Option {
   id: string
@@ -44,7 +45,7 @@ interface CompanyFormDialogProps {
 const emptyCompany = (): MappedCompany => ({
   id: '',
   name: '',
-  number: '',
+  number: generateCompanyNumber(),
   mail: null,
   businessPhone: null,
   website: null,
@@ -214,7 +215,6 @@ export function CompanyFormDialog({
   // ── Address handlers ──────────────────────────────────────────────────────
   async function handleAddAddr() {
     if (!form.id) {
-      // company not yet saved — store locally with temp id
       const addr: MappedCompanyAddress = {
         ...newAddr,
         id: `temp-${crypto.randomUUID()}`,
@@ -303,14 +303,40 @@ export function CompanyFormDialog({
                   className="bg-secondary border-border"
                 />
               </div>
+
+              {/* Number — auto-generated + regeneratable on create, read-only on edit */}
               <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Number *</Label>
-                <Input
-                  value={form.number}
-                  onChange={e => set('number', e.target.value)}
-                  className="bg-secondary border-border"
-                />
+                <Label className="text-xs text-muted-foreground">
+                  Number
+                  {isEdit ? (
+                    <span className="ml-1.5 text-muted-foreground/60">(locked)</span>
+                  ) : (
+                    <span className="ml-1.5 text-muted-foreground/60">(auto-generated)</span>
+                  )}
+                </Label>
+                {isEdit ? (
+                  <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                    {form.number}
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <Input
+                      value={form.number}
+                      readOnly
+                      className="bg-secondary/40 border-border text-muted-foreground flex-1 cursor-default"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="h-10 px-3 border-border text-xs shrink-0"
+                      onClick={() => set('number', generateCompanyNumber())}>
+                      Regenerate
+                    </Button>
+                  </div>
+                )}
               </div>
+
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Email</Label>
                 <Input
@@ -439,7 +465,6 @@ export function CompanyFormDialog({
           {/* ── Addresses ─────────────────────────────────────────────────── */}
           <TabsContent value="addresses">
             <div className="flex flex-col gap-4 py-3">
-              {/* Toolbar */}
               <div className="flex items-center gap-2">
                 {!addingAddr && (
                   <Button
@@ -465,7 +490,6 @@ export function CompanyFormDialog({
                 )}
               </div>
 
-              {/* Inline add form */}
               {addingAddr && (
                 <div className="rounded-lg border border-border bg-secondary/40 p-4 flex flex-col gap-3">
                   <p className="text-xs font-medium text-foreground">New Address</p>
@@ -488,7 +512,6 @@ export function CompanyFormDialog({
                 </div>
               )}
 
-              {/* Address cards */}
               {visibleAddrs.length === 0 && !addingAddr ? (
                 <p className="text-sm text-muted-foreground text-center py-8">No addresses yet.</p>
               ) : (

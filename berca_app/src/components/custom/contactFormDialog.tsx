@@ -23,13 +23,19 @@ interface ContactFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   contact: MappedContact | null
-  onSave: (contact: MappedContact, visibilityRows: VisibilityRow[]) => Promise<void>
+  onSave: (
+    contact: MappedContact,
+    visibilityRows: VisibilityRow[],
+    initialCompanyId?: string,
+    initialRoleWithCompany?: string,
+  ) => Promise<void>
   isAdmin: boolean
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
   functionOptions: SelectOption[]
   departmentExternOptions: SelectOption[]
   titleOptions: SelectOption[]
+  companyOptions: SelectOption[]
 }
 
 const emptyContact = (): MappedContact => ({
@@ -88,17 +94,23 @@ export function ContactFormDialog({
   functionOptions,
   departmentExternOptions,
   titleOptions,
+  companyOptions,
 }: ContactFormDialogProps) {
   const [form, setForm] = useState<MappedContact>(emptyContact())
   const [saving, setSaving] = useState(false)
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(contact?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
+  // Company assignment — only used on create
+  const [initialCompanyId, setInitialCompanyId] = useState<string>('none')
+  const [initialRoleWithCompany, setInitialRoleWithCompany] = useState<string>('')
 
   useEffect(() => {
     const next = contact ?? emptyContact()
     setForm(next)
     setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
+    setInitialCompanyId('none')
+    setInitialRoleWithCompany('')
   }, [contact?.id, open])
 
   function set<K extends keyof MappedContact>(key: K, value: MappedContact[K]) {
@@ -112,7 +124,12 @@ export function ContactFormDialog({
   async function handleSubmit() {
     setSaving(true)
     try {
-      await onSave(form, visibilityRows)
+      await onSave(
+        form,
+        visibilityRows,
+        initialCompanyId !== 'none' ? initialCompanyId : undefined,
+        initialRoleWithCompany || undefined,
+      )
     } finally {
       setSaving(false)
     }
@@ -205,6 +222,39 @@ export function ContactFormDialog({
               {selectField('titleId', 'Title', titleOptions)}
               {selectField('functionId', 'Function', functionOptions)}
               {selectField('departmentExternId', 'External Department', departmentExternOptions)}
+
+              {/* Company assignment — create only */}
+              {!isEdit && (
+                <>
+                  <div className="flex flex-col gap-1.5">
+                    <Label className="text-xs text-muted-foreground">Assign to Company</Label>
+                    <Select value={initialCompanyId} onValueChange={setInitialCompanyId}>
+                      <SelectTrigger className="bg-secondary border-border">
+                        <SelectValue placeholder="None" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-card border-border">
+                        <SelectItem value="none">None</SelectItem>
+                        {companyOptions.map(o => (
+                          <SelectItem key={o.id} value={o.id}>
+                            {o.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  {initialCompanyId !== 'none' && (
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-xs text-muted-foreground">Role at Company</Label>
+                      <Input
+                        value={initialRoleWithCompany}
+                        onChange={e => setInitialRoleWithCompany(e.target.value)}
+                        placeholder="e.g. CEO, Purchasing Manager…"
+                        className="bg-secondary border-border"
+                      />
+                    </div>
+                  )}
+                </>
+              )}
 
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <Label className="text-xs text-muted-foreground">Description</Label>

@@ -25,13 +25,30 @@ import type {Route} from 'next'
 type SortField =
   | 'lastName'
   | 'firstName'
-  | 'mail1'
-  | 'generalPhone'
-  | 'mobilePhone'
-  | 'active'
+  | 'titleName'
   | 'functionName'
   | 'departmentExternName'
-  | 'titleName'
+  | 'mail1'
+  | 'mail2'
+  | 'mail3'
+  | 'generalPhone'
+  | 'mobilePhone'
+  | 'homePhone'
+  | 'birthDate'
+  | 'trough'
+  | 'active'
+  | 'infoCorrect'
+  | 'checkInfo'
+  | 'newYearCard'
+  | 'newsLetter'
+  | 'mailing'
+  | 'trainingAdvice'
+  | 'contactForTrainingAndAdvice'
+  | 'customerTrainingAndAdvice'
+  | 'potentialCustomerTrainingAndAdvice'
+  | 'potentialTeacherTrainingAndAdvice'
+  | 'teacherTrainingAndAdvice'
+  | 'participantTrainingAndAdvice'
   | 'createdAt'
   | 'createdBy'
   | 'deleted'
@@ -101,6 +118,7 @@ interface ContactTableProps {
   functionOptions: SelectOption[]
   departmentExternOptions: SelectOption[]
   titleOptions: SelectOption[]
+  companyOptions: SelectOption[]
 }
 
 export function ContactTable({
@@ -113,6 +131,7 @@ export function ContactTable({
   functionOptions,
   departmentExternOptions,
   titleOptions,
+  companyOptions,
 }: ContactTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -146,7 +165,8 @@ export function ContactTable({
         (c.mail2?.toLowerCase().includes(q) ?? false) ||
         (c.generalPhone?.toLowerCase().includes(q) ?? false) ||
         (c.mobilePhone?.toLowerCase().includes(q) ?? false) ||
-        (c.functionName?.toLowerCase().includes(q) ?? false)
+        (c.functionName?.toLowerCase().includes(q) ?? false) ||
+        (c.trough?.toLowerCase().includes(q) ?? false)
       )
     })
     .sort((a, b) => {
@@ -158,20 +178,54 @@ export function ContactTable({
           return s(a.lastName, b.lastName)
         case 'firstName':
           return s(a.firstName, b.firstName)
-        case 'mail1':
-          return s(a.mail1, b.mail1)
-        case 'generalPhone':
-          return s(a.generalPhone, b.generalPhone)
-        case 'mobilePhone':
-          return s(a.mobilePhone, b.mobilePhone)
-        case 'active':
-          return n(a.active, b.active)
+        case 'titleName':
+          return s(a.titleName, b.titleName)
         case 'functionName':
           return s(a.functionName, b.functionName)
         case 'departmentExternName':
           return s(a.departmentExternName, b.departmentExternName)
-        case 'titleName':
-          return s(a.titleName, b.titleName)
+        case 'mail1':
+          return s(a.mail1, b.mail1)
+        case 'mail2':
+          return s(a.mail2, b.mail2)
+        case 'mail3':
+          return s(a.mail3, b.mail3)
+        case 'generalPhone':
+          return s(a.generalPhone, b.generalPhone)
+        case 'mobilePhone':
+          return s(a.mobilePhone, b.mobilePhone)
+        case 'homePhone':
+          return s(a.homePhone, b.homePhone)
+        case 'birthDate':
+          return s(a.birthDate, b.birthDate)
+        case 'trough':
+          return s(a.trough, b.trough)
+        case 'active':
+          return n(a.active, b.active)
+        case 'infoCorrect':
+          return n(a.infoCorrect, b.infoCorrect)
+        case 'checkInfo':
+          return n(a.checkInfo, b.checkInfo)
+        case 'newYearCard':
+          return n(a.newYearCard, b.newYearCard)
+        case 'newsLetter':
+          return n(a.newsLetter, b.newsLetter)
+        case 'mailing':
+          return n(a.mailing, b.mailing)
+        case 'trainingAdvice':
+          return n(a.trainingAdvice, b.trainingAdvice)
+        case 'contactForTrainingAndAdvice':
+          return n(a.contactForTrainingAndAdvice, b.contactForTrainingAndAdvice)
+        case 'customerTrainingAndAdvice':
+          return n(a.customerTrainingAndAdvice, b.customerTrainingAndAdvice)
+        case 'potentialCustomerTrainingAndAdvice':
+          return n(a.potentialCustomerTrainingAndAdvice, b.potentialCustomerTrainingAndAdvice)
+        case 'potentialTeacherTrainingAndAdvice':
+          return n(a.potentialTeacherTrainingAndAdvice, b.potentialTeacherTrainingAndAdvice)
+        case 'teacherTrainingAndAdvice':
+          return n(a.teacherTrainingAndAdvice, b.teacherTrainingAndAdvice)
+        case 'participantTrainingAndAdvice':
+          return n(a.participantTrainingAndAdvice, b.participantTrainingAndAdvice)
         case 'createdAt':
           return s(a.createdAt, b.createdAt)
         case 'createdBy':
@@ -183,7 +237,12 @@ export function ContactTable({
       }
     })
 
-  async function handleSave(c: MappedContact, visibilityRows: VisibilityRow[]) {
+  async function handleSave(
+    c: MappedContact,
+    visibilityRows: VisibilityRow[],
+    initialCompanyId?: string,
+    initialRoleWithCompany?: string,
+  ) {
     const core = {
       firstName: c.firstName,
       lastName: c.lastName,
@@ -219,7 +278,12 @@ export function ContactTable({
     if (editingContact) {
       await updateContactAction({id: c.id, ...core, visibilityForRoles: visibilityRows})
     } else {
-      await createContactAction({...core, visibilityForRoles: visibilityRows})
+      await createContactAction({
+        ...core,
+        visibilityForRoles: visibilityRows,
+        initialCompanyId: initialCompanyId ?? null,
+        initialRoleWithCompany: initialRoleWithCompany ?? null,
+      })
     }
     setDialogOpen(false)
     router.refresh()
@@ -241,6 +305,9 @@ export function ContactTable({
   }
 
   const showDeletedCols = filterDeleted !== 'not-deleted'
+  // base col count: 27 data cols + 1 actions = 28
+  const baseColCount = 28
+  const colCount = showDeletedCols ? baseColCount + 3 : baseColCount
 
   return (
     <div className="flex flex-col gap-6">
@@ -250,7 +317,7 @@ export function ContactTable({
           <div className="relative max-w-sm flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search name, email, phone…"
+              placeholder="Search name, email, phone, source…"
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
@@ -294,10 +361,63 @@ export function ContactTable({
                 sortDir={sortDir}
                 onSort={toggleSort}
               />
-              <Th field="mail1" label="Email" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="mail1" label="Email 1" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="mail2" label="Email 2" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="mail3" label="Email 3" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="generalPhone" label="Phone" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="mobilePhone" label="Mobile" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="homePhone" label="Home Phone" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="birthDate" label="Birth Date" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="trough" label="Source" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="active" label="Active" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="infoCorrect" label="Info OK" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="checkInfo" label="Check Info" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="newYearCard" label="NY Card" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="newsLetter" label="Newsletter" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="mailing" label="Mailing" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="trainingAdvice" label="T&A" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th
+                field="contactForTrainingAndAdvice"
+                label="Contact T&A"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
+              <Th
+                field="customerTrainingAndAdvice"
+                label="Customer T&A"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
+              <Th
+                field="potentialCustomerTrainingAndAdvice"
+                label="Pot. Customer T&A"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
+              <Th
+                field="potentialTeacherTrainingAndAdvice"
+                label="Pot. Teacher T&A"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
+              <Th
+                field="teacherTrainingAndAdvice"
+                label="Teacher T&A"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
+              <Th
+                field="participantTrainingAndAdvice"
+                label="Participant T&A"
+                sortField={sortField}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              />
               <Th field="createdAt" label="Created At" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdBy" label="Created By" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               {showDeletedCols && (
@@ -315,7 +435,7 @@ export function ContactTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={showDeletedCols ? 15 : 12} className="h-32 text-center text-muted-foreground">
+                <TableCell colSpan={colCount} className="h-32 text-center text-muted-foreground">
                   No contacts found.
                 </TableCell>
               </TableRow>
@@ -336,10 +456,51 @@ export function ContactTable({
                   <TableCell className={tdClass}>{c.functionName ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{c.departmentExternName ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{c.mail1 ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{c.mail2 ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{c.mail3 ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{c.generalPhone ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{c.mobilePhone ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{c.homePhone ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{formatDate(c.birthDate)}</TableCell>
+                  <TableCell className={tdClass}>{c.trough ?? '-'}</TableCell>
                   <TableCell>
                     <YesNoBadge value={c.active} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.infoCorrect} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.checkInfo} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.newYearCard} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.newsLetter} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.mailing} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.trainingAdvice} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.contactForTrainingAndAdvice} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.customerTrainingAndAdvice} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.potentialCustomerTrainingAndAdvice} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.potentialTeacherTrainingAndAdvice} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.teacherTrainingAndAdvice} />
+                  </TableCell>
+                  <TableCell>
+                    <YesNoBadge value={c.participantTrainingAndAdvice} />
                   </TableCell>
                   <TableCell className={tdClass}>{formatDate(c.createdAt)}</TableCell>
                   <TableCell className={tdClass}>{c.createdByName}</TableCell>
@@ -449,6 +610,7 @@ export function ContactTable({
         functionOptions={functionOptions}
         departmentExternOptions={departmentExternOptions}
         titleOptions={titleOptions}
+        companyOptions={companyOptions}
       />
     </div>
   )

@@ -53,6 +53,8 @@ export const createContactSchema = contactSchema
   })
   .extend({
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
+    initialCompanyId: z.string().nullable().optional(),
+    initialRoleWithCompany: z.string().nullable().optional(),
   })
 
 export const updateContactSchema = contactSchema

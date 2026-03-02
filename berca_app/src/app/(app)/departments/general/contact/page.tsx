@@ -7,13 +7,14 @@ import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
 
 export default async function ContactsPage() {
-  const [contactsFromDAL, roleLevels, profile, functions, departmentExterns, titles] = await Promise.all([
+  const [contactsFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies] = await Promise.all([
     getContacts(),
     getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
     prismaClient.function.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
     prismaClient.departmentExtern.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
     prismaClient.title.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+    prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
   ])
 
   const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
@@ -32,8 +33,6 @@ export default async function ContactsPage() {
       })
 
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-
-  // Adjust fragment to match your role naming convention
   const defaultVisibleRoleNames = ['General']
   const department = 'general'
 
@@ -55,6 +54,7 @@ export default async function ContactsPage() {
           functionOptions={functions}
           departmentExternOptions={departmentExterns}
           titleOptions={titles}
+          companyOptions={companies}
         />
       </div>
     </main>

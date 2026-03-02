@@ -10,7 +10,11 @@ import {upsertVisibilityRows} from '@/serverFunctions/visibilityForRoles'
 export const createContactAction = protectedServerFunction({
   schema: createContactSchema,
   functionName: 'Create contact action',
-  serverFn: async ({data: {visibilityForRoles, ...data}, logger, profile}) => {
+  serverFn: async ({
+    data: {visibilityForRoles, initialCompanyId, initialRoleWithCompany, ...data},
+    logger,
+    profile,
+  }) => {
     logger.info(`Creating contact, createdBy: ${profile.id}`)
 
     const target = await createTargetForType('Contact', profile.id)
@@ -27,11 +31,28 @@ export const createContactAction = protectedServerFunction({
       },
     })
 
+    // Create company link if a company was selected
+    if (initialCompanyId) {
+      await prismaClient.companyContact.create({
+        data: {
+          id: crypto.randomUUID(),
+          contactId,
+          companyId: initialCompanyId,
+          roleWithCompany: initialRoleWithCompany ?? null,
+          startedDate: now,
+          createdBy: profile.id,
+          createdAt: now,
+        },
+      })
+    }
+
     if (visibilityForRoles.length > 0) {
       await upsertVisibilityRows(target.id, visibilityForRoles)
     }
 
-    logger.info(`Contact created: ${contactId} with ${visibilityForRoles.length} visibility row(s)`)
+    logger.info(
+      `Contact created: ${contactId} with ${visibilityForRoles.length} visibility row(s)${initialCompanyId ? ` linked to company ${initialCompanyId}` : ''}`,
+    )
     revalidatePath('/contacts')
   },
 })

@@ -111,7 +111,7 @@ model CompanyAdress {
   deletedAt                                  DateTime? @db.DateTime(0)
   deletedBy                                  String?   @db.Char(36)
   Employee                                   Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_1")
-  Company                                    Company   @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_2")
+  Company                                    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "CompanyAdress_ibfk_2")
   Employee_CompanyAdress_deletedByToEmployee Employee? @relation("CompanyAdress_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_3")
 
   @@index([companyId], map: "companyId")
@@ -1818,7 +1818,7 @@ model TrainingDocument {
 
 model TrainingStandard {
   id                                            String             @id @db.Char(36)
-  description                                   String?            @db.Text
+  description                                   String             @db.Text
   descriptionShort                              String?            @db.Text
   location                                      String?            @db.VarChar(100)
   createdAt                                     DateTime           @db.DateTime(0)

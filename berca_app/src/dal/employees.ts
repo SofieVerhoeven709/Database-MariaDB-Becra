@@ -78,12 +78,12 @@ export async function getEmployees(): Promise<
  * @param employeeId The id of the user for whom to start a new session.
  * @param role The role of the user for whom to start the session.
  */
-export async function startSession(employeeId: string, role: {name: string}): Promise<SessionWithProfile> {
+export async function startSession(employeeId: string, subRole: {name: string}): Promise<SessionWithProfile> {
   return prismaClient.session.create({
     data: {
       id: randomUUID(),
       employeeId,
-      activeUntil: new Date(Date.now() + SessionDuration[role.name]),
+      activeUntil: new Date(Date.now() + SessionDuration[subRole.name]),
     },
     include: sessionWithProfileInclude,
   })
@@ -155,11 +155,11 @@ export async function updateEmployee({id, ...data}: UpdateEmployeeParams): Promi
  * @param id The id of the session to extend.
  * @param role The role of the user for whom to start the session.
  */
-export async function extendSession(id: string, role: {name: string}): Promise<SessionWithProfile> {
+export async function extendSession(id: string, subRole: {name: string}): Promise<SessionWithProfile> {
   return prismaClient.session.update({
     where: {id},
     data: {
-      activeUntil: new Date(Date.now() + SessionDuration[role.name]),
+      activeUntil: new Date(Date.now() + SessionDuration[subRole.name]),
     },
     include: sessionWithProfileInclude,
   })

@@ -2,20 +2,23 @@ FROM node:22
 
 WORKDIR /app
 
+# Copy everything
 COPY . .
 
-# Enable Corepack and set pnpm to version 8.15.0
+# Enable Corepack and pin pnpm version to match lockfile
 RUN corepack enable && corepack prepare pnpm@8.15.0 --activate
 
-# Install dependencies using the existing lockfile
+# Install dependencies
 RUN pnpm install --frozen-lockfile
 
 # Build the app
 RUN pnpm run build
 
-# Run Prisma seed (make sure your .env is configured correctly)
-RUN pnpm run prisma:seed
+# Copy start script and make it executable
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 EXPOSE 3000
 
-CMD ["pnpm", "run", "start"]
+# Run seed + backend at runtime
+CMD ["/start.sh"]

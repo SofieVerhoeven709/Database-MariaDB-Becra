@@ -45,7 +45,7 @@ export type DocumentStructureMinAggregateOutputType = {
   revisionDetail: string | null
   valid: boolean | null
   process: boolean | null
-  aditionalInfo: string | null
+  additionalInfo: string | null
   referenceDocId: string | null
   roleId: string | null
   deleted: boolean | null
@@ -68,7 +68,7 @@ export type DocumentStructureMaxAggregateOutputType = {
   revisionDetail: string | null
   valid: boolean | null
   process: boolean | null
-  aditionalInfo: string | null
+  additionalInfo: string | null
   referenceDocId: string | null
   roleId: string | null
   deleted: boolean | null
@@ -91,7 +91,7 @@ export type DocumentStructureCountAggregateOutputType = {
   revisionDetail: number
   valid: number
   process: number
-  aditionalInfo: number
+  additionalInfo: number
   referenceDocId: number
   roleId: number
   deleted: number
@@ -124,7 +124,7 @@ export type DocumentStructureMinAggregateInputType = {
   revisionDetail?: true
   valid?: true
   process?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   referenceDocId?: true
   roleId?: true
   deleted?: true
@@ -147,7 +147,7 @@ export type DocumentStructureMaxAggregateInputType = {
   revisionDetail?: true
   valid?: true
   process?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   referenceDocId?: true
   roleId?: true
   deleted?: true
@@ -170,7 +170,7 @@ export type DocumentStructureCountAggregateInputType = {
   revisionDetail?: true
   valid?: true
   process?: true
-  aditionalInfo?: true
+  additionalInfo?: true
   referenceDocId?: true
   roleId?: true
   deleted?: true
@@ -280,7 +280,7 @@ export type DocumentStructureGroupByOutputType = {
   revisionDetail: string | null
   valid: boolean
   process: boolean
-  aditionalInfo: string | null
+  additionalInfo: string | null
   referenceDocId: string | null
   roleId: string | null
   deleted: boolean
@@ -326,7 +326,7 @@ export type DocumentStructureWhereInput = {
   revisionDetail?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   valid?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolFilter<"DocumentStructure"> | boolean
-  aditionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   referenceDocId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   roleId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   deleted?: Prisma.BoolFilter<"DocumentStructure"> | boolean
@@ -365,7 +365,7 @@ export type DocumentStructureOrderByWithRelationInput = {
   revisionDetail?: Prisma.SortOrderInput | Prisma.SortOrder
   valid?: Prisma.SortOrder
   process?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceDocId?: Prisma.SortOrderInput | Prisma.SortOrder
   roleId?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
@@ -396,10 +396,10 @@ export type DocumentStructureOrderByWithRelationInput = {
 
 export type DocumentStructureWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  documentNumber?: string
   AND?: Prisma.DocumentStructureWhereInput | Prisma.DocumentStructureWhereInput[]
   OR?: Prisma.DocumentStructureWhereInput[]
   NOT?: Prisma.DocumentStructureWhereInput | Prisma.DocumentStructureWhereInput[]
-  documentNumber?: Prisma.StringFilter<"DocumentStructure"> | string
   description?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   descriptionShort?: Prisma.StringFilter<"DocumentStructure"> | string
   createdAt?: Prisma.DateTimeFilter<"DocumentStructure"> | Date | string
@@ -408,7 +408,7 @@ export type DocumentStructureWhereUniqueInput = Prisma.AtLeast<{
   revisionDetail?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   valid?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolFilter<"DocumentStructure"> | boolean
-  aditionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   referenceDocId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   roleId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   deleted?: Prisma.BoolFilter<"DocumentStructure"> | boolean
@@ -434,7 +434,7 @@ export type DocumentStructureWhereUniqueInput = Prisma.AtLeast<{
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
   MaterialStructure?: Prisma.MaterialStructureListRelationFilter
   TrainingDocument?: Prisma.TrainingDocumentListRelationFilter
-}, "id">
+}, "id" | "documentNumber">
 
 export type DocumentStructureOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -447,7 +447,7 @@ export type DocumentStructureOrderByWithAggregationInput = {
   revisionDetail?: Prisma.SortOrderInput | Prisma.SortOrder
   valid?: Prisma.SortOrder
   process?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceDocId?: Prisma.SortOrderInput | Prisma.SortOrder
   roleId?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
@@ -478,7 +478,7 @@ export type DocumentStructureScalarWhereWithAggregatesInput = {
   revisionDetail?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
   valid?: Prisma.BoolWithAggregatesFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolWithAggregatesFilter<"DocumentStructure"> | boolean
-  aditionalInfo?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
   referenceDocId?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
   roleId?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
   deleted?: Prisma.BoolWithAggregatesFilter<"DocumentStructure"> | boolean
@@ -501,7 +501,7 @@ export type DocumentStructureCreateInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -533,7 +533,7 @@ export type DocumentStructureUncheckedCreateInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -565,7 +565,7 @@ export type DocumentStructureUpdateInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -597,7 +597,7 @@ export type DocumentStructureUncheckedUpdateInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -629,7 +629,7 @@ export type DocumentStructureCreateManyInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -652,7 +652,7 @@ export type DocumentStructureUpdateManyMutationInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -668,7 +668,7 @@ export type DocumentStructureUncheckedUpdateManyInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -712,7 +712,7 @@ export type DocumentStructureCountOrderByAggregateInput = {
   revisionDetail?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   process?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
@@ -739,7 +739,7 @@ export type DocumentStructureMaxOrderByAggregateInput = {
   revisionDetail?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   process?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
@@ -762,7 +762,7 @@ export type DocumentStructureMinOrderByAggregateInput = {
   revisionDetail?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   process?: Prisma.SortOrder
-  aditionalInfo?: Prisma.SortOrder
+  additionalInfo?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
@@ -1226,7 +1226,7 @@ export type DocumentStructureCreateWithoutContactInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
@@ -1257,7 +1257,7 @@ export type DocumentStructureUncheckedCreateWithoutContactInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -1304,7 +1304,7 @@ export type DocumentStructureUpdateWithoutContactInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
@@ -1335,7 +1335,7 @@ export type DocumentStructureUncheckedUpdateWithoutContactInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1366,7 +1366,7 @@ export type DocumentStructureCreateWithoutOther_DocumentStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -1397,7 +1397,7 @@ export type DocumentStructureUncheckedCreateWithoutOther_DocumentStructureInput 
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -1433,7 +1433,7 @@ export type DocumentStructureCreateWithoutDocumentStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -1464,7 +1464,7 @@ export type DocumentStructureUncheckedCreateWithoutDocumentStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -1516,7 +1516,7 @@ export type DocumentStructureUpdateWithoutOther_DocumentStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -1547,7 +1547,7 @@ export type DocumentStructureUncheckedUpdateWithoutOther_DocumentStructureInput 
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1597,7 +1597,7 @@ export type DocumentStructureScalarWhereInput = {
   revisionDetail?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   valid?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolFilter<"DocumentStructure"> | boolean
-  aditionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  additionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   referenceDocId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   roleId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   deleted?: Prisma.BoolFilter<"DocumentStructure"> | boolean
@@ -1620,7 +1620,7 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_createdByTo
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -1651,7 +1651,7 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_cr
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -1692,7 +1692,7 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_deletedByTo
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -1723,7 +1723,7 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_de
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -1764,7 +1764,7 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_managedById
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -1795,7 +1795,7 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_ma
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -1836,7 +1836,7 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_revisedById
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -1867,7 +1867,7 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_re
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -1908,7 +1908,7 @@ export type DocumentStructureCreateWithoutEmployee_Employee_pictureIdToDocumentS
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -1939,7 +1939,7 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_Employee_pictureIdTo
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -2050,7 +2050,7 @@ export type DocumentStructureUpdateWithoutEmployee_Employee_pictureIdToDocumentS
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -2081,7 +2081,7 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_Employee_pictureIdTo
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2112,7 +2112,7 @@ export type DocumentStructureCreateWithoutFollowUpInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -2143,7 +2143,7 @@ export type DocumentStructureUncheckedCreateWithoutFollowUpInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -2190,7 +2190,7 @@ export type DocumentStructureUpdateWithoutFollowUpInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -2221,7 +2221,7 @@ export type DocumentStructureUncheckedUpdateWithoutFollowUpInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2252,7 +2252,7 @@ export type DocumentStructureCreateWithoutFollowUpStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -2283,7 +2283,7 @@ export type DocumentStructureUncheckedCreateWithoutFollowUpStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -2330,7 +2330,7 @@ export type DocumentStructureUpdateWithoutFollowUpStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -2361,7 +2361,7 @@ export type DocumentStructureUncheckedUpdateWithoutFollowUpStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2392,7 +2392,7 @@ export type DocumentStructureCreateWithoutMaterialSerialTrackedStructure_Materia
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -2423,7 +2423,7 @@ export type DocumentStructureUncheckedCreateWithoutMaterialSerialTrackedStructur
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -2459,7 +2459,7 @@ export type DocumentStructureCreateWithoutMaterialSerialTrackedStructure_Materia
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -2490,7 +2490,7 @@ export type DocumentStructureUncheckedCreateWithoutMaterialSerialTrackedStructur
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -2537,7 +2537,7 @@ export type DocumentStructureUpdateWithoutMaterialSerialTrackedStructure_Materia
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -2568,7 +2568,7 @@ export type DocumentStructureUncheckedUpdateWithoutMaterialSerialTrackedStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2610,7 +2610,7 @@ export type DocumentStructureUpdateWithoutMaterialSerialTrackedStructure_Materia
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -2641,7 +2641,7 @@ export type DocumentStructureUncheckedUpdateWithoutMaterialSerialTrackedStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2672,7 +2672,7 @@ export type DocumentStructureCreateWithoutMaterialStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -2703,7 +2703,7 @@ export type DocumentStructureUncheckedCreateWithoutMaterialStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -2750,7 +2750,7 @@ export type DocumentStructureUpdateWithoutMaterialStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -2781,7 +2781,7 @@ export type DocumentStructureUncheckedUpdateWithoutMaterialStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2812,7 +2812,7 @@ export type DocumentStructureCreateWithoutRoleInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -2843,7 +2843,7 @@ export type DocumentStructureUncheckedCreateWithoutRoleInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -2900,7 +2900,7 @@ export type DocumentStructureCreateWithoutTargetInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -2931,7 +2931,7 @@ export type DocumentStructureUncheckedCreateWithoutTargetInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -2988,7 +2988,7 @@ export type DocumentStructureCreateWithoutTrainingDocumentInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
@@ -3019,7 +3019,7 @@ export type DocumentStructureUncheckedCreateWithoutTrainingDocumentInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -3066,7 +3066,7 @@ export type DocumentStructureUpdateWithoutTrainingDocumentInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -3097,7 +3097,7 @@ export type DocumentStructureUncheckedUpdateWithoutTrainingDocumentInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3128,7 +3128,7 @@ export type DocumentStructureCreateManyDocumentStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -3150,7 +3150,7 @@ export type DocumentStructureUpdateWithoutDocumentStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -3181,7 +3181,7 @@ export type DocumentStructureUncheckedUpdateWithoutDocumentStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3212,7 +3212,7 @@ export type DocumentStructureUncheckedUpdateManyWithoutDocumentStructureInput = 
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3234,7 +3234,7 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_createdByToEmp
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -3256,7 +3256,7 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_deletedByToEmp
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -3278,7 +3278,7 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_managedByIdToE
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -3300,7 +3300,7 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_revisedByIdToE
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -3322,7 +3322,7 @@ export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_createdByTo
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -3353,7 +3353,7 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_cr
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3384,7 +3384,7 @@ export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3406,7 +3406,7 @@ export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_deletedByTo
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -3437,7 +3437,7 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_de
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3468,7 +3468,7 @@ export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3490,7 +3490,7 @@ export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_managedById
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -3521,7 +3521,7 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_ma
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3552,7 +3552,7 @@ export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3574,7 +3574,7 @@ export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_revisedById
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -3605,7 +3605,7 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_re
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3636,7 +3636,7 @@ export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3658,7 +3658,7 @@ export type DocumentStructureCreateManyRoleInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -3680,7 +3680,7 @@ export type DocumentStructureUpdateWithoutRoleInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -3711,7 +3711,7 @@ export type DocumentStructureUncheckedUpdateWithoutRoleInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3742,7 +3742,7 @@ export type DocumentStructureUncheckedUpdateManyWithoutRoleInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3764,7 +3764,7 @@ export type DocumentStructureCreateManyTargetInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
-  aditionalInfo?: string | null
+  additionalInfo?: string | null
   referenceDocId?: string | null
   roleId?: string | null
   deleted?: boolean
@@ -3786,7 +3786,7 @@ export type DocumentStructureUpdateWithoutTargetInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
@@ -3817,7 +3817,7 @@ export type DocumentStructureUncheckedUpdateWithoutTargetInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3848,7 +3848,7 @@ export type DocumentStructureUncheckedUpdateManyWithoutTargetInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  aditionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3973,7 +3973,7 @@ export type DocumentStructureSelect<ExtArgs extends runtime.Types.Extensions.Int
   revisionDetail?: boolean
   valid?: boolean
   process?: boolean
-  aditionalInfo?: boolean
+  additionalInfo?: boolean
   referenceDocId?: boolean
   roleId?: boolean
   deleted?: boolean
@@ -4015,7 +4015,7 @@ export type DocumentStructureSelectScalar = {
   revisionDetail?: boolean
   valid?: boolean
   process?: boolean
-  aditionalInfo?: boolean
+  additionalInfo?: boolean
   referenceDocId?: boolean
   roleId?: boolean
   deleted?: boolean
@@ -4027,7 +4027,7 @@ export type DocumentStructureSelectScalar = {
   deletedBy?: boolean
 }
 
-export type DocumentStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "documentNumber" | "description" | "descriptionShort" | "createdAt" | "expiryDate" | "revisionNumber" | "revisionDetail" | "valid" | "process" | "aditionalInfo" | "referenceDocId" | "roleId" | "deleted" | "deletedAt" | "createdBy" | "revisedById" | "managedById" | "targetId" | "deletedBy", ExtArgs["result"]["documentStructure"]>
+export type DocumentStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "documentNumber" | "description" | "descriptionShort" | "createdAt" | "expiryDate" | "revisionNumber" | "revisionDetail" | "valid" | "process" | "additionalInfo" | "referenceDocId" | "roleId" | "deleted" | "deletedAt" | "createdBy" | "revisedById" | "managedById" | "targetId" | "deletedBy", ExtArgs["result"]["documentStructure"]>
 export type DocumentStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Contact?: boolean | Prisma.DocumentStructure$ContactArgs<ExtArgs>
   DocumentStructure?: boolean | Prisma.DocumentStructure$DocumentStructureArgs<ExtArgs>
@@ -4079,7 +4079,7 @@ export type $DocumentStructurePayload<ExtArgs extends runtime.Types.Extensions.I
     revisionDetail: string | null
     valid: boolean
     process: boolean
-    aditionalInfo: string | null
+    additionalInfo: string | null
     referenceDocId: string | null
     roleId: string | null
     deleted: boolean
@@ -4484,7 +4484,7 @@ export interface DocumentStructureFieldRefs {
   readonly revisionDetail: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly valid: Prisma.FieldRef<"DocumentStructure", 'Boolean'>
   readonly process: Prisma.FieldRef<"DocumentStructure", 'Boolean'>
-  readonly aditionalInfo: Prisma.FieldRef<"DocumentStructure", 'String'>
+  readonly additionalInfo: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly referenceDocId: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly roleId: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly deleted: Prisma.FieldRef<"DocumentStructure", 'Boolean'>

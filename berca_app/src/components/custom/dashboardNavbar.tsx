@@ -30,9 +30,7 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
     const fetchDepartments = async () => {
       try {
         const res = await fetch('/api/departments', {
-          method: 'POST', // match what DepartmentGrid does
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(roleContextInput), // send the rolelevelId
+          method: 'GET',
         })
         if (!res.ok) throw new Error('Failed to fetch departments')
         const data: Department[] = await res.json()

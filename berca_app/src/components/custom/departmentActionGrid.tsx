@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type {Department} from '@/generated/prisma/client'
 import camelCase from 'lodash/camelCase'
 import {getIconByName} from '@/extra/icons'
+import type {Route} from 'next'
 
 interface DepartmentActionGridProps {
   department: Department
@@ -32,7 +33,7 @@ export function DepartmentActionGrid({department}: DepartmentActionGridProps) {
         return (
           <Link
             key={action.id}
-            href={`/departments/${folderSlug}/${action.id}`}
+            href={`/departments/${folderSlug}/${action.id}` as Route}
             className="group flex flex-col items-start gap-4 rounded-xl border border-border/60 bg-card p-5 transition-all hover:shadow-lg hover:-translate-y-0.5"
             style={
               {

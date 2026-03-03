@@ -23,9 +23,7 @@ export function DepartmentGrid({roleContextInput}: DepartmentGridProps) {
   useEffect(() => {
     const fetchDepartments = async () => {
       const res = await fetch('/api/departments', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(roleContextInput),
+        method: 'GET',
       })
 
       if (!res.ok) {

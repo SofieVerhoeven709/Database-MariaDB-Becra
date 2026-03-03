@@ -27,3 +27,13 @@ export async function getRoleLevels(): Promise<RoleLevelWithRelations[] | null> 
     },
   })
 }
+
+export async function getAllRoleLevels() {
+  return prismaClient.roleLevel.findMany({
+    include: {
+      Role: true,
+      SubRole: true,
+    },
+    orderBy: [{Role: {name: 'asc'}}, {SubRole: {level: 'asc'}}],
+  })
+}

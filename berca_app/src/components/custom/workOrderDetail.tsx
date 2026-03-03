@@ -29,6 +29,7 @@ interface WorkOrderDetailProps {
   materials: MaterialOption[]
   currentUserLevel: number
   currentUserRole: string
+  currentUserId: string
 }
 
 export function WorkOrderDetail({
@@ -39,6 +40,7 @@ export function WorkOrderDetail({
   materials,
   currentUserLevel,
   currentUserRole,
+  currentUserId,
 }: WorkOrderDetailProps) {
   const router = useRouter()
   const isNew = workOrder === null
@@ -302,6 +304,7 @@ export function WorkOrderDetail({
               employees={employees}
               hourTypes={hourTypes}
               permissions={permissions}
+              currentUserId={currentUserId}
             />
           </TabsContent>
 

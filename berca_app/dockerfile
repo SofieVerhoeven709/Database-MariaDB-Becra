@@ -4,7 +4,13 @@ WORKDIR /app
 
 COPY . .
 
-RUN corepack enable && pnpm install --frozen-lockfile
+# Enable Corepack and set pnpm to version 8.15.0 (matches your lockfile)
+RUN corepack enable && corepack prepare pnpm@8.15.0 --activate
+
+# Install dependencies using your existing lockfile
+RUN pnpm install --frozen-lockfile
+
+# Build app
 RUN pnpm run build
 
 EXPOSE 3000

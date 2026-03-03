@@ -44,6 +44,7 @@ export default async function NewWorkOrderPage({params}: NewWorkOrderPageProps) 
           materials={materialOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          currentUserId={profile.id}
         />
       </div>
     </main>

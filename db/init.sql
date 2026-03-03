@@ -1,6 +1,6 @@
 CREATE DATABASE BecraBV;
 
-USE BecraBv;
+USE BecraBV;
 
 CREATE TABLE
       Role (
@@ -1563,6 +1563,3 @@ CREATE TABLE
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
-
--- Select below then right click and run selected query
-SHOW TABLE STATUS

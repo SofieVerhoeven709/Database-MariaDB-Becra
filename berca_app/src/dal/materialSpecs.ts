@@ -1,6 +1,6 @@
 import 'server-only'
 import {prismaClient} from './prismaClient'
-import type {MaterialGroup, Unit} from '@/generated/prisma/client'
+import type {MaterialGroup, Unit, MaterialPerformance, MaterialSpec, MaterialFamily} from '@/generated/prisma/client'
 import type {Prisma} from '@/generated/prisma/client'
 
 // ─── MaterialGroup ───────────────────────────────────────────────────────────
@@ -60,6 +60,66 @@ export async function updateUnit(id: string, data: Prisma.UnitUncheckedUpdateInp
 
 export async function softDeleteUnit(id: string, deletedBy: string) {
   return prismaClient.unit.update({
+    where: {id},
+    data: {deleted: true, deletedAt: new Date(), deletedBy},
+  })
+}
+
+// ─── MaterialSpec (for dropdown) ──────────────────────────────────────────────
+
+export async function getMaterialSpecs(): Promise<MaterialSpec[]> {
+  return prismaClient.materialSpec.findMany({
+    where: {deleted: false},
+    orderBy: {name: 'asc'},
+  })
+}
+
+// ─── MaterialFamily (for dropdown) ───────────────────────────────────────────
+
+export async function getMaterialFamilies(): Promise<MaterialFamily[]> {
+  return prismaClient.materialFamily.findMany({
+    where: {deleted: false},
+    orderBy: {name: 'asc'},
+  })
+}
+
+// ─── MaterialPerformance ──────────────────────────────────────────────────────
+
+export async function getMaterialPerformances(): Promise<MaterialPerformance[]> {
+  return prismaClient.materialPerformance.findMany({
+    where: {deleted: false},
+    orderBy: {name: 'asc'},
+  })
+}
+
+export async function createMaterialPerformance(data: {
+  id: string
+  name: string
+  materialSpecId?: string | null
+  materialFamilyId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  createdBy: string
+  createdAt: Date
+}) {
+  return prismaClient.materialPerformance.create({data})
+}
+
+export async function updateMaterialPerformance(
+  id: string,
+  data: {
+    name?: string
+    materialSpecId?: string | null
+    materialFamilyId?: string | null
+    shortDescription?: string | null
+    longDescription?: string | null
+  },
+) {
+  return prismaClient.materialPerformance.update({where: {id}, data})
+}
+
+export async function softDeleteMaterialPerformance(id: string, deletedBy: string) {
+  return prismaClient.materialPerformance.update({
     where: {id},
     data: {deleted: true, deletedAt: new Date(), deletedBy},
   })

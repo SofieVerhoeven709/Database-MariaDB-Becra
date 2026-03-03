@@ -3,20 +3,104 @@ import {randomUUID} from 'crypto'
 import {hashPassword} from '@/lib/passwordUtils'
 // Departments with icons and HEX colors
 const ALL_DEPARTMENTS = [
-  {name: 'General', description: 'Office coordination, scheduling, and general administration', icon: 'Clipboard', color: '#00b0f0', number: 1},
-  {name: 'Accounting', description: 'Financial records, audits, and reporting', icon: 'Calculator', color: '#0c78d2', number: 2},
-  {name: 'Engineering', description: 'Development, deployments, and infrastructure', icon: 'Wrench', color: '#aeaaaa', number: 3},
-  {name: 'Training', description: 'Employee development and learning programs', icon: 'BookOpen', color: '#00cc00', number: 4},
-  {name: 'Project', description: 'Project planning, timelines, and deliverables', icon: 'ClipboardList', color: '#ffff00', number: 5},
-  {name: 'SHEQ', description: 'Safety, Health, Environment, and Quality', icon: 'ShieldCheck', color: '#f7caac', number: 6},
-  {name: 'HR', description: 'Employee records, recruitment, and onboarding', icon: 'Users', color: '#7030a0', number: 7},
-  {name: 'Management', description: 'Leadership, strategy, and organizational planning', icon: 'Briefcase', color: '#ffc000', number: 8},
-  {name: 'Database', description: 'Database administration and data integrity', icon: 'Database', color: '#2de2e6', number: 9},
-  {name: 'Purchasing', description: 'Supplies, vendor management, and procurement', icon: 'ShoppingCart', color: '#ff4fa3', number: 10},
-  {name: 'Warehouse', description: 'Inventory storage, stock control, and goods handling', icon: 'Package', color: '#e3c2e4', number: 11},
-  {name: 'Sales', description: 'Leads, deals, and customer acquisition', icon: 'TrendingUp', color: '#fe6f5e', number: 12},
-  {name: 'PR', description: 'Public relations, media, and communications', icon: 'Megaphone', color: '#7800ef', number: 13},
-  {name: 'Product Quality', description: 'Product inspection, quality assurance, and standards compliance', icon: 'CheckCircle', color: '#8c92ac', number: 14},
+  {
+    name: 'General',
+    description: 'Office coordination, scheduling, and general administration',
+    icon: 'Clipboard',
+    color: '#00b0f0',
+    number: 1,
+  },
+  {
+    name: 'Accounting',
+    description: 'Financial records, audits, and reporting',
+    icon: 'Calculator',
+    color: '#0c78d2',
+    number: 2,
+  },
+  {
+    name: 'Engineering',
+    description: 'Development, deployments, and infrastructure',
+    icon: 'Wrench',
+    color: '#aeaaaa',
+    number: 3,
+  },
+  {
+    name: 'Training',
+    description: 'Employee development and learning programs',
+    icon: 'BookOpen',
+    color: '#00cc00',
+    number: 4,
+  },
+  {
+    name: 'Project',
+    description: 'Project planning, timelines, and deliverables',
+    icon: 'ClipboardList',
+    color: '#ffff00',
+    number: 5,
+  },
+  {
+    name: 'SHEQ',
+    description: 'Safety, Health, Environment, and Quality',
+    icon: 'ShieldCheck',
+    color: '#f7caac',
+    number: 6,
+  },
+  {
+    name: 'HR',
+    description: 'Employee records, recruitment, and onboarding',
+    icon: 'Users',
+    color: '#7030a0',
+    number: 7,
+  },
+  {
+    name: 'Management',
+    description: 'Leadership, strategy, and organizational planning',
+    icon: 'Briefcase',
+    color: '#ffc000',
+    number: 8,
+  },
+  {
+    name: 'Database',
+    description: 'Database administration and data integrity',
+    icon: 'Database',
+    color: '#2de2e6',
+    number: 9,
+  },
+  {
+    name: 'Purchasing',
+    description: 'Supplies, vendor management, and procurement',
+    icon: 'ShoppingCart',
+    color: '#ff4fa3',
+    number: 10,
+  },
+  {
+    name: 'Warehouse',
+    description: 'Inventory storage, stock control, and goods handling',
+    icon: 'Package',
+    color: '#e3c2e4',
+    number: 11,
+  },
+  {
+    name: 'Sales',
+    description: 'Leads, deals, and customer acquisition',
+    icon: 'TrendingUp',
+    color: '#fe6f5e',
+    number: 12,
+  },
+  {
+    name: 'PR',
+    description: 'Public relations, media, and communications',
+    icon: 'Megaphone',
+    color: '#7800ef',
+    number: 13,
+  },
+  {
+    name: 'Product Quality',
+    description: 'Product inspection, quality assurance, and standards compliance',
+    icon: 'CheckCircle',
+    color: '#8c92ac',
+    number: 14,
+  },
 ]
 const SUB_ROLES = [
   {name: 'user', level: 20},
@@ -25,7 +109,10 @@ const SUB_ROLES = [
   {name: 'manager', level: 80},
 ]
 type SubRoleName = (typeof SUB_ROLES)[number]['name']
-const createdSubRoles: Record<SubRoleName, {id: string; level: number}> = {} as Record<SubRoleName, {id: string; level: number}>
+const createdSubRoles: Record<SubRoleName, {id: string; level: number}> = {} as Record<
+  SubRoleName,
+  {id: string; level: number}
+>
 const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}, {name: 'Internal'}]
 export const seedDev = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
@@ -216,100 +303,20 @@ export const seedDev = async (prisma: PrismaClient) => {
     const existing = await prisma.hourType.findFirst({where: {name: ht.name}})
     if (!existing) {
       await prisma.hourType.create({
-        data: {id: randomUUID(), name: ht.name, info: ht.info, createdAt: now, createdBy: adminEmployee.id, deleted: false},
-      })
-    }
-  }
-  // 16. Upsert MaterialGroups
-  const MATERIAL_GROUPS = [
-    {groupA: 'Mechanical', groupB: 'Fasteners', groupC: 'Bolts', groupD: 'Hex'},
-    {groupA: 'Mechanical', groupB: 'Fasteners', groupC: 'Nuts', groupD: 'Hex'},
-    {groupA: 'Electrical', groupB: 'Cables', groupC: 'Power', groupD: 'Copper'},
-    {groupA: 'Electrical', groupB: 'Components', groupC: 'Switches', groupD: 'Industrial'},
-    {groupA: 'Hydraulics', groupB: 'Fittings', groupC: 'Couplings', groupD: 'Quick'},
-  ]
-  const createdMaterialGroups: string[] = []
-  for (const mg of MATERIAL_GROUPS) {
-    let existing = await prisma.materialGroup.findFirst({
-      where: {groupA: mg.groupA, groupB: mg.groupB, groupC: mg.groupC, groupD: mg.groupD, deleted: false},
-    })
-    if (!existing) {
-      existing = await prisma.materialGroup.create({
-        data: {id: randomUUID(), groupA: mg.groupA, groupB: mg.groupB, groupC: mg.groupC, groupD: mg.groupD, deleted: false},
-      })
-    }
-    createdMaterialGroups.push(existing.id)
-  }
-  console.log('MaterialGroups seeded')
-  // 17. Upsert Units
-  const UNITS = [
-    {name: 'Piece', quantity: 1, abbreviation: 'pcs', shortDescription: 'Single piece'},
-    {name: 'Meter', quantity: 1, abbreviation: 'm', shortDescription: 'Length in meters'},
-    {name: 'Kilogram', quantity: 1, abbreviation: 'kg', shortDescription: 'Weight in kilograms'},
-    {name: 'Box', quantity: 1, abbreviation: 'box', shortDescription: 'Box quantity'},
-  ]
-  const createdUnits: string[] = []
-  for (const unit of UNITS) {
-    let existing = await prisma.unit.findFirst({
-      where: {unitName: unit.name, abbreviation: unit.abbreviation, deleted: false},
-    })
-    if (!existing) {
-      existing = await prisma.unit.create({
         data: {
           id: randomUUID(),
-          unitName: unit.name,
-          physicalQuantity: unit.quantity.toString(),
-          abbreviation: unit.abbreviation,
-          shortDescription: unit.shortDescription,
-          longDescription: unit.shortDescription,
-          valid: true,
-          createdBy: adminEmployee.id,
+          name: ht.name,
+          info: ht.info,
           createdAt: now,
-          deleted: false,
-        },
-      })
-    }
-    createdUnits.push(existing.id)
-  }
-  console.log('Units seeded')
-  // 18. Upsert Materials (skip if beNumber already exists)
-  const MATERIALS = [
-    {beNumber: 'BE-MAT-0001', name: 'Hex Bolt M10', shortDescription: 'M10 hex bolt galvanized', longDescription: 'Standard galvanized hex bolt M10 x 30mm', brandName: 'Fabory', preferredSupplier: 'Fabory'},
-    {beNumber: 'BE-MAT-0002', name: 'Hex Nut M10', shortDescription: 'M10 hex nut', longDescription: 'Standard steel hex nut M10', brandName: 'Fabory', preferredSupplier: 'Fabory'},
-    {beNumber: 'BE-MAT-0003', name: 'Power Cable 3G2.5', shortDescription: 'Power cable 3G2.5mm2', longDescription: 'Flexible copper power cable', brandName: 'Nexans', preferredSupplier: 'Nexans'},
-    {beNumber: 'BE-MAT-0004', name: 'Industrial Switch', shortDescription: '24V industrial switch', longDescription: 'Heavy duty industrial control switch', brandName: 'Siemens', preferredSupplier: 'Siemens'},
-    {beNumber: 'BE-MAT-0005', name: 'Hydraulic Coupling', shortDescription: 'Quick hydraulic coupling', longDescription: 'High pressure quick connect coupling', brandName: 'Parker', preferredSupplier: 'Parker'},
-  ]
-  let brandOrderCounter = 1
-  for (let i = 0; i < MATERIALS.length; i++) {
-    const mat = MATERIALS[i]
-    const existing = await prisma.material.findUnique({where: {beNumber: mat.beNumber}})
-    if (!existing) {
-      await prisma.material.create({
-        data: {
-          id: randomUUID(),
-          beNumber: mat.beNumber,
-          name: mat.name,
-          brandOrderNr: brandOrderCounter,
-          shortDescription: mat.shortDescription,
-          longDescription: mat.longDescription,
-          preferredSupplier: mat.preferredSupplier,
-          brandName: mat.brandName,
-          documentationPlace: 'SharePoint',
-          bePartDoc: null,
-          rejected: false,
-          materialGroupId: createdMaterialGroups[i % createdMaterialGroups.length],
-          unitId: createdUnits[i % createdUnits.length],
           createdBy: adminEmployee.id,
           deleted: false,
         },
       })
     }
-    brandOrderCounter++
   }
-  console.log('Materials seeded')
   console.log('Default hour types seeded')
   console.log('Project types seeded')
   console.log('Departments, Roles, SubRoles, RoleLevels, Targets, and VisibilityForRole seeded')
   console.log('Total roleLevels created: 57 (14 x 4 + 1 Administrator)')
+  console.log('NOTE: MaterialGroups, Units, Materials, and Performance Specs are managed via the frontend only.')
 }

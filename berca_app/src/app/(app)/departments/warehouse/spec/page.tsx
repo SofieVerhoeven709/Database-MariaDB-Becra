@@ -1,15 +1,24 @@
-import {getMaterialGroups, getUnits} from '@/dal/materialSpecs'
+import {
+  getMaterialGroups,
+  getUnits,
+  getMaterialPerformances,
+  getMaterialSpecs,
+  getMaterialFamilies,
+} from '@/dal/materialSpecs'
 import {MaterialSpecManager} from '@/components/custom/materialSpecManager'
 
 export default async function SpecPage() {
-  const [groups, units] = await Promise.all([getMaterialGroups(), getUnits()])
+  const [groups, units, performances, specs, families] = await Promise.all([
+    getMaterialGroups(),
+    getUnits(),
+    getMaterialPerformances(),
+    getMaterialSpecs(),
+    getMaterialFamilies(),
+  ])
 
   const mappedGroups = groups.map(g => ({
     id: g.id,
-    groupA: g.groupA,
-    groupB: g.groupB ?? null,
-    groupC: g.groupC ?? null,
-    groupD: g.groupD ?? null,
+    name: g.groupA,
   }))
 
   const mappedUnits = units.map(u => ({
@@ -22,13 +31,40 @@ export default async function SpecPage() {
     valid: u.valid,
   }))
 
+  const mappedPerformances = performances.map(p => ({
+    id: p.id,
+    name: p.name ?? '',
+    materialSpecId: p.materialSpecId ?? null,
+    materialFamilyId: p.materialFamilyId ?? null,
+    shortDescription: p.shortDescription ?? null,
+    longDescription: p.longDescription ?? null,
+  }))
+
+  const mappedSpecs = specs.map(s => ({
+    id: s.id,
+    name: s.name ?? null,
+  }))
+
+  const mappedFamilies = families.map(f => ({
+    id: f.id,
+    name: f.name ?? null,
+  }))
+
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Material Specifications</h1>
-        <p className="text-muted-foreground text-sm mt-1">Manage material groups and measurement units.</p>
+        <p className="text-muted-foreground text-sm mt-1">
+          Manage material groups, measurement units, and performance specifications.
+        </p>
       </div>
-      <MaterialSpecManager initialGroups={mappedGroups} initialUnits={mappedUnits} />
+      <MaterialSpecManager
+        initialGroups={mappedGroups}
+        initialUnits={mappedUnits}
+        initialPerformances={mappedPerformances}
+        specs={mappedSpecs}
+        families={mappedFamilies}
+      />
     </div>
   )
 }

@@ -9,6 +9,9 @@ import {
   createUnit,
   updateUnit,
   softDeleteUnit,
+  createMaterialPerformance,
+  updateMaterialPerformance,
+  softDeleteMaterialPerformance,
 } from '@/dal/materialSpecs'
 import {protectedFormAction} from '@/lib/serverFunctions'
 import {
@@ -16,6 +19,8 @@ import {
   deleteMaterialGroupSchema,
   unitSchema,
   deleteUnitSchema,
+  performanceSchema,
+  deletePerformanceSchema,
 } from '@/schemas/materialSpecSchemas'
 
 const REVALIDATE = '/departments/warehouse/spec'
@@ -101,5 +106,46 @@ export const deleteUnitAction = protectedFormAction({
     logger.info(`Unit soft-deleted: ${data.id}`)
     revalidatePath(REVALIDATE)
     revalidatePath(REVALIDATE_MATERIAL)
+  },
+})
+
+// ─── MaterialPerformance actions ─────────────────────────────────────────────
+
+export const createPerformanceAction = protectedFormAction({
+  schema: performanceSchema,
+  functionName: 'Create performance spec',
+  globalErrorMessage: 'Could not create the performance spec, please try again.',
+  serverFn: async ({data, profile, logger}) => {
+    const perf = await createMaterialPerformance({
+      ...data,
+      id: data.id || randomUUID(),
+      createdBy: profile.id,
+      createdAt: new Date(),
+    })
+    logger.info(`MaterialPerformance created: ${perf.id}`)
+    revalidatePath(REVALIDATE)
+  },
+})
+
+export const updatePerformanceAction = protectedFormAction({
+  schema: performanceSchema,
+  functionName: 'Update performance spec',
+  globalErrorMessage: 'Could not update the performance spec, please try again.',
+  serverFn: async ({data, logger}) => {
+    const {id, ...rest} = data
+    const perf = await updateMaterialPerformance(id, rest)
+    logger.info(`MaterialPerformance updated: ${perf.id}`)
+    revalidatePath(REVALIDATE)
+  },
+})
+
+export const deletePerformanceAction = protectedFormAction({
+  schema: deletePerformanceSchema,
+  functionName: 'Delete performance spec',
+  globalErrorMessage: 'Could not delete the performance spec, please try again.',
+  serverFn: async ({data, profile, logger}) => {
+    await softDeleteMaterialPerformance(data.id, profile.id)
+    logger.info(`MaterialPerformance soft-deleted: ${data.id}`)
+    revalidatePath(REVALIDATE)
   },
 })

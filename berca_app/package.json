@@ -9,7 +9,10 @@
     "lint": "eslint ./src",
     "lint-fix": "eslint ./src --fix",
     "format": "prettier --write ./src",
-    "prisma:seed": "pnpx tsx --conditions=react-server ./prisma/seed.ts"
+    "prisma:seed": "pnpx tsx --conditions=react-server ./prisma/seed.ts",
+    "prisma:studio": "pnpx prisma studio",
+    "prisma:cleanup": "pnpx tsx --conditions=react-server ./prisma/cleanupDuplicates.ts",
+    "prisma:wipe": "pnpx tsx --conditions=react-server ./prisma/wipeSeededData.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

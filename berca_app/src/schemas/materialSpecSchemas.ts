@@ -11,9 +11,6 @@ const booleanFromString = z.preprocess(
 export const materialGroupSchema = z.object({
   id: z.string().uuid(),
   groupA: z.string().min(1).max(255),
-  groupB: z.string().max(255).nullable().optional(),
-  groupC: z.string().max(255).nullable().optional(),
-  groupD: z.string().max(255).nullable().optional(),
 })
 
 export const deleteMaterialGroupSchema = z.object({
@@ -33,5 +30,20 @@ export const unitSchema = z.object({
 })
 
 export const deleteUnitSchema = z.object({
+  id: z.string().uuid(),
+})
+
+// ─── Performance Specs ───────────────────────────────────────────────────────
+
+export const performanceSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(1).max(255),
+  materialSpecId: z.string().uuid().nullable().optional(),
+  materialFamilyId: z.string().uuid().nullable().optional(),
+  shortDescription: z.string().max(255).nullable().optional(),
+  longDescription: z.string().nullable().optional(),
+})
+
+export const deletePerformanceSchema = z.object({
   id: z.string().uuid(),
 })

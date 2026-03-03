@@ -4,14 +4,17 @@ WORKDIR /app
 
 COPY . .
 
-# Enable Corepack and set pnpm to version 8.15.0 (matches your lockfile)
+# Enable Corepack and set pnpm to version 8.15.0
 RUN corepack enable && corepack prepare pnpm@8.15.0 --activate
 
-# Install dependencies using your existing lockfile
+# Install dependencies using the existing lockfile
 RUN pnpm install --frozen-lockfile
 
-# Build app
+# Build the app
 RUN pnpm run build
+
+# Run Prisma seed (make sure your .env is configured correctly)
+RUN pnpm run db seed
 
 EXPOSE 3000
 

@@ -14,7 +14,7 @@ RUN pnpm install --frozen-lockfile
 RUN pnpm run build
 
 # Run Prisma seed (make sure your .env is configured correctly)
-RUN pnpm run db seed
+RUN pnpm run prisma db seed
 
 EXPOSE 3000
 

@@ -120,7 +120,7 @@ const createdSubRoles: Record<SubRoleName, {id: string; level: number}> = {} as 
 
 const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}, {name: 'Internal'}]
 
-export const seedDev = async (prisma: PrismaClient) => {
+export const seedProd = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
   const now = new Date()
 

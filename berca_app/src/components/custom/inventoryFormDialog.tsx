@@ -64,7 +64,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-card border-border max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-foreground">{isEditing ? 'Edit Inventory Item' : 'New Inventory Item'}</DialogTitle>
+          <DialogTitle className="text-foreground">
+            {isEditing ? 'Edit Inventory Item' : 'New Inventory Item'}
+          </DialogTitle>
           <DialogDescription>
             {isEditing ? `Editing ${item.beNumber}` : 'Register a new inventory item linked to a material.'}
           </DialogDescription>
@@ -85,7 +87,7 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
               <SelectContent>
                 {materials.map(m => (
                   <SelectItem key={m.id} value={m.id}>
-                    {m.beNumber} – {m.name ?? m.shortDescription}
+                    {m.beNumber} - {m.name ?? m.shortDescription}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -94,7 +96,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
           {/* BE Number + Serie Number */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="inv-beNumber" className="text-xs text-muted-foreground">BE Number *</Label>
+              <Label htmlFor="inv-beNumber" className="text-xs text-muted-foreground">
+                BE Number *
+              </Label>
               <Input
                 id="inv-beNumber"
                 className={inputStyles}
@@ -105,7 +109,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
               />
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="inv-serie" className="text-xs text-muted-foreground">Serie Number *</Label>
+              <Label htmlFor="inv-serie" className="text-xs text-muted-foreground">
+                Serie Number *
+              </Label>
               <Input
                 id="inv-serie"
                 className={inputStyles}
@@ -118,7 +124,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
           </div>
           {/* Short Description */}
           <div className="flex flex-col gap-2">
-            <Label htmlFor="inv-short" className="text-xs text-muted-foreground">Short Description *</Label>
+            <Label htmlFor="inv-short" className="text-xs text-muted-foreground">
+              Short Description *
+            </Label>
             <Input
               id="inv-short"
               className={inputStyles}
@@ -130,7 +138,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
           </div>
           {/* Long Description */}
           <div className="flex flex-col gap-2">
-            <Label htmlFor="inv-long" className="text-xs text-muted-foreground">Long Description *</Label>
+            <Label htmlFor="inv-long" className="text-xs text-muted-foreground">
+              Long Description *
+            </Label>
             <Textarea
               id="inv-long"
               className={`${inputStyles} resize-none`}
@@ -143,7 +153,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
           </div>
           {/* Place */}
           <div className="flex flex-col gap-2">
-            <Label htmlFor="inv-place" className="text-xs text-muted-foreground">Storage Place *</Label>
+            <Label htmlFor="inv-place" className="text-xs text-muted-foreground">
+              Storage Place *
+            </Label>
             <Input
               id="inv-place"
               className={inputStyles}
@@ -156,7 +168,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
           {/* Quantities */}
           <div className="grid grid-cols-3 gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="inv-qty" className="text-xs text-muted-foreground">In Stock *</Label>
+              <Label htmlFor="inv-qty" className="text-xs text-muted-foreground">
+                In Stock *
+              </Label>
               <Input
                 id="inv-qty"
                 type="number"
@@ -167,7 +181,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
               />
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="inv-min" className="text-xs text-muted-foreground">Min Stock *</Label>
+              <Label htmlFor="inv-min" className="text-xs text-muted-foreground">
+                Min Stock *
+              </Label>
               <Input
                 id="inv-min"
                 type="number"
@@ -178,7 +194,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
               />
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="inv-max" className="text-xs text-muted-foreground">Max Stock *</Label>
+              <Label htmlFor="inv-max" className="text-xs text-muted-foreground">
+                Max Stock *
+              </Label>
               <Input
                 id="inv-max"
                 type="number"
@@ -191,7 +209,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
           </div>
           {/* Information */}
           <div className="flex flex-col gap-2">
-            <Label htmlFor="inv-info" className="text-xs text-muted-foreground">Additional Information *</Label>
+            <Label htmlFor="inv-info" className="text-xs text-muted-foreground">
+              Additional Information *
+            </Label>
             <Textarea
               id="inv-info"
               className={`${inputStyles} resize-none`}
@@ -212,7 +232,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="inv-noValidDate" className="text-xs text-muted-foreground">Expiry Date *</Label>
+              <Label htmlFor="inv-noValidDate" className="text-xs text-muted-foreground">
+                Expiry Date *
+              </Label>
               <Input
                 id="inv-noValidDate"
                 type="date"
@@ -224,7 +246,9 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
             </div>
           </div>
           <DialogFooter className="pt-2">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              Cancel
+            </Button>
             <Button type="submit">{isEditing ? 'Save changes' : 'Create item'}</Button>
           </DialogFooter>
         </form>

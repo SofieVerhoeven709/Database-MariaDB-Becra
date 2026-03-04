@@ -160,7 +160,7 @@ CREATE TABLE
       IF NOT EXISTS Unit (
             id CHAR(36) NOT NULL PRIMARY KEY,
             unitName VARCHAR(255) NOT NULL,
-            physicalQuantity INT NOT NULL,
+            physicalQuantity VARCHAR(255) NOT NULL,
             abbreviation VARCHAR(255) NOT NULL,
             shortDescription VARCHAR(255),
             longDescription TEXT,

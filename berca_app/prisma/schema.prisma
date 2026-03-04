@@ -1846,7 +1846,7 @@ model TrainingStandard {
 model Unit {
   id                                String     @id @db.Char(36)
   unitName                          String     @db.VarChar(255)
-  physicalQuantity                  Int
+  physicalQuantity                  String     @db.VarChar(255)
   abbreviation                      String     @db.VarChar(255)
   shortDescription                  String?    @db.VarChar(255)
   longDescription                   String?    @db.Text

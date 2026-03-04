@@ -456,7 +456,7 @@ export const seedDev = async (prisma: PrismaClient) => {
         data: {
           id: randomUUID(),
           unitName: unit.name,
-          physicalQuantity: unit.quantity,
+          physicalQuantity: unit.quantity.toString(),
           abbreviation: unit.abbreviation,
           shortDescription: unit.shortDescription,
           longDescription: unit.shortDescription,

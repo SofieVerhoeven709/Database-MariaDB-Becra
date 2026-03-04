@@ -326,6 +326,13 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
       icon: 'ShieldCheck',
       owner: 'database',
     },
+    {
+      id: 'departmentVisibility',
+      name: 'Department Visibility',
+      description: 'Make departments visible to roles',
+      icon: 'Eye',
+      owner: 'database',
+    },
   ],
 
   Purchasing: [

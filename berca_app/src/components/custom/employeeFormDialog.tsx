@@ -83,6 +83,10 @@ export function EmployeeFormDialog({
   const isEditing = employee !== null
   const [form, setForm] = useState<MappedEmployee>(EMPTY_EMPLOYEE)
   const [password, setPassword] = useState('')
+  const [passwordTouched, setPasswordTouched] = useState(false)
+
+  const passwordTooShort = password.length > 0 && password.length < 8
+  const showPasswordError = passwordTouched && passwordTooShort
 
   useEffect(() => {
     if (open) {
@@ -98,6 +102,7 @@ export function EmployeeFormDialog({
         setForm({...EMPTY_EMPLOYEE, id: `e-${Date.now()}`})
       }
       setPassword('')
+      setPasswordTouched(false)
     }
   }, [open, employee])
 
@@ -135,6 +140,11 @@ export function EmployeeFormDialog({
         <form
           onSubmit={e => {
             e.preventDefault()
+            // Block submit if password is set but too short
+            if (passwordTooShort) {
+              setPasswordTouched(true)
+              return
+            }
             onSave(form, password)
           }}
           className="flex flex-col gap-6">
@@ -252,11 +262,19 @@ export function EmployeeFormDialog({
                     id="password"
                     type="password"
                     value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    placeholder={isEditing ? 'Leave blank to keep current' : 'Enter password'}
-                    className={inputStyles}
+                    onChange={e => {
+                      setPassword(e.target.value)
+                      setPasswordTouched(true)
+                    }}
+                    onBlur={() => setPasswordTouched(true)}
+                    placeholder={isEditing ? 'Leave blank to keep current' : 'Min. 8 characters'}
+                    className={`${inputStyles} ${showPasswordError ? 'border-destructive focus-visible:ring-destructive' : ''}`}
+                    minLength={isEditing ? undefined : 8}
                     required={!isEditing}
                   />
+                  {showPasswordError && (
+                    <p className="text-xs text-destructive">Password must be at least 8 characters.</p>
+                  )}
                 </div>
               </div>
 
@@ -370,7 +388,7 @@ export function EmployeeFormDialog({
                           relationship: '',
                           mail: '',
                           phoneNumber: '',
-                          employeeId: '', // temporary for UI
+                          employeeId: '',
                         },
                       ])
                     }>
@@ -385,7 +403,6 @@ export function EmployeeFormDialog({
                 {(form.emergencyContacts ?? []).map((contact, index) => (
                   <div key={contact.id ?? index} className="flex flex-col gap-3 p-3 border border-border rounded-lg">
                     <div className="text-sm font-medium text-muted-foreground">Contact #{index + 1}</div>
-                    {/* ROW 1 */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       <Input
                         placeholder="Name"
@@ -397,7 +414,6 @@ export function EmployeeFormDialog({
                         }}
                         className={inputStyles}
                       />
-
                       <Input
                         placeholder="Relationship"
                         value={contact.relationship ?? ''}
@@ -409,8 +425,6 @@ export function EmployeeFormDialog({
                         className={inputStyles}
                       />
                     </div>
-
-                    {/* ROW 2 */}
                     <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-2">
                       <Input
                         type="email"
@@ -423,7 +437,6 @@ export function EmployeeFormDialog({
                         }}
                         className={inputStyles}
                       />
-
                       <Input
                         placeholder="+32 471 123 456"
                         value={contact.phoneNumber ?? ''}
@@ -434,7 +447,6 @@ export function EmployeeFormDialog({
                         }}
                         className={inputStyles}
                       />
-
                       <Button
                         type="button"
                         variant="destructive"

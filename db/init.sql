@@ -157,7 +157,7 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS Unit (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            unit VARCHAR(255) NOT NULL,
+            unitName VARCHAR(255) NOT NULL,
             physicalQuantity INT NOT NULL,
             abbreviation VARCHAR(255) NOT NULL,
             shortDescription VARCHAR(255),
@@ -180,7 +180,7 @@ CREATE TABLE
             brandOrderNr INT NOT NULL,
             shortDescription VARCHAR(255) NOT NULL,
             longDescription TEXT,
-            preferedSupplier VARCHAR(255),
+            preferredSupplier VARCHAR(255),
             brandName VARCHAR(255),
             documentationPlace VARCHAR(255),
             bePartDoc INT,

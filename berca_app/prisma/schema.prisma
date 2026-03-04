@@ -922,7 +922,7 @@ model Material {
   brandOrderNr                                             Int
   shortDescription                                         String               @db.VarChar(255)
   longDescription                                          String?              @db.Text
-  preferedSupplier                                         String?              @db.VarChar(255)
+  preferredSupplier                                        String?              @db.VarChar(255)
   brandName                                                String?              @db.VarChar(255)
   documentationPlace                                       String?              @db.VarChar(255)
   bePartDoc                                                Int?
@@ -1845,7 +1845,7 @@ model TrainingStandard {
 
 model Unit {
   id                                String     @id @db.Char(36)
-  unit                              String     @db.VarChar(255)
+  unitName                          String     @db.VarChar(255)
   physicalQuantity                  Int
   abbreviation                      String     @db.VarChar(255)
   shortDescription                  String?    @db.VarChar(255)

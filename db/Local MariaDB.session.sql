@@ -396,7 +396,7 @@ CREATE TABLE
             createdBy CHAR(36) NOT NULL,
             companyId CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT,
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE CASCADE,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),

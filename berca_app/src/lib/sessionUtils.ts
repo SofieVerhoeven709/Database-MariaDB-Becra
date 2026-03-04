@@ -1,6 +1,6 @@
 import type {Profile, SessionWithProfile} from '@/models/employees'
 import {cookies} from 'next/headers'
-import type {Role} from '@/generated/prisma/client'
+import type {SubRole} from '@/generated/prisma/client'
 import {extendSession, getSessionProfile} from '@/dal/employees'
 import type {StatefulJwtTokenBody} from '@/lib/jwtUtils'
 import {createStatefulJwtToken, validateStatefulJwtToken} from '@/lib/jwtUtils'
@@ -63,8 +63,8 @@ export async function getSessionProfileFromCookieOrThrow(stateful = true): Promi
   return session?.Employee ?? null
 }
 
-export async function extendSessionAndSetCookie(id: string, role: Role): Promise<void> {
-  const extendedSession = await extendSession(id, role)
+export async function extendSessionAndSetCookie(id: string, subRole: SubRole): Promise<void> {
+  const extendedSession = await extendSession(id, subRole)
   await setSessionCookie(extendedSession)
 }
 

@@ -16,7 +16,7 @@ export async function sessionManagementProxy(
     session.activeUntil.getTime() - Date.now() <
     SessionDuration[session.Employee.RoleLevel_Employee_roleLevelIdToRoleLevel!.SubRole.name] / 2
   ) {
-    await extendSessionAndSetCookie(session.id, session.Employee.RoleLevel_Employee_roleLevelIdToRoleLevel!.Role)
+    await extendSessionAndSetCookie(session.id, session.Employee.RoleLevel_Employee_roleLevelIdToRoleLevel!.SubRole)
     logger.info(
       `Extended session ${session.id} by ${SessionDuration[session.Employee.RoleLevel_Employee_roleLevelIdToRoleLevel!.SubRole.name]} ms`,
     )

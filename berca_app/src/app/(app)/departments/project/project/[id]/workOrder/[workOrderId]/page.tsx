@@ -49,6 +49,7 @@ export default async function WorkOrderDetailPage({params}: WorkOrderDetailPageP
           materials={materialOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          currentUserId={profile.id}
         />
       </div>
     </main>

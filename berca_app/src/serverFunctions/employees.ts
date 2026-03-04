@@ -32,7 +32,7 @@ export const registerAction = publicFormAction({
     })
     if (!role) throw new Error('Employee has no role assigned.')
 
-    const session = await startSession(employee.id, role.Role)
+    const session = await startSession(employee.id, role.SubRole)
     logger.info(`New session started: ${session.id}, ends at ${session.activeUntil.toISOString()}`)
 
     await setSessionCookie(session)
@@ -79,7 +79,7 @@ export const signInAction = publicFormAction({
     })
     if (!role) throw new Error('Employee has no role assigned.')
 
-    const session = await startSession(employee!.id, role.Role)
+    const session = await startSession(employee!.id, role.SubRole)
     logger.info(`New session started: ${session.id}, ends at ${session.activeUntil.toISOString()}`)
 
     await setSessionCookie(session)

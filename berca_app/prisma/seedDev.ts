@@ -136,24 +136,33 @@ export const seedDev = async (prisma: PrismaClient) => {
       },
     })
   }
-  // 2. Upsert Administrator role
-  let adminRole = await prisma.role.findFirst({where: {name: 'Administrator'}})
-  if (!adminRole) {
-    adminRole = await prisma.role.create({
-      data: {id: randomUUID(), name: 'Administrator', createdAt: now, createdBy: adminEmployee.id},
-    })
-  }
-  // 3. Upsert Administrator subRole
-  let adminSubRole = await prisma.subRole.findFirst({where: {name: 'Administrator', level: 100}})
-  if (!adminSubRole) {
-    adminSubRole = await prisma.subRole.create({
-      data: {id: randomUUID(), name: 'Administrator', level: 100, createdAt: now, createdBy: adminEmployee.id},
-    })
-  }
-  // 4. Upsert Administrator roleLevel
-  let adminRoleLevel = await prisma.roleLevel.findFirst({where: {roleId: adminRole.id, subRoleId: adminSubRole.id}})
-  if (!adminRoleLevel) {
-    adminRoleLevel = await prisma.roleLevel.create({
+
+  // 7. Create default TargetType for Departments
+  // 7. Create one TargetType per table — reused for every target of that table
+  const departmentTargetType = await prisma.targetType.create({
+    data: {id: randomUUID(), name: 'Department', createdAt: now, createdBy: adminEmployee.id},
+  })
+
+  const companyTargetType = await prisma.targetType.create({
+    data: {id: randomUUID(), name: 'Company', createdAt: now, createdBy: adminEmployee.id},
+  })
+
+  await prisma.targetType.create({
+    data: {id: randomUUID(), name: 'Project', createdAt: now, createdBy: adminEmployee.id},
+  })
+  await prisma.targetType.create({
+    data: {id: randomUUID(), name: 'WorkOrder', createdAt: now, createdBy: adminEmployee.id},
+  })
+  await prisma.targetType.create({
+    data: {id: randomUUID(), name: 'WorkOrderStructure', createdAt: now, createdBy: adminEmployee.id},
+  })
+  await prisma.targetType.create({
+    data: {id: randomUUID(), name: 'Contact', createdAt: now, createdBy: adminEmployee.id},
+  })
+
+  // 9. Create Departments + Department Roles + RoleLevels + Target
+  for (const dept of ALL_DEPARTMENTS) {
+    const deptTarget = await prisma.target.create({
       data: {
         id: randomUUID(),
         roleId: adminRole.id,

@@ -4,6 +4,13 @@ import {prismaClient} from '@/dal/prismaClient'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTimeRegistrySchema, timeRegistryIdSchema, updateTimeRegistrySchema} from '@/schemas/timeRegistrySchemas'
 
+function revalidateTimeRegistryPaths(workOrderId?: string) {
+  revalidatePath('/departments/timeregistries')
+  if (workOrderId) {
+    revalidatePath(`/departments/project/project/${workOrderId}`)
+  }
+}
+
 export const createTimeRegistryAction = protectedServerFunction({
   schema: createTimeRegistrySchema,
   functionName: 'Create time registry action',
@@ -24,7 +31,7 @@ export const createTimeRegistryAction = protectedServerFunction({
     })
 
     logger.info(`Time registry created: ${timeRegistry.id}`)
-    revalidatePath(`/departments/project/project/${data.workOrderId}`)
+    revalidateTimeRegistryPaths(data.workOrderId)
   },
 })
 
@@ -47,7 +54,7 @@ export const updateTimeRegistryAction = protectedServerFunction({
     })
 
     logger.info(`Time registry updated: ${id}`)
-    revalidatePath(`/departments/project/project/${data.workOrderId}`)
+    revalidateTimeRegistryPaths(data.workOrderId)
   },
 })
 
@@ -62,7 +69,7 @@ export const softDeleteTimeRegistryAction = protectedServerFunction({
     })
 
     logger.info(`Time registry soft deleted: ${id}`)
-    revalidatePath(`/departments/project/project/${tr.workOrderId}`)
+    revalidateTimeRegistryPaths(tr.workOrderId)
   },
 })
 
@@ -76,7 +83,7 @@ export const hardDeleteTimeRegistryAction = protectedServerFunction({
     })
     await prismaClient.timeRegistry.delete({where: {id}})
     logger.info(`Time registry hard deleted: ${id}`)
-    revalidatePath(`/departments/project/project/${tr.workOrderId}`)
+    revalidateTimeRegistryPaths(tr.workOrderId)
   },
 })
 
@@ -90,6 +97,6 @@ export const undeleteTimeRegistryAction = protectedServerFunction({
       select: {workOrderId: true},
     })
     logger.info(`Time registry undeleted: ${id}`)
-    revalidatePath(`/departments/project/project/${tr.workOrderId}`)
+    revalidateTimeRegistryPaths(tr.workOrderId)
   },
 })

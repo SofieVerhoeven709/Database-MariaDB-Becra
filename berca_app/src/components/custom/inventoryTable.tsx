@@ -149,7 +149,9 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
                   <SortIcon field={col.key} sortField={sortField} sortDir={sortDir} />
                 </TableHead>
               ))}
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Min/Max</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Min/Max
+              </TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -169,21 +171,21 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
                   <TableRow key={item.id} className="hover:bg-secondary/50 transition-colors">
                     <TableCell className="font-mono text-sm font-medium">{item.beNumber}</TableCell>
                     <TableCell className="text-sm">
-                      {item.materialName ?? <span className="text-muted-foreground">—</span>}
+                      {item.materialName ?? <span className="text-muted-foreground">-</span>}
                     </TableCell>
                     <TableCell className="text-sm max-w-[200px] truncate" title={item.shortDescription}>
                       {item.shortDescription}
                     </TableCell>
                     <TableCell className="text-sm">{item.place}</TableCell>
                     <TableCell className="text-sm">
-                      <span className={`font-semibold ${isLow ? 'text-destructive' : ''}`}>
-                        {item.quantityInStock}
-                      </span>
+                      <span className={`font-semibold ${isLow ? 'text-destructive' : ''}`}>{item.quantityInStock}</span>
                       {isLow && <AlertTriangle className="inline ml-1 h-3.5 w-3.5 text-destructive" />}
                     </TableCell>
                     <TableCell>
                       {item.valid ? (
-                        <Badge variant="secondary" className="text-xs bg-green-500/15 text-green-700 dark:text-green-400">
+                        <Badge
+                          variant="secondary"
+                          className="text-xs bg-green-500/15 text-green-700 dark:text-green-400">
                           Valid
                         </Badge>
                       ) : (

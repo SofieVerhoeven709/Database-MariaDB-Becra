@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import {seedDev} from './seedDev'
 import {seedProd} from './seedProd'
 import {env} from 'process'

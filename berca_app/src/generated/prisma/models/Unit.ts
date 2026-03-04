@@ -27,17 +27,17 @@ export type AggregateUnit = {
 }
 
 export type UnitAvgAggregateOutputType = {
-  quantity: number | null
+  physicalQuantity: number | null
 }
 
 export type UnitSumAggregateOutputType = {
-  quantity: number | null
+  physicalQuantity: number | null
 }
 
 export type UnitMinAggregateOutputType = {
   id: string | null
-  name: string | null
-  quantity: number | null
+  unit: string | null
+  physicalQuantity: number | null
   abbreviation: string | null
   shortDescription: string | null
   longDescription: string | null
@@ -51,8 +51,8 @@ export type UnitMinAggregateOutputType = {
 
 export type UnitMaxAggregateOutputType = {
   id: string | null
-  name: string | null
-  quantity: number | null
+  unit: string | null
+  physicalQuantity: number | null
   abbreviation: string | null
   shortDescription: string | null
   longDescription: string | null
@@ -66,8 +66,8 @@ export type UnitMaxAggregateOutputType = {
 
 export type UnitCountAggregateOutputType = {
   id: number
-  name: number
-  quantity: number
+  unit: number
+  physicalQuantity: number
   abbreviation: number
   shortDescription: number
   longDescription: number
@@ -82,17 +82,17 @@ export type UnitCountAggregateOutputType = {
 
 
 export type UnitAvgAggregateInputType = {
-  quantity?: true
+  physicalQuantity?: true
 }
 
 export type UnitSumAggregateInputType = {
-  quantity?: true
+  physicalQuantity?: true
 }
 
 export type UnitMinAggregateInputType = {
   id?: true
-  name?: true
-  quantity?: true
+  unit?: true
+  physicalQuantity?: true
   abbreviation?: true
   shortDescription?: true
   longDescription?: true
@@ -106,8 +106,8 @@ export type UnitMinAggregateInputType = {
 
 export type UnitMaxAggregateInputType = {
   id?: true
-  name?: true
-  quantity?: true
+  unit?: true
+  physicalQuantity?: true
   abbreviation?: true
   shortDescription?: true
   longDescription?: true
@@ -121,8 +121,8 @@ export type UnitMaxAggregateInputType = {
 
 export type UnitCountAggregateInputType = {
   id?: true
-  name?: true
-  quantity?: true
+  unit?: true
+  physicalQuantity?: true
   abbreviation?: true
   shortDescription?: true
   longDescription?: true
@@ -223,8 +223,8 @@ export type UnitGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UnitGroupByOutputType = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription: string | null
   longDescription: string | null
@@ -261,8 +261,8 @@ export type UnitWhereInput = {
   OR?: Prisma.UnitWhereInput[]
   NOT?: Prisma.UnitWhereInput | Prisma.UnitWhereInput[]
   id?: Prisma.StringFilter<"Unit"> | string
-  name?: Prisma.StringFilter<"Unit"> | string
-  quantity?: Prisma.IntFilter<"Unit"> | number
+  unit?: Prisma.StringFilter<"Unit"> | string
+  physicalQuantity?: Prisma.IntFilter<"Unit"> | number
   abbreviation?: Prisma.StringFilter<"Unit"> | string
   shortDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
   longDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
@@ -279,8 +279,8 @@ export type UnitWhereInput = {
 
 export type UnitOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  physicalQuantity?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -301,8 +301,8 @@ export type UnitWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UnitWhereInput | Prisma.UnitWhereInput[]
   OR?: Prisma.UnitWhereInput[]
   NOT?: Prisma.UnitWhereInput | Prisma.UnitWhereInput[]
-  name?: Prisma.StringFilter<"Unit"> | string
-  quantity?: Prisma.IntFilter<"Unit"> | number
+  unit?: Prisma.StringFilter<"Unit"> | string
+  physicalQuantity?: Prisma.IntFilter<"Unit"> | number
   abbreviation?: Prisma.StringFilter<"Unit"> | string
   shortDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
   longDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
@@ -319,8 +319,8 @@ export type UnitWhereUniqueInput = Prisma.AtLeast<{
 
 export type UnitOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  physicalQuantity?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -342,8 +342,8 @@ export type UnitScalarWhereWithAggregatesInput = {
   OR?: Prisma.UnitScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UnitScalarWhereWithAggregatesInput | Prisma.UnitScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Unit"> | string
-  name?: Prisma.StringWithAggregatesFilter<"Unit"> | string
-  quantity?: Prisma.IntWithAggregatesFilter<"Unit"> | number
+  unit?: Prisma.StringWithAggregatesFilter<"Unit"> | string
+  physicalQuantity?: Prisma.IntWithAggregatesFilter<"Unit"> | number
   abbreviation?: Prisma.StringWithAggregatesFilter<"Unit"> | string
   shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
   longDescription?: Prisma.StringNullableWithAggregatesFilter<"Unit"> | string | null
@@ -357,8 +357,8 @@ export type UnitScalarWhereWithAggregatesInput = {
 
 export type UnitCreateInput = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -373,8 +373,8 @@ export type UnitCreateInput = {
 
 export type UnitUncheckedCreateInput = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -389,8 +389,8 @@ export type UnitUncheckedCreateInput = {
 
 export type UnitUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -405,8 +405,8 @@ export type UnitUpdateInput = {
 
 export type UnitUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -421,8 +421,8 @@ export type UnitUncheckedUpdateInput = {
 
 export type UnitCreateManyInput = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -436,8 +436,8 @@ export type UnitCreateManyInput = {
 
 export type UnitUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -449,8 +449,8 @@ export type UnitUpdateManyMutationInput = {
 
 export type UnitUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -485,8 +485,8 @@ export type UnitOrderByRelevanceInput = {
 
 export type UnitCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  physicalQuantity?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
@@ -499,13 +499,13 @@ export type UnitCountOrderByAggregateInput = {
 }
 
 export type UnitAvgOrderByAggregateInput = {
-  quantity?: Prisma.SortOrder
+  physicalQuantity?: Prisma.SortOrder
 }
 
 export type UnitMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  physicalQuantity?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
@@ -519,8 +519,8 @@ export type UnitMaxOrderByAggregateInput = {
 
 export type UnitMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  quantity?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  physicalQuantity?: Prisma.SortOrder
   abbreviation?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
@@ -533,7 +533,7 @@ export type UnitMinOrderByAggregateInput = {
 }
 
 export type UnitSumOrderByAggregateInput = {
-  quantity?: Prisma.SortOrder
+  physicalQuantity?: Prisma.SortOrder
 }
 
 export type UnitCreateNestedManyWithoutEmployeeInput = {
@@ -636,8 +636,8 @@ export type UnitUpdateOneRequiredWithoutMaterialNestedInput = {
 
 export type UnitCreateWithoutEmployeeInput = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -651,8 +651,8 @@ export type UnitCreateWithoutEmployeeInput = {
 
 export type UnitUncheckedCreateWithoutEmployeeInput = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -676,8 +676,8 @@ export type UnitCreateManyEmployeeInputEnvelope = {
 
 export type UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -691,8 +691,8 @@ export type UnitCreateWithoutEmployee_Unit_deletedByToEmployeeInput = {
 
 export type UnitUncheckedCreateWithoutEmployee_Unit_deletedByToEmployeeInput = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -735,8 +735,8 @@ export type UnitScalarWhereInput = {
   OR?: Prisma.UnitScalarWhereInput[]
   NOT?: Prisma.UnitScalarWhereInput | Prisma.UnitScalarWhereInput[]
   id?: Prisma.StringFilter<"Unit"> | string
-  name?: Prisma.StringFilter<"Unit"> | string
-  quantity?: Prisma.IntFilter<"Unit"> | number
+  unit?: Prisma.StringFilter<"Unit"> | string
+  physicalQuantity?: Prisma.IntFilter<"Unit"> | number
   abbreviation?: Prisma.StringFilter<"Unit"> | string
   shortDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
   longDescription?: Prisma.StringNullableFilter<"Unit"> | string | null
@@ -766,8 +766,8 @@ export type UnitUpdateManyWithWhereWithoutEmployee_Unit_deletedByToEmployeeInput
 
 export type UnitCreateWithoutMaterialInput = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -781,8 +781,8 @@ export type UnitCreateWithoutMaterialInput = {
 
 export type UnitUncheckedCreateWithoutMaterialInput = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -812,8 +812,8 @@ export type UnitUpdateToOneWithWhereWithoutMaterialInput = {
 
 export type UnitUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -827,8 +827,8 @@ export type UnitUpdateWithoutMaterialInput = {
 
 export type UnitUncheckedUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -842,8 +842,8 @@ export type UnitUncheckedUpdateWithoutMaterialInput = {
 
 export type UnitCreateManyEmployeeInput = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -856,8 +856,8 @@ export type UnitCreateManyEmployeeInput = {
 
 export type UnitCreateManyEmployee_Unit_deletedByToEmployeeInput = {
   id: string
-  name: string
-  quantity: number
+  unit: string
+  physicalQuantity: number
   abbreviation: string
   shortDescription?: string | null
   longDescription?: string | null
@@ -870,8 +870,8 @@ export type UnitCreateManyEmployee_Unit_deletedByToEmployeeInput = {
 
 export type UnitUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -885,8 +885,8 @@ export type UnitUpdateWithoutEmployeeInput = {
 
 export type UnitUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -900,8 +900,8 @@ export type UnitUncheckedUpdateWithoutEmployeeInput = {
 
 export type UnitUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -914,8 +914,8 @@ export type UnitUncheckedUpdateManyWithoutEmployeeInput = {
 
 export type UnitUpdateWithoutEmployee_Unit_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -929,8 +929,8 @@ export type UnitUpdateWithoutEmployee_Unit_deletedByToEmployeeInput = {
 
 export type UnitUncheckedUpdateWithoutEmployee_Unit_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -944,8 +944,8 @@ export type UnitUncheckedUpdateWithoutEmployee_Unit_deletedByToEmployeeInput = {
 
 export type UnitUncheckedUpdateManyWithoutEmployee_Unit_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  physicalQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -989,8 +989,8 @@ export type UnitCountOutputTypeCountMaterialArgs<ExtArgs extends runtime.Types.E
 
 export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
-  quantity?: boolean
+  unit?: boolean
+  physicalQuantity?: boolean
   abbreviation?: boolean
   shortDescription?: boolean
   longDescription?: boolean
@@ -1010,8 +1010,8 @@ export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 
 export type UnitSelectScalar = {
   id?: boolean
-  name?: boolean
-  quantity?: boolean
+  unit?: boolean
+  physicalQuantity?: boolean
   abbreviation?: boolean
   shortDescription?: boolean
   longDescription?: boolean
@@ -1023,7 +1023,7 @@ export type UnitSelectScalar = {
   deletedBy?: boolean
 }
 
-export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "quantity" | "abbreviation" | "shortDescription" | "longDescription" | "valid" | "createdBy" | "createdAt" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["unit"]>
+export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "unit" | "physicalQuantity" | "abbreviation" | "shortDescription" | "longDescription" | "valid" | "createdBy" | "createdAt" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["unit"]>
 export type UnitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Material?: boolean | Prisma.Unit$MaterialArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -1040,8 +1040,8 @@ export type $UnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    name: string
-    quantity: number
+    unit: string
+    physicalQuantity: number
     abbreviation: string
     shortDescription: string | null
     longDescription: string | null
@@ -1424,8 +1424,8 @@ export interface Prisma__UnitClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UnitFieldRefs {
   readonly id: Prisma.FieldRef<"Unit", 'String'>
-  readonly name: Prisma.FieldRef<"Unit", 'String'>
-  readonly quantity: Prisma.FieldRef<"Unit", 'Int'>
+  readonly unit: Prisma.FieldRef<"Unit", 'String'>
+  readonly physicalQuantity: Prisma.FieldRef<"Unit", 'Int'>
   readonly abbreviation: Prisma.FieldRef<"Unit", 'String'>
   readonly shortDescription: Prisma.FieldRef<"Unit", 'String'>
   readonly longDescription: Prisma.FieldRef<"Unit", 'String'>

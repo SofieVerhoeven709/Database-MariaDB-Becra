@@ -1249,9 +1249,9 @@ model MaterialSpec {
   MaterialPerformance                       MaterialPerformance[]
   MaterialSerialTrackedStructure            MaterialSerialTrackedStructure[]
   MaterialFamily                            MaterialFamily?                  @relation(fields: [materialFamilyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_1")
-  MaterialDimension                         MaterialDimension?               @relation(fields: [materialDimensionId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_2")
-  Employee                                  Employee?                        @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_3")
-  Employee_MaterialSpec_deletedByToEmployee Employee?                        @relation("MaterialSpec_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialSpec_ibfk_4")
+  MaterialDimension                         MaterialDimension?               @relation(fields: [materialDimensionId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_3")
+  Employee                                  Employee?                        @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_4")
+  Employee_MaterialSpec_deletedByToEmployee Employee?                        @relation("MaterialSpec_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialSpec_ibfk_5")
 
   @@index([createdBy], map: "createdBy")
   @@index([materialDimensionId], map: "materialDimensionId")
@@ -1818,7 +1818,7 @@ model TrainingDocument {
 
 model TrainingStandard {
   id                                            String             @id @db.Char(36)
-  description                                   String             @db.Text
+  description                                   String?            @db.Text
   descriptionShort                              String?            @db.Text
   location                                      String?            @db.VarChar(100)
   createdAt                                     DateTime           @db.DateTime(0)
@@ -1845,8 +1845,8 @@ model TrainingStandard {
 
 model Unit {
   id                                String     @id @db.Char(36)
-  name                              String     @db.VarChar(255)
-  quantity                          Int
+  unit                              String     @db.VarChar(255)
+  physicalQuantity                  Int
   abbreviation                      String     @db.VarChar(255)
   shortDescription                  String?    @db.VarChar(255)
   longDescription                   String?    @db.Text

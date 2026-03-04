@@ -122,6 +122,16 @@ const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consul
 
 export const seedDev = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
+
+  const existingAdmin = await prisma.employee.findFirst({
+    where: {username: 'admin'},
+  })
+
+  if (existingAdmin) {
+    console.log('Seed already applied — skipping.')
+    return
+  }
+
   const now = new Date()
 
   // 1. Create admin employee

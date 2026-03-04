@@ -14,6 +14,21 @@
             "password": "app_password",
             "database": "app_db",
             "username": "app_user"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "energetic-spontaneity-production.up.railway.app",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "BecraBV",
+            "database": "BecraBV",
+            "username": "admin",
+            "password": "M%40riaDB_P%40ssw0rd%21"
         }
     ]
 }

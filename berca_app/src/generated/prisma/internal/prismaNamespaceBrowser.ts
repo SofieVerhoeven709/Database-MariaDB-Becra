@@ -727,7 +727,7 @@ export const MaterialScalarFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -1421,7 +1421,7 @@ export type TrainingStandardScalarFieldEnum = (typeof TrainingStandardScalarFiel
 
 export const UnitScalarFieldEnum = {
   id: 'id',
-  unit: 'unit',
+  unitName: 'unitName',
   physicalQuantity: 'physicalQuantity',
   abbreviation: 'abbreviation',
   shortDescription: 'shortDescription',
@@ -2014,7 +2014,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   name: 'name',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   materialGroupId: 'materialGroupId',
@@ -2539,7 +2539,8 @@ export type TrainingStandardOrderByRelevanceFieldEnum = (typeof TrainingStandard
 
 export const UnitOrderByRelevanceFieldEnum = {
   id: 'id',
-  unit: 'unit',
+  unitName: 'unitName',
+  physicalQuantity: 'physicalQuantity',
   abbreviation: 'abbreviation',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',

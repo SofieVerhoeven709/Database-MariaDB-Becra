@@ -88,12 +88,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.19.0
- * Query Engine version: 2ba551f319ab1df4bc874a89965d8b3641056773
+ * Prisma Client JS version: 6.19.2
+ * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.19.0",
-  engine: "2ba551f319ab1df4bc874a89965d8b3641056773"
+  client: "6.19.2",
+  engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
 }
 
 /**
@@ -6124,7 +6124,7 @@ export const MaterialScalarFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  preferredSupplier: 'preferredSupplier',
+  preferedSupplier: 'preferedSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -6370,7 +6370,6 @@ export const MaterialSpecScalarFieldEnum = {
   materialFamilyId: 'materialFamilyId',
   name: 'name',
   materialDimensionId: 'materialDimensionId',
-  unitId: 'unitId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   createdAt: 'createdAt',
@@ -6819,7 +6818,7 @@ export type TrainingStandardScalarFieldEnum = (typeof TrainingStandardScalarFiel
 
 export const UnitScalarFieldEnum = {
   id: 'id',
-  unitName: 'unitName',
+  unit: 'unit',
   physicalQuantity: 'physicalQuantity',
   abbreviation: 'abbreviation',
   shortDescription: 'shortDescription',
@@ -7412,7 +7411,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   name: 'name',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  preferredSupplier: 'preferredSupplier',
+  preferedSupplier: 'preferedSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   materialGroupId: 'materialGroupId',
@@ -7607,7 +7606,6 @@ export const MaterialSpecOrderByRelevanceFieldEnum = {
   materialFamilyId: 'materialFamilyId',
   name: 'name',
   materialDimensionId: 'materialDimensionId',
-  unitId: 'unitId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   createdBy: 'createdBy',
@@ -7938,8 +7936,7 @@ export type TrainingStandardOrderByRelevanceFieldEnum = (typeof TrainingStandard
 
 export const UnitOrderByRelevanceFieldEnum = {
   id: 'id',
-  unitName: 'unitName',
-  physicalQuantity: 'physicalQuantity',
+  unit: 'unit',
   abbreviation: 'abbreviation',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',

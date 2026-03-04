@@ -5,8 +5,9 @@ import {cache} from 'react'
 import {hashPassword} from '@/lib/passwordUtils'
 import type {Profile, SessionWithProfile} from '@/models/employees'
 import {profileOmit, sessionWithProfileInclude} from '@/models/employees'
-import {SessionDuration} from '@/constants'
+import {DEFAULT_SESSION_DURATION, SessionDuration} from '@/constants'
 import {randomUUID} from 'crypto'
+import {logger} from '@/lib/logger'
 
 export type CreateEmployeeParams = Prisma.EmployeeCreateInput
 
@@ -79,11 +80,15 @@ export async function getEmployees(): Promise<
  * @param role The role of the user for whom to start the session.
  */
 export async function startSession(employeeId: string, subRole: {name: string}): Promise<SessionWithProfile> {
+  const duration = SessionDuration[subRole.name.toLowerCase()] ?? DEFAULT_SESSION_DURATION
+
+  logger.warn(subRole.name)
+
   return prismaClient.session.create({
     data: {
       id: randomUUID(),
       employeeId,
-      activeUntil: new Date(Date.now() + SessionDuration[subRole.name]),
+      activeUntil: new Date(Date.now() + duration),
     },
     include: sessionWithProfileInclude,
   })
@@ -156,10 +161,12 @@ export async function updateEmployee({id, ...data}: UpdateEmployeeParams): Promi
  * @param role The role of the user for whom to start the session.
  */
 export async function extendSession(id: string, subRole: {name: string}): Promise<SessionWithProfile> {
+  const duration = SessionDuration[subRole.name.toLowerCase()] ?? DEFAULT_SESSION_DURATION
+
   return prismaClient.session.update({
     where: {id},
     data: {
-      activeUntil: new Date(Date.now() + SessionDuration[subRole.name]),
+      activeUntil: new Date(Date.now() + duration),
     },
     include: sessionWithProfileInclude,
   })

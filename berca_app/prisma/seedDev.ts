@@ -1,6 +1,7 @@
 import type {PrismaClient} from '@/generated/prisma/client'
 import {randomUUID} from 'crypto'
 import {hashPassword} from '@/lib/passwordUtils'
+
 // Departments with icons and HEX colors
 const ALL_DEPARTMENTS = [
   {
@@ -102,31 +103,27 @@ const ALL_DEPARTMENTS = [
     number: 14,
   },
 ]
+
 const SUB_ROLES = [
   {name: 'user', level: 20},
   {name: 'senior-user', level: 40},
   {name: 'supervisor', level: 60},
   {name: 'manager', level: 80},
 ]
+
 type SubRoleName = (typeof SUB_ROLES)[number]['name']
+
 const createdSubRoles: Record<SubRoleName, {id: string; level: number}> = {} as Record<
   SubRoleName,
   {id: string; level: number}
 >
+
 const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}, {name: 'Internal'}]
+
 export const seedDev = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
-
-  const existingAdmin = await prisma.employee.findFirst({
-    where: {username: 'admin'},
-  })
-
-  if (existingAdmin) {
-    console.log('Seed already applied — skipping.')
-    return
-  }
-
   const now = new Date()
+
   // 1. Upsert admin employee
   let adminEmployee = await prisma.employee.findFirst({where: {username: 'admin'}})
   if (!adminEmployee) {
@@ -147,32 +144,39 @@ export const seedDev = async (prisma: PrismaClient) => {
     })
   }
 
-  // 7. Create default TargetType for Departments
-  // 7. Create one TargetType per table — reused for every target of that table
-  const departmentTargetType = await prisma.targetType.create({
-    data: {id: randomUUID(), name: 'Department', createdAt: now, createdBy: adminEmployee.id},
-  })
+  // 2. Upsert Administrator role
+  let adminRole = await prisma.role.findFirst({where: {name: 'Administrator'}})
+  if (!adminRole) {
+    adminRole = await prisma.role.create({
+      data: {
+        id: randomUUID(),
+        name: 'Administrator',
+        createdAt: now,
+        createdBy: adminEmployee.id,
+      },
+    })
+  }
 
-  const companyTargetType = await prisma.targetType.create({
-    data: {id: randomUUID(), name: 'Company', createdAt: now, createdBy: adminEmployee.id},
-  })
+  // 3. Upsert Administrator subRole
+  let adminSubRole = await prisma.subRole.findFirst({where: {name: 'Administrator'}})
+  if (!adminSubRole) {
+    adminSubRole = await prisma.subRole.create({
+      data: {
+        id: randomUUID(),
+        name: 'Administrator',
+        level: 100,
+        createdAt: now,
+        createdBy: adminEmployee.id,
+      },
+    })
+  }
 
-  await prisma.targetType.create({
-    data: {id: randomUUID(), name: 'Project', createdAt: now, createdBy: adminEmployee.id},
+  // 4. Upsert Administrator roleLevel
+  let adminRoleLevel = await prisma.roleLevel.findFirst({
+    where: {roleId: adminRole.id, subRoleId: adminSubRole.id},
   })
-  await prisma.targetType.create({
-    data: {id: randomUUID(), name: 'WorkOrder', createdAt: now, createdBy: adminEmployee.id},
-  })
-  await prisma.targetType.create({
-    data: {id: randomUUID(), name: 'WorkOrderStructure', createdAt: now, createdBy: adminEmployee.id},
-  })
-  await prisma.targetType.create({
-    data: {id: randomUUID(), name: 'Contact', createdAt: now, createdBy: adminEmployee.id},
-  })
-
-  // 9. Create Departments + Department Roles + RoleLevels + Target
-  for (const dept of ALL_DEPARTMENTS) {
-    const deptTarget = await prisma.target.create({
+  if (!adminRoleLevel) {
+    adminRoleLevel = await prisma.roleLevel.create({
       data: {
         id: randomUUID(),
         roleId: adminRole.id,
@@ -182,19 +186,34 @@ export const seedDev = async (prisma: PrismaClient) => {
       },
     })
   }
-  // 5. Attach admin roleLevel
-  await prisma.employee.update({where: {id: adminEmployee.id}, data: {roleLevelId: adminRoleLevel.id}})
+
+  // 5. Attach admin roleLevel (only if not already set)
+  if (!adminEmployee.roleLevelId) {
+    await prisma.employee.update({
+      where: {id: adminEmployee.id},
+      data: {roleLevelId: adminRoleLevel.id},
+    })
+  }
+
   console.log('Administrator account created')
+
   // 6. Upsert shared subRoles
   for (const sub of SUB_ROLES) {
-    let existing = await prisma.subRole.findFirst({where: {name: sub.name, level: sub.level}})
+    let existing = await prisma.subRole.findFirst({where: {name: sub.name}})
     if (!existing) {
       existing = await prisma.subRole.create({
-        data: {id: randomUUID(), name: sub.name, level: sub.level, createdAt: now, createdBy: adminEmployee.id},
+        data: {
+          id: randomUUID(),
+          name: sub.name,
+          level: sub.level,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+        },
       })
     }
     createdSubRoles[sub.name] = {id: existing.id, level: existing.level}
   }
+
   // 7. Upsert TargetTypes
   async function upsertTargetType(name: string) {
     let tt = await prisma.targetType.findFirst({where: {name}})
@@ -205,18 +224,28 @@ export const seedDev = async (prisma: PrismaClient) => {
     }
     return tt
   }
+
   const departmentTargetType = await upsertTargetType('Department')
   const companyTargetType = await upsertTargetType('Company')
   await upsertTargetType('Project')
   await upsertTargetType('WorkOrder')
   await upsertTargetType('WorkOrderStructure')
-  // 9. Upsert Departments + Roles + RoleLevels + Targets
+  await upsertTargetType('Contact')
+
+  // 9. Upsert Departments + Department Roles + RoleLevels + Targets
   for (const dept of ALL_DEPARTMENTS) {
     const existingDept = await prisma.department.findFirst({where: {name: dept.name}})
     if (existingDept) continue
+
     const deptTarget = await prisma.target.create({
-      data: {id: randomUUID(), createdAt: now, createdBy: adminEmployee.id, targetTypeId: departmentTargetType.id},
+      data: {
+        id: randomUUID(),
+        createdAt: now,
+        createdBy: adminEmployee.id,
+        targetTypeId: departmentTargetType.id,
+      },
     })
+
     await prisma.department.create({
       data: {
         id: randomUUID(),
@@ -230,9 +259,16 @@ export const seedDev = async (prisma: PrismaClient) => {
         targetId: deptTarget.id,
       },
     })
+
     const departmentRole = await prisma.role.create({
-      data: {id: randomUUID(), name: `${dept.name} Role`, createdAt: now, createdBy: adminEmployee.id},
+      data: {
+        id: randomUUID(),
+        name: `${dept.name} Role`,
+        createdAt: now,
+        createdBy: adminEmployee.id,
+      },
     })
+
     for (const sub of SUB_ROLES) {
       await prisma.roleLevel.create({
         data: {
@@ -243,28 +279,50 @@ export const seedDev = async (prisma: PrismaClient) => {
           createdBy: adminEmployee.id,
         },
       })
+
       await prisma.visibilityForRole.create({
-        data: {id: randomUUID(), visible: true, roleLevelId: adminRoleLevel.id, targetId: deptTarget.id},
+        data: {
+          id: randomUUID(),
+          visible: true,
+          roleLevelId: adminRoleLevel.id,
+          targetId: deptTarget.id,
+        },
       })
     }
   }
+
   // 10. Upsert default Titles
   const DEFAULT_TITLES = ['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.', 'Ir.']
+
   for (const titleName of DEFAULT_TITLES) {
     const existing = await prisma.title.findFirst({where: {name: titleName}})
     if (!existing) {
       await prisma.title.create({
-        data: {id: randomUUID(), name: titleName, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+        data: {
+          id: randomUUID(),
+          name: titleName,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+          deleted: false,
+        },
       })
     }
   }
+
   console.log('Default titles seeded')
+
   // 11-12. Upsert Becra company
   let becraCompany = await prisma.company.findFirst({where: {name: 'Becra BV'}})
   if (!becraCompany) {
     const becraTarget = await prisma.target.create({
-      data: {id: randomUUID(), createdAt: now, createdBy: adminEmployee.id, targetTypeId: companyTargetType.id},
+      data: {
+        id: randomUUID(),
+        createdAt: now,
+        createdBy: adminEmployee.id,
+        targetTypeId: companyTargetType.id,
+      },
     })
+
     becraCompany = await prisma.company.create({
       data: {
         id: randomUUID(),
@@ -282,6 +340,7 @@ export const seedDev = async (prisma: PrismaClient) => {
         targetId: becraTarget.id,
       },
     })
+
     // 13. Create address only when company is new
     await prisma.companyAdress.create({
       data: {
@@ -297,16 +356,27 @@ export const seedDev = async (prisma: PrismaClient) => {
       },
     })
   }
+
   console.log('Becra company and address seeded')
+
   // 14. Upsert project types
   for (const pt of PROJECT_TYPES) {
     const existing = await prisma.projectType.findFirst({where: {name: pt.name}})
     if (!existing) {
       await prisma.projectType.create({
-        data: {id: randomUUID(), name: pt.name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+        data: {
+          id: randomUUID(),
+          name: pt.name,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+          deleted: false,
+        },
       })
     }
   }
+
+  console.log('Project types seeded')
+
   // 15. Upsert default hour types
   const DEFAULT_HOUR_TYPES = [
     {name: 'Regular Hours', info: 'Standard working hours'},
@@ -318,6 +388,7 @@ export const seedDev = async (prisma: PrismaClient) => {
     {name: 'Public Holiday', info: 'Official public holiday'},
     {name: 'Unpaid Leave', info: 'Approved unpaid leave'},
   ]
+
   for (const ht of DEFAULT_HOUR_TYPES) {
     const existing = await prisma.hourType.findFirst({where: {name: ht.name}})
     if (!existing) {
@@ -333,9 +404,148 @@ export const seedDev = async (prisma: PrismaClient) => {
       })
     }
   }
+
   console.log('Default hour types seeded')
-  console.log('Project types seeded')
+
+  // 16. Upsert MaterialGroups
+  const MATERIAL_GROUPS = [
+    {groupA: 'Mechanical', groupB: 'Fasteners', groupC: 'Bolts', groupD: 'Hex'},
+    {groupA: 'Mechanical', groupB: 'Fasteners', groupC: 'Nuts', groupD: 'Hex'},
+    {groupA: 'Electrical', groupB: 'Cables', groupC: 'Power', groupD: 'Copper'},
+    {groupA: 'Electrical', groupB: 'Components', groupC: 'Switches', groupD: 'Industrial'},
+    {groupA: 'Hydraulics', groupB: 'Fittings', groupC: 'Couplings', groupD: 'Quick'},
+  ]
+
+  const createdMaterialGroups: string[] = []
+
+  for (const mg of MATERIAL_GROUPS) {
+    let existing = await prisma.materialGroup.findFirst({
+      where: {groupA: mg.groupA, groupB: mg.groupB, groupC: mg.groupC, groupD: mg.groupD},
+    })
+    if (!existing) {
+      existing = await prisma.materialGroup.create({
+        data: {
+          id: randomUUID(),
+          groupA: mg.groupA,
+          groupB: mg.groupB,
+          groupC: mg.groupC,
+          groupD: mg.groupD,
+          deleted: false,
+        },
+      })
+    }
+    createdMaterialGroups.push(existing.id)
+  }
+
+  console.log('MaterialGroups seeded')
+
+  // 17. Upsert Units
+  const UNITS = [
+    {name: 'Piece', quantity: 1, abbreviation: 'pcs', shortDescription: 'Single piece'},
+    {name: 'Meter', quantity: 1, abbreviation: 'm', shortDescription: 'Length in meters'},
+    {name: 'Kilogram', quantity: 1, abbreviation: 'kg', shortDescription: 'Weight in kilograms'},
+    {name: 'Box', quantity: 1, abbreviation: 'box', shortDescription: 'Box quantity'},
+  ]
+
+  const createdUnits: string[] = []
+
+  for (const unit of UNITS) {
+    let existing = await prisma.unit.findFirst({where: {abbreviation: unit.abbreviation}})
+    if (!existing) {
+      existing = await prisma.unit.create({
+        data: {
+          id: randomUUID(),
+          unit: unit.name,
+          physicalQuantity: unit.quantity,
+          abbreviation: unit.abbreviation,
+          shortDescription: unit.shortDescription,
+          longDescription: unit.shortDescription,
+          valid: true,
+          createdBy: adminEmployee.id,
+          createdAt: now,
+          deleted: false,
+        },
+      })
+    }
+    createdUnits.push(existing.id)
+  }
+
+  console.log('Units seeded')
+
+  // 18. Upsert Materials
+  const MATERIALS = [
+    {
+      beNumber: 'BE-MAT-0001',
+      name: 'Hex Bolt M10',
+      shortDescription: 'M10 hex bolt galvanized',
+      longDescription: 'Standard galvanized hex bolt M10 x 30mm',
+      brandName: 'Fabory',
+      preferedSupplier: 'Fabory',
+    },
+    {
+      beNumber: 'BE-MAT-0002',
+      name: 'Hex Nut M10',
+      shortDescription: 'M10 hex nut',
+      longDescription: 'Standard steel hex nut M10',
+      brandName: 'Fabory',
+      preferedSupplier: 'Fabory',
+    },
+    {
+      beNumber: 'BE-MAT-0003',
+      name: 'Power Cable 3G2.5',
+      shortDescription: 'Power cable 3G2.5mm²',
+      longDescription: 'Flexible copper power cable',
+      brandName: 'Nexans',
+      preferedSupplier: 'Nexans',
+    },
+    {
+      beNumber: 'BE-MAT-0004',
+      name: 'Industrial Switch',
+      shortDescription: '24V industrial switch',
+      longDescription: 'Heavy duty industrial control switch',
+      brandName: 'Siemens',
+      preferedSupplier: 'Siemens',
+    },
+    {
+      beNumber: 'BE-MAT-0005',
+      name: 'Hydraulic Coupling',
+      shortDescription: 'Quick hydraulic coupling',
+      longDescription: 'High pressure quick connect coupling',
+      brandName: 'Parker',
+      preferedSupplier: 'Parker',
+    },
+  ]
+
+  let brandOrderCounter = (await prisma.material.count()) + 1
+
+  for (let i = 0; i < MATERIALS.length; i++) {
+    const mat = MATERIALS[i]
+    const existing = await prisma.material.findFirst({where: {beNumber: mat.beNumber}})
+    if (!existing) {
+      await prisma.material.create({
+        data: {
+          id: randomUUID(),
+          beNumber: mat.beNumber,
+          name: mat.name,
+          brandOrderNr: brandOrderCounter++,
+          shortDescription: mat.shortDescription,
+          longDescription: mat.longDescription,
+          preferedSupplier: mat.preferedSupplier,
+          brandName: mat.brandName,
+          documentationPlace: 'SharePoint',
+          bePartDoc: null,
+          rejected: false,
+          materialGroupId: createdMaterialGroups[i % createdMaterialGroups.length],
+          unitId: createdUnits[i % createdUnits.length],
+          createdBy: adminEmployee.id,
+          deleted: false,
+        },
+      })
+    }
+  }
+
+  console.log('Materials seeded')
+
   console.log('Departments, Roles, SubRoles, RoleLevels, Targets, and VisibilityForRole seeded')
-  console.log('Total roleLevels created: 57 (14 x 4 + 1 Administrator)')
-  console.log('NOTE: MaterialGroups, Units, Materials, and Performance Specs are managed via the frontend only.')
+  console.log('Total roleLevels created: 57 (14 × 4 + 1 Administrator)')
 }

@@ -197,7 +197,7 @@ export type TrainingStandardGroupByArgs<ExtArgs extends runtime.Types.Extensions
 
 export type TrainingStandardGroupByOutputType = {
   id: string
-  description: string
+  description: string | null
   descriptionShort: string | null
   location: string | null
   createdAt: Date
@@ -234,7 +234,7 @@ export type TrainingStandardWhereInput = {
   OR?: Prisma.TrainingStandardWhereInput[]
   NOT?: Prisma.TrainingStandardWhereInput | Prisma.TrainingStandardWhereInput[]
   id?: Prisma.StringFilter<"TrainingStandard"> | string
-  description?: Prisma.StringFilter<"TrainingStandard"> | string
+  description?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   descriptionShort?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   location?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TrainingStandard"> | Date | string
@@ -256,7 +256,7 @@ export type TrainingStandardWhereInput = {
 
 export type TrainingStandardOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  description?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   descriptionShort?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -282,7 +282,7 @@ export type TrainingStandardWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TrainingStandardWhereInput | Prisma.TrainingStandardWhereInput[]
   OR?: Prisma.TrainingStandardWhereInput[]
   NOT?: Prisma.TrainingStandardWhereInput | Prisma.TrainingStandardWhereInput[]
-  description?: Prisma.StringFilter<"TrainingStandard"> | string
+  description?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   descriptionShort?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   location?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TrainingStandard"> | Date | string
@@ -304,7 +304,7 @@ export type TrainingStandardWhereUniqueInput = Prisma.AtLeast<{
 
 export type TrainingStandardOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  description?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   descriptionShort?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -326,7 +326,7 @@ export type TrainingStandardScalarWhereWithAggregatesInput = {
   OR?: Prisma.TrainingStandardScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TrainingStandardScalarWhereWithAggregatesInput | Prisma.TrainingStandardScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"TrainingStandard"> | string
-  description?: Prisma.StringWithAggregatesFilter<"TrainingStandard"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"TrainingStandard"> | string | null
   descriptionShort?: Prisma.StringNullableWithAggregatesFilter<"TrainingStandard"> | string | null
   location?: Prisma.StringNullableWithAggregatesFilter<"TrainingStandard"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TrainingStandard"> | Date | string
@@ -342,7 +342,7 @@ export type TrainingStandardScalarWhereWithAggregatesInput = {
 
 export type TrainingStandardCreateInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -360,7 +360,7 @@ export type TrainingStandardCreateInput = {
 
 export type TrainingStandardUncheckedCreateInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -378,7 +378,7 @@ export type TrainingStandardUncheckedCreateInput = {
 
 export type TrainingStandardUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -396,7 +396,7 @@ export type TrainingStandardUpdateInput = {
 
 export type TrainingStandardUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -414,7 +414,7 @@ export type TrainingStandardUncheckedUpdateInput = {
 
 export type TrainingStandardCreateManyInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -430,7 +430,7 @@ export type TrainingStandardCreateManyInput = {
 
 export type TrainingStandardUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -442,7 +442,7 @@ export type TrainingStandardUpdateManyMutationInput = {
 
 export type TrainingStandardUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -723,7 +723,7 @@ export type TrainingStandardUpdateOneRequiredWithoutTrainingDocumentNestedInput 
 
 export type TrainingStandardCreateWithoutCertificateInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -740,7 +740,7 @@ export type TrainingStandardCreateWithoutCertificateInput = {
 
 export type TrainingStandardUncheckedCreateWithoutCertificateInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -786,7 +786,7 @@ export type TrainingStandardScalarWhereInput = {
   OR?: Prisma.TrainingStandardScalarWhereInput[]
   NOT?: Prisma.TrainingStandardScalarWhereInput | Prisma.TrainingStandardScalarWhereInput[]
   id?: Prisma.StringFilter<"TrainingStandard"> | string
-  description?: Prisma.StringFilter<"TrainingStandard"> | string
+  description?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   descriptionShort?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   location?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TrainingStandard"> | Date | string
@@ -802,7 +802,7 @@ export type TrainingStandardScalarWhereInput = {
 
 export type TrainingStandardCreateWithoutEmployeeInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -819,7 +819,7 @@ export type TrainingStandardCreateWithoutEmployeeInput = {
 
 export type TrainingStandardUncheckedCreateWithoutEmployeeInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -846,7 +846,7 @@ export type TrainingStandardCreateManyEmployeeInputEnvelope = {
 
 export type TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -863,7 +863,7 @@ export type TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEm
 
 export type TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -922,7 +922,7 @@ export type TrainingStandardUpdateManyWithWhereWithoutEmployee_TrainingStandard_
 
 export type TrainingStandardCreateWithoutTargetInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -939,7 +939,7 @@ export type TrainingStandardCreateWithoutTargetInput = {
 
 export type TrainingStandardUncheckedCreateWithoutTargetInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -982,7 +982,7 @@ export type TrainingStandardUpdateManyWithWhereWithoutTargetInput = {
 
 export type TrainingStandardCreateWithoutTrainingInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -999,7 +999,7 @@ export type TrainingStandardCreateWithoutTrainingInput = {
 
 export type TrainingStandardUncheckedCreateWithoutTrainingInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -1032,7 +1032,7 @@ export type TrainingStandardUpdateToOneWithWhereWithoutTrainingInput = {
 
 export type TrainingStandardUpdateWithoutTrainingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1049,7 +1049,7 @@ export type TrainingStandardUpdateWithoutTrainingInput = {
 
 export type TrainingStandardUncheckedUpdateWithoutTrainingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1066,7 +1066,7 @@ export type TrainingStandardUncheckedUpdateWithoutTrainingInput = {
 
 export type TrainingStandardCreateWithoutTrainingDocumentInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -1083,7 +1083,7 @@ export type TrainingStandardCreateWithoutTrainingDocumentInput = {
 
 export type TrainingStandardUncheckedCreateWithoutTrainingDocumentInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -1116,7 +1116,7 @@ export type TrainingStandardUpdateToOneWithWhereWithoutTrainingDocumentInput = {
 
 export type TrainingStandardUpdateWithoutTrainingDocumentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1133,7 +1133,7 @@ export type TrainingStandardUpdateWithoutTrainingDocumentInput = {
 
 export type TrainingStandardUncheckedUpdateWithoutTrainingDocumentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1150,7 +1150,7 @@ export type TrainingStandardUncheckedUpdateWithoutTrainingDocumentInput = {
 
 export type TrainingStandardCreateManyCertificateInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -1165,7 +1165,7 @@ export type TrainingStandardCreateManyCertificateInput = {
 
 export type TrainingStandardUpdateWithoutCertificateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1182,7 +1182,7 @@ export type TrainingStandardUpdateWithoutCertificateInput = {
 
 export type TrainingStandardUncheckedUpdateWithoutCertificateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1199,7 +1199,7 @@ export type TrainingStandardUncheckedUpdateWithoutCertificateInput = {
 
 export type TrainingStandardUncheckedUpdateManyWithoutCertificateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1214,7 +1214,7 @@ export type TrainingStandardUncheckedUpdateManyWithoutCertificateInput = {
 
 export type TrainingStandardCreateManyEmployeeInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -1229,7 +1229,7 @@ export type TrainingStandardCreateManyEmployeeInput = {
 
 export type TrainingStandardCreateManyEmployee_TrainingStandard_deletedByToEmployeeInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -1244,7 +1244,7 @@ export type TrainingStandardCreateManyEmployee_TrainingStandard_deletedByToEmplo
 
 export type TrainingStandardUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1261,7 +1261,7 @@ export type TrainingStandardUpdateWithoutEmployeeInput = {
 
 export type TrainingStandardUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1278,7 +1278,7 @@ export type TrainingStandardUncheckedUpdateWithoutEmployeeInput = {
 
 export type TrainingStandardUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1293,7 +1293,7 @@ export type TrainingStandardUncheckedUpdateManyWithoutEmployeeInput = {
 
 export type TrainingStandardUpdateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1310,7 +1310,7 @@ export type TrainingStandardUpdateWithoutEmployee_TrainingStandard_deletedByToEm
 
 export type TrainingStandardUncheckedUpdateWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1327,7 +1327,7 @@ export type TrainingStandardUncheckedUpdateWithoutEmployee_TrainingStandard_dele
 
 export type TrainingStandardUncheckedUpdateManyWithoutEmployee_TrainingStandard_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1342,7 +1342,7 @@ export type TrainingStandardUncheckedUpdateManyWithoutEmployee_TrainingStandard_
 
 export type TrainingStandardCreateManyTargetInput = {
   id: string
-  description: string
+  description?: string | null
   descriptionShort?: string | null
   location?: string | null
   createdAt: Date | string
@@ -1357,7 +1357,7 @@ export type TrainingStandardCreateManyTargetInput = {
 
 export type TrainingStandardUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1374,7 +1374,7 @@ export type TrainingStandardUpdateWithoutTargetInput = {
 
 export type TrainingStandardUncheckedUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1391,7 +1391,7 @@ export type TrainingStandardUncheckedUpdateWithoutTargetInput = {
 
 export type TrainingStandardUncheckedUpdateManyWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1508,7 +1508,7 @@ export type $TrainingStandardPayload<ExtArgs extends runtime.Types.Extensions.In
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    description: string
+    description: string | null
     descriptionShort: string | null
     location: string | null
     createdAt: Date

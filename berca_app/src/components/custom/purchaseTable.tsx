@@ -2,6 +2,7 @@
 
 import {useMemo, useState} from 'react'
 import {useRouter} from 'next/navigation'
+import type {Route} from 'next'
 import {Search, ChevronDown, ChevronUp, Plus, Pencil, Trash2, Eye} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
@@ -238,7 +239,7 @@ export function PurchaseTable({
             ) : (
               filtered.map(purchase => {
                 const secondaryLabel = purchase.brandName ?? purchase.preferedSupplier ?? ''
-                const detailHref = `/departments/purchasing/orders/${purchase.id}`
+                const detailHref = `/departments/purchasing/orders/${purchase.id}` as Route
                 return (
                   <TableRow
                     key={purchase.id}

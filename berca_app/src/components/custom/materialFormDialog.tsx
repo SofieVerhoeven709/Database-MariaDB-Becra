@@ -74,7 +74,7 @@ export function MaterialFormDialog({
 
   const [form, setForm] = useState<Partial<MappedMaterial> & {id: string}>(makeForm)
 
-  // Sync form state when the dialog opens or switches between materials.
+  // Sync form state when the dialogue opens or switches between materials.
   // The lint rule warns against sync setState in effects, but this is intentional:
   // we only update when `open` transitions to true or the edited material changes.
 

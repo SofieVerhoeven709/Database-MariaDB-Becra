@@ -171,3 +171,327 @@ export async function extendSession(id: string, subRole: {name: string}): Promis
     include: sessionWithProfileInclude,
   })
 }
+
+export async function getEmployeeDetail(id: string) {
+  return prismaClient.employee.findUniqueOrThrow({
+    where: {id},
+    include: {
+      RoleLevel_Employee_roleLevelIdToRoleLevel: {
+        include: {Role: true, SubRole: true},
+      },
+      Title_Employee_titleIdToTitle: true,
+      EmergencyContact: true,
+      Employee: {select: {id: true, firstName: true, lastName: true}}, // createdBy
+      Employee_Employee_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}}, // deletedBy
+
+      // ── Section 1: Assigned ──────────────────────────────────────────────
+
+      // FollowUps where employee is owner or executor
+      FollowUp_FollowUp_ownedByToEmployee: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'desc'},
+        take: 50,
+        include: {
+          Status: {select: {name: true}},
+          FollowUpType: {select: {name: true}},
+          UrgencyType: {select: {name: true}},
+        },
+      },
+      FollowUp_FollowUp_executedByToEmployee: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'desc'},
+        take: 50,
+        include: {
+          Status: {select: {name: true}},
+          FollowUpType: {select: {name: true}},
+          UrgencyType: {select: {name: true}},
+        },
+      },
+
+      // FollowUpStructures where employee is owner, executor, or taskFor
+      FollowUpStructure_FollowUpStructure_ownedByToEmployee: {
+        where: {deleted: false},
+        orderBy: {contactDate: 'desc'},
+        take: 50,
+        include: {
+          Status: {select: {name: true}},
+          UrgencyType: {select: {name: true}},
+        },
+      },
+      FollowUpStructure_FollowUpStructure_executedByToEmployee: {
+        where: {deleted: false},
+        orderBy: {contactDate: 'desc'},
+        take: 50,
+        include: {
+          Status: {select: {name: true}},
+          UrgencyType: {select: {name: true}},
+        },
+      },
+      FollowUpStructure_FollowUpStructure_taskForToEmployee: {
+        where: {deleted: false},
+        orderBy: {contactDate: 'desc'},
+        take: 50,
+        include: {
+          Status: {select: {name: true}},
+          UrgencyType: {select: {name: true}},
+        },
+      },
+
+      // DocumentStructures where employee is manager or revisor
+      DocumentStructure_DocumentStructure_managedByIdToEmployee: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          documentNumber: true,
+          descriptionShort: true,
+          valid: true,
+          createdAt: true,
+        },
+      },
+      DocumentStructure_DocumentStructure_revisedByIdToEmployee: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          documentNumber: true,
+          descriptionShort: true,
+          valid: true,
+          createdAt: true,
+        },
+      },
+
+      // TimeRegistry entries this employee participated in (not created)
+      TimeRegistryEmployee: {
+        orderBy: {TimeRegistry: {workDate: 'desc'}},
+        take: 50,
+        include: {
+          TimeRegistry: {
+            select: {
+              id: true,
+              workDate: true,
+              startTime: true,
+              endTime: true,
+              activityDescription: true,
+              deleted: true,
+              WorkOrder: {select: {id: true, workOrderNumber: true}},
+            },
+          },
+        },
+      },
+
+      // ── Section 2: Created ───────────────────────────────────────────────
+
+      Contact: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          createdAt: true,
+          active: true,
+          Function: {select: {name: true}},
+        },
+      },
+      Company: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          name: true,
+          number: true,
+          createdAt: true,
+          companyActive: true,
+        },
+      },
+      Project: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          projectNumber: true,
+          projectName: true,
+          createdAt: true,
+          isOpen: true,
+          isClosed: true,
+          Company: {select: {name: true}},
+          ProjectType: {select: {name: true}},
+        },
+      },
+      Training: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          trainingNumber: true,
+          trainingDate: true,
+          createdAt: true,
+          closed: true,
+          TrainingStandard: {select: {descriptionShort: true}},
+        },
+      },
+      WorkOrder: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          workOrderNumber: true,
+          description: true,
+          startDate: true,
+          endDate: true,
+          createdAt: true,
+          completed: true,
+          Project: {select: {projectName: true, projectNumber: true}},
+        },
+      },
+      InvoiceIn: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          invoiceNumber: true,
+          invoiceDate: true,
+          createdAt: true,
+          completed: true,
+          amountWithoutVat: true,
+          InvoiceType: {select: {name: true}},
+        },
+      },
+      InvoiceOut: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          invoiceNumber: true,
+          invoiceDate: true,
+          createdAt: true,
+          completed: true,
+          amountWithoutVat: true,
+          InvoiceType: {select: {name: true}},
+        },
+      },
+      Purchase: {
+        where: {deleted: false},
+        orderBy: {purchaseDate: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          orderNumber: true,
+          shortDescription: true,
+          purchaseDate: true,
+          status: true,
+          Company: {select: {name: true}},
+          Project: {select: {projectName: true}},
+        },
+      },
+      TimeRegistry: {
+        where: {deleted: false},
+        orderBy: {workDate: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          workDate: true,
+          startTime: true,
+          endTime: true,
+          activityDescription: true,
+          WorkOrder: {select: {workOrderNumber: true, Project: {select: {projectName: true}}}},
+        },
+      },
+
+      // ── Section 3: Deleted ───────────────────────────────────────────────
+
+      Contact_Contact_deletedByToEmployee: {
+        where: {deleted: true},
+        orderBy: {deletedAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          deletedAt: true,
+          Function: {select: {name: true}},
+        },
+      },
+      Company_Company_deletedByToEmployee: {
+        where: {deleted: true},
+        orderBy: {deletedAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          name: true,
+          number: true,
+          deletedAt: true,
+        },
+      },
+      Project_Project_deletedByToEmployee: {
+        where: {deleted: true},
+        orderBy: {deletedAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          projectNumber: true,
+          projectName: true,
+          deletedAt: true,
+          Company: {select: {name: true}},
+        },
+      },
+      Training_Training_deletedByToEmployee: {
+        where: {deleted: true},
+        orderBy: {deletedAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          trainingNumber: true,
+          trainingDate: true,
+          deletedAt: true,
+          TrainingStandard: {select: {descriptionShort: true}},
+        },
+      },
+      WorkOrder_WorkOrder_deletedByToEmployee: {
+        where: {deleted: true},
+        orderBy: {deletedAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          workOrderNumber: true,
+          deletedAt: true,
+          Project: {select: {projectName: true}},
+        },
+      },
+      InvoiceIn_InvoiceIn_deletedByToEmployee: {
+        where: {deleted: true},
+        orderBy: {deletedAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          invoiceNumber: true,
+          invoiceDate: true,
+          deletedAt: true,
+          amountWithoutVat: true,
+        },
+      },
+      InvoiceOut_InvoiceOut_deletedByToEmployee: {
+        where: {deleted: true},
+        orderBy: {deletedAt: 'desc'},
+        take: 50,
+        select: {
+          id: true,
+          invoiceNumber: true,
+          invoiceDate: true,
+          deletedAt: true,
+          amountWithoutVat: true,
+        },
+      },
+    },
+  })
+}

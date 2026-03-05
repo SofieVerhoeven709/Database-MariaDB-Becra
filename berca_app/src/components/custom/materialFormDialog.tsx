@@ -116,7 +116,7 @@ export function MaterialFormDialog({
                 className={inputStyles}
                 value={form.beNumber ?? ''}
                 onChange={e => update('beNumber', e.target.value)}
-                placeholder="BE-0001"
+                placeholder="1000000"
                 required
               />
             </div>
@@ -135,7 +135,7 @@ export function MaterialFormDialog({
             </div>
           </div>
 
-          {/* Row 2: Name + Brand Name */}
+          {/* Row 2: Material Name + Brand Name */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="name" className="text-xs text-muted-foreground">
@@ -193,7 +193,7 @@ export function MaterialFormDialog({
             />
           </div>
 
-          {/* Row 3: Group + Unit */}
+          {/* Row 3: MaterialGroup + Unit */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label className="text-xs text-muted-foreground">Material Group *</Label>

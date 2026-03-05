@@ -1,13 +1,15 @@
 'use client'
 
 import {useState} from 'react'
-import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2} from 'lucide-react'
+import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
 import {EmployeeFormDialog} from '@/components/custom/employeeFormDialog'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
+import Link from 'next/link'
+import type {Route} from 'next'
 import type {MappedEmployee} from '@/types/employee'
 import {
   createEmployeeAction,
@@ -241,8 +243,8 @@ export function EmployeeTable({
   const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
   const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 
-  // Total column count for the empty state colspan
-  const totalCols = filterDeleted !== 'not-deleted' ? 29 : 26
+  // 24 base cols + 1 actions col; +3 when showing deleted columns
+  const totalCols = filterDeleted !== 'not-deleted' ? 28 : 25
 
   return (
     <div className="flex flex-col gap-6">
@@ -371,7 +373,7 @@ export function EmployeeTable({
                   <TableHead className={thClass}>Deleted By</TableHead>
                 </>
               )}
-              <TableHead className="w-20">
+              <TableHead className="w-24">
                 <span className="sr-only">Actions</span>
               </TableHead>
             </TableRow>
@@ -388,15 +390,10 @@ export function EmployeeTable({
                 <TableRow
                   key={emp.id}
                   className={`border-border/40 hover:bg-secondary/50 ${emp.deleted ? 'opacity-50' : ''}`}>
-                  {/* titleId */}
                   <TableCell className={tdClass}>{emp.titleName}</TableCell>
-                  {/* firstName */}
                   <TableCell className={`${tdClass} text-foreground font-medium`}>{emp.firstName}</TableCell>
-                  {/* lastName */}
                   <TableCell className={`${tdClass} text-foreground font-medium`}>{emp.lastName}</TableCell>
-                  {/* username */}
                   <TableCell className={tdClass}>{emp.username}</TableCell>
-                  {/* role subrole Name */}
                   <TableCell>
                     <Badge
                       variant="outline"
@@ -404,31 +401,19 @@ export function EmployeeTable({
                       {emp.roleName}
                     </Badge>
                   </TableCell>
-                  {/* mail */}
                   <TableCell className={tdClass}>{emp.mail ?? '-'}</TableCell>
-                  {/* phoneNumber */}
                   <TableCell className={tdClass}>{emp.phoneNumber ?? '-'}</TableCell>
-                  {/* birthDate */}
                   <TableCell className={tdClass}>{formatDate(emp.birthDate)}</TableCell>
-                  {/* startDate */}
                   <TableCell className={tdClass}>{formatDate(emp.startDate)}</TableCell>
-                  {/* endDate */}
                   <TableCell className={tdClass}>{formatDate(emp.endDate)}</TableCell>
-                  {/* street */}
                   <TableCell className={tdClass}>{emp.street ?? '-'}</TableCell>
-                  {/* houseNumber */}
                   <TableCell className={tdClass}>{emp.houseNumber ?? '-'}</TableCell>
-                  {/* busNumber */}
                   <TableCell className={tdClass}>{emp.busNumber ?? '-'}</TableCell>
-                  {/* zipCode */}
                   <TableCell className={tdClass}>{emp.zipCode ?? '-'}</TableCell>
-                  {/* place */}
                   <TableCell className={tdClass}>{emp.place ?? '-'}</TableCell>
-                  {/* info */}
                   <TableCell className={tdClass}>
                     <span className="max-w-[200px] truncate inline-block">{emp.info ?? '-'}</span>
                   </TableCell>
-                  {/* permanentEmployee */}
                   <TableCell>
                     {emp.permanentEmployee ? (
                       <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
@@ -438,11 +423,8 @@ export function EmployeeTable({
                       </Badge>
                     )}
                   </TableCell>
-                  {/* checkInfo */}
                   <TableCell className={tdClass}>{boolLabel(emp.checkInfo)}</TableCell>
-                  {/* newYearCard */}
                   <TableCell className={tdClass}>{boolLabel(emp.newYearCard)}</TableCell>
-                  {/* active */}
                   <TableCell>
                     {emp.active ? (
                       <Badge className="bg-accent/15 text-accent border-0 font-medium">Active</Badge>
@@ -452,15 +434,10 @@ export function EmployeeTable({
                       </Badge>
                     )}
                   </TableCell>
-                  {/* pictureId */}
                   <TableCell className={`${tdClass} font-mono text-xs`}>{emp.pictureId ?? '-'}</TableCell>
-                  {/* createdAt */}
                   <TableCell className={tdClass}>{formatDate(emp.createdAt)}</TableCell>
-                  {/* createdBy */}
                   <TableCell className={tdClass}>{getEmployeeName(emp.createdBy)}</TableCell>
-                  {/* passwordCreatedAt */}
                   <TableCell className={tdClass}>{formatDate(emp.passwordCreatedAt)}</TableCell>
-                  {/* deleted columns */}
                   {filterDeleted !== 'not-deleted' && (
                     <>
                       <TableCell>
@@ -479,6 +456,17 @@ export function EmployeeTable({
                   {/* Actions */}
                   <TableCell>
                     <div className="flex items-center gap-1">
+                      <Link href={`/departments/hr/records/${emp.id}` as Route}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                          <ExternalLink className="h-3.5 w-3.5" />
+                          <span className="sr-only">
+                            View {emp.firstName} {emp.lastName}
+                          </span>
+                        </Button>
+                      </Link>
                       <Button
                         variant="ghost"
                         size="icon"
@@ -501,7 +489,6 @@ export function EmployeeTable({
                           </span>
                         </Button>
                       )}
-
                       {emp.deleted && isAdmin && (
                         <Button
                           variant="ghost"

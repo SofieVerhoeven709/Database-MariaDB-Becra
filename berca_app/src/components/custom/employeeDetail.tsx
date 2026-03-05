@@ -156,6 +156,14 @@ const TYPE_COLOURS: Record<RecordType, string> = {
   'Invoice Out': 'bg-orange-500/10 text-orange-600 border-orange-500/20',
   Purchase: 'bg-indigo-500/10 text-indigo-600 border-indigo-500/20',
   'Time Registry': 'bg-slate-500/10 text-slate-600 border-slate-500/20',
+  Employee: 'bg-pink-500/10 text-pink-600 border-pink-500/20',
+  Document: 'bg-teal-500/10 text-teal-600 border-teal-500/20',
+  'Follow-up': 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
+  'Follow-up Structure': 'bg-lime-500/10 text-lime-600 border-lime-500/20',
+  'Training Standard': 'bg-emerald-600/10 text-emerald-700 border-emerald-600/20',
+  'Delivery Note': 'bg-sky-500/10 text-sky-600 border-sky-500/20',
+  Quote: 'bg-purple-500/10 text-purple-600 border-purple-500/20',
+  'WO Structure': 'bg-zinc-500/10 text-zinc-600 border-zinc-500/20',
 }
 
 function TypeBadge({type}: {type: RecordType}) {
@@ -348,7 +356,7 @@ export function EmployeeDetail({
   titleOptions,
 }: EmployeeDetailProps) {
   const router = useRouter()
-  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const isAdmin = currentUserLevel >= 80
   const canEdit = currentUserLevel >= 20
 
   const [editing, setEditing] = useState(false)
@@ -669,14 +677,14 @@ export function EmployeeDetail({
           <TabsTrigger value="created">
             Created
             <Badge variant="secondary" className="ml-2 text-xs">
-              {employee.createdRecords.length}
+              {employee.createdMainRecords.length + employee.createdOtherRecords.length}
             </Badge>
           </TabsTrigger>
           {isAdmin && (
             <TabsTrigger value="deleted">
               Deleted
               <Badge variant="secondary" className="ml-2 text-xs">
-                {employee.deletedRecords.length}
+                {employee.deletedMainRecords.length + employee.deletedOtherRecords.length}
               </Badge>
             </TabsTrigger>
           )}
@@ -849,13 +857,43 @@ export function EmployeeDetail({
 
         {/* ══ SECTION 2 — CREATED ═════════════════════════════════════════════ */}
         <TabsContent value="created" className="mt-3">
-          <CreatedTable records={employee.createdRecords} />
+          <CreatedTable records={employee.createdMainRecords} />
+          {employee.createdOtherRecords.length > 0 && (
+            <div className="mt-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="h-px flex-1 bg-border" />
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Other Records
+                  <Badge variant="secondary" className="ml-2">
+                    {employee.createdOtherRecords.length}
+                  </Badge>
+                </span>
+                <div className="h-px flex-1 bg-border" />
+              </div>
+              <CreatedTable records={employee.createdOtherRecords} />
+            </div>
+          )}
         </TabsContent>
 
         {/* ══ SECTION 3 — DELETED (admin only) ═══════════════════════════════ */}
         {isAdmin && (
           <TabsContent value="deleted" className="mt-3">
-            <DeletedTable records={employee.deletedRecords} />
+            <DeletedTable records={employee.deletedMainRecords} />
+            {employee.deletedOtherRecords.length > 0 && (
+              <div className="mt-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="h-px flex-1 bg-border" />
+                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                    Other Records
+                    <Badge variant="secondary" className="ml-2">
+                      {employee.deletedOtherRecords.length}
+                    </Badge>
+                  </span>
+                  <div className="h-px flex-1 bg-border" />
+                </div>
+                <DeletedTable records={employee.deletedOtherRecords} />
+              </div>
+            )}
           </TabsContent>
         )}
       </Tabs>

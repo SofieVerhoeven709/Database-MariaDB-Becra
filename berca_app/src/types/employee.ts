@@ -83,6 +83,7 @@ export interface MappedEmployeeTimeRegistryParticipation {
 // ─── Unified flat row for Created / Deleted tables ────────────────────────────
 
 export type RecordType =
+  // Main records
   | 'Contact'
   | 'Company'
   | 'Project'
@@ -92,6 +93,56 @@ export type RecordType =
   | 'Invoice Out'
   | 'Purchase'
   | 'Time Registry'
+  | 'Employee'
+  | 'Document'
+  | 'Follow-up'
+  | 'Follow-up Structure'
+  | 'Training Standard'
+  | 'Delivery Note'
+  | 'Quote'
+  | 'WO Structure'
+  // Other records
+  | 'Certificate'
+  | 'Certificate Type'
+  | 'Company Address'
+  | 'Company Contact'
+  | 'Department'
+  | 'Function'
+  | 'Hour Type'
+  | 'Inventory'
+  | 'Inventory Change'
+  | 'Inventory Order'
+  | 'Inventory Structure'
+  | 'Invoice Type'
+  | 'Material'
+  | 'Material Assembly'
+  | 'Material Code'
+  | 'Material Family'
+  | 'Material Movement'
+  | 'Material Other'
+  | 'Material Price'
+  | 'Material Serial Track'
+  | 'Part'
+  | 'Phantom'
+  | 'Product'
+  | 'Project Contact'
+  | 'Project Type'
+  | 'Purchase Detail'
+  | 'Purchase Order'
+  | 'Quote Becra'
+  | 'Role'
+  | 'Role Level'
+  | 'Status'
+  | 'Sub Role'
+  | 'Supplier DN Follow-up'
+  | 'Target'
+  | 'Target Type'
+  | 'Test Procedure'
+  | 'Title'
+  | 'Training Contact'
+  | 'Unit'
+  | 'Urgency Type'
+  | 'Warehouse Place'
 
 export interface UnifiedRecord {
   id: string
@@ -150,9 +201,11 @@ export interface EmployeeDetailData {
   assignedDocuments: MappedEmployeeDocument[]
   participatedTimeRegistries: MappedEmployeeTimeRegistryParticipation[]
 
-  // Section 2 – Created (flat unified rows)
-  createdRecords: UnifiedRecord[]
+  // Section 2 – Created
+  createdMainRecords: UnifiedRecord[]
+  createdOtherRecords: UnifiedRecord[]
 
-  // Section 3 – Deleted (flat unified rows)
-  deletedRecords: UnifiedRecord[]
+  // Section 3 – Deleted
+  deletedMainRecords: UnifiedRecord[]
+  deletedOtherRecords: UnifiedRecord[]
 }

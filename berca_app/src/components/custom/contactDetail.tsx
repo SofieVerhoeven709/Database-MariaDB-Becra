@@ -22,6 +22,9 @@ import {
   undeleteCompanyContactAction,
   hardDeleteCompanyContactAction,
 } from '@/serverFunctions/companyContact'
+import {createCompanyAndReturnIdAction} from '@/serverFunctions/companies'
+import {CompanyFormDialog} from '@/components/custom/companyFormDialog'
+import type {MappedCompany} from '@/types/company'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import type {Route} from 'next'
@@ -103,6 +106,50 @@ export function ContactDetail({
   const [endPreviousActive, setEndPreviousActive] = useState(true)
   const [editingCompanyId, setEditingCompanyId] = useState<string | null>(null)
   const [editCompanyForm, setEditCompanyForm] = useState<CompanyForm>(emptyCompanyForm)
+
+  // ─── Create company dialog ─────────────────────────────────────────────────
+  const [companies, setCompanies] = useState(companyOptions)
+  const [companyDialogOpen, setCompanyDialogOpen] = useState(false)
+
+  async function handleSaveCompany(c: MappedCompany, visRows: VisibilityRow[]) {
+    const created = await createCompanyAndReturnIdAction({
+      name: c.name,
+      number: c.number,
+      mail: c.mail,
+      businessPhone: c.businessPhone,
+      website: c.website,
+      vatNumber: c.vatNumber,
+      bankNumber: c.bankNumber,
+      iban: c.iban,
+      bic: c.bic,
+      becraCustomerNumber: c.becraCustomerNumber,
+      becraWebsiteLogin: c.becraWebsiteLogin,
+      supplier: c.supplier,
+      prefferedSupplier: c.prefferedSupplier,
+      companyActive: c.companyActive,
+      newsLetter: c.newsLetter,
+      customer: c.customer,
+      potentialCustomer: c.potentialCustomer,
+      headQuarters: c.headQuarters,
+      potentialSubContractor: c.potentialSubContractor,
+      subContractor: c.subContractor,
+      notes: c.notes,
+      companyId: c.companyId,
+      addresses: c.addresses.map(a => ({
+        street: a.street,
+        houseNumber: a.houseNumber,
+        busNumber: a.busNumber,
+        zipCode: a.zipCode,
+        place: a.place,
+        typeAdress: a.typeAdress,
+      })),
+      visibilityForRoles: visRows,
+    })
+
+    setCompanies(prev => [...prev, {id: created.id, name: created.name}])
+    setCompanyForm(f => ({...f, companyId: created.id}))
+    setCompanyDialogOpen(false)
+  }
 
   // ─── Edit form ─────────────────────────────────────────────────────────────
   const buildForm = () => ({
@@ -194,12 +241,6 @@ export function ContactDetail({
     }
   }
 
-  console.log({
-    total: contact.companies.length,
-    deletedCount: contact.companies.filter(c => c.deleted === true).length,
-    showDeletedCompanies,
-  })
-
   // ─── Derived ───────────────────────────────────────────────────────────────
   const hasDeletedCompanies = contact.companies.some(cc => cc.deleted)
   const nonDeletedCompanies = contact.companies.filter(cc => !cc.deleted)
@@ -211,12 +252,6 @@ export function ContactDetail({
       : activeCompanies
   const activeProjects = contact.projects.filter(p => p.project.isOpen && !p.project.isClosed)
   const closedProjects = contact.projects.filter(p => p.project.isClosed || !p.project.isOpen)
-
-  console.log({
-    total: contact.companies.length,
-    deletedCount: contact.companies.filter(c => c.deleted === true).length,
-    showDeletedCompanies,
-  })
 
   // ─── Reusable field renderers ──────────────────────────────────────────────
   const textRow = (label: string, val: string | null, formKey?: keyof typeof form, opts?: {type?: string}) => (
@@ -528,20 +563,39 @@ export function ContactDetail({
                 {addingCompany && (
                   <TableRow className="border-border/40 bg-secondary/30">
                     <TableCell colSpan={2}>
-                      <Select
-                        value={companyForm.companyId}
-                        onValueChange={v => setCompanyForm(f => ({...f, companyId: v}))}>
-                        <SelectTrigger className="h-7 text-xs bg-background border-border">
-                          <SelectValue placeholder="Select company…" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-card border-border">
-                          {companyOptions.map(o => (
-                            <SelectItem key={o.id} value={o.id} className="text-xs">
-                              {o.name}
+                      <div className="flex gap-1">
+                        <Select
+                          value={companyForm.companyId}
+                          onValueChange={v => {
+                            if (v === '__create__') {
+                              setCompanyDialogOpen(true)
+                            } else {
+                              setCompanyForm(f => ({...f, companyId: v}))
+                            }
+                          }}>
+                          <SelectTrigger className="h-7 text-xs bg-background border-border flex-1">
+                            <SelectValue placeholder="Select company…" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-card border-border">
+                            {companies.map(o => (
+                              <SelectItem key={o.id} value={o.id} className="text-xs">
+                                {o.name}
+                              </SelectItem>
+                            ))}
+                            <SelectItem value="__create__" className="text-xs">
+                              + Create New Company
                             </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                          </SelectContent>
+                        </Select>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          className="h-7 w-7 border-border shrink-0"
+                          onClick={() => setCompanyDialogOpen(true)}>
+                          <Plus className="h-3 w-3" />
+                        </Button>
+                      </div>
                     </TableCell>
                     <TableCell>
                       <Input
@@ -578,6 +632,7 @@ export function ContactDetail({
                         End active
                       </label>
                     </TableCell>
+                    <TableCell />
                     <TableCell>
                       <div className="flex items-center gap-1">
                         <Button
@@ -669,9 +724,7 @@ export function ContactDetail({
                                 className="h-7 text-xs bg-background border-border"
                               />
                             </TableCell>
-                            {/* End Active col — not applicable when editing existing */}
                             <TableCell />
-                            {/* Status col */}
                             <TableCell />
                             <TableCell>
                               <div className="flex items-center gap-1">
@@ -1072,6 +1125,19 @@ export function ContactDetail({
           </TabsContent>
         )}
       </Tabs>
+
+      {/* ── Create company dialog ───────────────────────────────────────────── */}
+      <CompanyFormDialog
+        open={companyDialogOpen}
+        onOpenChange={setCompanyDialogOpen}
+        company={null}
+        companies={companies}
+        onSave={handleSaveCompany}
+        isAdmin={isAdmin}
+        canDelete={false}
+        roleLevelOptions={roleLevelOptions}
+        defaultVisibleRoleNames={defaultVisibleRoleNames}
+      />
     </div>
   )
 }

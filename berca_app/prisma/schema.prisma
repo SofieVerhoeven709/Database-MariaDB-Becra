@@ -111,7 +111,7 @@ model CompanyAdress {
   deletedAt                                  DateTime? @db.DateTime(0)
   deletedBy                                  String?   @db.Char(36)
   Employee                                   Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_1")
-  Company                                    Company   @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_2")
+  Company                                    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "CompanyAdress_ibfk_2")
   Employee_CompanyAdress_deletedByToEmployee Employee? @relation("CompanyAdress_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_3")
 
   @@index([companyId], map: "companyId")
@@ -244,7 +244,7 @@ model Department {
 
 model DocumentGroup {
   id        String    @id @db.Char(36)
-  groupA    String?   @db.VarChar(255)
+  groupA    String    @db.VarChar(255)
   groupB    String?   @db.VarChar(255)
   groupC    String?   @db.VarChar(255)
   groupD    String?   @db.VarChar(255)
@@ -258,7 +258,7 @@ model DocumentGroup {
 
 model DocumentPlace {
   id            String          @id @db.Char(36)
-  placeA        String?         @db.VarChar(255)
+  placeA        String          @db.VarChar(255)
   placeB        String?         @db.VarChar(255)
   placeC        String?         @db.VarChar(255)
   placeD        String?         @db.VarChar(255)
@@ -922,7 +922,7 @@ model Material {
   brandOrderNr                                             Int
   shortDescription                                         String               @db.VarChar(255)
   longDescription                                          String?              @db.Text
-  preferedSupplier                                         String?              @db.VarChar(255)
+  preferredSupplier                                        String?              @db.VarChar(255)
   brandName                                                String?              @db.VarChar(255)
   documentationPlace                                       String?              @db.VarChar(255)
   bePartDoc                                                Int?
@@ -1239,6 +1239,7 @@ model MaterialSpec {
   materialFamilyId                          String?                          @db.Char(36)
   name                                      String?                          @db.VarChar(255)
   materialDimensionId                       String?                          @db.Char(36)
+  unitId                                    String?                          @db.Char(36)
   shortDescription                          String?                          @db.VarChar(255)
   longDescription                           String?                          @db.Text
   createdAt                                 DateTime?                        @db.DateTime(0)
@@ -1249,14 +1250,16 @@ model MaterialSpec {
   MaterialPerformance                       MaterialPerformance[]
   MaterialSerialTrackedStructure            MaterialSerialTrackedStructure[]
   MaterialFamily                            MaterialFamily?                  @relation(fields: [materialFamilyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_1")
-  MaterialDimension                         MaterialDimension?               @relation(fields: [materialDimensionId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_2")
-  Employee                                  Employee?                        @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_3")
-  Employee_MaterialSpec_deletedByToEmployee Employee?                        @relation("MaterialSpec_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialSpec_ibfk_4")
+  Unit                                      Unit?                            @relation(fields: [unitId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_2")
+  MaterialDimension                         MaterialDimension?               @relation(fields: [materialDimensionId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_3")
+  Employee                                  Employee?                        @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_4")
+  Employee_MaterialSpec_deletedByToEmployee Employee?                        @relation("MaterialSpec_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialSpec_ibfk_5")
 
   @@index([createdBy], map: "createdBy")
   @@index([materialDimensionId], map: "materialDimensionId")
   @@index([materialFamilyId], map: "materialFamilyId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([unitId], map: "unitId")
 }
 
 model MaterialStructure {
@@ -1844,21 +1847,22 @@ model TrainingStandard {
 }
 
 model Unit {
-  id                                String     @id @db.Char(36)
-  name                              String     @db.VarChar(255)
-  quantity                          Int
-  abbreviation                      String     @db.VarChar(255)
-  shortDescription                  String?    @db.VarChar(255)
-  longDescription                   String?    @db.Text
+  id                                String         @id @db.Char(36)
+  unitName                          String         @db.VarChar(255)
+  physicalQuantity                  String         @db.VarChar(255)
+  abbreviation                      String         @db.VarChar(255)
+  shortDescription                  String?        @db.VarChar(255)
+  longDescription                   String?        @db.Text
   valid                             Boolean
-  createdBy                         String     @db.Char(36)
-  createdAt                         DateTime   @db.Timestamp(0)
-  deleted                           Boolean    @default(false)
-  deletedAt                         DateTime?  @db.DateTime(0)
-  deletedBy                         String?    @db.Char(36)
+  createdBy                         String         @db.Char(36)
+  createdAt                         DateTime       @db.Timestamp(0)
+  deleted                           Boolean        @default(false)
+  deletedAt                         DateTime?      @db.DateTime(0)
+  deletedBy                         String?        @db.Char(36)
   Material                          Material[]
-  Employee                          Employee   @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Unit_ibfk_1")
-  Employee_Unit_deletedByToEmployee Employee?  @relation("Unit_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Unit_ibfk_2")
+  MaterialSpec                      MaterialSpec[]
+  Employee                          Employee       @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Unit_ibfk_1")
+  Employee_Unit_deletedByToEmployee Employee?      @relation("Unit_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Unit_ibfk_2")
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")

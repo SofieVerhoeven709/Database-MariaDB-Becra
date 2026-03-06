@@ -1,11 +1,11 @@
 DROP DATABASE IF EXISTS app_db;
 
-CREATE DATABASE app_db;
+CREATE DATABASE IF NOT EXISTS app_db;
 
 USE app_db;
 
 CREATE TABLE
-      Role (
+      IF NOT EXISTS Role (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Function (
+      IF NOT EXISTS Function (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Title (
+      IF NOT EXISTS Title (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      DocumentStructure (
+      IF NOT EXISTS DocumentStructure (
             id CHAR(36) NOT NULL PRIMARY KEY,
             documentNumber VARCHAR(100) NOT NULL,
             description TEXT,
@@ -54,7 +54,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
  CREATE TABLE
-      SubRole (
+      IF NOT EXISTS SubRole (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             level INT NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;     
 
 CREATE TABLE
-      RoleLevel(
+      IF NOT EXISTS RoleLevel(
             id CHAR(36) NOT NULL PRIMARY KEY,
             roleId CHAR(36) NOT NULL,
             subRoleId CHAR(36) NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;    
 
 CREATE TABLE
-      Employee (
+      IF NOT EXISTS Employee (
             id CHAR(36) NOT NULL PRIMARY KEY,
             firstName VARCHAR(100) NOT NULL,
             lastName VARCHAR(100) NOT NULL,
@@ -114,7 +114,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Department (
+      IF NOT EXISTS Department (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             color VARCHAR(10),
@@ -131,7 +131,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      DepartmentExtern (
+      IF NOT EXISTS DepartmentExtern (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -159,8 +159,8 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS Unit (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            quantity INT NOT NULL,
+            unitName VARCHAR(255) NOT NULL,
+            physicalQuantity VARCHAR(255) NOT NULL,
             abbreviation VARCHAR(255) NOT NULL,
             shortDescription VARCHAR(255),
             longDescription TEXT,
@@ -182,7 +182,7 @@ CREATE TABLE
             brandOrderNr INT NOT NULL,
             shortDescription VARCHAR(255) NOT NULL,
             longDescription TEXT,
-            preferedSupplier VARCHAR(255),
+            preferredSupplier VARCHAR(255),
             brandName VARCHAR(255),
             documentationPlace VARCHAR(255),
             bePartDoc INT,
@@ -201,7 +201,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Session (
+      IF NOT EXISTS Session (
             id CHAR(36) NOT NULL PRIMARY KEY,
             activeFrom DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             activeUntil DATETIME NOT NULL,
@@ -210,7 +210,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      TargetType (
+      IF NOT EXISTS TargetType (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -223,7 +223,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Target (
+      IF NOT EXISTS Target (
             id CHAR(36) NOT NULL PRIMARY KEY,
             createdAt DATETIME NOT NULL,
             createdBy CHAR(36) NOT NULL,
@@ -289,7 +289,7 @@ ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES
 
 
 CREATE TABLE
-      EmergencyContact (
+      IF NOT EXISTS EmergencyContact (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             relationship VARCHAR(100) NOT NULL,
@@ -300,7 +300,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Company (
+      IF NOT EXISTS Company (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             number VARCHAR(100) NOT NULL,
@@ -337,7 +337,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Contact (
+      IF NOT EXISTS Contact (
             id CHAR(36) NOT NULL PRIMARY KEY,
             firstName VARCHAR(100) NOT NULL,
             lastName VARCHAR(100) NOT NULL,
@@ -384,7 +384,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      CompanyAdress (
+      IF NOT EXISTS CompanyAdress (
             id CHAR(36) NOT NULL PRIMARY KEY,
             street VARCHAR(100),
             houseNumber VARCHAR(100),
@@ -396,7 +396,7 @@ CREATE TABLE
             createdBy CHAR(36) NOT NULL,
             companyId CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT,
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE CASCADE,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
@@ -404,7 +404,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      CompanyContact (
+      IF NOT EXISTS CompanyContact (
             id CHAR(36) NOT NULL PRIMARY KEY,
             startedDate DATETIME NOT NULL,
             endDate DATETIME,
@@ -423,7 +423,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      ProjectType (
+      IF NOT EXISTS ProjectType (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -436,7 +436,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      CertificateType (
+      IF NOT EXISTS CertificateType (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -449,7 +449,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      UrgencyType (
+      IF NOT EXISTS UrgencyType (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -462,7 +462,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Status (
+      IF NOT EXISTS Status (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -475,7 +475,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      FollowUpType (
+      IF NOT EXISTS FollowUpType (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -488,7 +488,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      InvoiceType (
+      IF NOT EXISTS InvoiceType (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -501,7 +501,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      HourType (
+      IF NOT EXISTS HourType (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -515,7 +515,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Project (
+      IF NOT EXISTS Project (
             id CHAR(36) NOT NULL PRIMARY KEY,
             projectNumber VARCHAR(255) NOT NULL,
             projectName VARCHAR(255) NOT NULL,
@@ -548,7 +548,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Certificate (
+      IF NOT EXISTS Certificate (
             id CHAR(36) NOT NULL PRIMARY KEY,
             description TEXT,
             descriptionShort TEXT,
@@ -566,7 +566,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      TrainingStandard (
+      IF NOT EXISTS TrainingStandard (
             id CHAR(36) NOT NULL PRIMARY KEY,
             description TEXT,
             descriptionShort TEXT,
@@ -587,7 +587,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      TrainingDocument (
+      IF NOT EXISTS TrainingDocument (
             id CHAR(36) NOT NULL PRIMARY KEY,
             documentId CHAR(36) NOT NULL,
             trainingStandardId CHAR(36) NOT NULL,
@@ -600,7 +600,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      WorkOrder (
+      IF NOT EXISTS WorkOrder (
             id CHAR(36) NOT NULL PRIMARY KEY,
             workOrderNumber VARCHAR(100),
             description TEXT,
@@ -625,7 +625,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      TimeRegistry (
+      IF NOT EXISTS TimeRegistry (
             id CHAR(36) NOT NULL PRIMARY KEY,
             activityDescription TEXT,
             additionalInfo TEXT,
@@ -651,7 +651,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      TimeRegistryEmployee (
+      IF NOT EXISTS TimeRegistryEmployee (
             id CHAR(36) NOT NULL PRIMARY KEY,
             employeeId CHAR(36) NOT NULL,
             timeRegistryId CHAR(36) NOT NULL,
@@ -660,7 +660,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      ProjectContact (
+      IF NOT EXISTS ProjectContact (
             id CHAR(36) NOT NULL PRIMARY KEY,
             description TEXT,
             extraInfo TEXT,
@@ -682,7 +682,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Training (
+      IF NOT EXISTS Training (
             id CHAR(36) NOT NULL PRIMARY KEY,
             trainingNumber VARCHAR(100),
             trainingDate DATETIME NOT NULL,
@@ -704,7 +704,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      TrainingContact (
+      IF NOT EXISTS TrainingContact (
             id CHAR(36) NOT NULL PRIMARY KEY,
             clientNumber VARCHAR(100),
             certSentDate DATETIME,
@@ -725,7 +725,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      WorkOrderStructure (
+      IF NOT EXISTS WorkOrderStructure (
             id CHAR(36) NOT NULL PRIMARY KEY,
             clientNumber VARCHAR(100),
             tag VARCHAR(100),
@@ -749,7 +749,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      InvoiceOut (
+      IF NOT EXISTS InvoiceOut (
             id CHAR(36) NOT NULL PRIMARY KEY,
             invoiceNumber VARCHAR(100),
             invoiceDate DATETIME NOT NULL,
@@ -784,7 +784,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      InvoiceIn (
+      IF NOT EXISTS InvoiceIn (
             id CHAR(36) NOT NULL PRIMARY KEY,
             invoiceNumber VARCHAR(100),
             invoiceDate DATETIME NOT NULL,
@@ -823,7 +823,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      InvoiceInTarget (
+      IF NOT EXISTS InvoiceInTarget (
             id CHAR(36) NOT NULL PRIMARY KEY,
             invoiceInId CHAR(36) NOT NULL,
             targetId CHAR(36) NOT NULL,
@@ -836,7 +836,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      WorkOrderInvoice (
+      IF NOT EXISTS WorkOrderInvoice (
             id CHAR(36) NOT NULL PRIMARY KEY,
             invoiceOutId CHAR(36) NOT NULL,
             workOrderId CHAR(36) NOT NULL,
@@ -849,7 +849,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      FollowUp (
+      IF NOT EXISTS FollowUp (
             id CHAR(36) NOT NULL PRIMARY KEY,
             activityDescription TEXT,
             additionalInfo TEXT,
@@ -886,7 +886,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      FollowUpStructure (
+      IF NOT EXISTS FollowUpStructure (
             id CHAR(36) NOT NULL PRIMARY KEY,
             activityDescription TEXT,
             additionalInfo TEXT,
@@ -927,7 +927,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      VisibilityForRole (
+      IF NOT EXISTS VisibilityForRole (
             id CHAR(36) NOT NULL PRIMARY KEY,
             visible BOOLEAN NOT NULL DEFAULT 0,
             roleLevelId CHAR(36) NOT NULL,
@@ -937,7 +937,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      FollowUpTarget (
+      IF NOT EXISTS FollowUpTarget (
             id CHAR(36) NOT NULL PRIMARY KEY,
             followUpId CHAR(36) NOT NULL,
             targetId CHAR(36) NOT NULL,
@@ -950,7 +950,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      Inventory (
+      IF NOT EXISTS Inventory (
             id CHAR(36) NOT NULL PRIMARY KEY,
             materialId CHAR(36) NOT NULL,
             beNumber VARCHAR(255) NOT NULL,
@@ -976,7 +976,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      InventoryChange (
+      IF NOT EXISTS InventoryChange (
             id CHAR(36) NOT NULL PRIMARY KEY,
             inventoryId CHAR(36) NOT NULL,
             beNumber VARCHAR(255),
@@ -1000,7 +1000,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      InventoryStructure (
+      IF NOT EXISTS InventoryStructure (
             id CHAR(36) NOT NULL PRIMARY KEY,
             inventoryPlaceId CHAR(36) NOT NULL,
             place VARCHAR(255) NOT NULL,
@@ -1031,7 +1031,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      InventoryOrder (
+      IF NOT EXISTS InventoryOrder (
             id CHAR(36) NOT NULL PRIMARY KEY,
             inventoryId CHAR(36) NOT NULL,
             orderNumber VARCHAR(255) NOT NULL,

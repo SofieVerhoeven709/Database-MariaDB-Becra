@@ -1,6 +1,7 @@
 'use client'
 
 import {useEffect, useState} from 'react'
+import {useRouter} from 'next/navigation'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from '@/components/ui/dialog'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Button} from '@/components/ui/button'
@@ -13,6 +14,7 @@ import type {MappedContact} from '@/types/contact'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
+import {CompanyFormDialog} from '@/components/custom/companyFormDialog'
 
 interface SelectOption {
   id: string
@@ -98,12 +100,17 @@ export function ContactFormDialog({
   titleOptions,
   companyOptions,
 }: ContactFormDialogProps) {
+  const router = useRouter()
+
   const [form, setForm] = useState<MappedContact>(emptyContact())
   const [saving, setSaving] = useState(false)
+
+  const [companyDialogOpen, setCompanyDialogOpen] = useState(false)
+
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(contact?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
-  // Company assignment — only used on create
+
   const [initialCompanyId, setInitialCompanyId] = useState<string>('none')
   const [initialRoleWithCompany, setInitialRoleWithCompany] = useState<string>('')
 
@@ -139,7 +146,6 @@ export function ContactFormDialog({
 
   const isEdit = !!contact
 
-  // ─── Field helpers ────────────────────────────────────────────────────────
   const textField = (
     key: keyof MappedContact,
     label: string,
@@ -189,160 +195,184 @@ export function ContactFormDialog({
   )
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card border-border">
-        <DialogHeader>
-          <DialogTitle className="text-foreground">{isEdit ? 'Edit Contact' : 'New Contact'}</DialogTitle>
-        </DialogHeader>
+    <>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card border-border">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">{isEdit ? 'Edit Contact' : 'New Contact'}</DialogTitle>
+          </DialogHeader>
 
-        <Tabs defaultValue="identity">
-          <TabsList className="bg-secondary border border-border/60 flex-wrap h-auto gap-1">
-            <TabsTrigger value="identity">Identity</TabsTrigger>
-            <TabsTrigger value="contact">Contact Info</TabsTrigger>
-            <TabsTrigger value="flags">Flags</TabsTrigger>
-            {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
-          </TabsList>
+          <Tabs defaultValue="identity">
+            <TabsList className="bg-secondary border border-border/60 flex-wrap h-auto gap-1">
+              <TabsTrigger value="identity">Identity</TabsTrigger>
+              <TabsTrigger value="contact">Contact Info</TabsTrigger>
+              <TabsTrigger value="flags">Flags</TabsTrigger>
+              {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+            </TabsList>
 
-          {/* ── Identity ──────────────────────────────────────────────────── */}
-          <TabsContent value="identity">
-            <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
-              {textField('firstName', 'First Name', {required: true})}
-              {textField('lastName', 'Last Name', {required: true})}
+            <TabsContent value="identity">
+              <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
+                {textField('firstName', 'First Name', {required: true})}
+                {textField('lastName', 'Last Name', {required: true})}
 
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Birth Date</Label>
-                <Input
-                  type="date"
-                  value={form.birthDate ? form.birthDate.slice(0, 10) : ''}
-                  onChange={e => set('birthDate', e.target.value ? new Date(e.target.value).toISOString() : null)}
-                  className="bg-secondary border-border"
-                />
-              </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label className="text-xs text-muted-foreground">Birth Date</Label>
+                  <Input
+                    type="date"
+                    value={form.birthDate ? form.birthDate.slice(0, 10) : ''}
+                    onChange={e => set('birthDate', e.target.value ? new Date(e.target.value).toISOString() : null)}
+                    className="bg-secondary border-border"
+                  />
+                </div>
 
-              {textField('trough', 'Trough / Source')}
+                {textField('trough', 'Trough / Source')}
 
-              {selectField('titleId', 'Title', titleOptions)}
-              {selectField('functionId', 'Function', functionOptions)}
-              {selectField('departmentExternId', 'External Department', departmentExternOptions)}
+                {selectField('titleId', 'Title', titleOptions)}
+                {selectField('functionId', 'Function', functionOptions)}
+                {selectField('departmentExternId', 'External Department', departmentExternOptions)}
 
-              {/* Company assignment — create only */}
-              {!isEdit && (
-                <>
-                  <div className="flex flex-col gap-1.5">
-                    <Label className="text-xs text-muted-foreground">Assign to Company</Label>
-                    <Select value={initialCompanyId} onValueChange={setInitialCompanyId}>
-                      <SelectTrigger className="bg-secondary border-border">
-                        <SelectValue placeholder="None" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card border-border">
-                        <SelectItem value="none">None</SelectItem>
-                        {companyOptions.map(o => (
-                          <SelectItem key={o.id} value={o.id}>
-                            {o.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  {initialCompanyId !== 'none' && (
+                {!isEdit && (
+                  <>
                     <div className="flex flex-col gap-1.5">
-                      <Label className="text-xs text-muted-foreground">Role at Company</Label>
-                      <Input
-                        value={initialRoleWithCompany}
-                        onChange={e => setInitialRoleWithCompany(e.target.value)}
-                        placeholder="e.g. CEO, Purchasing Manager…"
-                        className="bg-secondary border-border"
-                      />
+                      <Label className="text-xs text-muted-foreground">Assign to Company</Label>
+
+                      <div className="flex gap-2">
+                        <Select value={initialCompanyId} onValueChange={setInitialCompanyId}>
+                          <SelectTrigger className="bg-secondary border-border flex-1">
+                            <SelectValue placeholder="None" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-card border-border">
+                            <SelectItem value="none">None</SelectItem>
+                            {companyOptions.map(o => (
+                              <SelectItem key={o.id} value={o.id}>
+                                {o.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="border-border"
+                          onClick={() => setCompanyDialogOpen(true)}>
+                          +
+                        </Button>
+                      </div>
                     </div>
-                  )}
-                </>
-              )}
 
-              <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <Label className="text-xs text-muted-foreground">Description</Label>
-                <Textarea
-                  value={form.description ?? ''}
-                  onChange={e => set('description', str(e.target.value))}
-                  rows={2}
-                  className="bg-secondary border-border resize-none"
-                />
-              </div>
+                    {initialCompanyId !== 'none' && (
+                      <div className="flex flex-col gap-1.5">
+                        <Label className="text-xs text-muted-foreground">Role at Company</Label>
+                        <Input
+                          value={initialRoleWithCompany}
+                          onChange={e => setInitialRoleWithCompany(e.target.value)}
+                          placeholder="e.g. CEO, Purchasing Manager…"
+                          className="bg-secondary border-border"
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
 
-              <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <Label className="text-xs text-muted-foreground">Info</Label>
-                <Textarea
-                  value={form.info ?? ''}
-                  onChange={e => set('info', str(e.target.value))}
-                  rows={3}
-                  className="bg-secondary border-border resize-none"
-                />
-              </div>
-            </div>
-          </TabsContent>
+                <div className="flex flex-col gap-1.5 sm:col-span-2">
+                  <Label className="text-xs text-muted-foreground">Description</Label>
+                  <Textarea
+                    value={form.description ?? ''}
+                    onChange={e => set('description', str(e.target.value))}
+                    rows={2}
+                    className="bg-secondary border-border resize-none"
+                  />
+                </div>
 
-          {/* ── Contact Info ──────────────────────────────────────────────── */}
-          <TabsContent value="contact">
-            <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
-              {textField('mail1', 'Email 1', {type: 'email'})}
-              {textField('mail2', 'Email 2', {type: 'email'})}
-              {textField('mail3', 'Email 3', {type: 'email'})}
-              {textField('generalPhone', 'General Phone', {type: 'tel'})}
-              {textField('mobilePhone', 'Mobile Phone', {type: 'tel'})}
-              {textField('homePhone', 'Home Phone', {type: 'tel'})}
-            </div>
-          </TabsContent>
-
-          {/* ── Flags ─────────────────────────────────────────────────────── */}
-          <TabsContent value="flags">
-            <div className="py-3">
-              <p className="text-xs text-muted-foreground mb-3">General</p>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 mb-5">
-                {toggleField('active', 'Active')}
-                {toggleField('infoCorrect', 'Info Correct')}
-                {toggleField('checkInfo', 'Check Info')}
-                {toggleField('newYearCard', 'New Year Card')}
-                {toggleField('newsLetter', 'Newsletter')}
-                {toggleField('mailing', 'Mailing')}
-              </div>
-              <p className="text-xs text-muted-foreground mb-3">Training &amp; Advice</p>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {toggleField('trainingAdvice', 'Training Advice')}
-                {toggleField('contactForTrainingAndAdvice', 'Contact for T&A')}
-                {toggleField('customerTrainingAndAdvice', 'Customer T&A')}
-                {toggleField('potentialCustomerTrainingAndAdvice', 'Pot. Customer T&A')}
-                {toggleField('potentialTeacherTrainingAndAdvice', 'Pot. Teacher T&A')}
-                {toggleField('teacherTrainingAndAdvice', 'Teacher T&A')}
-                {toggleField('participantTrainingAndAdvice', 'Participant T&A')}
-              </div>
-            </div>
-          </TabsContent>
-
-          {/* ── Visibility ────────────────────────────────────────────────── */}
-          {isAdmin && (
-            <TabsContent value="visibility">
-              <div className="py-3">
-                <VisibilityForRoleTab
-                  roleLevelOptions={roleLevelOptions}
-                  value={visibilityRows}
-                  onChange={setVisibilityRows}
-                />
+                <div className="flex flex-col gap-1.5 sm:col-span-2">
+                  <Label className="text-xs text-muted-foreground">Info</Label>
+                  <Textarea
+                    value={form.info ?? ''}
+                    onChange={e => set('info', str(e.target.value))}
+                    rows={3}
+                    className="bg-secondary border-border resize-none"
+                  />
+                </div>
               </div>
             </TabsContent>
-          )}
-        </Tabs>
 
-        <DialogFooter className="pt-2">
-          <Button variant="outline" onClick={() => onOpenChange(false)} className="border-border">
-            Cancel
-          </Button>
-          <Button
-            onClick={handleSubmit}
-            disabled={saving || !form.firstName || !form.lastName}
-            className="bg-accent text-accent-foreground hover:bg-accent/80">
-            {saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Create Contact'}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+            <TabsContent value="contact">
+              <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
+                {textField('mail1', 'Email 1', {type: 'email'})}
+                {textField('mail2', 'Email 2', {type: 'email'})}
+                {textField('mail3', 'Email 3', {type: 'email'})}
+                {textField('generalPhone', 'General Phone', {type: 'tel'})}
+                {textField('mobilePhone', 'Mobile Phone', {type: 'tel'})}
+                {textField('homePhone', 'Home Phone', {type: 'tel'})}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="flags">
+              <div className="py-3">
+                <p className="text-xs text-muted-foreground mb-3">General</p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 mb-5">
+                  {toggleField('active', 'Active')}
+                  {toggleField('infoCorrect', 'Info Correct')}
+                  {toggleField('checkInfo', 'Check Info')}
+                  {toggleField('newYearCard', 'New Year Card')}
+                  {toggleField('newsLetter', 'Newsletter')}
+                  {toggleField('mailing', 'Mailing')}
+                </div>
+                <p className="text-xs text-muted-foreground mb-3">Training & Advice</p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {toggleField('trainingAdvice', 'Training Advice')}
+                  {toggleField('contactForTrainingAndAdvice', 'Contact for T&A')}
+                  {toggleField('customerTrainingAndAdvice', 'Customer T&A')}
+                  {toggleField('potentialCustomerTrainingAndAdvice', 'Pot. Customer T&A')}
+                  {toggleField('potentialTeacherTrainingAndAdvice', 'Pot. Teacher T&A')}
+                  {toggleField('teacherTrainingAndAdvice', 'Teacher T&A')}
+                  {toggleField('participantTrainingAndAdvice', 'Participant T&A')}
+                </div>
+              </div>
+            </TabsContent>
+
+            {isAdmin && (
+              <TabsContent value="visibility">
+                <div className="py-3">
+                  <VisibilityForRoleTab
+                    roleLevelOptions={roleLevelOptions}
+                    value={visibilityRows}
+                    onChange={setVisibilityRows}
+                  />
+                </div>
+              </TabsContent>
+            )}
+          </Tabs>
+
+          <DialogFooter className="pt-2">
+            <Button variant="outline" onClick={() => onOpenChange(false)} className="border-border">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              disabled={saving || !form.firstName || !form.lastName}
+              className="bg-accent text-accent-foreground hover:bg-accent/80">
+              {saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Create Contact'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <CompanyFormDialog
+        open={companyDialogOpen}
+        onOpenChange={setCompanyDialogOpen}
+        company={null}
+        companies={companyOptions}
+        onSave={async () => {
+          router.refresh()
+          setCompanyDialogOpen(false)
+        }}
+        isAdmin={isAdmin}
+        canDelete={false}
+        roleLevelOptions={roleLevelOptions}
+        defaultVisibleRoleNames={defaultVisibleRoleNames}
+      />
+    </>
   )
 }

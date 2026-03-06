@@ -182,10 +182,10 @@ export async function getEmployeeDetail(id: string) {
         },
         Title_Employee_titleIdToTitle: true,
         EmergencyContact: true,
-        Employee: {select: {id: true, firstName: true, lastName: true}}, // createdBy
-        Employee_Employee_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}}, // deletedBy
+        Employee: {select: {id: true, firstName: true, lastName: true}},
+        Employee_Employee_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
 
-        // ── Section 1: Assigned ────────────────────────────────────────────
+        // ── Section 1: Assigned ──────────────────────────────────────────────
 
         FollowUp_FollowUp_ownedByToEmployee: {
           where: {deleted: false},
@@ -207,7 +207,6 @@ export async function getEmployeeDetail(id: string) {
             UrgencyType: {select: {name: true}},
           },
         },
-
         FollowUpStructure_FollowUpStructure_ownedByToEmployee: {
           where: {deleted: false},
           orderBy: {contactDate: 'desc'},
@@ -235,32 +234,18 @@ export async function getEmployeeDetail(id: string) {
             UrgencyType: {select: {name: true}},
           },
         },
-
         DocumentStructure_DocumentStructure_managedByIdToEmployee: {
           where: {deleted: false},
           orderBy: {createdAt: 'desc'},
           take: 50,
-          select: {
-            id: true,
-            documentNumber: true,
-            descriptionShort: true,
-            valid: true,
-            createdAt: true,
-          },
+          select: {id: true, documentNumber: true, descriptionShort: true, valid: true, createdAt: true},
         },
         DocumentStructure_DocumentStructure_revisedByIdToEmployee: {
           where: {deleted: false},
           orderBy: {createdAt: 'desc'},
           take: 50,
-          select: {
-            id: true,
-            documentNumber: true,
-            descriptionShort: true,
-            valid: true,
-            createdAt: true,
-          },
+          select: {id: true, documentNumber: true, descriptionShort: true, valid: true, createdAt: true},
         },
-
         TimeRegistryEmployee: {
           orderBy: {TimeRegistry: {workDate: 'desc'}},
           take: 50,
@@ -279,7 +264,7 @@ export async function getEmployeeDetail(id: string) {
           },
         },
 
-        // ── Section 2: Created ─────────────────────────────────────────────
+        // ── Section 2: Created (Main) ────────────────────────────────────────
 
         Contact: {
           where: {deleted: false},
@@ -298,13 +283,7 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: false},
           orderBy: {createdAt: 'desc'},
           take: 50,
-          select: {
-            id: true,
-            name: true,
-            number: true,
-            createdAt: true,
-            companyActive: true,
-          },
+          select: {id: true, name: true, number: true, createdAt: true, companyActive: true},
         },
         Project: {
           where: {deleted: false},
@@ -404,18 +383,11 @@ export async function getEmployeeDetail(id: string) {
             WorkOrder: {select: {workOrderNumber: true, Project: {select: {projectName: true}}}},
           },
         },
-
         DocumentStructure_DocumentStructure_createdByToEmployee: {
           where: {deleted: false},
           orderBy: {createdAt: 'desc'},
           take: 50,
-          select: {
-            id: true,
-            documentNumber: true,
-            descriptionShort: true,
-            createdAt: true,
-            valid: true,
-          },
+          select: {id: true, documentNumber: true, descriptionShort: true, createdAt: true, valid: true},
         },
         FollowUp_FollowUp_createdByToEmployee: {
           where: {deleted: false},
@@ -440,11 +412,7 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: false},
           orderBy: {createdAt: 'desc'},
           take: 50,
-          select: {
-            id: true,
-            descriptionShort: true,
-            createdAt: true,
-          },
+          select: {id: true, descriptionShort: true, createdAt: true},
         },
         DeliveryNoteSupplier: {
           where: {deleted: false},
@@ -480,7 +448,8 @@ export async function getEmployeeDetail(id: string) {
           },
         },
 
-        // Config / lookup tables
+        // ── Section 2: Created (Other) ───────────────────────────────────────
+
         Certificate: {
           where: {deleted: false},
           orderBy: {createdAt: 'desc'},
@@ -545,12 +514,7 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: false},
           orderBy: {createdAt: 'desc'},
           take: 50,
-          select: {
-            id: true,
-            beNumber: true,
-            shortDescription: true,
-            createdAt: true,
-          },
+          select: {id: true, beNumber: true, shortDescription: true, createdAt: true},
         },
         InventoryChange: {
           where: {deleted: false},
@@ -567,12 +531,7 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: false},
           orderBy: {createdAt: 'desc'},
           take: 50,
-          select: {
-            id: true,
-            orderNumber: true,
-            shortDescription: true,
-            createdAt: true,
-          },
+          select: {id: true, orderNumber: true, shortDescription: true, createdAt: true},
         },
         InventoryStructure: {
           where: {deleted: false},
@@ -593,7 +552,7 @@ export async function getEmployeeDetail(id: string) {
         },
         Material: {
           where: {deleted: false},
-          orderBy: {createdAt: 'desc'},
+          orderBy: {id: 'desc'},
           take: 50,
           select: {id: true, beNumber: true, shortDescription: true},
         },
@@ -629,7 +588,7 @@ export async function getEmployeeDetail(id: string) {
         },
         MaterialPrice: {
           where: {deleted: false},
-          orderBy: {createdAt: 'desc'},
+          orderBy: {updatedAt: 'desc'},
           take: 50,
           select: {id: true, beNumber: true, shortDescription: true},
         },
@@ -728,11 +687,12 @@ export async function getEmployeeDetail(id: string) {
         },
         SupplierDeliveryNoteFollowUp: {
           where: {deleted: false},
-          orderBy: {id: 'desc'},
+          orderBy: {deliveryDate: 'desc'},
           take: 50,
           select: {
             id: true,
             information: true,
+            deliveryDate: true,
             DeliveryNoteSupplier: {select: {supplierNN: true}},
           },
         },
@@ -794,7 +754,7 @@ export async function getEmployeeDetail(id: string) {
           select: {id: true, place: true, shelf: true, createdAt: true},
         },
 
-        // ── Section 3: Deleted ─────────────────────────────────────────────
+        // ── Section 3: Deleted (Main) ────────────────────────────────────────
 
         Contact_Contact_deletedByToEmployee: {
           where: {deleted: true},
@@ -812,12 +772,7 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: true},
           orderBy: {deletedAt: 'desc'},
           take: 50,
-          select: {
-            id: true,
-            name: true,
-            number: true,
-            deletedAt: true,
-          },
+          select: {id: true, name: true, number: true, deletedAt: true},
         },
         Project_Project_deletedByToEmployee: {
           where: {deleted: true},
@@ -858,347 +813,418 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: true},
           orderBy: {deletedAt: 'desc'},
           take: 50,
-          select: {
-            id: true,
-            invoiceNumber: true,
-            invoiceDate: true,
-            deletedAt: true,
-            amountWithoutVat: true,
-          },
+          select: {id: true, invoiceNumber: true, invoiceDate: true, deletedAt: true, amountWithoutVat: true},
         },
         InvoiceOut_InvoiceOut_deletedByToEmployee: {
           where: {deleted: true},
           orderBy: {deletedAt: 'desc'},
           take: 50,
+          select: {id: true, invoiceNumber: true, invoiceDate: true, deletedAt: true, amountWithoutVat: true},
+        },
+        Purchase_Purchase_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
           select: {
             id: true,
-            invoiceNumber: true,
-            invoiceDate: true,
+            orderNumber: true,
+            shortDescription: true,
             deletedAt: true,
-            amountWithoutVat: true,
+            purchaseDate: true,
+            Company: {select: {name: true}},
+            Project: {select: {projectName: true}},
           },
         },
-      },
-      // Config / lookup deleted
-      Certificate_Certificate_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          descriptionShort: true,
-          deletedAt: true,
-          CertificateType: {select: {name: true}},
+        TimeRegistry_TimeRegistry_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            workDate: true,
+            deletedAt: true,
+            activityDescription: true,
+            WorkOrder: {select: {workOrderNumber: true, Project: {select: {projectName: true}}}},
+          },
         },
-      },
-      CertificateType_CertificateType_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      CompanyAdress_CompanyAdress_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          street: true,
-          houseNumber: true,
-          place: true,
-          deletedAt: true,
-          Company: {select: {name: true}},
+        DocumentStructure_DocumentStructure_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, documentNumber: true, descriptionShort: true, deletedAt: true},
         },
-      },
-      CompanyContact_CompanyContact_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          deletedAt: true,
-          roleWithCompany: true,
-          Contact: {select: {firstName: true, lastName: true}},
-          Company: {select: {name: true}},
+        FollowUp_FollowUp_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          include: {
+            Status: {select: {name: true}},
+            FollowUpType: {select: {name: true}},
+            UrgencyType: {select: {name: true}},
+          },
         },
-      },
-      Department_Department_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      Function_Function_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      HourType_HourType_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      Inventory_Inventory_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          beNumber: true,
-          shortDescription: true,
-          deletedAt: true,
+        FollowUpStructure_FollowUpStructure_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          include: {
+            Status: {select: {name: true}},
+            UrgencyType: {select: {name: true}},
+          },
         },
-      },
-      InventoryChange_InventoryChange_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          changeDescription: true,
-          deletedAt: true,
-          Inventory: {select: {beNumber: true, shortDescription: true}},
+        TrainingStandard_TrainingStandard_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, descriptionShort: true, deletedAt: true},
         },
-      },
-      InventoryOrder_InventoryOrder_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          orderNumber: true,
-          shortDescription: true,
-          deletedAt: true,
+        DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            supplierNN: true,
+            information: true,
+            deletedAt: true,
+            Company: {select: {name: true}},
+          },
         },
-      },
-      InventoryStructure_InventoryStructure_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          shortDescription: true,
-          deletedAt: true,
-          Inventory: {select: {beNumber: true}},
+        QuoteSupplier_QuoteSupplier_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            description: true,
+            deletedAt: true,
+            Project: {select: {projectName: true, projectNumber: true}},
+          },
         },
-      },
-      InvoiceType_InvoiceType_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      Material_Material_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, beNumber: true, shortDescription: true, deletedAt: true},
-      },
-      MaterialAssembly_MaterialAssembly_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, shortDescription: true, deletedAt: true},
-      },
-      MaterialCode_MaterialCode_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      MaterialFamily_MaterialFamily_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      MaterialMovement_MaterialMovement_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, shortDescription: true, deletedAt: true},
-      },
-      MaterialOther_MaterialOther_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          name: true,
-          shortDescription: true,
-          deletedAt: true,
-          Material: {select: {beNumber: true}},
+        WorkOrderStructure_WorkOrderStructure_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            shortDescription: true,
+            deletedAt: true,
+            WorkOrder: {select: {workOrderNumber: true}},
+          },
         },
-      },
-      MaterialPrice_MaterialPrice_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, beNumber: true, shortDescription: true, deletedAt: true},
-      },
-      MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, beNumber: true, shortDescription: true, deletedAt: true},
-      },
-      Part_Part_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, shortDescription: true, deletedAt: true},
-      },
-      Phantom_Phantom_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, description: true, deletedAt: true},
-      },
-      Product_Product_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, shortDescription: true, status: true, deletedAt: true},
-      },
-      ProjectContact_ProjectContact_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          deletedAt: true,
-          Contact: {select: {firstName: true, lastName: true}},
-          Project: {select: {projectNumber: true, projectName: true}},
+
+        // ── Section 3: Deleted (Other) ───────────────────────────────────────
+
+        Certificate_Certificate_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            descriptionShort: true,
+            deletedAt: true,
+            CertificateType: {select: {name: true}},
+          },
         },
-      },
-      ProjectType_ProjectType_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      PurchaseDetail_PurchaseDetail_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          beNumber: true,
-          status: true,
-          deletedAt: true,
-          Purchase: {select: {orderNumber: true}},
+        CertificateType_CertificateType_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
         },
-      },
-      PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, description: true, deletedAt: true},
-      },
-      QouteBecra_QouteBecra_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, description: true, deletedAt: true},
-      },
-      Role_Role_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      RoleLevel_RoleLevel_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          deletedAt: true,
-          Role: {select: {name: true}},
-          SubRole: {select: {name: true}},
+        CompanyAdress_CompanyAdress_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            street: true,
+            houseNumber: true,
+            place: true,
+            deletedAt: true,
+            Company: {select: {name: true}},
+          },
         },
-      },
-      Status_Status_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      SubRole_SubRole_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          information: true,
-          deletedAt: true,
-          DeliveryNoteSupplier: {select: {supplierNN: true}},
+        CompanyContact_CompanyContact_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            deletedAt: true,
+            roleWithCompany: true,
+            Contact: {select: {firstName: true, lastName: true}},
+            Company: {select: {name: true}},
+          },
         },
-      },
-      Target_Target_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          deletedAt: true,
-          TargetType: {select: {name: true}},
+        Department_Department_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
         },
-      },
-      TargetType_TargetType_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      TestProcedure_TestProcedure_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, shortDescription: true, deletedAt: true},
-      },
-      Title_Title_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      TrainingContact_TrainingContact_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          deletedAt: true,
-          Contact: {select: {firstName: true, lastName: true}},
-          Training: {select: {trainingNumber: true}},
+        Function_Function_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
         },
-      },
-      Unit_Unit_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, unitName: true, abbreviation: true, deletedAt: true},
-      },
-      UrgencyType_UrgencyType_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, name: true, deletedAt: true},
-      },
-      WarehousePlace_WarehousePlace_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {id: true, place: true, shelf: true, deletedAt: true},
+        HourType_HourType_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
+        },
+        Inventory_Inventory_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, beNumber: true, shortDescription: true, deletedAt: true},
+        },
+        InventoryChange_InventoryChange_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            changeDescription: true,
+            deletedAt: true,
+            Inventory: {select: {beNumber: true, shortDescription: true}},
+          },
+        },
+        InventoryOrder_InventoryOrder_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, orderNumber: true, shortDescription: true, deletedAt: true},
+        },
+        InventoryStructure_InventoryStructure_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            shortDescription: true,
+            deletedAt: true,
+            Inventory: {select: {beNumber: true}},
+          },
+        },
+        InvoiceType_InvoiceType_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
+        },
+        Material_Material_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, beNumber: true, shortDescription: true, deletedAt: true},
+        },
+        MaterialAssembly_MaterialAssembly_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, shortDescription: true, deletedAt: true},
+        },
+        MaterialCode_MaterialCode_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
+        },
+        MaterialFamily_MaterialFamily_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
+        },
+        MaterialMovement_MaterialMovement_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, shortDescription: true, deletedAt: true},
+        },
+        MaterialOther_MaterialOther_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            name: true,
+            shortDescription: true,
+            deletedAt: true,
+            Material: {select: {beNumber: true}},
+          },
+        },
+        MaterialPrice_MaterialPrice_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, beNumber: true, shortDescription: true, deletedAt: true},
+        },
+        MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, beNumber: true, shortDescription: true, deletedAt: true},
+        },
+        Part_Part_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, shortDescription: true, deletedAt: true},
+        },
+        Phantom_Phantom_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, description: true, deletedAt: true},
+        },
+        Product_Product_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, shortDescription: true, status: true, deletedAt: true},
+        },
+        ProjectContact_ProjectContact_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            deletedAt: true,
+            Contact: {select: {firstName: true, lastName: true}},
+            Project: {select: {projectNumber: true, projectName: true}},
+          },
+        },
+        ProjectType_ProjectType_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
+        },
+        PurchaseDetail_PurchaseDetail_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            beNumber: true,
+            status: true,
+            deletedAt: true,
+            Purchase: {select: {orderNumber: true}},
+          },
+        },
+        PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, description: true, deletedAt: true},
+        },
+        QouteBecra_QouteBecra_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, description: true, deletedAt: true},
+        },
+        Role_Role_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
+        },
+        RoleLevel_RoleLevel_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            deletedAt: true,
+            Role: {select: {name: true}},
+            SubRole: {select: {name: true}},
+          },
+        },
+        Status_Status_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
+        },
+        SubRole_SubRole_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
+        },
+        SupplierDeliveryNoteFollowUp_SupplierDeliveryNoteFollowUp_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            information: true,
+            deletedAt: true,
+            DeliveryNoteSupplier: {select: {supplierNN: true}},
+          },
+        },
+        Target_Target_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            deletedAt: true,
+            TargetType: {select: {name: true}},
+          },
+        },
+        TargetType_TargetType_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
+        },
+        TestProcedure_TestProcedure_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, shortDescription: true, deletedAt: true},
+        },
+        Title_Title_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
+        },
+        TrainingContact_TrainingContact_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {
+            id: true,
+            deletedAt: true,
+            Contact: {select: {firstName: true, lastName: true}},
+            Training: {select: {trainingNumber: true}},
+          },
+        },
+        Unit_Unit_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, unitName: true, abbreviation: true, deletedAt: true},
+        },
+        UrgencyType_UrgencyType_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, name: true, deletedAt: true},
+        },
+        WarehousePlace_WarehousePlace_deletedByToEmployee: {
+          where: {deleted: true},
+          orderBy: {deletedAt: 'desc'},
+          take: 50,
+          select: {id: true, place: true, shelf: true, deletedAt: true},
+        },
       },
     }),
     prismaClient.employee.findMany({
@@ -1213,106 +1239,6 @@ export async function getEmployeeDetail(id: string) {
         active: true,
         RoleLevel_Employee_roleLevelIdToRoleLevel: {
           include: {Role: true, SubRole: true},
-        },
-      },
-      DocumentStructure_DocumentStructure_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          documentNumber: true,
-          descriptionShort: true,
-          deletedAt: true,
-        },
-      },
-      FollowUp_FollowUp_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        include: {
-          Status: {select: {name: true}},
-          FollowUpType: {select: {name: true}},
-          UrgencyType: {select: {name: true}},
-        },
-      },
-      FollowUpStructure_FollowUpStructure_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        include: {
-          Status: {select: {name: true}},
-          UrgencyType: {select: {name: true}},
-        },
-      },
-      Purchase_Purchase_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          orderNumber: true,
-          shortDescription: true,
-          deletedAt: true,
-          purchaseDate: true,
-          Company: {select: {name: true}},
-          Project: {select: {projectName: true}},
-        },
-      },
-      TimeRegistry_TimeRegistry_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          workDate: true,
-          deletedAt: true,
-          activityDescription: true,
-          WorkOrder: {select: {workOrderNumber: true, Project: {select: {projectName: true}}}},
-        },
-      },
-      TrainingStandard_TrainingStandard_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          descriptionShort: true,
-          deletedAt: true,
-        },
-      },
-      DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          supplierNN: true,
-          information: true,
-          deletedAt: true,
-          Company: {select: {name: true}},
-        },
-      },
-      QuoteSupplier_QuoteSupplier_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          description: true,
-          deletedAt: true,
-          Project: {select: {projectName: true, projectNumber: true}},
-        },
-      },
-      WorkOrderStructure_WorkOrderStructure_deletedByToEmployee: {
-        where: {deleted: true},
-        orderBy: {deletedAt: 'desc'},
-        take: 50,
-        select: {
-          id: true,
-          shortDescription: true,
-          deletedAt: true,
-          WorkOrder: {select: {workOrderNumber: true}},
         },
       },
     }),

@@ -88,12 +88,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.19.2
- * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
+ * Prisma Client JS version: 6.19.0
+ * Query Engine version: 2ba551f319ab1df4bc874a89965d8b3641056773
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.19.2",
-  engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
+  client: "6.19.0",
+  engine: "2ba551f319ab1df4bc874a89965d8b3641056773"
 }
 
 /**
@@ -6370,7 +6370,6 @@ export const MaterialSpecScalarFieldEnum = {
   materialFamilyId: 'materialFamilyId',
   name: 'name',
   materialDimensionId: 'materialDimensionId',
-  unitId: 'unitId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   createdAt: 'createdAt',
@@ -6860,13 +6859,16 @@ export type VisibilityForRoleScalarFieldEnum = (typeof VisibilityForRoleScalarFi
 
 export const WarehousePlaceScalarFieldEnum = {
   id: 'id',
+  abbreviation: 'abbreviation',
+  beNumber: 'beNumber',
+  serialTrackedId: 'serialTrackedId',
   place: 'place',
   shelf: 'shelf',
   column: 'column',
   layer: 'layer',
   layerPlace: 'layerPlace',
   information: 'information',
-  volume: 'volume',
+  quantityInStock: 'quantityInStock',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
   deleted: 'deleted',
@@ -7607,7 +7609,6 @@ export const MaterialSpecOrderByRelevanceFieldEnum = {
   materialFamilyId: 'materialFamilyId',
   name: 'name',
   materialDimensionId: 'materialDimensionId',
-  unitId: 'unitId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   createdBy: 'createdBy',
@@ -7971,6 +7972,9 @@ export type VisibilityForRoleOrderByRelevanceFieldEnum = (typeof VisibilityForRo
 
 export const WarehousePlaceOrderByRelevanceFieldEnum = {
   id: 'id',
+  abbreviation: 'abbreviation',
+  beNumber: 'beNumber',
+  serialTrackedId: 'serialTrackedId',
   place: 'place',
   shelf: 'shelf',
   column: 'column',

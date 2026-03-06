@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS BecraBV;
+
 CREATE DATABASE IF NOT EXISTS BecraBV;
 
 USE BecraBV;
@@ -1137,25 +1139,6 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      IF NOT EXISTS WarehousePlace (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            place VARCHAR(255),
-            shelf VARCHAR(255),
-            `column` VARCHAR(255),
-            layer VARCHAR(255),
-            layerPlace VARCHAR(255),
-            information VARCHAR(255),
-            volume INT NOT NULL,
-            createdAt DATETIME NOT NULL,
-            createdBy CHAR(36) NOT NULL,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME,
-            deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-      ) ENGINE = InnoDB;
-
-CREATE TABLE
       IF NOT EXISTS MaterialPrice (
             id CHAR(36) NOT NULL PRIMARY KEY,
             beNumber VARCHAR(255),
@@ -1205,6 +1188,29 @@ CREATE TABLE
             FOREIGN KEY (materialGroupId) REFERENCES MaterialGroup (id) ON DELETE RESTRICT,
             FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS WarehousePlace (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            abbreviation VARCHAR(255) NOT NULL,
+            beNumber VARCHAR(255),
+            serialTrackedId CHAR(36),
+            place VARCHAR(255),
+            shelf VARCHAR(255),
+            `column` VARCHAR(255),
+            layer VARCHAR(255),
+            layerPlace VARCHAR(255),
+            information VARCHAR(255),
+            quantityInStock INT NOT NULL,
+            createdAt DATETIME NOT NULL,
+            createdBy CHAR(36) NOT NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (serialTrackedId) REFERENCES MaterialSerialTrack (id) ON DELETE SET NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),

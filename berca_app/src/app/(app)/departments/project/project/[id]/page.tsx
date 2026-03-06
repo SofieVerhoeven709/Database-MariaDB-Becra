@@ -2,6 +2,7 @@ import {getProjectById} from '@/dal/projects'
 import {getProjectTypes} from '@/dal/projects'
 import {getEmployees} from '@/dal/employees'
 import {getContacts} from '@/dal/contacts'
+import {getPurchases} from '@/dal/purchases'
 import {mapEmployee} from '@/extra/employees'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {ProjectDetail} from '@/components/custom/projectDetail'
@@ -14,14 +15,16 @@ interface ProjectDetailPageProps {
 
 export default async function ProjectDetailPage({params}: ProjectDetailPageProps) {
   const {id} = await params
-  const [project, projectTypes, companies, employeesFromDAL, contactsFromDAL, profile] = await Promise.all([
-    getProjectById(id).catch(() => null),
-    getProjectTypes(),
-    getCompanies(),
-    getEmployees(),
-    getContacts(),
-    getSessionProfileFromCookieOrThrow(),
-  ])
+  const [project, projectTypes, companies, employeesFromDAL, contactsFromDAL, purchasesFromDAL, profile] =
+    await Promise.all([
+      getProjectById(id).catch(() => null),
+      getProjectTypes(),
+      getCompanies(),
+      getEmployees(),
+      getContacts(),
+      getPurchases(),
+      getSessionProfileFromCookieOrThrow(),
+    ])
 
   if (!project) notFound()
 
@@ -41,6 +44,16 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
   const projectTypeOptions = projectTypes.map(t => ({id: t.id, name: t.name}))
   const companyOptions = companies.map(c => ({id: c.id, name: c.name}))
 
+  // Purchases with no project yet — offered in the "link existing" picker
+  const availablePurchases = purchasesFromDAL
+    .filter(p => !p.deleted && p.projectId === null)
+    .map(p => ({
+      id: p.id,
+      orderNumber: p.orderNumber,
+      companyName: p.Company?.name ?? null,
+      status: p.status,
+    }))
+
   const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
 
@@ -55,6 +68,7 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
           contacts={contactOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          availablePurchases={availablePurchases}
         />
       </div>
     </main>

@@ -8,7 +8,7 @@ USE BecraBV;
 -- ============================================================
 
 -- ------------------------------------------------------------
--- 1. Rename column: volume -> quantityInStock
+-- 1. Rename column: volume -> quantityInStock fu
 --    Guard: only run when 'volume' still exists on the table.
 -- ------------------------------------------------------------
 DROP PROCEDURE IF EXISTS _migration_rename_volume;

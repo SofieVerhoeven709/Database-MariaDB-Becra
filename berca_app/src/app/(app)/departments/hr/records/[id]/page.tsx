@@ -13,16 +13,17 @@ interface EmployeeDetailPageProps {
 export default async function EmployeeDetailPage({params}: EmployeeDetailPageProps) {
   const {id} = await params
 
-  const [employeeFromDAL, roleLevels, titles, profile] = await Promise.all([
+  const [employeeResult, roleLevels, titles, profile] = await Promise.all([
     getEmployeeDetail(id).catch(() => null),
     getRoleLevels(),
     getTitles(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
-  if (!employeeFromDAL) notFound()
+  if (!employeeResult) notFound()
 
-  const employee = mapEmployeeDetail(employeeFromDAL)
+  const {employee: employeeFromDAL, createdEmployees, deletedEmployees} = employeeResult
+  const employee = mapEmployeeDetail(employeeFromDAL, createdEmployees, deletedEmployees)
 
   const roleOptions = roleLevels!
     .filter(r => !r.deleted)

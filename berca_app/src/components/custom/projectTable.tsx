@@ -9,6 +9,8 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
 import type {MappedProject} from '@/types/project'
+import type {RoleLevelOption} from '@/types/roleLevel'
+import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {
   createProjectAction,
   hardDeleteProjectAction,
@@ -43,11 +45,7 @@ type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 
 function formatDate(date: string | null) {
   if (!date) return '-'
-  return new Date(date).toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  })
+  return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -71,6 +69,8 @@ interface ProjectTableProps {
   currentUserRole: string
   currentUserLevel: number
   employees: Option[]
+  roleLevelOptions: RoleLevelOption[]
+  defaultVisibleRoleNames: string[]
 }
 
 export function ProjectTable({
@@ -80,6 +80,8 @@ export function ProjectTable({
   currentUserRole,
   currentUserLevel,
   employees,
+  roleLevelOptions,
+  defaultVisibleRoleNames,
 }: ProjectTableProps) {
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const projects = initialProjects
@@ -183,7 +185,7 @@ export function ProjectTable({
     setDialogOpen(true)
   }
 
-  async function handleSave(p: MappedProject) {
+  async function handleSave(p: MappedProject, visibilityRows: VisibilityRow[]) {
     const payload = {
       ...p,
       startDate: p.startDate ? new Date(p.startDate) : null,
@@ -192,9 +194,9 @@ export function ProjectTable({
       engineeringStartDate: p.engineeringStartDate ? new Date(p.engineeringStartDate) : null,
       createdAt: new Date(p.createdAt),
       deletedAt: p.deletedAt ? new Date(p.deletedAt) : null,
-      // strip UI-only fields
       companyName: undefined,
       projectTypeName: undefined,
+      visibilityForRoles: visibilityRows,
     }
 
     if (editingProject) {
@@ -347,7 +349,6 @@ export function ProjectTable({
                     </Link>
                   </TableCell>
                   <TableCell className={tdClass}>{p.projectName}</TableCell>
-
                   <TableCell className={tdClass}>{p.companyName}</TableCell>
                   <TableCell>
                     <Badge
@@ -479,6 +480,8 @@ export function ProjectTable({
         projectTypes={projectTypes}
         companies={companies}
         onSave={handleSave}
+        roleLevelOptions={roleLevelOptions}
+        defaultVisibleRoleNames={defaultVisibleRoleNames}
       />
     </div>
   )

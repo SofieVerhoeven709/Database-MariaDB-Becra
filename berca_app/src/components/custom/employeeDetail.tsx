@@ -16,6 +16,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {updateEmployeeAdminAction} from '@/serverFunctions/employees'
 import type {Route} from 'next'
 import type {EmployeeDetailData, UnifiedRecord, RecordType} from '@/types/employee'
+import {TYPE_COLOURS} from '@/types/employee'
 
 interface SelectOption {
   id: string
@@ -143,19 +144,6 @@ function SortableHead<K extends string>({
       </span>
     </TableHead>
   )
-}
-
-// ─── Type badge colours ───────────────────────────────────────────────────────
-const TYPE_COLOURS: Record<RecordType, string> = {
-  Contact: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
-  Company: 'bg-violet-500/10 text-violet-600 border-violet-500/20',
-  Project: 'bg-amber-500/10 text-amber-600 border-amber-500/20',
-  Training: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
-  'Work Order': 'bg-cyan-500/10 text-cyan-600 border-cyan-500/20',
-  'Invoice In': 'bg-rose-500/10 text-rose-600 border-rose-500/20',
-  'Invoice Out': 'bg-orange-500/10 text-orange-600 border-orange-500/20',
-  Purchase: 'bg-indigo-500/10 text-indigo-600 border-indigo-500/20',
-  'Time Registry': 'bg-slate-500/10 text-slate-600 border-slate-500/20',
 }
 
 function TypeBadge({type}: {type: RecordType}) {
@@ -348,7 +336,7 @@ export function EmployeeDetail({
   titleOptions,
 }: EmployeeDetailProps) {
   const router = useRouter()
-  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const isAdmin = currentUserLevel >= 80
   const canEdit = currentUserLevel >= 20
 
   const [editing, setEditing] = useState(false)
@@ -669,14 +657,14 @@ export function EmployeeDetail({
           <TabsTrigger value="created">
             Created
             <Badge variant="secondary" className="ml-2 text-xs">
-              {employee.createdRecords.length}
+              {employee.createdMainRecords.length + employee.createdOtherRecords.length}
             </Badge>
           </TabsTrigger>
           {isAdmin && (
             <TabsTrigger value="deleted">
               Deleted
               <Badge variant="secondary" className="ml-2 text-xs">
-                {employee.deletedRecords.length}
+                {employee.deletedMainRecords.length + employee.deletedOtherRecords.length}
               </Badge>
             </TabsTrigger>
           )}
@@ -849,13 +837,55 @@ export function EmployeeDetail({
 
         {/* ══ SECTION 2 — CREATED ═════════════════════════════════════════════ */}
         <TabsContent value="created" className="mt-3">
-          <CreatedTable records={employee.createdRecords} />
+          <Tabs defaultValue="created-main">
+            <TabsList className="bg-secondary border border-border/60 mb-3">
+              <TabsTrigger value="created-main">
+                Main
+                <Badge variant="secondary" className="ml-2 text-xs">
+                  {employee.createdMainRecords.length}
+                </Badge>
+              </TabsTrigger>
+              <TabsTrigger value="created-other">
+                Other
+                <Badge variant="secondary" className="ml-2 text-xs">
+                  {employee.createdOtherRecords.length}
+                </Badge>
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="created-main">
+              <CreatedTable records={employee.createdMainRecords} />
+            </TabsContent>
+            <TabsContent value="created-other">
+              <CreatedTable records={employee.createdOtherRecords} />
+            </TabsContent>
+          </Tabs>
         </TabsContent>
 
         {/* ══ SECTION 3 — DELETED (admin only) ═══════════════════════════════ */}
         {isAdmin && (
           <TabsContent value="deleted" className="mt-3">
-            <DeletedTable records={employee.deletedRecords} />
+            <Tabs defaultValue="deleted-main">
+              <TabsList className="bg-secondary border border-border/60 mb-3">
+                <TabsTrigger value="deleted-main">
+                  Main
+                  <Badge variant="secondary" className="ml-2 text-xs">
+                    {employee.deletedMainRecords.length}
+                  </Badge>
+                </TabsTrigger>
+                <TabsTrigger value="deleted-other">
+                  Other
+                  <Badge variant="secondary" className="ml-2 text-xs">
+                    {employee.deletedOtherRecords.length}
+                  </Badge>
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="deleted-main">
+                <DeletedTable records={employee.deletedMainRecords} />
+              </TabsContent>
+              <TabsContent value="deleted-other">
+                <DeletedTable records={employee.deletedOtherRecords} />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
         )}
       </Tabs>

@@ -6,3 +6,9 @@ ENV MYSQL_USER=${MYSQL_USER}
 ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
 
 COPY init.sql /docker-entrypoint-initdb.d/
+COPY alter.sql /migrations/alter.sql
+
+RUN printf '#!/bin/bash\nset -e\ndocker-entrypoint.sh mariadbd &\nMARIADB_PID=$!\necho "Waiting for MariaDB..."\nuntil mariadb -u root -p"${MYSQL_ROOT_PASSWORD}" -e "SELECT 1" &>/dev/null; do\n  sleep 1\ndone\necho "Running migrations..."\nmariadb -u root -p"${MYSQL_ROOT_PASSWORD}" < /migrations/alter.sql\necho "Migrations complete."\nwait $MARIADB_PID\n' > /usr/local/bin/docker-entrypoint-custom.sh \
+    && chmod +x /usr/local/bin/docker-entrypoint-custom.sh
+
+ENTRYPOINT ["docker-entrypoint-custom.sh"]

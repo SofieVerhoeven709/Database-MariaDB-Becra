@@ -12,9 +12,11 @@ export const createProjectAction = protectedServerFunction({
   serverFn: async ({data, logger, profile}) => {
     logger.info(`Creating project, createdBy: ${profile.id}`)
 
+    const {visibilityForRoles, ...projectData} = data
+
     const target = await createTargetForType('Project', profile.id)
 
-    let projectNumber = data.projectNumber || generateProjectNumber()
+    let projectNumber = projectData.projectNumber || generateProjectNumber()
 
     let attempts = 0
     let project
@@ -23,7 +25,7 @@ export const createProjectAction = protectedServerFunction({
       try {
         project = await prismaClient.project.create({
           data: {
-            ...data,
+            ...projectData,
             projectNumber,
             id: crypto.randomUUID(),
             createdBy: profile.id,
@@ -33,7 +35,6 @@ export const createProjectAction = protectedServerFunction({
         })
         break
       } catch (err: any) {
-        // Prisma unique constraint
         if (err.code === 'P2002') {
           attempts++
           projectNumber = generateProjectNumber()
@@ -47,6 +48,18 @@ export const createProjectAction = protectedServerFunction({
       throw new Error('Failed to generate unique project number')
     }
 
+    // Set visibility
+    if (visibilityForRoles.length > 0) {
+      await prismaClient.visibilityForRole.createMany({
+        data: visibilityForRoles.map(v => ({
+          id: crypto.randomUUID(),
+          targetId: target.id,
+          roleLevelId: v.roleLevelId,
+          visible: v.visible,
+        })),
+      })
+    }
+
     logger.info(`Project created: ${project.id}`)
     revalidatePath('/projects')
   },
@@ -55,11 +68,28 @@ export const createProjectAction = protectedServerFunction({
 export const updateProjectAction = protectedServerFunction({
   schema: upsertProjectSchema,
   functionName: 'Update project action',
-  serverFn: async ({data: {id, ...data}, logger}) => {
-    await prismaClient.project.update({
+  serverFn: async ({data: {id, visibilityForRoles, ...data}, logger}) => {
+    const project = await prismaClient.project.update({
       where: {id},
       data,
+      select: {targetId: true},
     })
+
+    // Sync visibility — delete all existing then recreate (same pattern as company)
+    await prismaClient.visibilityForRole.deleteMany({
+      where: {targetId: project.targetId},
+    })
+
+    if (visibilityForRoles.length > 0) {
+      await prismaClient.visibilityForRole.createMany({
+        data: visibilityForRoles.map(v => ({
+          id: crypto.randomUUID(),
+          targetId: project.targetId,
+          roleLevelId: v.roleLevelId,
+          visible: v.visible,
+        })),
+      })
+    }
 
     logger.info(`Project updated: ${id}`)
     revalidatePath('/projects')

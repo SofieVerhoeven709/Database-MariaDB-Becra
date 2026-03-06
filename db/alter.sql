@@ -1,7 +1,7 @@
 USE BecraBV;
 
 -- ============================================================
--- Idempotent migration for WarehousePlace changes
+-- Idempotent migration for WarehousePlace changes.
 -- Safe to run multiple times on both old and fresh databases.
 -- Each ALTER is guarded by an information_schema check so it
 -- only executes when the change has not been applied yet.

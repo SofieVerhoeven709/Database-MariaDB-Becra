@@ -6,3 +6,9 @@ ENV MYSQL_USER=${MYSQL_USER}
 ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
 
 COPY init.sql /docker-entrypoint-initdb.d/
+COPY alter.sql /migrations/alter.sql
+COPY docker-entrypoint-custom.sh /usr/local/bin/docker-entrypoint-custom.sh
+
+RUN chmod +x /usr/local/bin/docker-entrypoint-custom.sh
+
+ENTRYPOINT ["docker-entrypoint-custom.sh"]

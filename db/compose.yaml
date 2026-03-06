@@ -8,12 +8,14 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MARIADB_ROOT_PASSWORD: rootpassword
       MARIADB_DATABASE: app_db
+      MARIADB_ROOT_PASSWORD: rootpassword
       MARIADB_USER: app_user
       MARIADB_PASSWORD: app_password
     volumes:
       - mariadb_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
 volumes:
   mariadb_data:
+    driver: local

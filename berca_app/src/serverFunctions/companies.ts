@@ -189,3 +189,15 @@ export const undeleteCompanyAddressAction = protectedServerFunction({
     revalidatePath('/companies')
   },
 })
+
+export async function createCompanyAndReturnIdAction(
+  data: Parameters<typeof createCompanyAction>[0],
+): Promise<{id: string; name: string}> {
+  await createCompanyAction(data)
+  const record = await prismaClient.company.findFirstOrThrow({
+    where: {number: data.number},
+    orderBy: {createdAt: 'desc'},
+    select: {id: true, name: true},
+  })
+  return record
+}

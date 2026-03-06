@@ -3,12 +3,12 @@ version: "3.9"
 services:
   mariadb:
     image: mariadb:11
-    container_name: localBecra
+    container_name: local-mariadb
     restart: unless-stopped
     ports:
       - "3306:3306"
     environment:
-      MARIADB_DATABASE: BecraBV
+      MARIADB_DATABASE: app_db
       MARIADB_ROOT_PASSWORD: rootpassword
       MARIADB_USER: app_user
       MARIADB_PASSWORD: app_password

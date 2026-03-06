@@ -973,7 +973,6 @@ export const MaterialSpecScalarFieldEnum = {
   materialFamilyId: 'materialFamilyId',
   name: 'name',
   materialDimensionId: 'materialDimensionId',
-  unitId: 'unitId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   createdAt: 'createdAt',
@@ -1463,13 +1462,16 @@ export type VisibilityForRoleScalarFieldEnum = (typeof VisibilityForRoleScalarFi
 
 export const WarehousePlaceScalarFieldEnum = {
   id: 'id',
+  abbreviation: 'abbreviation',
+  beNumber: 'beNumber',
+  serialTrackedId: 'serialTrackedId',
   place: 'place',
   shelf: 'shelf',
   column: 'column',
   layer: 'layer',
   layerPlace: 'layerPlace',
   information: 'information',
-  volume: 'volume',
+  quantityInStock: 'quantityInStock',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
   deleted: 'deleted',
@@ -2210,7 +2212,6 @@ export const MaterialSpecOrderByRelevanceFieldEnum = {
   materialFamilyId: 'materialFamilyId',
   name: 'name',
   materialDimensionId: 'materialDimensionId',
-  unitId: 'unitId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   createdBy: 'createdBy',
@@ -2574,6 +2575,9 @@ export type VisibilityForRoleOrderByRelevanceFieldEnum = (typeof VisibilityForRo
 
 export const WarehousePlaceOrderByRelevanceFieldEnum = {
   id: 'id',
+  abbreviation: 'abbreviation',
+  beNumber: 'beNumber',
+  serialTrackedId: 'serialTrackedId',
   place: 'place',
   shelf: 'shelf',
   column: 'column',

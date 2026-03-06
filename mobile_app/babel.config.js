@@ -17,6 +17,7 @@ module.exports = function (api) {
         },
       ],
       'react-native-worklets/plugin',
+      '@nozbe/watermelondb/babel/plugin',
     ],
-  };
+  }
 };

@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Index: FunctionComponent = () => {
+const Home: FunctionComponent = () => {
   return (
     <>
       <View style={styles.container}>
@@ -22,4 +22,4 @@ const Index: FunctionComponent = () => {
   )
 }
 
-export default Index
+export default Home

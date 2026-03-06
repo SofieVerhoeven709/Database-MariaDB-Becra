@@ -7,6 +7,17 @@ export const upsertVisibilitySchema = z.object({
   revalidate: z.string().min(1),
 })
 
+export const bulkUpsertVisibilitySchema = z.object({
+  targetId: z.string(),
+  rows: z.array(
+    z.object({
+      roleLevelId: z.string(),
+      visible: z.boolean(),
+    }),
+  ),
+  revalidate: z.string().min(1),
+})
+
 // ─── Shared input type used when persisting visibility alongside any entity ───
 export const visibilityInputSchema = z.object({
   roleLevelId: z.string(),

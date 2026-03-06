@@ -167,7 +167,7 @@ export type DocumentPlaceGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type DocumentPlaceGroupByOutputType = {
   id: string
-  placeA: string | null
+  placeA: string
   placeB: string | null
   placeC: string | null
   placeD: string | null
@@ -199,7 +199,7 @@ export type DocumentPlaceWhereInput = {
   OR?: Prisma.DocumentPlaceWhereInput[]
   NOT?: Prisma.DocumentPlaceWhereInput | Prisma.DocumentPlaceWhereInput[]
   id?: Prisma.StringFilter<"DocumentPlace"> | string
-  placeA?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
+  placeA?: Prisma.StringFilter<"DocumentPlace"> | string
   placeB?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
   placeC?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
   placeD?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
@@ -212,7 +212,7 @@ export type DocumentPlaceWhereInput = {
 
 export type DocumentPlaceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  placeA?: Prisma.SortOrderInput | Prisma.SortOrder
+  placeA?: Prisma.SortOrder
   placeB?: Prisma.SortOrderInput | Prisma.SortOrder
   placeC?: Prisma.SortOrderInput | Prisma.SortOrder
   placeD?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -229,7 +229,7 @@ export type DocumentPlaceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.DocumentPlaceWhereInput | Prisma.DocumentPlaceWhereInput[]
   OR?: Prisma.DocumentPlaceWhereInput[]
   NOT?: Prisma.DocumentPlaceWhereInput | Prisma.DocumentPlaceWhereInput[]
-  placeA?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
+  placeA?: Prisma.StringFilter<"DocumentPlace"> | string
   placeB?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
   placeC?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
   placeD?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
@@ -242,7 +242,7 @@ export type DocumentPlaceWhereUniqueInput = Prisma.AtLeast<{
 
 export type DocumentPlaceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  placeA?: Prisma.SortOrderInput | Prisma.SortOrder
+  placeA?: Prisma.SortOrder
   placeB?: Prisma.SortOrderInput | Prisma.SortOrder
   placeC?: Prisma.SortOrderInput | Prisma.SortOrder
   placeD?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -259,7 +259,7 @@ export type DocumentPlaceScalarWhereWithAggregatesInput = {
   OR?: Prisma.DocumentPlaceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DocumentPlaceScalarWhereWithAggregatesInput | Prisma.DocumentPlaceScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"DocumentPlace"> | string
-  placeA?: Prisma.StringNullableWithAggregatesFilter<"DocumentPlace"> | string | null
+  placeA?: Prisma.StringWithAggregatesFilter<"DocumentPlace"> | string
   placeB?: Prisma.StringNullableWithAggregatesFilter<"DocumentPlace"> | string | null
   placeC?: Prisma.StringNullableWithAggregatesFilter<"DocumentPlace"> | string | null
   placeD?: Prisma.StringNullableWithAggregatesFilter<"DocumentPlace"> | string | null
@@ -270,7 +270,7 @@ export type DocumentPlaceScalarWhereWithAggregatesInput = {
 
 export type DocumentPlaceCreateInput = {
   id: string
-  placeA?: string | null
+  placeA: string
   placeB?: string | null
   placeC?: string | null
   placeD?: string | null
@@ -282,7 +282,7 @@ export type DocumentPlaceCreateInput = {
 
 export type DocumentPlaceUncheckedCreateInput = {
   id: string
-  placeA?: string | null
+  placeA: string
   placeB?: string | null
   placeC?: string | null
   placeD?: string | null
@@ -294,7 +294,7 @@ export type DocumentPlaceUncheckedCreateInput = {
 
 export type DocumentPlaceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeA?: Prisma.StringFieldUpdateOperationsInput | string
   placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -306,7 +306,7 @@ export type DocumentPlaceUpdateInput = {
 
 export type DocumentPlaceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeA?: Prisma.StringFieldUpdateOperationsInput | string
   placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -318,7 +318,7 @@ export type DocumentPlaceUncheckedUpdateInput = {
 
 export type DocumentPlaceCreateManyInput = {
   id: string
-  placeA?: string | null
+  placeA: string
   placeB?: string | null
   placeC?: string | null
   placeD?: string | null
@@ -329,7 +329,7 @@ export type DocumentPlaceCreateManyInput = {
 
 export type DocumentPlaceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeA?: Prisma.StringFieldUpdateOperationsInput | string
   placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -339,7 +339,7 @@ export type DocumentPlaceUpdateManyMutationInput = {
 
 export type DocumentPlaceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeA?: Prisma.StringFieldUpdateOperationsInput | string
   placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -462,7 +462,7 @@ export type DocumentPlaceUpdateOneWithoutQuoteSupplierNestedInput = {
 
 export type DocumentPlaceCreateWithoutEmployeeInput = {
   id: string
-  placeA?: string | null
+  placeA: string
   placeB?: string | null
   placeC?: string | null
   placeD?: string | null
@@ -473,7 +473,7 @@ export type DocumentPlaceCreateWithoutEmployeeInput = {
 
 export type DocumentPlaceUncheckedCreateWithoutEmployeeInput = {
   id: string
-  placeA?: string | null
+  placeA: string
   placeB?: string | null
   placeC?: string | null
   placeD?: string | null
@@ -513,7 +513,7 @@ export type DocumentPlaceScalarWhereInput = {
   OR?: Prisma.DocumentPlaceScalarWhereInput[]
   NOT?: Prisma.DocumentPlaceScalarWhereInput | Prisma.DocumentPlaceScalarWhereInput[]
   id?: Prisma.StringFilter<"DocumentPlace"> | string
-  placeA?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
+  placeA?: Prisma.StringFilter<"DocumentPlace"> | string
   placeB?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
   placeC?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
   placeD?: Prisma.StringNullableFilter<"DocumentPlace"> | string | null
@@ -524,7 +524,7 @@ export type DocumentPlaceScalarWhereInput = {
 
 export type DocumentPlaceCreateWithoutQuoteSupplierInput = {
   id: string
-  placeA?: string | null
+  placeA: string
   placeB?: string | null
   placeC?: string | null
   placeD?: string | null
@@ -535,7 +535,7 @@ export type DocumentPlaceCreateWithoutQuoteSupplierInput = {
 
 export type DocumentPlaceUncheckedCreateWithoutQuoteSupplierInput = {
   id: string
-  placeA?: string | null
+  placeA: string
   placeB?: string | null
   placeC?: string | null
   placeD?: string | null
@@ -562,7 +562,7 @@ export type DocumentPlaceUpdateToOneWithWhereWithoutQuoteSupplierInput = {
 
 export type DocumentPlaceUpdateWithoutQuoteSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeA?: Prisma.StringFieldUpdateOperationsInput | string
   placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -573,7 +573,7 @@ export type DocumentPlaceUpdateWithoutQuoteSupplierInput = {
 
 export type DocumentPlaceUncheckedUpdateWithoutQuoteSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeA?: Prisma.StringFieldUpdateOperationsInput | string
   placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -584,7 +584,7 @@ export type DocumentPlaceUncheckedUpdateWithoutQuoteSupplierInput = {
 
 export type DocumentPlaceCreateManyEmployeeInput = {
   id: string
-  placeA?: string | null
+  placeA: string
   placeB?: string | null
   placeC?: string | null
   placeD?: string | null
@@ -594,7 +594,7 @@ export type DocumentPlaceCreateManyEmployeeInput = {
 
 export type DocumentPlaceUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeA?: Prisma.StringFieldUpdateOperationsInput | string
   placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -605,7 +605,7 @@ export type DocumentPlaceUpdateWithoutEmployeeInput = {
 
 export type DocumentPlaceUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeA?: Prisma.StringFieldUpdateOperationsInput | string
   placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -616,7 +616,7 @@ export type DocumentPlaceUncheckedUpdateWithoutEmployeeInput = {
 
 export type DocumentPlaceUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  placeA?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  placeA?: Prisma.StringFieldUpdateOperationsInput | string
   placeB?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeC?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placeD?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -697,7 +697,7 @@ export type $DocumentPlacePayload<ExtArgs extends runtime.Types.Extensions.Inter
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    placeA: string | null
+    placeA: string
     placeB: string | null
     placeC: string | null
     placeD: string | null

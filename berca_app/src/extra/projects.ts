@@ -1,9 +1,27 @@
-import type {Project, Company, ProjectType} from '@/generated/prisma/client'
+import type {
+  Project,
+  Company,
+  ProjectType,
+  Target,
+  VisibilityForRole,
+  RoleLevel,
+  Role,
+  SubRole,
+} from '@/generated/prisma/client'
 import type {MappedProject} from '@/types/project'
+import {mapVisibility} from '@/extra/visibilityForRole'
 
 type ProjectWithRelations = Project & {
   Company: Company
   ProjectType: ProjectType
+  Target: Target & {
+    VisibilityForRole: (VisibilityForRole & {
+      RoleLevel: RoleLevel & {
+        Role: Role
+        SubRole: SubRole
+      }
+    })[]
+  }
 }
 
 export function mapProject(p: ProjectWithRelations): MappedProject {
@@ -31,5 +49,7 @@ export function mapProject(p: ProjectWithRelations): MappedProject {
     deleted: p.deleted,
     deletedAt: p.deletedAt?.toISOString() ?? null,
     deletedBy: p.deletedBy,
+    targetId: p.Target.id,
+    visibilityForRoles: p.Target.VisibilityForRole.map(mapVisibility),
   }
 }

@@ -6,12 +6,13 @@ import {Pencil, X, Plus, Trash2, ExternalLink} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
-import {Textarea} from '@/components/ui/textarea'
 import {Switch} from '@/components/ui/switch'
 import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog'
+import {TimeRegistryFormDialog, type TimeRegistryFormData} from '@/components/custom/timeRegistryFormDialog'
+import type {EmployeeOption, HourTypeOption} from '@/components/custom/timeRegistryFormDialog'
 import {
   createTimeRegistryAction,
   updateTimeRegistryAction,
@@ -19,18 +20,9 @@ import {
   hardDeleteTimeRegistryAction,
   undeleteTimeRegistryAction,
 } from '@/serverFunctions/timeRegistries'
-import type {EmployeeOption, HourTypeOption, PermissionProps, TimeRegistryRow} from '@/types/workOrder'
-import {
-  combineDateAndTime,
-  formatDate,
-  formatDateTime,
-  tdClass,
-  thClass,
-  toInputDate,
-  toInputTime,
-} from '@/extra/workOrderHelpers'
+import type {PermissionProps, TimeRegistryRow} from '@/types/workOrder'
+import {combineDateAndTime, formatDate, formatDateTime, tdClass, thClass} from '@/extra/workOrderHelpers'
 
-// ─── Local types ──────────────────────────────────────────────────────────────
 interface WorkOrderTimeRegistriesProps {
   timeRegistries: TimeRegistryRow[]
   workOrderId: string
@@ -38,65 +30,59 @@ interface WorkOrderTimeRegistriesProps {
   employees: EmployeeOption[]
   hourTypes: HourTypeOption[]
   permissions: PermissionProps
+  currentUserId: string
 }
 
-type TimeRegistryForm = {
+type InlineForm = {
   activityDescription: string
-  additionalInfo: string
-  invoiceInfo: string
   workDate: string
   startTime: string
   endTime: string
-  startBreak: string
-  endBreak: string
   invoiceTime: boolean
   onSite: boolean
   hourTypeId: string
   employeeIds: string[]
 }
 
-const emptyForm = (): TimeRegistryForm => ({
+const emptyInlineForm = (): InlineForm => ({
   activityDescription: '',
-  additionalInfo: '',
-  invoiceInfo: '',
   workDate: '',
   startTime: '',
   endTime: '',
-  startBreak: '',
-  endBreak: '',
   invoiceTime: false,
   onSite: false,
   hourTypeId: '',
   employeeIds: [],
 })
 
-// ─── Employee multi-select ────────────────────────────────────────────────────
-function EmployeeMultiSelect({
+// ─── Compact employee multi-select (inline row only) ─────────────────────────
+function CompactEmployeeMultiSelect({
   value,
   onChange,
   employees,
-  compact = false,
+  lockedId,
 }: {
   value: string[]
   onChange: (ids: string[]) => void
   employees: EmployeeOption[]
-  compact?: boolean
+  lockedId?: string
 }) {
   return (
     <div className="flex flex-col gap-1">
-      {!compact && <Label className="text-xs text-muted-foreground">Additional Employees</Label>}
-      <div
-        className={`flex flex-wrap gap-1 rounded-md border border-border bg-secondary ${compact ? 'p-1 min-h-[28px]' : 'p-2 min-h-[36px]'}`}>
+      <div className="flex flex-wrap gap-1 rounded-md border border-border bg-secondary p-1 min-h-[28px]">
         {value.map(id => {
           const emp = employees.find(e => e.id === id)
+          const isLocked = id === lockedId
           return emp ? (
             <Badge
               key={id}
               variant="secondary"
-              className="gap-1 cursor-pointer text-xs h-5"
-              onClick={() => onChange(value.filter(v => v !== id))}>
+              className={`gap-1 text-xs h-5 ${isLocked ? 'cursor-default opacity-70' : 'cursor-pointer'}`}
+              onClick={() => {
+                if (!isLocked) onChange(value.filter(v => v !== id))
+              }}>
               {emp.firstName} {emp.lastName}
-              <X className="h-2.5 w-2.5" />
+              {isLocked ? null : <X className="h-2.5 w-2.5" />}
             </Badge>
           ) : null
         })}
@@ -105,7 +91,7 @@ function EmployeeMultiSelect({
         onValueChange={v => {
           if (!value.includes(v)) onChange([...value, v])
         }}>
-        <SelectTrigger className={`${compact ? 'h-6 text-xs' : 'h-7 text-xs'} bg-secondary border-border`}>
+        <SelectTrigger className="h-6 text-xs bg-secondary border-border">
           <SelectValue placeholder="Add employee…" />
         </SelectTrigger>
         <SelectContent className="bg-card border-border">
@@ -129,23 +115,43 @@ export function WorkOrderTimeRegistries({
   employees,
   hourTypes,
   permissions,
+  currentUserId,
 }: WorkOrderTimeRegistriesProps) {
   const router = useRouter()
   const {canAdd, canDelete, isAdmin} = permissions
 
+  const emptyInlineFormWithUser = () => ({...emptyInlineForm(), employeeIds: [currentUserId]})
+
   const [showInline, setShowInline] = useState(false)
-  const [inlineForm, setInlineForm] = useState(emptyForm())
+  const [inlineForm, setInlineForm] = useState(emptyInlineFormWithUser())
 
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [dialogForm, setDialogForm] = useState(emptyForm())
+  const [editingRecord, setEditingRecord] = useState<TimeRegistryRow | null>(null)
 
   const [detailId, setDetailId] = useState<string | null>(null)
   const [showDeleted, setShowDeleted] = useState(false)
 
   const detailRecord = detailId ? timeRegistries.find(tr => tr.id === detailId) : null
 
-  function buildPayload(f: TimeRegistryForm) {
+  function buildInlinePayload(f: InlineForm) {
+    return {
+      activityDescription: f.activityDescription || null,
+      additionalInfo: null,
+      invoiceInfo: null,
+      workDate: new Date(f.workDate),
+      startTime: combineDateAndTime(f.workDate, f.startTime)!,
+      endTime: combineDateAndTime(f.workDate, f.endTime),
+      startBreak: null,
+      endBreak: null,
+      invoiceTime: f.invoiceTime,
+      onSite: f.onSite,
+      hourTypeId: f.hourTypeId,
+      workOrderId,
+      employeeIds: f.employeeIds,
+    }
+  }
+
+  function buildDialogPayload(f: TimeRegistryFormData) {
     return {
       activityDescription: f.activityDescription || null,
       additionalInfo: f.additionalInfo || null,
@@ -163,42 +169,55 @@ export function WorkOrderTimeRegistries({
     }
   }
 
-  function openEdit(tr: TimeRegistryRow) {
-    setEditingId(tr.id)
-    setDialogForm({
-      activityDescription: tr.activityDescription ?? '',
-      additionalInfo: tr.additionalInfo ?? '',
-      invoiceInfo: tr.invoiceInfo ?? '',
-      workDate: toInputDate(tr.workDate),
-      startTime: toInputTime(tr.startTime),
-      endTime: toInputTime(tr.endTime),
-      startBreak: toInputTime(tr.startBreak),
-      endBreak: toInputTime(tr.endBreak),
+  // Convert a TimeRegistryRow to a MappedTimeRegistry-like object for the dialog
+  function rowToMapped(tr: TimeRegistryRow) {
+    return {
+      id: tr.id,
+      activityDescription: tr.activityDescription ?? null,
+      additionalInfo: tr.additionalInfo ?? null,
+      invoiceInfo: tr.invoiceInfo ?? null,
+      startTime: tr.startTime?.toISOString?.() ?? String(tr.startTime),
+      endTime: tr.endTime?.toISOString?.() ?? (tr.endTime ? String(tr.endTime) : null),
+      workDate: tr.workDate?.toISOString?.() ?? String(tr.workDate),
+      startBreak: tr.startBreak?.toISOString?.() ?? (tr.startBreak ? String(tr.startBreak) : null),
+      endBreak: tr.endBreak?.toISOString?.() ?? (tr.endBreak ? String(tr.endBreak) : null),
+      createdAt: tr.createdAt?.toISOString?.() ?? String(tr.createdAt),
       invoiceTime: tr.invoiceTime,
       onSite: tr.onSite,
+      createdBy: tr.createdBy,
+      workOrderId: tr.workOrderId,
       hourTypeId: tr.HourType.id,
-      employeeIds: tr.TimeRegistryEmployee.map(tre => tre.Employee.id),
-    })
-    setDialogOpen(true)
+      deleted: tr.deleted,
+      deletedAt: null,
+      deletedBy: null,
+      employeeFirstName: tr.Employee.firstName,
+      employeeLastName: tr.Employee.lastName,
+      hourTypeName: tr.HourType.name,
+      workOrderNumber: null,
+      additionalEmployees: tr.TimeRegistryEmployee.map(tre => ({
+        id: tre.id,
+        employeeId: tre.Employee.id,
+        employeeFirstName: tre.Employee.firstName,
+        employeeLastName: tre.Employee.lastName,
+      })),
+    }
   }
 
   async function handleInlineSave() {
-    await createTimeRegistryAction(buildPayload(inlineForm))
-    setInlineForm(emptyForm())
+    await createTimeRegistryAction(buildInlinePayload(inlineForm))
+    setInlineForm(emptyInlineForm())
     setShowInline(false)
     router.refresh()
   }
 
-  async function handleDialogSave() {
-    const payload = buildPayload(dialogForm)
-    if (editingId) {
-      await updateTimeRegistryAction({...payload, id: editingId})
+  async function handleDialogSave(formData: TimeRegistryFormData) {
+    const payload = buildDialogPayload(formData)
+    if (editingRecord) {
+      await updateTimeRegistryAction({...payload, id: editingRecord.id})
     } else {
       await createTimeRegistryAction(payload)
     }
-    setDialogForm(emptyForm())
-    setEditingId(null)
-    setDialogOpen(false)
+    setEditingRecord(null)
     router.refresh()
   }
 
@@ -231,7 +250,7 @@ export function WorkOrderTimeRegistries({
               className="gap-1.5 border-border text-xs h-7"
               onClick={() => {
                 setShowInline(v => !v)
-                setInlineForm(emptyForm())
+                setInlineForm(emptyInlineFormWithUser())
               }}>
               <Plus className="h-3 w-3" />
               {showInline ? 'Cancel inline' : 'Add inline'}
@@ -240,8 +259,7 @@ export function WorkOrderTimeRegistries({
               size="sm"
               className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7"
               onClick={() => {
-                setEditingId(null)
-                setDialogForm(emptyForm())
+                setEditingRecord(null)
                 setDialogOpen(true)
               }}>
               <Plus className="h-3 w-3" />
@@ -338,12 +356,12 @@ export function WorkOrderTimeRegistries({
                     onCheckedChange={v => setInlineForm(f => ({...f, invoiceTime: v}))}
                   />
                 </TableCell>
-                <TableCell>
-                  <EmployeeMultiSelect
-                    compact
+                <TableCell colSpan={1}>
+                  <CompactEmployeeMultiSelect
                     value={inlineForm.employeeIds}
                     onChange={ids => setInlineForm(f => ({...f, employeeIds: ids}))}
                     employees={employees}
+                    lockedId={currentUserId}
                   />
                 </TableCell>
                 <TableCell>
@@ -463,7 +481,10 @@ export function WorkOrderTimeRegistries({
                             variant="ghost"
                             size="icon"
                             className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                            onClick={() => openEdit(tr)}>
+                            onClick={() => {
+                              setEditingRecord(tr)
+                              setDialogOpen(true)
+                            }}>
                             <Pencil className="h-3.5 w-3.5" />
                           </Button>
                           {canDelete && (
@@ -493,140 +514,20 @@ export function WorkOrderTimeRegistries({
         </Table>
       </div>
 
-      {/* Add/Edit Dialog */}
-      <Dialog
+      {/* Add/Edit Dialog — reuses the shared form dialog, fixed to this work order */}
+      <TimeRegistryFormDialog
         open={dialogOpen}
         onOpenChange={open => {
-          if (!open) {
-            setEditingId(null)
-            setDialogForm(emptyForm())
-          }
+          if (!open) setEditingRecord(null)
           setDialogOpen(open)
-        }}>
-        <DialogContent className="bg-card border-border max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="text-foreground">
-              {editingId ? 'Edit Time Registry' : 'Add Time Registry'}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-2">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Work Date</Label>
-                <Input
-                  type="date"
-                  value={dialogForm.workDate}
-                  onChange={e => setDialogForm(f => ({...f, workDate: e.target.value}))}
-                  className="bg-secondary border-border"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Hour Type</Label>
-                <Select value={dialogForm.hourTypeId} onValueChange={v => setDialogForm(f => ({...f, hourTypeId: v}))}>
-                  <SelectTrigger className="bg-secondary border-border">
-                    <SelectValue placeholder="Select hour type" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-card border-border">
-                    {hourTypes.map(ht => (
-                      <SelectItem key={ht.id} value={ht.id}>
-                        {ht.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Start Time</Label>
-                <Input
-                  type="time"
-                  value={dialogForm.startTime}
-                  onChange={e => setDialogForm(f => ({...f, startTime: e.target.value}))}
-                  className="bg-secondary border-border"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">End Time</Label>
-                <Input
-                  type="time"
-                  value={dialogForm.endTime}
-                  onChange={e => setDialogForm(f => ({...f, endTime: e.target.value}))}
-                  className="bg-secondary border-border"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Break Start</Label>
-                <Input
-                  type="time"
-                  value={dialogForm.startBreak}
-                  onChange={e => setDialogForm(f => ({...f, startBreak: e.target.value}))}
-                  className="bg-secondary border-border"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Break End</Label>
-                <Input
-                  type="time"
-                  value={dialogForm.endBreak}
-                  onChange={e => setDialogForm(f => ({...f, endBreak: e.target.value}))}
-                  className="bg-secondary border-border"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Activity Description</Label>
-              <Textarea
-                value={dialogForm.activityDescription}
-                rows={2}
-                onChange={e => setDialogForm(f => ({...f, activityDescription: e.target.value}))}
-                className="bg-secondary border-border resize-none"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Invoice Info</Label>
-              <Input
-                value={dialogForm.invoiceInfo}
-                onChange={e => setDialogForm(f => ({...f, invoiceInfo: e.target.value}))}
-                className="bg-secondary border-border"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Additional Info</Label>
-              <Textarea
-                value={dialogForm.additionalInfo}
-                rows={2}
-                onChange={e => setDialogForm(f => ({...f, additionalInfo: e.target.value}))}
-                className="bg-secondary border-border resize-none"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
-                <Label className="text-xs text-muted-foreground">On Site</Label>
-                <Switch checked={dialogForm.onSite} onCheckedChange={v => setDialogForm(f => ({...f, onSite: v}))} />
-              </div>
-              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
-                <Label className="text-xs text-muted-foreground">Invoice Time</Label>
-                <Switch
-                  checked={dialogForm.invoiceTime}
-                  onCheckedChange={v => setDialogForm(f => ({...f, invoiceTime: v}))}
-                />
-              </div>
-            </div>
-            <EmployeeMultiSelect
-              value={dialogForm.employeeIds}
-              onChange={ids => setDialogForm(f => ({...f, employeeIds: ids}))}
-              employees={employees}
-            />
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setDialogOpen(false)} className="border-border">
-              Cancel
-            </Button>
-            <Button onClick={handleDialogSave} className="bg-accent text-accent-foreground hover:bg-accent/80">
-              {editingId ? 'Save Changes' : 'Add Time Registry'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        }}
+        timeRegistry={editingRecord ? rowToMapped(editingRecord) : null}
+        employees={employees}
+        hourTypes={hourTypes}
+        fixedWorkOrderId={workOrderId}
+        currentUserId={currentUserId}
+        onSave={handleDialogSave}
+      />
 
       {/* Detail Dialog */}
       <Dialog open={!!detailId} onOpenChange={open => !open && setDetailId(null)}>

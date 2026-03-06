@@ -1,12 +1,28 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 
+const projectInclude = {
+  Company: true,
+  ProjectType: true,
+  Target: {
+    include: {
+      VisibilityForRole: {
+        include: {
+          RoleLevel: {
+            include: {
+              Role: true,
+              SubRole: true,
+            },
+          },
+        },
+      },
+    },
+  },
+} as const
+
 export async function getProjects() {
   return prismaClient.project.findMany({
-    include: {
-      Company: true,
-      ProjectType: true,
-    },
+    include: projectInclude,
   })
 }
 
@@ -50,6 +66,15 @@ export async function getProjectById(id: string) {
         include: {
           Company: true,
           Employee: true,
+        },
+      },
+      Target: {
+        include: {
+          VisibilityForRole: {
+            include: {
+              RoleLevel: {include: {Role: true, SubRole: true}},
+            },
+          },
         },
       },
     },

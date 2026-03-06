@@ -1,7 +1,6 @@
 'use client'
 
 import {useEffect, useState} from 'react'
-import {useRouter} from 'next/navigation'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from '@/components/ui/dialog'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Button} from '@/components/ui/button'
@@ -15,6 +14,9 @@ import type {RoleLevelOption} from '@/types/roleLevel'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {CompanyFormDialog} from '@/components/custom/companyFormDialog'
+import {createCompanyAndReturnIdAction} from '@/serverFunctions/companies'
+import {addCompanyContactAction} from '@/serverFunctions/companyContact'
+import type {MappedCompany} from '@/types/company'
 
 interface SelectOption {
   id: string
@@ -100,19 +102,23 @@ export function ContactFormDialog({
   titleOptions,
   companyOptions,
 }: ContactFormDialogProps) {
-  const router = useRouter()
-
   const [form, setForm] = useState<MappedContact>(emptyContact())
   const [saving, setSaving] = useState(false)
-
+  const [companies, setCompanies] = useState(companyOptions)
   const [companyDialogOpen, setCompanyDialogOpen] = useState(false)
 
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(contact?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
 
+  // Create flow
   const [initialCompanyId, setInitialCompanyId] = useState<string>('none')
   const [initialRoleWithCompany, setInitialRoleWithCompany] = useState<string>('')
+
+  // Edit flow — company change
+  const [newCompanyId, setNewCompanyId] = useState<string>('none')
+  const [newRoleWithCompany, setNewRoleWithCompany] = useState<string>('')
+  const [endPreviousActive, setEndPreviousActive] = useState<boolean>(true)
 
   useEffect(() => {
     const next = contact ?? emptyContact()
@@ -120,6 +126,9 @@ export function ContactFormDialog({
     setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
     setInitialCompanyId('none')
     setInitialRoleWithCompany('')
+    setNewCompanyId('none')
+    setNewRoleWithCompany('')
+    setEndPreviousActive(true)
   }, [contact?.id, open])
 
   function set<K extends keyof MappedContact>(key: K, value: MappedContact[K]) {
@@ -133,12 +142,24 @@ export function ContactFormDialog({
   async function handleSubmit() {
     setSaving(true)
     try {
+      // Save the contact itself (active is preserved on edit since it's part of form state)
       await onSave(
         form,
         visibilityRows,
         initialCompanyId !== 'none' ? initialCompanyId : undefined,
         initialRoleWithCompany || undefined,
       )
+
+      // On edit: if a new company was chosen, link it (ends the previous active link automatically)
+      if (isEdit && newCompanyId !== 'none') {
+        await addCompanyContactAction({
+          contactId: form.id,
+          companyId: newCompanyId,
+          roleWithCompany: newRoleWithCompany || null,
+          startedDate: new Date(),
+          endPreviousActive,
+        })
+      }
     } finally {
       setSaving(false)
     }
@@ -194,6 +215,53 @@ export function ContactFormDialog({
     </div>
   )
 
+  async function handleSaveCompany(c: MappedCompany, visRows: VisibilityRow[]) {
+    const created = await createCompanyAndReturnIdAction({
+      name: c.name,
+      number: c.number,
+      mail: c.mail,
+      businessPhone: c.businessPhone,
+      website: c.website,
+      vatNumber: c.vatNumber,
+      bankNumber: c.bankNumber,
+      iban: c.iban,
+      bic: c.bic,
+      becraCustomerNumber: c.becraCustomerNumber,
+      becraWebsiteLogin: c.becraWebsiteLogin,
+      supplier: c.supplier,
+      prefferedSupplier: c.prefferedSupplier,
+      companyActive: c.companyActive,
+      newsLetter: c.newsLetter,
+      customer: c.customer,
+      potentialCustomer: c.potentialCustomer,
+      headQuarters: c.headQuarters,
+      potentialSubContractor: c.potentialSubContractor,
+      subContractor: c.subContractor,
+      notes: c.notes,
+      companyId: c.companyId,
+      addresses: c.addresses.map(a => ({
+        street: a.street,
+        houseNumber: a.houseNumber,
+        busNumber: a.busNumber,
+        zipCode: a.zipCode,
+        place: a.place,
+        typeAdress: a.typeAdress,
+      })),
+      visibilityForRoles: visRows,
+    })
+
+    setCompanies(prev => [...prev, {id: created.id, name: created.name}])
+
+    // Auto-select in whichever flow is active
+    if (isEdit) {
+      setNewCompanyId(created.id)
+    } else {
+      setInitialCompanyId(created.id)
+    }
+
+    setCompanyDialogOpen(false)
+  }
+
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
@@ -231,26 +299,34 @@ export function ContactFormDialog({
                 {selectField('functionId', 'Function', functionOptions)}
                 {selectField('departmentExternId', 'External Department', departmentExternOptions)}
 
+                {/* ── Create flow: assign company ── */}
                 {!isEdit && (
                   <>
                     <div className="flex flex-col gap-1.5">
                       <Label className="text-xs text-muted-foreground">Assign to Company</Label>
-
                       <div className="flex gap-2">
-                        <Select value={initialCompanyId} onValueChange={setInitialCompanyId}>
+                        <Select
+                          value={initialCompanyId}
+                          onValueChange={value => {
+                            if (value === '__create__') {
+                              setCompanyDialogOpen(true)
+                            } else {
+                              setInitialCompanyId(value)
+                            }
+                          }}>
                           <SelectTrigger className="bg-secondary border-border flex-1">
                             <SelectValue placeholder="None" />
                           </SelectTrigger>
                           <SelectContent className="bg-card border-border">
                             <SelectItem value="none">None</SelectItem>
-                            {companyOptions.map(o => (
+                            {companies.map(o => (
                               <SelectItem key={o.id} value={o.id}>
                                 {o.name}
                               </SelectItem>
                             ))}
+                            <SelectItem value="__create__">+ Create New Company</SelectItem>
                           </SelectContent>
                         </Select>
-
                         <Button
                           type="button"
                           variant="outline"
@@ -267,6 +343,74 @@ export function ContactFormDialog({
                         <Input
                           value={initialRoleWithCompany}
                           onChange={e => setInitialRoleWithCompany(e.target.value)}
+                          placeholder="e.g. CEO, Purchasing Manager…"
+                          className="bg-secondary border-border"
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
+
+                {/* ── Edit flow: change company ── */}
+                {isEdit && (
+                  <>
+                    <div className="flex flex-col gap-1.5 sm:col-span-2">
+                      <Label className="text-xs text-muted-foreground">Current Company</Label>
+                      <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground select-none">
+                        {contact?.currentCompanyName ?? 'None'}
+                        {contact?.currentRoleWithCompany && (
+                          <span className="ml-2 text-muted-foreground/60">· {contact.currentRoleWithCompany}</span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-1.5">
+                      <Label className="text-xs text-muted-foreground">Change Company</Label>
+                      <div className="flex gap-2">
+                        <Select
+                          value={newCompanyId}
+                          onValueChange={value => {
+                            if (value === '__create__') {
+                              setCompanyDialogOpen(true)
+                            } else {
+                              setNewCompanyId(value)
+                            }
+                          }}>
+                          <SelectTrigger className="bg-secondary border-border flex-1">
+                            <SelectValue placeholder="No change" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-card border-border">
+                            <SelectItem value="none">No change</SelectItem>
+                            {companies.map(o => (
+                              <SelectItem key={o.id} value={o.id}>
+                                {o.name}
+                              </SelectItem>
+                            ))}
+                            <SelectItem value="__create__">+ Create New Company</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="border-border"
+                          onClick={() => setCompanyDialogOpen(true)}>
+                          +
+                        </Button>
+                      </div>
+                      {newCompanyId !== 'none' && (
+                        <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                          <Label className="text-xs text-muted-foreground">End current active link</Label>
+                          <Switch checked={endPreviousActive} onCheckedChange={setEndPreviousActive} />
+                        </div>
+                      )}
+                    </div>
+
+                    {newCompanyId !== 'none' && (
+                      <div className="flex flex-col gap-1.5">
+                        <Label className="text-xs text-muted-foreground">Role at New Company</Label>
+                        <Input
+                          value={newRoleWithCompany}
+                          onChange={e => setNewRoleWithCompany(e.target.value)}
                           placeholder="e.g. CEO, Purchasing Manager…"
                           className="bg-secondary border-border"
                         />
@@ -363,11 +507,8 @@ export function ContactFormDialog({
         open={companyDialogOpen}
         onOpenChange={setCompanyDialogOpen}
         company={null}
-        companies={companyOptions}
-        onSave={async () => {
-          router.refresh()
-          setCompanyDialogOpen(false)
-        }}
+        companies={companies}
+        onSave={handleSaveCompany}
         isAdmin={isAdmin}
         canDelete={false}
         roleLevelOptions={roleLevelOptions}

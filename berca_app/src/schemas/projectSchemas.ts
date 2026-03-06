@@ -1,4 +1,5 @@
 import {z} from 'zod/v4'
+import {visibilityInputSchema} from '@/schemas/visibilityForRoleSchemas'
 
 const dateSchema = z.preprocess(
   val => (val === '' || val === null || val === undefined ? null : new Date(val as string)),
@@ -34,6 +35,8 @@ export const projectSchema = z.object({
   deletedBy: z.string().nullable().optional(),
 })
 
-export const upsertProjectSchema = projectSchema
+export const upsertProjectSchema = projectSchema.extend({
+  visibilityForRoles: z.array(visibilityInputSchema).default([]),
+})
 
 export const updateProjectSchema = projectSchema.pick({id: true})

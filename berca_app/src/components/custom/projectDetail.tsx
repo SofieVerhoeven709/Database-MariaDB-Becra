@@ -18,6 +18,10 @@ import {updateProjectAction} from '@/serverFunctions/projects'
 import {createPurchaseAction, updatePurchaseAction} from '@/serverFunctions/purchases'
 import type {Route} from 'next'
 import type {ProjectDetailData} from '@/extra/projectDetails'
+import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
+import type {RoleLevelOption} from '@/types/roleLevel'
+import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
+import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 
 interface Option {
   id: string
@@ -47,6 +51,9 @@ interface ProjectDetailProps {
   currentUserRole: string
   currentUserLevel: number
   availablePurchases: AvailablePurchase[]
+  roleLevelOptions: RoleLevelOption[]
+  defaultVisibleRoleNames: string[]
+  visibilityForRoles: MappedVisibilityForRole[]
 }
 
 function formatDate(date: Date | null) {
@@ -86,6 +93,9 @@ export function ProjectDetail({
   currentUserRole,
   currentUserLevel,
   availablePurchases,
+  roleLevelOptions,
+  defaultVisibleRoleNames,
+  visibilityForRoles: initialVisibilityForRoles,
 }: ProjectDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
@@ -135,6 +145,11 @@ export function ProjectDetail({
   const [savingNewPurchase, setSavingNewPurchase] = useState(false)
   const [savingLinkPurchase, setSavingLinkPurchase] = useState(false)
 
+  // ─── Visibility state ────────────────────────────────────────────────────────
+  const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
+    buildInitialVisibilityRows(initialVisibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
+  )
+
   const can = (level: number) => currentUserLevel >= level
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canManageWorkOrders = isAdmin || (currentUserLevel >= PERM.workOrders && currentUserRole === 'Management Role')
@@ -162,6 +177,7 @@ export function ProjectDetail({
       isOpen: project.isOpen,
       isClosed: project.isClosed,
     })
+    setVisibilityRows(buildInitialVisibilityRows(initialVisibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
     setEditing(false)
   }
 
@@ -190,6 +206,7 @@ export function ProjectDetail({
         deleted: project.deleted,
         deletedAt: project.deletedAt,
         deletedBy: project.deletedBy,
+        visibilityForRoles: visibilityRows,
       })
       setEditing(false)
       router.refresh()
@@ -577,6 +594,7 @@ export function ProjectDetail({
               {project.other_Project.length}
             </Badge>
           </TabsTrigger>
+          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
         {/* ── Contacts ─────────────────────────────────────────────────────────── */}
@@ -1139,6 +1157,47 @@ export function ProjectDetail({
             </Table>
           </div>
         </TabsContent>
+
+        {/* ── Visibility ───────────────────────────────────────────────────────── */}
+        {isAdmin && (
+          <TabsContent value="visibility" className="mt-3">
+            {editing ? (
+              <VisibilityForRoleTab
+                roleLevelOptions={roleLevelOptions}
+                value={visibilityRows}
+                onChange={setVisibilityRows}
+              />
+            ) : (
+              <div className="flex flex-col gap-3">
+                <p className="text-xs text-muted-foreground">Click Edit to change visibility settings.</p>
+                <div className="flex flex-wrap gap-3">
+                  {roleLevelOptions.map(rl => {
+                    const visible = visibilityRows.find(r => r.roleLevelId === rl.id)?.visible ?? false
+                    return (
+                      <div
+                        key={rl.id}
+                        className="flex flex-col items-start gap-2 rounded-lg border border-border bg-secondary px-4 py-2.5 w-60">
+                        <div>
+                          <p className="text-sm text-foreground">{rl.roleName}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {rl.subRoleName} — level {rl.subRoleLevel}
+                          </p>
+                        </div>
+                        {visible ? (
+                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Visible</Badge>
+                        ) : (
+                          <Badge variant="secondary" className="text-muted-foreground font-medium">
+                            Hidden
+                          </Badge>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+          </TabsContent>
+        )}
       </Tabs>
 
       {/* ── Contact Dialog ──────────────────────────────────────────────────────── */}

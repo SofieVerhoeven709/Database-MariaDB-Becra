@@ -8,6 +8,9 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {ProjectDetail} from '@/components/custom/projectDetail'
 import {notFound} from 'next/navigation'
 import {getCompanies} from '@/dal/companies'
+import {getAllRoleLevels} from '@/dal/roleLevel'
+import {mapRoleLevelOptions} from '@/types/roleLevel'
+import {mapVisibility} from '@/extra/visibilityForRole'
 
 interface ProjectDetailPageProps {
   params: Promise<{id: string}>
@@ -15,7 +18,7 @@ interface ProjectDetailPageProps {
 
 export default async function ProjectDetailPage({params}: ProjectDetailPageProps) {
   const {id} = await params
-  const [project, projectTypes, companies, employeesFromDAL, contactsFromDAL, purchasesFromDAL, profile] =
+  const [project, projectTypes, companies, employeesFromDAL, contactsFromDAL, purchasesFromDAL, roleLevels, profile] =
     await Promise.all([
       getProjectById(id).catch(() => null),
       getProjectTypes(),
@@ -23,6 +26,7 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
       getEmployees(),
       getContacts(),
       getPurchases(),
+      getAllRoleLevels(),
       getSessionProfileFromCookieOrThrow(),
     ])
 
@@ -42,9 +46,8 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
   }))
 
   const projectTypeOptions = projectTypes.map(t => ({id: t.id, name: t.name}))
-  const companyOptions = companies.map(c => ({id: c.id, name: c.name}))
+  const companyOptions = companies.filter(c => !c.deleted).map(c => ({id: c.id, name: c.name}))
 
-  // Purchases with no project yet — offered in the "link existing" picker
   const availablePurchases = purchasesFromDAL
     .filter(p => !p.deleted && p.projectId === null)
     .map(p => ({
@@ -56,6 +59,11 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
 
   const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+
+  const roleLevelOptions = mapRoleLevelOptions(roleLevels)
+  const defaultVisibleRoleNames = ['Project']
+
+  const visibilityForRoles = project.Target.VisibilityForRole.map(mapVisibility)
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -69,6 +77,9 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           availablePurchases={availablePurchases}
+          roleLevelOptions={roleLevelOptions}
+          defaultVisibleRoleNames={defaultVisibleRoleNames}
+          visibilityForRoles={visibilityForRoles}
         />
       </div>
     </main>

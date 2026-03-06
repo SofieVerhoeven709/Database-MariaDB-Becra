@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Pencil, X, Save, Plus, ExternalLink} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, Plus, ExternalLink, Link2} from 'lucide-react'
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
@@ -15,8 +15,13 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog'
 import {updateProjectAction} from '@/serverFunctions/projects'
+import {createPurchaseAction, updatePurchaseAction} from '@/serverFunctions/purchases'
 import type {Route} from 'next'
 import type {ProjectDetailData} from '@/extra/projectDetails'
+import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
+import type {RoleLevelOption} from '@/types/roleLevel'
+import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
+import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 
 interface Option {
   id: string
@@ -29,6 +34,14 @@ interface EmployeeOption {
   lastName: string
 }
 
+// Unassigned purchases passed from the server page for the "link existing" picker
+interface AvailablePurchase {
+  id: string
+  orderNumber: string | null
+  companyName: string | null
+  status: string | null
+}
+
 interface ProjectDetailProps {
   project: ProjectDetailData
   projectTypes: Option[]
@@ -37,6 +50,10 @@ interface ProjectDetailProps {
   contacts: Option[]
   currentUserRole: string
   currentUserLevel: number
+  availablePurchases: AvailablePurchase[]
+  roleLevelOptions: RoleLevelOption[]
+  defaultVisibleRoleNames: string[]
+  visibilityForRoles: MappedVisibilityForRole[]
 }
 
 function formatDate(date: Date | null) {
@@ -60,6 +77,8 @@ const PERM = {
   workOrders: 80,
 } as const
 
+const PURCHASE_STATUS_OPTIONS = ['Pending', 'Ordered', 'Delivered', 'Cancelled', 'On Hold']
+
 // ─── Empty form states ────────────────────────────────────────────────────────
 const emptyContact = () => ({contactId: '', description: ''})
 const emptyPurchase = () => ({orderNumber: '', shortDescription: '', status: '', companyId: ''})
@@ -73,6 +92,10 @@ export function ProjectDetail({
   contacts,
   currentUserRole,
   currentUserLevel,
+  availablePurchases,
+  roleLevelOptions,
+  defaultVisibleRoleNames,
+  visibilityForRoles: initialVisibilityForRoles,
 }: ProjectDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
@@ -109,12 +132,23 @@ export function ProjectDetail({
   // ─── Dialog visibility ──────────────────────────────────────────────────────
   const [dialogContact, setDialogContact] = useState(false)
   const [dialogPurchase, setDialogPurchase] = useState(false)
+  const [dialogLinkPurchase, setDialogLinkPurchase] = useState(false)
   const [dialogMaterial, setDialogMaterial] = useState(false)
 
   // ─── Dialog form states ─────────────────────────────────────────────────────
   const [dialogContactForm, setDialogContactForm] = useState(emptyContact())
   const [dialogPurchaseForm, setDialogPurchaseForm] = useState(emptyPurchase())
   const [dialogMaterialForm, setDialogMaterialForm] = useState(emptyMaterial())
+
+  // ─── Purchase-specific saving state ────────────────────────────────────────
+  const [linkPurchaseId, setLinkPurchaseId] = useState('')
+  const [savingNewPurchase, setSavingNewPurchase] = useState(false)
+  const [savingLinkPurchase, setSavingLinkPurchase] = useState(false)
+
+  // ─── Visibility state ────────────────────────────────────────────────────────
+  const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
+    buildInitialVisibilityRows(initialVisibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
+  )
 
   const can = (level: number) => currentUserLevel >= level
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -143,6 +177,7 @@ export function ProjectDetail({
       isOpen: project.isOpen,
       isClosed: project.isClosed,
     })
+    setVisibilityRows(buildInitialVisibilityRows(initialVisibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
     setEditing(false)
   }
 
@@ -171,6 +206,7 @@ export function ProjectDetail({
         deleted: project.deleted,
         deletedAt: project.deletedAt,
         deletedBy: project.deletedBy,
+        visibilityForRoles: visibilityRows,
       })
       setEditing(false)
       router.refresh()
@@ -188,7 +224,13 @@ export function ProjectDetail({
   }
 
   async function handleInlinePurchaseSave() {
-    // TODO: await createPurchaseAction({...inlinePurchase, projectId: project.id})
+    await createPurchaseAction({
+      orderNumber: inlinePurchase.orderNumber || null,
+      shortDescription: inlinePurchase.shortDescription || null,
+      status: inlinePurchase.status || null,
+      companyId: inlinePurchase.companyId || null,
+      projectId: project.id,
+    })
     setInlinePurchase(emptyPurchase())
     setShowInlinePurchase(false)
     router.refresh()
@@ -210,10 +252,37 @@ export function ProjectDetail({
   }
 
   async function handleDialogPurchaseSave() {
-    // TODO: await createPurchaseAction({...dialogPurchaseForm, projectId: project.id})
-    setDialogPurchaseForm(emptyPurchase())
-    setDialogPurchase(false)
-    router.refresh()
+    setSavingNewPurchase(true)
+    try {
+      await createPurchaseAction({
+        orderNumber: dialogPurchaseForm.orderNumber || null,
+        shortDescription: dialogPurchaseForm.shortDescription || null,
+        status: dialogPurchaseForm.status || null,
+        companyId: dialogPurchaseForm.companyId || null,
+        projectId: project.id,
+      })
+      setDialogPurchaseForm(emptyPurchase())
+      setDialogPurchase(false)
+      router.refresh()
+    } finally {
+      setSavingNewPurchase(false)
+    }
+  }
+
+  async function handleDialogLinkPurchaseSave() {
+    if (!linkPurchaseId) return
+    setSavingLinkPurchase(true)
+    try {
+      await updatePurchaseAction({
+        id: linkPurchaseId,
+        projectId: project.id,
+      })
+      setLinkPurchaseId('')
+      setDialogLinkPurchase(false)
+      router.refresh()
+    } finally {
+      setSavingLinkPurchase(false)
+    }
   }
 
   async function handleDialogMaterialSave() {
@@ -525,6 +594,7 @@ export function ProjectDetail({
               {project.other_Project.length}
             </Badge>
           </TabsTrigger>
+          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
         {/* ── Contacts ─────────────────────────────────────────────────────────── */}
@@ -736,18 +806,48 @@ export function ProjectDetail({
 
         {/* ── Purchases ─────────────────────────────────────────────────────────── */}
         <TabsContent value="purchases" className="mt-3">
-          <TabActions
-            canAdd={can(PERM.purchases)}
-            onInline={() => {
-              setShowInlinePurchase(v => !v)
-              setInlinePurchase(emptyPurchase())
-            }}
-            onDialog={() => {
-              setDialogPurchaseForm(emptyPurchase())
-              setDialogPurchase(true)
-            }}
-            showInline={showInlinePurchase}
-          />
+          {can(PERM.purchases) && (
+            <div className="flex items-center gap-2 mb-3">
+              <Button
+                size="sm"
+                variant="outline"
+                className="gap-1.5 border-border text-xs h-7"
+                onClick={() => {
+                  setShowInlinePurchase(v => !v)
+                  setInlinePurchase(emptyPurchase())
+                }}>
+                <Plus className="h-3 w-3" />
+                {showInlinePurchase ? 'Cancel inline' : 'Add inline'}
+              </Button>
+              <Button
+                size="sm"
+                className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7"
+                onClick={() => {
+                  setDialogPurchaseForm(emptyPurchase())
+                  setDialogPurchase(true)
+                }}>
+                <Plus className="h-3 w-3" />
+                Create new
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="gap-1.5 border-border text-xs h-7"
+                disabled={availablePurchases.length === 0}
+                onClick={() => {
+                  setLinkPurchaseId('')
+                  setDialogLinkPurchase(true)
+                }}>
+                <Link2 className="h-3 w-3" />
+                Link existing
+                {availablePurchases.length > 0 && (
+                  <Badge variant="secondary" className="ml-1 text-xs px-1 py-0">
+                    {availablePurchases.length}
+                  </Badge>
+                )}
+              </Button>
+            </div>
+          )}
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -758,6 +858,9 @@ export function ProjectDetail({
                   <TableHead className={thClass}>Supplier</TableHead>
                   <TableHead className={thClass}>Purchase Date</TableHead>
                   <TableHead className={thClass}>Created By</TableHead>
+                  <TableHead className="w-10">
+                    <span className="sr-only">Open</span>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -780,12 +883,20 @@ export function ProjectDetail({
                       />
                     </TableCell>
                     <TableCell>
-                      <Input
-                        placeholder="Status"
+                      <Select
                         value={inlinePurchase.status}
-                        onChange={e => setInlinePurchase(f => ({...f, status: e.target.value}))}
-                        className="h-7 text-xs bg-secondary border-border"
-                      />
+                        onValueChange={v => setInlinePurchase(f => ({...f, status: v}))}>
+                        <SelectTrigger className="h-7 text-xs bg-secondary border-border">
+                          <SelectValue placeholder="Status" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-card border-border">
+                          {PURCHASE_STATUS_OPTIONS.map(s => (
+                            <SelectItem key={s} value={s}>
+                              {s}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </TableCell>
                     <TableCell>
                       <Select
@@ -803,7 +914,7 @@ export function ProjectDetail({
                         </SelectContent>
                       </Select>
                     </TableCell>
-                    <TableCell colSpan={2}>
+                    <TableCell colSpan={3}>
                       <div className="flex gap-2">
                         <Button
                           size="sm"
@@ -824,7 +935,7 @@ export function ProjectDetail({
                 )}
                 {project.Purchase.length === 0 && !showInlinePurchase ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
+                    <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">
                       No purchases found.
                     </TableCell>
                   </TableRow>
@@ -848,6 +959,16 @@ export function ProjectDetail({
                       <TableCell className={tdClass}>{formatDate(p.purchaseDate)}</TableCell>
                       <TableCell className={tdClass}>
                         {p.Employee.firstName} {p.Employee.lastName}
+                      </TableCell>
+                      <TableCell>
+                        <Link href={`/departments/purchasing/orders/${p.id}` as Route}>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </Button>
+                        </Link>
                       </TableCell>
                     </TableRow>
                   ))
@@ -1036,6 +1157,47 @@ export function ProjectDetail({
             </Table>
           </div>
         </TabsContent>
+
+        {/* ── Visibility ───────────────────────────────────────────────────────── */}
+        {isAdmin && (
+          <TabsContent value="visibility" className="mt-3">
+            {editing ? (
+              <VisibilityForRoleTab
+                roleLevelOptions={roleLevelOptions}
+                value={visibilityRows}
+                onChange={setVisibilityRows}
+              />
+            ) : (
+              <div className="flex flex-col gap-3">
+                <p className="text-xs text-muted-foreground">Click Edit to change visibility settings.</p>
+                <div className="flex flex-wrap gap-3">
+                  {roleLevelOptions.map(rl => {
+                    const visible = visibilityRows.find(r => r.roleLevelId === rl.id)?.visible ?? false
+                    return (
+                      <div
+                        key={rl.id}
+                        className="flex flex-col items-start gap-2 rounded-lg border border-border bg-secondary px-4 py-2.5 w-60">
+                        <div>
+                          <p className="text-sm text-foreground">{rl.roleName}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {rl.subRoleName} — level {rl.subRoleLevel}
+                          </p>
+                        </div>
+                        {visible ? (
+                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Visible</Badge>
+                        ) : (
+                          <Badge variant="secondary" className="text-muted-foreground font-medium">
+                            Hidden
+                          </Badge>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+          </TabsContent>
+        )}
       </Tabs>
 
       {/* ── Contact Dialog ──────────────────────────────────────────────────────── */}
@@ -1083,11 +1245,11 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Purchase Dialog ─────────────────────────────────────────────────────── */}
+      {/* ── Create Purchase Dialog ──────────────────────────────────────────────── */}
       <Dialog open={dialogPurchase} onOpenChange={setDialogPurchase}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-foreground">Add Purchase</DialogTitle>
+            <DialogTitle className="text-foreground">Create New Purchase</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col gap-4 py-2">
             <div className="flex flex-col gap-1.5">
@@ -1095,6 +1257,7 @@ export function ProjectDetail({
               <Input
                 value={dialogPurchaseForm.orderNumber}
                 onChange={e => setDialogPurchaseForm(f => ({...f, orderNumber: e.target.value}))}
+                placeholder="e.g. PO-2026-001"
                 className="bg-secondary border-border"
               />
             </div>
@@ -1108,11 +1271,20 @@ export function ProjectDetail({
             </div>
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Status</Label>
-              <Input
-                value={dialogPurchaseForm.status}
-                onChange={e => setDialogPurchaseForm(f => ({...f, status: e.target.value}))}
-                className="bg-secondary border-border"
-              />
+              <Select
+                value={dialogPurchaseForm.status ?? ''}
+                onValueChange={v => setDialogPurchaseForm(f => ({...f, status: v}))}>
+                <SelectTrigger className="bg-secondary border-border">
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {PURCHASE_STATUS_OPTIONS.map(s => (
+                    <SelectItem key={s} value={s}>
+                      {s}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Supplier</Label>
@@ -1133,11 +1305,64 @@ export function ProjectDetail({
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDialogPurchase(false)} className="border-border">
+            <Button
+              variant="outline"
+              onClick={() => setDialogPurchase(false)}
+              disabled={savingNewPurchase}
+              className="border-border">
               Cancel
             </Button>
-            <Button onClick={handleDialogPurchaseSave} className="bg-accent text-accent-foreground hover:bg-accent/80">
-              Add Purchase
+            <Button
+              onClick={handleDialogPurchaseSave}
+              disabled={savingNewPurchase}
+              className="bg-accent text-accent-foreground hover:bg-accent/80">
+              {savingNewPurchase ? 'Creating…' : 'Create Purchase'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Link Existing Purchase Dialog ───────────────────────────────────────── */}
+      <Dialog open={dialogLinkPurchase} onOpenChange={setDialogLinkPurchase}>
+        <DialogContent className="bg-card border-border max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-foreground">Link Existing Purchase</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 py-2">
+            <p className="text-sm text-muted-foreground">
+              Select an unassigned purchase order to link to this project.
+            </p>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Purchase Order</Label>
+              <Select value={linkPurchaseId} onValueChange={setLinkPurchaseId}>
+                <SelectTrigger className="bg-secondary border-border">
+                  <SelectValue placeholder="Select purchase order" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {availablePurchases.map(p => (
+                    <SelectItem key={p.id} value={p.id}>
+                      {p.orderNumber ?? '(no order #)'}
+                      {p.companyName ? ` · ${p.companyName}` : ''}
+                      {p.status ? ` · ${p.status}` : ''}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDialogLinkPurchase(false)}
+              disabled={savingLinkPurchase}
+              className="border-border">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleDialogLinkPurchaseSave}
+              disabled={!linkPurchaseId || savingLinkPurchase}
+              className="bg-accent text-accent-foreground hover:bg-accent/80">
+              {savingLinkPurchase ? 'Linking…' : 'Link Purchase'}
             </Button>
           </DialogFooter>
         </DialogContent>

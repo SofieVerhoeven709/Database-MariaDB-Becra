@@ -23,7 +23,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "C:\\Users\\Thomas Schrauwen\\Desktop\\Database-MariaDB-Becra\\berca_app\\src\\generated\\prisma",
+      "value": "C:\\Users\\sofie\\Database-MariaDB-Becra\\berca_app\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -37,12 +37,12 @@ const config: runtime.GetPrismaClientConfig = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Thomas Schrauwen\\Desktop\\Database-MariaDB-Becra\\berca_app\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\sofie\\Database-MariaDB-Becra\\berca_app\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../../../prisma",
-  "clientVersion": "6.19.2",
-  "engineVersion": "c2990dca591cba766e3b7ef5d9e8a84796e47ab7",
+  "clientVersion": "6.19.0",
+  "engineVersion": "2ba551f319ab1df4bc874a89965d8b3641056773",
   "datasourceNames": [
     "db"
   ],

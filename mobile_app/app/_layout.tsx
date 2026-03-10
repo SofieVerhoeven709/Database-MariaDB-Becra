@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react'
+import {View, ActivityIndicator} from 'react-native'
 import {Slot, useRouter, useSegments} from 'expo-router'
 import {getToken} from '@/lib/secureStore'
 import GluestackUIProvider from '@/components/ui/gluestack-ui-provider'
@@ -29,7 +30,13 @@ export default function RootLayout() {
     }
   }, [isAuthenticated, segments])
 
-  if (isAuthenticated === null) return null
+  if (isAuthenticated === null) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000'}}>
+        <ActivityIndicator size="large" color="#fff" />
+      </View>
+    )
+  }
 
   return (
     <GluestackUIProvider>

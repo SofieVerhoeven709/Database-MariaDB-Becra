@@ -275,7 +275,7 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
 
   Management: [
     {
-      id: 'workOrderManagement',
+      id: 'workOrder',
       name: 'Work Order',
       description: 'Oversee and approve organizational work orders',
       icon: 'ClipboardSignature',

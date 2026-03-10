@@ -118,9 +118,36 @@ export const hardDeleteProjectAction = protectedServerFunction({
   schema: updateProjectSchema,
   functionName: 'Hard delete project action',
   serverFn: async ({data: {id}, logger}) => {
-    await prismaClient.project.delete({where: {id}})
+    // Check for dependent records
+    const dependentCounts = await prismaClient.$transaction([
+      prismaClient.materialSerialTrack.count({where: {projectId: id}}),
+      prismaClient.projectContact.count({where: {projectId: id}}),
+      prismaClient.purchase.count({where: {projectId: id}}),
+      prismaClient.purchaseDetail.count({where: {projectId: id}}),
+      prismaClient.quoteSupplier.count({where: {projectId: id}}),
+      prismaClient.workOrder.count({where: {projectId: id}}),
+      // Add other tables referencing projectId if needed
+    ])
 
+    if (dependentCounts.some(c => c > 0)) {
+      throw new Error(
+        `Cannot hard delete project: it has ${dependentCounts.reduce((acc, c) => acc + c, 0)} dependent record(s)`,
+      )
+    }
+
+    // Safe to delete
+    await prismaClient.project.delete({where: {id}})
     logger.info(`Project hard deleted: ${id}`)
+    revalidatePath('/projects')
+  },
+})
+
+export const undeleteProjectAction = protectedServerFunction({
+  schema: updateProjectSchema,
+  functionName: 'Undelete contact action',
+  serverFn: async ({data: {id}, logger}) => {
+    await prismaClient.project.update({where: {id}, data: {deleted: false}})
+    logger.info(`Project undeleted: ${id}`)
     revalidatePath('/projects')
   },
 })

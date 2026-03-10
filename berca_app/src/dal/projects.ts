@@ -35,34 +35,29 @@ export async function getProjectById(id: string) {
       Employee: true,
       Project: true,
       other_Project: {
-        where: {deleted: false},
         include: {
           Company: true,
           ProjectType: true,
         },
       },
       ProjectContact: {
-        where: {deleted: false},
         include: {
           Contact: true,
           Employee_ProjectContact_createdByToEmployee: true,
         },
       },
       WorkOrder: {
-        where: {deleted: false},
         include: {
           Employee: true,
         },
       },
       Purchase: {
-        where: {deleted: false},
         include: {
           Company: true,
           Employee: true,
         },
       },
       MaterialSerialTrack: {
-        where: {deleted: false},
         include: {
           Company: true,
           Employee: true,

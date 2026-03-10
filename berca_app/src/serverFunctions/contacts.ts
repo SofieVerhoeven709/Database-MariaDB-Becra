@@ -11,7 +11,7 @@ export const createContactAction = protectedServerFunction({
   schema: createContactSchema,
   functionName: 'Create contact action',
   serverFn: async ({
-    data: {visibilityForRoles, initialCompanyId, initialRoleWithCompany, ...data},
+    data: {visibilityForRoles, initialCompanyId, initialRoleWithCompany, initialProjectId, ...data},
     logger,
     profile,
   }) => {
@@ -41,6 +41,21 @@ export const createContactAction = protectedServerFunction({
           roleWithCompany: initialRoleWithCompany ?? null,
           startedDate: now,
           createdBy: profile.id,
+          createdAt: now,
+        },
+      })
+    }
+
+    // Link to project if provided
+    if (initialProjectId) {
+      await prismaClient.projectContact.create({
+        data: {
+          id: crypto.randomUUID(),
+          contactId,
+          projectId: initialProjectId,
+          description: null,
+          createdBy: profile.id,
+          moddifiedBy: profile.id,
           createdAt: now,
         },
       })
@@ -108,3 +123,15 @@ export const undeleteContactAction = protectedServerFunction({
     revalidatePath('/contacts')
   },
 })
+
+export async function createContactAndReturnIdAction(
+  data: Parameters<typeof createContactAction>[0],
+): Promise<{id: string; firstName: string; lastName: string}> {
+  await createContactAction(data)
+  const record = await prismaClient.contact.findFirstOrThrow({
+    where: {firstName: data.firstName, lastName: data.lastName},
+    orderBy: {createdAt: 'desc'},
+    select: {id: true, firstName: true, lastName: true},
+  })
+  return record
+}

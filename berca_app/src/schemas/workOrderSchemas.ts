@@ -19,14 +19,18 @@ export const workOrderSchema = z.object({
   deletedBy: z.string().nullable().optional(),
 })
 
-export const createWorkOrderSchema = workOrderSchema.omit({
-  id: true,
-  createdAt: true,
-  createdBy: true,
-  deleted: true,
-  deletedAt: true,
-  deletedBy: true,
-})
+export const createWorkOrderSchema = workOrderSchema
+  .omit({
+    id: true,
+    createdAt: true,
+    createdBy: true,
+    deleted: true,
+    deletedAt: true,
+    deletedBy: true,
+  })
+  .extend({
+    redirectToProject: z.boolean().default(false),
+  })
 
 export const updateWorkOrderSchema = workOrderSchema.pick({
   id: true,

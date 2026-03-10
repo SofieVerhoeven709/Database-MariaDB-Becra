@@ -99,11 +99,14 @@ export function WorkOrderDetail({
         hoursMaterialClosed: form.hoursMaterialClosed,
         invoiceSent: form.invoiceSent,
         completed: form.completed,
+        redirectToProject: true,
       }
+
+      const {redirectToProject, ...updatePayload} = payload
       if (isNew) {
         await createWorkOrderAction(payload)
       } else {
-        await updateWorkOrderAction({...payload, id: workOrder.id})
+        await updateWorkOrderAction({...updatePayload, id: workOrder.id})
         setEditing(false)
         router.refresh()
       }
@@ -117,11 +120,13 @@ export function WorkOrderDetail({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link href={`/departments/project/project/${projectId}` as Route}>
-            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-          </Link>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-muted-foreground hover:text-foreground"
+            onClick={() => router.back()}>
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
           <div>
             <h1 className="text-lg font-semibold text-foreground">
               {isNew ? 'New Work Order' : (workOrder.workOrderNumber ?? 'Work Order')}

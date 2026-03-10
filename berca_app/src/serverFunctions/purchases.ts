@@ -94,6 +94,16 @@ export const hardDeletePurchaseAction = protectedServerFunction({
   },
 })
 
+export const undeletePurchaseAction = protectedServerFunction({
+  schema: purchaseIdSchema,
+  functionName: 'Undelete purchase action',
+  serverFn: async ({data: {id}, logger}) => {
+    await prismaClient.purchase.update({where: {id}, data: {deleted: false}})
+    logger.info(`Purchase undeleted: ${id}`)
+    revalidatePath('/departments/purchasing')
+  },
+})
+
 // ─── PurchaseDetail ──────────────────────────────────────────────────────────
 
 export const createPurchaseDetailAction = protectedServerFunction({

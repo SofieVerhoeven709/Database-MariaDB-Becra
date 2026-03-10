@@ -38,3 +38,7 @@ export async function getWorkOrdersByProjectId(projectId: string) {
     },
   })
 }
+
+export async function getWorkOrders() {
+  return prismaClient.workOrder.findMany()
+}

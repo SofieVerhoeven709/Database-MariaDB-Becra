@@ -1,6 +1,18 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 
+const workOrderListInclude = {
+  Employee: {select: {firstName: true, lastName: true}},
+  Employee_WorkOrder_deletedByToEmployee: {select: {firstName: true, lastName: true}},
+  Project: {select: {projectNumber: true, projectName: true}},
+} as const
+
+export async function getWorkOrders() {
+  return prismaClient.workOrder.findMany({
+    include: workOrderListInclude,
+  })
+}
+
 export async function getWorkOrderById(id: string) {
   return prismaClient.workOrder.findUniqueOrThrow({
     where: {id},
@@ -37,8 +49,4 @@ export async function getWorkOrdersByProjectId(projectId: string) {
       Project: true,
     },
   })
-}
-
-export async function getWorkOrders() {
-  return prismaClient.workOrder.findMany()
 }

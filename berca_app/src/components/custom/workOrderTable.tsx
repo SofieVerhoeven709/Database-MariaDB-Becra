@@ -11,7 +11,12 @@ import {Badge} from '@/components/ui/badge'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import type {WorkOrder} from '@/types/workOrder'
+import type {MappedWorkOrder} from '@/types/workOrder'
+import {
+  softDeleteWorkOrderAction,
+  hardDeleteWorkOrderAction,
+  undeleteWorkOrderAction,
+} from '@/serverFunctions/workOrders'
 
 type SortField =
   | 'workOrderNumber'
@@ -77,7 +82,7 @@ function Th({
 }
 
 interface WorkOrderTableProps {
-  initialWorkOrders: WorkOrder[]
+  initialWorkOrders: MappedWorkOrder[]
   currentUserRole: string
   currentUserLevel: number
   projectOptions: {id: string; name: string}[]
@@ -98,7 +103,7 @@ export function WorkOrderTable({
   const [sortField, setSortField] = useState<SortField>('workOrderNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [editingWorkOrder, setEditingWorkOrder] = useState<WorkOrder | null>(null)
+  const [editingWorkOrder, setEditingWorkOrder] = useState<MappedWorkOrder | null>(null)
 
   function toggleSort(field: SortField) {
     if (sortField === field) setSortDir(d => (d === 'asc' ? 'desc' : 'asc'))
@@ -117,7 +122,9 @@ export function WorkOrderTable({
       return (
         w.workOrderNumber?.toLowerCase().includes(q) ||
         w.description?.toLowerCase().includes(q) ||
-        w.additionalInfo?.toLowerCase().includes(q)
+        w.additionalInfo?.toLowerCase().includes(q) ||
+        w.projectNumber?.toLowerCase().includes(q) ||
+        w.createdByName?.toLowerCase().includes(q)
       )
     })
     .sort((a, b) => {
@@ -132,9 +139,9 @@ export function WorkOrderTable({
         case 'additionalInfo':
           return s(a.additionalInfo, b.additionalInfo)
         case 'startDate':
-          return s(a.startDate?.toString() ?? '', b.startDate?.toString() ?? '')
+          return s(a.startDate, b.startDate)
         case 'endDate':
-          return s(a.endDate?.toString() ?? '', b.endDate?.toString() ?? '')
+          return s(a.endDate, b.endDate)
         case 'hoursMaterialClosed':
           return n(a.hoursMaterialClosed, b.hoursMaterialClosed)
         case 'invoiceSent':
@@ -142,7 +149,7 @@ export function WorkOrderTable({
         case 'completed':
           return n(a.completed, b.completed)
         case 'createdAt':
-          return s(a.createdAt.toString(), b.createdAt.toString())
+          return s(a.createdAt, b.createdAt)
         case 'createdBy':
           return s(a.createdByName, b.createdByName)
         case 'deleted':
@@ -152,24 +159,23 @@ export function WorkOrderTable({
       }
     })
 
-  async function handleSoftDelete(w: WorkOrder) {
-    // call your soft delete server action
+  async function handleSoftDelete(w: MappedWorkOrder) {
+    await softDeleteWorkOrderAction({id: w.id})
     router.refresh()
   }
 
-  async function handleHardDelete(w: WorkOrder) {
-    // call your hard delete server action
+  async function handleHardDelete(w: MappedWorkOrder) {
+    await hardDeleteWorkOrderAction({id: w.id})
     router.refresh()
   }
 
-  async function handleUndelete(w: WorkOrder) {
-    // call your undelete server action
+  async function handleUndelete(w: MappedWorkOrder) {
+    await undeleteWorkOrderAction({id: w.id})
     router.refresh()
   }
 
   const showDeletedCols = filterDeleted !== 'not-deleted'
-  const baseColCount = 12
-  const colCount = showDeletedCols ? baseColCount + 3 : baseColCount
+  const colCount = showDeletedCols ? 15 : 12
 
   return (
     <div className="flex flex-col gap-6">
@@ -179,7 +185,7 @@ export function WorkOrderTable({
           <div className="relative max-w-sm flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search work order number or description…"
+              placeholder="Search work order, project, description…"
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
@@ -219,6 +225,7 @@ export function WorkOrderTable({
                 sortDir={sortDir}
                 onSort={toggleSort}
               />
+              <TableHead className="whitespace-nowrap text-xs">Project</TableHead>
               <Th field="description" label="Description" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th
                 field="additionalInfo"
@@ -231,7 +238,7 @@ export function WorkOrderTable({
               <Th field="endDate" label="End Date" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th
                 field="hoursMaterialClosed"
-                label="Hours/Material Closed"
+                label="Hrs/Mat Closed"
                 sortField={sortField}
                 sortDir={sortDir}
                 onSort={toggleSort}
@@ -272,15 +279,26 @@ export function WorkOrderTable({
                   className={`border-border/40 hover:bg-secondary/50 ${w.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/workorders/${w.id}` as Route}
+                      href={`/departments/management/workOrderManagement:{id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
-                      {w.workOrderNumber}
+                      {w.workOrderNumber ?? '-'}
                     </Link>
                   </TableCell>
-                  <TableCell className={tdClass}>{w.description ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{w.additionalInfo ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(w.startDate?.toString() ?? null)}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(w.endDate?.toString() ?? null)}</TableCell>
+                  <TableCell className={tdClass}>
+                    <Link
+                      href={`/departments/project/project/${w.projectId}` as Route}
+                      className="hover:text-accent hover:underline transition-colors">
+                      {w.projectNumber}
+                    </Link>
+                  </TableCell>
+                  <TableCell className={tdClass}>
+                    <span className="max-w-[180px] truncate inline-block">{w.description ?? '-'}</span>
+                  </TableCell>
+                  <TableCell className={tdClass}>
+                    <span className="max-w-[180px] truncate inline-block">{w.additionalInfo ?? '-'}</span>
+                  </TableCell>
+                  <TableCell className={tdClass}>{formatDate(w.startDate)}</TableCell>
+                  <TableCell className={tdClass}>{formatDate(w.endDate)}</TableCell>
                   <TableCell>
                     <YesNoBadge value={w.hoursMaterialClosed} />
                   </TableCell>
@@ -290,8 +308,8 @@ export function WorkOrderTable({
                   <TableCell>
                     <YesNoBadge value={w.completed} />
                   </TableCell>
-                  <TableCell className={tdClass}>{formatDate(w.createdAt?.toString() ?? null)}</TableCell>
-                  <TableCell className={tdClass}>{w.createdByName ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{formatDate(w.createdAt)}</TableCell>
+                  <TableCell className={tdClass}>{w.createdByName}</TableCell>
                   {showDeletedCols && (
                     <>
                       <TableCell>
@@ -303,13 +321,13 @@ export function WorkOrderTable({
                           <span className="text-muted-foreground text-sm">No</span>
                         )}
                       </TableCell>
-                      <TableCell className={tdClass}>{formatDate(w.deletedAt?.toString() ?? null)}</TableCell>
+                      <TableCell className={tdClass}>{formatDate(w.deletedAt)}</TableCell>
                       <TableCell className={tdClass}>{w.deletedByName ?? '-'}</TableCell>
                     </>
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/workorders/${w.id}` as Route}>
+                      <Link href={`/departments/project/project/${w.projectId}/workOrder/${w.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

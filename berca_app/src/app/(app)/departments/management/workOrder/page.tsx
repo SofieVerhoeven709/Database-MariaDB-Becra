@@ -20,6 +20,7 @@ export default async function WorkOrdersPage() {
     id: p.id,
     name: `${p.projectNumber} — ${p.projectName}`,
   }))
+  const department = 'management'
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -34,6 +35,7 @@ export default async function WorkOrdersPage() {
           projectOptions={projectOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          department={department}
         />
       </div>
     </main>

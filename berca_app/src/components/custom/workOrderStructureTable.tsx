@@ -2,31 +2,27 @@
 
 import {useState} from 'react'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
-import {WorkOrderFormDialog} from '@/components/custom/workOrderFormDialog'
+import {WorkOrderStructureFormDialog} from '@/components/custom/workOrderStructureFormDialog'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
 import {useRouter} from 'next/navigation'
-import Link from 'next/link'
-import type {Route} from 'next'
-import type {MappedWorkOrder} from '@/types/workOrder'
+import type {MappedWorkOrderStructure, MaterialOption} from '@/types/workOrderStructure'
 import {
-  softDeleteWorkOrderAction,
-  hardDeleteWorkOrderAction,
-  undeleteWorkOrderAction,
-} from '@/serverFunctions/workOrders'
+  softDeleteWorkOrderStructureAction,
+  hardDeleteWorkOrderStructureAction,
+  undeleteWorkOrderStructureAction,
+} from '@/serverFunctions/workOrderStructures'
 
 type SortField =
   | 'workOrderNumber'
-  | 'description'
-  | 'additionalInfo'
-  | 'startDate'
-  | 'endDate'
-  | 'hoursMaterialClosed'
-  | 'invoiceSent'
-  | 'completed'
+  | 'materialName'
+  | 'clientNumber'
+  | 'tag'
+  | 'quantity'
+  | 'shortDescription'
   | 'createdAt'
   | 'createdBy'
   | 'deleted'
@@ -45,16 +41,6 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
     <ChevronUp className="inline h-3.5 w-3.5 ml-1" />
   ) : (
     <ChevronDown className="inline h-3.5 w-3.5 ml-1" />
-  )
-}
-
-function YesNoBadge({value}: {value: boolean}) {
-  return value ? (
-    <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
-  ) : (
-    <Badge variant="secondary" className="text-muted-foreground font-medium">
-      No
-    </Badge>
   )
 }
 
@@ -81,21 +67,23 @@ function Th({
   )
 }
 
-interface WorkOrderTableProps {
-  initialWorkOrders: MappedWorkOrder[]
+interface WorkOrderStructureTableProps {
+  initialStructures: MappedWorkOrderStructure[]
   currentUserRole: string
   currentUserLevel: number
-  projectOptions: {id: string; name: string}[]
+  workOrderOptions: {id: string; name: string}[]
+  materialOptions: MaterialOption[]
   department: string
 }
 
-export function WorkOrderTable({
-  initialWorkOrders,
+export function WorkOrderStructureTable({
+  initialStructures,
   currentUserRole,
   currentUserLevel,
-  projectOptions,
+  workOrderOptions,
+  materialOptions,
   department,
-}: WorkOrderTableProps) {
+}: WorkOrderStructureTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
@@ -105,7 +93,7 @@ export function WorkOrderTable({
   const [sortField, setSortField] = useState<SortField>('workOrderNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [editingWorkOrder, setEditingWorkOrder] = useState<MappedWorkOrder | null>(null)
+  const [editingStructure, setEditingStructure] = useState<MappedWorkOrderStructure | null>(null)
 
   function toggleSort(field: SortField) {
     if (sortField === field) setSortDir(d => (d === 'asc' ? 'desc' : 'asc'))
@@ -115,79 +103,75 @@ export function WorkOrderTable({
     }
   }
 
-  const filtered = initialWorkOrders
-    .filter(w => {
-      if (filterDeleted === 'not-deleted' && w.deleted) return false
-      if (filterDeleted === 'deleted' && !w.deleted) return false
+  const filtered = initialStructures
+    .filter(s => {
+      if (filterDeleted === 'not-deleted' && s.deleted) return false
+      if (filterDeleted === 'deleted' && !s.deleted) return false
       if (!search) return true
       const q = search.toLowerCase()
       return (
-        w.workOrderNumber?.toLowerCase().includes(q) ||
-        w.description?.toLowerCase().includes(q) ||
-        w.additionalInfo?.toLowerCase().includes(q) ||
-        w.projectNumber?.toLowerCase().includes(q) ||
-        w.createdByName?.toLowerCase().includes(q)
+        s.workOrderNumber?.toLowerCase().includes(q) ||
+        s.materialName?.toLowerCase().includes(q) ||
+        s.materialBeNumber?.toLowerCase().includes(q) ||
+        s.clientNumber?.toLowerCase().includes(q) ||
+        s.tag?.toLowerCase().includes(q) ||
+        s.shortDescription?.toLowerCase().includes(q)
       )
     })
     .sort((a, b) => {
       const dir = sortDir === 'asc' ? 1 : -1
       const s = (x: string | null, y: string | null) => dir * (x ?? '').localeCompare(y ?? '')
-      const n = (x: boolean, y: boolean) => dir * (Number(x) - Number(y))
+      const n = (x: number | null, y: number | null) => dir * ((x ?? 0) - (y ?? 0))
       switch (sortField) {
         case 'workOrderNumber':
           return s(a.workOrderNumber, b.workOrderNumber)
-        case 'description':
-          return s(a.description, b.description)
-        case 'additionalInfo':
-          return s(a.additionalInfo, b.additionalInfo)
-        case 'startDate':
-          return s(a.startDate, b.startDate)
-        case 'endDate':
-          return s(a.endDate, b.endDate)
-        case 'hoursMaterialClosed':
-          return n(a.hoursMaterialClosed, b.hoursMaterialClosed)
-        case 'invoiceSent':
-          return n(a.invoiceSent, b.invoiceSent)
-        case 'completed':
-          return n(a.completed, b.completed)
+        case 'materialName':
+          return s(a.materialName, b.materialName)
+        case 'clientNumber':
+          return s(a.clientNumber, b.clientNumber)
+        case 'tag':
+          return s(a.tag, b.tag)
+        case 'quantity':
+          return n(a.quantity, b.quantity)
+        case 'shortDescription':
+          return s(a.shortDescription, b.shortDescription)
         case 'createdAt':
           return s(a.createdAt, b.createdAt)
         case 'createdBy':
           return s(a.createdByName, b.createdByName)
         case 'deleted':
-          return n(a.deleted, b.deleted)
+          return dir * (Number(a.deleted) - Number(b.deleted))
         default:
           return 0
       }
     })
 
-  async function handleSoftDelete(w: MappedWorkOrder) {
-    await softDeleteWorkOrderAction({id: w.id})
+  async function handleSoftDelete(s: MappedWorkOrderStructure) {
+    await softDeleteWorkOrderStructureAction({id: s.id})
     router.refresh()
   }
 
-  async function handleHardDelete(w: MappedWorkOrder) {
-    await hardDeleteWorkOrderAction({id: w.id})
+  async function handleHardDelete(s: MappedWorkOrderStructure) {
+    await hardDeleteWorkOrderStructureAction({id: s.id})
     router.refresh()
   }
 
-  async function handleUndelete(w: MappedWorkOrder) {
-    await undeleteWorkOrderAction({id: w.id})
+  async function handleUndelete(s: MappedWorkOrderStructure) {
+    await undeleteWorkOrderStructureAction({id: s.id})
     router.refresh()
   }
 
   const showDeletedCols = filterDeleted !== 'not-deleted'
-  const colCount = showDeletedCols ? 15 : 12
+  const colCount = showDeletedCols ? 14 : 11
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Toolbar */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center flex-1">
           <div className="relative max-w-sm flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search work order, project, description…"
+              placeholder="Search work order, material, tag…"
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
@@ -204,57 +188,39 @@ export function WorkOrderTable({
             </SelectContent>
           </Select>
         </div>
-        {canDelete && (
-          <Button
-            onClick={() => {
-              setEditingWorkOrder(null)
-              setDialogOpen(true)
-            }}
-            className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-            <Plus className="h-4 w-4" />
-            New Work Order
-          </Button>
-        )}
+        <Button
+          onClick={() => {
+            setEditingStructure(null)
+            setDialogOpen(true)
+          }}
+          className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+          <Plus className="h-4 w-4" />
+          New Structure
+        </Button>
       </div>
 
-      {/* Table */}
       <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
               <Th
                 field="workOrderNumber"
-                label="WO Number"
+                label="Work Order"
                 sortField={sortField}
                 sortDir={sortDir}
                 onSort={toggleSort}
               />
-              <TableHead className="whitespace-nowrap text-xs">Project</TableHead>
-              <Th field="description" label="Description" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="materialName" label="Material" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="clientNumber" label="Client #" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="tag" label="Tag" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="quantity" label="Qty" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th
-                field="additionalInfo"
-                label="Additional Info"
+                field="shortDescription"
+                label="Short Description"
                 sortField={sortField}
                 sortDir={sortDir}
                 onSort={toggleSort}
               />
-              <Th field="startDate" label="Start Date" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
-              <Th field="endDate" label="End Date" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
-              <Th
-                field="hoursMaterialClosed"
-                label="Hrs/Mat Closed"
-                sortField={sortField}
-                sortDir={sortDir}
-                onSort={toggleSort}
-              />
-              <Th
-                field="invoiceSent"
-                label="Invoice Sent"
-                sortField={sortField}
-                sortDir={sortDir}
-                onSort={toggleSort}
-              />
-              <Th field="completed" label="Completed" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdAt" label="Created At" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdBy" label="Created By" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               {showDeletedCols && (
@@ -273,51 +239,31 @@ export function WorkOrderTable({
             {filtered.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={colCount} className="h-32 text-center text-muted-foreground">
-                  No work orders found.
+                  No structures found.
                 </TableCell>
               </TableRow>
             ) : (
-              filtered.map(w => (
+              filtered.map(s => (
                 <TableRow
-                  key={w.id}
-                  className={`border-border/40 hover:bg-secondary/50 ${w.deleted ? 'opacity-50' : ''}`}>
-                  <TableCell className={`${tdClass} text-foreground font-medium`}>
-                    <Link
-                      href={`/departments/${department}/workOrder/${w.id}` as Route}
-                      className="hover:text-accent hover:underline transition-colors">
-                      {w.workOrderNumber ?? '-'}
-                    </Link>
-                  </TableCell>
+                  key={s.id}
+                  className={`border-border/40 hover:bg-secondary/50 ${s.deleted ? 'opacity-50' : ''}`}>
+                  <TableCell className={`${tdClass} text-foreground font-medium`}>{s.workOrderNumber ?? '-'}</TableCell>
                   <TableCell className={tdClass}>
-                    <Link
-                      href={`/departments/project/project/${w.projectId}` as Route}
-                      className="hover:text-accent hover:underline transition-colors">
-                      {w.projectNumber}
-                    </Link>
+                    <span className="font-medium text-foreground">{s.materialBeNumber}</span>
+                    {s.materialName && <span className="ml-1 text-muted-foreground">— {s.materialName}</span>}
                   </TableCell>
+                  <TableCell className={tdClass}>{s.clientNumber ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{s.tag ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{s.quantity ?? '-'}</TableCell>
                   <TableCell className={tdClass}>
-                    <span className="max-w-[180px] truncate inline-block">{w.description ?? '-'}</span>
+                    <span className="max-w-[200px] truncate inline-block">{s.shortDescription ?? '-'}</span>
                   </TableCell>
-                  <TableCell className={tdClass}>
-                    <span className="max-w-[180px] truncate inline-block">{w.additionalInfo ?? '-'}</span>
-                  </TableCell>
-                  <TableCell className={tdClass}>{formatDate(w.startDate)}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(w.endDate)}</TableCell>
-                  <TableCell>
-                    <YesNoBadge value={w.hoursMaterialClosed} />
-                  </TableCell>
-                  <TableCell>
-                    <YesNoBadge value={w.invoiceSent} />
-                  </TableCell>
-                  <TableCell>
-                    <YesNoBadge value={w.completed} />
-                  </TableCell>
-                  <TableCell className={tdClass}>{formatDate(w.createdAt)}</TableCell>
-                  <TableCell className={tdClass}>{w.createdByName}</TableCell>
+                  <TableCell className={tdClass}>{formatDate(s.createdAt)}</TableCell>
+                  <TableCell className={tdClass}>{s.createdByName}</TableCell>
                   {showDeletedCols && (
                     <>
                       <TableCell>
-                        {w.deleted ? (
+                        {s.deleted ? (
                           <Badge variant="destructive" className="font-medium">
                             Yes
                           </Badge>
@@ -325,29 +271,20 @@ export function WorkOrderTable({
                           <span className="text-muted-foreground text-sm">No</span>
                         )}
                       </TableCell>
-                      <TableCell className={tdClass}>{formatDate(w.deletedAt)}</TableCell>
-                      <TableCell className={tdClass}>{w.deletedByName ?? '-'}</TableCell>
+                      <TableCell className={tdClass}>{formatDate(s.deletedAt)}</TableCell>
+                      <TableCell className={tdClass}>{s.deletedByName ?? '-'}</TableCell>
                     </>
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${department}/workOrder/${w.id}` as Route}>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-accent hover:bg-accent/10">
-                          <ExternalLink className="h-3.5 w-3.5" />
-                          <span className="sr-only">View {w.workOrderNumber}</span>
-                        </Button>
-                      </Link>
-                      {!w.deleted && (
+                      {!s.deleted && (
                         <>
                           <Button
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
                             onClick={() => {
-                              setEditingWorkOrder(w)
+                              setEditingStructure(s)
                               setDialogOpen(true)
                             }}>
                             <Pencil className="h-3.5 w-3.5" />
@@ -357,20 +294,20 @@ export function WorkOrderTable({
                               variant="ghost"
                               size="icon"
                               className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                              onClick={() => handleSoftDelete(w)}>
+                              onClick={() => handleSoftDelete(s)}>
                               <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           )}
                         </>
                       )}
-                      {w.deleted && (
+                      {s.deleted && (
                         <>
                           {canDelete && (
                             <Button
                               variant="ghost"
                               size="sm"
                               className="h-7 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary px-2"
-                              onClick={() => handleUndelete(w)}>
+                              onClick={() => handleUndelete(s)}>
                               Restore
                             </Button>
                           )}
@@ -379,7 +316,7 @@ export function WorkOrderTable({
                               variant="ghost"
                               size="icon"
                               className="h-8 w-8 text-destructive hover:bg-destructive/10"
-                              onClick={() => handleHardDelete(w)}>
+                              onClick={() => handleHardDelete(s)}>
                               <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           )}
@@ -395,14 +332,15 @@ export function WorkOrderTable({
       </div>
 
       <div className="text-xs text-muted-foreground">
-        Showing {filtered.length} of {initialWorkOrders.length} work orders
+        Showing {filtered.length} of {initialStructures.length} structures
       </div>
 
-      <WorkOrderFormDialog
+      <WorkOrderStructureFormDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}
-        workOrder={editingWorkOrder}
-        projectOptions={projectOptions}
+        structure={editingStructure}
+        workOrderOptions={workOrderOptions}
+        materialOptions={materialOptions}
       />
     </div>
   )

@@ -77,3 +77,13 @@ export const hardDeleteProjectContactAction = protectedServerFunction({
     revalidatePath(`/departments/project/project/${projectId}`)
   },
 })
+
+export const undeleteProjectContactAction = protectedServerFunction({
+  schema: projectContactIdSchema,
+  functionName: 'Undelete project contact action',
+  serverFn: async ({data: {id, projectId}, logger}) => {
+    await prismaClient.projectContact.update({where: {id}, data: {deleted: false}})
+    logger.info(`ProjectContact undeleted: ${id}`)
+    revalidatePath(`/departments/project/project/${projectId}`)
+  },
+})

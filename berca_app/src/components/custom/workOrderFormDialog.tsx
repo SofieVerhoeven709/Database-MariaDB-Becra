@@ -23,8 +23,6 @@ interface WorkOrderFormDialogProps {
   onOpenChange: (open: boolean) => void
   workOrder: MappedWorkOrder | null
   projectOptions: ProjectOption[]
-  /** If provided, locks the project selector to this value */
-  fixedProjectId?: string
 }
 
 function toInputDate(iso: string | null | undefined) {
@@ -32,31 +30,25 @@ function toInputDate(iso: string | null | undefined) {
   return iso.slice(0, 10)
 }
 
-function emptyForm(fixedProjectId?: string) {
+function emptyForm() {
   return {
     workOrderNumber: generateWorkOrderNumber(),
     description: '',
     additionalInfo: '',
     startDate: new Date().toISOString().slice(0, 10),
     endDate: '',
-    projectId: fixedProjectId ?? '',
+    projectId: '',
     hoursMaterialClosed: false,
     invoiceSent: false,
     completed: false,
   }
 }
 
-export function WorkOrderFormDialog({
-  open,
-  onOpenChange,
-  workOrder,
-  projectOptions,
-  fixedProjectId,
-}: WorkOrderFormDialogProps) {
+export function WorkOrderFormDialog({open, onOpenChange, workOrder, projectOptions}: WorkOrderFormDialogProps) {
   const router = useRouter()
   const isEdit = !!workOrder
   const [saving, setSaving] = useState(false)
-  const [form, setForm] = useState(emptyForm(fixedProjectId))
+  const [form, setForm] = useState(emptyForm())
 
   useEffect(() => {
     if (workOrder) {
@@ -72,7 +64,7 @@ export function WorkOrderFormDialog({
         completed: workOrder.completed,
       })
     } else if (open) {
-      setForm(emptyForm(fixedProjectId))
+      setForm(emptyForm())
     }
   }, [workOrder?.id, open])
 
@@ -97,12 +89,12 @@ export function WorkOrderFormDialog({
 
       if (isEdit) {
         await updateWorkOrderAction({...payload, id: workOrder.id})
-        onOpenChange(false)
-        router.refresh()
       } else {
-        // createWorkOrderAction redirects on success
-        await createWorkOrderAction(payload)
+        await createWorkOrderAction({...payload, redirectToProject: false})
       }
+
+      onOpenChange(false)
+      router.refresh()
     } finally {
       setSaving(false)
     }
@@ -118,38 +110,27 @@ export function WorkOrderFormDialog({
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-5 py-3 sm:grid-cols-2">
-          {/* Work Order Number */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Work Order Number</Label>
             <Input value={form.workOrderNumber} readOnly className="bg-secondary border-border" />
           </div>
 
-          {/* Project */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project *</Label>
-            {fixedProjectId ? (
-              <Input
-                value={projectOptions.find(p => p.id === fixedProjectId)?.name ?? fixedProjectId}
-                readOnly
-                className="bg-secondary border-border"
-              />
-            ) : (
-              <Select value={form.projectId} onValueChange={v => set('projectId', v)}>
-                <SelectTrigger className="bg-secondary border-border">
-                  <SelectValue placeholder="Select project" />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-border">
-                  {projectOptions.map(p => (
-                    <SelectItem key={p.id} value={p.id}>
-                      {p.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
+            <Select value={form.projectId} onValueChange={v => set('projectId', v)}>
+              <SelectTrigger className="bg-secondary border-border">
+                <SelectValue placeholder="Select project" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
+                {projectOptions.map(p => (
+                  <SelectItem key={p.id} value={p.id}>
+                    {p.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
-          {/* Start Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Start Date *</Label>
             <Input
@@ -160,7 +141,6 @@ export function WorkOrderFormDialog({
             />
           </div>
 
-          {/* End Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">End Date</Label>
             <Input
@@ -171,7 +151,6 @@ export function WorkOrderFormDialog({
             />
           </div>
 
-          {/* Description */}
           <div className="flex flex-col gap-1.5 sm:col-span-2">
             <Label className="text-xs text-muted-foreground">Description</Label>
             <Textarea
@@ -182,7 +161,6 @@ export function WorkOrderFormDialog({
             />
           </div>
 
-          {/* Additional Info */}
           <div className="flex flex-col gap-1.5 sm:col-span-2">
             <Label className="text-xs text-muted-foreground">Additional Info</Label>
             <Textarea
@@ -193,7 +171,6 @@ export function WorkOrderFormDialog({
             />
           </div>
 
-          {/* Toggles */}
           <div className="sm:col-span-2 grid grid-cols-1 gap-3 sm:grid-cols-3">
             {(
               [

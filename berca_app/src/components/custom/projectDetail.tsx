@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Pencil, X, Save, Plus, ExternalLink, Link2, Trash2, Trash} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, Plus, ExternalLink, Link2, Trash2, Trash, Undo2} from 'lucide-react'
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
@@ -20,6 +20,7 @@ import {
   updatePurchaseAction,
   softDeletePurchaseAction,
   hardDeletePurchaseAction,
+  undeletePurchaseAction,
 } from '@/serverFunctions/purchases'
 import {createContactAndReturnIdAction} from '@/serverFunctions/contacts'
 import {
@@ -27,8 +28,13 @@ import {
   updateProjectContactAction,
   softDeleteProjectContactAction,
   hardDeleteProjectContactAction,
+  undeleteProjectContactAction,
 } from '@/serverFunctions/projectContacts'
-import {softDeleteWorkOrderAction, hardDeleteWorkOrderAction} from '@/serverFunctions/workOrders'
+import {
+  softDeleteWorkOrderAction,
+  hardDeleteWorkOrderAction,
+  undeleteWorkOrderAction,
+} from '@/serverFunctions/workOrders'
 import type {Route} from 'next'
 import type {ProjectDetailData} from '@/extra/projectDetails'
 import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
@@ -123,6 +129,11 @@ export function ProjectDetail({
   const router = useRouter()
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [showDeletedContacts, setShowDeletedContacts] = useState(false)
+  const [showDeletedWorkOrders, setShowDeletedWorkOrders] = useState(false)
+  const [showDeletedPurchases, setShowDeletedPurchases] = useState(false)
+  const [showDeletedMaterials, setShowDeletedMaterials] = useState(false)
+  const [showDeletedSubProjects, setShowDeletedSubProjects] = useState(false)
 
   // ─── Project edit form ────────────────────────────────────────────────────
   const [form, setForm] = useState({
@@ -172,7 +183,7 @@ export function ProjectDetail({
     type: 'contact' | 'purchase' | 'workorder'
     id: string
     label: string
-    hard: boolean
+    action: 'soft' | 'hard' | 'undelete'
   } | null>(null)
 
   // ─── Dialog form states ───────────────────────────────────────────────────
@@ -199,7 +210,7 @@ export function ProjectDetail({
   const can = (level: number) => currentUserLevel >= level
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canDelete = isAdmin || currentUserLevel >= PERM.delete
-  const canManageWorkOrders = isAdmin || (currentUserLevel >= PERM.workOrders && currentUserRole === 'Management Role')
+  const canManageWorkOrders = isAdmin || currentUserLevel >= PERM.workOrders
 
   function handleCancel() {
     setForm({
@@ -468,25 +479,19 @@ export function ProjectDetail({
     if (!deleteTarget) return
     setSavingDelete(true)
     try {
-      const {type, id, hard} = deleteTarget
+      const {type, id, action} = deleteTarget
       if (type === 'contact') {
-        if (hard) {
-          await hardDeleteProjectContactAction({id, projectId: project.id})
-        } else {
-          await softDeleteProjectContactAction({id, projectId: project.id})
-        }
+        if (action === 'hard') await hardDeleteProjectContactAction({id, projectId: project.id})
+        else if (action === 'undelete') await undeleteProjectContactAction({id, projectId: project.id})
+        else await softDeleteProjectContactAction({id, projectId: project.id})
       } else if (type === 'purchase') {
-        if (hard) {
-          await hardDeletePurchaseAction({id})
-        } else {
-          await softDeletePurchaseAction({id})
-        }
+        if (action === 'hard') await hardDeletePurchaseAction({id})
+        else if (action === 'undelete') await undeletePurchaseAction({id})
+        else await softDeletePurchaseAction({id})
       } else if (type === 'workorder') {
-        if (hard) {
-          await hardDeleteWorkOrderAction({id})
-        } else {
-          await softDeleteWorkOrderAction({id})
-        }
+        if (action === 'hard') await hardDeleteWorkOrderAction({id})
+        else if (action === 'undelete') await undeleteWorkOrderAction({id})
+        else await softDeleteWorkOrderAction({id})
       }
       setDeleteTarget(null)
       router.refresh()
@@ -526,68 +531,63 @@ export function ProjectDetail({
   }
 
   // ─── Reusable row action buttons ──────────────────────────────────────────
-  function RowActions<T extends {id: string; deleted?: boolean; projectNumber?: string}>({
-    item,
-    viewHref,
+  function RowActions({
     onEdit,
     onSoftDelete,
     onHardDelete,
+    onUndelete,
+    isDeleted,
   }: {
-    item: T
-    viewHref?: string
-    onEdit?: (item: T) => void
-    onSoftDelete?: (item: T) => void
-    onHardDelete?: (item: T) => void
+    onEdit?: () => void
+    onSoftDelete: () => void
+    onHardDelete: () => void
+    onUndelete: () => void
+    isDeleted?: boolean
   }) {
     if (!canDelete) return null
-
-    const label = item.projectNumber ?? item.id
-
     return (
       <div className="flex items-center gap-1">
-        {viewHref && (
-          <Link href={viewHref as Route}>
+        {!isDeleted && (
+          <>
+            {onEdit && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10"
+                onClick={onEdit}>
+                <Pencil className="h-3.5 w-3.5" />
+              </Button>
+            )}
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-muted-foreground hover:text-accent hover:bg-accent/10">
-              <ExternalLink className="h-3.5 w-3.5" />
-              <span className="sr-only">View {label}</span>
+              title="Delete"
+              className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+              onClick={onSoftDelete}>
+              <Trash2 className="h-3.5 w-3.5" />
             </Button>
-          </Link>
+          </>
         )}
-
-        {onEdit && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-            onClick={() => onEdit(item)}>
-            <Pencil className="h-3.5 w-3.5" />
-            <span className="sr-only">Edit {label}</span>
-          </Button>
-        )}
-
-        {!item.deleted && onSoftDelete && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-            onClick={() => onSoftDelete(item)}>
-            <Trash2 className="h-3.5 w-3.5" />
-            <span className="sr-only">Delete {label}</span>
-          </Button>
-        )}
-
-        {item.deleted && isAdmin && onHardDelete && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-            onClick={() => onHardDelete(item)}>
-            <Trash className="h-3.5 w-3.5" />
-            <span className="sr-only">Permanently delete {label}</span>
-          </Button>
+        {isDeleted && (
+          <>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary px-2"
+              onClick={onUndelete}>
+              Restore
+            </Button>
+            {isAdmin && (
+              <Button
+                variant="ghost"
+                size="icon"
+                title="Permanently delete"
+                className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                onClick={onHardDelete}>
+                <Trash className="h-3.5 w-3.5" />
+              </Button>
+            )}
+          </>
         )}
       </div>
     )
@@ -882,6 +882,17 @@ export function ProjectDetail({
             }}
             showInline={showInlineContact}
           />
+          {canDelete && (
+            <div className="flex justify-end mb-2">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-xs h-7 text-muted-foreground gap-1.5"
+                onClick={() => setShowDeletedContacts(v => !v)}>
+                {showDeletedContacts ? 'Hide deleted' : 'Show deleted'}
+              </Button>
+            </div>
+          )}
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -946,15 +957,18 @@ export function ProjectDetail({
                     </TableCell>
                   </TableRow>
                 )}
-                {project.ProjectContact.length === 0 && !showInlineContact ? (
+                {project.ProjectContact.filter(pc => (showDeletedContacts ? !!pc.deleted : !pc.deleted)).length === 0 &&
+                !showInlineContact ? (
                   <TableRow>
                     <TableCell colSpan={canDelete ? 8 : 7} className="h-24 text-center text-muted-foreground">
                       No contacts linked.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  project.ProjectContact.map(pc => (
-                    <TableRow key={pc.id} className="border-border/40 hover:bg-secondary/50">
+                  project.ProjectContact.filter(pc => (showDeletedContacts ? !!pc.deleted : !pc.deleted)).map(pc => (
+                    <TableRow
+                      key={pc.id}
+                      className={`border-border/40 hover:bg-secondary/50 ${pc.deleted ? 'opacity-50' : ''}`}>
                       <TableCell className={`${tdClass} text-foreground font-medium`}>
                         {pc.Contact ? `${pc.Contact.firstName} ${pc.Contact.lastName}` : '-'}
                       </TableCell>
@@ -980,7 +994,7 @@ export function ProjectDetail({
                       {canDelete && (
                         <TableCell>
                           <RowActions
-                            item={{id: pc.id, deleted: pc.deleted}}
+                            isDeleted={!!pc.deleted}
                             onEdit={() =>
                               openEditContact({
                                 id: pc.id,
@@ -994,7 +1008,7 @@ export function ProjectDetail({
                                 type: 'contact',
                                 id: pc.id,
                                 label: pc.Contact ? `${pc.Contact.firstName} ${pc.Contact.lastName}` : pc.id,
-                                hard: false,
+                                action: 'soft',
                               })
                             }
                             onHardDelete={() =>
@@ -1002,7 +1016,15 @@ export function ProjectDetail({
                                 type: 'contact',
                                 id: pc.id,
                                 label: pc.Contact ? `${pc.Contact.firstName} ${pc.Contact.lastName}` : pc.id,
-                                hard: true,
+                                action: 'hard',
+                              })
+                            }
+                            onUndelete={() =>
+                              setDeleteTarget({
+                                type: 'contact',
+                                id: pc.id,
+                                label: pc.Contact ? `${pc.Contact.firstName} ${pc.Contact.lastName}` : pc.id,
+                                action: 'undelete',
                               })
                             }
                           />
@@ -1028,6 +1050,17 @@ export function ProjectDetail({
               </Link>
             </div>
           )}
+          {canDelete && (
+            <div className="flex justify-end mb-2">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-xs h-7 text-muted-foreground gap-1.5"
+                onClick={() => setShowDeletedWorkOrders(v => !v)}>
+                {showDeletedWorkOrders ? 'Hide deleted' : 'Show deleted'}
+              </Button>
+            </div>
+          )}
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -1051,14 +1084,14 @@ export function ProjectDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {project.WorkOrder.length === 0 ? (
+                {project.WorkOrder.filter(wo => (showDeletedWorkOrders ? !!wo.deleted : !wo.deleted)).length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={canDelete ? 10 : 9} className="h-24 text-center text-muted-foreground">
                       No work orders found.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  project.WorkOrder.map(wo => (
+                  project.WorkOrder.filter(wo => (showDeletedWorkOrders ? !!wo.deleted : !wo.deleted)).map(wo => (
                     <TableRow key={wo.id} className="border-border/40 hover:bg-secondary/50">
                       <TableCell className={`${tdClass} text-foreground font-medium`}>
                         {wo.workOrderNumber ?? '-'}
@@ -1111,13 +1144,13 @@ export function ProjectDetail({
                       {canDelete && (
                         <TableCell>
                           <RowActions
-                            item={{id: wo.id, deleted: wo.deleted}}
+                            isDeleted={!!wo.deleted}
                             onSoftDelete={() =>
                               setDeleteTarget({
                                 type: 'workorder',
                                 id: wo.id,
                                 label: wo.workOrderNumber ?? wo.id,
-                                hard: false,
+                                action: 'soft',
                               })
                             }
                             onHardDelete={() =>
@@ -1125,7 +1158,15 @@ export function ProjectDetail({
                                 type: 'workorder',
                                 id: wo.id,
                                 label: wo.workOrderNumber ?? wo.id,
-                                hard: true,
+                                action: 'hard',
+                              })
+                            }
+                            onUndelete={() =>
+                              setDeleteTarget({
+                                type: 'workorder',
+                                id: wo.id,
+                                label: wo.workOrderNumber ?? wo.id,
+                                action: 'undelete',
                               })
                             }
                           />
@@ -1180,6 +1221,17 @@ export function ProjectDetail({
                     {availablePurchases.length}
                   </Badge>
                 )}
+              </Button>
+            </div>
+          )}
+          {canDelete && (
+            <div className="flex justify-end mb-2">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-xs h-7 text-muted-foreground gap-1.5"
+                onClick={() => setShowDeletedPurchases(v => !v)}>
+                {showDeletedPurchases ? 'Hide deleted' : 'Show deleted'}
               </Button>
             </div>
           )}
@@ -1273,14 +1325,15 @@ export function ProjectDetail({
                     </TableCell>
                   </TableRow>
                 )}
-                {project.Purchase.length === 0 && !showInlinePurchase ? (
+                {project.Purchase.filter(p => (showDeletedPurchases ? !!p.deleted : !p.deleted)).length === 0 &&
+                !showInlinePurchase ? (
                   <TableRow>
                     <TableCell colSpan={canDelete ? 8 : 7} className="h-24 text-center text-muted-foreground">
                       No purchases found.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  project.Purchase.map(p => (
+                  project.Purchase.filter(p => (showDeletedPurchases ? !!p.deleted : !p.deleted)).map(p => (
                     <TableRow key={p.id} className="border-border/40 hover:bg-secondary/50">
                       <TableCell className={`${tdClass} text-foreground font-medium`}>{p.orderNumber ?? '-'}</TableCell>
                       <TableCell className={tdClass}>
@@ -1313,7 +1366,7 @@ export function ProjectDetail({
                       {canDelete && (
                         <TableCell>
                           <RowActions
-                            item={{id: p.id, deleted: p.deleted}}
+                            isDeleted={!!p.deleted}
                             onEdit={() =>
                               openEditPurchase({
                                 id: p.id,
@@ -1328,7 +1381,7 @@ export function ProjectDetail({
                                 type: 'purchase',
                                 id: p.id,
                                 label: p.orderNumber ?? p.id,
-                                hard: false,
+                                action: 'soft',
                               })
                             }
                             onHardDelete={() =>
@@ -1336,7 +1389,15 @@ export function ProjectDetail({
                                 type: 'purchase',
                                 id: p.id,
                                 label: p.orderNumber ?? p.id,
-                                hard: true,
+                                action: 'hard',
+                              })
+                            }
+                            onUndelete={() =>
+                              setDeleteTarget({
+                                type: 'purchase',
+                                id: p.id,
+                                label: p.orderNumber ?? p.id,
+                                action: 'undelete',
                               })
                             }
                           />
@@ -1364,6 +1425,17 @@ export function ProjectDetail({
             }}
             showInline={showInlineMaterial}
           />
+          {canDelete && (
+            <div className="flex justify-end mb-2">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-xs h-7 text-muted-foreground gap-1.5"
+                onClick={() => setShowDeletedMaterials(v => !v)}>
+                {showDeletedMaterials ? 'Hide deleted' : 'Show deleted'}
+              </Button>
+            </div>
+          )}
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -1430,14 +1502,15 @@ export function ProjectDetail({
                     </TableCell>
                   </TableRow>
                 )}
-                {project.MaterialSerialTrack.length === 0 && !showInlineMaterial ? (
+                {project.MaterialSerialTrack.filter(m => (showDeletedMaterials ? !!m.deleted : !m.deleted)).length ===
+                  0 && !showInlineMaterial ? (
                   <TableRow>
                     <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
                       No material tracks found.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  project.MaterialSerialTrack.map(m => (
+                  project.MaterialSerialTrack.filter(m => (showDeletedMaterials ? !!m.deleted : !m.deleted)).map(m => (
                     <TableRow key={m.id} className="border-border/40 hover:bg-secondary/50">
                       <TableCell className={`${tdClass} text-foreground font-medium`}>{m.becraCode ?? '-'}</TableCell>
                       <TableCell className={tdClass}>
@@ -1459,6 +1532,17 @@ export function ProjectDetail({
 
         {/* ── Sub-projects ──────────────────────────────────────────────────── */}
         <TabsContent value="subprojects" className="mt-3">
+          {canDelete && (
+            <div className="flex justify-end mb-2">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="text-xs h-7 text-muted-foreground gap-1.5"
+                onClick={() => setShowDeletedSubProjects(v => !v)}>
+                {showDeletedSubProjects ? 'Hide deleted' : 'Show deleted'}
+              </Button>
+            </div>
+          )}
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -1476,54 +1560,59 @@ export function ProjectDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {project.other_Project.length === 0 ? (
+                {project.other_Project.filter(sp => (showDeletedSubProjects ? !!sp.deleted : !sp.deleted)).length ===
+                0 ? (
                   <TableRow>
                     <TableCell colSpan={8} className="h-24 text-center text-muted-foreground">
                       No sub-projects found.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  project.other_Project.map(sp => (
-                    <TableRow key={sp.id} className="border-border/40 hover:bg-secondary/50">
-                      <TableCell className={`${tdClass} text-foreground font-medium`}>{sp.projectNumber}</TableCell>
-                      <TableCell className={tdClass}>{sp.Company.name}</TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className="border-border text-muted-foreground font-normal">
-                          {sp.ProjectType.name}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className={tdClass}>{formatDate(sp.startDate)}</TableCell>
-                      <TableCell className={tdClass}>{formatDate(sp.endDate)}</TableCell>
-                      <TableCell>
-                        {sp.isOpen ? (
-                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
-                        ) : (
-                          <Badge variant="secondary" className="text-muted-foreground font-medium">
-                            No
+                  project.other_Project
+                    .filter(sp => (showDeletedSubProjects ? !!sp.deleted : !sp.deleted))
+                    .map(sp => (
+                      <TableRow
+                        key={sp.id}
+                        className={`border-border/40 hover:bg-secondary/50 ${sp.deleted ? 'opacity-50' : ''}`}>
+                        <TableCell className={`${tdClass} text-foreground font-medium`}>{sp.projectNumber}</TableCell>
+                        <TableCell className={tdClass}>{sp.Company.name}</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="border-border text-muted-foreground font-normal">
+                            {sp.ProjectType.name}
                           </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {sp.isClosed ? (
-                          <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
-                        ) : (
-                          <Badge variant="secondary" className="text-muted-foreground font-medium">
-                            No
-                          </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <Link href={`/departments/project/project/${sp.id}` as Route}>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                        </TableCell>
+                        <TableCell className={tdClass}>{formatDate(sp.startDate)}</TableCell>
+                        <TableCell className={tdClass}>{formatDate(sp.endDate)}</TableCell>
+                        <TableCell>
+                          {sp.isOpen ? (
+                            <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-muted-foreground font-medium">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {sp.isClosed ? (
+                            <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-muted-foreground font-medium">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/departments/project/project/${sp.id}` as Route}>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                              <ExternalLink className="h-3.5 w-3.5" />
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))
                 )}
               </TableBody>
             </Table>
@@ -1775,18 +1864,19 @@ export function ProjectDetail({
         <DialogContent className="bg-card border-border max-w-sm">
           <DialogHeader>
             <DialogTitle className="text-foreground">
-              {deleteTarget?.hard ? 'Permanently Delete' : 'Delete'}{' '}
-              {deleteTarget?.type === 'contact'
-                ? 'Contact Link'
-                : deleteTarget?.type === 'purchase'
-                  ? 'Purchase'
-                  : 'Work Order'}
+              {deleteTarget?.action === 'undelete'
+                ? 'Restore entry'
+                : deleteTarget?.action === 'hard'
+                  ? 'Permanently delete'
+                  : 'Delete entry'}
             </DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground py-2">
-            {deleteTarget?.hard
-              ? `This will permanently delete "${deleteTarget?.label}" and cannot be undone.`
-              : `This will soft-delete "${deleteTarget?.label}". It can be restored later.`}
+          <p className="text-sm text-muted-foreground">
+            {deleteTarget?.action === 'undelete'
+              ? `Restore "${deleteTarget?.label}"?`
+              : deleteTarget?.action === 'hard'
+                ? `Permanently delete "${deleteTarget?.label}"? This cannot be undone.`
+                : `Soft-delete "${deleteTarget?.label}"? It can be restored later.`}
           </p>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteTarget(null)} className="border-border">
@@ -1796,11 +1886,19 @@ export function ProjectDetail({
               onClick={handleConfirmDelete}
               disabled={savingDelete}
               className={
-                deleteTarget?.hard
+                deleteTarget?.action === 'hard'
                   ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
-                  : 'bg-accent text-accent-foreground hover:bg-accent/80'
+                  : deleteTarget?.action === 'undelete'
+                    ? 'bg-green-600 text-white hover:bg-green-600/90'
+                    : 'bg-accent text-accent-foreground hover:bg-accent/80'
               }>
-              {savingDelete ? 'Deleting…' : deleteTarget?.hard ? 'Permanently Delete' : 'Delete'}
+              {savingDelete
+                ? 'Working…'
+                : deleteTarget?.action === 'undelete'
+                  ? 'Restore'
+                  : deleteTarget?.action === 'hard'
+                    ? 'Permanently Delete'
+                    : 'Delete'}
             </Button>
           </DialogFooter>
         </DialogContent>

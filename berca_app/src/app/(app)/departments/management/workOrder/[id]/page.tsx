@@ -8,14 +8,14 @@ import {WorkOrderDetail} from '@/components/custom/workOrderDetail'
 import {notFound} from 'next/navigation'
 
 interface WorkOrderDetailPageProps {
-  params: Promise<{id: string; workOrderId: string}>
+  params: Promise<{id: string}>
 }
 
 export default async function WorkOrderDetailPage({params}: WorkOrderDetailPageProps) {
-  const {id: projectId, workOrderId} = await params
+  const {id} = await params
 
   const [workOrder, employeesFromDAL, hourTypes, materialsFromDAL, profile] = await Promise.all([
-    getWorkOrderById(workOrderId).catch(() => null),
+    getWorkOrderById(id).catch(() => null),
     getEmployees(),
     getHourTypes(),
     getMaterials(),
@@ -43,7 +43,7 @@ export default async function WorkOrderDetailPage({params}: WorkOrderDetailPageP
       <div className="mx-auto max-w-6xl">
         <WorkOrderDetail
           workOrder={workOrder}
-          projectId={projectId}
+          projectId={workOrder.projectId}
           employees={employeeOptions}
           hourTypes={hourTypeOptions}
           materials={materialOptions}

@@ -64,7 +64,12 @@ export function WorkOrderFormDialog({open, onOpenChange, workOrder, projectOptio
         completed: workOrder.completed,
       })
     } else if (open) {
-      setForm(emptyForm())
+      const newForm = emptyForm()
+      // Auto-select if only one project option (e.g. opened from project detail)
+      if (projectOptions.length === 1) {
+        newForm.projectId = projectOptions[0].id
+      }
+      setForm(newForm)
     }
   }, [workOrder?.id, open])
 
@@ -117,18 +122,22 @@ export function WorkOrderFormDialog({open, onOpenChange, workOrder, projectOptio
 
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project *</Label>
-            <Select value={form.projectId} onValueChange={v => set('projectId', v)}>
-              <SelectTrigger className="bg-secondary border-border">
-                <SelectValue placeholder="Select project" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                {projectOptions.map(p => (
-                  <SelectItem key={p.id} value={p.id}>
-                    {p.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            {projectOptions.length === 1 ? (
+              <Input value={projectOptions[0].name} readOnly className="bg-secondary border-border" />
+            ) : (
+              <Select value={form.projectId} onValueChange={v => set('projectId', v)}>
+                <SelectTrigger className="bg-secondary border-border">
+                  <SelectValue placeholder="Select project" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {projectOptions.map(p => (
+                    <SelectItem key={p.id} value={p.id}>
+                      {p.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
           </div>
 
           <div className="flex flex-col gap-1.5">

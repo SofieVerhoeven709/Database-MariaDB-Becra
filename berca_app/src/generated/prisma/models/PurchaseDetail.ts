@@ -27,15 +27,15 @@ export type AggregatePurchaseDetail = {
 }
 
 export type PurchaseDetailAvgAggregateOutputType = {
-  unitPrice: runtime.Decimal | null
+  unitPrice: number | null
   quantity: number | null
-  totalCost: runtime.Decimal | null
+  totalCost: number | null
 }
 
 export type PurchaseDetailSumAggregateOutputType = {
-  unitPrice: runtime.Decimal | null
+  unitPrice: number | null
   quantity: number | null
-  totalCost: runtime.Decimal | null
+  totalCost: number | null
 }
 
 export type PurchaseDetailMinAggregateOutputType = {
@@ -43,9 +43,9 @@ export type PurchaseDetailMinAggregateOutputType = {
   projectId: string | null
   purchaseId: string | null
   beNumber: string | null
-  unitPrice: runtime.Decimal | null
+  unitPrice: number | null
   quantity: number | null
-  totalCost: runtime.Decimal | null
+  totalCost: number | null
   status: string | null
   additionalInfo: string | null
   updatedAt: Date | null
@@ -60,9 +60,9 @@ export type PurchaseDetailMaxAggregateOutputType = {
   projectId: string | null
   purchaseId: string | null
   beNumber: string | null
-  unitPrice: runtime.Decimal | null
+  unitPrice: number | null
   quantity: number | null
-  totalCost: runtime.Decimal | null
+  totalCost: number | null
   status: string | null
   additionalInfo: string | null
   updatedAt: Date | null
@@ -246,9 +246,9 @@ export type PurchaseDetailGroupByOutputType = {
   projectId: string | null
   purchaseId: string | null
   beNumber: string | null
-  unitPrice: runtime.Decimal | null
+  unitPrice: number | null
   quantity: number | null
-  totalCost: runtime.Decimal | null
+  totalCost: number | null
   status: string | null
   additionalInfo: string | null
   updatedAt: Date | null
@@ -286,9 +286,9 @@ export type PurchaseDetailWhereInput = {
   projectId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   purchaseId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   beNumber?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
-  unitPrice?: Prisma.DecimalNullableFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.FloatNullableFilter<"PurchaseDetail"> | number | null
   quantity?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
-  totalCost?: Prisma.DecimalNullableFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.FloatNullableFilter<"PurchaseDetail"> | number | null
   status?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"PurchaseDetail"> | Date | string | null
@@ -332,9 +332,9 @@ export type PurchaseDetailWhereUniqueInput = Prisma.AtLeast<{
   projectId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   purchaseId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   beNumber?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
-  unitPrice?: Prisma.DecimalNullableFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.FloatNullableFilter<"PurchaseDetail"> | number | null
   quantity?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
-  totalCost?: Prisma.DecimalNullableFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.FloatNullableFilter<"PurchaseDetail"> | number | null
   status?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"PurchaseDetail"> | Date | string | null
@@ -378,9 +378,9 @@ export type PurchaseDetailScalarWhereWithAggregatesInput = {
   projectId?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
   purchaseId?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
   beNumber?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
-  unitPrice?: Prisma.DecimalNullableWithAggregatesFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.FloatNullableWithAggregatesFilter<"PurchaseDetail"> | number | null
   quantity?: Prisma.IntNullableWithAggregatesFilter<"PurchaseDetail"> | number | null
-  totalCost?: Prisma.DecimalNullableWithAggregatesFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.FloatNullableWithAggregatesFilter<"PurchaseDetail"> | number | null
   status?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"PurchaseDetail"> | string | null
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseDetail"> | Date | string | null
@@ -393,9 +393,9 @@ export type PurchaseDetailScalarWhereWithAggregatesInput = {
 export type PurchaseDetailCreateInput = {
   id: string
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -412,9 +412,9 @@ export type PurchaseDetailUncheckedCreateInput = {
   projectId?: string | null
   purchaseId?: string | null
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -427,9 +427,9 @@ export type PurchaseDetailUncheckedCreateInput = {
 export type PurchaseDetailUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -446,9 +446,9 @@ export type PurchaseDetailUncheckedUpdateInput = {
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -463,9 +463,9 @@ export type PurchaseDetailCreateManyInput = {
   projectId?: string | null
   purchaseId?: string | null
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -478,9 +478,9 @@ export type PurchaseDetailCreateManyInput = {
 export type PurchaseDetailUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -493,9 +493,9 @@ export type PurchaseDetailUncheckedUpdateManyInput = {
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -755,9 +755,9 @@ export type PurchaseDetailUncheckedUpdateManyWithoutPurchaseNestedInput = {
 export type PurchaseDetailCreateWithoutEmployeeInput = {
   id: string
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -773,9 +773,9 @@ export type PurchaseDetailUncheckedCreateWithoutEmployeeInput = {
   projectId?: string | null
   purchaseId?: string | null
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -797,9 +797,9 @@ export type PurchaseDetailCreateManyEmployeeInputEnvelope = {
 export type PurchaseDetailCreateWithoutEmployee_PurchaseDetail_deletedByToEmployeeInput = {
   id: string
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -815,9 +815,9 @@ export type PurchaseDetailUncheckedCreateWithoutEmployee_PurchaseDetail_deletedB
   projectId?: string | null
   purchaseId?: string | null
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -860,9 +860,9 @@ export type PurchaseDetailScalarWhereInput = {
   projectId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   purchaseId?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   beNumber?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
-  unitPrice?: Prisma.DecimalNullableFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.FloatNullableFilter<"PurchaseDetail"> | number | null
   quantity?: Prisma.IntNullableFilter<"PurchaseDetail"> | number | null
-  totalCost?: Prisma.DecimalNullableFilter<"PurchaseDetail"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.FloatNullableFilter<"PurchaseDetail"> | number | null
   status?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"PurchaseDetail"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"PurchaseDetail"> | Date | string | null
@@ -891,9 +891,9 @@ export type PurchaseDetailUpdateManyWithWhereWithoutEmployee_PurchaseDetail_dele
 export type PurchaseDetailCreateWithoutProjectInput = {
   id: string
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -908,9 +908,9 @@ export type PurchaseDetailUncheckedCreateWithoutProjectInput = {
   id: string
   purchaseId?: string | null
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -949,9 +949,9 @@ export type PurchaseDetailUpdateManyWithWhereWithoutProjectInput = {
 export type PurchaseDetailCreateWithoutPurchaseInput = {
   id: string
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -966,9 +966,9 @@ export type PurchaseDetailUncheckedCreateWithoutPurchaseInput = {
   id: string
   projectId?: string | null
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -1009,9 +1009,9 @@ export type PurchaseDetailCreateManyEmployeeInput = {
   projectId?: string | null
   purchaseId?: string | null
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -1025,9 +1025,9 @@ export type PurchaseDetailCreateManyEmployee_PurchaseDetail_deletedByToEmployeeI
   projectId?: string | null
   purchaseId?: string | null
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -1039,9 +1039,9 @@ export type PurchaseDetailCreateManyEmployee_PurchaseDetail_deletedByToEmployeeI
 export type PurchaseDetailUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1057,9 +1057,9 @@ export type PurchaseDetailUncheckedUpdateWithoutEmployeeInput = {
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1073,9 +1073,9 @@ export type PurchaseDetailUncheckedUpdateManyWithoutEmployeeInput = {
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1087,9 +1087,9 @@ export type PurchaseDetailUncheckedUpdateManyWithoutEmployeeInput = {
 export type PurchaseDetailUpdateWithoutEmployee_PurchaseDetail_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1105,9 +1105,9 @@ export type PurchaseDetailUncheckedUpdateWithoutEmployee_PurchaseDetail_deletedB
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1121,9 +1121,9 @@ export type PurchaseDetailUncheckedUpdateManyWithoutEmployee_PurchaseDetail_dele
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1136,9 +1136,9 @@ export type PurchaseDetailCreateManyProjectInput = {
   id: string
   purchaseId?: string | null
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -1151,9 +1151,9 @@ export type PurchaseDetailCreateManyProjectInput = {
 export type PurchaseDetailUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1168,9 +1168,9 @@ export type PurchaseDetailUncheckedUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1184,9 +1184,9 @@ export type PurchaseDetailUncheckedUpdateManyWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1200,9 +1200,9 @@ export type PurchaseDetailCreateManyPurchaseInput = {
   id: string
   projectId?: string | null
   beNumber?: string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: number | null
   quantity?: number | null
-  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: number | null
   status?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
@@ -1215,9 +1215,9 @@ export type PurchaseDetailCreateManyPurchaseInput = {
 export type PurchaseDetailUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1232,9 +1232,9 @@ export type PurchaseDetailUncheckedUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1248,9 +1248,9 @@ export type PurchaseDetailUncheckedUpdateManyWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   quantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1323,9 +1323,9 @@ export type $PurchaseDetailPayload<ExtArgs extends runtime.Types.Extensions.Inte
     projectId: string | null
     purchaseId: string | null
     beNumber: string | null
-    unitPrice: runtime.Decimal | null
+    unitPrice: number | null
     quantity: number | null
-    totalCost: runtime.Decimal | null
+    totalCost: number | null
     status: string | null
     additionalInfo: string | null
     updatedAt: Date | null
@@ -1710,9 +1710,9 @@ export interface PurchaseDetailFieldRefs {
   readonly projectId: Prisma.FieldRef<"PurchaseDetail", 'String'>
   readonly purchaseId: Prisma.FieldRef<"PurchaseDetail", 'String'>
   readonly beNumber: Prisma.FieldRef<"PurchaseDetail", 'String'>
-  readonly unitPrice: Prisma.FieldRef<"PurchaseDetail", 'Decimal'>
+  readonly unitPrice: Prisma.FieldRef<"PurchaseDetail", 'Float'>
   readonly quantity: Prisma.FieldRef<"PurchaseDetail", 'Int'>
-  readonly totalCost: Prisma.FieldRef<"PurchaseDetail", 'Decimal'>
+  readonly totalCost: Prisma.FieldRef<"PurchaseDetail", 'Float'>
   readonly status: Prisma.FieldRef<"PurchaseDetail", 'String'>
   readonly additionalInfo: Prisma.FieldRef<"PurchaseDetail", 'String'>
   readonly updatedAt: Prisma.FieldRef<"PurchaseDetail", 'DateTime'>

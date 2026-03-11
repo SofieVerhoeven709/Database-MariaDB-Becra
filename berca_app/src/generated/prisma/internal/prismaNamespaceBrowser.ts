@@ -1462,21 +1462,21 @@ export type VisibilityForRoleScalarFieldEnum = (typeof VisibilityForRoleScalarFi
 
 export const WarehousePlaceScalarFieldEnum = {
   id: 'id',
-  abbreviation: 'abbreviation',
-  beNumber: 'beNumber',
-  serialTrackedId: 'serialTrackedId',
   place: 'place',
   shelf: 'shelf',
   column: 'column',
   layer: 'layer',
   layerPlace: 'layerPlace',
   information: 'information',
-  quantityInStock: 'quantityInStock',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  abbreviation: 'abbreviation',
+  beNumber: 'beNumber',
+  quantityInStock: 'quantityInStock',
+  serialTrackedId: 'serialTrackedId'
 } as const
 
 export type WarehousePlaceScalarFieldEnum = (typeof WarehousePlaceScalarFieldEnum)[keyof typeof WarehousePlaceScalarFieldEnum]
@@ -2575,9 +2575,6 @@ export type VisibilityForRoleOrderByRelevanceFieldEnum = (typeof VisibilityForRo
 
 export const WarehousePlaceOrderByRelevanceFieldEnum = {
   id: 'id',
-  abbreviation: 'abbreviation',
-  beNumber: 'beNumber',
-  serialTrackedId: 'serialTrackedId',
   place: 'place',
   shelf: 'shelf',
   column: 'column',
@@ -2585,7 +2582,10 @@ export const WarehousePlaceOrderByRelevanceFieldEnum = {
   layerPlace: 'layerPlace',
   information: 'information',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  abbreviation: 'abbreviation',
+  beNumber: 'beNumber',
+  serialTrackedId: 'serialTrackedId'
 } as const
 
 export type WarehousePlaceOrderByRelevanceFieldEnum = (typeof WarehousePlaceOrderByRelevanceFieldEnum)[keyof typeof WarehousePlaceOrderByRelevanceFieldEnum]

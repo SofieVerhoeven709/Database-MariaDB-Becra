@@ -36,59 +36,59 @@ export type WarehousePlaceSumAggregateOutputType = {
 
 export type WarehousePlaceMinAggregateOutputType = {
   id: string | null
-  abbreviation: string | null
-  beNumber: string | null
-  serialTrackedId: string | null
   place: string | null
   shelf: string | null
   column: string | null
   layer: string | null
   layerPlace: string | null
   information: string | null
-  quantityInStock: number | null
   createdAt: Date | null
   createdBy: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
+  abbreviation: string | null
+  beNumber: string | null
+  quantityInStock: number | null
+  serialTrackedId: string | null
 }
 
 export type WarehousePlaceMaxAggregateOutputType = {
   id: string | null
-  abbreviation: string | null
-  beNumber: string | null
-  serialTrackedId: string | null
   place: string | null
   shelf: string | null
   column: string | null
   layer: string | null
   layerPlace: string | null
   information: string | null
-  quantityInStock: number | null
   createdAt: Date | null
   createdBy: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
+  abbreviation: string | null
+  beNumber: string | null
+  quantityInStock: number | null
+  serialTrackedId: string | null
 }
 
 export type WarehousePlaceCountAggregateOutputType = {
   id: number
-  abbreviation: number
-  beNumber: number
-  serialTrackedId: number
   place: number
   shelf: number
   column: number
   layer: number
   layerPlace: number
   information: number
-  quantityInStock: number
   createdAt: number
   createdBy: number
   deleted: number
   deletedAt: number
   deletedBy: number
+  abbreviation: number
+  beNumber: number
+  quantityInStock: number
+  serialTrackedId: number
   _all: number
 }
 
@@ -103,59 +103,59 @@ export type WarehousePlaceSumAggregateInputType = {
 
 export type WarehousePlaceMinAggregateInputType = {
   id?: true
-  abbreviation?: true
-  beNumber?: true
-  serialTrackedId?: true
   place?: true
   shelf?: true
   column?: true
   layer?: true
   layerPlace?: true
   information?: true
-  quantityInStock?: true
   createdAt?: true
   createdBy?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
+  abbreviation?: true
+  beNumber?: true
+  quantityInStock?: true
+  serialTrackedId?: true
 }
 
 export type WarehousePlaceMaxAggregateInputType = {
   id?: true
-  abbreviation?: true
-  beNumber?: true
-  serialTrackedId?: true
   place?: true
   shelf?: true
   column?: true
   layer?: true
   layerPlace?: true
   information?: true
-  quantityInStock?: true
   createdAt?: true
   createdBy?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
+  abbreviation?: true
+  beNumber?: true
+  quantityInStock?: true
+  serialTrackedId?: true
 }
 
 export type WarehousePlaceCountAggregateInputType = {
   id?: true
-  abbreviation?: true
-  beNumber?: true
-  serialTrackedId?: true
   place?: true
   shelf?: true
   column?: true
   layer?: true
   layerPlace?: true
   information?: true
-  quantityInStock?: true
   createdAt?: true
   createdBy?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
+  abbreviation?: true
+  beNumber?: true
+  quantityInStock?: true
+  serialTrackedId?: true
   _all?: true
 }
 
@@ -247,21 +247,21 @@ export type WarehousePlaceGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 
 export type WarehousePlaceGroupByOutputType = {
   id: string
-  abbreviation: string
-  beNumber: string | null
-  serialTrackedId: string | null
   place: string | null
   shelf: string | null
   column: string | null
   layer: string | null
   layerPlace: string | null
   information: string | null
-  quantityInStock: number
   createdAt: Date
   createdBy: string
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
+  abbreviation: string
+  beNumber: string | null
+  quantityInStock: number
+  serialTrackedId: string | null
   _count: WarehousePlaceCountAggregateOutputType | null
   _avg: WarehousePlaceAvgAggregateOutputType | null
   _sum: WarehousePlaceSumAggregateOutputType | null
@@ -289,42 +289,42 @@ export type WarehousePlaceWhereInput = {
   OR?: Prisma.WarehousePlaceWhereInput[]
   NOT?: Prisma.WarehousePlaceWhereInput | Prisma.WarehousePlaceWhereInput[]
   id?: Prisma.StringFilter<"WarehousePlace"> | string
-  abbreviation?: Prisma.StringFilter<"WarehousePlace"> | string
-  beNumber?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
-  serialTrackedId?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   place?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   shelf?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   column?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   layer?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   layerPlace?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   information?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
-  quantityInStock?: Prisma.IntFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeFilter<"WarehousePlace"> | Date | string
   createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
   deleted?: Prisma.BoolFilter<"WarehousePlace"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"WarehousePlace"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  abbreviation?: Prisma.StringFilter<"WarehousePlace"> | string
+  beNumber?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  quantityInStock?: Prisma.IntFilter<"WarehousePlace"> | number
+  serialTrackedId?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type WarehousePlaceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  abbreviation?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  serialTrackedId?: Prisma.SortOrderInput | Prisma.SortOrder
   place?: Prisma.SortOrderInput | Prisma.SortOrder
   shelf?: Prisma.SortOrderInput | Prisma.SortOrder
   column?: Prisma.SortOrderInput | Prisma.SortOrder
   layer?: Prisma.SortOrderInput | Prisma.SortOrder
   layerPlace?: Prisma.SortOrderInput | Prisma.SortOrder
   information?: Prisma.SortOrderInput | Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  abbreviation?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  quantityInStock?: Prisma.SortOrder
+  serialTrackedId?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.WarehousePlaceOrderByRelevanceInput
@@ -335,42 +335,42 @@ export type WarehousePlaceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.WarehousePlaceWhereInput | Prisma.WarehousePlaceWhereInput[]
   OR?: Prisma.WarehousePlaceWhereInput[]
   NOT?: Prisma.WarehousePlaceWhereInput | Prisma.WarehousePlaceWhereInput[]
-  abbreviation?: Prisma.StringFilter<"WarehousePlace"> | string
-  beNumber?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
-  serialTrackedId?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   place?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   shelf?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   column?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   layer?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   layerPlace?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   information?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
-  quantityInStock?: Prisma.IntFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeFilter<"WarehousePlace"> | Date | string
   createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
   deleted?: Prisma.BoolFilter<"WarehousePlace"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"WarehousePlace"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  abbreviation?: Prisma.StringFilter<"WarehousePlace"> | string
+  beNumber?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  quantityInStock?: Prisma.IntFilter<"WarehousePlace"> | number
+  serialTrackedId?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type WarehousePlaceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  abbreviation?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  serialTrackedId?: Prisma.SortOrderInput | Prisma.SortOrder
   place?: Prisma.SortOrderInput | Prisma.SortOrder
   shelf?: Prisma.SortOrderInput | Prisma.SortOrder
   column?: Prisma.SortOrderInput | Prisma.SortOrder
   layer?: Prisma.SortOrderInput | Prisma.SortOrder
   layerPlace?: Prisma.SortOrderInput | Prisma.SortOrder
   information?: Prisma.SortOrderInput | Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  abbreviation?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  quantityInStock?: Prisma.SortOrder
+  serialTrackedId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.WarehousePlaceCountOrderByAggregateInput
   _avg?: Prisma.WarehousePlaceAvgOrderByAggregateInput
   _max?: Prisma.WarehousePlaceMaxOrderByAggregateInput
@@ -383,152 +383,152 @@ export type WarehousePlaceScalarWhereWithAggregatesInput = {
   OR?: Prisma.WarehousePlaceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.WarehousePlaceScalarWhereWithAggregatesInput | Prisma.WarehousePlaceScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
-  abbreviation?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
-  beNumber?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
-  serialTrackedId?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
   place?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
   shelf?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
   column?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
   layer?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
   layerPlace?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
   information?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
-  quantityInStock?: Prisma.IntWithAggregatesFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"WarehousePlace"> | Date | string
   createdBy?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
   deleted?: Prisma.BoolWithAggregatesFilter<"WarehousePlace"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"WarehousePlace"> | Date | string | null
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
+  abbreviation?: Prisma.StringWithAggregatesFilter<"WarehousePlace"> | string
+  beNumber?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
+  quantityInStock?: Prisma.IntWithAggregatesFilter<"WarehousePlace"> | number
+  serialTrackedId?: Prisma.StringNullableWithAggregatesFilter<"WarehousePlace"> | string | null
 }
 
 export type WarehousePlaceCreateInput = {
   id: string
-  abbreviation?: string
-  beNumber?: string | null
-  serialTrackedId?: string | null
   place?: string | null
   shelf?: string | null
   column?: string | null
   layer?: string | null
   layerPlace?: string | null
   information?: string | null
-  quantityInStock?: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  abbreviation?: string
+  beNumber?: string | null
+  quantityInStock?: number
+  serialTrackedId?: string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutWarehousePlaceInput
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeInput
 }
 
 export type WarehousePlaceUncheckedCreateInput = {
   id: string
-  abbreviation?: string
-  beNumber?: string | null
-  serialTrackedId?: string | null
   place?: string | null
   shelf?: string | null
   column?: string | null
   layer?: string | null
   layerPlace?: string | null
   information?: string | null
-  quantityInStock?: number
   createdAt: Date | string
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  abbreviation?: string
+  beNumber?: string | null
+  quantityInStock?: number
+  serialTrackedId?: string | null
 }
 
 export type WarehousePlaceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutWarehousePlaceNestedInput
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeNestedInput
 }
 
 export type WarehousePlaceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WarehousePlaceCreateManyInput = {
   id: string
-  abbreviation?: string
-  beNumber?: string | null
-  serialTrackedId?: string | null
   place?: string | null
   shelf?: string | null
   column?: string | null
   layer?: string | null
   layerPlace?: string | null
   information?: string | null
-  quantityInStock?: number
   createdAt: Date | string
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  abbreviation?: string
+  beNumber?: string | null
+  quantityInStock?: number
+  serialTrackedId?: string | null
 }
 
 export type WarehousePlaceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WarehousePlaceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WarehousePlaceListRelationFilter = {
@@ -549,21 +549,21 @@ export type WarehousePlaceOrderByRelevanceInput = {
 
 export type WarehousePlaceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  abbreviation?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  serialTrackedId?: Prisma.SortOrder
   place?: Prisma.SortOrder
   shelf?: Prisma.SortOrder
   column?: Prisma.SortOrder
   layer?: Prisma.SortOrder
   layerPlace?: Prisma.SortOrder
   information?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  abbreviation?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrder
+  quantityInStock?: Prisma.SortOrder
+  serialTrackedId?: Prisma.SortOrder
 }
 
 export type WarehousePlaceAvgOrderByAggregateInput = {
@@ -572,40 +572,40 @@ export type WarehousePlaceAvgOrderByAggregateInput = {
 
 export type WarehousePlaceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  abbreviation?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  serialTrackedId?: Prisma.SortOrder
   place?: Prisma.SortOrder
   shelf?: Prisma.SortOrder
   column?: Prisma.SortOrder
   layer?: Prisma.SortOrder
   layerPlace?: Prisma.SortOrder
   information?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  abbreviation?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrder
+  quantityInStock?: Prisma.SortOrder
+  serialTrackedId?: Prisma.SortOrder
 }
 
 export type WarehousePlaceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  abbreviation?: Prisma.SortOrder
-  beNumber?: Prisma.SortOrder
-  serialTrackedId?: Prisma.SortOrder
   place?: Prisma.SortOrder
   shelf?: Prisma.SortOrder
   column?: Prisma.SortOrder
   layer?: Prisma.SortOrder
   layerPlace?: Prisma.SortOrder
   information?: Prisma.SortOrder
-  quantityInStock?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+  abbreviation?: Prisma.SortOrder
+  beNumber?: Prisma.SortOrder
+  quantityInStock?: Prisma.SortOrder
+  serialTrackedId?: Prisma.SortOrder
 }
 
 export type WarehousePlaceSumOrderByAggregateInput = {
@@ -698,38 +698,38 @@ export type WarehousePlaceUncheckedUpdateManyWithoutEmployee_WarehousePlace_dele
 
 export type WarehousePlaceCreateWithoutEmployeeInput = {
   id: string
-  abbreviation?: string
-  beNumber?: string | null
-  serialTrackedId?: string | null
   place?: string | null
   shelf?: string | null
   column?: string | null
   layer?: string | null
   layerPlace?: string | null
   information?: string | null
-  quantityInStock?: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  abbreviation?: string
+  beNumber?: string | null
+  quantityInStock?: number
+  serialTrackedId?: string | null
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeInput
 }
 
 export type WarehousePlaceUncheckedCreateWithoutEmployeeInput = {
   id: string
-  abbreviation?: string
-  beNumber?: string | null
-  serialTrackedId?: string | null
   place?: string | null
   shelf?: string | null
   column?: string | null
   layer?: string | null
   layerPlace?: string | null
   information?: string | null
-  quantityInStock?: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  abbreviation?: string
+  beNumber?: string | null
+  quantityInStock?: number
+  serialTrackedId?: string | null
 }
 
 export type WarehousePlaceCreateOrConnectWithoutEmployeeInput = {
@@ -744,38 +744,38 @@ export type WarehousePlaceCreateManyEmployeeInputEnvelope = {
 
 export type WarehousePlaceCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
   id: string
-  abbreviation?: string
-  beNumber?: string | null
-  serialTrackedId?: string | null
   place?: string | null
   shelf?: string | null
   column?: string | null
   layer?: string | null
   layerPlace?: string | null
   information?: string | null
-  quantityInStock?: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  abbreviation?: string
+  beNumber?: string | null
+  quantityInStock?: number
+  serialTrackedId?: string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutWarehousePlaceInput
 }
 
 export type WarehousePlaceUncheckedCreateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
   id: string
-  abbreviation?: string
-  beNumber?: string | null
-  serialTrackedId?: string | null
   place?: string | null
   shelf?: string | null
   column?: string | null
   layer?: string | null
   layerPlace?: string | null
   information?: string | null
-  quantityInStock?: number
   createdAt: Date | string
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
+  abbreviation?: string
+  beNumber?: string | null
+  quantityInStock?: number
+  serialTrackedId?: string | null
 }
 
 export type WarehousePlaceCreateOrConnectWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
@@ -809,21 +809,21 @@ export type WarehousePlaceScalarWhereInput = {
   OR?: Prisma.WarehousePlaceScalarWhereInput[]
   NOT?: Prisma.WarehousePlaceScalarWhereInput | Prisma.WarehousePlaceScalarWhereInput[]
   id?: Prisma.StringFilter<"WarehousePlace"> | string
-  abbreviation?: Prisma.StringFilter<"WarehousePlace"> | string
-  beNumber?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
-  serialTrackedId?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   place?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   shelf?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   column?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   layer?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   layerPlace?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   information?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
-  quantityInStock?: Prisma.IntFilter<"WarehousePlace"> | number
   createdAt?: Prisma.DateTimeFilter<"WarehousePlace"> | Date | string
   createdBy?: Prisma.StringFilter<"WarehousePlace"> | string
   deleted?: Prisma.BoolFilter<"WarehousePlace"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"WarehousePlace"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  abbreviation?: Prisma.StringFilter<"WarehousePlace"> | string
+  beNumber?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
+  quantityInStock?: Prisma.IntFilter<"WarehousePlace"> | number
+  serialTrackedId?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
 }
 
 export type WarehousePlaceUpsertWithWhereUniqueWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
@@ -844,167 +844,167 @@ export type WarehousePlaceUpdateManyWithWhereWithoutEmployee_WarehousePlace_dele
 
 export type WarehousePlaceCreateManyEmployeeInput = {
   id: string
-  abbreviation?: string
-  beNumber?: string | null
-  serialTrackedId?: string | null
   place?: string | null
   shelf?: string | null
   column?: string | null
   layer?: string | null
   layerPlace?: string | null
   information?: string | null
-  quantityInStock?: number
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  abbreviation?: string
+  beNumber?: string | null
+  quantityInStock?: number
+  serialTrackedId?: string | null
 }
 
 export type WarehousePlaceCreateManyEmployee_WarehousePlace_deletedByToEmployeeInput = {
   id: string
-  abbreviation?: string
-  beNumber?: string | null
-  serialTrackedId?: string | null
   place?: string | null
   shelf?: string | null
   column?: string | null
   layer?: string | null
   layerPlace?: string | null
   information?: string | null
-  quantityInStock?: number
   createdAt: Date | string
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
+  abbreviation?: string
+  beNumber?: string | null
+  quantityInStock?: number
+  serialTrackedId?: string | null
 }
 
 export type WarehousePlaceUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeNestedInput
 }
 
 export type WarehousePlaceUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WarehousePlaceUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WarehousePlaceUpdateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutWarehousePlaceNestedInput
 }
 
 export type WarehousePlaceUncheckedUpdateWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type WarehousePlaceUncheckedUpdateManyWithoutEmployee_WarehousePlace_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   place?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelf?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   column?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   layerPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   information?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  abbreviation?: Prisma.StringFieldUpdateOperationsInput | string
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
+  serialTrackedId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
 
 export type WarehousePlaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  abbreviation?: boolean
-  beNumber?: boolean
-  serialTrackedId?: boolean
   place?: boolean
   shelf?: boolean
   column?: boolean
   layer?: boolean
   layerPlace?: boolean
   information?: boolean
-  quantityInStock?: boolean
   createdAt?: boolean
   createdBy?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
+  abbreviation?: boolean
+  beNumber?: boolean
+  quantityInStock?: boolean
+  serialTrackedId?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_WarehousePlace_deletedByToEmployee?: boolean | Prisma.WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["warehousePlace"]>
@@ -1013,24 +1013,24 @@ export type WarehousePlaceSelect<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type WarehousePlaceSelectScalar = {
   id?: boolean
-  abbreviation?: boolean
-  beNumber?: boolean
-  serialTrackedId?: boolean
   place?: boolean
   shelf?: boolean
   column?: boolean
   layer?: boolean
   layerPlace?: boolean
   information?: boolean
-  quantityInStock?: boolean
   createdAt?: boolean
   createdBy?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
+  abbreviation?: boolean
+  beNumber?: boolean
+  quantityInStock?: boolean
+  serialTrackedId?: boolean
 }
 
-export type WarehousePlaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "abbreviation" | "beNumber" | "serialTrackedId" | "place" | "shelf" | "column" | "layer" | "layerPlace" | "information" | "quantityInStock" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["warehousePlace"]>
+export type WarehousePlaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "place" | "shelf" | "column" | "layer" | "layerPlace" | "information" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy" | "abbreviation" | "beNumber" | "quantityInStock" | "serialTrackedId", ExtArgs["result"]["warehousePlace"]>
 export type WarehousePlaceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_WarehousePlace_deletedByToEmployee?: boolean | Prisma.WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs>
@@ -1044,21 +1044,21 @@ export type $WarehousePlacePayload<ExtArgs extends runtime.Types.Extensions.Inte
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    abbreviation: string
-    beNumber: string | null
-    serialTrackedId: string | null
     place: string | null
     shelf: string | null
     column: string | null
     layer: string | null
     layerPlace: string | null
     information: string | null
-    quantityInStock: number
     createdAt: Date
     createdBy: string
     deleted: boolean
     deletedAt: Date | null
     deletedBy: string | null
+    abbreviation: string
+    beNumber: string | null
+    quantityInStock: number
+    serialTrackedId: string | null
   }, ExtArgs["result"]["warehousePlace"]>
   composites: {}
 }
@@ -1431,21 +1431,21 @@ export interface Prisma__WarehousePlaceClient<T, Null = never, ExtArgs extends r
  */
 export interface WarehousePlaceFieldRefs {
   readonly id: Prisma.FieldRef<"WarehousePlace", 'String'>
-  readonly abbreviation: Prisma.FieldRef<"WarehousePlace", 'String'>
-  readonly beNumber: Prisma.FieldRef<"WarehousePlace", 'String'>
-  readonly serialTrackedId: Prisma.FieldRef<"WarehousePlace", 'String'>
   readonly place: Prisma.FieldRef<"WarehousePlace", 'String'>
   readonly shelf: Prisma.FieldRef<"WarehousePlace", 'String'>
   readonly column: Prisma.FieldRef<"WarehousePlace", 'String'>
   readonly layer: Prisma.FieldRef<"WarehousePlace", 'String'>
   readonly layerPlace: Prisma.FieldRef<"WarehousePlace", 'String'>
   readonly information: Prisma.FieldRef<"WarehousePlace", 'String'>
-  readonly quantityInStock: Prisma.FieldRef<"WarehousePlace", 'Int'>
   readonly createdAt: Prisma.FieldRef<"WarehousePlace", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"WarehousePlace", 'String'>
   readonly deleted: Prisma.FieldRef<"WarehousePlace", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"WarehousePlace", 'DateTime'>
   readonly deletedBy: Prisma.FieldRef<"WarehousePlace", 'String'>
+  readonly abbreviation: Prisma.FieldRef<"WarehousePlace", 'String'>
+  readonly beNumber: Prisma.FieldRef<"WarehousePlace", 'String'>
+  readonly quantityInStock: Prisma.FieldRef<"WarehousePlace", 'Int'>
+  readonly serialTrackedId: Prisma.FieldRef<"WarehousePlace", 'String'>
 }
     
 

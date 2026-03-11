@@ -233,13 +233,13 @@ model Department {
   createdBy                               String    @db.Char(36)
   deletedBy                               String?   @db.Char(36)
   targetId                                String    @db.Char(36)
-  Employee_Department_deletedByToEmployee Employee? @relation("Department_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_department_deletedBy")
   Employee_Department_createdByToEmployee Employee  @relation("Department_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_department_createdBy")
+  Employee_Department_deletedByToEmployee Employee? @relation("Department_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_department_deletedBy")
   Target                                  Target    @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_department_target")
 
   @@index([targetId], map: "fk_department_target")
   @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "deletedBy")
+  @@index([deletedBy], map: "fk_department_deletedBy")
 }
 
 model DocumentGroup {
@@ -374,8 +374,8 @@ model Employee {
   Contact_Contact_deletedByToEmployee                                               Contact[]                        @relation("Contact_deletedByToEmployee")
   DeliveryNoteSupplier                                                              DeliveryNoteSupplier[]
   DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee                     DeliveryNoteSupplier[]           @relation("DeliveryNoteSupplier_deletedByToEmployee")
-  Department_Department_deletedByToEmployee                                         Department[]                     @relation("Department_deletedByToEmployee")
   Department_Department_createdByToEmployee                                         Department[]                     @relation("Department_createdByToEmployee")
+  Department_Department_deletedByToEmployee                                         Department[]                     @relation("Department_deletedByToEmployee")
   DepartmentExtern_DepartmentExtern_deletedByToEmployee                             DepartmentExtern[]               @relation("DepartmentExtern_deletedByToEmployee")
   DepartmentExtern_DepartmentExtern_createdByToEmployee                             DepartmentExtern[]               @relation("DepartmentExtern_createdByToEmployee")
   DocumentGroup                                                                     DocumentGroup[]
@@ -515,10 +515,10 @@ model Employee {
   WorkOrderStructure_WorkOrderStructure_deletedByToEmployee                         WorkOrderStructure[]             @relation("WorkOrderStructure_deletedByToEmployee")
 
   @@index([createdBy], map: "createdBy")
-  @@index([pictureId], map: "pictureId")
-  @@index([titleId], map: "titleId")
-  @@index([deletedBy], map: "deletedBy")
   @@index([roleLevelId], map: "roleLevelId")
+  @@index([titleId], map: "Employee_ibfk_5")
+  @@index([pictureId], map: "Employee_ibfk_6")
+  @@index([deletedBy], map: "Employee_ibfk_7")
 }
 
 model FollowUp {
@@ -1126,8 +1126,8 @@ model MaterialPrice {
   updatedAt                                  DateTime? @db.DateTime(0)
   rejected                                   Boolean?
   additionalInfo                             String?   @db.VarChar(255)
-  unitPrice                                  Decimal?  @db.Decimal(10, 2)
-  quantityPrice                              Int?
+  unitPrice                                  Float?
+  quantityPrice                              Float?
   createdBy                                  String    @db.Char(36)
   deleted                                    Boolean   @default(false)
   deletedAt                                  DateTime? @db.DateTime(0)
@@ -1253,10 +1253,10 @@ model MaterialSpec {
   Employee                                  Employee?                        @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_4")
   Employee_MaterialSpec_deletedByToEmployee Employee?                        @relation("MaterialSpec_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialSpec_ibfk_5")
 
-  @@index([createdBy], map: "createdBy")
-  @@index([materialDimensionId], map: "materialDimensionId")
   @@index([materialFamilyId], map: "materialFamilyId")
-  @@index([deletedBy], map: "deletedBy")
+  @@index([materialDimensionId], map: "MaterialSpec_ibfk_3")
+  @@index([createdBy], map: "MaterialSpec_ibfk_4")
+  @@index([deletedBy], map: "MaterialSpec_ibfk_5")
 }
 
 model MaterialStructure {
@@ -1476,9 +1476,9 @@ model PurchaseDetail {
   projectId                                   String?   @db.Char(36)
   purchaseId                                  String?   @db.Char(36)
   beNumber                                    String?   @db.VarChar(255)
-  unitPrice                                   Decimal?  @db.Decimal(10, 2)
+  unitPrice                                   Float?
   quantity                                    Int?
-  totalCost                                   Decimal?  @db.Decimal(10, 2)
+  totalCost                                   Float?
   status                                      String?   @db.VarChar(255)
   additionalInfo                              String?   @db.VarChar(255)
   updatedAt                                   DateTime? @db.DateTime(0)
@@ -1895,26 +1895,26 @@ model VisibilityForRole {
 
 model WarehousePlace {
   id                                          String    @id @db.Char(36)
-  abbreviation                                String    @default("") @db.VarChar(255)
-  beNumber                                    String?   @db.VarChar(255)
-  serialTrackedId                             String?   @db.VarChar(255)
   place                                       String?   @db.VarChar(255)
   shelf                                       String?   @db.VarChar(255)
   column                                      String?   @db.VarChar(255)
   layer                                       String?   @db.VarChar(255)
   layerPlace                                  String?   @db.VarChar(255)
   information                                 String?   @db.VarChar(255)
-  quantityInStock                             Int       @default(0)
   createdAt                                   DateTime  @db.DateTime(0)
   createdBy                                   String    @db.Char(36)
   deleted                                     Boolean   @default(false)
   deletedAt                                   DateTime? @db.DateTime(0)
   deletedBy                                   String?   @db.Char(36)
+  abbreviation                                String    @default("") @db.VarChar(255)
+  beNumber                                    String?   @db.VarChar(255)
+  quantityInStock                             Int       @default(0)
+  serialTrackedId                             String?   @db.VarChar(255)
   Employee                                    Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_1")
   Employee_WarehousePlace_deletedByToEmployee Employee? @relation("WarehousePlace_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_3")
 
   @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "deletedBy")
+  @@index([deletedBy], map: "WarehousePlace_ibfk_3")
 }
 
 model WorkOrder {

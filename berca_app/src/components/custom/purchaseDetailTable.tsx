@@ -22,9 +22,11 @@ interface PurchaseDetailTableProps {
   isAdmin: boolean
 }
 
-function formatCurrency(val: number | null | undefined) {
+function formatCurrency(val: string | number | null | undefined) {
   if (val == null) return '—'
-  return new Intl.NumberFormat('nl-BE', {style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2}).format(val)
+  const num = typeof val === 'string' ? parseFloat(val) : val
+  if (isNaN(num)) return '—'
+  return new Intl.NumberFormat('nl-BE', {style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2}).format(num)
 }
 
 function formatDate(iso: string | null | undefined) {
@@ -86,7 +88,10 @@ export function PurchaseDetailTable({purchaseId, initialDetails, projects, isAdm
     router.refresh()
   }
 
-  const totalValue = initialDetails.reduce((sum, d) => sum + (d.totalCost ?? 0), 0)
+  const totalValue = initialDetails.reduce((sum, d) => {
+    const cost = d.totalCost != null ? parseFloat(d.totalCost) : 0
+    return sum + (isNaN(cost) ? 0 : cost)
+  }, 0)
 
   return (
     <div className="flex flex-col gap-4">

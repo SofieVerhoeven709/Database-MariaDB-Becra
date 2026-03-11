@@ -118,3 +118,93 @@ END$$
 DELIMITER ;
 CALL _migration_add_serialtrack_fk();
 DROP PROCEDURE IF EXISTS _migration_add_serialtrack_fk;
+
+
+DROP PROCEDURE IF EXISTS _migration_rename_volume;
+DELIMITER $$
+CREATE PROCEDURE _migration_rename_volume()
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA = 'BecraBV'
+          AND TABLE_NAME   = 'PurchaseDetail'
+          AND COLUMN_NAME  = 'volume'
+    ) THEN
+        ALTER TABLE PurchaseDetail
+            CHANGE COLUMN `volume` `quantityInStock` INT NOT NULL;
+    END IF;
+END$$
+DELIMITER ;
+CALL _migration_rename_volume();
+DROP PROCEDURE IF EXISTS _migration_rename_volume;
+
+-- ------------------------------------------------------------
+-- 6. Change column type: MaterialPrice.unitPrice INT -> DECIMAL(10,2)
+--    Guard: only run when the column is still INT.
+-- ------------------------------------------------------------
+DROP PROCEDURE IF EXISTS _migration_unitprice_decimal_MaterialPrice;
+DELIMITER $$
+CREATE PROCEDURE _migration_unitprice_decimal_MaterialPrice()
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA = 'BecraBV'
+          AND TABLE_NAME   = 'MaterialPrice'
+          AND COLUMN_NAME  = 'unitPrice'
+          AND DATA_TYPE    = 'int'
+    ) THEN
+        ALTER TABLE MaterialPrice
+            MODIFY COLUMN `unitPrice` DECIMAL(10, 2);
+    END IF;
+END$$
+DELIMITER ;
+CALL _migration_unitprice_decimal_MaterialPrice();
+DROP PROCEDURE IF EXISTS _migration_unitprice_decimal_MaterialPrice;
+
+-- ------------------------------------------------------------
+-- 7. Change column type: PurchaseDetail.unitPrice INT -> DECIMAL(10,2)
+--    Guard: only run when the column is still INT.
+-- ------------------------------------------------------------
+DROP PROCEDURE IF EXISTS _migration_unitprice_decimal_PurchaseDetail;
+DELIMITER $$
+CREATE PROCEDURE _migration_unitprice_decimal_PurchaseDetail()
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA = 'BecraBV'
+          AND TABLE_NAME   = 'PurchaseDetail'
+          AND COLUMN_NAME  = 'unitPrice'
+          AND DATA_TYPE    = 'int'
+    ) THEN
+        ALTER TABLE PurchaseDetail
+            MODIFY COLUMN `unitPrice` DECIMAL(10, 2);
+    END IF;
+END$$
+DELIMITER ;
+CALL _migration_unitprice_decimal_PurchaseDetail();
+DROP PROCEDURE IF EXISTS _migration_unitprice_decimal_PurchaseDetail;
+
+-- ------------------------------------------------------------
+-- 8. Change column type: PurchaseDetail.totalCost INT -> DECIMAL(10,2)
+--    Guard: only run when the column is still INT.
+--    Note: if your live column is named totalPrice, change COLUMN_NAME
+--    and MODIFY COLUMN name below to match.
+-- ------------------------------------------------------------
+DROP PROCEDURE IF EXISTS _migration_totalcost_decimal_PurchaseDetail;
+DELIMITER $$
+CREATE PROCEDURE _migration_totalcost_decimal_PurchaseDetail()
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA = 'BecraBV'
+          AND TABLE_NAME   = 'PurchaseDetail'
+          AND COLUMN_NAME  = 'totalCost'
+          AND DATA_TYPE    = 'int'
+    ) THEN
+        ALTER TABLE PurchaseDetail
+            MODIFY COLUMN `totalCost` DECIMAL(10, 2);
+    END IF;
+END$$
+DELIMITER ;
+CALL _migration_totalcost_decimal_PurchaseDetail();
+DROP PROCEDURE IF EXISTS _migration_totalcost_decimal_PurchaseDetail;

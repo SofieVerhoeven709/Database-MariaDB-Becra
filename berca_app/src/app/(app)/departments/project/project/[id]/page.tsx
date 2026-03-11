@@ -11,6 +11,9 @@ import {getCompanies} from '@/dal/companies'
 import {getAllRoleLevels} from '@/dal/roleLevel'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {mapVisibility} from '@/extra/visibilityForRole'
+import {getFunctions} from '@/dal/functions'
+import {getDepartmentExterns} from '@/dal/departmentExterns'
+import {getTitles} from '@/dal/titles'
 
 interface ProjectDetailPageProps {
   params: Promise<{id: string}>
@@ -18,17 +21,31 @@ interface ProjectDetailPageProps {
 
 export default async function ProjectDetailPage({params}: ProjectDetailPageProps) {
   const {id} = await params
-  const [project, projectTypes, companies, employeesFromDAL, contactsFromDAL, purchasesFromDAL, roleLevels, profile] =
-    await Promise.all([
-      getProjectById(id).catch(() => null),
-      getProjectTypes(),
-      getCompanies(),
-      getEmployees(),
-      getContacts(),
-      getPurchases(),
-      getAllRoleLevels(),
-      getSessionProfileFromCookieOrThrow(),
-    ])
+  const [
+    project,
+    projectTypes,
+    companies,
+    employeesFromDAL,
+    contactsFromDAL,
+    purchasesFromDAL,
+    roleLevels,
+    profile,
+    functions,
+    departmentExterns,
+    titles,
+  ] = await Promise.all([
+    getProjectById(id).catch(() => null),
+    getProjectTypes(),
+    getCompanies(),
+    getEmployees(),
+    getContacts(),
+    getPurchases(),
+    getAllRoleLevels(),
+    getSessionProfileFromCookieOrThrow(),
+    getFunctions(),
+    getDepartmentExterns(),
+    getTitles(),
+  ])
 
   if (!project) notFound()
 
@@ -62,9 +79,13 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
 
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
   const defaultVisibleRoleNames = ['Project']
-
   const visibilityForRoles = project.Target.VisibilityForRole.map(mapVisibility)
 
+  const functionOptions = (functions ?? []).map(f => ({id: f.id, name: f.name ?? ''})).filter(f => f.name)
+  const departmentExternOptions = (departmentExterns ?? [])
+    .map(d => ({id: d.id, name: d.name ?? ''}))
+    .filter(d => d.name)
+  const titleOptions = (titles ?? []).map(t => ({id: t.id, name: t.name ?? ''})).filter(t => t.name)
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-6xl">
@@ -80,6 +101,9 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
           visibilityForRoles={visibilityForRoles}
+          functionOptions={functionOptions}
+          departmentExternOptions={departmentExternOptions}
+          titleOptions={titleOptions}
         />
       </div>
     </main>

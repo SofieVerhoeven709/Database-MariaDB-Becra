@@ -15,9 +15,8 @@ export const createWorkOrderAction = protectedServerFunction({
     logger.info(`Creating work order for project: ${data.projectId}`)
 
     const target = await createTargetForType('WorkOrder', profile.id)
-
+    const {redirectToProject, ...workOrderData} = data
     let workOrderNumber = data.workOrderNumber || generateWorkOrderNumber()
-
     let attempts = 0
     let workOrder
 
@@ -25,7 +24,7 @@ export const createWorkOrderAction = protectedServerFunction({
       try {
         workOrder = await prismaClient.workOrder.create({
           data: {
-            ...data,
+            ...workOrderData,
             workOrderNumber,
             id: crypto.randomUUID(),
             createdBy: profile.id,
@@ -35,7 +34,6 @@ export const createWorkOrderAction = protectedServerFunction({
         })
         break
       } catch (err: any) {
-        // Prisma unique constraint
         if (err.code === 'P2002') {
           attempts++
           workOrderNumber = generateWorkOrderNumber()
@@ -45,13 +43,14 @@ export const createWorkOrderAction = protectedServerFunction({
       }
     }
 
-    if (!workOrder) {
-      throw new Error('Failed to generate unique work order number')
-    }
+    if (!workOrder) throw new Error('Failed to generate unique work order number')
 
     logger.info(`Work order created: ${workOrder.id}`)
+    revalidatePath('/workOrder')
 
-    redirect(`/departments/project/project/${data.projectId}/workOrder/${workOrder.id}` as Route)
+    if (redirectToProject) {
+      redirect(`/departments/project/project/${workOrderData.projectId}/workOrder/${workOrder.id}` as Route)
+    }
   },
 })
 
@@ -59,12 +58,9 @@ export const updateWorkOrderAction = protectedServerFunction({
   schema: updateWorkOrderSchema,
   functionName: 'Update work order action',
   serverFn: async ({data: {id, ...data}, logger}) => {
-    await prismaClient.workOrder.update({
-      where: {id},
-      data,
-    })
-
+    await prismaClient.workOrder.update({where: {id}, data})
     logger.info(`Work order updated: ${id}`)
+    revalidatePath('/workOrder')
     revalidatePath(`/departments/project/project/${data.projectId}/workOrder/${id}`)
   },
 })
@@ -78,8 +74,8 @@ export const softDeleteWorkOrderAction = protectedServerFunction({
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
       select: {projectId: true},
     })
-
     logger.info(`Work order soft deleted: ${id}`)
+    revalidatePath('/workOrder')
     revalidatePath(`/departments/project/project/${wo.projectId}`)
   },
 })
@@ -89,7 +85,17 @@ export const hardDeleteWorkOrderAction = protectedServerFunction({
   functionName: 'Hard delete work order action',
   serverFn: async ({data: {id}, logger}) => {
     await prismaClient.workOrder.delete({where: {id}})
-
     logger.info(`Work order hard deleted: ${id}`)
+    revalidatePath('/workOrder')
+  },
+})
+
+export const undeleteWorkOrderAction = protectedServerFunction({
+  schema: workOrderIdSchema,
+  functionName: 'Undelete work order action',
+  serverFn: async ({data: {id}, logger}) => {
+    await prismaClient.workOrder.update({where: {id}, data: {deleted: false, deletedAt: null, deletedBy: null}})
+    logger.info(`Work order undeleted: ${id}`)
+    revalidatePath('/workOrder')
   },
 })

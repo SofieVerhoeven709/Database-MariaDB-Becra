@@ -15,6 +15,7 @@ import {
   createProjectAction,
   hardDeleteProjectAction,
   softDeleteProjectAction,
+  undeleteProjectAction,
   updateProjectAction,
 } from '@/serverFunctions/projects'
 import {useRouter} from 'next/navigation'
@@ -216,6 +217,10 @@ export function ProjectTable({
 
   async function handleHardDelete(p: MappedProject) {
     await hardDeleteProjectAction({id: p.id})
+    router.refresh()
+  }
+  async function handleRestore(p: MappedProject) {
+    await undeleteProjectAction({id: p.id})
     router.refresh()
   }
 
@@ -431,33 +436,48 @@ export function ProjectTable({
                           <span className="sr-only">View {p.projectNumber}</span>
                         </Button>
                       </Link>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                        onClick={() => handleEdit(p)}>
-                        <Pencil className="h-3.5 w-3.5" />
-                        <span className="sr-only">Edit {p.projectNumber}</span>
-                      </Button>
+
                       {!p.deleted && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                          onClick={() => handleSoftDelete(p)}>
-                          <Trash2 className="h-3.5 w-3.5" />
-                          <span className="sr-only">Delete {p.projectNumber}</span>
-                        </Button>
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                            onClick={() => handleEdit(p)}>
+                            <Pencil className="h-3.5 w-3.5" />
+                            <span className="sr-only">Edit {p.projectNumber}</span>
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                            onClick={() => handleSoftDelete(p)}>
+                            <Trash2 className="h-3.5 w-3.5" />
+                            <span className="sr-only">Delete {p.projectNumber}</span>
+                          </Button>
+                        </>
                       )}
-                      {p.deleted && isAdmin && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                          onClick={() => handleHardDelete(p)}>
-                          <Trash2 className="h-3.5 w-3.5" />
-                          <span className="sr-only">Permanently delete {p.projectNumber}</span>
-                        </Button>
+
+                      {p.deleted && (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary px-2"
+                            onClick={() => handleRestore(p)}>
+                            Restore
+                          </Button>
+                          {isAdmin && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-destructive hover:bg-destructive/10"
+                              onClick={() => handleHardDelete(p)}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                              <span className="sr-only">Permanently delete {p.projectNumber}</span>
+                            </Button>
+                          )}
+                        </>
                       )}
                     </div>
                   </TableCell>

@@ -16,9 +16,9 @@ export interface MappedWorkOrder {
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
-  // relations
-  createdByFirstName: string
-  createdByLastName: string
+  // display fields
+  createdByName: string
+  deletedByName: string | null
   projectNumber: string
   projectName: string
 }

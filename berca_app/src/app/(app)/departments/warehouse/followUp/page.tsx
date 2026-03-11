@@ -5,33 +5,36 @@ import {mapFollowUp} from '@/extra/followUps'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
+import {getFollowUpTargetOptions} from '@/extra/followUpTargetOptions'
 
 export default async function FollowUpsPage() {
-  const [followUpsFromDAL, roleLevels, profile, statuses, urgencyTypes, followUpTypes, employees] = await Promise.all([
-    getFollowUps(),
-    getAllRoleLevels(),
-    getSessionProfileFromCookieOrThrow(),
-    prismaClient.status.findMany({
-      where: {deleted: false},
-      orderBy: {name: 'asc'},
-      select: {id: true, name: true},
-    }),
-    prismaClient.urgencyType.findMany({
-      where: {deleted: false},
-      orderBy: {name: 'asc'},
-      select: {id: true, name: true},
-    }),
-    prismaClient.followUpType.findMany({
-      where: {deleted: false},
-      orderBy: {name: 'asc'},
-      select: {id: true, name: true},
-    }),
-    prismaClient.employee.findMany({
-      where: {deleted: false},
-      orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
-      select: {id: true, firstName: true, lastName: true},
-    }),
-  ])
+  const [followUpsFromDAL, roleLevels, profile, statuses, urgencyTypes, followUpTypes, employees, targetOptions] =
+    await Promise.all([
+      getFollowUps(),
+      getAllRoleLevels(),
+      getSessionProfileFromCookieOrThrow(),
+      prismaClient.status.findMany({
+        where: {deleted: false},
+        orderBy: {name: 'asc'},
+        select: {id: true, name: true},
+      }),
+      prismaClient.urgencyType.findMany({
+        where: {deleted: false},
+        orderBy: {name: 'asc'},
+        select: {id: true, name: true},
+      }),
+      prismaClient.followUpType.findMany({
+        where: {deleted: false},
+        orderBy: {name: 'asc'},
+        select: {id: true, name: true},
+      }),
+      prismaClient.employee.findMany({
+        where: {deleted: false},
+        orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
+        select: {id: true, firstName: true, lastName: true},
+      }),
+      getFollowUpTargetOptions(prismaClient),
+    ])
 
   const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
@@ -71,6 +74,7 @@ export default async function FollowUpsPage() {
           urgencyTypeOptions={urgencyTypes}
           followUpTypeOptions={followUpTypes}
           employeeOptions={employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))}
+          targetOptions={targetOptions}
         />
       </div>
     </main>

@@ -13,6 +13,8 @@ import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/cus
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import type {MappedFollowUp} from '@/types/followUp'
 import type {RoleLevelOption} from '@/types/roleLevel'
+import type {TargetOptions, TargetTypeName} from '@/types/followUpTargetOptions'
+import {TARGET_TYPE_NAMES} from '@/types/followUpTargetOptions'
 
 interface SelectOption {
   id: string
@@ -23,7 +25,12 @@ interface FollowUpFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   followUp: MappedFollowUp | null
-  onSave: (followUp: MappedFollowUp, visibilityRows: VisibilityRow[]) => Promise<void>
+  onSave: (
+    followUp: MappedFollowUp,
+    visibilityRows: VisibilityRow[],
+    targetTypeName?: TargetTypeName,
+    targetEntityId?: string,
+  ) => Promise<void>
   isAdmin: boolean
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
@@ -31,6 +38,7 @@ interface FollowUpFormDialogProps {
   urgencyTypeOptions: SelectOption[]
   followUpTypeOptions: SelectOption[]
   employeeOptions: SelectOption[]
+  targetOptions: TargetOptions
 }
 
 const emptyFollowUp = (): MappedFollowUp => ({
@@ -82,6 +90,7 @@ export function FollowUpFormDialog({
   urgencyTypeOptions,
   followUpTypeOptions,
   employeeOptions,
+  targetOptions,
 }: FollowUpFormDialogProps) {
   const [form, setForm] = useState<MappedFollowUp>(emptyFollowUp())
   const [saving, setSaving] = useState(false)
@@ -89,13 +98,26 @@ export function FollowUpFormDialog({
     buildInitialVisibilityRows(followUp?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
 
+  // target — create only
+  const [targetTypeName, setTargetTypeName] = useState<TargetTypeName | ''>('')
+  const [targetEntityId, setTargetEntityId] = useState('')
+
   const isEdit = !!followUp
 
   useEffect(() => {
     const next = followUp ?? emptyFollowUp()
     setForm(next)
     setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
+    if (!followUp) {
+      setTargetTypeName('')
+      setTargetEntityId('')
+    }
   }, [followUp?.id, open])
+
+  // reset entity when type changes
+  useEffect(() => {
+    setTargetEntityId('')
+  }, [targetTypeName])
 
   function set<K extends keyof MappedFollowUp>(key: K, value: MappedFollowUp[K]) {
     setForm(prev => ({...prev, [key]: value}))
@@ -108,7 +130,12 @@ export function FollowUpFormDialog({
   async function handleSubmit() {
     setSaving(true)
     try {
-      await onSave(form, visibilityRows)
+      await onSave(
+        form,
+        visibilityRows,
+        isEdit ? undefined : (targetTypeName as TargetTypeName) || undefined,
+        isEdit ? undefined : targetEntityId || undefined,
+      )
     } finally {
       setSaving(false)
     }
@@ -119,7 +146,8 @@ export function FollowUpFormDialog({
     form.urgencyTypeId !== '' &&
     form.followUpTypeId !== '' &&
     form.ownedBy !== '' &&
-    form.executedBy !== ''
+    form.executedBy !== '' &&
+    (isEdit || (targetTypeName !== '' && targetEntityId !== ''))
 
   // ─── Field helpers ─────────────────────────────────────────────────────────
 
@@ -180,6 +208,8 @@ export function FollowUpFormDialog({
     </div>
   )
 
+  const entityOptions = targetTypeName ? targetOptions[targetTypeName] : []
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card border-border">
@@ -190,6 +220,7 @@ export function FollowUpFormDialog({
         <Tabs defaultValue="details">
           <TabsList className="bg-secondary border border-border/60 flex-wrap h-auto gap-1">
             <TabsTrigger value="details">Details</TabsTrigger>
+            {!isEdit && <TabsTrigger value="target">Target</TabsTrigger>}
             <TabsTrigger value="assignment">Assignment</TabsTrigger>
             <TabsTrigger value="flags">Flags</TabsTrigger>
             {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
@@ -198,6 +229,14 @@ export function FollowUpFormDialog({
           {/* ── Details ──────────────────────────────────────────────────── */}
           <TabsContent value="details">
             <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
+              {/* Read-only target banner on edit */}
+              {isEdit && followUp?.targetTypeName && (
+                <div className="sm:col-span-2 rounded-lg border border-border bg-secondary px-3 py-2 text-xs text-muted-foreground">
+                  <span className="font-medium text-foreground">Target: </span>
+                  {followUp.targetTypeName}
+                  {followUp.followUpTargetTargetId && ` — ${followUp.followUpTargetTargetId.slice(0, 8)}`}
+                </div>
+              )}
               <div className="sm:col-span-2">{textareaField('activityDescription', 'Activity Description', 3)}</div>
               <div className="sm:col-span-2">{textareaField('additionalInfo', 'Additional Info', 2)}</div>
               {dateField('actionAgenda', 'Action Agenda')}
@@ -217,6 +256,55 @@ export function FollowUpFormDialog({
               </div>
             </div>
           </TabsContent>
+
+          {/* ── Target (create only) ─────────────────────────────────────── */}
+          {!isEdit && (
+            <TabsContent value="target">
+              <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
+                <div className="flex flex-col gap-1.5">
+                  <Label className="text-xs text-muted-foreground">Target Type *</Label>
+                  <Select
+                    value={targetTypeName || 'none'}
+                    onValueChange={v => setTargetTypeName(v === 'none' ? '' : (v as TargetTypeName))}>
+                    <SelectTrigger className="bg-secondary border-border">
+                      <SelectValue placeholder="Select type…" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-card border-border">
+                      <SelectItem value="none">Select type…</SelectItem>
+                      {TARGET_TYPE_NAMES.map(t => (
+                        <SelectItem key={t} value={t}>
+                          {t}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <Label className="text-xs text-muted-foreground">{targetTypeName || 'Target'} *</Label>
+                  <Select
+                    value={targetEntityId || 'none'}
+                    onValueChange={v => setTargetEntityId(v === 'none' ? '' : v)}
+                    disabled={!targetTypeName || entityOptions.length === 0}>
+                    <SelectTrigger className="bg-secondary border-border">
+                      <SelectValue placeholder={!targetTypeName ? 'Select type first…' : 'Select…'} />
+                    </SelectTrigger>
+                    <SelectContent className="bg-card border-border">
+                      <SelectItem value="none">Select…</SelectItem>
+                      {entityOptions.map(o => (
+                        <SelectItem key={o.id} value={o.id}>
+                          {o.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {targetTypeName && entityOptions.length === 0 && (
+                    <p className="text-xs text-muted-foreground">No {targetTypeName} records found.</p>
+                  )}
+                </div>
+              </div>
+            </TabsContent>
+          )}
 
           {/* ── Assignment ───────────────────────────────────────────────── */}
           <TabsContent value="assignment">

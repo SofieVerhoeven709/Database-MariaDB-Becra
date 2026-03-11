@@ -11,6 +11,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {Badge} from '@/components/ui/badge'
 import type {MappedFollowUp} from '@/types/followUp'
 import type {RoleLevelOption} from '@/types/roleLevel'
+import type {TargetOptions, TargetTypeName} from '@/types/followUpTargetOptions'
 import {
   createFollowUpAction,
   updateFollowUpAction,
@@ -114,6 +115,7 @@ interface FollowUpTableProps {
   urgencyTypeOptions: SelectOption[]
   followUpTypeOptions: SelectOption[]
   employeeOptions: SelectOption[]
+  targetOptions: TargetOptions
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -129,6 +131,7 @@ export function FollowUpTable({
   urgencyTypeOptions,
   followUpTypeOptions,
   employeeOptions,
+  targetOptions,
 }: FollowUpTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -220,7 +223,12 @@ export function FollowUpTable({
 
   // ─── Save handler ──────────────────────────────────────────────────────────
 
-  async function handleSave(f: MappedFollowUp, visibilityRows: VisibilityRow[]) {
+  async function handleSave(
+    f: MappedFollowUp,
+    visibilityRows: VisibilityRow[],
+    _targetTypeName?: TargetTypeName,
+    targetEntityId?: string,
+  ) {
     const core = {
       activityDescription: f.activityDescription,
       additionalInfo: f.additionalInfo,
@@ -243,7 +251,11 @@ export function FollowUpTable({
     if (editingFollowUp) {
       await updateFollowUpAction({id: f.id, ...core, visibilityForRoles: visibilityRows})
     } else {
-      await createFollowUpAction({...core, visibilityForRoles: visibilityRows})
+      await createFollowUpAction({
+        ...core,
+        visibilityForRoles: visibilityRows,
+        followUpTargetId: targetEntityId,
+      })
     }
     setDialogOpen(false)
     router.refresh()
@@ -550,6 +562,7 @@ export function FollowUpTable({
         urgencyTypeOptions={urgencyTypeOptions}
         followUpTypeOptions={followUpTypeOptions}
         employeeOptions={employeeOptions}
+        targetOptions={targetOptions}
       />
     </div>
   )

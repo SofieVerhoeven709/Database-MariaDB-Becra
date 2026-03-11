@@ -120,6 +120,48 @@ const createdSubRoles: Record<SubRoleName, {id: string; level: number}> = {} as 
 
 const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}, {name: 'Internal'}]
 
+// ─── All target type names used across the system ─────────────────────────────
+
+const ALL_TARGET_TYPES = [
+  'Department',
+  'Company',
+  'Project',
+  'WorkOrder',
+  'WorkOrderStructure',
+  'Contact',
+  'Certificate',
+  'DocumentStructure',
+  'FollowUp',
+  'FollowUpStructure',
+  'InvoiceIn',
+  'InvoiceOut',
+  'Training',
+  'TrainingStandard',
+  'Employee',
+  'DepartmentExtern',
+]
+
+// ─── Urgency types ────────────────────────────────────────────────────────────
+
+const URGENCY_TYPES = ['Low', 'Medium', 'High', 'Critical']
+
+// ─── Statuses ─────────────────────────────────────────────────────────────────
+
+const STATUSES = ['Open', 'In Progress', 'Pending', 'On Hold', 'Resolved', 'Closed', 'Cancelled']
+
+// ─── Follow-up types ──────────────────────────────────────────────────────────
+
+const FOLLOW_UP_TYPES = [
+  'Sales',
+  'Support',
+  'Non-Conformance',
+  'Periodic Control',
+  'Review',
+  'General',
+  'Task',
+  'Complaint',
+]
+
 export const seedDev = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
   const now = new Date()
@@ -195,7 +237,7 @@ export const seedDev = async (prisma: PrismaClient) => {
     })
   }
 
-  console.log('Administrator account created')
+  console.log('Administrator account ready')
 
   // 6. Upsert shared subRoles
   for (const sub of SUB_ROLES) {
@@ -214,7 +256,7 @@ export const seedDev = async (prisma: PrismaClient) => {
     createdSubRoles[sub.name] = {id: existing.id, level: existing.level}
   }
 
-  // 7. Upsert TargetTypes
+  // 7. Upsert ALL TargetTypes
   async function upsertTargetType(name: string) {
     let tt = await prisma.targetType.findFirst({where: {name}})
     if (!tt) {
@@ -225,14 +267,71 @@ export const seedDev = async (prisma: PrismaClient) => {
     return tt
   }
 
-  const departmentTargetType = await upsertTargetType('Department')
-  const companyTargetType = await upsertTargetType('Company')
-  await upsertTargetType('Project')
-  await upsertTargetType('WorkOrder')
-  await upsertTargetType('WorkOrderStructure')
-  await upsertTargetType('Contact')
+  for (const targetTypeName of ALL_TARGET_TYPES) {
+    await upsertTargetType(targetTypeName)
+  }
 
-  // 9. Upsert Departments + Department Roles + RoleLevels + Targets
+  console.log('Target types seeded')
+
+  // Resolve the two target types needed for departments and companies below
+  const departmentTargetType = await prisma.targetType.findFirst({where: {name: 'Department'}})!
+  const companyTargetType = await prisma.targetType.findFirst({where: {name: 'Company'}})!
+
+  // 8. Upsert UrgencyTypes
+  for (const name of URGENCY_TYPES) {
+    const existing = await prisma.urgencyType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.urgencyType.create({
+        data: {
+          id: randomUUID(),
+          name,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+          deleted: false,
+        },
+      })
+    }
+  }
+
+  console.log('Urgency types seeded')
+
+  // 9. Upsert Statuses
+  for (const name of STATUSES) {
+    const existing = await prisma.status.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.status.create({
+        data: {
+          id: randomUUID(),
+          name,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+          deleted: false,
+        },
+      })
+    }
+  }
+
+  console.log('Statuses seeded')
+
+  // 10. Upsert FollowUpTypes
+  for (const name of FOLLOW_UP_TYPES) {
+    const existing = await prisma.followUpType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.followUpType.create({
+        data: {
+          id: randomUUID(),
+          name,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+          deleted: false,
+        },
+      })
+    }
+  }
+
+  console.log('Follow-up types seeded')
+
+  // 11. Upsert Departments + Department Roles + RoleLevels + Targets
   for (const dept of ALL_DEPARTMENTS) {
     const existingDept = await prisma.department.findFirst({where: {name: dept.name}})
     if (existingDept) continue
@@ -242,7 +341,7 @@ export const seedDev = async (prisma: PrismaClient) => {
         id: randomUUID(),
         createdAt: now,
         createdBy: adminEmployee.id,
-        targetTypeId: departmentTargetType.id,
+        targetTypeId: departmentTargetType!.id,
       },
     })
 
@@ -291,7 +390,9 @@ export const seedDev = async (prisma: PrismaClient) => {
     }
   }
 
-  // 10. Upsert default Titles
+  console.log('Departments, Roles, SubRoles, RoleLevels, Targets, and VisibilityForRole seeded')
+
+  // 12. Upsert default Titles
   const DEFAULT_TITLES = ['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.', 'Ir.']
 
   for (const titleName of DEFAULT_TITLES) {
@@ -311,7 +412,7 @@ export const seedDev = async (prisma: PrismaClient) => {
 
   console.log('Default titles seeded')
 
-  // 11-12. Upsert Becra company
+  // 13. Upsert Becra company
   let becraCompany = await prisma.company.findFirst({where: {name: 'Becra BV'}})
   if (!becraCompany) {
     const becraTarget = await prisma.target.create({
@@ -319,7 +420,7 @@ export const seedDev = async (prisma: PrismaClient) => {
         id: randomUUID(),
         createdAt: now,
         createdBy: adminEmployee.id,
-        targetTypeId: companyTargetType.id,
+        targetTypeId: companyTargetType!.id,
       },
     })
 
@@ -341,7 +442,6 @@ export const seedDev = async (prisma: PrismaClient) => {
       },
     })
 
-    // 13. Create address only when company is new
     await prisma.companyAdress.create({
       data: {
         id: randomUUID(),
@@ -546,7 +646,7 @@ export const seedDev = async (prisma: PrismaClient) => {
 
   console.log('Materials seeded')
 
-  // Warehouse Places
+  // 19. Upsert Warehouse Places
   const warehousePlaces = [
     {
       abbreviation: 'W140C800R70',
@@ -1055,7 +1155,5 @@ export const seedDev = async (prisma: PrismaClient) => {
   }
 
   console.log('Warehouse places seeded')
-
-  console.log('Departments, Roles, SubRoles, RoleLevels, Targets, and VisibilityForRole seeded')
-  console.log('Total roleLevels created: 57 (14 × 4 + 1 Administrator)')
+  console.log('Seed complete')
 }

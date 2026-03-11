@@ -30,7 +30,7 @@ export const createFollowUpStructureAction = protectedServerFunction({
         createdAt: now,
         targetId: target.id,
         // documentId intentionally left as empty string until document module is implemented
-        documentId: documentId ?? '',
+        documentId: documentId ?? null,
       },
     })
 

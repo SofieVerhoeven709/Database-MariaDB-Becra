@@ -55,8 +55,8 @@ export default async function FollowUpStructuresPage() {
       })
 
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-  const defaultVisibleRoleNames = ['General']
-  const department = 'general'
+  const defaultVisibleRoleNames = ['Project']
+  const department = 'project'
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

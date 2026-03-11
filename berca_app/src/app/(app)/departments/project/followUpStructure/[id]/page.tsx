@@ -48,7 +48,7 @@ export default async function FollowUpStructureDetailPage({params}: FollowUpStru
   const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
 
-  const defaultVisibleRoleNames = ['General']
+  const defaultVisibleRoleNames = ['Project']
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

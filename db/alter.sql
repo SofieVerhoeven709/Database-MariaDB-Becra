@@ -118,3 +118,102 @@ END$$
 DELIMITER ;
 CALL _migration_add_serialtrack_fk();
 DROP PROCEDURE IF EXISTS _migration_add_serialtrack_fk;
+
+-- ============================================================
+-- Idempotent migration: make documentId nullable on FollowUp
+-- and FollowUpStructure, and relax the FK to ON DELETE SET NULL.
+-- Safe to run multiple times on both old and fresh databases.
+-- FK constraint names are resolved dynamically from
+-- information_schema to avoid hardcoding auto-generated names.
+-- ============================================================
+
+-- ------------------------------------------------------------
+-- 1. FollowUp.documentId: NOT NULL -> nullable
+-- ------------------------------------------------------------
+DROP PROCEDURE IF EXISTS _migration_followup_documentid_nullable;
+DELIMITER $$
+CREATE PROCEDURE _migration_followup_documentid_nullable()
+BEGIN
+    DECLARE v_fk_name VARCHAR(255) DEFAULT NULL;
+
+    -- Only proceed if the column is still NOT NULL
+    IF EXISTS (
+        SELECT 1 FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA = 'BecraBV'
+          AND TABLE_NAME   = 'FollowUp'
+          AND COLUMN_NAME  = 'documentId'
+          AND IS_NULLABLE  = 'NO'
+    ) THEN
+        -- Resolve the auto-generated FK name for documentId
+        SELECT CONSTRAINT_NAME INTO v_fk_name
+        FROM information_schema.KEY_COLUMN_USAGE
+        WHERE TABLE_SCHEMA            = 'BecraBV'
+          AND TABLE_NAME              = 'FollowUp'
+          AND COLUMN_NAME             = 'documentId'
+          AND REFERENCED_TABLE_NAME   = 'DocumentStructure'
+        LIMIT 1;
+
+        -- Drop the FK if found
+        IF v_fk_name IS NOT NULL THEN
+            SET @drop_fk = CONCAT('ALTER TABLE FollowUp DROP FOREIGN KEY `', v_fk_name, '`');
+            PREPARE stmt FROM @drop_fk;
+            EXECUTE stmt;
+            DEALLOCATE PREPARE stmt;
+        END IF;
+
+        -- Make the column nullable
+        ALTER TABLE FollowUp
+            MODIFY COLUMN `documentId` CHAR(36) NULL;
+
+        -- Re-add FK with SET NULL
+        ALTER TABLE FollowUp
+            ADD CONSTRAINT FOREIGN KEY (`documentId`)
+                REFERENCES DocumentStructure (`id`) ON DELETE SET NULL;
+    END IF;
+END$$
+DELIMITER ;
+CALL _migration_followup_documentid_nullable();
+DROP PROCEDURE IF EXISTS _migration_followup_documentid_nullable;
+
+-- ------------------------------------------------------------
+-- 2. FollowUpStructure.documentId: NOT NULL -> nullable
+-- ------------------------------------------------------------
+DROP PROCEDURE IF EXISTS _migration_followupstructure_documentid_nullable;
+DELIMITER $$
+CREATE PROCEDURE _migration_followupstructure_documentid_nullable()
+BEGIN
+    DECLARE v_fk_name VARCHAR(255) DEFAULT NULL;
+
+    IF EXISTS (
+        SELECT 1 FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA = 'BecraBV'
+          AND TABLE_NAME   = 'FollowUpStructure'
+          AND COLUMN_NAME  = 'documentId'
+          AND IS_NULLABLE  = 'NO'
+    ) THEN
+        SELECT CONSTRAINT_NAME INTO v_fk_name
+        FROM information_schema.KEY_COLUMN_USAGE
+        WHERE TABLE_SCHEMA            = 'BecraBV'
+          AND TABLE_NAME              = 'FollowUpStructure'
+          AND COLUMN_NAME             = 'documentId'
+          AND REFERENCED_TABLE_NAME   = 'DocumentStructure'
+        LIMIT 1;
+
+        IF v_fk_name IS NOT NULL THEN
+            SET @drop_fk = CONCAT('ALTER TABLE FollowUpStructure DROP FOREIGN KEY `', v_fk_name, '`');
+            PREPARE stmt FROM @drop_fk;
+            EXECUTE stmt;
+            DEALLOCATE PREPARE stmt;
+        END IF;
+
+        ALTER TABLE FollowUpStructure
+            MODIFY COLUMN `documentId` CHAR(36) NULL;
+
+        ALTER TABLE FollowUpStructure
+            ADD CONSTRAINT FOREIGN KEY (`documentId`)
+                REFERENCES DocumentStructure (`id`) ON DELETE SET NULL;
+    END IF;
+END$$
+DELIMITER ;
+CALL _migration_followupstructure_documentid_nullable();
+DROP PROCEDURE IF EXISTS _migration_followupstructure_documentid_nullable;

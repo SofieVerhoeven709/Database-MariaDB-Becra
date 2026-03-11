@@ -26,7 +26,7 @@ export const createFollowUpAction = protectedServerFunction({
         createdAt: now,
         targetId: target.id,
         // documentId intentionally left null until document module is implemented
-        documentId: documentId ?? '',
+        documentId: documentId ?? null,
       },
     })
 

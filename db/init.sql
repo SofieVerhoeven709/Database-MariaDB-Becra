@@ -234,56 +234,249 @@ CREATE TABLE
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-ALTER TABLE Role ADD createdBy CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_role_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- ============================================================
+-- Idempotent ALTERs: add createdBy / deletedBy columns + FKs
+-- to tables that were created before Employee existed.
+-- Each block is safe to re-run on an already-migrated database.
+-- ============================================================
 
-ALTER TABLE SubRole ADD createdBy CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_subRole_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- Role: createdBy
+DROP PROCEDURE IF EXISTS _init_role_createdBy;
+DELIMITER $$
+CREATE PROCEDURE _init_role_createdBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='Role' AND COLUMN_NAME='createdBy') THEN
+        ALTER TABLE Role ADD createdBy CHAR(36) NOT NULL,
+            ADD CONSTRAINT fk_role_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_role_createdBy();
+DROP PROCEDURE IF EXISTS _init_role_createdBy;
 
-ALTER TABLE RoleLevel ADD createdBy CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_roleLevel_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- SubRole: createdBy
+DROP PROCEDURE IF EXISTS _init_subRole_createdBy;
+DELIMITER $$
+CREATE PROCEDURE _init_subRole_createdBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='SubRole' AND COLUMN_NAME='createdBy') THEN
+        ALTER TABLE SubRole ADD createdBy CHAR(36) NOT NULL,
+            ADD CONSTRAINT fk_subRole_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_subRole_createdBy();
+DROP PROCEDURE IF EXISTS _init_subRole_createdBy;
 
-ALTER TABLE Function ADD createdBy CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_function_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- RoleLevel: createdBy
+DROP PROCEDURE IF EXISTS _init_roleLevel_createdBy;
+DELIMITER $$
+CREATE PROCEDURE _init_roleLevel_createdBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='RoleLevel' AND COLUMN_NAME='createdBy') THEN
+        ALTER TABLE RoleLevel ADD createdBy CHAR(36) NOT NULL,
+            ADD CONSTRAINT fk_roleLevel_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_roleLevel_createdBy();
+DROP PROCEDURE IF EXISTS _init_roleLevel_createdBy;
 
-ALTER TABLE Title ADD createdBy CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_title_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- Function: createdBy
+DROP PROCEDURE IF EXISTS _init_function_createdBy;
+DELIMITER $$
+CREATE PROCEDURE _init_function_createdBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='Function' AND COLUMN_NAME='createdBy') THEN
+        ALTER TABLE `Function` ADD createdBy CHAR(36) NOT NULL,
+            ADD CONSTRAINT fk_function_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_function_createdBy();
+DROP PROCEDURE IF EXISTS _init_function_createdBy;
 
-ALTER TABLE DocumentStructure ADD createdBy CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_documentStructure_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- Title: createdBy
+DROP PROCEDURE IF EXISTS _init_title_createdBy;
+DELIMITER $$
+CREATE PROCEDURE _init_title_createdBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='Title' AND COLUMN_NAME='createdBy') THEN
+        ALTER TABLE Title ADD createdBy CHAR(36) NOT NULL,
+            ADD CONSTRAINT fk_title_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_title_createdBy();
+DROP PROCEDURE IF EXISTS _init_title_createdBy;
 
-ALTER TABLE DocumentStructure ADD revisedById CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_documentStructure_revisedBy FOREIGN KEY (revisedById) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- DocumentStructure: createdBy
+DROP PROCEDURE IF EXISTS _init_docStruct_createdBy;
+DELIMITER $$
+CREATE PROCEDURE _init_docStruct_createdBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='DocumentStructure' AND COLUMN_NAME='createdBy') THEN
+        ALTER TABLE DocumentStructure ADD createdBy CHAR(36) NOT NULL,
+            ADD CONSTRAINT fk_documentStructure_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_docStruct_createdBy();
+DROP PROCEDURE IF EXISTS _init_docStruct_createdBy;
 
-ALTER TABLE DocumentStructure ADD managedById CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_documentStructure_managedBy FOREIGN KEY (managedById) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- DocumentStructure: revisedById
+DROP PROCEDURE IF EXISTS _init_docStruct_revisedById;
+DELIMITER $$
+CREATE PROCEDURE _init_docStruct_revisedById()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='DocumentStructure' AND COLUMN_NAME='revisedById') THEN
+        ALTER TABLE DocumentStructure ADD revisedById CHAR(36) NOT NULL,
+            ADD CONSTRAINT fk_documentStructure_revisedBy FOREIGN KEY (revisedById) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_docStruct_revisedById();
+DROP PROCEDURE IF EXISTS _init_docStruct_revisedById;
 
-ALTER TABLE DocumentStructure ADD targetId CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_documentStructure_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
+-- DocumentStructure: managedById
+DROP PROCEDURE IF EXISTS _init_docStruct_managedById;
+DELIMITER $$
+CREATE PROCEDURE _init_docStruct_managedById()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='DocumentStructure' AND COLUMN_NAME='managedById') THEN
+        ALTER TABLE DocumentStructure ADD managedById CHAR(36) NOT NULL,
+            ADD CONSTRAINT fk_documentStructure_managedBy FOREIGN KEY (managedById) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_docStruct_managedById();
+DROP PROCEDURE IF EXISTS _init_docStruct_managedById;
 
-ALTER TABLE Department ADD targetId CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_department_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
+-- DocumentStructure: targetId
+DROP PROCEDURE IF EXISTS _init_docStruct_targetId;
+DELIMITER $$
+CREATE PROCEDURE _init_docStruct_targetId()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='DocumentStructure' AND COLUMN_NAME='targetId') THEN
+        ALTER TABLE DocumentStructure ADD targetId CHAR(36) NOT NULL,
+            ADD CONSTRAINT fk_documentStructure_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_docStruct_targetId();
+DROP PROCEDURE IF EXISTS _init_docStruct_targetId;
 
-ALTER TABLE DepartmentExtern ADD targetId CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_departmentextern_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
+-- Department: targetId
+DROP PROCEDURE IF EXISTS _init_department_targetId;
+DELIMITER $$
+CREATE PROCEDURE _init_department_targetId()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='Department' AND COLUMN_NAME='targetId') THEN
+        ALTER TABLE Department ADD targetId CHAR(36) NOT NULL,
+            ADD CONSTRAINT fk_department_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_department_targetId();
+DROP PROCEDURE IF EXISTS _init_department_targetId;
 
-ALTER TABLE Role ADD deletedBy CHAR(36) NULL,
-ADD CONSTRAINT fk_role_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- DepartmentExtern: targetId
+DROP PROCEDURE IF EXISTS _init_deptExtern_targetId;
+DELIMITER $$
+CREATE PROCEDURE _init_deptExtern_targetId()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='DepartmentExtern' AND COLUMN_NAME='targetId') THEN
+        ALTER TABLE DepartmentExtern ADD targetId CHAR(36) NOT NULL,
+            ADD CONSTRAINT fk_departmentextern_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_deptExtern_targetId();
+DROP PROCEDURE IF EXISTS _init_deptExtern_targetId;
 
-ALTER TABLE SubRole ADD deletedBy CHAR(36) NULL,
-ADD CONSTRAINT fk_subRole_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- Role: deletedBy
+DROP PROCEDURE IF EXISTS _init_role_deletedBy;
+DELIMITER $$
+CREATE PROCEDURE _init_role_deletedBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='Role' AND COLUMN_NAME='deletedBy') THEN
+        ALTER TABLE Role ADD deletedBy CHAR(36) NULL,
+            ADD CONSTRAINT fk_role_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_role_deletedBy();
+DROP PROCEDURE IF EXISTS _init_role_deletedBy;
 
-ALTER TABLE RoleLevel ADD deletedBy CHAR(36) NULL,
-ADD CONSTRAINT fk_roleLevel_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- SubRole: deletedBy
+DROP PROCEDURE IF EXISTS _init_subRole_deletedBy;
+DELIMITER $$
+CREATE PROCEDURE _init_subRole_deletedBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='SubRole' AND COLUMN_NAME='deletedBy') THEN
+        ALTER TABLE SubRole ADD deletedBy CHAR(36) NULL,
+            ADD CONSTRAINT fk_subRole_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_subRole_deletedBy();
+DROP PROCEDURE IF EXISTS _init_subRole_deletedBy;
 
-ALTER TABLE Function ADD deletedBy CHAR(36) NULL,
-ADD CONSTRAINT fk_function_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- RoleLevel: deletedBy
+DROP PROCEDURE IF EXISTS _init_roleLevel_deletedBy;
+DELIMITER $$
+CREATE PROCEDURE _init_roleLevel_deletedBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='RoleLevel' AND COLUMN_NAME='deletedBy') THEN
+        ALTER TABLE RoleLevel ADD deletedBy CHAR(36) NULL,
+            ADD CONSTRAINT fk_roleLevel_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_roleLevel_deletedBy();
+DROP PROCEDURE IF EXISTS _init_roleLevel_deletedBy;
 
-ALTER TABLE Title ADD deletedBy CHAR(36) NULL,
-ADD CONSTRAINT fk_title_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- Function: deletedBy
+DROP PROCEDURE IF EXISTS _init_function_deletedBy;
+DELIMITER $$
+CREATE PROCEDURE _init_function_deletedBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='Function' AND COLUMN_NAME='deletedBy') THEN
+        ALTER TABLE `Function` ADD deletedBy CHAR(36) NULL,
+            ADD CONSTRAINT fk_function_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_function_deletedBy();
+DROP PROCEDURE IF EXISTS _init_function_deletedBy;
 
-ALTER TABLE DocumentStructure ADD deletedBy CHAR(36) NULL,
-ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+-- Title: deletedBy
+DROP PROCEDURE IF EXISTS _init_title_deletedBy;
+DELIMITER $$
+CREATE PROCEDURE _init_title_deletedBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='Title' AND COLUMN_NAME='deletedBy') THEN
+        ALTER TABLE Title ADD deletedBy CHAR(36) NULL,
+            ADD CONSTRAINT fk_title_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_title_deletedBy();
+DROP PROCEDURE IF EXISTS _init_title_deletedBy;
+
+-- DocumentStructure: deletedBy
+DROP PROCEDURE IF EXISTS _init_docStruct_deletedBy;
+DELIMITER $$
+CREATE PROCEDURE _init_docStruct_deletedBy()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='BecraBV' AND TABLE_NAME='DocumentStructure' AND COLUMN_NAME='deletedBy') THEN
+        ALTER TABLE DocumentStructure ADD deletedBy CHAR(36) NULL,
+            ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_docStruct_deletedBy();
+DROP PROCEDURE IF EXISTS _init_docStruct_deletedBy;
 
 
 CREATE TABLE
@@ -1195,27 +1388,40 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS WarehousePlace (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            abbreviation VARCHAR(255) NOT NULL,
-            beNumber VARCHAR(255),
-            serialTrackedId CHAR(36),
             place VARCHAR(255),
             shelf VARCHAR(255),
             `column` VARCHAR(255),
             layer VARCHAR(255),
             layerPlace VARCHAR(255),
             information VARCHAR(255),
-            quantityInStock INT NOT NULL,
+            volume INT NOT NULL,
             createdAt DATETIME NOT NULL,
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (serialTrackedId) REFERENCES MaterialSerialTrack (id) ON DELETE SET NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-ALTER TABLE Inventory ADD CONSTRAINT uq_inventory_beNumber UNIQUE (beNumber);
+-- Inventory: unique constraint on beNumber (idempotent)
+DROP PROCEDURE IF EXISTS _init_inventory_uq_beNumber;
+DELIMITER $$
+CREATE PROCEDURE _init_inventory_uq_beNumber()
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.TABLE_CONSTRAINTS
+        WHERE TABLE_SCHEMA    = 'BecraBV'
+          AND TABLE_NAME      = 'Inventory'
+          AND CONSTRAINT_NAME = 'uq_inventory_beNumber'
+          AND CONSTRAINT_TYPE = 'UNIQUE'
+    ) THEN
+        ALTER TABLE Inventory ADD CONSTRAINT uq_inventory_beNumber UNIQUE (beNumber);
+    END IF;
+END$$
+DELIMITER ;
+CALL _init_inventory_uq_beNumber();
+DROP PROCEDURE IF EXISTS _init_inventory_uq_beNumber;
 
 CREATE TABLE
       IF NOT EXISTS MaterialStructure (

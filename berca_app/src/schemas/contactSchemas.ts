@@ -55,6 +55,7 @@ export const createContactSchema = contactSchema
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
     initialCompanyId: z.string().nullable().optional(),
     initialRoleWithCompany: z.string().nullable().optional(),
+    initialProjectId: z.string().nullable().optional(),
   })
 
 export const updateContactSchema = contactSchema

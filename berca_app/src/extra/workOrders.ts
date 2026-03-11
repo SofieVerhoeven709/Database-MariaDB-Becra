@@ -11,9 +11,9 @@ import type {
 } from '@/generated/prisma/client'
 import type {MappedWorkOrder} from '@/types/workOrder'
 
-// ─── Mapper for list / simple use ────────────────────────────────────────────
 type WorkOrderWithRelations = WorkOrder & {
   Employee: Pick<Employee, 'firstName' | 'lastName'>
+  Employee_WorkOrder_deletedByToEmployee: Pick<Employee, 'firstName' | 'lastName'> | null
   Project: Pick<Project, 'projectNumber' | 'projectName'>
 }
 
@@ -34,8 +34,10 @@ export function mapWorkOrder(wo: WorkOrderWithRelations): MappedWorkOrder {
     deleted: wo.deleted,
     deletedAt: wo.deletedAt?.toISOString() ?? null,
     deletedBy: wo.deletedBy,
-    createdByFirstName: wo.Employee.firstName,
-    createdByLastName: wo.Employee.lastName,
+    createdByName: `${wo.Employee.firstName} ${wo.Employee.lastName}`,
+    deletedByName: wo.Employee_WorkOrder_deletedByToEmployee
+      ? `${wo.Employee_WorkOrder_deletedByToEmployee.firstName} ${wo.Employee_WorkOrder_deletedByToEmployee.lastName}`
+      : null,
     projectNumber: wo.Project.projectNumber,
     projectName: wo.Project.projectName,
   }

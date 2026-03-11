@@ -136,8 +136,9 @@ export function PurchaseDetailFormDialog({
                 id="unitPrice"
                 type="number"
                 min={0}
+                step="any"
                 value={form.unitPrice ?? ''}
-                onChange={e => set('unitPrice', e.target.value ? parseInt(e.target.value, 10) : null)}
+                onChange={e => set('unitPrice', e.target.value ? parseFloat(e.target.value) : null)}
                 placeholder="0"
                 className="bg-secondary border-border"
               />
@@ -160,8 +161,9 @@ export function PurchaseDetailFormDialog({
                 id="totalCost"
                 type="number"
                 min={0}
+                step="any"
                 value={form.totalCost ?? ''}
-                onChange={e => set('totalCost', e.target.value ? parseInt(e.target.value, 10) : null)}
+                onChange={e => set('totalCost', e.target.value ? parseFloat(e.target.value) : null)}
                 placeholder="0"
                 className="bg-secondary border-border"
               />

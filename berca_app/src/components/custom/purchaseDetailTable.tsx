@@ -24,7 +24,7 @@ interface PurchaseDetailTableProps {
 
 function formatCurrency(val: number | null | undefined) {
   if (val == null) return '—'
-  return new Intl.NumberFormat('nl-BE', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(val)
+  return new Intl.NumberFormat('nl-BE', {style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2}).format(val)
 }
 
 function formatDate(iso: string | null | undefined) {

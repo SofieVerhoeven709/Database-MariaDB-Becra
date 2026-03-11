@@ -1126,7 +1126,7 @@ model MaterialPrice {
   updatedAt                                  DateTime? @db.DateTime(0)
   rejected                                   Boolean?
   additionalInfo                             String?   @db.VarChar(255)
-  unitPrice                                  Int?
+  unitPrice                                  Decimal?  @db.Decimal(10, 2)
   quantityPrice                              Int?
   createdBy                                  String    @db.Char(36)
   deleted                                    Boolean   @default(false)
@@ -1170,7 +1170,6 @@ model MaterialSerialTrack {
   Employee                                         Employee?                        @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrack_ibfk_4")
   Employee_MaterialSerialTrack_deletedByToEmployee Employee?                        @relation("MaterialSerialTrack_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialSerialTrack_ibfk_5")
   MaterialSerialTrackedStructure                   MaterialSerialTrackedStructure[]
-  WarehousePlace                                   WarehousePlace[]
 
   @@index([companyId], map: "companyId")
   @@index([createdBy], map: "createdBy")
@@ -1477,9 +1476,9 @@ model PurchaseDetail {
   projectId                                   String?   @db.Char(36)
   purchaseId                                  String?   @db.Char(36)
   beNumber                                    String?   @db.VarChar(255)
-  unitPrice                                   Int?
+  unitPrice                                   Decimal?  @db.Decimal(10, 2)
   quantity                                    Int?
-  totalCost                                   Int?
+  totalCost                                   Decimal?  @db.Decimal(10, 2)
   status                                      String?   @db.VarChar(255)
   additionalInfo                              String?   @db.VarChar(255)
   updatedAt                                   DateTime? @db.DateTime(0)
@@ -1895,29 +1894,27 @@ model VisibilityForRole {
 }
 
 model WarehousePlace {
-  id                                          String               @id @db.Char(36)
-  abbreviation                                String               @db.VarChar(255)
-  beNumber                                    String?              @db.VarChar(255)
-  serialTrackedId                             String?              @db.Char(36)
-  place                                       String?              @db.VarChar(255)
-  shelf                                       String?              @db.VarChar(255)
-  column                                      String?              @db.VarChar(255)
-  layer                                       String?              @db.VarChar(255)
-  layerPlace                                  String?              @db.VarChar(255)
-  information                                 String?              @db.VarChar(255)
-  quantityInStock                             Int
-  createdAt                                   DateTime             @db.DateTime(0)
-  createdBy                                   String               @db.Char(36)
-  deleted                                     Boolean              @default(false)
-  deletedAt                                   DateTime?            @db.DateTime(0)
-  deletedBy                                   String?              @db.Char(36)
-  Employee                                    Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_1")
-  MaterialSerialTrack                         MaterialSerialTrack? @relation(fields: [serialTrackedId], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_2")
-  Employee_WarehousePlace_deletedByToEmployee Employee?            @relation("WarehousePlace_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_3")
+  id                                          String    @id @db.Char(36)
+  abbreviation                                String    @default("") @db.VarChar(255)
+  beNumber                                    String?   @db.VarChar(255)
+  serialTrackedId                             String?   @db.VarChar(255)
+  place                                       String?   @db.VarChar(255)
+  shelf                                       String?   @db.VarChar(255)
+  column                                      String?   @db.VarChar(255)
+  layer                                       String?   @db.VarChar(255)
+  layerPlace                                  String?   @db.VarChar(255)
+  information                                 String?   @db.VarChar(255)
+  quantityInStock                             Int       @default(0)
+  createdAt                                   DateTime  @db.DateTime(0)
+  createdBy                                   String    @db.Char(36)
+  deleted                                     Boolean   @default(false)
+  deletedAt                                   DateTime? @db.DateTime(0)
+  deletedBy                                   String?   @db.Char(36)
+  Employee                                    Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_1")
+  Employee_WarehousePlace_deletedByToEmployee Employee? @relation("WarehousePlace_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_3")
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
-  @@index([serialTrackedId], map: "serialTrackedId")
 }
 
 model WorkOrder {

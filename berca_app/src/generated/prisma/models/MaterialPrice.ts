@@ -27,12 +27,12 @@ export type AggregateMaterialPrice = {
 }
 
 export type MaterialPriceAvgAggregateOutputType = {
-  unitPrice: number | null
+  unitPrice: runtime.Decimal | null
   quantityPrice: number | null
 }
 
 export type MaterialPriceSumAggregateOutputType = {
-  unitPrice: number | null
+  unitPrice: runtime.Decimal | null
   quantityPrice: number | null
 }
 
@@ -49,7 +49,7 @@ export type MaterialPriceMinAggregateOutputType = {
   updatedAt: Date | null
   rejected: boolean | null
   additionalInfo: string | null
-  unitPrice: number | null
+  unitPrice: runtime.Decimal | null
   quantityPrice: number | null
   createdBy: string | null
   deleted: boolean | null
@@ -70,7 +70,7 @@ export type MaterialPriceMaxAggregateOutputType = {
   updatedAt: Date | null
   rejected: boolean | null
   additionalInfo: string | null
-  unitPrice: number | null
+  unitPrice: runtime.Decimal | null
   quantityPrice: number | null
   createdBy: string | null
   deleted: boolean | null
@@ -274,7 +274,7 @@ export type MaterialPriceGroupByOutputType = {
   updatedAt: Date | null
   rejected: boolean | null
   additionalInfo: string | null
-  unitPrice: number | null
+  unitPrice: runtime.Decimal | null
   quantityPrice: number | null
   createdBy: string
   deleted: boolean
@@ -318,7 +318,7 @@ export type MaterialPriceWhereInput = {
   updatedAt?: Prisma.DateTimeNullableFilter<"MaterialPrice"> | Date | string | null
   rejected?: Prisma.BoolNullableFilter<"MaterialPrice"> | boolean | null
   additionalInfo?: Prisma.StringNullableFilter<"MaterialPrice"> | string | null
-  unitPrice?: Prisma.IntNullableFilter<"MaterialPrice"> | number | null
+  unitPrice?: Prisma.DecimalNullableFilter<"MaterialPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.IntNullableFilter<"MaterialPrice"> | number | null
   createdBy?: Prisma.StringFilter<"MaterialPrice"> | string
   deleted?: Prisma.BoolFilter<"MaterialPrice"> | boolean
@@ -368,7 +368,7 @@ export type MaterialPriceWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeNullableFilter<"MaterialPrice"> | Date | string | null
   rejected?: Prisma.BoolNullableFilter<"MaterialPrice"> | boolean | null
   additionalInfo?: Prisma.StringNullableFilter<"MaterialPrice"> | string | null
-  unitPrice?: Prisma.IntNullableFilter<"MaterialPrice"> | number | null
+  unitPrice?: Prisma.DecimalNullableFilter<"MaterialPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.IntNullableFilter<"MaterialPrice"> | number | null
   createdBy?: Prisma.StringFilter<"MaterialPrice"> | string
   deleted?: Prisma.BoolFilter<"MaterialPrice"> | boolean
@@ -420,7 +420,7 @@ export type MaterialPriceScalarWhereWithAggregatesInput = {
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"MaterialPrice"> | Date | string | null
   rejected?: Prisma.BoolNullableWithAggregatesFilter<"MaterialPrice"> | boolean | null
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"MaterialPrice"> | string | null
-  unitPrice?: Prisma.IntNullableWithAggregatesFilter<"MaterialPrice"> | number | null
+  unitPrice?: Prisma.DecimalNullableWithAggregatesFilter<"MaterialPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.IntNullableWithAggregatesFilter<"MaterialPrice"> | number | null
   createdBy?: Prisma.StringWithAggregatesFilter<"MaterialPrice"> | string
   deleted?: Prisma.BoolWithAggregatesFilter<"MaterialPrice"> | boolean
@@ -441,7 +441,7 @@ export type MaterialPriceCreateInput = {
   updatedAt?: Date | string | null
   rejected?: boolean | null
   additionalInfo?: string | null
-  unitPrice?: number | null
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -462,7 +462,7 @@ export type MaterialPriceUncheckedCreateInput = {
   updatedAt?: Date | string | null
   rejected?: boolean | null
   additionalInfo?: string | null
-  unitPrice?: number | null
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: number | null
   createdBy: string
   deleted?: boolean
@@ -483,7 +483,7 @@ export type MaterialPriceUpdateInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -504,7 +504,7 @@ export type MaterialPriceUncheckedUpdateInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -525,7 +525,7 @@ export type MaterialPriceCreateManyInput = {
   updatedAt?: Date | string | null
   rejected?: boolean | null
   additionalInfo?: string | null
-  unitPrice?: number | null
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: number | null
   createdBy: string
   deleted?: boolean
@@ -546,7 +546,7 @@ export type MaterialPriceUpdateManyMutationInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -565,7 +565,7 @@ export type MaterialPriceUncheckedUpdateManyInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -746,6 +746,14 @@ export type MaterialPriceUncheckedUpdateManyWithoutEmployee_MaterialPrice_delete
   deleteMany?: Prisma.MaterialPriceScalarWhereInput | Prisma.MaterialPriceScalarWhereInput[]
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type MaterialPriceCreateWithoutEmployeeInput = {
   id: string
   beNumber?: string | null
@@ -759,7 +767,7 @@ export type MaterialPriceCreateWithoutEmployeeInput = {
   updatedAt?: Date | string | null
   rejected?: boolean | null
   additionalInfo?: string | null
-  unitPrice?: number | null
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -779,7 +787,7 @@ export type MaterialPriceUncheckedCreateWithoutEmployeeInput = {
   updatedAt?: Date | string | null
   rejected?: boolean | null
   additionalInfo?: string | null
-  unitPrice?: number | null
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -809,7 +817,7 @@ export type MaterialPriceCreateWithoutEmployee_MaterialPrice_deletedByToEmployee
   updatedAt?: Date | string | null
   rejected?: boolean | null
   additionalInfo?: string | null
-  unitPrice?: number | null
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -829,7 +837,7 @@ export type MaterialPriceUncheckedCreateWithoutEmployee_MaterialPrice_deletedByT
   updatedAt?: Date | string | null
   rejected?: boolean | null
   additionalInfo?: string | null
-  unitPrice?: number | null
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: number | null
   createdBy: string
   deleted?: boolean
@@ -878,7 +886,7 @@ export type MaterialPriceScalarWhereInput = {
   updatedAt?: Prisma.DateTimeNullableFilter<"MaterialPrice"> | Date | string | null
   rejected?: Prisma.BoolNullableFilter<"MaterialPrice"> | boolean | null
   additionalInfo?: Prisma.StringNullableFilter<"MaterialPrice"> | string | null
-  unitPrice?: Prisma.IntNullableFilter<"MaterialPrice"> | number | null
+  unitPrice?: Prisma.DecimalNullableFilter<"MaterialPrice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.IntNullableFilter<"MaterialPrice"> | number | null
   createdBy?: Prisma.StringFilter<"MaterialPrice"> | string
   deleted?: Prisma.BoolFilter<"MaterialPrice"> | boolean
@@ -915,7 +923,7 @@ export type MaterialPriceCreateManyEmployeeInput = {
   updatedAt?: Date | string | null
   rejected?: boolean | null
   additionalInfo?: string | null
-  unitPrice?: number | null
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: number | null
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -935,7 +943,7 @@ export type MaterialPriceCreateManyEmployee_MaterialPrice_deletedByToEmployeeInp
   updatedAt?: Date | string | null
   rejected?: boolean | null
   additionalInfo?: string | null
-  unitPrice?: number | null
+  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: number | null
   createdBy: string
   deleted?: boolean
@@ -955,7 +963,7 @@ export type MaterialPriceUpdateWithoutEmployeeInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -975,7 +983,7 @@ export type MaterialPriceUncheckedUpdateWithoutEmployeeInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -995,7 +1003,7 @@ export type MaterialPriceUncheckedUpdateManyWithoutEmployeeInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1015,7 +1023,7 @@ export type MaterialPriceUpdateWithoutEmployee_MaterialPrice_deletedByToEmployee
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1035,7 +1043,7 @@ export type MaterialPriceUncheckedUpdateWithoutEmployee_MaterialPrice_deletedByT
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1055,7 +1063,7 @@ export type MaterialPriceUncheckedUpdateManyWithoutEmployee_MaterialPrice_delete
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quantityPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1135,7 +1143,7 @@ export type $MaterialPricePayload<ExtArgs extends runtime.Types.Extensions.Inter
     updatedAt: Date | null
     rejected: boolean | null
     additionalInfo: string | null
-    unitPrice: number | null
+    unitPrice: runtime.Decimal | null
     quantityPrice: number | null
     createdBy: string
     deleted: boolean
@@ -1524,7 +1532,7 @@ export interface MaterialPriceFieldRefs {
   readonly updatedAt: Prisma.FieldRef<"MaterialPrice", 'DateTime'>
   readonly rejected: Prisma.FieldRef<"MaterialPrice", 'Boolean'>
   readonly additionalInfo: Prisma.FieldRef<"MaterialPrice", 'String'>
-  readonly unitPrice: Prisma.FieldRef<"MaterialPrice", 'Int'>
+  readonly unitPrice: Prisma.FieldRef<"MaterialPrice", 'Decimal'>
   readonly quantityPrice: Prisma.FieldRef<"MaterialPrice", 'Int'>
   readonly createdBy: Prisma.FieldRef<"MaterialPrice", 'String'>
   readonly deleted: Prisma.FieldRef<"MaterialPrice", 'Boolean'>

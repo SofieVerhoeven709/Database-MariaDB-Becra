@@ -465,7 +465,7 @@ export function FollowUpTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${department}/followup/${f.id}` as Route}>
+                      <Link href={`/departments/${department}/followUp/${f.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

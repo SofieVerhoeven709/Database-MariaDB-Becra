@@ -409,7 +409,7 @@ export function FollowUpStructureTable({
                   className={`border-border/40 hover:bg-secondary/50 ${s.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/${department}/followupstructure/${s.id}` as Route}
+                      href={`/departments/${department}/followUpStructure/${s.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {formatDate(s.contactDate)}
                     </Link>

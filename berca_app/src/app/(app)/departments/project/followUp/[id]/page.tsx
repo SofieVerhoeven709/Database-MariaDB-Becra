@@ -1,15 +1,22 @@
-import {FollowUpStructureTable} from '@/components/custom/followUpStructureTable'
-import {getFollowUpStructures} from '@/dal/followUpStructures'
+import {FollowUpDetail} from '@/components/custom/followUpDetail'
+import {getFollowUpDetail} from '@/dal/followUps'
 import {getAllRoleLevels} from '@/dal/roleLevel'
-import {mapFollowUpStructure} from '@/extra/followUpStructures'
+import {mapFollowUpDetail} from '@/extra/followUps'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
+import {notFound} from 'next/navigation'
 
-export default async function FollowUpStructuresPage() {
-  const [structuresFromDAL, roleLevels, profile, statuses, urgencyTypes, employees, contacts, followUps] =
+interface FollowUpDetailPageProps {
+  params: Promise<{department: string; id: string}>
+}
+
+export default async function FollowUpDetailPage({params}: FollowUpDetailPageProps) {
+  const {department, id} = await params
+
+  const [followUpFromDAL, roleLevels, profile, statuses, urgencyTypes, followUpTypes, employees, contacts] =
     await Promise.all([
-      getFollowUpStructures(),
+      getFollowUpDetail(id).catch(() => null),
       getAllRoleLevels(),
       getSessionProfileFromCookieOrThrow(),
       prismaClient.status.findMany({
@@ -18,6 +25,11 @@ export default async function FollowUpStructuresPage() {
         select: {id: true, name: true},
       }),
       prismaClient.urgencyType.findMany({
+        where: {deleted: false},
+        orderBy: {name: 'asc'},
+        select: {id: true, name: true},
+      }),
+      prismaClient.followUpType.findMany({
         where: {deleted: false},
         orderBy: {name: 'asc'},
         select: {id: true, name: true},
@@ -32,57 +44,33 @@ export default async function FollowUpStructuresPage() {
         orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
         select: {id: true, firstName: true, lastName: true},
       }),
-      prismaClient.followUp.findMany({
-        where: {deleted: false},
-        orderBy: {createdAt: 'desc'},
-        select: {id: true, activityDescription: true},
-      }),
     ])
+
+  if (!followUpFromDAL) notFound()
+
+  const followUp = mapFollowUpDetail(followUpFromDAL)
+  const roleLevelOptions = mapRoleLevelOptions(roleLevels)
 
   const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
-  const currentUserRoleLevelId = profile.roleLevelId ?? ''
-  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
-  const allStructures = structuresFromDAL.map(mapFollowUpStructure)
-  const structures = isAdmin
-    ? allStructures
-    : allStructures.filter(s => {
-        const rows = s.visibilityForRoles
-        if (rows.length === 0) return true
-        const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
-        return myRow?.visible ?? false
-      })
-
-  const roleLevelOptions = mapRoleLevelOptions(roleLevels)
   const defaultVisibleRoleNames = ['General']
-  const department = 'general'
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-8">
-          <h1 className="text-lg font-semibold text-foreground">Follow-up Entries</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Manage follow-up log entries and tasks</p>
-        </div>
-
-        <FollowUpStructureTable
-          initialStructures={structures}
+      <div className="mx-auto max-w-5xl">
+        <FollowUpDetail
+          followUp={followUp}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          department={department}
           statusOptions={statuses}
           urgencyTypeOptions={urgencyTypes}
+          followUpTypeOptions={followUpTypes}
           employeeOptions={employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))}
           contactOptions={contacts.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))}
-          followUpOptions={followUps.map(f => ({
-            id: f.id,
-            name: f.activityDescription
-              ? f.activityDescription.slice(0, 60) + (f.activityDescription.length > 60 ? '…' : '')
-              : `Follow-up (${f.id.slice(0, 8)})`,
-          }))}
+          department={department}
         />
       </div>
     </main>

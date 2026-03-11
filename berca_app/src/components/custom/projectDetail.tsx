@@ -43,6 +43,7 @@ import type {MappedContact} from '@/types/contact'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {ContactFormDialog} from '@/components/custom/contactFormDialog'
+import {WorkOrderFormDialog} from '@/components/custom/workOrderFormDialog'
 
 interface Option {
   id: string
@@ -134,6 +135,7 @@ export function ProjectDetail({
   const [showDeletedPurchases, setShowDeletedPurchases] = useState(false)
   const [showDeletedMaterials, setShowDeletedMaterials] = useState(false)
   const [showDeletedSubProjects, setShowDeletedSubProjects] = useState(false)
+  const [workOrderDialogOpen, setWorkOrderDialogOpen] = useState(false)
 
   // ─── Project edit form ────────────────────────────────────────────────────
   const [form, setForm] = useState({
@@ -211,6 +213,12 @@ export function ProjectDetail({
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canDelete = isAdmin || currentUserLevel >= PERM.delete
   const canManageWorkOrders = isAdmin || currentUserLevel >= PERM.workOrders
+  const workOrderProjectOptions = [
+    {
+      id: project.id,
+      name: `${project.projectNumber} — ${project.projectName}`,
+    },
+  ]
 
   function handleCancel() {
     setForm({
@@ -309,9 +317,9 @@ export function ProjectDetail({
     try {
       await createProjectContactAction({
         projectId: project.id,
-        contactId: inlineContact.contactId,
+        contactId: dialogContactForm.contactId,
         idValid: true,
-        description: inlineContact.description || null,
+        description: dialogContactForm.description || null,
       })
       setDialogContactForm(emptyContact())
       setDialogContact(false)
@@ -1042,12 +1050,13 @@ export function ProjectDetail({
         <TabsContent value="workorders" className="mt-3">
           {canManageWorkOrders && (
             <div className="flex items-center gap-2 mb-3">
-              <Link href={`/departments/project/project/${project.id}/workOrder/new` as Route}>
-                <Button size="sm" className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7">
-                  <Plus className="h-3 w-3" />
-                  New Work Order
-                </Button>
-              </Link>
+              <Button
+                size="sm"
+                className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7"
+                onClick={() => setWorkOrderDialogOpen(true)}>
+                <Plus className="h-3 w-3" />
+                New Work Order
+              </Button>
             </div>
           )}
           {canDelete && (
@@ -1738,6 +1747,13 @@ export function ProjectDetail({
         departmentExternOptions={departmentExternOptions}
         titleOptions={titleOptions}
         companyOptions={companies}
+      />
+
+      <WorkOrderFormDialog
+        open={workOrderDialogOpen}
+        onOpenChange={setWorkOrderDialogOpen}
+        workOrder={null}
+        projectOptions={workOrderProjectOptions}
       />
 
       {/* ── Edit Contact Dialog ──────────────────────────────────────────────── */}

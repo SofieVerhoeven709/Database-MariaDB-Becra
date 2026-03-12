@@ -88,12 +88,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.19.2
- * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
+ * Prisma Client JS version: 6.19.0
+ * Query Engine version: 2ba551f319ab1df4bc874a89965d8b3641056773
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.19.2",
-  engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
+  client: "6.19.0",
+  engine: "2ba551f319ab1df4bc874a89965d8b3641056773"
 }
 
 /**
@@ -6859,21 +6859,21 @@ export type VisibilityForRoleScalarFieldEnum = (typeof VisibilityForRoleScalarFi
 
 export const WarehousePlaceScalarFieldEnum = {
   id: 'id',
-  abbreviation: 'abbreviation',
-  beNumber: 'beNumber',
-  serialTrackedId: 'serialTrackedId',
   place: 'place',
   shelf: 'shelf',
   column: 'column',
   layer: 'layer',
   layerPlace: 'layerPlace',
   information: 'information',
-  quantityInStock: 'quantityInStock',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  abbreviation: 'abbreviation',
+  beNumber: 'beNumber',
+  quantityInStock: 'quantityInStock',
+  serialTrackedId: 'serialTrackedId'
 } as const
 
 export type WarehousePlaceScalarFieldEnum = (typeof WarehousePlaceScalarFieldEnum)[keyof typeof WarehousePlaceScalarFieldEnum]
@@ -7972,9 +7972,6 @@ export type VisibilityForRoleOrderByRelevanceFieldEnum = (typeof VisibilityForRo
 
 export const WarehousePlaceOrderByRelevanceFieldEnum = {
   id: 'id',
-  abbreviation: 'abbreviation',
-  beNumber: 'beNumber',
-  serialTrackedId: 'serialTrackedId',
   place: 'place',
   shelf: 'shelf',
   column: 'column',
@@ -7982,7 +7979,10 @@ export const WarehousePlaceOrderByRelevanceFieldEnum = {
   layerPlace: 'layerPlace',
   information: 'information',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  abbreviation: 'abbreviation',
+  beNumber: 'beNumber',
+  serialTrackedId: 'serialTrackedId'
 } as const
 
 export type WarehousePlaceOrderByRelevanceFieldEnum = (typeof WarehousePlaceOrderByRelevanceFieldEnum)[keyof typeof WarehousePlaceOrderByRelevanceFieldEnum]

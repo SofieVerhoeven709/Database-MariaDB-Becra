@@ -24,9 +24,9 @@ export const createPurchaseDetailSchema = z.object({
   purchaseId: z.string(),
   projectId: z.string().nullable().optional(),
   beNumber: z.string().max(255).nullable().optional(),
-  unitPrice: z.number().int().nullable().optional(),
+  unitPrice: z.string().nullable().optional(),
   quantity: z.number().int().nullable().optional(),
-  totalCost: z.number().int().nullable().optional(),
+  totalCost: z.string().nullable().optional(),
   status: z.string().max(255).nullable().optional(),
   additionalInfo: z.string().max(255).nullable().optional(),
 })

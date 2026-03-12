@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -233,7 +233,10 @@ export function MaterialTable({initialMaterials, materialGroups, units}: Materia
               </TableRow>
             ) : (
               filtered.map(m => (
-                <TableRow key={m.id} className="hover:bg-secondary/50 transition-colors">
+                <TableRow
+                  key={m.id}
+                  className="hover:bg-secondary/50 transition-colors cursor-pointer"
+                  onClick={() => router.push(`/departments/engineering/material/${m.id}`)}>
                   <TableCell className="font-mono text-sm font-medium">{m.beNumber}</TableCell>
                   <TableCell className="text-sm">
                     {m.name ?? <span className="text-muted-foreground">—</span>}
@@ -260,8 +263,15 @@ export function MaterialTable({initialMaterials, materialGroups, units}: Materia
                       </Badge>
                     )}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right" onClick={e => e.stopPropagation()}>
                     <div className="flex justify-end gap-1">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-7 w-7"
+                        onClick={() => router.push(`/departments/engineering/material/${m.id}`)}>
+                        <Eye className="h-3.5 w-3.5" />
+                      </Button>
                       <Button
                         size="icon"
                         variant="ghost"

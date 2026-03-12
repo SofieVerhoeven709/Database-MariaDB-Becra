@@ -26,9 +26,9 @@ export interface MappedPurchaseDetail {
   projectNumber: string | null
   projectName: string | null
   beNumber: string | null
-  unitPrice: number | null
+  unitPrice: string | null
   quantity: number | null
-  totalCost: number | null
+  totalCost: string | null
   status: string | null
   additionalInfo: string | null
   updatedAt: string | null

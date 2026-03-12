@@ -41,6 +41,7 @@ export const updateMaterialAction = protectedFormAction({
     logger.info(`Material updated: ${updated.id}`)
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)
+    revalidatePath(`${REVALIDATE_MATERIAL}/${updated.id}`)
   },
 })
 
@@ -53,5 +54,6 @@ export const deleteMaterialAction = protectedFormAction({
     logger.info(`Material soft-deleted: ${data.id}`)
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)
+    revalidatePath(`${REVALIDATE_MATERIAL}/${data.id}`)
   },
 })

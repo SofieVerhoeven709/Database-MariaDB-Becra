@@ -90,3 +90,13 @@ ALTER TABLE FollowUpStructure
     DROP FOREIGN KEY IF EXISTS FollowUpStructure_ibfk_6,
     MODIFY COLUMN `documentId` CHAR(36) NULL,
     ADD CONSTRAINT FOREIGN KEY (`documentId`) REFERENCES DocumentStructure (`id`) ON DELETE SET NULL;
+
+
+CREATE TABLE
+      Testing (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME
+      ) ENGINE = InnoDB;

@@ -312,7 +312,7 @@ export type FollowUpGroupByOutputType = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId: string | null
   targetId: string
   followUpTypeId: string
   deleted: boolean
@@ -362,7 +362,7 @@ export type FollowUpWhereInput = {
   statusId?: Prisma.StringFilter<"FollowUp"> | string
   executedBy?: Prisma.StringFilter<"FollowUp"> | string
   urgencyTypeId?: Prisma.StringFilter<"FollowUp"> | string
-  documentId?: Prisma.StringFilter<"FollowUp"> | string
+  documentId?: Prisma.StringNullableFilter<"FollowUp"> | string | null
   targetId?: Prisma.StringFilter<"FollowUp"> | string
   followUpTypeId?: Prisma.StringFilter<"FollowUp"> | string
   deleted?: Prisma.BoolFilter<"FollowUp"> | boolean
@@ -372,7 +372,7 @@ export type FollowUpWhereInput = {
   Employee_FollowUp_ownedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Status?: Prisma.XOR<Prisma.StatusScalarRelationFilter, Prisma.StatusWhereInput>
   Employee_FollowUp_executedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureScalarRelationFilter, Prisma.DocumentStructureWhereInput>
+  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Employee_FollowUp_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   FollowUpType?: Prisma.XOR<Prisma.FollowUpTypeScalarRelationFilter, Prisma.FollowUpTypeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
@@ -400,7 +400,7 @@ export type FollowUpOrderByWithRelationInput = {
   statusId?: Prisma.SortOrder
   executedBy?: Prisma.SortOrder
   urgencyTypeId?: Prisma.SortOrder
-  documentId?: Prisma.SortOrder
+  documentId?: Prisma.SortOrderInput | Prisma.SortOrder
   targetId?: Prisma.SortOrder
   followUpTypeId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
@@ -442,7 +442,7 @@ export type FollowUpWhereUniqueInput = Prisma.AtLeast<{
   statusId?: Prisma.StringFilter<"FollowUp"> | string
   executedBy?: Prisma.StringFilter<"FollowUp"> | string
   urgencyTypeId?: Prisma.StringFilter<"FollowUp"> | string
-  documentId?: Prisma.StringFilter<"FollowUp"> | string
+  documentId?: Prisma.StringNullableFilter<"FollowUp"> | string | null
   targetId?: Prisma.StringFilter<"FollowUp"> | string
   followUpTypeId?: Prisma.StringFilter<"FollowUp"> | string
   deleted?: Prisma.BoolFilter<"FollowUp"> | boolean
@@ -452,7 +452,7 @@ export type FollowUpWhereUniqueInput = Prisma.AtLeast<{
   Employee_FollowUp_ownedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Status?: Prisma.XOR<Prisma.StatusScalarRelationFilter, Prisma.StatusWhereInput>
   Employee_FollowUp_executedByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureScalarRelationFilter, Prisma.DocumentStructureWhereInput>
+  DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Employee_FollowUp_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   FollowUpType?: Prisma.XOR<Prisma.FollowUpTypeScalarRelationFilter, Prisma.FollowUpTypeWhereInput>
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
@@ -480,7 +480,7 @@ export type FollowUpOrderByWithAggregationInput = {
   statusId?: Prisma.SortOrder
   executedBy?: Prisma.SortOrder
   urgencyTypeId?: Prisma.SortOrder
-  documentId?: Prisma.SortOrder
+  documentId?: Prisma.SortOrderInput | Prisma.SortOrder
   targetId?: Prisma.SortOrder
   followUpTypeId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
@@ -515,7 +515,7 @@ export type FollowUpScalarWhereWithAggregatesInput = {
   statusId?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
   executedBy?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
   urgencyTypeId?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
-  documentId?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
+  documentId?: Prisma.StringNullableWithAggregatesFilter<"FollowUp"> | string | null
   targetId?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
   followUpTypeId?: Prisma.StringWithAggregatesFilter<"FollowUp"> | string
   deleted?: Prisma.BoolWithAggregatesFilter<"FollowUp"> | boolean
@@ -543,7 +543,7 @@ export type FollowUpCreateInput = {
   Employee_FollowUp_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_executedByToEmployeeInput
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_createdByToEmployeeInput
   FollowUpType: Prisma.FollowUpTypeCreateNestedOneWithoutFollowUpInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpInput
@@ -571,7 +571,7 @@ export type FollowUpUncheckedCreateInput = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -601,7 +601,7 @@ export type FollowUpUpdateInput = {
   Employee_FollowUp_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_executedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpNestedInput
   Employee_FollowUp_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_createdByToEmployeeNestedInput
   FollowUpType?: Prisma.FollowUpTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpNestedInput
@@ -629,7 +629,7 @@ export type FollowUpUncheckedUpdateInput = {
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -658,7 +658,7 @@ export type FollowUpCreateManyInput = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -703,7 +703,7 @@ export type FollowUpUncheckedUpdateManyInput = {
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1331,7 +1331,7 @@ export type FollowUpScalarWhereInput = {
   statusId?: Prisma.StringFilter<"FollowUp"> | string
   executedBy?: Prisma.StringFilter<"FollowUp"> | string
   urgencyTypeId?: Prisma.StringFilter<"FollowUp"> | string
-  documentId?: Prisma.StringFilter<"FollowUp"> | string
+  documentId?: Prisma.StringNullableFilter<"FollowUp"> | string | null
   targetId?: Prisma.StringFilter<"FollowUp"> | string
   followUpTypeId?: Prisma.StringFilter<"FollowUp"> | string
   deleted?: Prisma.BoolFilter<"FollowUp"> | boolean
@@ -1358,7 +1358,7 @@ export type FollowUpCreateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_executedByToEmployeeInput
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_createdByToEmployeeInput
   FollowUpType: Prisma.FollowUpTypeCreateNestedOneWithoutFollowUpInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpInput
@@ -1385,7 +1385,7 @@ export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_ownedByToEmployeeInp
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -1424,7 +1424,7 @@ export type FollowUpCreateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpInput
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_createdByToEmployeeInput
   FollowUpType: Prisma.FollowUpTypeCreateNestedOneWithoutFollowUpInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpInput
@@ -1451,7 +1451,7 @@ export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_executedByToEmployee
   ownedBy: string
   statusId: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -1491,7 +1491,7 @@ export type FollowUpCreateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
   Employee_FollowUp_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_executedByToEmployeeInput
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
   FollowUpType: Prisma.FollowUpTypeCreateNestedOneWithoutFollowUpInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_deletedByToEmployeeInput
@@ -1517,7 +1517,7 @@ export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_createdByToEmployeeI
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -1557,7 +1557,7 @@ export type FollowUpCreateWithoutEmployee_FollowUp_deletedByToEmployeeInput = {
   Employee_FollowUp_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_executedByToEmployeeInput
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_createdByToEmployeeInput
   FollowUpType: Prisma.FollowUpTypeCreateNestedOneWithoutFollowUpInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpInput
@@ -1584,7 +1584,7 @@ export type FollowUpUncheckedCreateWithoutEmployee_FollowUp_deletedByToEmployeeI
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -1687,7 +1687,7 @@ export type FollowUpCreateWithoutFollowUpStructureInput = {
   Employee_FollowUp_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_executedByToEmployeeInput
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_createdByToEmployeeInput
   FollowUpType: Prisma.FollowUpTypeCreateNestedOneWithoutFollowUpInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpInput
@@ -1714,7 +1714,7 @@ export type FollowUpUncheckedCreateWithoutFollowUpStructureInput = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -1759,7 +1759,7 @@ export type FollowUpUpdateWithoutFollowUpStructureInput = {
   Employee_FollowUp_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_executedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpNestedInput
   Employee_FollowUp_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_createdByToEmployeeNestedInput
   FollowUpType?: Prisma.FollowUpTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpNestedInput
@@ -1786,7 +1786,7 @@ export type FollowUpUncheckedUpdateWithoutFollowUpStructureInput = {
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1815,7 +1815,7 @@ export type FollowUpCreateWithoutFollowUpTargetInput = {
   Employee_FollowUp_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_executedByToEmployeeInput
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_createdByToEmployeeInput
   FollowUpType: Prisma.FollowUpTypeCreateNestedOneWithoutFollowUpInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpInput
@@ -1842,7 +1842,7 @@ export type FollowUpUncheckedCreateWithoutFollowUpTargetInput = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -1887,7 +1887,7 @@ export type FollowUpUpdateWithoutFollowUpTargetInput = {
   Employee_FollowUp_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_executedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpNestedInput
   Employee_FollowUp_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_createdByToEmployeeNestedInput
   FollowUpType?: Prisma.FollowUpTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpNestedInput
@@ -1914,7 +1914,7 @@ export type FollowUpUncheckedUpdateWithoutFollowUpTargetInput = {
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1943,7 +1943,7 @@ export type FollowUpCreateWithoutFollowUpTypeInput = {
   Employee_FollowUp_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_executedByToEmployeeInput
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_createdByToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_deletedByToEmployeeInput
@@ -1970,7 +1970,7 @@ export type FollowUpUncheckedCreateWithoutFollowUpTypeInput = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -2024,7 +2024,7 @@ export type FollowUpCreateWithoutStatusInput = {
   UrgencyType: Prisma.UrgencyTypeCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_ownedByToEmployeeInput
   Employee_FollowUp_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_executedByToEmployeeInput
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_createdByToEmployeeInput
   FollowUpType: Prisma.FollowUpTypeCreateNestedOneWithoutFollowUpInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpInput
@@ -2051,7 +2051,7 @@ export type FollowUpUncheckedCreateWithoutStatusInput = {
   ownedBy: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -2107,7 +2107,7 @@ export type FollowUpCreateWithoutTargetInput = {
   Employee_FollowUp_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_executedByToEmployeeInput
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_createdByToEmployeeInput
   FollowUpType: Prisma.FollowUpTypeCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_deletedByToEmployeeInput
@@ -2134,7 +2134,7 @@ export type FollowUpUncheckedCreateWithoutTargetInput = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   followUpTypeId: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -2188,7 +2188,7 @@ export type FollowUpCreateWithoutUrgencyTypeInput = {
   Employee_FollowUp_ownedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_ownedByToEmployeeInput
   Status: Prisma.StatusCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_executedByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_executedByToEmployeeInput
-  DocumentStructure: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutFollowUpInput
   Employee_FollowUp_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFollowUp_FollowUp_createdByToEmployeeInput
   FollowUpType: Prisma.FollowUpTypeCreateNestedOneWithoutFollowUpInput
   Target: Prisma.TargetCreateNestedOneWithoutFollowUpInput
@@ -2215,7 +2215,7 @@ export type FollowUpUncheckedCreateWithoutUrgencyTypeInput = {
   ownedBy: string
   statusId: string
   executedBy: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -2377,7 +2377,7 @@ export type FollowUpCreateManyEmployee_FollowUp_ownedByToEmployeeInput = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -2403,7 +2403,7 @@ export type FollowUpCreateManyEmployee_FollowUp_executedByToEmployeeInput = {
   ownedBy: string
   statusId: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -2429,7 +2429,7 @@ export type FollowUpCreateManyEmployee_FollowUp_createdByToEmployeeInput = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -2456,7 +2456,7 @@ export type FollowUpCreateManyEmployee_FollowUp_deletedByToEmployeeInput = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -2482,7 +2482,7 @@ export type FollowUpUpdateWithoutEmployee_FollowUp_ownedByToEmployeeInput = {
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_executedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpNestedInput
   Employee_FollowUp_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_createdByToEmployeeNestedInput
   FollowUpType?: Prisma.FollowUpTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpNestedInput
@@ -2509,7 +2509,7 @@ export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_ownedByToEmployeeInp
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2537,7 +2537,7 @@ export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_ownedByToEmploye
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2564,7 +2564,7 @@ export type FollowUpUpdateWithoutEmployee_FollowUp_executedByToEmployeeInput = {
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpNestedInput
   Employee_FollowUp_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_createdByToEmployeeNestedInput
   FollowUpType?: Prisma.FollowUpTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpNestedInput
@@ -2591,7 +2591,7 @@ export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_executedByToEmployee
   ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2619,7 +2619,7 @@ export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_executedByToEmpl
   ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2647,7 +2647,7 @@ export type FollowUpUpdateWithoutEmployee_FollowUp_createdByToEmployeeInput = {
   Employee_FollowUp_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_executedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpNestedInput
   FollowUpType?: Prisma.FollowUpTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUp_FollowUp_deletedByToEmployeeNestedInput
@@ -2673,7 +2673,7 @@ export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_createdByToEmployeeI
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2701,7 +2701,7 @@ export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_createdByToEmplo
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2729,7 +2729,7 @@ export type FollowUpUpdateWithoutEmployee_FollowUp_deletedByToEmployeeInput = {
   Employee_FollowUp_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_executedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpNestedInput
   Employee_FollowUp_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_createdByToEmployeeNestedInput
   FollowUpType?: Prisma.FollowUpTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpNestedInput
@@ -2756,7 +2756,7 @@ export type FollowUpUncheckedUpdateWithoutEmployee_FollowUp_deletedByToEmployeeI
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2784,7 +2784,7 @@ export type FollowUpUncheckedUpdateManyWithoutEmployee_FollowUp_deletedByToEmplo
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2810,7 +2810,7 @@ export type FollowUpCreateManyFollowUpTypeInput = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -2837,7 +2837,7 @@ export type FollowUpUpdateWithoutFollowUpTypeInput = {
   Employee_FollowUp_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_executedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpNestedInput
   Employee_FollowUp_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_createdByToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUp_FollowUp_deletedByToEmployeeNestedInput
@@ -2864,7 +2864,7 @@ export type FollowUpUncheckedUpdateWithoutFollowUpTypeInput = {
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2892,7 +2892,7 @@ export type FollowUpUncheckedUpdateManyWithoutFollowUpTypeInput = {
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2917,7 +2917,7 @@ export type FollowUpCreateManyStatusInput = {
   ownedBy: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -2944,7 +2944,7 @@ export type FollowUpUpdateWithoutStatusInput = {
   UrgencyType?: Prisma.UrgencyTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_ownedByToEmployeeNestedInput
   Employee_FollowUp_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_executedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpNestedInput
   Employee_FollowUp_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_createdByToEmployeeNestedInput
   FollowUpType?: Prisma.FollowUpTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpNestedInput
@@ -2971,7 +2971,7 @@ export type FollowUpUncheckedUpdateWithoutStatusInput = {
   ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2999,7 +2999,7 @@ export type FollowUpUncheckedUpdateManyWithoutStatusInput = {
   ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3026,7 +3026,7 @@ export type FollowUpCreateManyTargetInput = {
   statusId: string
   executedBy: string
   urgencyTypeId: string
-  documentId: string
+  documentId?: string | null
   followUpTypeId: string
   deleted?: boolean
   deletedAt?: Date | string | null
@@ -3053,7 +3053,7 @@ export type FollowUpUpdateWithoutTargetInput = {
   Employee_FollowUp_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_executedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpNestedInput
   Employee_FollowUp_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_createdByToEmployeeNestedInput
   FollowUpType?: Prisma.FollowUpTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutFollowUp_FollowUp_deletedByToEmployeeNestedInput
@@ -3080,7 +3080,7 @@ export type FollowUpUncheckedUpdateWithoutTargetInput = {
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3108,7 +3108,7 @@ export type FollowUpUncheckedUpdateManyWithoutTargetInput = {
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
   urgencyTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3133,7 +3133,7 @@ export type FollowUpCreateManyUrgencyTypeInput = {
   ownedBy: string
   statusId: string
   executedBy: string
-  documentId: string
+  documentId?: string | null
   targetId: string
   followUpTypeId: string
   deleted?: boolean
@@ -3160,7 +3160,7 @@ export type FollowUpUpdateWithoutUrgencyTypeInput = {
   Employee_FollowUp_ownedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_ownedByToEmployeeNestedInput
   Status?: Prisma.StatusUpdateOneRequiredWithoutFollowUpNestedInput
   Employee_FollowUp_executedByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_executedByToEmployeeNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutFollowUpNestedInput
   Employee_FollowUp_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutFollowUp_FollowUp_createdByToEmployeeNestedInput
   FollowUpType?: Prisma.FollowUpTypeUpdateOneRequiredWithoutFollowUpNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutFollowUpNestedInput
@@ -3187,7 +3187,7 @@ export type FollowUpUncheckedUpdateWithoutUrgencyTypeInput = {
   ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3215,7 +3215,7 @@ export type FollowUpUncheckedUpdateManyWithoutUrgencyTypeInput = {
   ownedBy?: Prisma.StringFieldUpdateOperationsInput | string
   statusId?: Prisma.StringFieldUpdateOperationsInput | string
   executedBy?: Prisma.StringFieldUpdateOperationsInput | string
-  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   followUpTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3292,7 +3292,7 @@ export type FollowUpSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   Employee_FollowUp_ownedByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Status?: boolean | Prisma.StatusDefaultArgs<ExtArgs>
   Employee_FollowUp_executedByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  DocumentStructure?: boolean | Prisma.DocumentStructureDefaultArgs<ExtArgs>
+  DocumentStructure?: boolean | Prisma.FollowUp$DocumentStructureArgs<ExtArgs>
   Employee_FollowUp_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   FollowUpType?: boolean | Prisma.FollowUpTypeDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
@@ -3337,7 +3337,7 @@ export type FollowUpInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   Employee_FollowUp_ownedByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Status?: boolean | Prisma.StatusDefaultArgs<ExtArgs>
   Employee_FollowUp_executedByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  DocumentStructure?: boolean | Prisma.DocumentStructureDefaultArgs<ExtArgs>
+  DocumentStructure?: boolean | Prisma.FollowUp$DocumentStructureArgs<ExtArgs>
   Employee_FollowUp_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   FollowUpType?: boolean | Prisma.FollowUpTypeDefaultArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
@@ -3354,7 +3354,7 @@ export type $FollowUpPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     Employee_FollowUp_ownedByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Status: Prisma.$StatusPayload<ExtArgs>
     Employee_FollowUp_executedByToEmployee: Prisma.$EmployeePayload<ExtArgs>
-    DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs>
+    DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs> | null
     Employee_FollowUp_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     FollowUpType: Prisma.$FollowUpTypePayload<ExtArgs>
     Target: Prisma.$TargetPayload<ExtArgs>
@@ -3381,7 +3381,7 @@ export type $FollowUpPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     statusId: string
     executedBy: string
     urgencyTypeId: string
-    documentId: string
+    documentId: string | null
     targetId: string
     followUpTypeId: string
     deleted: boolean
@@ -3731,7 +3731,7 @@ export interface Prisma__FollowUpClient<T, Null = never, ExtArgs extends runtime
   Employee_FollowUp_ownedByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Status<T extends Prisma.StatusDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StatusDefaultArgs<ExtArgs>>): Prisma.Prisma__StatusClient<runtime.Types.Result.GetResult<Prisma.$StatusPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_FollowUp_executedByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  DocumentStructure<T extends Prisma.DocumentStructureDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructureDefaultArgs<ExtArgs>>): Prisma.Prisma__DocumentStructureClient<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  DocumentStructure<T extends Prisma.FollowUp$DocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FollowUp$DocumentStructureArgs<ExtArgs>>): Prisma.Prisma__DocumentStructureClient<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_FollowUp_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   FollowUpType<T extends Prisma.FollowUpTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FollowUpTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__FollowUpTypeClient<runtime.Types.Result.GetResult<Prisma.$FollowUpTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -4131,6 +4131,25 @@ export type FollowUpDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many FollowUps to delete.
    */
   limit?: number
+}
+
+/**
+ * FollowUp.DocumentStructure
+ */
+export type FollowUp$DocumentStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DocumentStructure
+   */
+  select?: Prisma.DocumentStructureSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DocumentStructure
+   */
+  omit?: Prisma.DocumentStructureOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DocumentStructureInclude<ExtArgs> | null
+  where?: Prisma.DocumentStructureWhereInput
 }
 
 /**

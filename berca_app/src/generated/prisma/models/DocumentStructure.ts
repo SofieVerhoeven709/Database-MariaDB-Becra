@@ -1047,10 +1047,12 @@ export type DocumentStructureCreateNestedOneWithoutFollowUpInput = {
   connect?: Prisma.DocumentStructureWhereUniqueInput
 }
 
-export type DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput = {
+export type DocumentStructureUpdateOneWithoutFollowUpNestedInput = {
   create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutFollowUpInput, Prisma.DocumentStructureUncheckedCreateWithoutFollowUpInput>
   connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutFollowUpInput
   upsert?: Prisma.DocumentStructureUpsertWithoutFollowUpInput
+  disconnect?: Prisma.DocumentStructureWhereInput | boolean
+  delete?: Prisma.DocumentStructureWhereInput | boolean
   connect?: Prisma.DocumentStructureWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentStructureUpdateToOneWithWhereWithoutFollowUpInput, Prisma.DocumentStructureUpdateWithoutFollowUpInput>, Prisma.DocumentStructureUncheckedUpdateWithoutFollowUpInput>
 }
@@ -1061,10 +1063,12 @@ export type DocumentStructureCreateNestedOneWithoutFollowUpStructureInput = {
   connect?: Prisma.DocumentStructureWhereUniqueInput
 }
 
-export type DocumentStructureUpdateOneRequiredWithoutFollowUpStructureNestedInput = {
+export type DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput = {
   create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutFollowUpStructureInput, Prisma.DocumentStructureUncheckedCreateWithoutFollowUpStructureInput>
   connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutFollowUpStructureInput
   upsert?: Prisma.DocumentStructureUpsertWithoutFollowUpStructureInput
+  disconnect?: Prisma.DocumentStructureWhereInput | boolean
+  delete?: Prisma.DocumentStructureWhereInput | boolean
   connect?: Prisma.DocumentStructureWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentStructureUpdateToOneWithWhereWithoutFollowUpStructureInput, Prisma.DocumentStructureUpdateWithoutFollowUpStructureInput>, Prisma.DocumentStructureUncheckedUpdateWithoutFollowUpStructureInput>
 }

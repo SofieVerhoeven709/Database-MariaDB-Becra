@@ -8,11 +8,11 @@ import {prismaClient} from '@/dal/prismaClient'
 import {notFound} from 'next/navigation'
 
 interface FollowUpStructureDetailPageProps {
-  params: Promise<{department: string; id: string}>
+  params: Promise<{id: string}>
 }
 
 export default async function FollowUpStructureDetailPage({params}: FollowUpStructureDetailPageProps) {
-  const {department, id} = await params
+  const {id} = await params
 
   const [structureFromDAL, roleLevels, profile, statuses, urgencyTypes, employees, contacts] = await Promise.all([
     getFollowUpStructureDetail(id).catch(() => null),
@@ -49,6 +49,7 @@ export default async function FollowUpStructureDetailPage({params}: FollowUpStru
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
 
   const defaultVisibleRoleNames = ['Sales']
+  const department = 'sales'
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

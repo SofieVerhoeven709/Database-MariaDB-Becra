@@ -8,11 +8,11 @@ import {prismaClient} from '@/dal/prismaClient'
 import {notFound} from 'next/navigation'
 
 interface FollowUpDetailPageProps {
-  params: Promise<{department: string; id: string}>
+  params: Promise<{id: string}>
 }
 
 export default async function FollowUpDetailPage({params}: FollowUpDetailPageProps) {
-  const {department, id} = await params
+  const {id} = await params
 
   const [followUpFromDAL, roleLevels, profile, statuses, urgencyTypes, followUpTypes, employees, contacts] =
     await Promise.all([
@@ -55,6 +55,7 @@ export default async function FollowUpDetailPage({params}: FollowUpDetailPagePro
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
 
   const defaultVisibleRoleNames = ['Database']
+  const department = 'database'
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

@@ -654,7 +654,7 @@ function StructureRow({
       <TableCell className={tdClass}>{st.createdByName}</TableCell>
       <TableCell>
         <div className="flex items-center gap-1">
-          <Link href={`/departments/${department}/followupstructure/${st.id}` as Route}>
+          <Link href={`/departments/${department}/followUpStructure/${st.id}` as Route}>
             <Button
               variant="ghost"
               size="icon"

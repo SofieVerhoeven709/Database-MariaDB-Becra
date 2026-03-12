@@ -268,7 +268,7 @@ export function FollowUpStructureDetail({
         </div>
         <div className="flex items-center gap-2">
           {/* Link back to parent follow-up */}
-          <Link href={`/departments/${department}/followup/${structure.followUpId}` as Route}>
+          <Link href={`/departments/${department}/followUp/${structure.followUpId}` as Route}>
             <Button variant="outline" size="sm" className="gap-2 border-border text-xs">
               <ExternalLink className="h-3.5 w-3.5" />
               Parent Follow-up
@@ -313,7 +313,7 @@ export function FollowUpStructureDetail({
             {[structure.followUp.followUpTypeName, structure.followUp.statusName].filter(Boolean).join(' · ')}
           </p>
         </div>
-        <Link href={`/departments/${department}/followup/${structure.followUpId}` as Route}>
+        <Link href={`/departments/${department}/followUp/${structure.followUpId}` as Route}>
           <Button
             variant="ghost"
             size="icon"

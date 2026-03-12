@@ -130,8 +130,13 @@ export function FollowUpFormDialog({
   async function handleSubmit() {
     setSaving(true)
     try {
+      const trimmedForm = {
+        ...form,
+        activityDescription: form.activityDescription?.trim() || null,
+        additionalInfo: form.additionalInfo?.trim() || null,
+      }
       await onSave(
-        form,
+        trimmedForm,
         visibilityRows,
         isEdit ? undefined : (targetTypeName as TargetTypeName) || undefined,
         isEdit ? undefined : targetEntityId || undefined,
@@ -156,7 +161,7 @@ export function FollowUpFormDialog({
       <Label className="text-xs text-muted-foreground">{label}</Label>
       <Textarea
         value={(form[key] as string | null) ?? ''}
-        onChange={e => set(key, str(e.target.value) as MappedFollowUp[typeof key])}
+        onChange={e => set(key, (e.target.value || null) as MappedFollowUp[typeof key])}
         rows={rows}
         className="bg-secondary border-border resize-none"
       />

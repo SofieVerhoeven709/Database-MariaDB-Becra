@@ -91,3 +91,28 @@ ALTER TABLE FollowUpStructure
     MODIFY COLUMN `documentId` CHAR(36) NULL,
     ADD CONSTRAINT FOREIGN KEY (`documentId`) REFERENCES DocumentStructure (`id`) ON DELETE SET NULL;
     
+-- 24. RoleLevel: extract roleLevelId from Employee into junction table
+CREATE TABLE IF NOT EXISTS RoleLevelEmployee (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    employeeId CHAR(36) NOT NULL,
+    roleLevelId CHAR(36) NOT NULL,
+    FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
+    FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT
+) ENGINE = InnoDB;
+
+-- 25. Migrate existing data (only if Employee still has the roleLevelId column)
+INSERT IGNORE INTO RoleLevelEmployee (id, employeeId, roleLevelId)
+SELECT UUID(), id, roleLevelId
+FROM Employee
+WHERE roleLevelId IS NOT NULL
+  AND NOT EXISTS (SELECT 1 FROM RoleLevelEmployee rle WHERE rle.employeeId = Employee.id);
+
+-- 26. Drop FK then column
+ALTER TABLE Employee DROP FOREIGN KEY IF EXISTS fk_employee_rolelevel;
+ALTER TABLE Employee DROP COLUMN IF EXISTS roleLevelId;
+
+-- 27. MaterialPrice: add companyId column and FK
+ALTER TABLE MaterialPrice
+    ADD COLUMN IF NOT EXISTS `companyId` CHAR(36) NOT NULL AFTER `id`,
+    ADD CONSTRAINT fk_materialprice_company
+        FOREIGN KEY (`companyId`) REFERENCES Company (`id`) ON DELETE RESTRICT;

@@ -44,7 +44,10 @@ export const createJwtToken = (employee: Profile) => {
     {
       id: employee.id,
       username: employee.username,
-      role: employee.roleLevelId,
+      role: employee.RoleLevelEmployee.reduce<(typeof employee.RoleLevelEmployee)[0] | null>((highest, current) => {
+        if (!highest) return current
+        return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
+      }, null)?.roleLevelId,
     },
     PRIVATE_KEY_DECODED,
     {algorithm: 'RS256', expiresIn: TOKEN_EXPIRATION, subject: employee.username, issuer: 'contacts-app'},
@@ -56,7 +59,13 @@ export const createStatefulJwtToken = (session: SessionWithProfile) => {
     {
       id: session.Employee.id,
       username: session.Employee.username,
-      role: session.Employee.roleLevelId,
+      role: session.Employee.RoleLevelEmployee.reduce<(typeof session.Employee.RoleLevelEmployee)[0] | null>(
+        (highest, current) => {
+          if (!highest) return current
+          return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
+        },
+        null,
+      )?.roleLevelId,
       sessionId: session.id,
     },
     PRIVATE_KEY_DECODED,

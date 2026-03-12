@@ -10,8 +10,13 @@ export default async function DashboardLayout({children}: {children: React.React
     return <div>Please log in</div>
   }
 
-  const roleLevel =
-    employee.RoleLevel_Employee_roleLevelIdToRoleLevel ?? (await getRolelevelById(employee.roleLevelId!))
+  const roleLevel = employee.RoleLevelEmployee.reduce<(typeof employee.RoleLevelEmployee)[0] | null>(
+    (highest, current) => {
+      if (!highest) return current
+      return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
+    },
+    null,
+  )?.RoleLevel
 
   if (!roleLevel || !roleLevel.Role || !roleLevel.SubRole) {
     return <div>Role not configured</div>

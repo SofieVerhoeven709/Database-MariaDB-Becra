@@ -40,7 +40,6 @@ export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
     deleted: prismaEmp.deleted,
     deletedAt: prismaEmp.deletedAt?.toISOString() ?? null,
     deletedBy: prismaEmp.Employee_Employee_deletedByToEmployee?.id ?? null,
-    roleLevelId: prismaEmp.roleLevelId,
     titleId: prismaEmp.titleId,
     roleName: prismaEmp.RoleLevel_Employee_roleLevelIdToRoleLevel
       ? `${prismaEmp.RoleLevel_Employee_roleLevelIdToRoleLevel.Role.name.replace(' Role', '')} / ${prismaEmp.RoleLevel_Employee_roleLevelIdToRoleLevel.SubRole.name}`
@@ -854,7 +853,6 @@ export function mapEmployeeDetail(
       ? `${e.Employee_Employee_deletedByToEmployee.firstName} ${e.Employee_Employee_deletedByToEmployee.lastName}`
       : null,
     roleName: roleLevel ? `${roleLevel.Role.name.replace(' Role', '')} / ${roleLevel.SubRole.name}` : '-',
-    roleLevelId: e.roleLevelId,
     titleName: e.Title_Employee_titleIdToTitle?.name ?? '-',
     titleId: e.titleId,
     emergencyContacts: e.EmergencyContact,

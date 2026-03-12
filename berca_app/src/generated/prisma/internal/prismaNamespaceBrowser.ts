@@ -124,7 +124,8 @@ export const ModelName = {
   RoleLevel: 'RoleLevel',
   SubRole: 'SubRole',
   DepartmentExtern: 'DepartmentExtern',
-  QuoteBecra: 'QuoteBecra'
+  QuoteBecra: 'QuoteBecra',
+  RoleLevelEmployee: 'RoleLevelEmployee'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +409,6 @@ export const EmployeeScalarFieldEnum = {
   active: 'active',
   passwordCreatedAt: 'passwordCreatedAt',
   createdBy: 'createdBy',
-  roleLevelId: 'roleLevelId',
   titleId: 'titleId',
   pictureId: 'pictureId',
   deleted: 'deleted',
@@ -888,11 +888,11 @@ export const MaterialPriceScalarFieldEnum = {
   additionalInfo: 'additionalInfo',
   unitPrice: 'unitPrice',
   quantityPrice: 'quantityPrice',
-  companyId: 'companyId',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  companyId: 'companyId'
 } as const
 
 export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)[keyof typeof MaterialPriceScalarFieldEnum]
@@ -1580,6 +1580,15 @@ export const QuoteBecraScalarFieldEnum = {
 export type QuoteBecraScalarFieldEnum = (typeof QuoteBecraScalarFieldEnum)[keyof typeof QuoteBecraScalarFieldEnum]
 
 
+export const RoleLevelEmployeeScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  roleLevelId: 'roleLevelId'
+} as const
+
+export type RoleLevelEmployeeScalarFieldEnum = (typeof RoleLevelEmployeeScalarFieldEnum)[keyof typeof RoleLevelEmployeeScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1791,7 +1800,6 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   place: 'place',
   username: 'username',
   createdBy: 'createdBy',
-  roleLevelId: 'roleLevelId',
   titleId: 'titleId',
   pictureId: 'pictureId',
   deletedBy: 'deletedBy'
@@ -2147,9 +2155,9 @@ export const MaterialPriceOrderByRelevanceFieldEnum = {
   longDescription: 'longDescription',
   brandName: 'brandName',
   additionalInfo: 'additionalInfo',
-  companyId: 'companyId',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  companyId: 'companyId'
 } as const
 
 export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderByRelevanceFieldEnum)[keyof typeof MaterialPriceOrderByRelevanceFieldEnum]
@@ -2664,4 +2672,13 @@ export const QuoteBecraOrderByRelevanceFieldEnum = {
 } as const
 
 export type QuoteBecraOrderByRelevanceFieldEnum = (typeof QuoteBecraOrderByRelevanceFieldEnum)[keyof typeof QuoteBecraOrderByRelevanceFieldEnum]
+
+
+export const RoleLevelEmployeeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  roleLevelId: 'roleLevelId'
+} as const
+
+export type RoleLevelEmployeeOrderByRelevanceFieldEnum = (typeof RoleLevelEmployeeOrderByRelevanceFieldEnum)[keyof typeof RoleLevelEmployeeOrderByRelevanceFieldEnum]
 

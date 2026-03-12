@@ -270,7 +270,7 @@ export type TitleCreateInput = {
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutTitleInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
-  Employee_Title_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
+  Employee_Title_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
   Employee_Title_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_deletedByToEmployeeInput
 }
 
@@ -280,7 +280,7 @@ export type TitleUncheckedCreateInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy?: string
+  createdBy: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTitleInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
@@ -316,7 +316,7 @@ export type TitleCreateManyInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy?: string
+  createdBy: string
   deletedBy?: string | null
 }
 
@@ -512,7 +512,7 @@ export type TitleCreateWithoutContactInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
-  Employee_Title_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
+  Employee_Title_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
   Employee_Title_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_deletedByToEmployeeInput
 }
 
@@ -522,7 +522,7 @@ export type TitleUncheckedCreateWithoutContactInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy?: string
+  createdBy: string
   deletedBy?: string | null
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
 }
@@ -572,7 +572,7 @@ export type TitleCreateWithoutEmployee_Employee_titleIdToTitleInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutTitleInput
-  Employee_Title_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
+  Employee_Title_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
   Employee_Title_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_deletedByToEmployeeInput
 }
 
@@ -582,7 +582,7 @@ export type TitleUncheckedCreateWithoutEmployee_Employee_titleIdToTitleInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy?: string
+  createdBy: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTitleInput
 }
@@ -632,7 +632,7 @@ export type TitleCreateWithoutEmployee_Title_deletedByToEmployeeInput = {
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutTitleInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
-  Employee_Title_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
+  Employee_Title_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutTitle_Title_createdByToEmployeeInput
 }
 
 export type TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput = {
@@ -641,7 +641,7 @@ export type TitleUncheckedCreateWithoutEmployee_Title_deletedByToEmployeeInput =
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy?: string
+  createdBy: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTitleInput
   Employee_Employee_titleIdToTitle?: Prisma.EmployeeUncheckedCreateNestedManyWithoutTitle_Employee_titleIdToTitleInput
 }
@@ -749,7 +749,7 @@ export type TitleCreateManyEmployee_Title_deletedByToEmployeeInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy?: string
+  createdBy: string
 }
 
 export type TitleUpdateWithoutEmployee_Title_createdByToEmployeeInput = {

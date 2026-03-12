@@ -3,7 +3,7 @@ export interface MappedMaterialPrice {
   beNumber: string | null
   orderNr: string | null
   quoteBecra: string | null
-  supllierOrderNr: string | null
+  supplierOrderNr: string | null
   brandOrderNr: string | null
   shortDescription: string | null
   longDescription: string | null
@@ -19,4 +19,3 @@ export interface MappedMaterialPrice {
   deletedAt: string | null
   deletedBy: string | null
 }
-

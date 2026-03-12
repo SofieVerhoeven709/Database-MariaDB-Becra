@@ -269,7 +269,7 @@ export type RoleCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutRoleInput
-  Employee_Role_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRole_Role_createdByToEmployeeInput
+  Employee_Role_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRole_Role_createdByToEmployeeInput
   Employee_Role_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRole_Role_deletedByToEmployeeInput
   RoleLevel?: Prisma.RoleLevelCreateNestedManyWithoutRoleInput
 }
@@ -280,7 +280,7 @@ export type RoleUncheckedCreateInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutRoleInput
   RoleLevel?: Prisma.RoleLevelUncheckedCreateNestedManyWithoutRoleInput
@@ -316,7 +316,7 @@ export type RoleCreateManyInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
 }
 
@@ -514,7 +514,7 @@ export type RoleCreateWithoutDocumentStructureInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Employee_Role_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRole_Role_createdByToEmployeeInput
+  Employee_Role_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRole_Role_createdByToEmployeeInput
   Employee_Role_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRole_Role_deletedByToEmployeeInput
   RoleLevel?: Prisma.RoleLevelCreateNestedManyWithoutRoleInput
 }
@@ -525,7 +525,7 @@ export type RoleUncheckedCreateWithoutDocumentStructureInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
   RoleLevel?: Prisma.RoleLevelUncheckedCreateNestedManyWithoutRoleInput
 }
@@ -607,7 +607,7 @@ export type RoleCreateWithoutEmployee_Role_deletedByToEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutRoleInput
-  Employee_Role_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRole_Role_createdByToEmployeeInput
+  Employee_Role_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRole_Role_createdByToEmployeeInput
   RoleLevel?: Prisma.RoleLevelCreateNestedManyWithoutRoleInput
 }
 
@@ -617,7 +617,7 @@ export type RoleUncheckedCreateWithoutEmployee_Role_deletedByToEmployeeInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutRoleInput
   RoleLevel?: Prisma.RoleLevelUncheckedCreateNestedManyWithoutRoleInput
 }
@@ -684,7 +684,7 @@ export type RoleCreateWithoutRoleLevelInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutRoleInput
-  Employee_Role_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRole_Role_createdByToEmployeeInput
+  Employee_Role_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRole_Role_createdByToEmployeeInput
   Employee_Role_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRole_Role_deletedByToEmployeeInput
 }
 
@@ -694,7 +694,7 @@ export type RoleUncheckedCreateWithoutRoleLevelInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
   DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutRoleInput
 }
@@ -752,7 +752,7 @@ export type RoleCreateManyEmployee_Role_deletedByToEmployeeInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
 }
 
 export type RoleUpdateWithoutEmployee_Role_createdByToEmployeeInput = {

@@ -39,7 +39,7 @@ function emptyPurchase(): MappedPurchase {
     updatedAt: null,
     createdBy: '',
     createdByName: '',
-    preferedSupplier: null,
+    preferredSupplier: null,
     description: null,
     deleted: false,
     deletedAt: null,
@@ -180,8 +180,8 @@ export function PurchaseFormDialog({
             <Label htmlFor="preferedSupplier">Preferred Supplier</Label>
             <Input
               id="preferedSupplier"
-              value={form.preferedSupplier ?? ''}
-              onChange={e => set('preferedSupplier', e.target.value || null)}
+              value={form.preferredSupplier ?? ''}
+              onChange={e => set('preferredSupplier', e.target.value || null)}
               placeholder="e.g. PartsCo"
               className="bg-secondary border-border"
             />

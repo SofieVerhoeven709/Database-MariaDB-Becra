@@ -38,7 +38,7 @@ export type CompanyMinAggregateOutputType = {
   becraCustomerNumber: string | null
   becraWebsiteLogin: string | null
   supplier: boolean | null
-  prefferedSupplier: boolean | null
+  preferredSupplier: boolean | null
   companyActive: boolean | null
   newsLetter: boolean | null
   customer: boolean | null
@@ -70,7 +70,7 @@ export type CompanyMaxAggregateOutputType = {
   becraCustomerNumber: string | null
   becraWebsiteLogin: string | null
   supplier: boolean | null
-  prefferedSupplier: boolean | null
+  preferredSupplier: boolean | null
   companyActive: boolean | null
   newsLetter: boolean | null
   customer: boolean | null
@@ -102,7 +102,7 @@ export type CompanyCountAggregateOutputType = {
   becraCustomerNumber: number
   becraWebsiteLogin: number
   supplier: number
-  prefferedSupplier: number
+  preferredSupplier: number
   companyActive: number
   newsLetter: number
   customer: number
@@ -136,7 +136,7 @@ export type CompanyMinAggregateInputType = {
   becraCustomerNumber?: true
   becraWebsiteLogin?: true
   supplier?: true
-  prefferedSupplier?: true
+  preferredSupplier?: true
   companyActive?: true
   newsLetter?: true
   customer?: true
@@ -168,7 +168,7 @@ export type CompanyMaxAggregateInputType = {
   becraCustomerNumber?: true
   becraWebsiteLogin?: true
   supplier?: true
-  prefferedSupplier?: true
+  preferredSupplier?: true
   companyActive?: true
   newsLetter?: true
   customer?: true
@@ -200,7 +200,7 @@ export type CompanyCountAggregateInputType = {
   becraCustomerNumber?: true
   becraWebsiteLogin?: true
   supplier?: true
-  prefferedSupplier?: true
+  preferredSupplier?: true
   companyActive?: true
   newsLetter?: true
   customer?: true
@@ -305,7 +305,7 @@ export type CompanyGroupByOutputType = {
   becraCustomerNumber: string | null
   becraWebsiteLogin: string | null
   supplier: boolean
-  prefferedSupplier: boolean
+  preferredSupplier: boolean
   companyActive: boolean
   newsLetter: boolean
   customer: boolean
@@ -358,7 +358,7 @@ export type CompanyWhereInput = {
   becraCustomerNumber?: Prisma.StringNullableFilter<"Company"> | string | null
   becraWebsiteLogin?: Prisma.StringNullableFilter<"Company"> | string | null
   supplier?: Prisma.BoolFilter<"Company"> | boolean
-  prefferedSupplier?: Prisma.BoolFilter<"Company"> | boolean
+  preferredSupplier?: Prisma.BoolFilter<"Company"> | boolean
   companyActive?: Prisma.BoolFilter<"Company"> | boolean
   newsLetter?: Prisma.BoolFilter<"Company"> | boolean
   customer?: Prisma.BoolFilter<"Company"> | boolean
@@ -401,7 +401,7 @@ export type CompanyOrderByWithRelationInput = {
   becraCustomerNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   becraWebsiteLogin?: Prisma.SortOrderInput | Prisma.SortOrder
   supplier?: Prisma.SortOrder
-  prefferedSupplier?: Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrder
   companyActive?: Prisma.SortOrder
   newsLetter?: Prisma.SortOrder
   customer?: Prisma.SortOrder
@@ -448,7 +448,7 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   becraCustomerNumber?: Prisma.StringNullableFilter<"Company"> | string | null
   becraWebsiteLogin?: Prisma.StringNullableFilter<"Company"> | string | null
   supplier?: Prisma.BoolFilter<"Company"> | boolean
-  prefferedSupplier?: Prisma.BoolFilter<"Company"> | boolean
+  preferredSupplier?: Prisma.BoolFilter<"Company"> | boolean
   companyActive?: Prisma.BoolFilter<"Company"> | boolean
   newsLetter?: Prisma.BoolFilter<"Company"> | boolean
   customer?: Prisma.BoolFilter<"Company"> | boolean
@@ -491,7 +491,7 @@ export type CompanyOrderByWithAggregationInput = {
   becraCustomerNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   becraWebsiteLogin?: Prisma.SortOrderInput | Prisma.SortOrder
   supplier?: Prisma.SortOrder
-  prefferedSupplier?: Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrder
   companyActive?: Prisma.SortOrder
   newsLetter?: Prisma.SortOrder
   customer?: Prisma.SortOrder
@@ -529,7 +529,7 @@ export type CompanyScalarWhereWithAggregatesInput = {
   becraCustomerNumber?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
   becraWebsiteLogin?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
   supplier?: Prisma.BoolWithAggregatesFilter<"Company"> | boolean
-  prefferedSupplier?: Prisma.BoolWithAggregatesFilter<"Company"> | boolean
+  preferredSupplier?: Prisma.BoolWithAggregatesFilter<"Company"> | boolean
   companyActive?: Prisma.BoolWithAggregatesFilter<"Company"> | boolean
   newsLetter?: Prisma.BoolWithAggregatesFilter<"Company"> | boolean
   customer?: Prisma.BoolWithAggregatesFilter<"Company"> | boolean
@@ -561,7 +561,7 @@ export type CompanyCreateInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -600,7 +600,7 @@ export type CompanyUncheckedCreateInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -639,7 +639,7 @@ export type CompanyUpdateInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -678,7 +678,7 @@ export type CompanyUncheckedUpdateInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -717,7 +717,7 @@ export type CompanyCreateManyInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -749,7 +749,7 @@ export type CompanyUpdateManyMutationInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -777,7 +777,7 @@ export type CompanyUncheckedUpdateManyInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -830,7 +830,7 @@ export type CompanyCountOrderByAggregateInput = {
   becraCustomerNumber?: Prisma.SortOrder
   becraWebsiteLogin?: Prisma.SortOrder
   supplier?: Prisma.SortOrder
-  prefferedSupplier?: Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrder
   companyActive?: Prisma.SortOrder
   newsLetter?: Prisma.SortOrder
   customer?: Prisma.SortOrder
@@ -862,7 +862,7 @@ export type CompanyMaxOrderByAggregateInput = {
   becraCustomerNumber?: Prisma.SortOrder
   becraWebsiteLogin?: Prisma.SortOrder
   supplier?: Prisma.SortOrder
-  prefferedSupplier?: Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrder
   companyActive?: Prisma.SortOrder
   newsLetter?: Prisma.SortOrder
   customer?: Prisma.SortOrder
@@ -894,7 +894,7 @@ export type CompanyMinOrderByAggregateInput = {
   becraCustomerNumber?: Prisma.SortOrder
   becraWebsiteLogin?: Prisma.SortOrder
   supplier?: Prisma.SortOrder
-  prefferedSupplier?: Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrder
   companyActive?: Prisma.SortOrder
   newsLetter?: Prisma.SortOrder
   customer?: Prisma.SortOrder
@@ -1205,7 +1205,7 @@ export type CompanyCreateWithoutOther_CompanyInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -1243,7 +1243,7 @@ export type CompanyUncheckedCreateWithoutOther_CompanyInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -1286,7 +1286,7 @@ export type CompanyCreateWithoutCompanyInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -1324,7 +1324,7 @@ export type CompanyUncheckedCreateWithoutCompanyInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -1383,7 +1383,7 @@ export type CompanyUpdateWithoutOther_CompanyInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1421,7 +1421,7 @@ export type CompanyUncheckedUpdateWithoutOther_CompanyInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1478,7 +1478,7 @@ export type CompanyScalarWhereInput = {
   becraCustomerNumber?: Prisma.StringNullableFilter<"Company"> | string | null
   becraWebsiteLogin?: Prisma.StringNullableFilter<"Company"> | string | null
   supplier?: Prisma.BoolFilter<"Company"> | boolean
-  prefferedSupplier?: Prisma.BoolFilter<"Company"> | boolean
+  preferredSupplier?: Prisma.BoolFilter<"Company"> | boolean
   companyActive?: Prisma.BoolFilter<"Company"> | boolean
   newsLetter?: Prisma.BoolFilter<"Company"> | boolean
   customer?: Prisma.BoolFilter<"Company"> | boolean
@@ -1510,7 +1510,7 @@ export type CompanyCreateWithoutCompanyAdressInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -1548,7 +1548,7 @@ export type CompanyUncheckedCreateWithoutCompanyAdressInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -1602,7 +1602,7 @@ export type CompanyUpdateWithoutCompanyAdressInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1640,7 +1640,7 @@ export type CompanyUncheckedUpdateWithoutCompanyAdressInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1678,7 +1678,7 @@ export type CompanyCreateWithoutCompanyContactInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -1716,7 +1716,7 @@ export type CompanyUncheckedCreateWithoutCompanyContactInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -1770,7 +1770,7 @@ export type CompanyUpdateWithoutCompanyContactInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1808,7 +1808,7 @@ export type CompanyUncheckedUpdateWithoutCompanyContactInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1846,7 +1846,7 @@ export type CompanyCreateWithoutDeliveryNoteSupplierInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -1884,7 +1884,7 @@ export type CompanyUncheckedCreateWithoutDeliveryNoteSupplierInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -1938,7 +1938,7 @@ export type CompanyUpdateWithoutDeliveryNoteSupplierInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1976,7 +1976,7 @@ export type CompanyUncheckedUpdateWithoutDeliveryNoteSupplierInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2014,7 +2014,7 @@ export type CompanyCreateWithoutEmployeeInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2052,7 +2052,7 @@ export type CompanyUncheckedCreateWithoutEmployeeInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2100,7 +2100,7 @@ export type CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2138,7 +2138,7 @@ export type CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInp
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2218,7 +2218,7 @@ export type CompanyCreateWithoutMaterialSerialTrackInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2256,7 +2256,7 @@ export type CompanyUncheckedCreateWithoutMaterialSerialTrackInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2310,7 +2310,7 @@ export type CompanyUpdateWithoutMaterialSerialTrackInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2348,7 +2348,7 @@ export type CompanyUncheckedUpdateWithoutMaterialSerialTrackInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2386,7 +2386,7 @@ export type CompanyCreateWithoutProjectInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2424,7 +2424,7 @@ export type CompanyUncheckedCreateWithoutProjectInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2478,7 +2478,7 @@ export type CompanyUpdateWithoutProjectInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2516,7 +2516,7 @@ export type CompanyUncheckedUpdateWithoutProjectInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2554,7 +2554,7 @@ export type CompanyCreateWithoutPurchaseInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2592,7 +2592,7 @@ export type CompanyUncheckedCreateWithoutPurchaseInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2646,7 +2646,7 @@ export type CompanyUpdateWithoutPurchaseInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2684,7 +2684,7 @@ export type CompanyUncheckedUpdateWithoutPurchaseInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2722,7 +2722,7 @@ export type CompanyCreateWithoutTargetInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2760,7 +2760,7 @@ export type CompanyUncheckedCreateWithoutTargetInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2824,7 +2824,7 @@ export type CompanyCreateManyCompanyInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2855,7 +2855,7 @@ export type CompanyUpdateWithoutCompanyInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2893,7 +2893,7 @@ export type CompanyUncheckedUpdateWithoutCompanyInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2931,7 +2931,7 @@ export type CompanyUncheckedUpdateManyWithoutCompanyInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2962,7 +2962,7 @@ export type CompanyCreateManyEmployeeInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -2993,7 +2993,7 @@ export type CompanyCreateManyEmployee_Company_deletedByToEmployeeInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -3024,7 +3024,7 @@ export type CompanyUpdateWithoutEmployeeInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3062,7 +3062,7 @@ export type CompanyUncheckedUpdateWithoutEmployeeInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3100,7 +3100,7 @@ export type CompanyUncheckedUpdateManyWithoutEmployeeInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3131,7 +3131,7 @@ export type CompanyUpdateWithoutEmployee_Company_deletedByToEmployeeInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3169,7 +3169,7 @@ export type CompanyUncheckedUpdateWithoutEmployee_Company_deletedByToEmployeeInp
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3207,7 +3207,7 @@ export type CompanyUncheckedUpdateManyWithoutEmployee_Company_deletedByToEmploye
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3238,7 +3238,7 @@ export type CompanyCreateManyTargetInput = {
   becraCustomerNumber?: string | null
   becraWebsiteLogin?: string | null
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -3269,7 +3269,7 @@ export type CompanyUpdateWithoutTargetInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3307,7 +3307,7 @@ export type CompanyUncheckedUpdateWithoutTargetInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3345,7 +3345,7 @@ export type CompanyUncheckedUpdateManyWithoutTargetInput = {
   becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  prefferedSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
   companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3461,7 +3461,7 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   becraCustomerNumber?: boolean
   becraWebsiteLogin?: boolean
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -3507,7 +3507,7 @@ export type CompanySelectScalar = {
   becraCustomerNumber?: boolean
   becraWebsiteLogin?: boolean
   supplier?: boolean
-  prefferedSupplier?: boolean
+  preferredSupplier?: boolean
   companyActive?: boolean
   newsLetter?: boolean
   customer?: boolean
@@ -3525,7 +3525,7 @@ export type CompanySelectScalar = {
   deletedBy?: boolean
 }
 
-export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "number" | "mail" | "businessPhone" | "website" | "vatNumber" | "bankNumber" | "iban" | "bic" | "becraCustomerNumber" | "becraWebsiteLogin" | "supplier" | "prefferedSupplier" | "companyActive" | "newsLetter" | "customer" | "potentialCustomer" | "headQuarters" | "potentialSubContractor" | "subContractor" | "notes" | "createdAt" | "createdBy" | "companyId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["company"]>
+export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "number" | "mail" | "businessPhone" | "website" | "vatNumber" | "bankNumber" | "iban" | "bic" | "becraCustomerNumber" | "becraWebsiteLogin" | "supplier" | "preferredSupplier" | "companyActive" | "newsLetter" | "customer" | "potentialCustomer" | "headQuarters" | "potentialSubContractor" | "subContractor" | "notes" | "createdAt" | "createdBy" | "companyId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["company"]>
 export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.Company$CompanyArgs<ExtArgs>
@@ -3570,7 +3570,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     becraCustomerNumber: string | null
     becraWebsiteLogin: string | null
     supplier: boolean
-    prefferedSupplier: boolean
+    preferredSupplier: boolean
     companyActive: boolean
     newsLetter: boolean
     customer: boolean
@@ -3979,7 +3979,7 @@ export interface CompanyFieldRefs {
   readonly becraCustomerNumber: Prisma.FieldRef<"Company", 'String'>
   readonly becraWebsiteLogin: Prisma.FieldRef<"Company", 'String'>
   readonly supplier: Prisma.FieldRef<"Company", 'Boolean'>
-  readonly prefferedSupplier: Prisma.FieldRef<"Company", 'Boolean'>
+  readonly preferredSupplier: Prisma.FieldRef<"Company", 'Boolean'>
   readonly companyActive: Prisma.FieldRef<"Company", 'Boolean'>
   readonly newsLetter: Prisma.FieldRef<"Company", 'Boolean'>
   readonly customer: Prisma.FieldRef<"Company", 'Boolean'>

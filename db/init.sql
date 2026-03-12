@@ -1597,12 +1597,3 @@ CREATE TABLE
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
-
-CREATE TABLE
-      Testing (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            name VARCHAR(100) NOT NULL,
-            createdAt DATETIME NOT NULL,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME
-      ) ENGINE = InnoDB;

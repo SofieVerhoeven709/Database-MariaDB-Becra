@@ -367,7 +367,7 @@ export type DepartmentCreateInput = {
   deletedAt?: Date | string | null
   Employee_Department_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDepartment_Department_deletedByToEmployeeInput
   Employee_Department_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDepartment_Department_createdByToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDepartmentInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateInput = {
@@ -382,7 +382,7 @@ export type DepartmentUncheckedCreateInput = {
   deletedAt?: Date | string | null
   createdBy: string
   deletedBy?: string | null
-  targetId: string
+  targetId?: string
 }
 
 export type DepartmentUpdateInput = {
@@ -427,7 +427,7 @@ export type DepartmentCreateManyInput = {
   deletedAt?: Date | string | null
   createdBy: string
   deletedBy?: string | null
-  targetId: string
+  targetId?: string
 }
 
 export type DepartmentUpdateManyMutationInput = {
@@ -671,7 +671,7 @@ export type DepartmentCreateWithoutEmployee_Department_deletedByToEmployeeInput 
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee_Department_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDepartment_Department_createdByToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDepartmentInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateWithoutEmployee_Department_deletedByToEmployeeInput = {
@@ -685,7 +685,7 @@ export type DepartmentUncheckedCreateWithoutEmployee_Department_deletedByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  targetId: string
+  targetId?: string
 }
 
 export type DepartmentCreateOrConnectWithoutEmployee_Department_deletedByToEmployeeInput = {
@@ -709,7 +709,7 @@ export type DepartmentCreateWithoutEmployee_Department_createdByToEmployeeInput 
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee_Department_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDepartment_Department_deletedByToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDepartmentInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateWithoutEmployee_Department_createdByToEmployeeInput = {
@@ -723,7 +723,7 @@ export type DepartmentUncheckedCreateWithoutEmployee_Department_createdByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  targetId: string
+  targetId?: string
 }
 
 export type DepartmentCreateOrConnectWithoutEmployee_Department_createdByToEmployeeInput = {
@@ -851,7 +851,7 @@ export type DepartmentCreateManyEmployee_Department_deletedByToEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  targetId: string
+  targetId?: string
 }
 
 export type DepartmentCreateManyEmployee_Department_createdByToEmployeeInput = {
@@ -865,7 +865,7 @@ export type DepartmentCreateManyEmployee_Department_createdByToEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  targetId: string
+  targetId?: string
 }
 
 export type DepartmentUpdateWithoutEmployee_Department_deletedByToEmployeeInput = {

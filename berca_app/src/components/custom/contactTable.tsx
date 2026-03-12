@@ -37,7 +37,7 @@ type SortField =
   | 'mobilePhone'
   | 'homePhone'
   | 'birthDate'
-  | 'trough'
+  | 'through'
   | 'active'
   | 'infoCorrect'
   | 'checkInfo'
@@ -168,7 +168,7 @@ export function ContactTable({
         (c.generalPhone?.toLowerCase().includes(q) ?? false) ||
         (c.mobilePhone?.toLowerCase().includes(q) ?? false) ||
         (c.functionName?.toLowerCase().includes(q) ?? false) ||
-        (c.trough?.toLowerCase().includes(q) ?? false)
+        (c.through?.toLowerCase().includes(q) ?? false)
       )
     })
     .sort((a, b) => {
@@ -204,8 +204,8 @@ export function ContactTable({
           return s(a.homePhone, b.homePhone)
         case 'birthDate':
           return s(a.birthDate, b.birthDate)
-        case 'trough':
-          return s(a.trough, b.trough)
+        case 'through':
+          return s(a.through, b.through)
         case 'active':
           return n(a.active, b.active)
         case 'infoCorrect':
@@ -260,7 +260,7 @@ export function ContactTable({
       mobilePhone: c.mobilePhone,
       info: c.info,
       birthDate: c.birthDate ? new Date(c.birthDate) : null,
-      trough: c.trough,
+      through: c.through,
       description: c.description,
       infoCorrect: c.infoCorrect,
       checkInfo: c.checkInfo,
@@ -388,7 +388,7 @@ export function ContactTable({
               <Th field="mobilePhone" label="Mobile" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="homePhone" label="Home Phone" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="birthDate" label="Birth Date" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
-              <Th field="trough" label="Source" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="through" label="Source" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="active" label="Active" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="infoCorrect" label="Info OK" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="checkInfo" label="Check Info" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
@@ -484,7 +484,7 @@ export function ContactTable({
                   <TableCell className={tdClass}>{c.mobilePhone ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{c.homePhone ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{formatDate(c.birthDate)}</TableCell>
-                  <TableCell className={tdClass}>{c.trough ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{c.through ?? '-'}</TableCell>
                   <TableCell>
                     <YesNoBadge value={c.active} />
                   </TableCell>

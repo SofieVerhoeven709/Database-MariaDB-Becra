@@ -45,7 +45,7 @@ export type InventoryMinAggregateOutputType = {
   place: string | null
   shortDescription: string | null
   longDescription: string | null
-  serieNumber: string | null
+  serialNumber: string | null
   quantityInStock: number | null
   minQuantityInStock: number | null
   maxQuantityInStock: number | null
@@ -66,7 +66,7 @@ export type InventoryMaxAggregateOutputType = {
   place: string | null
   shortDescription: string | null
   longDescription: string | null
-  serieNumber: string | null
+  serialNumber: string | null
   quantityInStock: number | null
   minQuantityInStock: number | null
   maxQuantityInStock: number | null
@@ -87,7 +87,7 @@ export type InventoryCountAggregateOutputType = {
   place: number
   shortDescription: number
   longDescription: number
-  serieNumber: number
+  serialNumber: number
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -122,7 +122,7 @@ export type InventoryMinAggregateInputType = {
   place?: true
   shortDescription?: true
   longDescription?: true
-  serieNumber?: true
+  serialNumber?: true
   quantityInStock?: true
   minQuantityInStock?: true
   maxQuantityInStock?: true
@@ -143,7 +143,7 @@ export type InventoryMaxAggregateInputType = {
   place?: true
   shortDescription?: true
   longDescription?: true
-  serieNumber?: true
+  serialNumber?: true
   quantityInStock?: true
   minQuantityInStock?: true
   maxQuantityInStock?: true
@@ -164,7 +164,7 @@ export type InventoryCountAggregateInputType = {
   place?: true
   shortDescription?: true
   longDescription?: true
-  serieNumber?: true
+  serialNumber?: true
   quantityInStock?: true
   minQuantityInStock?: true
   maxQuantityInStock?: true
@@ -272,7 +272,7 @@ export type InventoryGroupByOutputType = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -316,7 +316,7 @@ export type InventoryWhereInput = {
   place?: Prisma.StringFilter<"Inventory"> | string
   shortDescription?: Prisma.StringFilter<"Inventory"> | string
   longDescription?: Prisma.StringFilter<"Inventory"> | string
-  serieNumber?: Prisma.StringFilter<"Inventory"> | string
+  serialNumber?: Prisma.StringFilter<"Inventory"> | string
   quantityInStock?: Prisma.IntFilter<"Inventory"> | number
   minQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
   maxQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
@@ -344,7 +344,7 @@ export type InventoryOrderByWithRelationInput = {
   place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  serieNumber?: Prisma.SortOrder
+  serialNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
   minQuantityInStock?: Prisma.SortOrder
   maxQuantityInStock?: Prisma.SortOrder
@@ -376,7 +376,7 @@ export type InventoryWhereUniqueInput = Prisma.AtLeast<{
   place?: Prisma.StringFilter<"Inventory"> | string
   shortDescription?: Prisma.StringFilter<"Inventory"> | string
   longDescription?: Prisma.StringFilter<"Inventory"> | string
-  serieNumber?: Prisma.StringFilter<"Inventory"> | string
+  serialNumber?: Prisma.StringFilter<"Inventory"> | string
   quantityInStock?: Prisma.IntFilter<"Inventory"> | number
   minQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
   maxQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
@@ -404,7 +404,7 @@ export type InventoryOrderByWithAggregationInput = {
   place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  serieNumber?: Prisma.SortOrder
+  serialNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
   minQuantityInStock?: Prisma.SortOrder
   maxQuantityInStock?: Prisma.SortOrder
@@ -433,7 +433,7 @@ export type InventoryScalarWhereWithAggregatesInput = {
   place?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
   shortDescription?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
   longDescription?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
-  serieNumber?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
+  serialNumber?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
   quantityInStock?: Prisma.IntWithAggregatesFilter<"Inventory"> | number
   minQuantityInStock?: Prisma.IntWithAggregatesFilter<"Inventory"> | number
   maxQuantityInStock?: Prisma.IntWithAggregatesFilter<"Inventory"> | number
@@ -452,7 +452,7 @@ export type InventoryCreateInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -478,7 +478,7 @@ export type InventoryUncheckedCreateInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -500,7 +500,7 @@ export type InventoryUpdateInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -526,7 +526,7 @@ export type InventoryUncheckedUpdateInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -550,7 +550,7 @@ export type InventoryCreateManyInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -569,7 +569,7 @@ export type InventoryUpdateManyMutationInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -588,7 +588,7 @@ export type InventoryUncheckedUpdateManyInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -625,7 +625,7 @@ export type InventoryCountOrderByAggregateInput = {
   place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  serieNumber?: Prisma.SortOrder
+  serialNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
   minQuantityInStock?: Prisma.SortOrder
   maxQuantityInStock?: Prisma.SortOrder
@@ -652,7 +652,7 @@ export type InventoryMaxOrderByAggregateInput = {
   place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  serieNumber?: Prisma.SortOrder
+  serialNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
   minQuantityInStock?: Prisma.SortOrder
   maxQuantityInStock?: Prisma.SortOrder
@@ -673,7 +673,7 @@ export type InventoryMinOrderByAggregateInput = {
   place?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  serieNumber?: Prisma.SortOrder
+  serialNumber?: Prisma.SortOrder
   quantityInStock?: Prisma.SortOrder
   minQuantityInStock?: Prisma.SortOrder
   maxQuantityInStock?: Prisma.SortOrder
@@ -916,7 +916,7 @@ export type InventoryCreateWithoutEmployeeInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -941,7 +941,7 @@ export type InventoryUncheckedCreateWithoutEmployeeInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -972,7 +972,7 @@ export type InventoryCreateWithoutEmployee_Inventory_deletedByToEmployeeInput = 
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -997,7 +997,7 @@ export type InventoryUncheckedCreateWithoutEmployee_Inventory_deletedByToEmploye
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1049,7 +1049,7 @@ export type InventoryScalarWhereInput = {
   place?: Prisma.StringFilter<"Inventory"> | string
   shortDescription?: Prisma.StringFilter<"Inventory"> | string
   longDescription?: Prisma.StringFilter<"Inventory"> | string
-  serieNumber?: Prisma.StringFilter<"Inventory"> | string
+  serialNumber?: Prisma.StringFilter<"Inventory"> | string
   quantityInStock?: Prisma.IntFilter<"Inventory"> | number
   minQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
   maxQuantityInStock?: Prisma.IntFilter<"Inventory"> | number
@@ -1084,7 +1084,7 @@ export type InventoryCreateWithoutInventoryChangeInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1109,7 +1109,7 @@ export type InventoryUncheckedCreateWithoutInventoryChangeInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1146,7 +1146,7 @@ export type InventoryUpdateWithoutInventoryChangeInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1171,7 +1171,7 @@ export type InventoryUncheckedUpdateWithoutInventoryChangeInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1192,7 +1192,7 @@ export type InventoryCreateWithoutInventoryOrderInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1217,7 +1217,7 @@ export type InventoryUncheckedCreateWithoutInventoryOrderInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1254,7 +1254,7 @@ export type InventoryUpdateWithoutInventoryOrderInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1279,7 +1279,7 @@ export type InventoryUncheckedUpdateWithoutInventoryOrderInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1300,7 +1300,7 @@ export type InventoryCreateWithoutInventoryStructureInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1325,7 +1325,7 @@ export type InventoryUncheckedCreateWithoutInventoryStructureInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1362,7 +1362,7 @@ export type InventoryUpdateWithoutInventoryStructureInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1387,7 +1387,7 @@ export type InventoryUncheckedUpdateWithoutInventoryStructureInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1408,7 +1408,7 @@ export type InventoryCreateWithoutMaterial_Inventory_materialIdToMaterialInput =
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1432,7 +1432,7 @@ export type InventoryUncheckedCreateWithoutMaterial_Inventory_materialIdToMateri
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1464,7 +1464,7 @@ export type InventoryCreateWithoutMaterial_Inventory_beNumberToMaterialInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1488,7 +1488,7 @@ export type InventoryUncheckedCreateWithoutMaterial_Inventory_beNumberToMaterial
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1542,7 +1542,7 @@ export type InventoryUpdateWithoutMaterial_Inventory_beNumberToMaterialInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1566,7 +1566,7 @@ export type InventoryUncheckedUpdateWithoutMaterial_Inventory_beNumberToMaterial
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1590,7 +1590,7 @@ export type InventoryCreateManyEmployeeInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1610,7 +1610,7 @@ export type InventoryCreateManyEmployee_Inventory_deletedByToEmployeeInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1628,7 +1628,7 @@ export type InventoryUpdateWithoutEmployeeInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1653,7 +1653,7 @@ export type InventoryUncheckedUpdateWithoutEmployeeInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1676,7 +1676,7 @@ export type InventoryUncheckedUpdateManyWithoutEmployeeInput = {
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1694,7 +1694,7 @@ export type InventoryUpdateWithoutEmployee_Inventory_deletedByToEmployeeInput = 
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1719,7 +1719,7 @@ export type InventoryUncheckedUpdateWithoutEmployee_Inventory_deletedByToEmploye
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1742,7 +1742,7 @@ export type InventoryUncheckedUpdateManyWithoutEmployee_Inventory_deletedByToEmp
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1761,7 +1761,7 @@ export type InventoryCreateManyMaterial_Inventory_materialIdToMaterialInput = {
   place: string
   shortDescription: string
   longDescription: string
-  serieNumber: string
+  serialNumber: string
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
@@ -1780,7 +1780,7 @@ export type InventoryUpdateWithoutMaterial_Inventory_materialIdToMaterialInput =
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1804,7 +1804,7 @@ export type InventoryUncheckedUpdateWithoutMaterial_Inventory_materialIdToMateri
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1827,7 +1827,7 @@ export type InventoryUncheckedUpdateManyWithoutMaterial_Inventory_materialIdToMa
   place?: Prisma.StringFieldUpdateOperationsInput | string
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.StringFieldUpdateOperationsInput | string
-  serieNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   quantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   minQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
   maxQuantityInStock?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1897,7 +1897,7 @@ export type InventorySelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   place?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  serieNumber?: boolean
+  serialNumber?: boolean
   quantityInStock?: boolean
   minQuantityInStock?: boolean
   maxQuantityInStock?: boolean
@@ -1928,7 +1928,7 @@ export type InventorySelectScalar = {
   place?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  serieNumber?: boolean
+  serialNumber?: boolean
   quantityInStock?: boolean
   minQuantityInStock?: boolean
   maxQuantityInStock?: boolean
@@ -1942,7 +1942,7 @@ export type InventorySelectScalar = {
   deletedBy?: boolean
 }
 
-export type InventoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "beNumber" | "place" | "shortDescription" | "longDescription" | "serieNumber" | "quantityInStock" | "minQuantityInStock" | "maxQuantityInStock" | "information" | "valid" | "noValidDate" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["inventory"]>
+export type InventoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "beNumber" | "place" | "shortDescription" | "longDescription" | "serialNumber" | "quantityInStock" | "minQuantityInStock" | "maxQuantityInStock" | "information" | "valid" | "noValidDate" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["inventory"]>
 export type InventoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Material_Inventory_materialIdToMaterial?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   Material_Inventory_beNumberToMaterial?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
@@ -1972,7 +1972,7 @@ export type $InventoryPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     place: string
     shortDescription: string
     longDescription: string
-    serieNumber: string
+    serialNumber: string
     quantityInStock: number
     minQuantityInStock: number
     maxQuantityInStock: number
@@ -2366,7 +2366,7 @@ export interface InventoryFieldRefs {
   readonly place: Prisma.FieldRef<"Inventory", 'String'>
   readonly shortDescription: Prisma.FieldRef<"Inventory", 'String'>
   readonly longDescription: Prisma.FieldRef<"Inventory", 'String'>
-  readonly serieNumber: Prisma.FieldRef<"Inventory", 'String'>
+  readonly serialNumber: Prisma.FieldRef<"Inventory", 'String'>
   readonly quantityInStock: Prisma.FieldRef<"Inventory", 'Int'>
   readonly minQuantityInStock: Prisma.FieldRef<"Inventory", 'Int'>
   readonly maxQuantityInStock: Prisma.FieldRef<"Inventory", 'Int'>

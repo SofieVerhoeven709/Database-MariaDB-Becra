@@ -99,7 +99,6 @@ export const ModelName = {
   Purchase: 'Purchase',
   PurchaseDetail: 'PurchaseDetail',
   PurchaseOrderBecra: 'PurchaseOrderBecra',
-  QouteBecra: 'QouteBecra',
   QuoteSupplier: 'QuoteSupplier',
   Role: 'Role',
   Session: 'Session',
@@ -124,7 +123,8 @@ export const ModelName = {
   WorkOrderStructure: 'WorkOrderStructure',
   RoleLevel: 'RoleLevel',
   SubRole: 'SubRole',
-  DepartmentExtern: 'DepartmentExtern'
+  DepartmentExtern: 'DepartmentExtern',
+  QuoteBecra: 'QuoteBecra'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -186,7 +186,7 @@ export const CompanyScalarFieldEnum = {
   becraCustomerNumber: 'becraCustomerNumber',
   becraWebsiteLogin: 'becraWebsiteLogin',
   supplier: 'supplier',
-  prefferedSupplier: 'prefferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   companyActive: 'companyActive',
   newsLetter: 'newsLetter',
   customer: 'customer',
@@ -255,7 +255,7 @@ export const ContactScalarFieldEnum = {
   mobilePhone: 'mobilePhone',
   info: 'info',
   birthDate: 'birthDate',
-  trough: 'trough',
+  through: 'through',
   description: 'description',
   createdAt: 'createdAt',
   infoCorrect: 'infoCorrect',
@@ -540,7 +540,7 @@ export const InventoryScalarFieldEnum = {
   place: 'place',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  serieNumber: 'serieNumber',
+  serialNumber: 'serialNumber',
   quantityInStock: 'quantityInStock',
   minQuantityInStock: 'minQuantityInStock',
   maxQuantityInStock: 'maxQuantityInStock',
@@ -634,7 +634,7 @@ export const InvoiceInScalarFieldEnum = {
   expireDate: 'expireDate',
   payDate: 'payDate',
   invoiceReference: 'invoiceReference',
-  invoiceOutAttachement: 'invoiceOutAttachement',
+  invoiceOutAttachment: 'invoiceOutAttachment',
   deliveryNote: 'deliveryNote',
   purchaseOrder: 'purchaseOrder',
   transactionNumber: 'transactionNumber',
@@ -682,7 +682,7 @@ export const InvoiceOutScalarFieldEnum = {
   expireDate: 'expireDate',
   payDate: 'payDate',
   invoiceReference: 'invoiceReference',
-  invoiceInAttachement: 'invoiceInAttachement',
+  invoiceInAttachment: 'invoiceInAttachment',
   deliveryNote: 'deliveryNote',
   purchaseOrder: 'purchaseOrder',
   transactionNumber: 'transactionNumber',
@@ -878,7 +878,7 @@ export const MaterialPriceScalarFieldEnum = {
   beNumber: 'beNumber',
   orderNr: 'orderNr',
   quoteBecra: 'quoteBecra',
-  supllierOrderNr: 'supllierOrderNr',
+  supplierOrderNr: 'supplierOrderNr',
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -888,6 +888,7 @@ export const MaterialPriceScalarFieldEnum = {
   additionalInfo: 'additionalInfo',
   unitPrice: 'unitPrice',
   quantityPrice: 'quantityPrice',
+  companyId: 'companyId',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -912,7 +913,7 @@ export const MaterialSerialTrackScalarFieldEnum = {
   fromLocation: 'fromLocation',
   toLocation: 'toLocation',
   updatedAt: 'updatedAt',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   rejected: 'rejected',
   additionalInfo: 'additionalInfo',
   projectId: 'projectId',
@@ -947,7 +948,7 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   beParentPart: 'beParentPart',
   serialCode: 'serialCode',
   tag: 'tag',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   brandOrderNr: 'brandOrderNr',
   unit: 'unit',
@@ -1093,10 +1094,10 @@ export const ProjectContactScalarFieldEnum = {
   description: 'description',
   extraInfo: 'extraInfo',
   createdAt: 'createdAt',
-  moddifiedAt: 'moddifiedAt',
-  idValid: 'idValid',
+  modifiedAt: 'modifiedAt',
+  isValid: 'isValid',
   createdBy: 'createdBy',
-  moddifiedBy: 'moddifiedBy',
+  modifiedBy: 'modifiedBy',
   projectId: 'projectId',
   contactId: 'contactId',
   deleted: 'deleted',
@@ -1132,7 +1133,7 @@ export const PurchaseScalarFieldEnum = {
   status: 'status',
   shortDescription: 'shortDescription',
   description: 'description',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   additionalInfo: 'additionalInfo',
   updatedAt: 'updatedAt',
   createdBy: 'createdBy',
@@ -1175,20 +1176,6 @@ export const PurchaseOrderBecraScalarFieldEnum = {
 } as const
 
 export type PurchaseOrderBecraScalarFieldEnum = (typeof PurchaseOrderBecraScalarFieldEnum)[keyof typeof PurchaseOrderBecraScalarFieldEnum]
-
-
-export const QouteBecraScalarFieldEnum = {
-  id: 'id',
-  description: 'description',
-  validDate: 'validDate',
-  date: 'date',
-  createdBy: 'createdBy',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type QouteBecraScalarFieldEnum = (typeof QouteBecraScalarFieldEnum)[keyof typeof QouteBecraScalarFieldEnum]
 
 
 export const QuoteSupplierScalarFieldEnum = {
@@ -1579,6 +1566,20 @@ export const DepartmentExternScalarFieldEnum = {
 export type DepartmentExternScalarFieldEnum = (typeof DepartmentExternScalarFieldEnum)[keyof typeof DepartmentExternScalarFieldEnum]
 
 
+export const QuoteBecraScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  validDate: 'validDate',
+  date: 'date',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type QuoteBecraScalarFieldEnum = (typeof QuoteBecraScalarFieldEnum)[keyof typeof QuoteBecraScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1680,7 +1681,7 @@ export const ContactOrderByRelevanceFieldEnum = {
   homePhone: 'homePhone',
   mobilePhone: 'mobilePhone',
   info: 'info',
-  trough: 'trough',
+  through: 'through',
   description: 'description',
   createdBy: 'createdBy',
   functionId: 'functionId',
@@ -1888,7 +1889,7 @@ export const InventoryOrderByRelevanceFieldEnum = {
   place: 'place',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  serieNumber: 'serieNumber',
+  serialNumber: 'serialNumber',
   information: 'information',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
@@ -1953,7 +1954,7 @@ export const InvoiceInOrderByRelevanceFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
   invoiceReference: 'invoiceReference',
-  invoiceOutAttachement: 'invoiceOutAttachement',
+  invoiceOutAttachment: 'invoiceOutAttachment',
   deliveryNote: 'deliveryNote',
   purchaseOrder: 'purchaseOrder',
   transactionNumber: 'transactionNumber',
@@ -1984,7 +1985,7 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
   invoiceReference: 'invoiceReference',
-  invoiceInAttachement: 'invoiceInAttachement',
+  invoiceInAttachment: 'invoiceInAttachment',
   deliveryNote: 'deliveryNote',
   purchaseOrder: 'purchaseOrder',
   transactionNumber: 'transactionNumber',
@@ -2140,12 +2141,13 @@ export const MaterialPriceOrderByRelevanceFieldEnum = {
   beNumber: 'beNumber',
   orderNr: 'orderNr',
   quoteBecra: 'quoteBecra',
-  supllierOrderNr: 'supllierOrderNr',
+  supplierOrderNr: 'supplierOrderNr',
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   brandName: 'brandName',
   additionalInfo: 'additionalInfo',
+  companyId: 'companyId',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
 } as const
@@ -2167,7 +2169,7 @@ export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   materialGroupId: 'materialGroupId',
   fromLocation: 'fromLocation',
   toLocation: 'toLocation',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   additionalInfo: 'additionalInfo',
   projectId: 'projectId',
   becraCode: 'becraCode',
@@ -2195,7 +2197,7 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   beParentPart: 'beParentPart',
   serialCode: 'serialCode',
   tag: 'tag',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   brandOrderNr: 'brandOrderNr',
   unit: 'unit',
@@ -2298,7 +2300,7 @@ export const ProjectContactOrderByRelevanceFieldEnum = {
   description: 'description',
   extraInfo: 'extraInfo',
   createdBy: 'createdBy',
-  moddifiedBy: 'moddifiedBy',
+  modifiedBy: 'modifiedBy',
   projectId: 'projectId',
   contactId: 'contactId',
   deletedBy: 'deletedBy'
@@ -2328,7 +2330,7 @@ export const PurchaseOrderByRelevanceFieldEnum = {
   status: 'status',
   shortDescription: 'shortDescription',
   description: 'description',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
@@ -2359,16 +2361,6 @@ export const PurchaseOrderBecraOrderByRelevanceFieldEnum = {
 } as const
 
 export type PurchaseOrderBecraOrderByRelevanceFieldEnum = (typeof PurchaseOrderBecraOrderByRelevanceFieldEnum)[keyof typeof PurchaseOrderBecraOrderByRelevanceFieldEnum]
-
-
-export const QouteBecraOrderByRelevanceFieldEnum = {
-  id: 'id',
-  description: 'description',
-  createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
-} as const
-
-export type QouteBecraOrderByRelevanceFieldEnum = (typeof QouteBecraOrderByRelevanceFieldEnum)[keyof typeof QouteBecraOrderByRelevanceFieldEnum]
 
 
 export const QuoteSupplierOrderByRelevanceFieldEnum = {
@@ -2662,4 +2654,14 @@ export const DepartmentExternOrderByRelevanceFieldEnum = {
 } as const
 
 export type DepartmentExternOrderByRelevanceFieldEnum = (typeof DepartmentExternOrderByRelevanceFieldEnum)[keyof typeof DepartmentExternOrderByRelevanceFieldEnum]
+
+
+export const QuoteBecraOrderByRelevanceFieldEnum = {
+  id: 'id',
+  description: 'description',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type QuoteBecraOrderByRelevanceFieldEnum = (typeof QuoteBecraOrderByRelevanceFieldEnum)[keyof typeof QuoteBecraOrderByRelevanceFieldEnum]
 

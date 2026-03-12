@@ -30,7 +30,7 @@ export interface MappedCompany {
   becraCustomerNumber: string | null
   becraWebsiteLogin: string | null
   supplier: boolean
-  prefferedSupplier: boolean
+  preferredSupplier: boolean
   companyActive: boolean
   newsLetter: boolean
   customer: boolean
@@ -105,7 +105,7 @@ export interface CompanyDetailData {
   becraWebsiteLogin: string | null
   notes: string | null
   supplier: boolean
-  prefferedSupplier: boolean
+  preferredSupplier: boolean
   companyActive: boolean
   newsLetter: boolean
   customer: boolean

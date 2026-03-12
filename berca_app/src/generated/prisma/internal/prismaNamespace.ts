@@ -440,7 +440,6 @@ export const ModelName = {
   Purchase: 'Purchase',
   PurchaseDetail: 'PurchaseDetail',
   PurchaseOrderBecra: 'PurchaseOrderBecra',
-  QouteBecra: 'QouteBecra',
   QuoteSupplier: 'QuoteSupplier',
   Role: 'Role',
   Session: 'Session',
@@ -465,7 +464,8 @@ export const ModelName = {
   WorkOrderStructure: 'WorkOrderStructure',
   RoleLevel: 'RoleLevel',
   SubRole: 'SubRole',
-  DepartmentExtern: 'DepartmentExtern'
+  DepartmentExtern: 'DepartmentExtern',
+  QuoteBecra: 'QuoteBecra'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -481,7 +481,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyAdress" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentGroup" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "qouteBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern"
+    modelProps: "certificate" | "certificateType" | "company" | "companyAdress" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentGroup" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3785,72 +3785,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    QouteBecra: {
-      payload: Prisma.$QouteBecraPayload<ExtArgs>
-      fields: Prisma.QouteBecraFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.QouteBecraFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$QouteBecraPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.QouteBecraFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$QouteBecraPayload>
-        }
-        findFirst: {
-          args: Prisma.QouteBecraFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$QouteBecraPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.QouteBecraFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$QouteBecraPayload>
-        }
-        findMany: {
-          args: Prisma.QouteBecraFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$QouteBecraPayload>[]
-        }
-        create: {
-          args: Prisma.QouteBecraCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$QouteBecraPayload>
-        }
-        createMany: {
-          args: Prisma.QouteBecraCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        delete: {
-          args: Prisma.QouteBecraDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$QouteBecraPayload>
-        }
-        update: {
-          args: Prisma.QouteBecraUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$QouteBecraPayload>
-        }
-        deleteMany: {
-          args: Prisma.QouteBecraDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.QouteBecraUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        upsert: {
-          args: Prisma.QouteBecraUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$QouteBecraPayload>
-        }
-        aggregate: {
-          args: Prisma.QouteBecraAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateQouteBecra>
-        }
-        groupBy: {
-          args: Prisma.QouteBecraGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.QouteBecraGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.QouteBecraCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.QouteBecraCountAggregateOutputType> | number
-        }
-      }
-    }
     QuoteSupplier: {
       payload: Prisma.$QuoteSupplierPayload<ExtArgs>
       fields: Prisma.QuoteSupplierFieldRefs
@@ -5501,6 +5435,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    QuoteBecra: {
+      payload: Prisma.$QuoteBecraPayload<ExtArgs>
+      fields: Prisma.QuoteBecraFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuoteBecraFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteBecraPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuoteBecraFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteBecraPayload>
+        }
+        findFirst: {
+          args: Prisma.QuoteBecraFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteBecraPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuoteBecraFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteBecraPayload>
+        }
+        findMany: {
+          args: Prisma.QuoteBecraFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteBecraPayload>[]
+        }
+        create: {
+          args: Prisma.QuoteBecraCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteBecraPayload>
+        }
+        createMany: {
+          args: Prisma.QuoteBecraCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.QuoteBecraDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteBecraPayload>
+        }
+        update: {
+          args: Prisma.QuoteBecraUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteBecraPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuoteBecraDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuoteBecraUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.QuoteBecraUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteBecraPayload>
+        }
+        aggregate: {
+          args: Prisma.QuoteBecraAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuoteBecra>
+        }
+        groupBy: {
+          args: Prisma.QuoteBecraGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteBecraGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuoteBecraCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteBecraCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -5583,7 +5583,7 @@ export const CompanyScalarFieldEnum = {
   becraCustomerNumber: 'becraCustomerNumber',
   becraWebsiteLogin: 'becraWebsiteLogin',
   supplier: 'supplier',
-  prefferedSupplier: 'prefferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   companyActive: 'companyActive',
   newsLetter: 'newsLetter',
   customer: 'customer',
@@ -5652,7 +5652,7 @@ export const ContactScalarFieldEnum = {
   mobilePhone: 'mobilePhone',
   info: 'info',
   birthDate: 'birthDate',
-  trough: 'trough',
+  through: 'through',
   description: 'description',
   createdAt: 'createdAt',
   infoCorrect: 'infoCorrect',
@@ -5937,7 +5937,7 @@ export const InventoryScalarFieldEnum = {
   place: 'place',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  serieNumber: 'serieNumber',
+  serialNumber: 'serialNumber',
   quantityInStock: 'quantityInStock',
   minQuantityInStock: 'minQuantityInStock',
   maxQuantityInStock: 'maxQuantityInStock',
@@ -6031,7 +6031,7 @@ export const InvoiceInScalarFieldEnum = {
   expireDate: 'expireDate',
   payDate: 'payDate',
   invoiceReference: 'invoiceReference',
-  invoiceOutAttachement: 'invoiceOutAttachement',
+  invoiceOutAttachment: 'invoiceOutAttachment',
   deliveryNote: 'deliveryNote',
   purchaseOrder: 'purchaseOrder',
   transactionNumber: 'transactionNumber',
@@ -6079,7 +6079,7 @@ export const InvoiceOutScalarFieldEnum = {
   expireDate: 'expireDate',
   payDate: 'payDate',
   invoiceReference: 'invoiceReference',
-  invoiceInAttachement: 'invoiceInAttachement',
+  invoiceInAttachment: 'invoiceInAttachment',
   deliveryNote: 'deliveryNote',
   purchaseOrder: 'purchaseOrder',
   transactionNumber: 'transactionNumber',
@@ -6275,7 +6275,7 @@ export const MaterialPriceScalarFieldEnum = {
   beNumber: 'beNumber',
   orderNr: 'orderNr',
   quoteBecra: 'quoteBecra',
-  supllierOrderNr: 'supllierOrderNr',
+  supplierOrderNr: 'supplierOrderNr',
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -6285,6 +6285,7 @@ export const MaterialPriceScalarFieldEnum = {
   additionalInfo: 'additionalInfo',
   unitPrice: 'unitPrice',
   quantityPrice: 'quantityPrice',
+  companyId: 'companyId',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -6309,7 +6310,7 @@ export const MaterialSerialTrackScalarFieldEnum = {
   fromLocation: 'fromLocation',
   toLocation: 'toLocation',
   updatedAt: 'updatedAt',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   rejected: 'rejected',
   additionalInfo: 'additionalInfo',
   projectId: 'projectId',
@@ -6344,7 +6345,7 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   beParentPart: 'beParentPart',
   serialCode: 'serialCode',
   tag: 'tag',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   brandOrderNr: 'brandOrderNr',
   unit: 'unit',
@@ -6490,10 +6491,10 @@ export const ProjectContactScalarFieldEnum = {
   description: 'description',
   extraInfo: 'extraInfo',
   createdAt: 'createdAt',
-  moddifiedAt: 'moddifiedAt',
-  idValid: 'idValid',
+  modifiedAt: 'modifiedAt',
+  isValid: 'isValid',
   createdBy: 'createdBy',
-  moddifiedBy: 'moddifiedBy',
+  modifiedBy: 'modifiedBy',
   projectId: 'projectId',
   contactId: 'contactId',
   deleted: 'deleted',
@@ -6529,7 +6530,7 @@ export const PurchaseScalarFieldEnum = {
   status: 'status',
   shortDescription: 'shortDescription',
   description: 'description',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   additionalInfo: 'additionalInfo',
   updatedAt: 'updatedAt',
   createdBy: 'createdBy',
@@ -6572,20 +6573,6 @@ export const PurchaseOrderBecraScalarFieldEnum = {
 } as const
 
 export type PurchaseOrderBecraScalarFieldEnum = (typeof PurchaseOrderBecraScalarFieldEnum)[keyof typeof PurchaseOrderBecraScalarFieldEnum]
-
-
-export const QouteBecraScalarFieldEnum = {
-  id: 'id',
-  description: 'description',
-  validDate: 'validDate',
-  date: 'date',
-  createdBy: 'createdBy',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type QouteBecraScalarFieldEnum = (typeof QouteBecraScalarFieldEnum)[keyof typeof QouteBecraScalarFieldEnum]
 
 
 export const QuoteSupplierScalarFieldEnum = {
@@ -6976,6 +6963,20 @@ export const DepartmentExternScalarFieldEnum = {
 export type DepartmentExternScalarFieldEnum = (typeof DepartmentExternScalarFieldEnum)[keyof typeof DepartmentExternScalarFieldEnum]
 
 
+export const QuoteBecraScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  validDate: 'validDate',
+  date: 'date',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type QuoteBecraScalarFieldEnum = (typeof QuoteBecraScalarFieldEnum)[keyof typeof QuoteBecraScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -7077,7 +7078,7 @@ export const ContactOrderByRelevanceFieldEnum = {
   homePhone: 'homePhone',
   mobilePhone: 'mobilePhone',
   info: 'info',
-  trough: 'trough',
+  through: 'through',
   description: 'description',
   createdBy: 'createdBy',
   functionId: 'functionId',
@@ -7285,7 +7286,7 @@ export const InventoryOrderByRelevanceFieldEnum = {
   place: 'place',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  serieNumber: 'serieNumber',
+  serialNumber: 'serialNumber',
   information: 'information',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
@@ -7350,7 +7351,7 @@ export const InvoiceInOrderByRelevanceFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
   invoiceReference: 'invoiceReference',
-  invoiceOutAttachement: 'invoiceOutAttachement',
+  invoiceOutAttachment: 'invoiceOutAttachment',
   deliveryNote: 'deliveryNote',
   purchaseOrder: 'purchaseOrder',
   transactionNumber: 'transactionNumber',
@@ -7381,7 +7382,7 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
   invoiceReference: 'invoiceReference',
-  invoiceInAttachement: 'invoiceInAttachement',
+  invoiceInAttachment: 'invoiceInAttachment',
   deliveryNote: 'deliveryNote',
   purchaseOrder: 'purchaseOrder',
   transactionNumber: 'transactionNumber',
@@ -7537,12 +7538,13 @@ export const MaterialPriceOrderByRelevanceFieldEnum = {
   beNumber: 'beNumber',
   orderNr: 'orderNr',
   quoteBecra: 'quoteBecra',
-  supllierOrderNr: 'supllierOrderNr',
+  supplierOrderNr: 'supplierOrderNr',
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   brandName: 'brandName',
   additionalInfo: 'additionalInfo',
+  companyId: 'companyId',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
 } as const
@@ -7564,7 +7566,7 @@ export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   materialGroupId: 'materialGroupId',
   fromLocation: 'fromLocation',
   toLocation: 'toLocation',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   additionalInfo: 'additionalInfo',
   projectId: 'projectId',
   becraCode: 'becraCode',
@@ -7592,7 +7594,7 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   beParentPart: 'beParentPart',
   serialCode: 'serialCode',
   tag: 'tag',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   brandOrderNr: 'brandOrderNr',
   unit: 'unit',
@@ -7695,7 +7697,7 @@ export const ProjectContactOrderByRelevanceFieldEnum = {
   description: 'description',
   extraInfo: 'extraInfo',
   createdBy: 'createdBy',
-  moddifiedBy: 'moddifiedBy',
+  modifiedBy: 'modifiedBy',
   projectId: 'projectId',
   contactId: 'contactId',
   deletedBy: 'deletedBy'
@@ -7725,7 +7727,7 @@ export const PurchaseOrderByRelevanceFieldEnum = {
   status: 'status',
   shortDescription: 'shortDescription',
   description: 'description',
-  preferedSupplier: 'preferedSupplier',
+  preferredSupplier: 'preferredSupplier',
   additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
@@ -7756,16 +7758,6 @@ export const PurchaseOrderBecraOrderByRelevanceFieldEnum = {
 } as const
 
 export type PurchaseOrderBecraOrderByRelevanceFieldEnum = (typeof PurchaseOrderBecraOrderByRelevanceFieldEnum)[keyof typeof PurchaseOrderBecraOrderByRelevanceFieldEnum]
-
-
-export const QouteBecraOrderByRelevanceFieldEnum = {
-  id: 'id',
-  description: 'description',
-  createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
-} as const
-
-export type QouteBecraOrderByRelevanceFieldEnum = (typeof QouteBecraOrderByRelevanceFieldEnum)[keyof typeof QouteBecraOrderByRelevanceFieldEnum]
 
 
 export const QuoteSupplierOrderByRelevanceFieldEnum = {
@@ -8061,6 +8053,16 @@ export const DepartmentExternOrderByRelevanceFieldEnum = {
 export type DepartmentExternOrderByRelevanceFieldEnum = (typeof DepartmentExternOrderByRelevanceFieldEnum)[keyof typeof DepartmentExternOrderByRelevanceFieldEnum]
 
 
+export const QuoteBecraOrderByRelevanceFieldEnum = {
+  id: 'id',
+  description: 'description',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type QuoteBecraOrderByRelevanceFieldEnum = (typeof QuoteBecraOrderByRelevanceFieldEnum)[keyof typeof QuoteBecraOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -8099,6 +8101,13 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
     
 
 /**
@@ -8238,7 +8247,6 @@ export type GlobalOmitConfig = {
   purchase?: Prisma.PurchaseOmit
   purchaseDetail?: Prisma.PurchaseDetailOmit
   purchaseOrderBecra?: Prisma.PurchaseOrderBecraOmit
-  qouteBecra?: Prisma.QouteBecraOmit
   quoteSupplier?: Prisma.QuoteSupplierOmit
   role?: Prisma.RoleOmit
   session?: Prisma.SessionOmit
@@ -8264,6 +8272,7 @@ export type GlobalOmitConfig = {
   roleLevel?: Prisma.RoleLevelOmit
   subRole?: Prisma.SubRoleOmit
   departmentExtern?: Prisma.DepartmentExternOmit
+  quoteBecra?: Prisma.QuoteBecraOmit
 }
 
 /* Types for Logging */

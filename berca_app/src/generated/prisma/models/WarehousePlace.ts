@@ -305,8 +305,8 @@ export type WarehousePlaceWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"WarehousePlace"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  MaterialSerialTrack?: Prisma.XOR<Prisma.MaterialSerialTrackNullableScalarRelationFilter, Prisma.MaterialSerialTrackWhereInput> | null
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  MaterialSerialTrack?: Prisma.XOR<Prisma.MaterialSerialTrackNullableScalarRelationFilter, Prisma.MaterialSerialTrackWhereInput> | null
 }
 
 export type WarehousePlaceOrderByWithRelationInput = {
@@ -327,8 +327,8 @@ export type WarehousePlaceOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackOrderByWithRelationInput
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackOrderByWithRelationInput
   _relevance?: Prisma.WarehousePlaceOrderByRelevanceInput
 }
 
@@ -353,8 +353,8 @@ export type WarehousePlaceWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"WarehousePlace"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  MaterialSerialTrack?: Prisma.XOR<Prisma.MaterialSerialTrackNullableScalarRelationFilter, Prisma.MaterialSerialTrackWhereInput> | null
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  MaterialSerialTrack?: Prisma.XOR<Prisma.MaterialSerialTrackNullableScalarRelationFilter, Prisma.MaterialSerialTrackWhereInput> | null
 }, "id">
 
 export type WarehousePlaceOrderByWithAggregationInput = {
@@ -418,8 +418,8 @@ export type WarehousePlaceCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutWarehousePlaceInput
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedOneWithoutWarehousePlaceInput
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedOneWithoutWarehousePlaceInput
 }
 
 export type WarehousePlaceUncheckedCreateInput = {
@@ -456,8 +456,8 @@ export type WarehousePlaceUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutWarehousePlaceNestedInput
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneWithoutWarehousePlaceNestedInput
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneWithoutWarehousePlaceNestedInput
 }
 
 export type WarehousePlaceUncheckedUpdateInput = {
@@ -754,8 +754,8 @@ export type WarehousePlaceCreateWithoutEmployeeInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedOneWithoutWarehousePlaceInput
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedOneWithoutWarehousePlaceInput
 }
 
 export type WarehousePlaceUncheckedCreateWithoutEmployeeInput = {
@@ -998,8 +998,8 @@ export type WarehousePlaceUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneWithoutWarehousePlaceNestedInput
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneWithoutWarehousePlaceNestedInput
 }
 
 export type WarehousePlaceUncheckedUpdateWithoutEmployeeInput = {
@@ -1184,8 +1184,8 @@ export type WarehousePlaceSelect<ExtArgs extends runtime.Types.Extensions.Intern
   deletedAt?: boolean
   deletedBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  MaterialSerialTrack?: boolean | Prisma.WarehousePlace$MaterialSerialTrackArgs<ExtArgs>
   Employee_WarehousePlace_deletedByToEmployee?: boolean | Prisma.WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs>
+  MaterialSerialTrack?: boolean | Prisma.WarehousePlace$MaterialSerialTrackArgs<ExtArgs>
 }, ExtArgs["result"]["warehousePlace"]>
 
 
@@ -1212,16 +1212,16 @@ export type WarehousePlaceSelectScalar = {
 export type WarehousePlaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "abbreviation" | "beNumber" | "serialTrackedId" | "place" | "shelf" | "column" | "layer" | "layerPlace" | "information" | "quantityInStock" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["warehousePlace"]>
 export type WarehousePlaceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  MaterialSerialTrack?: boolean | Prisma.WarehousePlace$MaterialSerialTrackArgs<ExtArgs>
   Employee_WarehousePlace_deletedByToEmployee?: boolean | Prisma.WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs>
+  MaterialSerialTrack?: boolean | Prisma.WarehousePlace$MaterialSerialTrackArgs<ExtArgs>
 }
 
 export type $WarehousePlacePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "WarehousePlace"
   objects: {
     Employee: Prisma.$EmployeePayload<ExtArgs>
-    MaterialSerialTrack: Prisma.$MaterialSerialTrackPayload<ExtArgs> | null
     Employee_WarehousePlace_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    MaterialSerialTrack: Prisma.$MaterialSerialTrackPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1581,8 +1581,8 @@ readonly fields: WarehousePlaceFieldRefs;
 export interface Prisma__WarehousePlaceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  MaterialSerialTrack<T extends Prisma.WarehousePlace$MaterialSerialTrackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WarehousePlace$MaterialSerialTrackArgs<ExtArgs>>): Prisma.Prisma__MaterialSerialTrackClient<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_WarehousePlace_deletedByToEmployee<T extends Prisma.WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  MaterialSerialTrack<T extends Prisma.WarehousePlace$MaterialSerialTrackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WarehousePlace$MaterialSerialTrackArgs<ExtArgs>>): Prisma.Prisma__MaterialSerialTrackClient<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1971,25 +1971,6 @@ export type WarehousePlaceDeleteManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * WarehousePlace.MaterialSerialTrack
- */
-export type WarehousePlace$MaterialSerialTrackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the MaterialSerialTrack
-   */
-  select?: Prisma.MaterialSerialTrackSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the MaterialSerialTrack
-   */
-  omit?: Prisma.MaterialSerialTrackOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MaterialSerialTrackInclude<ExtArgs> | null
-  where?: Prisma.MaterialSerialTrackWhereInput
-}
-
-/**
  * WarehousePlace.Employee_WarehousePlace_deletedByToEmployee
  */
 export type WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2006,6 +1987,25 @@ export type WarehousePlace$Employee_WarehousePlace_deletedByToEmployeeArgs<ExtAr
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * WarehousePlace.MaterialSerialTrack
+ */
+export type WarehousePlace$MaterialSerialTrackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaterialSerialTrack
+   */
+  select?: Prisma.MaterialSerialTrackSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaterialSerialTrack
+   */
+  omit?: Prisma.MaterialSerialTrackOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaterialSerialTrackInclude<ExtArgs> | null
+  where?: Prisma.MaterialSerialTrackWhereInput
 }
 
 /**

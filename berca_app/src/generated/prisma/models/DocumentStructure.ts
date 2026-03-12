@@ -508,11 +508,11 @@ export type DocumentStructureCreateInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -538,10 +538,10 @@ export type DocumentStructureUncheckedCreateInput = {
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -634,10 +634,10 @@ export type DocumentStructureCreateManyInput = {
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
 }
 
@@ -1047,10 +1047,12 @@ export type DocumentStructureCreateNestedOneWithoutFollowUpInput = {
   connect?: Prisma.DocumentStructureWhereUniqueInput
 }
 
-export type DocumentStructureUpdateOneRequiredWithoutFollowUpNestedInput = {
+export type DocumentStructureUpdateOneWithoutFollowUpNestedInput = {
   create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutFollowUpInput, Prisma.DocumentStructureUncheckedCreateWithoutFollowUpInput>
   connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutFollowUpInput
   upsert?: Prisma.DocumentStructureUpsertWithoutFollowUpInput
+  disconnect?: Prisma.DocumentStructureWhereInput | boolean
+  delete?: Prisma.DocumentStructureWhereInput | boolean
   connect?: Prisma.DocumentStructureWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentStructureUpdateToOneWithWhereWithoutFollowUpInput, Prisma.DocumentStructureUpdateWithoutFollowUpInput>, Prisma.DocumentStructureUncheckedUpdateWithoutFollowUpInput>
 }
@@ -1061,10 +1063,12 @@ export type DocumentStructureCreateNestedOneWithoutFollowUpStructureInput = {
   connect?: Prisma.DocumentStructureWhereUniqueInput
 }
 
-export type DocumentStructureUpdateOneRequiredWithoutFollowUpStructureNestedInput = {
+export type DocumentStructureUpdateOneWithoutFollowUpStructureNestedInput = {
   create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutFollowUpStructureInput, Prisma.DocumentStructureUncheckedCreateWithoutFollowUpStructureInput>
   connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutFollowUpStructureInput
   upsert?: Prisma.DocumentStructureUpsertWithoutFollowUpStructureInput
+  disconnect?: Prisma.DocumentStructureWhereInput | boolean
+  delete?: Prisma.DocumentStructureWhereInput | boolean
   connect?: Prisma.DocumentStructureWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentStructureUpdateToOneWithWhereWithoutFollowUpStructureInput, Prisma.DocumentStructureUpdateWithoutFollowUpStructureInput>, Prisma.DocumentStructureUncheckedUpdateWithoutFollowUpStructureInput>
 }
@@ -1232,11 +1236,11 @@ export type DocumentStructureCreateWithoutContactInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -1262,10 +1266,10 @@ export type DocumentStructureUncheckedCreateWithoutContactInput = {
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -1372,11 +1376,11 @@ export type DocumentStructureCreateWithoutOther_DocumentStructureInput = {
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -1402,10 +1406,10 @@ export type DocumentStructureUncheckedCreateWithoutOther_DocumentStructureInput 
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -1439,11 +1443,11 @@ export type DocumentStructureCreateWithoutDocumentStructureInput = {
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -1468,10 +1472,10 @@ export type DocumentStructureUncheckedCreateWithoutDocumentStructureInput = {
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -1628,9 +1632,9 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_createdByTo
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -1656,9 +1660,9 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_cr
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  revisedById: string
-  managedById: string
-  targetId: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -1699,10 +1703,10 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_deletedByTo
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -1728,10 +1732,10 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_de
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
@@ -1771,10 +1775,10 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_managedById
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -1800,9 +1804,9 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_ma
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -1843,10 +1847,10 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_revisedById
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -1872,9 +1876,9 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_re
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -1915,11 +1919,11 @@ export type DocumentStructureCreateWithoutEmployee_Employee_pictureIdToDocumentS
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
@@ -1944,10 +1948,10 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_Employee_pictureIdTo
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2119,11 +2123,11 @@ export type DocumentStructureCreateWithoutFollowUpInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
@@ -2148,10 +2152,10 @@ export type DocumentStructureUncheckedCreateWithoutFollowUpInput = {
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2259,11 +2263,11 @@ export type DocumentStructureCreateWithoutFollowUpStructureInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
@@ -2288,10 +2292,10 @@ export type DocumentStructureUncheckedCreateWithoutFollowUpStructureInput = {
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2399,11 +2403,11 @@ export type DocumentStructureCreateWithoutMaterialSerialTrackedStructure_Materia
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -2428,10 +2432,10 @@ export type DocumentStructureUncheckedCreateWithoutMaterialSerialTrackedStructur
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2466,11 +2470,11 @@ export type DocumentStructureCreateWithoutMaterialSerialTrackedStructure_Materia
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -2495,10 +2499,10 @@ export type DocumentStructureUncheckedCreateWithoutMaterialSerialTrackedStructur
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2679,11 +2683,11 @@ export type DocumentStructureCreateWithoutMaterialStructureInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -2708,10 +2712,10 @@ export type DocumentStructureUncheckedCreateWithoutMaterialStructureInput = {
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2818,11 +2822,11 @@ export type DocumentStructureCreateWithoutRoleInput = {
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -2847,10 +2851,10 @@ export type DocumentStructureUncheckedCreateWithoutRoleInput = {
   referenceDocId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2907,10 +2911,10 @@ export type DocumentStructureCreateWithoutTargetInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -2936,9 +2940,9 @@ export type DocumentStructureUncheckedCreateWithoutTargetInput = {
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2995,11 +2999,11 @@ export type DocumentStructureCreateWithoutTrainingDocumentInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
   Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target?: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -3024,10 +3028,10 @@ export type DocumentStructureUncheckedCreateWithoutTrainingDocumentInput = {
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -3132,10 +3136,10 @@ export type DocumentStructureCreateManyDocumentStructureInput = {
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
 }
 
@@ -3239,9 +3243,9 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_createdByToEmp
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  revisedById: string
-  managedById: string
-  targetId: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
 }
 
@@ -3261,10 +3265,10 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_deletedByToEmp
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
 }
 
 export type DocumentStructureCreateManyEmployee_DocumentStructure_managedByIdToEmployeeInput = {
@@ -3283,9 +3287,9 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_managedByIdToE
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  targetId?: string
   deletedBy?: string | null
 }
 
@@ -3305,9 +3309,9 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_revisedByIdToE
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
 }
 
@@ -3662,10 +3666,10 @@ export type DocumentStructureCreateManyRoleInput = {
   referenceDocId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
+  targetId?: string
   deletedBy?: string | null
 }
 
@@ -3769,9 +3773,9 @@ export type DocumentStructureCreateManyTargetInput = {
   roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
+  createdBy?: string
+  revisedById?: string
+  managedById?: string
   deletedBy?: string | null
 }
 

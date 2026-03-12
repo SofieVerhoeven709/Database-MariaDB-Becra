@@ -1,11 +1,15 @@
 import 'server-only'
 import {prismaClient} from './prismaClient'
-import type {Material, MaterialGroup, Unit, Employee} from '@/generated/prisma/client'
+import type {Material, MaterialGroup, Unit, Employee, Inventory} from '@/generated/prisma/client'
 
 export type MaterialWithRelations = Material & {
   MaterialGroup: MaterialGroup
   Unit: Unit
   Employee: Pick<Employee, 'id'> & {firstName: string; lastName: string}
+}
+
+export type MaterialWithDetails = MaterialWithRelations & {
+  Inventory_Inventory_materialIdToMaterial: Inventory[]
 }
 
 export async function getMaterials(): Promise<MaterialWithRelations[]> {
@@ -22,7 +26,7 @@ export async function getMaterials(): Promise<MaterialWithRelations[]> {
   })
 }
 
-export async function getMaterialById(id: string): Promise<MaterialWithRelations | null> {
+export async function getMaterialById(id: string): Promise<MaterialWithDetails | null> {
   return prismaClient.material.findUnique({
     where: {id},
     include: {
@@ -31,8 +35,12 @@ export async function getMaterialById(id: string): Promise<MaterialWithRelations
       Employee: {
         select: {id: true, firstName: true, lastName: true},
       },
+      Inventory_Inventory_materialIdToMaterial: {
+        where: {deleted: false},
+        orderBy: {createdAt: 'asc'},
+      },
     },
-  })
+  }) as Promise<MaterialWithDetails | null>
 }
 
 export async function getMaterialGroups() {

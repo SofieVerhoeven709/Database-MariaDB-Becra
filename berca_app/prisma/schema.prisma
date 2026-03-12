@@ -234,13 +234,13 @@ model Department {
   createdBy                               String    @db.Char(36)
   deletedBy                               String?   @db.Char(36)
   targetId                                String    @default("") @db.Char(36)
-  Employee_Department_deletedByToEmployee Employee? @relation("Department_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_department_deletedBy")
   Employee_Department_createdByToEmployee Employee  @relation("Department_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_department_createdBy")
+  Employee_Department_deletedByToEmployee Employee? @relation("Department_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_department_deletedBy")
   Target                                  Target    @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_department_target")
 
   @@index([targetId], map: "fk_department_target")
-  @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "deletedBy")
+  @@index([createdBy], map: "fk_department_createdBy")
+  @@index([deletedBy], map: "fk_department_deletedBy")
 }
 
 model DocumentGroup {
@@ -375,8 +375,8 @@ model Employee {
   Contact_Contact_deletedByToEmployee                                               Contact[]                        @relation("Contact_deletedByToEmployee")
   DeliveryNoteSupplier                                                              DeliveryNoteSupplier[]
   DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee                     DeliveryNoteSupplier[]           @relation("DeliveryNoteSupplier_deletedByToEmployee")
-  Department_Department_deletedByToEmployee                                         Department[]                     @relation("Department_deletedByToEmployee")
   Department_Department_createdByToEmployee                                         Department[]                     @relation("Department_createdByToEmployee")
+  Department_Department_deletedByToEmployee                                         Department[]                     @relation("Department_deletedByToEmployee")
   DepartmentExtern_DepartmentExtern_deletedByToEmployee                             DepartmentExtern[]               @relation("DepartmentExtern_deletedByToEmployee")
   DepartmentExtern_DepartmentExtern_createdByToEmployee                             DepartmentExtern[]               @relation("DepartmentExtern_createdByToEmployee")
   DocumentGroup                                                                     DocumentGroup[]
@@ -517,9 +517,9 @@ model Employee {
 
   @@index([createdBy], map: "createdBy")
   @@index([roleLevelId], map: "roleLevelId")
-  @@index([deletedBy], map: "deletedBy")
-  @@index([pictureId], map: "pictureId")
-  @@index([titleId], map: "titleId")
+  @@index([titleId], map: "Employee_ibfk_5")
+  @@index([pictureId], map: "Employee_ibfk_6")
+  @@index([deletedBy], map: "Employee_ibfk_7")
 }
 
 model FollowUp {
@@ -560,7 +560,6 @@ model FollowUp {
   FollowUpTarget                         FollowUpTarget[]
 
   @@index([createdBy], map: "createdBy")
-  @@index([documentId], map: "documentId")
   @@index([executedBy], map: "executedBy")
   @@index([followUpTypeId], map: "followUpTypeId")
   @@index([ownedBy], map: "ownedBy")
@@ -568,6 +567,7 @@ model FollowUp {
   @@index([targetId], map: "targetId")
   @@index([urgencyTypeId], map: "urgencyTypeId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([documentId], map: "FollowUp_ibfk_5")
 }
 
 model FollowUpStructure {
@@ -611,7 +611,6 @@ model FollowUpStructure {
 
   @@index([contactId], map: "contactId")
   @@index([createdBy], map: "createdBy")
-  @@index([documentId], map: "documentId")
   @@index([executedBy], map: "executedBy")
   @@index([followUpId], map: "followUpId")
   @@index([ownedBy], map: "ownedBy")
@@ -620,6 +619,7 @@ model FollowUpStructure {
   @@index([taskFor], map: "taskFor")
   @@index([urgencyTypeId], map: "urgencyTypeId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([documentId], map: "FollowUpStructure_ibfk_6")
 }
 
 model FollowUpTarget {
@@ -1129,14 +1129,14 @@ model MaterialPrice {
   additionalInfo                             String?   @db.VarChar(255)
   unitPrice                                  Decimal?  @db.Decimal(10, 2)
   quantityPrice                              Int?
-  companyId                                  String?   @db.Char(36)
   createdBy                                  String    @db.Char(36)
   deleted                                    Boolean   @default(false)
   deletedAt                                  DateTime? @db.DateTime(0)
   deletedBy                                  String?   @db.Char(36)
-  Company                                    Company?  @relation(fields: [companyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialPrice_ibfk_3")
+  companyId                                  String?   @db.Char(36)
   Employee                                   Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_1")
   Employee_MaterialPrice_deletedByToEmployee Employee? @relation("MaterialPrice_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_2")
+  Company                                    Company?  @relation(fields: [companyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialPrice_ibfk_3")
 
   @@index([companyId], map: "companyId")
   @@index([createdBy], map: "createdBy")
@@ -1259,9 +1259,9 @@ model MaterialSpec {
   Employee_MaterialSpec_deletedByToEmployee Employee?                        @relation("MaterialSpec_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialSpec_ibfk_5")
 
   @@index([materialFamilyId], map: "materialFamilyId")
-  @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "deletedBy")
-  @@index([materialDimensionId], map: "materialDimensionId")
+  @@index([materialDimensionId], map: "MaterialSpec_ibfk_3")
+  @@index([createdBy], map: "MaterialSpec_ibfk_4")
+  @@index([deletedBy], map: "MaterialSpec_ibfk_5")
 }
 
 model MaterialStructure {
@@ -1904,8 +1904,8 @@ model WarehousePlace {
   MaterialSerialTrack                         MaterialSerialTrack? @relation(fields: [serialTrackedId], references: [id], onUpdate: Restrict, map: "fk_warehouseplace_serialtrack")
 
   @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "deletedBy")
   @@index([serialTrackedId], map: "fk_warehouseplace_serialtrack")
+  @@index([deletedBy], map: "WarehousePlace_ibfk_3")
 }
 
 model WorkOrder {

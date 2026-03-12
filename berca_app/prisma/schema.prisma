@@ -62,7 +62,7 @@ model Company {
   becraCustomerNumber                  String?                @db.VarChar(100)
   becraWebsiteLogin                    String?                @db.VarChar(100)
   supplier                             Boolean                @default(false)
-  prefferedSupplier                    Boolean                @default(false)
+  preferredSupplier                    Boolean                @default(false)
   companyActive                        Boolean                @default(true)
   newsLetter                           Boolean                @default(false)
   customer                             Boolean                @default(false)
@@ -154,7 +154,7 @@ model Contact {
   mobilePhone                          String?             @db.VarChar(100)
   info                                 String?             @db.Text
   birthDate                            DateTime?           @db.DateTime(0)
-  trough                               String?             @db.VarChar(100)
+  through                              String?             @db.VarChar(100)
   description                          String?             @db.Text
   createdAt                            DateTime            @db.DateTime(0)
   infoCorrect                          Boolean             @default(false)
@@ -232,14 +232,14 @@ model Department {
   deletedAt                               DateTime? @db.DateTime(0)
   createdBy                               String    @db.Char(36)
   deletedBy                               String?   @db.Char(36)
-  targetId                                String    @db.Char(36)
-  Employee_Department_createdByToEmployee Employee  @relation("Department_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_department_createdBy")
+  targetId                                String    @default("") @db.Char(36)
   Employee_Department_deletedByToEmployee Employee? @relation("Department_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_department_deletedBy")
+  Employee_Department_createdByToEmployee Employee  @relation("Department_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_department_createdBy")
   Target                                  Target    @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_department_target")
 
   @@index([targetId], map: "fk_department_target")
   @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "fk_department_deletedBy")
+  @@index([deletedBy], map: "deletedBy")
 }
 
 model DocumentGroup {
@@ -287,10 +287,10 @@ model DocumentStructure {
   roleId                                                                                          String?                          @db.Char(36)
   deleted                                                                                         Boolean                          @default(false)
   deletedAt                                                                                       DateTime?                        @db.DateTime(0)
-  createdBy                                                                                       String                           @db.Char(36)
-  revisedById                                                                                     String                           @db.Char(36)
-  managedById                                                                                     String                           @db.Char(36)
-  targetId                                                                                        String                           @db.Char(36)
+  createdBy                                                                                       String                           @default("") @db.Char(36)
+  revisedById                                                                                     String                           @default("") @db.Char(36)
+  managedById                                                                                     String                           @default("") @db.Char(36)
+  targetId                                                                                        String                           @default("") @db.Char(36)
   deletedBy                                                                                       String?                          @db.Char(36)
   Contact                                                                                         Contact[]
   DocumentStructure                                                                               DocumentStructure?               @relation("DocumentStructureToDocumentStructure", fields: [referenceDocId], references: [id], onUpdate: Restrict, map: "DocumentStructure_ibfk_1")
@@ -374,8 +374,8 @@ model Employee {
   Contact_Contact_deletedByToEmployee                                               Contact[]                        @relation("Contact_deletedByToEmployee")
   DeliveryNoteSupplier                                                              DeliveryNoteSupplier[]
   DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee                     DeliveryNoteSupplier[]           @relation("DeliveryNoteSupplier_deletedByToEmployee")
-  Department_Department_createdByToEmployee                                         Department[]                     @relation("Department_createdByToEmployee")
   Department_Department_deletedByToEmployee                                         Department[]                     @relation("Department_deletedByToEmployee")
+  Department_Department_createdByToEmployee                                         Department[]                     @relation("Department_createdByToEmployee")
   DepartmentExtern_DepartmentExtern_deletedByToEmployee                             DepartmentExtern[]               @relation("DepartmentExtern_deletedByToEmployee")
   DepartmentExtern_DepartmentExtern_createdByToEmployee                             DepartmentExtern[]               @relation("DepartmentExtern_createdByToEmployee")
   DocumentGroup                                                                     DocumentGroup[]
@@ -459,8 +459,8 @@ model Employee {
   Project                                                                           Project[]
   Project_Project_deletedByToEmployee                                               Project[]                        @relation("Project_deletedByToEmployee")
   ProjectContact_ProjectContact_createdByToEmployee                                 ProjectContact[]                 @relation("ProjectContact_createdByToEmployee")
-  ProjectContact_ProjectContact_moddifiedByToEmployee                               ProjectContact[]                 @relation("ProjectContact_moddifiedByToEmployee")
   ProjectContact_ProjectContact_deletedByToEmployee                                 ProjectContact[]                 @relation("ProjectContact_deletedByToEmployee")
+  ProjectContact_ProjectContact_modifiedByToEmployee                                ProjectContact[]                 @relation("ProjectContact_modifiedByToEmployee")
   ProjectType                                                                       ProjectType[]
   ProjectType_ProjectType_deletedByToEmployee                                       ProjectType[]                    @relation("ProjectType_deletedByToEmployee")
   Purchase                                                                          Purchase[]
@@ -469,8 +469,8 @@ model Employee {
   PurchaseDetail_PurchaseDetail_deletedByToEmployee                                 PurchaseDetail[]                 @relation("PurchaseDetail_deletedByToEmployee")
   PurchaseOrderBecra                                                                PurchaseOrderBecra[]
   PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee                         PurchaseOrderBecra[]             @relation("PurchaseOrderBecra_deletedByToEmployee")
-  QouteBecra                                                                        QouteBecra[]
-  QouteBecra_QouteBecra_deletedByToEmployee                                         QouteBecra[]                     @relation("QouteBecra_deletedByToEmployee")
+  QuoteBecra_QuoteBecra_createdByToEmployee                                         QuoteBecra[]                     @relation("QuoteBecra_createdByToEmployee")
+  QuoteBecra_QuoteBecra_deletedByToEmployee                                         QuoteBecra[]                     @relation("QuoteBecra_deletedByToEmployee")
   QuoteSupplier                                                                     QuoteSupplier[]
   QuoteSupplier_QuoteSupplier_deletedByToEmployee                                   QuoteSupplier[]                  @relation("QuoteSupplier_deletedByToEmployee")
   Role_Role_createdByToEmployee                                                     Role[]                           @relation("Role_createdByToEmployee")
@@ -516,9 +516,9 @@ model Employee {
 
   @@index([createdBy], map: "createdBy")
   @@index([roleLevelId], map: "roleLevelId")
-  @@index([titleId], map: "Employee_ibfk_5")
-  @@index([pictureId], map: "Employee_ibfk_6")
-  @@index([deletedBy], map: "Employee_ibfk_7")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([pictureId], map: "pictureId")
+  @@index([titleId], map: "titleId")
 }
 
 model FollowUp {
@@ -659,7 +659,7 @@ model Function {
   createdAt                             DateTime  @db.DateTime(0)
   deleted                               Boolean   @default(false)
   deletedAt                             DateTime? @db.DateTime(0)
-  createdBy                             String    @db.Char(36)
+  createdBy                             String    @default("") @db.Char(36)
   deletedBy                             String?   @db.Char(36)
   Contact                               Contact[]
   Employee_Function_createdByToEmployee Employee  @relation("Function_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_function_createdBy")
@@ -693,7 +693,7 @@ model Inventory {
   place                                   String               @db.VarChar(255)
   shortDescription                        String               @db.VarChar(255)
   longDescription                         String               @db.Text
-  serieNumber                             String               @db.VarChar(255)
+  serialNumber                            String               @db.VarChar(255)
   quantityInStock                         Int
   minQuantityInStock                      Int
   maxQuantityInStock                      Int
@@ -807,7 +807,7 @@ model InvoiceIn {
   expireDate                             DateTime          @db.DateTime(0)
   payDate                                DateTime?         @db.DateTime(0)
   invoiceReference                       String?           @db.VarChar(100)
-  invoiceOutAttachement                  String?           @db.VarChar(100)
+  invoiceOutAttachment                   String?           @db.VarChar(100)
   deliveryNote                           String?           @db.Text
   purchaseOrder                          String?           @db.Text
   transactionNumber                      String?           @db.VarChar(100)
@@ -866,7 +866,7 @@ model InvoiceOut {
   expireDate                              DateTime           @db.DateTime(0)
   payDate                                 DateTime?          @db.DateTime(0)
   invoiceReference                        String?            @db.VarChar(100)
-  invoiceInAttachement                    String?            @db.VarChar(100)
+  invoiceInAttachment                     String?            @db.VarChar(100)
   deliveryNote                            String?            @db.Text
   purchaseOrder                           String?            @db.Text
   transactionNumber                       String?            @db.VarChar(100)
@@ -1118,7 +1118,7 @@ model MaterialPrice {
   beNumber                                   String?   @db.VarChar(255)
   orderNr                                    String?   @db.VarChar(255)
   quoteBecra                                 String?   @db.Char(36)
-  supllierOrderNr                            String?   @db.VarChar(255)
+  supplierOrderNr                            String?   @db.VarChar(255)
   brandOrderNr                               String?   @db.VarChar(255)
   shortDescription                           String?   @db.VarChar(255)
   longDescription                            String?   @db.Text
@@ -1126,8 +1126,8 @@ model MaterialPrice {
   updatedAt                                  DateTime? @db.DateTime(0)
   rejected                                   Boolean?
   additionalInfo                             String?   @db.VarChar(255)
-  unitPrice                                  Float?
-  quantityPrice                              Float?
+  unitPrice                                  Decimal?  @db.Decimal(10, 2)
+  quantityPrice                              Int?
   createdBy                                  String    @db.Char(36)
   deleted                                    Boolean   @default(false)
   deletedAt                                  DateTime? @db.DateTime(0)
@@ -1154,7 +1154,7 @@ model MaterialSerialTrack {
   fromLocation                                     String?                          @db.VarChar(255)
   toLocation                                       String?                          @db.VarChar(255)
   updatedAt                                        DateTime?                        @db.DateTime(0)
-  preferedSupplier                                 String?                          @db.VarChar(255)
+  preferredSupplier                                String?                          @db.VarChar(255)
   rejected                                         Boolean?                         @default(false)
   additionalInfo                                   String?                          @db.VarChar(255)
   projectId                                        String?                          @db.Char(36)
@@ -1170,6 +1170,7 @@ model MaterialSerialTrack {
   Employee                                         Employee?                        @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSerialTrack_ibfk_4")
   Employee_MaterialSerialTrack_deletedByToEmployee Employee?                        @relation("MaterialSerialTrack_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialSerialTrack_ibfk_5")
   MaterialSerialTrackedStructure                   MaterialSerialTrackedStructure[]
+  WarehousePlace                                   WarehousePlace[]
 
   @@index([companyId], map: "companyId")
   @@index([createdBy], map: "createdBy")
@@ -1199,7 +1200,7 @@ model MaterialSerialTrackedStructure {
   beParentPart                                                                       String?             @db.VarChar(255)
   serialCode                                                                         String?             @db.VarChar(255)
   tag                                                                                String?             @db.VarChar(255)
-  preferedSupplier                                                                   String?             @db.VarChar(255)
+  preferredSupplier                                                                  String?             @db.VarChar(255)
   brandName                                                                          String?             @db.VarChar(255)
   brandOrderNr                                                                       String?             @db.VarChar(255)
   unit                                                                               String?             @db.VarChar(255)
@@ -1254,9 +1255,9 @@ model MaterialSpec {
   Employee_MaterialSpec_deletedByToEmployee Employee?                        @relation("MaterialSpec_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialSpec_ibfk_5")
 
   @@index([materialFamilyId], map: "materialFamilyId")
-  @@index([materialDimensionId], map: "MaterialSpec_ibfk_3")
-  @@index([createdBy], map: "MaterialSpec_ibfk_4")
-  @@index([deletedBy], map: "MaterialSpec_ibfk_5")
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([materialDimensionId], map: "materialDimensionId")
 }
 
 model MaterialStructure {
@@ -1396,30 +1397,30 @@ model Project {
 }
 
 model ProjectContact {
-  id                                            String    @id @db.Char(36)
-  description                                   String?   @db.Text
-  extraInfo                                     String?   @db.Text
-  createdAt                                     DateTime  @db.DateTime(0)
-  moddifiedAt                                   DateTime? @db.DateTime(0)
-  idValid                                       Boolean   @default(true)
-  createdBy                                     String    @db.Char(36)
-  moddifiedBy                                   String    @db.Char(36)
-  projectId                                     String    @db.Char(36)
-  contactId                                     String    @db.Char(36)
-  deleted                                       Boolean   @default(false)
-  deletedAt                                     DateTime? @db.DateTime(0)
-  deletedBy                                     String?   @db.Char(36)
-  Employee_ProjectContact_createdByToEmployee   Employee  @relation("ProjectContact_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_1")
-  Project                                       Project   @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_2")
-  Employee_ProjectContact_moddifiedByToEmployee Employee  @relation("ProjectContact_moddifiedByToEmployee", fields: [moddifiedBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_3")
-  Contact                                       Contact   @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_4")
-  Employee_ProjectContact_deletedByToEmployee   Employee? @relation("ProjectContact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_5")
+  id                                           String    @id @db.Char(36)
+  description                                  String?   @db.Text
+  extraInfo                                    String?   @db.Text
+  createdAt                                    DateTime  @db.DateTime(0)
+  modifiedAt                                   DateTime? @db.DateTime(0)
+  isValid                                      Boolean   @default(true)
+  createdBy                                    String    @db.Char(36)
+  modifiedBy                                   String    @db.Char(36)
+  projectId                                    String    @db.Char(36)
+  contactId                                    String    @db.Char(36)
+  deleted                                      Boolean   @default(false)
+  deletedAt                                    DateTime? @db.DateTime(0)
+  deletedBy                                    String?   @db.Char(36)
+  Employee_ProjectContact_createdByToEmployee  Employee  @relation("ProjectContact_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_1")
+  Project                                      Project   @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_2")
+  Contact                                      Contact   @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_4")
+  Employee_ProjectContact_deletedByToEmployee  Employee? @relation("ProjectContact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_5")
+  Employee_ProjectContact_modifiedByToEmployee Employee  @relation("ProjectContact_modifiedByToEmployee", fields: [modifiedBy], references: [id], onUpdate: Restrict, map: "fk_projectcontact_modifiedBy")
 
   @@index([contactId], map: "contactId")
   @@index([createdBy], map: "createdBy")
-  @@index([moddifiedBy], map: "moddifiedBy")
   @@index([projectId], map: "projectId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([modifiedBy], map: "fk_projectcontact_modifiedBy")
 }
 
 model ProjectType {
@@ -1450,7 +1451,7 @@ model Purchase {
   status                                String?          @db.VarChar(255)
   shortDescription                      String?          @db.VarChar(255)
   description                           String?          @db.VarChar(255)
-  preferedSupplier                      String?          @db.VarChar(255)
+  preferredSupplier                     String?          @db.VarChar(255)
   additionalInfo                        String?          @db.VarChar(255)
   updatedAt                             DateTime?        @db.DateTime(0)
   createdBy                             String           @db.Char(36)
@@ -1476,9 +1477,9 @@ model PurchaseDetail {
   projectId                                   String?   @db.Char(36)
   purchaseId                                  String?   @db.Char(36)
   beNumber                                    String?   @db.VarChar(255)
-  unitPrice                                   Float?
+  unitPrice                                   Decimal?  @db.Decimal(10, 2)
   quantity                                    Int?
-  totalCost                                   Float?
+  totalCost                                   Decimal?  @db.Decimal(10, 2)
   status                                      String?   @db.VarChar(255)
   additionalInfo                              String?   @db.VarChar(255)
   updatedAt                                   DateTime? @db.DateTime(0)
@@ -1507,22 +1508,6 @@ model PurchaseOrderBecra {
   deletedBy                                       String?   @db.Char(36)
   Employee                                        Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseOrderBecra_ibfk_1")
   Employee_PurchaseOrderBecra_deletedByToEmployee Employee? @relation("PurchaseOrderBecra_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PurchaseOrderBecra_ibfk_2")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "deletedBy")
-}
-
-model QouteBecra {
-  id                                      String    @id @db.Char(36)
-  description                             String?   @db.Text
-  validDate                               Boolean
-  date                                    DateTime? @db.DateTime(0)
-  createdBy                               String    @db.Char(36)
-  deleted                                 Boolean   @default(false)
-  deletedAt                               DateTime? @db.DateTime(0)
-  deletedBy                               String?   @db.Char(36)
-  Employee                                Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "QouteBecra_ibfk_1")
-  Employee_QouteBecra_deletedByToEmployee Employee? @relation("QouteBecra_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "QouteBecra_ibfk_2")
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
@@ -1561,7 +1546,7 @@ model Role {
   createdAt                         DateTime            @db.DateTime(0)
   deleted                           Boolean             @default(false)
   deletedAt                         DateTime?           @db.DateTime(0)
-  createdBy                         String              @db.Char(36)
+  createdBy                         String              @default("") @db.Char(36)
   deletedBy                         String?             @db.Char(36)
   DocumentStructure                 DocumentStructure[]
   Employee_Role_createdByToEmployee Employee            @relation("Role_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_role_createdBy")
@@ -1737,7 +1722,7 @@ model Title {
   createdAt                          DateTime   @db.DateTime(0)
   deleted                            Boolean    @default(false)
   deletedAt                          DateTime?  @db.DateTime(0)
-  createdBy                          String     @db.Char(36)
+  createdBy                          String     @default("") @db.Char(36)
   deletedBy                          String?    @db.Char(36)
   Contact                            Contact[]
   Employee_Employee_titleIdToTitle   Employee[] @relation("Employee_titleIdToTitle")
@@ -1894,27 +1879,29 @@ model VisibilityForRole {
 }
 
 model WarehousePlace {
-  id                                          String    @id @db.Char(36)
-  place                                       String?   @db.VarChar(255)
-  shelf                                       String?   @db.VarChar(255)
-  column                                      String?   @db.VarChar(255)
-  layer                                       String?   @db.VarChar(255)
-  layerPlace                                  String?   @db.VarChar(255)
-  information                                 String?   @db.VarChar(255)
-  createdAt                                   DateTime  @db.DateTime(0)
-  createdBy                                   String    @db.Char(36)
-  deleted                                     Boolean   @default(false)
-  deletedAt                                   DateTime? @db.DateTime(0)
-  deletedBy                                   String?   @db.Char(36)
-  abbreviation                                String    @default("") @db.VarChar(255)
-  beNumber                                    String?   @db.VarChar(255)
-  quantityInStock                             Int       @default(0)
-  serialTrackedId                             String?   @db.VarChar(255)
-  Employee                                    Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_1")
-  Employee_WarehousePlace_deletedByToEmployee Employee? @relation("WarehousePlace_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_3")
+  id                                          String               @id @db.Char(36)
+  abbreviation                                String               @db.VarChar(255)
+  beNumber                                    String?              @db.VarChar(255)
+  serialTrackedId                             String?              @db.Char(36)
+  place                                       String?              @db.VarChar(255)
+  shelf                                       String?              @db.VarChar(255)
+  column                                      String?              @db.VarChar(255)
+  layer                                       String?              @db.VarChar(255)
+  layerPlace                                  String?              @db.VarChar(255)
+  information                                 String?              @db.VarChar(255)
+  quantityInStock                             Int
+  createdAt                                   DateTime             @db.DateTime(0)
+  createdBy                                   String               @db.Char(36)
+  deleted                                     Boolean              @default(false)
+  deletedAt                                   DateTime?            @db.DateTime(0)
+  deletedBy                                   String?              @db.Char(36)
+  Employee                                    Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_1")
+  Employee_WarehousePlace_deletedByToEmployee Employee?            @relation("WarehousePlace_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_3")
+  MaterialSerialTrack                         MaterialSerialTrack? @relation(fields: [serialTrackedId], references: [id], onUpdate: Restrict, map: "fk_warehouseplace_serialtrack")
 
   @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "WarehousePlace_ibfk_3")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([serialTrackedId], map: "fk_warehouseplace_serialtrack")
 }
 
 model WorkOrder {
@@ -2002,7 +1989,7 @@ model RoleLevel {
   createdAt                                DateTime            @db.DateTime(0)
   deleted                                  Boolean             @default(false)
   deletedAt                                DateTime?           @db.DateTime(0)
-  createdBy                                String              @db.Char(36)
+  createdBy                                String              @default("") @db.Char(36)
   deletedBy                                String?             @db.Char(36)
   Employee_Employee_roleLevelIdToRoleLevel Employee[]          @relation("Employee_roleLevelIdToRoleLevel")
   Role                                     Role                @relation(fields: [roleId], references: [id], onUpdate: Restrict, map: "RoleLevel_ibfk_1")
@@ -2024,7 +2011,7 @@ model SubRole {
   createdAt                            DateTime    @db.DateTime(0)
   deleted                              Boolean     @default(false)
   deletedAt                            DateTime?   @db.DateTime(0)
-  createdBy                            String      @db.Char(36)
+  createdBy                            String      @default("") @db.Char(36)
   deletedBy                            String?     @db.Char(36)
   RoleLevel                            RoleLevel[]
   Employee_SubRole_createdByToEmployee Employee    @relation("SubRole_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_subRole_createdBy")
@@ -2042,7 +2029,7 @@ model DepartmentExtern {
   deletedAt                                     DateTime? @db.DateTime(0)
   createdBy                                     String    @db.Char(36)
   deletedBy                                     String?   @db.Char(36)
-  targetId                                      String    @db.Char(36)
+  targetId                                      String    @default("") @db.Char(36)
   Contact                                       Contact[]
   Employee_DepartmentExtern_deletedByToEmployee Employee? @relation("DepartmentExtern_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "DepartmentExtern_ibfk_1")
   Employee_DepartmentExtern_createdByToEmployee Employee  @relation("DepartmentExtern_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DepartmentExtern_ibfk_2")
@@ -2051,4 +2038,20 @@ model DepartmentExtern {
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
   @@index([targetId], map: "fk_departmentextern_target")
+}
+
+model QuoteBecra {
+  id                                      String    @id @db.Char(36)
+  description                             String?   @db.Text
+  validDate                               Boolean
+  date                                    DateTime? @db.DateTime(0)
+  createdBy                               String    @db.Char(36)
+  deleted                                 Boolean   @default(false)
+  deletedAt                               DateTime? @db.DateTime(0)
+  deletedBy                               String?   @db.Char(36)
+  Employee_QuoteBecra_createdByToEmployee Employee  @relation("QuoteBecra_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "QuoteBecra_ibfk_1")
+  Employee_QuoteBecra_deletedByToEmployee Employee? @relation("QuoteBecra_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "QuoteBecra_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
 }

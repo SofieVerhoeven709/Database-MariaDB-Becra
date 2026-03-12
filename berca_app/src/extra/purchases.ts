@@ -24,7 +24,7 @@ export function mapPurchase(p: PurchaseWithRelations): MappedPurchase {
     updatedAt: p.updatedAt?.toISOString() ?? null,
     createdBy: p.createdBy,
     createdByName: `${p.Employee.firstName} ${p.Employee.lastName}`,
-    preferedSupplier: p.preferedSupplier,
+    preferredSupplier: p.preferredSupplier,
     description: p.description,
     deleted: p.deleted,
     deletedAt: p.deletedAt?.toISOString() ?? null,

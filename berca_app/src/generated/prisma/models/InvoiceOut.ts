@@ -43,7 +43,7 @@ export type InvoiceOutMinAggregateOutputType = {
   expireDate: Date | null
   payDate: Date | null
   invoiceReference: string | null
-  invoiceInAttachement: string | null
+  invoiceInAttachment: string | null
   deliveryNote: string | null
   purchaseOrder: string | null
   transactionNumber: string | null
@@ -72,7 +72,7 @@ export type InvoiceOutMaxAggregateOutputType = {
   expireDate: Date | null
   payDate: Date | null
   invoiceReference: string | null
-  invoiceInAttachement: string | null
+  invoiceInAttachment: string | null
   deliveryNote: string | null
   purchaseOrder: string | null
   transactionNumber: string | null
@@ -101,7 +101,7 @@ export type InvoiceOutCountAggregateOutputType = {
   expireDate: number
   payDate: number
   invoiceReference: number
-  invoiceInAttachement: number
+  invoiceInAttachment: number
   deliveryNote: number
   purchaseOrder: number
   transactionNumber: number
@@ -142,7 +142,7 @@ export type InvoiceOutMinAggregateInputType = {
   expireDate?: true
   payDate?: true
   invoiceReference?: true
-  invoiceInAttachement?: true
+  invoiceInAttachment?: true
   deliveryNote?: true
   purchaseOrder?: true
   transactionNumber?: true
@@ -171,7 +171,7 @@ export type InvoiceOutMaxAggregateInputType = {
   expireDate?: true
   payDate?: true
   invoiceReference?: true
-  invoiceInAttachement?: true
+  invoiceInAttachment?: true
   deliveryNote?: true
   purchaseOrder?: true
   transactionNumber?: true
@@ -200,7 +200,7 @@ export type InvoiceOutCountAggregateInputType = {
   expireDate?: true
   payDate?: true
   invoiceReference?: true
-  invoiceInAttachement?: true
+  invoiceInAttachment?: true
   deliveryNote?: true
   purchaseOrder?: true
   transactionNumber?: true
@@ -316,7 +316,7 @@ export type InvoiceOutGroupByOutputType = {
   expireDate: Date
   payDate: Date | null
   invoiceReference: string | null
-  invoiceInAttachement: string | null
+  invoiceInAttachment: string | null
   deliveryNote: string | null
   purchaseOrder: string | null
   transactionNumber: string | null
@@ -368,7 +368,7 @@ export type InvoiceOutWhereInput = {
   expireDate?: Prisma.DateTimeFilter<"InvoiceOut"> | Date | string
   payDate?: Prisma.DateTimeNullableFilter<"InvoiceOut"> | Date | string | null
   invoiceReference?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
-  invoiceInAttachement?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
+  invoiceInAttachment?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   deliveryNote?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   purchaseOrder?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   transactionNumber?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
@@ -402,7 +402,7 @@ export type InvoiceOutOrderByWithRelationInput = {
   expireDate?: Prisma.SortOrder
   payDate?: Prisma.SortOrderInput | Prisma.SortOrder
   invoiceReference?: Prisma.SortOrderInput | Prisma.SortOrder
-  invoiceInAttachement?: Prisma.SortOrderInput | Prisma.SortOrder
+  invoiceInAttachment?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryNote?: Prisma.SortOrderInput | Prisma.SortOrder
   purchaseOrder?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -440,7 +440,7 @@ export type InvoiceOutWhereUniqueInput = Prisma.AtLeast<{
   expireDate?: Prisma.DateTimeFilter<"InvoiceOut"> | Date | string
   payDate?: Prisma.DateTimeNullableFilter<"InvoiceOut"> | Date | string | null
   invoiceReference?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
-  invoiceInAttachement?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
+  invoiceInAttachment?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   deliveryNote?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   purchaseOrder?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   transactionNumber?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
@@ -474,7 +474,7 @@ export type InvoiceOutOrderByWithAggregationInput = {
   expireDate?: Prisma.SortOrder
   payDate?: Prisma.SortOrderInput | Prisma.SortOrder
   invoiceReference?: Prisma.SortOrderInput | Prisma.SortOrder
-  invoiceInAttachement?: Prisma.SortOrderInput | Prisma.SortOrder
+  invoiceInAttachment?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryNote?: Prisma.SortOrderInput | Prisma.SortOrder
   purchaseOrder?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -511,7 +511,7 @@ export type InvoiceOutScalarWhereWithAggregatesInput = {
   expireDate?: Prisma.DateTimeWithAggregatesFilter<"InvoiceOut"> | Date | string
   payDate?: Prisma.DateTimeNullableWithAggregatesFilter<"InvoiceOut"> | Date | string | null
   invoiceReference?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
-  invoiceInAttachement?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
+  invoiceInAttachment?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
   deliveryNote?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
   purchaseOrder?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
   transactionNumber?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOut"> | string | null
@@ -540,7 +540,7 @@ export type InvoiceOutCreateInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -570,7 +570,7 @@ export type InvoiceOutUncheckedCreateInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -600,7 +600,7 @@ export type InvoiceOutUpdateInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -630,7 +630,7 @@ export type InvoiceOutUncheckedUpdateInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -660,7 +660,7 @@ export type InvoiceOutCreateManyInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -689,7 +689,7 @@ export type InvoiceOutUpdateManyMutationInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -714,7 +714,7 @@ export type InvoiceOutUncheckedUpdateManyInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -759,7 +759,7 @@ export type InvoiceOutCountOrderByAggregateInput = {
   expireDate?: Prisma.SortOrder
   payDate?: Prisma.SortOrder
   invoiceReference?: Prisma.SortOrder
-  invoiceInAttachement?: Prisma.SortOrder
+  invoiceInAttachment?: Prisma.SortOrder
   deliveryNote?: Prisma.SortOrder
   purchaseOrder?: Prisma.SortOrder
   transactionNumber?: Prisma.SortOrder
@@ -793,7 +793,7 @@ export type InvoiceOutMaxOrderByAggregateInput = {
   expireDate?: Prisma.SortOrder
   payDate?: Prisma.SortOrder
   invoiceReference?: Prisma.SortOrder
-  invoiceInAttachement?: Prisma.SortOrder
+  invoiceInAttachment?: Prisma.SortOrder
   deliveryNote?: Prisma.SortOrder
   purchaseOrder?: Prisma.SortOrder
   transactionNumber?: Prisma.SortOrder
@@ -822,7 +822,7 @@ export type InvoiceOutMinOrderByAggregateInput = {
   expireDate?: Prisma.SortOrder
   payDate?: Prisma.SortOrder
   invoiceReference?: Prisma.SortOrder
-  invoiceInAttachement?: Prisma.SortOrder
+  invoiceInAttachment?: Prisma.SortOrder
   deliveryNote?: Prisma.SortOrder
   purchaseOrder?: Prisma.SortOrder
   transactionNumber?: Prisma.SortOrder
@@ -1043,7 +1043,7 @@ export type InvoiceOutCreateWithoutEmployeeInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1072,7 +1072,7 @@ export type InvoiceOutUncheckedCreateWithoutEmployeeInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1111,7 +1111,7 @@ export type InvoiceOutCreateWithoutEmployee_InvoiceOut_deletedByToEmployeeInput 
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1140,7 +1140,7 @@ export type InvoiceOutUncheckedCreateWithoutEmployee_InvoiceOut_deletedByToEmplo
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1198,7 +1198,7 @@ export type InvoiceOutScalarWhereInput = {
   expireDate?: Prisma.DateTimeFilter<"InvoiceOut"> | Date | string
   payDate?: Prisma.DateTimeNullableFilter<"InvoiceOut"> | Date | string | null
   invoiceReference?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
-  invoiceInAttachement?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
+  invoiceInAttachment?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   deliveryNote?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   purchaseOrder?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
   transactionNumber?: Prisma.StringNullableFilter<"InvoiceOut"> | string | null
@@ -1243,7 +1243,7 @@ export type InvoiceOutCreateWithoutInvoiceTypeInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1272,7 +1272,7 @@ export type InvoiceOutUncheckedCreateWithoutInvoiceTypeInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1327,7 +1327,7 @@ export type InvoiceOutCreateWithoutTargetInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1356,7 +1356,7 @@ export type InvoiceOutUncheckedCreateWithoutTargetInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1411,7 +1411,7 @@ export type InvoiceOutCreateWithoutWorkOrderInvoiceInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1440,7 +1440,7 @@ export type InvoiceOutUncheckedCreateWithoutWorkOrderInvoiceInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1485,7 +1485,7 @@ export type InvoiceOutUpdateWithoutWorkOrderInvoiceInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1514,7 +1514,7 @@ export type InvoiceOutUncheckedUpdateWithoutWorkOrderInvoiceInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1543,7 +1543,7 @@ export type InvoiceOutCreateManyEmployeeInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1571,7 +1571,7 @@ export type InvoiceOutCreateManyEmployee_InvoiceOut_deletedByToEmployeeInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1599,7 +1599,7 @@ export type InvoiceOutUpdateWithoutEmployeeInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1628,7 +1628,7 @@ export type InvoiceOutUncheckedUpdateWithoutEmployeeInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1657,7 +1657,7 @@ export type InvoiceOutUncheckedUpdateManyWithoutEmployeeInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1685,7 +1685,7 @@ export type InvoiceOutUpdateWithoutEmployee_InvoiceOut_deletedByToEmployeeInput 
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1714,7 +1714,7 @@ export type InvoiceOutUncheckedUpdateWithoutEmployee_InvoiceOut_deletedByToEmplo
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1743,7 +1743,7 @@ export type InvoiceOutUncheckedUpdateManyWithoutEmployee_InvoiceOut_deletedByToE
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1771,7 +1771,7 @@ export type InvoiceOutCreateManyInvoiceTypeInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1799,7 +1799,7 @@ export type InvoiceOutUpdateWithoutInvoiceTypeInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1828,7 +1828,7 @@ export type InvoiceOutUncheckedUpdateWithoutInvoiceTypeInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1857,7 +1857,7 @@ export type InvoiceOutUncheckedUpdateManyWithoutInvoiceTypeInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1885,7 +1885,7 @@ export type InvoiceOutCreateManyTargetInput = {
   expireDate: Date | string
   payDate?: Date | string | null
   invoiceReference?: string | null
-  invoiceInAttachement?: string | null
+  invoiceInAttachment?: string | null
   deliveryNote?: string | null
   purchaseOrder?: string | null
   transactionNumber?: string | null
@@ -1913,7 +1913,7 @@ export type InvoiceOutUpdateWithoutTargetInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1942,7 +1942,7 @@ export type InvoiceOutUncheckedUpdateWithoutTargetInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1971,7 +1971,7 @@ export type InvoiceOutUncheckedUpdateManyWithoutTargetInput = {
   expireDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  invoiceInAttachement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceInAttachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   purchaseOrder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2030,7 +2030,7 @@ export type InvoiceOutSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   expireDate?: boolean
   payDate?: boolean
   invoiceReference?: boolean
-  invoiceInAttachement?: boolean
+  invoiceInAttachment?: boolean
   deliveryNote?: boolean
   purchaseOrder?: boolean
   transactionNumber?: boolean
@@ -2067,7 +2067,7 @@ export type InvoiceOutSelectScalar = {
   expireDate?: boolean
   payDate?: boolean
   invoiceReference?: boolean
-  invoiceInAttachement?: boolean
+  invoiceInAttachment?: boolean
   deliveryNote?: boolean
   purchaseOrder?: boolean
   transactionNumber?: boolean
@@ -2089,7 +2089,7 @@ export type InvoiceOutSelectScalar = {
   deletedBy?: boolean
 }
 
-export type InvoiceOutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "invoiceDate" | "expireDate" | "payDate" | "invoiceReference" | "invoiceInAttachement" | "deliveryNote" | "purchaseOrder" | "transactionNumber" | "deliveryInvoiceInfo" | "additionalInfo" | "info" | "deliveryInvoiceCode" | "vatMargin" | "amountWithoutVat" | "sentDate" | "createdAt" | "materialCost" | "completed" | "createdBy" | "invoiceTypeId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["invoiceOut"]>
+export type InvoiceOutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "invoiceDate" | "expireDate" | "payDate" | "invoiceReference" | "invoiceInAttachment" | "deliveryNote" | "purchaseOrder" | "transactionNumber" | "deliveryInvoiceInfo" | "additionalInfo" | "info" | "deliveryInvoiceCode" | "vatMargin" | "amountWithoutVat" | "sentDate" | "createdAt" | "materialCost" | "completed" | "createdBy" | "invoiceTypeId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["invoiceOut"]>
 export type InvoiceOutInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   InvoiceType?: boolean | Prisma.InvoiceTypeDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -2115,7 +2115,7 @@ export type $InvoiceOutPayload<ExtArgs extends runtime.Types.Extensions.Internal
     expireDate: Date
     payDate: Date | null
     invoiceReference: string | null
-    invoiceInAttachement: string | null
+    invoiceInAttachment: string | null
     deliveryNote: string | null
     purchaseOrder: string | null
     transactionNumber: string | null
@@ -2515,7 +2515,7 @@ export interface InvoiceOutFieldRefs {
   readonly expireDate: Prisma.FieldRef<"InvoiceOut", 'DateTime'>
   readonly payDate: Prisma.FieldRef<"InvoiceOut", 'DateTime'>
   readonly invoiceReference: Prisma.FieldRef<"InvoiceOut", 'String'>
-  readonly invoiceInAttachement: Prisma.FieldRef<"InvoiceOut", 'String'>
+  readonly invoiceInAttachment: Prisma.FieldRef<"InvoiceOut", 'String'>
   readonly deliveryNote: Prisma.FieldRef<"InvoiceOut", 'String'>
   readonly purchaseOrder: Prisma.FieldRef<"InvoiceOut", 'String'>
   readonly transactionNumber: Prisma.FieldRef<"InvoiceOut", 'String'>

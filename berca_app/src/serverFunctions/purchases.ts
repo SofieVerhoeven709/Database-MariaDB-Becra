@@ -40,7 +40,7 @@ export const createPurchaseAction = protectedServerFunction({
         status: d.status ?? null,
         companyId: d.companyId ?? null,
         projectId: d.projectId ?? null,
-        preferedSupplier: d.preferedSupplier ?? null,
+        preferredSupplier: d.preferredSupplier ?? null,
         shortDescription: d.shortDescription ?? null,
         description: d.description ?? null,
         additionalInfo: d.additionalInfo ?? null,

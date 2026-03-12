@@ -22,16 +22,18 @@ export default async function ProjectsPage() {
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
   const currentUserRoleLevelId = profile.roleLevelId ?? ''
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const isManagement = currentUserRole === 'Management' || currentUserLevel >= 80
 
   const allProjects = projectsFromDAL.map(mapProject)
-  const projects = isAdmin
-    ? allProjects
-    : allProjects.filter(p => {
-        const rows = p.visibilityForRoles
-        if (rows.length === 0) return true
-        const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
-        return myRow?.visible ?? false
-      })
+  const projects =
+    isAdmin || isManagement
+      ? allProjects
+      : allProjects.filter(p => {
+          const rows = p.visibilityForRoles
+          if (rows.length === 0) return true
+          const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
+          return myRow?.visible ?? false
+        })
 
   const projectTypeOptions = projectTypes.map(t => ({id: t.id, name: t.name}))
   const companyOptions = companies.map(c => ({id: c.id, name: c.name}))

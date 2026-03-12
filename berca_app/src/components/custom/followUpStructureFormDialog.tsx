@@ -113,7 +113,12 @@ export function FollowUpStructureFormDialog({
   async function handleSubmit() {
     setSaving(true)
     try {
-      await onSave(form, visibilityRows)
+      const trimmedForm = {
+        ...form,
+        activityDescription: form.activityDescription?.trim() || null,
+        additionalInfo: form.additionalInfo?.trim() || null,
+      }
+      await onSave(trimmedForm, visibilityRows)
     } finally {
       setSaving(false)
     }
@@ -148,7 +153,7 @@ export function FollowUpStructureFormDialog({
       <Label className="text-xs text-muted-foreground">{label}</Label>
       <Textarea
         value={(form[key] as string | null) ?? ''}
-        onChange={e => set(key, str(e.target.value) as MappedFollowUpStructure[typeof key])}
+        onChange={e => set(key, (e.target.value || null) as MappedFollowUpStructure[typeof key])}
         rows={rows}
         className="bg-secondary border-border resize-none"
       />

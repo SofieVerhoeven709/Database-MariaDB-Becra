@@ -22,7 +22,7 @@ interface InventoryItem {
   quantityInStock: number
   minQuantityInStock: number
   maxQuantityInStock: number
-  serieNumber: string | null
+  serialNumber: string | null
   information: string | null
   valid: boolean
   noValidDate: string
@@ -425,7 +425,7 @@ export function MaterialDetail({material, materialGroups, units}: MaterialDetail
                       <TableCell className={tdClass}>{inv.minQuantityInStock}</TableCell>
                       <TableCell className={tdClass}>{inv.maxQuantityInStock}</TableCell>
                       <TableCell className={tdClass}>
-                        {inv.serieNumber ?? <span className="text-muted-foreground">—</span>}
+                        {inv.serialNumber ?? <span className="text-muted-foreground">—</span>}
                       </TableCell>
                       <TableCell className={tdClass}>{formatDate(inv.noValidDate)}</TableCell>
                       <TableCell>

@@ -36,7 +36,7 @@ type SortField =
   | 'customer'
   | 'potentialCustomer'
   | 'supplier'
-  | 'prefferedSupplier'
+  | 'preferredSupplier'
   | 'subContractor'
   | 'potentialSubContractor'
   | 'headQuarters'
@@ -182,8 +182,8 @@ export function CompanyTable({
           return n(a.potentialCustomer, b.potentialCustomer)
         case 'supplier':
           return n(a.supplier, b.supplier)
-        case 'prefferedSupplier':
-          return n(a.prefferedSupplier, b.prefferedSupplier)
+        case 'preferredSupplier':
+          return n(a.preferredSupplier, b.preferredSupplier)
         case 'subContractor':
           return n(a.subContractor, b.subContractor)
         case 'potentialSubContractor':
@@ -222,7 +222,7 @@ export function CompanyTable({
       becraCustomerNumber: c.becraCustomerNumber,
       becraWebsiteLogin: c.becraWebsiteLogin,
       supplier: c.supplier,
-      prefferedSupplier: c.prefferedSupplier,
+      preferredSupplier: c.preferredSupplier,
       companyActive: c.companyActive,
       newsLetter: c.newsLetter,
       customer: c.customer,
@@ -339,7 +339,7 @@ export function CompanyTable({
               />
               <Th field="supplier" label="Supplier" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th
-                field="prefferedSupplier"
+                field="preferredSupplier"
                 label="Pref. Supplier"
                 sortField={sortField}
                 sortDir={sortDir}
@@ -423,7 +423,7 @@ export function CompanyTable({
                     <YesNoBadge value={c.supplier} />
                   </TableCell>
                   <TableCell>
-                    <YesNoBadge value={c.prefferedSupplier} />
+                    <YesNoBadge value={c.preferredSupplier} />
                   </TableCell>
                   <TableCell>
                     <YesNoBadge value={c.subContractor} />

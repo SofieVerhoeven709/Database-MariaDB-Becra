@@ -16,7 +16,7 @@ export const companySchema = z.object({
   becraCustomerNumber: z.string().max(100).nullable().optional(),
   becraWebsiteLogin: z.string().max(100).nullable().optional(),
   supplier: z.boolean().default(false),
-  prefferedSupplier: z.boolean().default(false),
+  preferredSupplier: z.boolean().default(false),
   companyActive: z.boolean().default(true),
   newsLetter: z.boolean().default(false),
   customer: z.boolean().default(false),

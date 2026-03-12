@@ -108,7 +108,7 @@ const PURCHASE_STATUS_OPTIONS = ['Pending', 'Ordered', 'Delivered', 'Cancelled',
 const emptyContact = () => ({contactId: '', description: ''})
 const emptyPurchase = () => ({orderNumber: '', shortDescription: '', status: '', companyId: ''})
 const emptyMaterial = () => ({becraCode: '', shortDescription: '', brandName: '', transactionType: ''})
-const emptyContactEdit = () => ({id: '', description: '', extraInfo: '', idValid: true})
+const emptyContactEdit = () => ({id: '', description: '', extraInfo: '', isValid: true})
 const emptyPurchaseEdit = () => ({id: '', orderNumber: '', shortDescription: '', status: '', companyId: ''})
 
 export function ProjectDetail({
@@ -281,7 +281,7 @@ export function ProjectDetail({
     await createProjectContactAction({
       projectId: project.id,
       contactId: inlineContact.contactId,
-      idValid: true,
+      isValid: true,
       description: inlineContact.description || null,
     })
     setInlineContact(emptyContact())
@@ -318,7 +318,7 @@ export function ProjectDetail({
       await createProjectContactAction({
         projectId: project.id,
         contactId: dialogContactForm.contactId,
-        idValid: true,
+        isValid: true,
         description: dialogContactForm.description || null,
       })
       setDialogContactForm(emptyContact())
@@ -420,12 +420,12 @@ export function ProjectDetail({
 
   // ─── Edit handlers ────────────────────────────────────────────────────────
 
-  function openEditContact(pc: {id: string; description: string | null; extraInfo: string | null; idValid: boolean}) {
+  function openEditContact(pc: {id: string; description: string | null; extraInfo: string | null; isValid: boolean}) {
     setEditContactForm({
       id: pc.id,
       description: pc.description ?? '',
       extraInfo: pc.extraInfo ?? '',
-      idValid: pc.idValid,
+      isValid: pc.isValid,
     })
     setEditContactDialog(true)
   }
@@ -438,7 +438,7 @@ export function ProjectDetail({
         projectId: project.id,
         description: editContactForm.description || null,
         extraInfo: editContactForm.extraInfo || null,
-        idValid: editContactForm.idValid,
+        isValid: editContactForm.isValid,
       })
       setEditContactDialog(false)
       router.refresh()
@@ -986,7 +986,7 @@ export function ProjectDetail({
                         <span className="max-w-[200px] truncate inline-block">{pc.description ?? '-'}</span>
                       </TableCell>
                       <TableCell>
-                        {pc.idValid ? (
+                        {pc.isValid ? (
                           <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
                         ) : (
                           <Badge variant="secondary" className="text-muted-foreground font-medium">
@@ -1008,7 +1008,7 @@ export function ProjectDetail({
                                 id: pc.id,
                                 description: pc.description,
                                 extraInfo: pc.extraInfo,
-                                idValid: pc.idValid,
+                                isValid: pc.isValid,
                               })
                             }
                             onSoftDelete={() =>
@@ -1784,8 +1784,8 @@ export function ProjectDetail({
             <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
               <Label className="text-xs text-muted-foreground">ID Valid</Label>
               <Switch
-                checked={editContactForm.idValid}
-                onCheckedChange={v => setEditContactForm(f => ({...f, idValid: v}))}
+                checked={editContactForm.isValid}
+                onCheckedChange={v => setEditContactForm(f => ({...f, isValid: v}))}
               />
             </div>
           </div>

@@ -888,6 +888,7 @@ export const MaterialPriceScalarFieldEnum = {
   additionalInfo: 'additionalInfo',
   unitPrice: 'unitPrice',
   quantityPrice: 'quantityPrice',
+  companyId: 'companyId',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -2146,6 +2147,7 @@ export const MaterialPriceOrderByRelevanceFieldEnum = {
   longDescription: 'longDescription',
   brandName: 'brandName',
   additionalInfo: 'additionalInfo',
+  companyId: 'companyId',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
 } as const

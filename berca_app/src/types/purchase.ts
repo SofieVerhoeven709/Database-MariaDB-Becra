@@ -12,7 +12,7 @@ export interface MappedPurchase {
   updatedAt: string | null
   createdBy: string
   createdByName: string
-  preferedSupplier: string | null
+  preferredSupplier: string | null
   description: string | null
   deleted: boolean
   deletedAt: string | null

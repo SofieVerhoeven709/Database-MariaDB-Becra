@@ -295,11 +295,6 @@ export type PurchaseDetail = Prisma.PurchaseDetailModel
  */
 export type PurchaseOrderBecra = Prisma.PurchaseOrderBecraModel
 /**
- * Model QouteBecra
- * 
- */
-export type QouteBecra = Prisma.QouteBecraModel
-/**
  * Model QuoteSupplier
  * 
  */
@@ -424,3 +419,8 @@ export type SubRole = Prisma.SubRoleModel
  * 
  */
 export type DepartmentExtern = Prisma.DepartmentExternModel
+/**
+ * Model QuoteBecra
+ * 
+ */
+export type QuoteBecra = Prisma.QuoteBecraModel

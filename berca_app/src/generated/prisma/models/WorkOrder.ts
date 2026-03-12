@@ -33,6 +33,7 @@ export type WorkOrderMinAggregateOutputType = {
   endDate: Date | null
   createdAt: Date | null
   hoursMaterialClosed: boolean | null
+  materialClosed: boolean | null
   invoiceSent: boolean | null
   completed: boolean | null
   createdBy: string | null
@@ -52,6 +53,7 @@ export type WorkOrderMaxAggregateOutputType = {
   endDate: Date | null
   createdAt: Date | null
   hoursMaterialClosed: boolean | null
+  materialClosed: boolean | null
   invoiceSent: boolean | null
   completed: boolean | null
   createdBy: string | null
@@ -71,6 +73,7 @@ export type WorkOrderCountAggregateOutputType = {
   endDate: number
   createdAt: number
   hoursMaterialClosed: number
+  materialClosed: number
   invoiceSent: number
   completed: number
   createdBy: number
@@ -92,6 +95,7 @@ export type WorkOrderMinAggregateInputType = {
   endDate?: true
   createdAt?: true
   hoursMaterialClosed?: true
+  materialClosed?: true
   invoiceSent?: true
   completed?: true
   createdBy?: true
@@ -111,6 +115,7 @@ export type WorkOrderMaxAggregateInputType = {
   endDate?: true
   createdAt?: true
   hoursMaterialClosed?: true
+  materialClosed?: true
   invoiceSent?: true
   completed?: true
   createdBy?: true
@@ -130,6 +135,7 @@ export type WorkOrderCountAggregateInputType = {
   endDate?: true
   createdAt?: true
   hoursMaterialClosed?: true
+  materialClosed?: true
   invoiceSent?: true
   completed?: true
   createdBy?: true
@@ -222,6 +228,7 @@ export type WorkOrderGroupByOutputType = {
   endDate: Date | null
   createdAt: Date
   hoursMaterialClosed: boolean
+  materialClosed: boolean
   invoiceSent: boolean
   completed: boolean
   createdBy: string
@@ -262,6 +269,7 @@ export type WorkOrderWhereInput = {
   endDate?: Prisma.DateTimeNullableFilter<"WorkOrder"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
   hoursMaterialClosed?: Prisma.BoolFilter<"WorkOrder"> | boolean
+  materialClosed?: Prisma.BoolFilter<"WorkOrder"> | boolean
   invoiceSent?: Prisma.BoolFilter<"WorkOrder"> | boolean
   completed?: Prisma.BoolFilter<"WorkOrder"> | boolean
   createdBy?: Prisma.StringFilter<"WorkOrder"> | string
@@ -289,6 +297,7 @@ export type WorkOrderOrderByWithRelationInput = {
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   hoursMaterialClosed?: Prisma.SortOrder
+  materialClosed?: Prisma.SortOrder
   invoiceSent?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -320,6 +329,7 @@ export type WorkOrderWhereUniqueInput = Prisma.AtLeast<{
   endDate?: Prisma.DateTimeNullableFilter<"WorkOrder"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
   hoursMaterialClosed?: Prisma.BoolFilter<"WorkOrder"> | boolean
+  materialClosed?: Prisma.BoolFilter<"WorkOrder"> | boolean
   invoiceSent?: Prisma.BoolFilter<"WorkOrder"> | boolean
   completed?: Prisma.BoolFilter<"WorkOrder"> | boolean
   createdBy?: Prisma.StringFilter<"WorkOrder"> | string
@@ -347,6 +357,7 @@ export type WorkOrderOrderByWithAggregationInput = {
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   hoursMaterialClosed?: Prisma.SortOrder
+  materialClosed?: Prisma.SortOrder
   invoiceSent?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -372,6 +383,7 @@ export type WorkOrderScalarWhereWithAggregatesInput = {
   endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"WorkOrder"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"WorkOrder"> | Date | string
   hoursMaterialClosed?: Prisma.BoolWithAggregatesFilter<"WorkOrder"> | boolean
+  materialClosed?: Prisma.BoolWithAggregatesFilter<"WorkOrder"> | boolean
   invoiceSent?: Prisma.BoolWithAggregatesFilter<"WorkOrder"> | boolean
   completed?: Prisma.BoolWithAggregatesFilter<"WorkOrder"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"WorkOrder"> | string
@@ -391,6 +403,7 @@ export type WorkOrderCreateInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   deleted?: boolean
@@ -414,6 +427,7 @@ export type WorkOrderUncheckedCreateInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -437,6 +451,7 @@ export type WorkOrderUpdateInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -460,6 +475,7 @@ export type WorkOrderUncheckedUpdateInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -483,6 +499,7 @@ export type WorkOrderCreateManyInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -502,6 +519,7 @@ export type WorkOrderUpdateManyMutationInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -517,6 +535,7 @@ export type WorkOrderUncheckedUpdateManyInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -557,6 +576,7 @@ export type WorkOrderCountOrderByAggregateInput = {
   endDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   hoursMaterialClosed?: Prisma.SortOrder
+  materialClosed?: Prisma.SortOrder
   invoiceSent?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -576,6 +596,7 @@ export type WorkOrderMaxOrderByAggregateInput = {
   endDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   hoursMaterialClosed?: Prisma.SortOrder
+  materialClosed?: Prisma.SortOrder
   invoiceSent?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -595,6 +616,7 @@ export type WorkOrderMinOrderByAggregateInput = {
   endDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   hoursMaterialClosed?: Prisma.SortOrder
+  materialClosed?: Prisma.SortOrder
   invoiceSent?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -838,6 +860,7 @@ export type WorkOrderCreateWithoutEmployeeInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   deleted?: boolean
@@ -860,6 +883,7 @@ export type WorkOrderUncheckedCreateWithoutEmployeeInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   projectId: string
@@ -892,6 +916,7 @@ export type WorkOrderCreateWithoutEmployee_WorkOrder_deletedByToEmployeeInput = 
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   deleted?: boolean
@@ -914,6 +939,7 @@ export type WorkOrderUncheckedCreateWithoutEmployee_WorkOrder_deletedByToEmploye
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -965,6 +991,7 @@ export type WorkOrderScalarWhereInput = {
   endDate?: Prisma.DateTimeNullableFilter<"WorkOrder"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
   hoursMaterialClosed?: Prisma.BoolFilter<"WorkOrder"> | boolean
+  materialClosed?: Prisma.BoolFilter<"WorkOrder"> | boolean
   invoiceSent?: Prisma.BoolFilter<"WorkOrder"> | boolean
   completed?: Prisma.BoolFilter<"WorkOrder"> | boolean
   createdBy?: Prisma.StringFilter<"WorkOrder"> | string
@@ -1000,6 +1027,7 @@ export type WorkOrderCreateWithoutProjectInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   deleted?: boolean
@@ -1022,6 +1050,7 @@ export type WorkOrderUncheckedCreateWithoutProjectInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -1070,6 +1099,7 @@ export type WorkOrderCreateWithoutTargetInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   deleted?: boolean
@@ -1092,6 +1122,7 @@ export type WorkOrderUncheckedCreateWithoutTargetInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -1140,6 +1171,7 @@ export type WorkOrderCreateWithoutTimeRegistryInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   deleted?: boolean
@@ -1162,6 +1194,7 @@ export type WorkOrderUncheckedCreateWithoutTimeRegistryInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -1200,6 +1233,7 @@ export type WorkOrderUpdateWithoutTimeRegistryInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1222,6 +1256,7 @@ export type WorkOrderUncheckedUpdateWithoutTimeRegistryInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1244,6 +1279,7 @@ export type WorkOrderCreateWithoutTrainingInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   deleted?: boolean
@@ -1266,6 +1302,7 @@ export type WorkOrderUncheckedCreateWithoutTrainingInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -1304,6 +1341,7 @@ export type WorkOrderUpdateWithoutTrainingInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1326,6 +1364,7 @@ export type WorkOrderUncheckedUpdateWithoutTrainingInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1348,6 +1387,7 @@ export type WorkOrderCreateWithoutWorkOrderInvoiceInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   deleted?: boolean
@@ -1370,6 +1410,7 @@ export type WorkOrderUncheckedCreateWithoutWorkOrderInvoiceInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -1408,6 +1449,7 @@ export type WorkOrderUpdateWithoutWorkOrderInvoiceInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1430,6 +1472,7 @@ export type WorkOrderUncheckedUpdateWithoutWorkOrderInvoiceInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1452,6 +1495,7 @@ export type WorkOrderCreateWithoutWorkOrderStructureInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   deleted?: boolean
@@ -1474,6 +1518,7 @@ export type WorkOrderUncheckedCreateWithoutWorkOrderStructureInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -1512,6 +1557,7 @@ export type WorkOrderUpdateWithoutWorkOrderStructureInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1534,6 +1580,7 @@ export type WorkOrderUncheckedUpdateWithoutWorkOrderStructureInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1556,6 +1603,7 @@ export type WorkOrderCreateManyEmployeeInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   projectId: string
@@ -1574,6 +1622,7 @@ export type WorkOrderCreateManyEmployee_WorkOrder_deletedByToEmployeeInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -1592,6 +1641,7 @@ export type WorkOrderUpdateWithoutEmployeeInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1614,6 +1664,7 @@ export type WorkOrderUncheckedUpdateWithoutEmployeeInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1636,6 +1687,7 @@ export type WorkOrderUncheckedUpdateManyWithoutEmployeeInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1654,6 +1706,7 @@ export type WorkOrderUpdateWithoutEmployee_WorkOrder_deletedByToEmployeeInput = 
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1676,6 +1729,7 @@ export type WorkOrderUncheckedUpdateWithoutEmployee_WorkOrder_deletedByToEmploye
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1698,6 +1752,7 @@ export type WorkOrderUncheckedUpdateManyWithoutEmployee_WorkOrder_deletedByToEmp
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1716,6 +1771,7 @@ export type WorkOrderCreateManyProjectInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -1734,6 +1790,7 @@ export type WorkOrderUpdateWithoutProjectInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1756,6 +1813,7 @@ export type WorkOrderUncheckedUpdateWithoutProjectInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1778,6 +1836,7 @@ export type WorkOrderUncheckedUpdateManyWithoutProjectInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1796,6 +1855,7 @@ export type WorkOrderCreateManyTargetInput = {
   endDate?: Date | string | null
   createdAt: Date | string
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy: string
@@ -1814,6 +1874,7 @@ export type WorkOrderUpdateWithoutTargetInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1836,6 +1897,7 @@ export type WorkOrderUncheckedUpdateWithoutTargetInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1858,6 +1920,7 @@ export type WorkOrderUncheckedUpdateManyWithoutTargetInput = {
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hoursMaterialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materialClosed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   invoiceSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1934,6 +1997,7 @@ export type WorkOrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   endDate?: boolean
   createdAt?: boolean
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy?: boolean
@@ -1964,6 +2028,7 @@ export type WorkOrderSelectScalar = {
   endDate?: boolean
   createdAt?: boolean
   hoursMaterialClosed?: boolean
+  materialClosed?: boolean
   invoiceSent?: boolean
   completed?: boolean
   createdBy?: boolean
@@ -1974,7 +2039,7 @@ export type WorkOrderSelectScalar = {
   deletedBy?: boolean
 }
 
-export type WorkOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "workOrderNumber" | "description" | "additionalInfo" | "startDate" | "endDate" | "createdAt" | "hoursMaterialClosed" | "invoiceSent" | "completed" | "createdBy" | "projectId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["workOrder"]>
+export type WorkOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "workOrderNumber" | "description" | "additionalInfo" | "startDate" | "endDate" | "createdAt" | "hoursMaterialClosed" | "materialClosed" | "invoiceSent" | "completed" | "createdBy" | "projectId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["workOrder"]>
 export type WorkOrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   TimeRegistry?: boolean | Prisma.WorkOrder$TimeRegistryArgs<ExtArgs>
   Training?: boolean | Prisma.WorkOrder$TrainingArgs<ExtArgs>
@@ -2008,6 +2073,7 @@ export type $WorkOrderPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     endDate: Date | null
     createdAt: Date
     hoursMaterialClosed: boolean
+    materialClosed: boolean
     invoiceSent: boolean
     completed: boolean
     createdBy: string
@@ -2401,6 +2467,7 @@ export interface WorkOrderFieldRefs {
   readonly endDate: Prisma.FieldRef<"WorkOrder", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"WorkOrder", 'DateTime'>
   readonly hoursMaterialClosed: Prisma.FieldRef<"WorkOrder", 'Boolean'>
+  readonly materialClosed: Prisma.FieldRef<"WorkOrder", 'Boolean'>
   readonly invoiceSent: Prisma.FieldRef<"WorkOrder", 'Boolean'>
   readonly completed: Prisma.FieldRef<"WorkOrder", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"WorkOrder", 'String'>

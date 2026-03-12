@@ -2,10 +2,14 @@ import {EmergencyContact, Employee, Prisma} from '@/generated/prisma/client'
 import type {EmployeeDetailData, MappedEmployee, UnifiedRecord} from '@/types/employee'
 
 type EmployeeWithRelations = Employee & {
-  RoleLevel_Employee_roleLevelIdToRoleLevel: {
-    Role: {name: string}
-    SubRole: {name: string}
-  } | null
+  RoleLevelEmployee:
+    | {
+        RoleLevel: {
+          Role: {name: string}
+          SubRole: {name: string}
+        }
+      }
+    | []
   Title_Employee_titleIdToTitle: {name: string} | null
   EmergencyContact: EmergencyContact[]
   Employee: {id: string} | null
@@ -41,8 +45,8 @@ export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
     deletedAt: prismaEmp.deletedAt?.toISOString() ?? null,
     deletedBy: prismaEmp.Employee_Employee_deletedByToEmployee?.id ?? null,
     titleId: prismaEmp.titleId,
-    roleName: prismaEmp.RoleLevel_Employee_roleLevelIdToRoleLevel
-      ? `${prismaEmp.RoleLevel_Employee_roleLevelIdToRoleLevel.Role.name.replace(' Role', '')} / ${prismaEmp.RoleLevel_Employee_roleLevelIdToRoleLevel.SubRole.name}`
+    roleName: prismaEmp.RoleLevelEmployee?.RoleLevel
+      ? `${prismaEmp.RoleLevelEmployee.RoleLevel.Role.name.replace(' Role', '')} / ${prismaEmp.RoleLevelEmployee.RoleLevel.SubRole.name}`
       : '-',
     titleName: prismaEmp.Title_Employee_titleIdToTitle?.name ?? '-',
     emergencyContacts: prismaEmp.EmergencyContact ?? [],

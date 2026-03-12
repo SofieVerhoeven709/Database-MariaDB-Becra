@@ -29,7 +29,7 @@ export default async function DashboardLayout({children}: {children: React.React
   }
 
   const roleContextInput = {
-    roleLevelId: roleLevel.id,
+    roleLevelIds: employee.RoleLevelEmployee.map(rle => rle.roleLevelId),
   }
 
   return (

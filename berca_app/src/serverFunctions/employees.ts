@@ -17,31 +17,6 @@ import {protectedFormAction, protectedServerFunction, publicFormAction} from '@/
 import {registerSchema, signInSchema, updateEmployeeSchema, upsertEmployeeSchema} from '@/schemas/employeeSchemas'
 import {prismaClient} from '@/dal/prismaClient'
 
-export const registerAction = publicFormAction({
-  schema: registerSchema,
-  serverFn: async ({data: {passwordConfirmation: _, ...data}, logger}) => {
-    const employee = await createEmployee(data)
-    logger.info(`New employee created: ${employee.id}`)
-
-    const role = await prismaClient.roleLevel.findUnique({
-      where: {id: employee.roleLevelId!},
-      include: {
-        Role: true, // RoleLevel → Role
-        SubRole: true, // RoleLevel → SubRole
-      },
-    })
-    if (!role) throw new Error('Employee has no role assigned.')
-
-    const session = await startSession(employee.id, role.SubRole)
-    logger.info(`New session started: ${session.id}, ends at ${session.activeUntil.toISOString()}`)
-
-    await setSessionCookie(session)
-    redirect('/')
-  },
-  functionName: 'Register action',
-  globalErrorMessage: "We couldn't create an account for you, please try again or log in with an existing account.",
-})
-
 export const signInAction = publicFormAction({
   schema: signInSchema,
   serverFn: async ({data, logger}) => {
@@ -70,16 +45,16 @@ export const signInAction = publicFormAction({
 
     logger.info(`Successful authentication request for ${employee!.id}`)
 
-    const role = await prismaClient.roleLevel.findUnique({
-      where: {id: employee!.roleLevelId!},
-      include: {
-        Role: true, // RoleLevel → Role
-        SubRole: true, // RoleLevel → SubRole
-      },
-    })
-    if (!role) throw new Error('Employee has no role assigned.')
+    type EmployeeRoleLevelItem = NonNullable<typeof employee>['RoleLevelEmployee'][0]
 
-    const session = await startSession(employee!.id, role.SubRole)
+    const highestRoleLevel = employee!.RoleLevelEmployee.reduce<EmployeeRoleLevelItem | null>((highest, current) => {
+      if (!highest) return current
+      return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
+    }, null)?.RoleLevel
+
+    if (!highestRoleLevel) throw new Error('Employee has no role assigned.')
+
+    const session = await startSession(employee!.id, highestRoleLevel.SubRole)
     logger.info(`New session started: ${session.id}, ends at ${session.activeUntil.toISOString()}`)
 
     await setSessionCookie(session)

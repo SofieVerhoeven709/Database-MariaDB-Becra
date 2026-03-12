@@ -45,8 +45,23 @@ export async function createEmployee(data: CreateEmployeeParams): Promise<Profil
  *
  * @param username The email of the user to retrieve.
  */
-export async function getEmployeeByUsername(username: string): Promise<Employee | null> {
-  return prismaClient.employee.findFirst({where: {username}})
+export async function getEmployeeByUsername(username: string) {
+  return prismaClient.employee.findFirst({
+    where: {username},
+    include: {
+      RoleLevelEmployee: {
+        // This is the Employee → RoleLevel relation
+        include: {
+          RoleLevel: {
+            include: {
+              Role: true, // RoleLevel → Role
+              SubRole: true, // RoleLevel → SubRole
+            },
+          },
+        },
+      },
+    },
+  })
 }
 
 export async function getEmployees(): Promise<

@@ -888,11 +888,11 @@ export const MaterialPriceScalarFieldEnum = {
   additionalInfo: 'additionalInfo',
   unitPrice: 'unitPrice',
   quantityPrice: 'quantityPrice',
-  companyId: 'companyId',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  companyId: 'companyId'
 } as const
 
 export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)[keyof typeof MaterialPriceScalarFieldEnum]
@@ -1478,6 +1478,7 @@ export const WorkOrderScalarFieldEnum = {
   endDate: 'endDate',
   createdAt: 'createdAt',
   hoursMaterialClosed: 'hoursMaterialClosed',
+  materialClosed: 'materialClosed',
   invoiceSent: 'invoiceSent',
   completed: 'completed',
   createdBy: 'createdBy',
@@ -2147,9 +2148,9 @@ export const MaterialPriceOrderByRelevanceFieldEnum = {
   longDescription: 'longDescription',
   brandName: 'brandName',
   additionalInfo: 'additionalInfo',
-  companyId: 'companyId',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  companyId: 'companyId'
 } as const
 
 export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderByRelevanceFieldEnum)[keyof typeof MaterialPriceOrderByRelevanceFieldEnum]

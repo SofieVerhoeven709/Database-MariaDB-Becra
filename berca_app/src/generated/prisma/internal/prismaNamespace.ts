@@ -88,12 +88,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.19.2
- * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
+ * Prisma Client JS version: 6.19.0
+ * Query Engine version: 2ba551f319ab1df4bc874a89965d8b3641056773
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.19.2",
-  engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
+  client: "6.19.0",
+  engine: "2ba551f319ab1df4bc874a89965d8b3641056773"
 }
 
 /**
@@ -6285,11 +6285,11 @@ export const MaterialPriceScalarFieldEnum = {
   additionalInfo: 'additionalInfo',
   unitPrice: 'unitPrice',
   quantityPrice: 'quantityPrice',
-  companyId: 'companyId',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  companyId: 'companyId'
 } as const
 
 export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)[keyof typeof MaterialPriceScalarFieldEnum]
@@ -6875,6 +6875,7 @@ export const WorkOrderScalarFieldEnum = {
   endDate: 'endDate',
   createdAt: 'createdAt',
   hoursMaterialClosed: 'hoursMaterialClosed',
+  materialClosed: 'materialClosed',
   invoiceSent: 'invoiceSent',
   completed: 'completed',
   createdBy: 'createdBy',
@@ -7544,9 +7545,9 @@ export const MaterialPriceOrderByRelevanceFieldEnum = {
   longDescription: 'longDescription',
   brandName: 'brandName',
   additionalInfo: 'additionalInfo',
-  companyId: 'companyId',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  companyId: 'companyId'
 } as const
 
 export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderByRelevanceFieldEnum)[keyof typeof MaterialPriceOrderByRelevanceFieldEnum]

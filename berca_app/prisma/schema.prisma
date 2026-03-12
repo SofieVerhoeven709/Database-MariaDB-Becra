@@ -86,6 +86,7 @@ model Company {
   CompanyAdress                        CompanyAdress[]
   CompanyContact                       CompanyContact[]
   DeliveryNoteSupplier                 DeliveryNoteSupplier[]
+  MaterialPrice                        MaterialPrice[]
   MaterialSerialTrack                  MaterialSerialTrack[]
   Project                              Project[]
   Purchase                             Purchase[]
@@ -1128,13 +1129,16 @@ model MaterialPrice {
   additionalInfo                             String?   @db.VarChar(255)
   unitPrice                                  Decimal?  @db.Decimal(10, 2)
   quantityPrice                              Int?
+  companyId                                  String?   @db.Char(36)
   createdBy                                  String    @db.Char(36)
   deleted                                    Boolean   @default(false)
   deletedAt                                  DateTime? @db.DateTime(0)
   deletedBy                                  String?   @db.Char(36)
+  Company                                    Company?  @relation(fields: [companyId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialPrice_ibfk_3")
   Employee                                   Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_1")
   Employee_MaterialPrice_deletedByToEmployee Employee? @relation("MaterialPrice_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_2")
 
+  @@index([companyId], map: "companyId")
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
 }

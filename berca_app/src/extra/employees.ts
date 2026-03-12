@@ -2,14 +2,13 @@ import {EmergencyContact, Employee, Prisma} from '@/generated/prisma/client'
 import type {EmployeeDetailData, MappedEmployee, UnifiedRecord} from '@/types/employee'
 
 type EmployeeWithRelations = Employee & {
-  RoleLevelEmployee:
-    | {
-        RoleLevel: {
-          Role: {name: string}
-          SubRole: {name: string}
-        }
-      }
-    | []
+  RoleLevelEmployee: {
+    roleLevelId: string
+    RoleLevel: {
+      Role: {name: string}
+      SubRole: {name: string; level: number}
+    }
+  }[]
   Title_Employee_titleIdToTitle: {name: string} | null
   EmergencyContact: EmergencyContact[]
   Employee: {id: string} | null
@@ -17,6 +16,14 @@ type EmployeeWithRelations = Employee & {
 }
 
 export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
+  const highestRoleLevel = prismaEmp.RoleLevelEmployee.reduce<EmployeeWithRelations['RoleLevelEmployee'][0] | null>(
+    (highest, current) => {
+      if (!highest) return current
+      return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
+    },
+    null,
+  )?.RoleLevel
+
   return {
     id: prismaEmp.id,
     firstName: prismaEmp.firstName,
@@ -45,8 +52,9 @@ export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
     deletedAt: prismaEmp.deletedAt?.toISOString() ?? null,
     deletedBy: prismaEmp.Employee_Employee_deletedByToEmployee?.id ?? null,
     titleId: prismaEmp.titleId,
-    roleName: prismaEmp.RoleLevelEmployee?.RoleLevel
-      ? `${prismaEmp.RoleLevelEmployee.RoleLevel.Role.name.replace(' Role', '')} / ${prismaEmp.RoleLevelEmployee.RoleLevel.SubRole.name}`
+    roleLevelIds: prismaEmp.RoleLevelEmployee.map(rle => rle.roleLevelId),
+    roleName: highestRoleLevel
+      ? `${highestRoleLevel.Role.name.replace(' Role', '')} / ${highestRoleLevel.SubRole.name}`
       : '-',
     titleName: prismaEmp.Title_Employee_titleIdToTitle?.name ?? '-',
     emergencyContacts: prismaEmp.EmergencyContact ?? [],
@@ -55,7 +63,11 @@ export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
 
 type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
   include: {
-    RoleLevel_Employee_roleLevelIdToRoleLevel: {include: {Role: true; SubRole: true}}
+    RoleLevelEmployee: {
+      include: {
+        RoleLevel: {include: {Role: true; SubRole: true}}
+      }
+    }
     Title_Employee_titleIdToTitle: true
     EmergencyContact: true
     Employee: {select: {id: true; firstName: true; lastName: true}}
@@ -472,7 +484,7 @@ type CreatedEmployee = {
   lastName: string
   createdAt: Date
   active: boolean
-  RoleLevel_Employee_roleLevelIdToRoleLevel: {Role: {name: string}; SubRole: {name: string}} | null
+  RoleLevelEmployee: {RoleLevel: {Role: {name: string}; SubRole: {name: string; level: number}}}[]
 }
 
 type DeletedEmployee = {
@@ -480,7 +492,7 @@ type DeletedEmployee = {
   firstName: string
   lastName: string
   deletedAt: Date | null
-  RoleLevel_Employee_roleLevelIdToRoleLevel: {Role: {name: string}; SubRole: {name: string}} | null
+  RoleLevelEmployee: {RoleLevel: {Role: {name: string}; SubRole: {name: string; level: number}}}[]
 }
 
 export function mapEmployeeDetail(
@@ -488,7 +500,19 @@ export function mapEmployeeDetail(
   createdEmployees: CreatedEmployee[],
   deletedEmployees: DeletedEmployee[],
 ): EmployeeDetailData {
-  const roleLevel = e.RoleLevel_Employee_roleLevelIdToRoleLevel
+  const highestRoleLevel = e.RoleLevelEmployee.reduce<(typeof e.RoleLevelEmployee)[0] | null>((highest, current) => {
+    if (!highest) return current
+    return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
+  }, null)?.RoleLevel
+
+  const getEmployeeRoleName = (emp: CreatedEmployee | DeletedEmployee) => {
+    const highest = emp.RoleLevelEmployee.reduce<(typeof emp.RoleLevelEmployee)[0] | null>((h, c) => {
+      if (!h) return c
+      return c.RoleLevel.SubRole.level > h.RoleLevel.SubRole.level ? c : h
+    }, null)?.RoleLevel
+    return highest ? `${highest.Role.name.replace(' Role', '')} / ${highest.SubRole.name}` : null
+  }
+
   const ownedFollowUpIds = new Set(e.FollowUp_FollowUp_ownedByToEmployee.map(f => f.id))
 
   // ── Created records: flat unified rows ──────────────────────────────────────
@@ -650,9 +674,7 @@ export function mapEmployeeDetail(
       id: emp.id,
       type: 'Employee' as const,
       label: `${emp.firstName} ${emp.lastName}`,
-      detail: emp.RoleLevel_Employee_roleLevelIdToRoleLevel
-        ? `${emp.RoleLevel_Employee_roleLevelIdToRoleLevel.Role.name.replace(' Role', '')} / ${emp.RoleLevel_Employee_roleLevelIdToRoleLevel.SubRole.name}`
-        : null,
+      detail: getEmployeeRoleName(emp),
       date: emp.createdAt.toISOString(),
       deletedAt: null,
       href: `/employees/${emp.id}`,
@@ -818,9 +840,7 @@ export function mapEmployeeDetail(
       id: emp.id,
       type: 'Employee' as const,
       label: `${emp.firstName} ${emp.lastName}`,
-      detail: emp.RoleLevel_Employee_roleLevelIdToRoleLevel
-        ? `${emp.RoleLevel_Employee_roleLevelIdToRoleLevel.Role.name.replace(' Role', '')} / ${emp.RoleLevel_Employee_roleLevelIdToRoleLevel.SubRole.name}`
-        : null,
+      detail: getEmployeeRoleName(emp),
       date: null,
       deletedAt: emp.deletedAt?.toISOString() ?? null,
       href: null,
@@ -856,7 +876,10 @@ export function mapEmployeeDetail(
     deletedByName: e.Employee_Employee_deletedByToEmployee
       ? `${e.Employee_Employee_deletedByToEmployee.firstName} ${e.Employee_Employee_deletedByToEmployee.lastName}`
       : null,
-    roleName: roleLevel ? `${roleLevel.Role.name.replace(' Role', '')} / ${roleLevel.SubRole.name}` : '-',
+    roleLevelIds: e.RoleLevelEmployee.map(rle => rle.roleLevelId),
+    roleName: highestRoleLevel
+      ? `${highestRoleLevel.Role.name.replace(' Role', '')} / ${highestRoleLevel.SubRole.name}`
+      : '-',
     titleName: e.Title_Employee_titleIdToTitle?.name ?? '-',
     titleId: e.titleId,
     emergencyContacts: e.EmergencyContact,

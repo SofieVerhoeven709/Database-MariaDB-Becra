@@ -8,11 +8,11 @@ import {prismaClient} from '@/dal/prismaClient'
 import {notFound} from 'next/navigation'
 
 interface ContactDetailPageProps {
-  params: Promise<{department: string; id: string}>
+  params: Promise<{id: string}>
 }
 
 export default async function ContactDetailPage({params}: ContactDetailPageProps) {
-  const {department, id} = await params
+  const {id} = await params
 
   const [contactFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies] = await Promise.all([
     getContactDetail(id).catch(() => null),
@@ -33,6 +33,7 @@ export default async function ContactDetailPage({params}: ContactDetailPageProps
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
 
   const defaultVisibleRoleNames = ['Management']
+  const department = 'management'
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -47,6 +48,7 @@ export default async function ContactDetailPage({params}: ContactDetailPageProps
           departmentExternOptions={departmentExterns}
           titleOptions={titles}
           companyOptions={companies}
+          department={department}
         />
       </div>
     </main>

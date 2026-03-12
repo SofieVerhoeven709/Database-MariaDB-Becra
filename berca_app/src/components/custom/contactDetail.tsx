@@ -46,6 +46,7 @@ interface ContactDetailProps {
   departmentExternOptions: SelectOption[]
   titleOptions: SelectOption[]
   companyOptions: SelectOption[]
+  department: string
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -83,6 +84,7 @@ export function ContactDetail({
   departmentExternOptions,
   titleOptions,
   companyOptions,
+  department,
 }: ContactDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -163,7 +165,7 @@ export function ContactDetail({
     mobilePhone: contact.mobilePhone ?? '',
     info: contact.info ?? '',
     birthDate: contact.birthDate ? contact.birthDate.slice(0, 10) : '',
-    trough: contact.trough ?? '',
+    through: contact.through ?? '',
     description: contact.description ?? '',
     infoCorrect: contact.infoCorrect,
     checkInfo: contact.checkInfo,
@@ -213,7 +215,7 @@ export function ContactDetail({
         mobilePhone: form.mobilePhone || null,
         info: form.info || null,
         birthDate: form.birthDate ? new Date(form.birthDate) : null,
-        trough: form.trough || null,
+        through: form.through || null,
         description: form.description || null,
         infoCorrect: form.infoCorrect,
         checkInfo: form.checkInfo,
@@ -376,7 +378,7 @@ export function ContactDetail({
                 <p className="text-sm text-muted-foreground">{formatDate(contact.birthDate)}</p>
               )}
             </div>
-            {textRow('Trough / Source', contact.trough, 'trough')}
+            {textRow('Through / Source', contact.through, 'through')}
             {selectRow('Title', contact.titleName, 'titleId', titleOptions)}
             {selectRow('Function', contact.functionName, 'functionId', functionOptions)}
             {selectRow('Ext. Department', contact.departmentExternName, 'departmentExternId', departmentExternOptions)}
@@ -839,7 +841,7 @@ export function ContactDetail({
                                         <CalendarOff className="h-3.5 w-3.5" />
                                       </Button>
                                     )}
-                                    <Link href={`/companies/${cc.company.id}` as Route}>
+                                    <Link href={`/departments/${department}/company/${cc.company.id}` as Route}>
                                       <Button
                                         variant="ghost"
                                         size="icon"

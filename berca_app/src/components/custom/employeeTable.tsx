@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
 import {EmployeeFormDialog} from '@/components/custom/employeeFormDialog'
 import {Input} from '@/components/ui/input'
@@ -17,6 +17,7 @@ import {
   softDeleteEmployeeAction,
   updateEmployeeAdminAction,
 } from '@/serverFunctions/employees'
+import {useRouter} from 'next/navigation'
 
 type SortField =
   | 'name'
@@ -98,6 +99,11 @@ export function EmployeeTable({
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
+  const router = useRouter()
+
+  useEffect(() => {
+    setEmployees(initialEmployees)
+  }, [initialEmployees])
 
   const getEmployeeName = (id: string | null) => {
     if (!id) return '-'
@@ -223,6 +229,7 @@ export function EmployeeTable({
     } else {
       await createEmployeeAction(payload)
       setEmployees(prev => [...prev, emp])
+      router.refresh()
     }
 
     setDialogOpen(false)

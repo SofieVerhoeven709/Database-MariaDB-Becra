@@ -346,7 +346,7 @@ export function ProjectDetail({
       mobilePhone: contact.mobilePhone,
       info: contact.info,
       birthDate: contact.birthDate ? new Date(contact.birthDate) : null,
-      trough: contact.trough,
+      through: contact.through,
       description: contact.description,
       infoCorrect: contact.infoCorrect,
       checkInfo: contact.checkInfo,

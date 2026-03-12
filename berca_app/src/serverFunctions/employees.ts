@@ -165,7 +165,7 @@ export const createEmployeeAction = protectedServerFunction({
     })
 
     logger.info(`Employee created: ${employee.id}`)
-    revalidatePath('/employees')
+    revalidatePath('/departments/hr/records')
   },
 })
 

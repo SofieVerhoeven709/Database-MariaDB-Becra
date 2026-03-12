@@ -650,7 +650,7 @@ export async function getEmployeeDetail(id: string) {
           take: 50,
           select: {id: true, description: true, date: true},
         },
-        QouteBecra: {
+        QuoteBecra_QuoteBecra_createdByToEmployee: {
           where: {deleted: false},
           orderBy: {date: 'desc'},
           take: 50,
@@ -1122,7 +1122,7 @@ export async function getEmployeeDetail(id: string) {
           take: 50,
           select: {id: true, description: true, deletedAt: true},
         },
-        QouteBecra_QouteBecra_deletedByToEmployee: {
+        QuoteBecra_QuoteBecra_deletedByToEmployee: {
           where: {deleted: true},
           orderBy: {deletedAt: 'desc'},
           take: 50,

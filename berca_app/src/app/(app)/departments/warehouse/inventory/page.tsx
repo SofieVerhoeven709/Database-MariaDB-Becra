@@ -12,7 +12,7 @@ export default async function InventoryPage() {
     place: i.place,
     shortDescription: i.shortDescription,
     longDescription: i.longDescription,
-    serieNumber: i.serieNumber,
+    serialNumber: i.serialNumber,
     quantityInStock: i.quantityInStock,
     minQuantityInStock: i.minQuantityInStock,
     maxQuantityInStock: i.maxQuantityInStock,

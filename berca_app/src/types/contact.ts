@@ -12,7 +12,7 @@ export interface MappedContact {
   mobilePhone: string | null
   info: string | null
   birthDate: string | null
-  trough: string | null
+  through: string | null
   description: string | null
   infoCorrect: boolean
   checkInfo: boolean
@@ -124,7 +124,7 @@ export interface ContactDetailData {
   mobilePhone: string | null
   info: string | null
   birthDate: string | null
-  trough: string | null
+  through: string | null
   description: string | null
   infoCorrect: boolean
   checkInfo: boolean

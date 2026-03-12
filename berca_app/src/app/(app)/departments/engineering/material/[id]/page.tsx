@@ -52,7 +52,7 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
       quantityInStock: inv.quantityInStock,
       minQuantityInStock: inv.minQuantityInStock,
       maxQuantityInStock: inv.maxQuantityInStock,
-      serieNumber: inv.serieNumber ?? null,
+      serialNumber: inv.serialNumber ?? null,
       information: inv.information ?? null,
       valid: inv.valid,
       noValidDate: inv.noValidDate.toISOString(),

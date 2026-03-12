@@ -338,7 +338,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
     ProjectType: {select: {id: true; name: true; createdAt: true}}
     PurchaseDetail: {select: {id: true; beNumber: true; status: true; Purchase: {select: {orderNumber: true}}}}
     PurchaseOrderBecra: {select: {id: true; description: true; date: true}}
-    QouteBecra: {select: {id: true; description: true; date: true}}
+    QuoteBecra_QuoteBecra_createdByToEmployee: {select: {id: true; description: true; date: true}}
     Role_Role_createdByToEmployee: {select: {id: true; name: true; createdAt: true}}
     RoleLevel_RoleLevel_createdByToEmployee: {
       select: {id: true; createdAt: true; Role: {select: {name: true}}; SubRole: {select: {name: true}}}
@@ -433,7 +433,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {id: true; beNumber: true; status: true; deletedAt: true; Purchase: {select: {orderNumber: true}}}
     }
     PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
-    QouteBecra_QouteBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
+    QuoteBecra_QuoteBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
     Role_Role_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
     RoleLevel_RoleLevel_deletedByToEmployee: {
       select: {id: true; deletedAt: true; Role: {select: {name: true}}; SubRole: {select: {name: true}}}
@@ -1174,7 +1174,7 @@ export function mapEmployeeDetail(
         deletedAt: null,
         href: null,
       })),
-      ...e.QouteBecra.map(r => ({
+      ...e.QuoteBecra_QuoteBecra_createdByToEmployee.map(r => ({
         id: r.id,
         type: 'Quote Becra' as const,
         label: r.description ?? '(no desc)',
@@ -1541,7 +1541,7 @@ export function mapEmployeeDetail(
         deletedAt: r.deletedAt?.toISOString() ?? null,
         href: null,
       })),
-      ...e.QouteBecra_QouteBecra_deletedByToEmployee.map(r => ({
+      ...e.QuoteBecra_QuoteBecra_deletedByToEmployee.map(r => ({
         id: r.id,
         type: 'Quote Becra' as const,
         label: r.description ?? '(no desc)',

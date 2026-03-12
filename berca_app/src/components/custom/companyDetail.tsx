@@ -32,6 +32,7 @@ interface CompanyDetailProps {
   currentUserLevel: number
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
+  department: string
 }
 
 function formatDate(date: string | null) {
@@ -64,6 +65,7 @@ export function CompanyDetail({
   currentUserLevel,
   roleLevelOptions,
   defaultVisibleRoleNames,
+  department,
 }: CompanyDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -88,7 +90,7 @@ export function CompanyDetail({
     notes: company.notes ?? '',
     companyId: company.companyId ?? 'none',
     supplier: company.supplier,
-    prefferedSupplier: company.prefferedSupplier,
+    preferredSupplier: company.preferredSupplier,
     companyActive: company.companyActive,
     newsLetter: company.newsLetter,
     customer: company.customer,
@@ -133,7 +135,7 @@ export function CompanyDetail({
         notes: form.notes || null,
         companyId: form.companyId === 'none' ? null : form.companyId,
         supplier: form.supplier,
-        prefferedSupplier: form.prefferedSupplier,
+        preferredSupplier: form.preferredSupplier,
         companyActive: form.companyActive,
         newsLetter: form.newsLetter,
         customer: form.customer,
@@ -266,7 +268,9 @@ export function CompanyDetail({
             ) : (
               <p className="text-sm text-muted-foreground">
                 {company.parentCompanyName ? (
-                  <Link href={`/companies/${company.companyId}` as Route} className="hover:text-accent hover:underline">
+                  <Link
+                    href={`/departments/${department}/company/${company.companyId}` as Route}
+                    className="hover:text-accent hover:underline">
                     {company.parentCompanyName}
                   </Link>
                 ) : (
@@ -292,7 +296,7 @@ export function CompanyDetail({
                 {key: 'customer', label: 'Customer'},
                 {key: 'potentialCustomer', label: 'Pot. Customer'},
                 {key: 'supplier', label: 'Supplier'},
-                {key: 'prefferedSupplier', label: 'Pref. Supplier'},
+                {key: 'preferredSupplier', label: 'Pref. Supplier'},
                 {key: 'subContractor', label: 'Sub-Contractor'},
                 {key: 'potentialSubContractor', label: 'Pot. Sub-Con'},
                 {key: 'headQuarters', label: 'Head Quarters'},
@@ -425,7 +429,7 @@ export function CompanyDetail({
                           )}
                         </TableCell>
                         <TableCell>
-                          <Link href={`/contacts/${cc.contact.id}` as Route}>
+                          <Link href={`/departments/${department}/contact/${cc.contact.id}` as Route}>
                             <Button
                               variant="ghost"
                               size="icon"
@@ -619,7 +623,7 @@ export function CompanyDetail({
                         <YesNoBadge value={sub.companyActive} />
                       </TableCell>
                       <TableCell>
-                        <Link href={`/companies/${sub.id}` as Route}>
+                        <Link href={`/departments/${department}/company/${sub.id}` as Route}>
                           <Button
                             variant="ghost"
                             size="icon"

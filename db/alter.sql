@@ -90,7 +90,4 @@ ALTER TABLE FollowUpStructure
     DROP FOREIGN KEY IF EXISTS FollowUpStructure_ibfk_6,
     MODIFY COLUMN `documentId` CHAR(36) NULL,
     ADD CONSTRAINT FOREIGN KEY (`documentId`) REFERENCES DocumentStructure (`id`) ON DELETE SET NULL;
-
-
-DROP TABLE Testing 
     

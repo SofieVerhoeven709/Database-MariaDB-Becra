@@ -122,14 +122,14 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
           </div>
 
           {/* Extra fields row */}
-          {(purchase.preferedSupplier ?? purchase.additionalInfo) && (
+          {(purchase.preferredSupplier ?? purchase.additionalInfo) && (
             <div className="grid grid-cols-2 gap-4 pt-2 border-t border-border/50">
-              {purchase.preferedSupplier && (
+              {purchase.preferredSupplier && (
                 <div className="flex flex-col gap-1">
                   <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
                     Preferred Supplier
                   </span>
-                  <span className="text-sm text-foreground">{purchase.preferedSupplier}</span>
+                  <span className="text-sm text-foreground">{purchase.preferredSupplier}</span>
                 </div>
               )}
               {purchase.additionalInfo && (

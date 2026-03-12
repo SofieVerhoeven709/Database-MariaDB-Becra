@@ -2,11 +2,8 @@
 
 import {useEffect, useState} from 'react'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter} from '@/components/ui/dialog'
-
 import {Textarea} from '@/components/ui/textarea'
-
 import {Switch} from '@/components/ui/switch'
-
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -25,7 +22,7 @@ interface EmployeeFormDialogProps {
 }
 
 export const EMPTY_EMPLOYEE: MappedEmployee = {
-  id: crypto.randomUUID(),
+  id: '',
   firstName: '',
   lastName: '',
   mail: null,
@@ -99,7 +96,7 @@ export function EmployeeFormDialog({
           deletedAt: employee.deletedAt ? employee.deletedAt.split('T')[0] : null,
         })
       } else {
-        setForm({...EMPTY_EMPLOYEE, id: `e-${Date.now()}`})
+        setForm({...EMPTY_EMPLOYEE})
       }
       setPassword('')
       setPasswordTouched(false)

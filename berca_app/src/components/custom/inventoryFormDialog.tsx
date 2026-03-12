@@ -30,7 +30,7 @@ const EMPTY: Partial<MappedInventory> & {id: string} = {
   place: '',
   shortDescription: '',
   longDescription: '',
-  serieNumber: '',
+  serialNumber: '',
   quantityInStock: 0,
   minQuantityInStock: 0,
   maxQuantityInStock: 0,
@@ -115,8 +115,8 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
               <Input
                 id="inv-serie"
                 className={inputStyles}
-                value={form.serieNumber ?? ''}
-                onChange={e => update('serieNumber', e.target.value)}
+                value={form.serialNumber ?? ''}
+                onChange={e => update('serialNumber', e.target.value)}
                 placeholder="SN-0001"
                 required
               />

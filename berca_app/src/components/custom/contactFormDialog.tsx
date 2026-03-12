@@ -54,7 +54,7 @@ const emptyContact = (): MappedContact => ({
   mobilePhone: null,
   info: null,
   birthDate: null,
-  trough: null,
+  through: null,
   description: null,
   infoCorrect: false,
   checkInfo: false,
@@ -229,7 +229,7 @@ export function ContactFormDialog({
       becraCustomerNumber: c.becraCustomerNumber,
       becraWebsiteLogin: c.becraWebsiteLogin,
       supplier: c.supplier,
-      prefferedSupplier: c.prefferedSupplier,
+      preferredSupplier: c.preferredSupplier,
       companyActive: c.companyActive,
       newsLetter: c.newsLetter,
       customer: c.customer,
@@ -293,7 +293,7 @@ export function ContactFormDialog({
                   />
                 </div>
 
-                {textField('trough', 'Trough / Source')}
+                {textField('through', 'Through / Source')}
 
                 {selectField('titleId', 'Title', titleOptions)}
                 {selectField('functionId', 'Function', functionOptions)}

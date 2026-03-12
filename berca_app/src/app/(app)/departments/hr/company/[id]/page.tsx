@@ -27,6 +27,7 @@ export default async function CompanyDetailPage({params}: Props) {
   const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
   const defaultVisibleRoleNames = ['HR']
+  const department = 'hr'
 
   const companies = allCompaniesRaw.filter(c => !c.deleted).map(c => ({id: c.id, name: c.name}))
 
@@ -40,6 +41,7 @@ export default async function CompanyDetailPage({params}: Props) {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
+          department={department}
         />
       </div>
     </main>

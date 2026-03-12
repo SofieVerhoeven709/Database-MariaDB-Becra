@@ -84,7 +84,7 @@ export function PurchaseTable({
         (p.projectName ?? '').toLowerCase().includes(q) ||
         (p.status ?? '').toLowerCase().includes(q) ||
         (p.brandName ?? '').toLowerCase().includes(q) ||
-        (p.preferedSupplier ?? '').toLowerCase().includes(q) ||
+        (p.preferredSupplier ?? '').toLowerCase().includes(q) ||
         p.createdByName.toLowerCase().includes(q)
       )
     })
@@ -128,7 +128,7 @@ export function PurchaseTable({
         status: p.status,
         companyId: p.companyId,
         projectId: p.projectId,
-        preferedSupplier: p.preferedSupplier,
+        preferredSupplier: p.preferredSupplier,
         description: p.description,
       })
     } else {
@@ -139,7 +139,7 @@ export function PurchaseTable({
         status: p.status,
         companyId: p.companyId,
         projectId: p.projectId,
-        preferedSupplier: p.preferedSupplier,
+        preferredSupplier: p.preferredSupplier,
         description: p.description,
       })
     }
@@ -238,7 +238,7 @@ export function PurchaseTable({
               </TableRow>
             ) : (
               filtered.map(purchase => {
-                const secondaryLabel = purchase.brandName ?? purchase.preferedSupplier ?? ''
+                const secondaryLabel = purchase.brandName ?? purchase.preferredSupplier ?? ''
                 const detailHref = `/departments/purchasing/orders/${purchase.id}` as Route
                 return (
                   <TableRow

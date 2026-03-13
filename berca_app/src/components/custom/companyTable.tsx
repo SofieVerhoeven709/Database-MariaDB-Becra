@@ -80,7 +80,7 @@ interface CompanyTableProps {
   currentUserLevel: number
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
-  department: string
+  departmentId: string
 }
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -112,7 +112,7 @@ export function CompanyTable({
   currentUserLevel,
   roleLevelOptions,
   defaultVisibleRoleNames,
-  department,
+  departmentId,
 }: CompanyTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -384,7 +384,7 @@ export function CompanyTable({
                   className={`border-border/40 hover:bg-secondary/50 ${c.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/${department}/company/${c.id}` as Route}
+                      href={`/departments/${departmentId}/company/${c.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {c.name}
                     </Link>
@@ -457,7 +457,7 @@ export function CompanyTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${department}/company/${c.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/company/${c.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

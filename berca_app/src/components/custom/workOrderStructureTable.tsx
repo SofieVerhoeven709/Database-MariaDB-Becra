@@ -73,7 +73,7 @@ interface WorkOrderStructureTableProps {
   currentUserLevel: number
   workOrderOptions: {id: string; name: string}[]
   materialOptions: MaterialOption[]
-  department: string
+  departmentId: string
 }
 
 export function WorkOrderStructureTable({
@@ -82,7 +82,7 @@ export function WorkOrderStructureTable({
   currentUserLevel,
   workOrderOptions,
   materialOptions,
-  department,
+  departmentId,
 }: WorkOrderStructureTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100

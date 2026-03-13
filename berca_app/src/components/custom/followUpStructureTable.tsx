@@ -109,7 +109,7 @@ interface FollowUpStructureTableProps {
   currentUserLevel: number
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
-  department: string
+  departmentId: string
   statusOptions: SelectOption[]
   urgencyTypeOptions: SelectOption[]
   employeeOptions: SelectOption[]
@@ -125,7 +125,7 @@ export function FollowUpStructureTable({
   currentUserLevel,
   roleLevelOptions,
   defaultVisibleRoleNames,
-  department,
+  departmentId,
   statusOptions,
   urgencyTypeOptions,
   employeeOptions,
@@ -409,7 +409,7 @@ export function FollowUpStructureTable({
                   className={`border-border/40 hover:bg-secondary/50 ${s.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/${department}/followUpStructure/${s.id}` as Route}
+                      href={`/departments/${departmentId}/followUpStructure/${s.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {formatDate(s.contactDate)}
                     </Link>
@@ -457,7 +457,7 @@ export function FollowUpStructureTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${department}/followupstructure/${s.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/followupstructure/${s.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

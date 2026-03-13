@@ -1,5 +1,4 @@
-import {getProjectById} from '@/dal/projects'
-import {getProjectTypes} from '@/dal/projects'
+import {getProjectById, getProjectTypes} from '@/dal/projects'
 import {getEmployees} from '@/dal/employees'
 import {getContacts} from '@/dal/contacts'
 import {getPurchases} from '@/dal/purchases'
@@ -14,14 +13,18 @@ import {mapVisibility} from '@/extra/visibilityForRole'
 import {getFunctions} from '@/dal/functions'
 import {getDepartmentExterns} from '@/dal/departmentExterns'
 import {getTitles} from '@/dal/titles'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-interface ProjectDetailPageProps {
-  params: Promise<{id: string}>
+interface PageProps {
+  params: Promise<{departmentId: string; projectId: string}>
 }
 
-export default async function ProjectDetailPage({params}: ProjectDetailPageProps) {
-  const {id} = await params
+export default async function ProjectDetailPage({params}: PageProps) {
+  const {departmentId, projectId} = await params
+
   const [
+    department,
     project,
     projectTypes,
     companies,
@@ -34,7 +37,8 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
     departmentExterns,
     titles,
   ] = await Promise.all([
-    getProjectById(id).catch(() => null),
+    getDepartmentById(departmentId),
+    getProjectById(projectId).catch(() => null),
     getProjectTypes(),
     getCompanies(),
     getEmployees(),
@@ -47,45 +51,28 @@ export default async function ProjectDetailPage({params}: ProjectDetailPageProps
     getTitles(),
   ])
 
+  if (!department) return <p>Department not found</p>
   if (!project) notFound()
 
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+
   const employees = employeesFromDAL.map(mapEmployee)
-
-  const employeeOptions = employees.map(e => ({
-    id: e.id,
-    firstName: e.firstName,
-    lastName: e.lastName,
-  }))
-
-  const contactOptions = contactsFromDAL.map(c => ({
-    id: c.id,
-    name: `${c.firstName} ${c.lastName}`,
-  }))
-
+  const employeeOptions = employees.map(e => ({id: e.id, firstName: e.firstName, lastName: e.lastName}))
+  const contactOptions = contactsFromDAL.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))
   const projectTypeOptions = projectTypes.map(t => ({id: t.id, name: t.name}))
   const companyOptions = companies.filter(c => !c.deleted).map(c => ({id: c.id, name: c.name}))
-
   const availablePurchases = purchasesFromDAL
     .filter(p => !p.deleted && p.projectId === null)
-    .map(p => ({
-      id: p.id,
-      orderNumber: p.orderNumber,
-      companyName: p.Company?.name ?? null,
-      status: p.status,
-    }))
-
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
-
+    .map(p => ({id: p.id, orderNumber: p.orderNumber, companyName: p.Company?.name ?? null, status: p.status}))
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-  const defaultVisibleRoleNames = ['Project']
+  const defaultVisibleRoleNames = [department.name]
   const visibilityForRoles = project.Target.VisibilityForRole.map(mapVisibility)
-
   const functionOptions = (functions ?? []).map(f => ({id: f.id, name: f.name ?? ''})).filter(f => f.name)
   const departmentExternOptions = (departmentExterns ?? [])
     .map(d => ({id: d.id, name: d.name ?? ''}))
     .filter(d => d.name)
   const titleOptions = (titles ?? []).map(t => ({id: t.id, name: t.name ?? ''})).filter(t => t.name)
+
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-6xl">

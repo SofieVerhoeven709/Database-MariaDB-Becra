@@ -397,3 +397,8 @@ export type DepartmentExtern = Prisma.DepartmentExternModel
  * 
  */
 export type QuoteBecra = Prisma.QuoteBecraModel
+/**
+ * Model RoleLevelEmployee
+ * 
+ */
+export type RoleLevelEmployee = Prisma.RoleLevelEmployeeModel

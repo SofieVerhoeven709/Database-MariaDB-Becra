@@ -1,6 +1,6 @@
 import {clsx, type ClassValue} from 'clsx'
 import {twMerge} from 'tailwind-merge'
-import type {Profile} from '@/models/employees'
+import {Profile} from '@/models/employees'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -63,13 +63,46 @@ export function generateCompanyNumber() {
   return `CO${year}${month}${day}${random}`
 }
 
-export function getDepartmentRoleInfo(profile: Profile, _departmentName: string) {
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+// Used for admin/global pages
+export function getGlobalRoleInfo(profile: Profile) {
+  const entries = profile.RoleLevelEmployee ?? []
+
+  const isAdmin = entries.some(rle => rle.RoleLevel.Role.name === 'Administrator')
+  const maxLevel = Math.max(0, ...entries.map(rle => rle.RoleLevel.SubRole.level))
+  const topRole = entries.find(rle => rle.RoleLevel.SubRole.level === maxLevel)
 
   return {
-    currentUserRole,
-    currentUserLevel,
+    currentUserRole: isAdmin ? 'Administrator' : (topRole?.RoleLevel.Role.name ?? ''),
+    currentUserLevel: maxLevel,
   }
 }
 
+// Used for department-specific pages
+export function getDepartmentRoleInfo(profile: Profile, departmentName: string) {
+  const entries = profile.RoleLevelEmployee ?? []
+
+  // Check for admin first — admins bypass department filtering
+  const isAdmin = entries.some(rle => rle.RoleLevel.Role.name === 'Administrator')
+  if (isAdmin) {
+    return {currentUserRole: 'Administrator', currentUserLevel: 100}
+  }
+
+  // Find role specific to this department
+  const deptEntry = entries.find(rle => rle.RoleLevel.Role.name === `${departmentName} Role`)
+
+  if (deptEntry) {
+    return {
+      currentUserRole: deptEntry.RoleLevel.Role.name,
+      currentUserLevel: deptEntry.RoleLevel.SubRole.level,
+    }
+  }
+
+  // Fallback — user has no department-specific role, use their highest global level
+  const maxLevel = Math.max(0, ...entries.map(rle => rle.RoleLevel.SubRole.level))
+  const topRole = entries.find(rle => rle.RoleLevel.SubRole.level === maxLevel)
+
+  return {
+    currentUserRole: topRole?.RoleLevel.Role.name ?? '',
+    currentUserLevel: maxLevel,
+  }
+}

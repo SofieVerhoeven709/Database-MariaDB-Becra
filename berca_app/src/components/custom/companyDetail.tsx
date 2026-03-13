@@ -32,7 +32,7 @@ interface CompanyDetailProps {
   currentUserLevel: number
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
-  department: string
+  departmentId: string
 }
 
 function formatDate(date: string | null) {
@@ -65,7 +65,7 @@ export function CompanyDetail({
   currentUserLevel,
   roleLevelOptions,
   defaultVisibleRoleNames,
-  department,
+  departmentId,
 }: CompanyDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -269,7 +269,7 @@ export function CompanyDetail({
               <p className="text-sm text-muted-foreground">
                 {company.parentCompanyName ? (
                   <Link
-                    href={`/departments/${department}/company/${company.companyId}` as Route}
+                    href={`/departments/${departmentId}/company/${company.companyId}` as Route}
                     className="hover:text-accent hover:underline">
                     {company.parentCompanyName}
                   </Link>
@@ -429,7 +429,7 @@ export function CompanyDetail({
                           )}
                         </TableCell>
                         <TableCell>
-                          <Link href={`/departments/${department}/contact/${cc.contact.id}` as Route}>
+                          <Link href={`/departments/${departmentId}/contact/${cc.contact.id}` as Route}>
                             <Button
                               variant="ghost"
                               size="icon"
@@ -623,7 +623,7 @@ export function CompanyDetail({
                         <YesNoBadge value={sub.companyActive} />
                       </TableCell>
                       <TableCell>
-                        <Link href={`/departments/${department}/company/${sub.id}` as Route}>
+                        <Link href={`/departments/${departmentId}/company/${sub.id}` as Route}>
                           <Button
                             variant="ghost"
                             size="icon"

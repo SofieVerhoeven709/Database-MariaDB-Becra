@@ -8,7 +8,6 @@ import {prismaClient} from '@/dal/prismaClient'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {notFound} from 'next/navigation'
-import camelCase from 'lodash/camelCase'
 
 interface PageProps {
   params: Promise<{departmentId: string; followUpId: string}>
@@ -55,7 +54,6 @@ export default async function FollowUpDetailPage({params}: PageProps) {
   const defaultVisibleRoleNames = [department.name]
   const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
   const contactOptions = contacts.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))
-  const departmentSlug = camelCase(department.name)
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -71,7 +69,7 @@ export default async function FollowUpDetailPage({params}: PageProps) {
           followUpTypeOptions={followUpTypes}
           employeeOptions={employeeOptions}
           contactOptions={contactOptions}
-          department={departmentSlug}
+          departmentId={departmentId}
         />
       </div>
     </main>

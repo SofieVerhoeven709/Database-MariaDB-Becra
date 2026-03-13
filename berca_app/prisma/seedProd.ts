@@ -120,6 +120,48 @@ const createdSubRoles: Record<SubRoleName, {id: string; level: number}> = {} as 
 
 const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}, {name: 'Internal'}]
 
+// ─── All target type names used across the system ─────────────────────────────
+
+const ALL_TARGET_TYPES = [
+  'Department',
+  'Company',
+  'Project',
+  'WorkOrder',
+  'WorkOrderStructure',
+  'Contact',
+  'Certificate',
+  'DocumentStructure',
+  'FollowUp',
+  'FollowUpStructure',
+  'InvoiceIn',
+  'InvoiceOut',
+  'Training',
+  'TrainingStandard',
+  'Employee',
+  'DepartmentExtern',
+]
+
+// ─── Urgency types ────────────────────────────────────────────────────────────
+
+const URGENCY_TYPES = ['Low', 'Medium', 'High', 'Critical']
+
+// ─── Statuses ─────────────────────────────────────────────────────────────────
+
+const STATUSES = ['Open', 'In Progress', 'Pending', 'On Hold', 'Resolved', 'Closed', 'Cancelled']
+
+// ─── Follow-up types ──────────────────────────────────────────────────────────
+
+const FOLLOW_UP_TYPES = [
+  'Sales',
+  'Support',
+  'Non-Conformance',
+  'Periodic Control',
+  'Review',
+  'General',
+  'Task',
+  'Complaint',
+]
+
 export const seedProd = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
   const now = new Date()
@@ -187,15 +229,21 @@ export const seedProd = async (prisma: PrismaClient) => {
     })
   }
 
-  // 5. Attach admin roleLevel (only if not already set)
-  if (!adminEmployee.roleLevelId) {
-    await prisma.employee.update({
-      where: {id: adminEmployee.id},
-      data: {roleLevelId: adminRoleLevel.id},
+  // 5. Attach admin roleLevel via junction table (only if not already set)
+  const existingRoleLevelEmployee = await prisma.roleLevelEmployee.findFirst({
+    where: {employeeId: adminEmployee.id},
+  })
+  if (!existingRoleLevelEmployee) {
+    await prisma.roleLevelEmployee.create({
+      data: {
+        id: randomUUID(),
+        employeeId: adminEmployee.id,
+        roleLevelId: adminRoleLevel.id,
+      },
     })
   }
 
-  console.log('Administrator account created')
+  console.log('Administrator account ready')
 
   // 6. Upsert shared subRoles
   for (const sub of SUB_ROLES) {
@@ -214,7 +262,7 @@ export const seedProd = async (prisma: PrismaClient) => {
     createdSubRoles[sub.name] = {id: existing.id, level: existing.level}
   }
 
-  // 7. Upsert TargetTypes
+  // 7. Upsert ALL TargetTypes
   async function upsertTargetType(name: string) {
     let tt = await prisma.targetType.findFirst({where: {name}})
     if (!tt) {
@@ -225,14 +273,71 @@ export const seedProd = async (prisma: PrismaClient) => {
     return tt
   }
 
-  const departmentTargetType = await upsertTargetType('Department')
-  const companyTargetType = await upsertTargetType('Company')
-  await upsertTargetType('Project')
-  await upsertTargetType('WorkOrder')
-  await upsertTargetType('WorkOrderStructure')
-  await upsertTargetType('Contact')
+  for (const targetTypeName of ALL_TARGET_TYPES) {
+    await upsertTargetType(targetTypeName)
+  }
 
-  // 9. Upsert Departments + Department Roles + RoleLevels + Targets
+  console.log('Target types seeded')
+
+  // Resolve the two target types needed for departments and companies below
+  const departmentTargetType = await prisma.targetType.findFirst({where: {name: 'Department'}})!
+  const companyTargetType = await prisma.targetType.findFirst({where: {name: 'Company'}})!
+
+  // 8. Upsert UrgencyTypes
+  for (const name of URGENCY_TYPES) {
+    const existing = await prisma.urgencyType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.urgencyType.create({
+        data: {
+          id: randomUUID(),
+          name,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+          deleted: false,
+        },
+      })
+    }
+  }
+
+  console.log('Urgency types seeded')
+
+  // 9. Upsert Statuses
+  for (const name of STATUSES) {
+    const existing = await prisma.status.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.status.create({
+        data: {
+          id: randomUUID(),
+          name,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+          deleted: false,
+        },
+      })
+    }
+  }
+
+  console.log('Statuses seeded')
+
+  // 10. Upsert FollowUpTypes
+  for (const name of FOLLOW_UP_TYPES) {
+    const existing = await prisma.followUpType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.followUpType.create({
+        data: {
+          id: randomUUID(),
+          name,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+          deleted: false,
+        },
+      })
+    }
+  }
+
+  console.log('Follow-up types seeded')
+
+  // 11. Upsert Departments + Department Roles + RoleLevels + Targets
   for (const dept of ALL_DEPARTMENTS) {
     const existingDept = await prisma.department.findFirst({where: {name: dept.name}})
     if (existingDept) continue
@@ -242,7 +347,7 @@ export const seedProd = async (prisma: PrismaClient) => {
         id: randomUUID(),
         createdAt: now,
         createdBy: adminEmployee.id,
-        targetTypeId: departmentTargetType.id,
+        targetTypeId: departmentTargetType!.id,
       },
     })
 
@@ -291,7 +396,9 @@ export const seedProd = async (prisma: PrismaClient) => {
     }
   }
 
-  // 10. Upsert default Titles
+  console.log('Departments, Roles, SubRoles, RoleLevels, Targets, and VisibilityForRole seeded')
+
+  // 12. Upsert default Titles
   const DEFAULT_TITLES = ['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.', 'Ir.']
 
   for (const titleName of DEFAULT_TITLES) {
@@ -311,7 +418,7 @@ export const seedProd = async (prisma: PrismaClient) => {
 
   console.log('Default titles seeded')
 
-  // 11-12. Upsert Becra company
+  // 13. Upsert Becra company
   let becraCompany = await prisma.company.findFirst({where: {name: 'Becra BV'}})
   if (!becraCompany) {
     const becraTarget = await prisma.target.create({
@@ -319,7 +426,7 @@ export const seedProd = async (prisma: PrismaClient) => {
         id: randomUUID(),
         createdAt: now,
         createdBy: adminEmployee.id,
-        targetTypeId: companyTargetType.id,
+        targetTypeId: companyTargetType!.id,
       },
     })
 
@@ -341,7 +448,6 @@ export const seedProd = async (prisma: PrismaClient) => {
       },
     })
 
-    // 13. Create address only when company is new
     await prisma.companyAdress.create({
       data: {
         id: randomUUID(),
@@ -409,11 +515,233 @@ export const seedProd = async (prisma: PrismaClient) => {
 
   // 16. Upsert MaterialGroups
   const MATERIAL_GROUPS = [
-    {groupA: 'Mechanical', groupB: 'Fasteners', groupC: 'Bolts', groupD: 'Hex'},
-    {groupA: 'Mechanical', groupB: 'Fasteners', groupC: 'Nuts', groupD: 'Hex'},
-    {groupA: 'Electrical', groupB: 'Cables', groupC: 'Power', groupD: 'Copper'},
-    {groupA: 'Electrical', groupB: 'Components', groupC: 'Switches', groupD: 'Industrial'},
-    {groupA: 'Hydraulics', groupB: 'Fittings', groupC: 'Couplings', groupD: 'Quick'},
+    {groupA: 'Electrical', groupB: 'Component', groupC: 'Power', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'HMI', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Switch', groupC: 'Safety', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Switch', groupC: 'Differential', groupD: 'Other'},
+    {groupA: 'Automation', groupB: 'PLC', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Relay', groupC: 'Safety', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Relay', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Motor', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Wire', groupC: 'Other', groupD: '0,5mm'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Communication', groupD: 'Other'},
+    {groupA: 'Tools', groupB: 'Electrical', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'STL', groupD: 'M5'},
+    {groupA: 'Tools', groupB: 'Mechanical', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Mechanical', groupB: 'Plate material', groupC: 'Other', groupD: 'STL - Steel'},
+    {groupA: 'Mechanical', groupB: 'Plate material', groupC: 'Other', groupD: 'Wood'},
+    {groupA: 'Mechanical', groupB: 'Plate material', groupC: 'Other', groupD: 'Plastic'},
+    {groupA: 'Solvents', groupB: 'Gas', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Insurance', groupB: 'Other', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Mechanical', groupB: 'Plate material', groupC: 'Other', groupD: 'ALU - Aluminium'},
+    {groupA: 'Solvents', groupB: 'Paints and lubricants', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Software', groupB: 'Other', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Mechanical', groupB: 'Plate material', groupC: 'Other', groupD: 'SS - Stainless steel'},
+    {groupA: 'Mechanical', groupB: 'Plate material', groupC: 'Other', groupD: 'CU - Copper'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'SS', groupD: 'M5'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'STL', groupD: 'M6'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'STL', groupD: 'M8'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'STL', groupD: 'M10'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'STL', groupD: 'M12'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'STL', groupD: 'M16'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'STL', groupD: 'M18'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'STL', groupD: 'M20'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'STL', groupD: 'Other'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'SS', groupD: 'M6'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'SS', groupD: 'M8'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'SS', groupD: 'M10'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'SS', groupD: 'M12'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'SS', groupD: 'M16'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'SS', groupD: 'M18'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'SS', groupD: 'M20'},
+    {groupA: 'Fasteners', groupB: 'Nut', groupC: 'SS', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Sleeve/Shoe', groupC: 'Wire', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Wire', groupC: 'Other', groupD: '0,75mm'},
+    {groupA: 'Electrical', groupB: 'Wire', groupC: 'Other', groupD: '1mm'},
+    {groupA: 'Electrical', groupB: 'Wire', groupC: 'Other', groupD: '1,5mm'},
+    {groupA: 'Electrical', groupB: 'Wire', groupC: 'Other', groupD: '2,5mm'},
+    {groupA: 'Electrical', groupB: 'Wire', groupC: 'Other', groupD: '4mm'},
+    {groupA: 'Electrical', groupB: 'Wire', groupC: 'Other', groupD: '6mm'},
+    {groupA: 'Electrical', groupB: 'Wire', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Multicore', groupD: '0,5mm'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Multicore', groupD: '0,75mm'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Multicore', groupD: '1,5mm'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Multicore', groupD: '2,5mm'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Multicore', groupD: '4mm'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Multicore', groupD: '6mm'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Multicore', groupD: '10mm'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Multicore', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Fuse', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Mechanical', groupB: 'Bearing', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Mechanical', groupB: 'Sealing', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Mechanical', groupB: 'Profile', groupC: 'Other', groupD: 'ALU - Aluminium'},
+    {groupA: 'Mechanical', groupB: 'Profile', groupC: 'Other', groupD: 'CU - Copper'},
+    {groupA: 'Mechanical', groupB: 'Profile', groupC: 'Other', groupD: 'STL - Steel'},
+    {groupA: 'Mechanical', groupB: 'Profile', groupC: 'Other', groupD: 'Plastic'},
+    {groupA: 'Mechanical', groupB: 'Profile', groupC: 'Other', groupD: 'SS - Stainless steel'},
+    {groupA: 'Electrical', groupB: 'Component', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Mechanical', groupB: 'Plate material', groupC: 'Other', groupD: 'C STL- Corten Steel'},
+    {groupA: 'Electrical', groupB: 'Component', groupC: 'Terminal', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Support', groupC: 'Duct/Ladder', groupD: 'Duct/Ladder'},
+    {groupA: 'Electrical', groupB: 'Frequency_Drive', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Surcharge', groupB: 'Transport', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Office', groupB: 'Paper', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Office', groupB: 'Copies', groupC: 'Copies', groupD: 'Other'},
+    {groupA: 'Office', groupB: 'Copies', groupC: 'Printer', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Profile', groupC: 'DIN rail', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Switch', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Cabinet', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Gland', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Mechanical', groupB: 'Component', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Multicore', groupD: '1mm'},
+    {groupA: 'Electrical', groupB: 'Bolts and Nuts', groupC: 'Screws', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Bolts and Nuts', groupC: 'Iron', groupD: 'Other'},
+    {groupA: 'PPE', groupB: 'PPE', groupC: 'PPE', groupD: 'PPE'},
+    {groupA: 'Project', groupB: 'Project ID Part', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Project', groupB: 'Project Parent Part', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Component', groupC: 'Atex', groupD: 'Other'},
+    {groupA: 'Fasteners', groupB: 'Blind Rivet', groupC: 'STL', groupD: 'All Diameters'},
+    {groupA: 'Tools', groupB: 'Mechanical', groupC: 'Drill/Tap', groupD: 'Other'},
+    {groupA: 'Surcharge', groupB: 'Small order', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Surcharge', groupB: 'Count Pieces', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Tape', groupB: 'Other', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Component', groupC: 'Surge Protector', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Component', groupC: 'Marking', groupD: 'Marking Holder'},
+    {groupA: 'Mobile Equipment', groupB: 'Tires', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Light', groupC: 'Standard', groupD: 'Led'},
+    {groupA: 'Solvents', groupB: 'Personal Cleaning', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Valve', groupC: 'Solenoid', groupD: 'Standard'},
+    {groupA: 'Electrical', groupB: 'Component', groupC: 'Atex', groupD: 'Fire detection'},
+    {groupA: 'Electrical', groupB: 'Light', groupC: 'Atex', groupD: 'Buld/TL'},
+    {groupA: 'Electrical', groupB: 'Fan', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Sensor', groupC: 'Measurement', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Sensor', groupC: 'Gas', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Valve', groupC: 'Atex', groupD: 'Solenoid'},
+    {groupA: 'Process', groupB: 'Valve', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Gas', groupB: 'Gas', groupC: 'Gas', groupD: 'Gas'},
+    {groupA: 'Process', groupB: 'Tubing', groupC: 'Tube', groupD: 'Imperial (All Dia)'},
+    {groupA: 'Process', groupB: 'Filter', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Measurement', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Vessel', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Tubing', groupC: 'Tube', groupD: 'Metric (All Dia)'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Atex', groupD: '2,5mm'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Atex', groupD: '0,75mm'},
+    {groupA: 'Electrical', groupB: 'Gland', groupC: 'Atex', groupD: 'M12X1'},
+    {groupA: 'Electrical', groupB: 'Battery', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Valve', groupC: 'Atex', groupD: 'Pneumatic'},
+    {groupA: 'Electrical', groupB: 'Gland', groupC: 'Atex', groupD: 'Exi'},
+    {groupA: 'Electrical', groupB: 'Gland', groupC: 'Atex', groupD: 'Exe'},
+    {groupA: 'Electrical', groupB: 'Transmitter', groupC: 'Atex', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Relief valve', groupC: 'Low Pressure', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Ferrule', groupC: '0.5 mm²', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Ferrule', groupC: 'Other', groupD: '0.75 mm²'},
+    {groupA: 'Electrical', groupB: 'Ferrule', groupC: '1 mm²', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Ferrule', groupC: '1.5 mm²', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Ferrule', groupC: '2 mm²', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Ferrule', groupC: '2.5 mm²', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Ferrule', groupC: '4 mm²', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Ferrule', groupC: '6 mm²', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Ferrule', groupC: '10 mm²', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Ferrule', groupC: '16 mm²', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Ferrule', groupC: '25 mm²', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Tubing', groupC: 'Connector', groupD: 'Metric (All Dia)'},
+    {groupA: 'Electrical', groupB: 'Connector', groupC: 'Spring Cage Terminal', groupD: 'Other'},
+    {groupA: 'PPE', groupB: 'Electrical', groupC: 'Arc Flash', groupD: 'Other'},
+    {groupA: 'PPE', groupB: 'Mechanical', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'PPE', groupB: 'Electrical', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Tools', groupB: 'Electrical', groupC: 'Angle Grinder', groupD: '125mm'},
+    {groupA: 'Tools', groupB: 'Electrical', groupC: 'Hot Air Gun', groupD: 'Other'},
+    {groupA: 'Mechanical', groupB: 'Air Pressure', groupC: 'Vessel', groupD: 'Galvanized'},
+    {groupA: 'Mechanical', groupB: 'Air Pressure', groupC: 'Fitting Set', groupD: 'Other'},
+    {groupA: 'Tools', groupB: 'Electrical', groupC: 'Extension cord', groupD: '2f 250V 2,5mm²'},
+    {groupA: 'Tools', groupB: 'Electrical', groupC: 'Extension cord', groupD: '3f 400V 2,5mm²'},
+    {groupA: 'Electrical', groupB: 'Connector', groupC: 'Plug (Male)', groupD: '250V'},
+    {groupA: 'Electrical', groupB: 'Connector', groupC: 'Plug (Male)', groupD: '400V'},
+    {groupA: 'Electrical', groupB: 'Connector', groupC: 'Plug (Female)', groupD: '250V'},
+    {groupA: 'Electrical', groupB: 'Connector', groupC: 'Plug (Female)', groupD: '400V'},
+    {groupA: 'Electrical', groupB: 'Extension cord', groupC: '250V', groupD: '1,5mm²'},
+    {groupA: 'Tools', groupB: 'Electrical', groupC: 'Impact Drill', groupD: 'Cordless'},
+    {groupA: 'Tools', groupB: 'Electrical', groupC: 'Screwing Machine', groupD: 'Cordless'},
+    {groupA: 'Tools', groupB: 'Electrical', groupC: 'Battery Charger', groupD: 'Other'},
+    {groupA: 'Tools', groupB: 'Electrical', groupC: 'Impact Drill', groupD: 'With Cord'},
+    {groupA: 'Tools', groupB: 'Electrical', groupC: 'Pump', groupD: 'Barrel Pump'},
+    {groupA: 'Tools', groupB: 'Mechanical', groupC: 'Ladder', groupD: 'Other'},
+    {groupA: 'Tools', groupB: 'Electrical', groupC: 'Cleaner', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Component', groupC: 'Pressure Gauge', groupD: '0-40Bar'},
+    {groupA: 'Tools', groupB: 'Process', groupC: 'Test stand', groupD: 'Pressure test'},
+    {groupA: 'Process', groupB: 'Seal', groupC: 'ePTFE', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Actuator', groupC: 'Valve', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Sensor', groupC: 'Temperature', groupD: 'Pt100'},
+    {groupA: 'Electrical', groupB: 'Heater', groupC: 'Fan Heater', groupD: 'Other'},
+    {groupA: 'Chemical', groupB: 'Treatment', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Plastic', groupB: 'PVC', groupC: 'PVC-U', groupD: 'Other'},
+    {groupA: 'Solvents', groupB: 'Cleaner', groupC: 'Oxygen', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Support', groupC: 'Duct/Ladder', groupD: 'Attachments'},
+    {groupA: 'Tools', groupB: 'Mechanical', groupC: 'Cutter', groupD: 'Cable'},
+    {groupA: 'Tools', groupB: 'Mechanical', groupC: 'Cutter', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Insulator', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Chemical', groupB: 'Paste', groupC: 'Anchoring', groupD: 'Other'},
+    {groupA: 'Office', groupB: 'Furniture', groupC: 'Chair', groupD: 'Other'},
+    {groupA: 'Tools', groupB: 'Process', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Tools', groupB: 'Pneumatic', groupC: 'Pump', groupD: 'Other'},
+    {groupA: 'Office', groupB: 'IT', groupC: 'Computer', groupD: 'Other'},
+    {groupA: 'Fasteners', groupB: 'Blind Rivet Nut', groupC: 'STL', groupD: 'All Diameters'},
+    {groupA: 'Chemical', groupB: 'Plastic', groupC: 'Hard tissue', groupD: 'Celleron'},
+    {groupA: 'Automation', groupB: 'PLC', groupC: 'CPU', groupD: 'Other'},
+    {groupA: 'Automation', groupB: 'PLC', groupC: 'I/O Systems', groupD: 'DO'},
+    {groupA: 'Automation', groupB: 'PLC', groupC: 'I/O Systems', groupD: 'DI'},
+    {groupA: 'Automation', groupB: 'PLC', groupC: 'I/O Systems', groupD: 'AO'},
+    {groupA: 'Automation', groupB: 'PLC', groupC: 'I/O Systems', groupD: 'AI'},
+    {groupA: 'Automation', groupB: 'PLC', groupC: 'I/O Systems', groupD: 'Filter'},
+    {groupA: 'Automation', groupB: 'PLC', groupC: 'I/O Systems', groupD: 'Fail Safe / PROFI safe'},
+    {groupA: 'Automation', groupB: 'PLC', groupC: 'I/O Systems', groupD: 'Intrinsically Safe'},
+    {groupA: 'Automation', groupB: 'PLC', groupC: 'I/O Systems', groupD: 'RTD'},
+    {groupA: 'Automation', groupB: 'PLC', groupC: 'I/O Systems', groupD: 'End Module'},
+    {groupA: 'Fasteners', groupB: 'Screws', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Tools', groupB: 'Transport', groupC: 'Transport', groupD: 'Transport'},
+    {groupA: 'Mechanical', groupB: 'Profile', groupC: 'C Shape', groupD: 'STL - Steel'},
+    {groupA: 'Mechanical', groupB: 'Profile', groupC: 'C Shape', groupD: 'SS - Stainless steel'},
+    {groupA: 'Electrical', groupB: 'Profile', groupC: 'C Shape', groupD: 'STL - Steel'},
+    {groupA: 'Electrical', groupB: 'Clamp', groupC: 'Cable clamp', groupD: 'Placement Clamp'},
+    {groupA: 'Electrical', groupB: 'Clamp', groupC: 'Cable clamp', groupD: 'Connection Clamp'},
+    {groupA: 'Electrical', groupB: 'Busbar', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Electrical', groupB: 'Bracket', groupC: 'Other', groupD: 'Other'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'STL', groupD: 'M5'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'SS', groupD: 'M5'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'STL', groupD: 'M6'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'STL', groupD: 'M8'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'STL', groupD: 'M10'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'STL', groupD: 'M12'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'STL', groupD: 'M16'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'STL', groupD: 'M18'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'STL', groupD: 'M20'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'STL', groupD: 'Other'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'SS', groupD: 'M6'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'SS', groupD: 'M8'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'SS', groupD: 'M10'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'SS', groupD: 'M12'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'SS', groupD: 'M16'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'SS', groupD: 'M18'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'SS', groupD: 'M20'},
+    {groupA: 'Fasteners', groupB: 'Bolt', groupC: 'SS', groupD: 'Other'},
+    {groupA: 'Fasteners', groupB: 'Washer', groupC: 'SS', groupD: 'All'},
+    {groupA: 'Fasteners', groupB: 'Washer', groupC: 'STL', groupD: 'All'},
+    {groupA: 'Electrical', groupB: 'Cable', groupC: 'Single core', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Tubing', groupC: 'Union', groupD: 'Metric (All Dia)'},
+    {groupA: 'Process', groupB: 'Regulator', groupC: 'Backpressure regulator', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Check valve', groupC: 'Low Pressure', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Valve', groupC: 'Needle Valve', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Valve', groupC: 'Ball Valve', groupD: 'Other'},
+    {groupA: 'Process', groupB: 'Tubing', groupC: 'Tubing Support', groupD: 'Metric (All Dia)'},
+    {groupA: 'Tools', groupB: 'Mechanical', groupC: 'Pliers', groupD: 'Water Pump Pliers'},
+    {groupA: 'Tools', groupB: 'Mechanical', groupC: 'Pliers', groupD: 'Wrench Pliers'},
+    {groupA: 'Tools', groupB: 'Mechanical', groupC: 'Wrench', groupD: 'Adjustable'},
+    {groupA: 'Tools', groupB: 'Mechanical', groupC: 'Wrench', groupD: 'Allen Key'},
+    {groupA: 'Tools', groupB: 'Mechanical', groupC: 'Pliers', groupD: 'Combination Pliers'},
+    {groupA: 'Process', groupB: 'Tubing', groupC: 'Adapter', groupD: 'Metric (All Dia)'},
+    {groupA: 'Process', groupB: 'Tubing', groupC: 'Cap', groupD: 'Metric (All Dia)'},
+    {groupA: 'Process', groupB: 'Tubing', groupC: 'Plugs', groupD: 'Metric (All Dia)'},
+    {groupA: 'Process', groupB: 'Tubing', groupC: 'Ferrule', groupD: 'Metric (All Dia)'},
   ]
 
   const createdMaterialGroups: string[] = []
@@ -475,12 +803,12 @@ export const seedProd = async (prisma: PrismaClient) => {
   // 18. Upsert Materials
   const MATERIALS = [
     {
-      beNumber: 'BE-MAT-0001',
-      name: 'Hex Bolt M10',
-      shortDescription: 'M10 hex bolt galvanized',
-      longDescription: 'Standard galvanized hex bolt M10 x 30mm',
-      brandName: 'Fabory',
-      preferredSupplier: 'Fabory',
+      beNumber: '1000173',
+      name: 'Metaldrill 8mm',
+      shortDescription: 'Wire H07V2-K 0,5 blue',
+      longDescription: 'Wire H05V-K 0,5 blue \n' + 'Type: VTB-ST ECA 0,5 Blue D100 ',
+      brandName: 'EUPEN',
+      preferredSupplier: 'EUPEN',
     },
     {
       beNumber: 'BE-MAT-0002',
@@ -546,6 +874,514 @@ export const seedProd = async (prisma: PrismaClient) => {
 
   console.log('Materials seeded')
 
-  console.log('Departments, Roles, SubRoles, RoleLevels, Targets, and VisibilityForRole seeded')
-  console.log('Total roleLevels created: 57 (14 × 4 + 1 Administrator)')
+  // 19. Upsert Warehouse Places
+  const warehousePlaces = [
+    {
+      abbreviation: 'W140C800R70',
+      beNumber: '1000943',
+      serialTrackedId: 'RX2345',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 3,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C800R60',
+      beNumber: '1000950',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 10,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C800R50',
+      beNumber: '1000947',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 5,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C800R70b',
+      beNumber: '1000944',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 7,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W100 Workshop',
+      beNumber: '',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 0,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: 'Hall where people come in via the main door.',
+    },
+    {
+      abbreviation: 'W110 TrainingSpace',
+      beNumber: '',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 0,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: 'Space left (double green door)',
+    },
+    {
+      abbreviation: 'W120 CompressorStorage',
+      beNumber: '',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 0,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: 'Small space in the back (entering from the back)',
+    },
+    {
+      abbreviation: 'W130 ChemicalStorage',
+      beNumber: '',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 0,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: 'Small storage space, directly opposite the main door',
+    },
+    {
+      abbreviation: 'W140 Warehouse',
+      beNumber: '',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 0,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: 'Bigger storage space, on the right side of W130',
+    },
+    {
+      abbreviation: 'W140C100R18',
+      beNumber: '10001101',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 1,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W010',
+      beNumber: '',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 0,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: 'previously bathroom 2',
+    },
+    {
+      abbreviation: 'W020',
+      beNumber: '',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 0,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: 'previously stockroom 1',
+    },
+    {
+      abbreviation: 'W140C100R10',
+      beNumber: '1001099',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 2,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R11',
+      beNumber: '1001073',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 6,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R12',
+      beNumber: '1001100',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 1,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R13',
+      beNumber: '1000733',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 1,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R14',
+      beNumber: '1000239',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 1,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W100C1',
+      beNumber: '1000874',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 1,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R15',
+      beNumber: '1001098',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 20,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R16',
+      beNumber: '1001083',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 20,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400R20',
+      beNumber: '1000808',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 100,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400R21',
+      beNumber: '1000809',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 50,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400R22',
+      beNumber: '1000811',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 50,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R17',
+      beNumber: '1000474',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 2,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400R30',
+      beNumber: '1000573',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 445,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400C23',
+      beNumber: '1000582',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 104,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400C24',
+      beNumber: '1000677',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 53,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400R25',
+      beNumber: '1000678',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 5,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400R26',
+      beNumber: '1001102',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 52,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400R27',
+      beNumber: '1001103',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 24,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400C28',
+      beNumber: '1001104',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 60,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400R29',
+      beNumber: '1001105',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 20,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R29a',
+      beNumber: '1001106',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 8,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R29b',
+      beNumber: '1001580',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 60,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C400C29c',
+      beNumber: '1001107',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 50,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R30a',
+      beNumber: '1000091',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 2,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R30b',
+      beNumber: '1000078',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 3,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C100R30c',
+      beNumber: '1000066',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 3,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C200R30d',
+      beNumber: '1000067',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 4,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+    {
+      abbreviation: 'W140C200R30e',
+      beNumber: '1001108',
+      serialTrackedId: '',
+      place: 'Warehouse Nijverheidstraat 14',
+      quantityInStock: 0,
+      shelf: '',
+      column: '',
+      layer: '',
+      layerPlace: '',
+      information: '',
+    },
+  ]
+
+  for (const wp of warehousePlaces) {
+    const exists = await prisma.warehousePlace.findFirst({where: {abbreviation: wp.abbreviation}})
+    if (!exists) {
+      await prisma.warehousePlace.create({
+        data: {
+          id: randomUUID(),
+          abbreviation: wp.abbreviation,
+          beNumber: wp.beNumber || null,
+          serialTrackedId: null,
+          place: wp.place || null,
+          shelf: wp.shelf || null,
+          column: wp.column || null,
+          layer: wp.layer || null,
+          layerPlace: wp.layerPlace || null,
+          information: wp.information || null,
+          quantityInStock: wp.quantityInStock,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+          deleted: false,
+        },
+      })
+    }
+  }
+
+  console.log('Warehouse places seeded')
+  console.log('Seed complete')
 }

@@ -91,6 +91,7 @@ export default async function ProjectDetailPage({params}: PageProps) {
           functionOptions={functionOptions}
           departmentExternOptions={departmentExternOptions}
           titleOptions={titleOptions}
+          departmentId={departmentId}
         />
       </div>
     </main>

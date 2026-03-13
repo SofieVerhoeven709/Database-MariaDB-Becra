@@ -24,7 +24,7 @@ export function mapMaterialPrice(p: MaterialPriceWithRelations): MappedMaterialP
     unitPrice: p.unitPrice?.toString() ?? null,
     quantityPrice: p.quantityPrice?.toString() ?? null,
     updatedAt: p.updatedAt?.toISOString() ?? null,
-    companyId: (p.companyId as string | null) ?? null,
+    companyId: p.companyId as string,
     companyName: (p.Company as {id: string; name: string} | null)?.name ?? null,
     createdBy: p.createdBy,
     createdByName: `${p.Employee.firstName} ${p.Employee.lastName}`,

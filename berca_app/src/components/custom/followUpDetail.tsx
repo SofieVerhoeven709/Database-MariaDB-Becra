@@ -45,7 +45,7 @@ interface FollowUpDetailProps {
   followUpTypeOptions: SelectOption[]
   employeeOptions: SelectOption[]
   contactOptions: SelectOption[]
-  department: string
+  departmentId: string
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -81,7 +81,7 @@ export function FollowUpDetail({
   followUpTypeOptions,
   employeeOptions,
   contactOptions,
-  department,
+  departmentId,
 }: FollowUpDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -472,7 +472,7 @@ export function FollowUpDetail({
                     <StructureRow
                       key={st.id}
                       st={st}
-                      department={department}
+                      department={departmentId}
                       canEdit={canEdit}
                       isAdmin={isAdmin}
                       onEdit={() => {
@@ -535,7 +535,7 @@ export function FollowUpDetail({
                   <StructureRow
                     key={st.id}
                     st={st}
-                    department={department}
+                    department={departmentId}
                     canEdit={canEdit}
                     isAdmin={isAdmin}
                     onEdit={() => {}}

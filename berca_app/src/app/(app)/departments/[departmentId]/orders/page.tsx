@@ -94,6 +94,7 @@ export default async function PurchaseOrdersPage({params}: PageProps) {
           projects={projectOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
+          departmentId={departmentId}
         />
       </div>
     </main>

@@ -124,7 +124,8 @@ export const ModelName = {
   RoleLevel: 'RoleLevel',
   SubRole: 'SubRole',
   DepartmentExtern: 'DepartmentExtern',
-  QuoteBecra: 'QuoteBecra'
+  QuoteBecra: 'QuoteBecra',
+  RoleLevelEmployee: 'RoleLevelEmployee'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +409,6 @@ export const EmployeeScalarFieldEnum = {
   active: 'active',
   passwordCreatedAt: 'passwordCreatedAt',
   createdBy: 'createdBy',
-  roleLevelId: 'roleLevelId',
   titleId: 'titleId',
   pictureId: 'pictureId',
   deleted: 'deleted',
@@ -1478,7 +1478,6 @@ export const WorkOrderScalarFieldEnum = {
   endDate: 'endDate',
   createdAt: 'createdAt',
   hoursMaterialClosed: 'hoursMaterialClosed',
-  materialClosed: 'materialClosed',
   invoiceSent: 'invoiceSent',
   completed: 'completed',
   createdBy: 'createdBy',
@@ -1579,6 +1578,15 @@ export const QuoteBecraScalarFieldEnum = {
 } as const
 
 export type QuoteBecraScalarFieldEnum = (typeof QuoteBecraScalarFieldEnum)[keyof typeof QuoteBecraScalarFieldEnum]
+
+
+export const RoleLevelEmployeeScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  roleLevelId: 'roleLevelId'
+} as const
+
+export type RoleLevelEmployeeScalarFieldEnum = (typeof RoleLevelEmployeeScalarFieldEnum)[keyof typeof RoleLevelEmployeeScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1792,7 +1800,6 @@ export const EmployeeOrderByRelevanceFieldEnum = {
   place: 'place',
   username: 'username',
   createdBy: 'createdBy',
-  roleLevelId: 'roleLevelId',
   titleId: 'titleId',
   pictureId: 'pictureId',
   deletedBy: 'deletedBy'
@@ -2665,4 +2672,13 @@ export const QuoteBecraOrderByRelevanceFieldEnum = {
 } as const
 
 export type QuoteBecraOrderByRelevanceFieldEnum = (typeof QuoteBecraOrderByRelevanceFieldEnum)[keyof typeof QuoteBecraOrderByRelevanceFieldEnum]
+
+
+export const RoleLevelEmployeeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  roleLevelId: 'roleLevelId'
+} as const
+
+export type RoleLevelEmployeeOrderByRelevanceFieldEnum = (typeof RoleLevelEmployeeOrderByRelevanceFieldEnum)[keyof typeof RoleLevelEmployeeOrderByRelevanceFieldEnum]
 

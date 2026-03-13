@@ -361,7 +361,7 @@ export function EmployeeDetail({
     checkInfo: employee.checkInfo,
     newYearCard: employee.newYearCard,
     active: employee.active,
-    roleLevelId: employee.roleLevelId ?? 'none',
+    roleLevelIds: employee.roleLevelIds ?? [],
     titleId: employee.titleId ?? 'none',
   })
 
@@ -397,7 +397,7 @@ export function EmployeeDetail({
         checkInfo: form.checkInfo,
         newYearCard: form.newYearCard,
         active: form.active,
-        roleLevelId: form.roleLevelId === 'none' ? null : form.roleLevelId,
+        roleLevelIds: form.roleLevelIds,
         titleId: form.titleId === 'none' ? null : form.titleId,
         // required by upsertEmployeeSchema but not editable here
         createdAt: new Date(employee.createdAt),
@@ -567,7 +567,33 @@ export function EmployeeDetail({
                 <p className="text-sm text-muted-foreground">{formatDate(employee.endDate)}</p>
               )}
             </div>
-            {selectRow('Role', employee.roleName, 'roleLevelId', roleOptions)}
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Roles</Label>
+              {editing ? (
+                <div className="flex flex-col gap-1 rounded-md border border-border bg-secondary p-2 max-h-48 overflow-y-auto">
+                  {roleOptions.map(r => (
+                    <label
+                      key={r.id}
+                      className="flex items-center gap-2 cursor-pointer px-2 py-1 rounded hover:bg-muted">
+                      <input
+                        type="checkbox"
+                        checked={form.roleLevelIds.includes(r.id)}
+                        onChange={e => {
+                          const next = e.target.checked
+                            ? [...form.roleLevelIds, r.id]
+                            : form.roleLevelIds.filter(id => id !== r.id)
+                          s('roleLevelIds', next)
+                        }}
+                        className="accent-accent"
+                      />
+                      <span className="text-sm">{r.name}</span>
+                    </label>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-muted-foreground">{employee.roleName || '-'}</p>
+              )}
+            </div>
             {selectRow('Title', employee.titleName, 'titleId', titleOptions)}
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Created By</Label>

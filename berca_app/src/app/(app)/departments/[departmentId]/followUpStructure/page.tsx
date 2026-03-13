@@ -7,7 +7,6 @@ import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
-import camelCase from 'lodash/camelCase'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -48,7 +47,7 @@ export default async function FollowUpStructuresPage({params}: PageProps) {
   if (!department) return <p>Department not found</p>
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const currentUserRoleLevelId = profile.roleLevelId ?? ''
+  const currentUserRoleLevelIds = profile.RoleLevelEmployee.map(rle => rle.RoleLevel.id)
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
   const allStructures = structuresFromDAL.map(mapFollowUpStructure)
@@ -57,7 +56,7 @@ export default async function FollowUpStructuresPage({params}: PageProps) {
     : allStructures.filter(s => {
         const rows = s.visibilityForRoles
         if (rows.length === 0) return true
-        const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
+        const myRow = rows.find(r => currentUserRoleLevelIds.includes(r.roleLevelId))
         return myRow?.visible ?? false
       })
 
@@ -65,7 +64,6 @@ export default async function FollowUpStructuresPage({params}: PageProps) {
   const defaultVisibleRoleNames = [department.name]
   const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
   const contactOptions = contacts.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))
-  const departmentSlug = camelCase(department.name)
   const followUpOptions = followUps.map(f => ({
     id: f.id,
     name: f.activityDescription
@@ -87,7 +85,7 @@ export default async function FollowUpStructuresPage({params}: PageProps) {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          department={departmentSlug}
+          departmentId={departmentId}
           statusOptions={statuses}
           urgencyTypeOptions={urgencyTypes}
           employeeOptions={employeeOptions}

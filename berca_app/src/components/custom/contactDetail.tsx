@@ -46,7 +46,7 @@ interface ContactDetailProps {
   departmentExternOptions: SelectOption[]
   titleOptions: SelectOption[]
   companyOptions: SelectOption[]
-  department: string
+  departmentId: string
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ export function ContactDetail({
   departmentExternOptions,
   titleOptions,
   companyOptions,
-  department,
+  departmentId,
 }: ContactDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -841,7 +841,7 @@ export function ContactDetail({
                                         <CalendarOff className="h-3.5 w-3.5" />
                                       </Button>
                                     )}
-                                    <Link href={`/departments/${department}/company/${cc.company.id}` as Route}>
+                                    <Link href={`/departments/${departmentId}/company/${cc.company.id}` as Route}>
                                       <Button
                                         variant="ghost"
                                         size="icon"

@@ -27,7 +27,7 @@ export interface MappedEmployee {
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
-  roleLevelId: string | null
+  roleLevelIds: string[]
   titleId: string | null
   roleName: string
   titleName: string
@@ -190,7 +190,7 @@ export interface EmployeeDetailData {
   deletedAt: string | null
   deletedByName: string | null
   roleName: string
-  roleLevelId: string | null
+  roleLevelIds: string[]
   titleName: string
   titleId: string | null
   emergencyContacts: EmergencyContact[]

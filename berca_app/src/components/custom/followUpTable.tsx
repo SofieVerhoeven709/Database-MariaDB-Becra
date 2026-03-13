@@ -110,7 +110,7 @@ interface FollowUpTableProps {
   currentUserLevel: number
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
-  department: string
+  departmentId: string
   statusOptions: SelectOption[]
   urgencyTypeOptions: SelectOption[]
   followUpTypeOptions: SelectOption[]
@@ -126,7 +126,7 @@ export function FollowUpTable({
   currentUserLevel,
   roleLevelOptions,
   defaultVisibleRoleNames,
-  department,
+  departmentId,
   statusOptions,
   urgencyTypeOptions,
   followUpTypeOptions,
@@ -477,7 +477,7 @@ export function FollowUpTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${department}/followUp/${f.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/followUp/${f.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

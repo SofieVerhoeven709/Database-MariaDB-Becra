@@ -20,8 +20,6 @@ export function DepartmentActionGrid({department}: DepartmentActionGridProps) {
 
   if (!actions.length) return <p>No actions available for {department.name}</p>
 
-  const folderSlug = camelCase(department.name)
-
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {actions.map(action => {
@@ -33,7 +31,7 @@ export function DepartmentActionGrid({department}: DepartmentActionGridProps) {
         return (
           <Link
             key={action.id}
-            href={`/departments/${folderSlug}/${action.id}` as Route}
+            href={`/departments/${department.id}/${action.id}` as Route}
             className="group flex flex-col items-start gap-4 rounded-xl border border-border/60 bg-card p-5 transition-all hover:shadow-lg hover:-translate-y-0.5"
             style={
               {

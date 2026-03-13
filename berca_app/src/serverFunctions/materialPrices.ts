@@ -30,7 +30,7 @@ export const createMaterialPriceAction = protectedServerFunction({
         additionalInfo: data.additionalInfo ?? null,
         unitPrice: data.unitPrice ?? null,
         quantityPrice: data.quantityPrice ?? null,
-        companyId: data.companyId ?? null,
+        companyId: data.companyId,
         createdBy: profile.id,
         updatedAt: new Date(),
       },
@@ -59,7 +59,7 @@ export const updateMaterialPriceAction = protectedServerFunction({
         additionalInfo: rest.additionalInfo ?? null,
         unitPrice: rest.unitPrice ?? null,
         quantityPrice: rest.quantityPrice ?? null,
-        companyId: rest.companyId ?? null,
+        companyId: rest.companyId,
         updatedAt: new Date(),
       },
     })
@@ -92,4 +92,3 @@ export const hardDeleteMaterialPriceAction = protectedServerFunction({
     revalidatePath(REVALIDATE_PATH)
   },
 })
-

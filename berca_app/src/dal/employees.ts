@@ -24,11 +24,15 @@ export async function createEmployee(data: CreateEmployeeParams): Promise<Profil
     },
     omit: profileOmit,
     include: {
-      RoleLevel_Employee_roleLevelIdToRoleLevel: {
+      RoleLevelEmployee: {
         // This is the Employee → RoleLevel relation
         include: {
-          Role: true, // RoleLevel → Role
-          SubRole: true, // RoleLevel → SubRole
+          RoleLevel: {
+            include: {
+              Role: true, // RoleLevel → Role
+              SubRole: true, // RoleLevel → SubRole
+            },
+          },
         },
       },
     },
@@ -41,16 +45,34 @@ export async function createEmployee(data: CreateEmployeeParams): Promise<Profil
  *
  * @param username The email of the user to retrieve.
  */
-export async function getEmployeeByUsername(username: string): Promise<Employee | null> {
-  return prismaClient.employee.findFirst({where: {username}})
+export async function getEmployeeByUsername(username: string) {
+  return prismaClient.employee.findFirst({
+    where: {username},
+    include: {
+      RoleLevelEmployee: {
+        // This is the Employee → RoleLevel relation
+        include: {
+          RoleLevel: {
+            include: {
+              Role: true, // RoleLevel → Role
+              SubRole: true, // RoleLevel → SubRole
+            },
+          },
+        },
+      },
+    },
+  })
 }
 
 export async function getEmployees(): Promise<
   (Employee & {
-    RoleLevel_Employee_roleLevelIdToRoleLevel: {
-      Role: {name: string}
-      SubRole: {name: string}
-    } | null
+    RoleLevelEmployee: {
+      roleLevelId: string
+      RoleLevel: {
+        Role: {name: string}
+        SubRole: {name: string; level: number}
+      }
+    }[]
     Title_Employee_titleIdToTitle: {name: string} | null
     EmergencyContact: EmergencyContact[]
     Employee: {id: string} | null // createdBy
@@ -59,10 +81,15 @@ export async function getEmployees(): Promise<
 > {
   return prismaClient.employee.findMany({
     include: {
-      RoleLevel_Employee_roleLevelIdToRoleLevel: {
+      RoleLevelEmployee: {
+        // This is the Employee → RoleLevel relation
         include: {
-          Role: true,
-          SubRole: true,
+          RoleLevel: {
+            include: {
+              Role: true, // RoleLevel → Role
+              SubRole: true, // RoleLevel → SubRole
+            },
+          },
         },
       },
       Title_Employee_titleIdToTitle: true,
@@ -143,11 +170,15 @@ export async function updateEmployee({id, ...data}: UpdateEmployeeParams): Promi
     },
     omit: profileOmit,
     include: {
-      RoleLevel_Employee_roleLevelIdToRoleLevel: {
+      RoleLevelEmployee: {
         // This is the Employee → RoleLevel relation
         include: {
-          Role: true, // RoleLevel → Role
-          SubRole: true, // RoleLevel → SubRole
+          RoleLevel: {
+            include: {
+              Role: true, // RoleLevel → Role
+              SubRole: true, // RoleLevel → SubRole
+            },
+          },
         },
       },
     },
@@ -177,8 +208,16 @@ export async function getEmployeeDetail(id: string) {
     prismaClient.employee.findUniqueOrThrow({
       where: {id},
       include: {
-        RoleLevel_Employee_roleLevelIdToRoleLevel: {
-          include: {Role: true, SubRole: true},
+        RoleLevelEmployee: {
+          // This is the Employee → RoleLevel relation
+          include: {
+            RoleLevel: {
+              include: {
+                Role: true, // RoleLevel → Role
+                SubRole: true, // RoleLevel → SubRole
+              },
+            },
+          },
         },
         Title_Employee_titleIdToTitle: true,
         EmergencyContact: true,
@@ -1237,8 +1276,16 @@ export async function getEmployeeDetail(id: string) {
         lastName: true,
         createdAt: true,
         active: true,
-        RoleLevel_Employee_roleLevelIdToRoleLevel: {
-          include: {Role: true, SubRole: true},
+        RoleLevelEmployee: {
+          // This is the Employee → RoleLevel relation
+          include: {
+            RoleLevel: {
+              include: {
+                Role: true, // RoleLevel → Role
+                SubRole: true, // RoleLevel → SubRole
+              },
+            },
+          },
         },
       },
     }),
@@ -1251,8 +1298,16 @@ export async function getEmployeeDetail(id: string) {
         firstName: true,
         lastName: true,
         deletedAt: true,
-        RoleLevel_Employee_roleLevelIdToRoleLevel: {
-          include: {Role: true, SubRole: true},
+        RoleLevelEmployee: {
+          // This is the Employee → RoleLevel relation
+          include: {
+            RoleLevel: {
+              include: {
+                Role: true, // RoleLevel → Role
+                SubRole: true, // RoleLevel → SubRole
+              },
+            },
+          },
         },
       },
     }),

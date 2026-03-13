@@ -13,7 +13,7 @@ export interface MappedMaterialPrice {
   unitPrice: string | null
   quantityPrice: string | null
   updatedAt: string | null
-  companyId: string | null
+  companyId: string
   companyName: string | null
   createdBy: string
   createdByName: string

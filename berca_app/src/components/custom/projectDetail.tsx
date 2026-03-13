@@ -78,6 +78,7 @@ interface ProjectDetailProps {
   functionOptions: Option[]
   departmentExternOptions: Option[]
   titleOptions: Option[]
+  departmentId: string
 }
 
 function formatDate(date: Date | null) {
@@ -126,6 +127,7 @@ export function ProjectDetail({
   functionOptions,
   departmentExternOptions,
   titleOptions,
+  departmentId,
 }: ProjectDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
@@ -606,7 +608,7 @@ export function ProjectDetail({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link href={'/departments/project/project' as Route}>
+          <Link href={`/departments/${departmentId}/project` as Route}>
             <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
               <ArrowLeft className="h-4 w-4" />
             </Button>
@@ -1141,7 +1143,7 @@ export function ProjectDetail({
                         {wo.Employee.firstName} {wo.Employee.lastName}
                       </TableCell>
                       <TableCell>
-                        <Link href={`/departments/project/project/${project.id}/workOrder/${wo.id}` as Route}>
+                        <Link href={`/departments/${departmentId}/workOrder/${wo.id}` as Route}>
                           <Button
                             variant="ghost"
                             size="icon"
@@ -1611,7 +1613,7 @@ export function ProjectDetail({
                           )}
                         </TableCell>
                         <TableCell>
-                          <Link href={`/departments/project/project/${sp.id}` as Route}>
+                          <Link href={`/departments/${departmentId}/project/${sp.id}` as Route}>
                             <Button
                               variant="ghost"
                               size="icon"

@@ -72,6 +72,7 @@ interface ProjectTableProps {
   employees: Option[]
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
+  departmentId: string
 }
 
 export function ProjectTable({
@@ -83,6 +84,7 @@ export function ProjectTable({
   employees,
   roleLevelOptions,
   defaultVisibleRoleNames,
+  departmentId,
 }: ProjectTableProps) {
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const projects = initialProjects
@@ -348,7 +350,7 @@ export function ProjectTable({
                   className={`border-border/40 hover:bg-secondary/50 ${p.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/project/project/${p.id}` as Route}
+                      href={`/departments/${departmentId}/project/${p.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {p.projectNumber}
                     </Link>
@@ -427,7 +429,7 @@ export function ProjectTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/project/project/${p.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/project/${p.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

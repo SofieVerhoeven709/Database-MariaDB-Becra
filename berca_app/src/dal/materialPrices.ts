@@ -52,7 +52,7 @@ export async function createMaterialPrice(data: {
   additionalInfo?: string | null
   unitPrice?: number | null
   quantityPrice?: number | null
-  companyId?: string | null
+  companyId: string
   createdBy: string
 }) {
   return prismaClient.materialPrice.create({data})
@@ -73,7 +73,7 @@ export async function updateMaterialPrice(
     additionalInfo?: string | null
     unitPrice?: number | null
     quantityPrice?: number | null
-    companyId?: string | null
+    companyId: string
     updatedAt?: Date
   },
 ) {
@@ -90,4 +90,3 @@ export async function softDeleteMaterialPrice(id: string, deletedBy: string) {
 export async function hardDeleteMaterialPrice(id: string) {
   return prismaClient.materialPrice.delete({where: {id}})
 }
-

@@ -42,6 +42,7 @@ interface PurchaseTableProps {
   projects: PurchaseOption[]
   currentUserRole: string
   currentUserLevel: number
+  departmentId: string
 }
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -53,6 +54,7 @@ export function PurchaseTable({
   projects,
   currentUserRole,
   currentUserLevel,
+  departmentId,
 }: PurchaseTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -239,7 +241,7 @@ export function PurchaseTable({
             ) : (
               filtered.map(purchase => {
                 const secondaryLabel = purchase.brandName ?? purchase.preferredSupplier ?? ''
-                const detailHref = `/departments/purchasing/orders/${purchase.id}` as Route
+                const detailHref = `/departments/${departmentId}/orders/${purchase.id}` as Route
                 return (
                   <TableRow
                     key={purchase.id}

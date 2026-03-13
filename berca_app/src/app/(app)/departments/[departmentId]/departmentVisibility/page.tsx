@@ -1,22 +1,30 @@
 import {DepartmentVisibilityTable} from '@/components/custom/departmentVisibilityTable'
 import {getAllRoleLevels} from '@/dal/roleLevel'
-import {getDepartments} from '@/dal/department'
+import {getDepartments, getDepartmentById} from '@/dal/department'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapVisibility} from '@/extra/visibilityForRole'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function DepartmentVisibilityPage() {
-  const [departmentsFromDAL, roleLevels, profile] = await Promise.all([
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
+
+export default async function DepartmentVisibilityPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, departmentsFromDAL, roleLevels, profile] = await Promise.all([
+    getDepartmentById(departmentId),
     getDepartments(),
     getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+  if (!department) return <p>Department not found</p>
+
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const isManager = currentUserRole === 'Administrator' || currentUserLevel >= 80
 
-  // Only admins/managers should access this page
   if (!isManager) {
     return (
       <main className="px-6 py-8 lg:px-10 lg:py-10">

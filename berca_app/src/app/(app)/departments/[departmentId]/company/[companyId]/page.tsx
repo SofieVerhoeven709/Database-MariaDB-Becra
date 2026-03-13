@@ -7,6 +7,7 @@ import {mapCompanyDetail} from '@/extra/companies'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {getDepartmentById} from '@/dal/department'
+import camelCase from 'lodash/camelCase'
 
 interface PageProps {
   params: Promise<{departmentId: string; companyId: string}>
@@ -31,6 +32,7 @@ export default async function CompanyDetailPage({params}: PageProps) {
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
   const defaultVisibleRoleNames = [department.name]
   const companies = allCompaniesRaw.filter(c => !c.deleted).map(c => ({id: c.id, name: c.name}))
+  const departmentSlug = camelCase(department.name)
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -42,7 +44,7 @@ export default async function CompanyDetailPage({params}: PageProps) {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          departmentId={departmentId}
+          department={departmentSlug}
         />
       </div>
     </main>

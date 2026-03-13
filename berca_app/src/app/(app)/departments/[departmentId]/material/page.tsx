@@ -71,7 +71,6 @@ export default async function MaterialPage({params}: PageProps) {
         initialMaterials={mappedMaterials}
         materialGroups={mappedGroups}
         units={mappedUnits}
-        departmentId={departmentId}
       />
     </div>
   )

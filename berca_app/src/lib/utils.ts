@@ -1,5 +1,6 @@
 import {clsx, type ClassValue} from 'clsx'
 import {twMerge} from 'tailwind-merge'
+import type {Profile} from '@/models/employees'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -61,3 +62,14 @@ export function generateCompanyNumber() {
 
   return `CO${year}${month}${day}${random}`
 }
+
+export function getDepartmentRoleInfo(profile: Profile, _departmentName: string) {
+  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
+  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+
+  return {
+    currentUserRole,
+    currentUserLevel,
+  }
+}
+

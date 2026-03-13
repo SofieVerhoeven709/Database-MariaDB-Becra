@@ -5,6 +5,7 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getProjects} from '@/dal/projects'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import camelCase from 'lodash/camelCase'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -23,6 +24,7 @@ export default async function WorkOrderSalesPage({params}: PageProps) {
   if (!department) return <p>Department not found</p>
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+  const departmentSlug = camelCase(department.name)
 
   const workOrders = workOrdersFromDAL.map(mapWorkOrder)
   const projectOptions = projectsFromDAL
@@ -45,7 +47,7 @@ export default async function WorkOrderSalesPage({params}: PageProps) {
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           projectOptions={projectOptions}
-          departmentId={departmentId}
+          department={departmentSlug}
         />
       </div>
     </main>

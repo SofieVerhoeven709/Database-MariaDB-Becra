@@ -7,6 +7,7 @@ import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import camelCase from 'lodash/camelCase'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -30,7 +31,7 @@ export default async function ContactsPage({params}: PageProps) {
   if (!department) return <p>Department not found</p>
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const currentUserRoleLevelIds = profile.RoleLevelEmployee.map(rle => rle.RoleLevel.id)
+  const currentUserRoleLevelId = profile.roleLevelId ?? ''
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
   const allContacts = contactsFromDAL.map(mapContact)
@@ -39,12 +40,13 @@ export default async function ContactsPage({params}: PageProps) {
     : allContacts.filter(c => {
         const rows = c.visibilityForRoles
         if (rows.length === 0) return true
-        const myRow = rows.find(r => currentUserRoleLevelIds.includes(r.roleLevelId))
+        const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
         return myRow?.visible ?? false
       })
 
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
   const defaultVisibleRoleNames = [department.name]
+  const departmentSlug = camelCase(department.name)
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -60,7 +62,7 @@ export default async function ContactsPage({params}: PageProps) {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          departmentId={departmentId}
+          department={departmentSlug}
           functionOptions={functions}
           departmentExternOptions={departmentExterns}
           titleOptions={titles}

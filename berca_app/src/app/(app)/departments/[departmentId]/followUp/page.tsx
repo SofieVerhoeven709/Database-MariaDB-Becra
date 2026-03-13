@@ -8,6 +8,7 @@ import {prismaClient} from '@/dal/prismaClient'
 import {getFollowUpTargetOptions} from '@/extra/followUpTargetOptions'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import camelCase from 'lodash/camelCase'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -53,7 +54,7 @@ export default async function FollowUpsPage({params}: PageProps) {
   if (!department) return <p>Department not found</p>
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const currentUserRoleLevelIds = profile.RoleLevelEmployee.map(rle => rle.RoleLevel.id)
+  const currentUserRoleLevelId = profile.roleLevelId ?? ''
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
   const allFollowUps = followUpsFromDAL.map(mapFollowUp)
@@ -62,13 +63,14 @@ export default async function FollowUpsPage({params}: PageProps) {
     : allFollowUps.filter(f => {
         const rows = f.visibilityForRoles
         if (rows.length === 0) return true
-        const myRow = rows.find(r => currentUserRoleLevelIds.includes(r.roleLevelId))
+        const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
         return myRow?.visible ?? false
       })
 
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
   const defaultVisibleRoleNames = [department.name]
   const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
+  const departmentSlug = camelCase(department.name)
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -84,7 +86,7 @@ export default async function FollowUpsPage({params}: PageProps) {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          departmentId={departmentId}
+          department={departmentSlug}
           statusOptions={statuses}
           urgencyTypeOptions={urgencyTypes}
           followUpTypeOptions={followUpTypes}

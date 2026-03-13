@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
+import type {Route} from 'next'
 import {Check, LogOut, LayoutDashboard} from 'lucide-react'
 import {Avatar, AvatarFallback} from '@/components/ui/avatar'
 import {
@@ -28,6 +29,12 @@ interface DashboardNavbarProps {
 }
 export type EmployeeSafe = Omit<Employee, 'password_hash'>
 type AppTheme = 'light' | 'dark' | 'high-contrast'
+type BreadcrumbItem = {
+  href: Route
+  label: string
+  isLast: boolean
+  shouldLink: boolean
+}
 
 export function DashboardNavbar({employee, roleContext, roleContextInput}: DashboardNavbarProps) {
   const [departmentMap, setDepartmentMap] = useState<Record<string, string>>({})
@@ -97,7 +104,7 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
   const breadcrumbSegments = isDashboardRoute ? routeSegments.slice(1) : routeSegments
   const isHome = breadcrumbSegments.length === 0
 
-  const breadcrumbItems = breadcrumbSegments.map((segment, index) => {
+  const breadcrumbItems: BreadcrumbItem[] = breadcrumbSegments.map((segment, index) => {
     const hrefSegments = [
       ...(isDashboardRoute ? ['dashboard'] : []),
       ...breadcrumbSegments.slice(0, index + 1),
@@ -113,11 +120,11 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
     const departmentId = isDepartmentSegment ? slugToIdMap[segment] : undefined
 
     return {
-      href: isDepartmentsRoot
+      href: (isDepartmentsRoot
         ? '/dashboard'
         : departmentId
           ? `/departments/${departmentId}`
-          : `/${hrefSegments.join('/')}`,
+          : `/${hrefSegments.join('/')}`) as Route<string>,
       label: isDepartmentsRoot ? 'Dashboard' : (departmentMap[segment] || fallbackLabel),
       isLast: index === breadcrumbSegments.length - 1,
       shouldLink: isDepartmentsRoot || isDepartmentSegment,

@@ -31,7 +31,7 @@ export default async function ProjectsPage({params}: PageProps) {
   if (!department) return <p>Department not found</p>
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const currentUserRoleLevelIds = profile.RoleLevelEmployee.map(rle => rle.RoleLevel.id)
+  const currentUserRoleLevelId = profile.roleLevelId ?? ''
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
   const allProjects = projectsFromDAL.map(mapProject)
@@ -40,7 +40,7 @@ export default async function ProjectsPage({params}: PageProps) {
     : allProjects.filter(p => {
         const rows = p.visibilityForRoles
         if (rows.length === 0) return true
-        const myRow = rows.find(r => currentUserRoleLevelIds.includes(r.roleLevelId))
+        const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
         return myRow?.visible ?? false
       })
 
@@ -68,7 +68,6 @@ export default async function ProjectsPage({params}: PageProps) {
           employees={employeeOptions}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          departmentId={departmentId}
         />
       </div>
     </main>

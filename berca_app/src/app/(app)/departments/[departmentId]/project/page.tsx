@@ -68,6 +68,7 @@ export default async function ProjectsPage({params}: PageProps) {
           employees={employeeOptions}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
+          departmentId={departmentId}
         />
       </div>
     </main>

@@ -46,6 +46,7 @@ export default async function RecordPage({params}: PageProps) {
         titleOptions={titleOptions}
         currentUserRole={currentUserRole}
         currentUserLevel={currentUserLevel}
+        departmentId={departmentId}
       />
     </main>
   )

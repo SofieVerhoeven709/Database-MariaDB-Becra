@@ -1,8 +1,23 @@
 import {getMaterials, getMaterialGroups, getUnits} from '@/dal/materials'
 import {MaterialTable} from '@/components/custom/materialTable'
+import {getDepartmentById} from '@/dal/department'
+import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 
-export default async function MaterialPage() {
-  const [materials, groups, units] = await Promise.all([getMaterials(), getMaterialGroups(), getUnits()])
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
+
+export default async function MaterialPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, materials, groups, units] = await Promise.all([
+    getDepartmentById(departmentId),
+    getMaterials(),
+    getMaterialGroups(),
+    getUnits(),
+  ])
+
+  if (!department) return <p>Department not found</p>
 
   const mappedMaterials = materials.map(m => ({
     id: m.id,
@@ -52,7 +67,12 @@ export default async function MaterialPage() {
           Manage engineering materials, components, and their specifications.
         </p>
       </div>
-      <MaterialTable initialMaterials={mappedMaterials} materialGroups={mappedGroups} units={mappedUnits} />
+      <MaterialTable
+        initialMaterials={mappedMaterials}
+        materialGroups={mappedGroups}
+        units={mappedUnits}
+        departmentId={departmentId}
+      />
     </div>
   )
 }

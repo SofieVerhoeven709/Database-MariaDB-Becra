@@ -112,7 +112,7 @@ export const signOutServerFunction = protectedServerFunction({
 export const createEmployeeAction = protectedServerFunction({
   schema: upsertEmployeeSchema,
   functionName: 'Create employee action',
-  serverFn: async ({data: {emergencyContacts, password_hash, ...data}, logger, profile}) => {
+  serverFn: async ({data: {emergencyContacts, password_hash, roleLevelIds, ...data}, logger, profile}) => {
     if (!password_hash) throw new Error('Password is required when creating an employee.')
 
     logger.info(`Creating employee, createdBy: ${profile.id}`)
@@ -125,6 +125,14 @@ export const createEmployeeAction = protectedServerFunction({
         createdBy: profile.id,
         createdAt: new Date(),
         passwordCreatedAt: new Date(),
+        RoleLevelEmployee: roleLevelIds?.length
+          ? {
+              create: roleLevelIds.map((roleLevelId: string) => ({
+                id: crypto.randomUUID(),
+                roleLevelId,
+              })),
+            }
+          : undefined,
         EmergencyContact: emergencyContacts?.length
           ? {
               create: emergencyContacts.map(c => ({
@@ -147,12 +155,23 @@ export const createEmployeeAction = protectedServerFunction({
 export const updateEmployeeAdminAction = protectedServerFunction({
   schema: upsertEmployeeSchema,
   functionName: 'Update employee admin action',
-  serverFn: async ({data: {emergencyContacts, password_hash, id, ...data}, logger}) => {
+  serverFn: async ({data: {emergencyContacts, password_hash, id, roleLevelIds, ...data}, logger}) => {
     await prismaClient.employee.update({
       where: {id},
       data: {
         ...data,
         ...(password_hash ? {password_hash: hashPassword(password_hash), passwordCreatedAt: new Date()} : {}),
+        RoleLevelEmployee: {
+          deleteMany: {employeeId: id},
+          ...(roleLevelIds?.length
+            ? {
+                create: roleLevelIds.map((roleLevelId: string) => ({
+                  id: crypto.randomUUID(),
+                  roleLevelId,
+                })),
+              }
+            : {}),
+        },
         EmergencyContact: {
           deleteMany: {employeeId: id},
           ...(emergencyContacts?.length

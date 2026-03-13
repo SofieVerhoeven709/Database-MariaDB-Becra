@@ -3,13 +3,13 @@ import {MaterialDetail} from '@/components/custom/materialDetail'
 import {notFound} from 'next/navigation'
 
 interface MaterialDetailPageProps {
-  params: Promise<{id: string}>
+  params: Promise<{materialId: string}>
 }
 
 export default async function MaterialDetailPage({params}: MaterialDetailPageProps) {
-  const {id} = await params
+  const {materialId} = await params
   const [material, groups, units] = await Promise.all([
-    getMaterialById(id).catch(() => null),
+    getMaterialById(materialId).catch(() => null),
     getMaterialGroups(),
     getUnits(),
   ])

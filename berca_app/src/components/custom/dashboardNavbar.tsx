@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import type {Department, Employee} from '@/generated/prisma/client'
+import camelCase from 'lodash/camelCase'
 import {useEffect, useState} from 'react'
 import type {RoleContext, RoleContextInput} from '@/schemas/roleSchemas'
 import {useTheme} from 'next-themes'
@@ -30,6 +31,7 @@ type AppTheme = 'light' | 'dark' | 'high-contrast'
 
 export function DashboardNavbar({employee, roleContext, roleContextInput}: DashboardNavbarProps) {
   const [departmentMap, setDepartmentMap] = useState<Record<string, string>>({})
+  const [slugToIdMap, setSlugToIdMap] = useState<Record<string, string>>({})
   const {theme, resolvedTheme, setTheme} = useTheme()
 
   const applyTheme = (nextTheme: AppTheme) => {
@@ -67,7 +69,9 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
         )
 
         const map = Object.fromEntries(departments.map(d => [d.id, d.name]))
+        const slugMap = Object.fromEntries(departments.map(d => [camelCase(d.name), d.id]))
         setDepartmentMap(map)
+        setSlugToIdMap(slugMap)
       } catch (err) {
         console.error('Error fetching departments for navbar:', err)
       }
@@ -88,13 +92,37 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
 
   const displayRole = roleContext.role.replace(/\sRole$/, '')
 
-  const isHome = pathname === '/dashboard'
+  const routeSegments = pathname.split('/').filter(Boolean)
+  const isDashboardRoute = routeSegments[0] === 'dashboard'
+  const breadcrumbSegments = isDashboardRoute ? routeSegments.slice(1) : routeSegments
+  const isHome = breadcrumbSegments.length === 0
 
-  const pathSegments = pathname.split('/').filter(Boolean).slice(1) // skip 'dashboard'
+  const breadcrumbItems = breadcrumbSegments.map((segment, index) => {
+    const hrefSegments = [
+      ...(isDashboardRoute ? ['dashboard'] : []),
+      ...breadcrumbSegments.slice(0, index + 1),
+    ]
 
-  const breadcrumb = pathSegments
-    .map(segment => departmentMap[segment] || segment) // replace id with name
-    .join(' / ')
+    const fallbackLabel = segment.replace(/[-_]/g, ' ')
+
+    const isDepartmentsRoot = !isDashboardRoute && index === 0 && segment === 'departments'
+    const isDepartmentSegment = !isDashboardRoute && routeSegments[0] === 'departments' && index === 1
+
+    // For the department name segment (e.g. "sales"), resolve its UUID so we
+    // link to /departments/{uuid} which is the real department home page.
+    const departmentId = isDepartmentSegment ? slugToIdMap[segment] : undefined
+
+    return {
+      href: isDepartmentsRoot
+        ? '/dashboard'
+        : departmentId
+          ? `/departments/${departmentId}`
+          : `/${hrefSegments.join('/')}`,
+      label: isDepartmentsRoot ? 'Dashboard' : (departmentMap[segment] || fallbackLabel),
+      isLast: index === breadcrumbSegments.length - 1,
+      shouldLink: isDepartmentsRoot || isDepartmentSegment,
+    }
+  })
 
   return (
     <header className="flex items-center justify-between border-b border-border px-6 py-4">
@@ -108,7 +136,24 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
         {!isHome && (
           <nav className="flex items-center" aria-label="Breadcrumb">
             <span className="mx-2 text-muted-foreground/40">/</span>
-            <span className="text-sm text-muted-foreground capitalize">{breadcrumb || 'Home'}</span>
+            <div className="flex items-center gap-1 text-sm">
+              {breadcrumbItems.map(item =>
+                item.isLast && !item.shouldLink ? (
+                  <span key={item.href} className="capitalize text-foreground" aria-current="page">
+                    {item.label}
+                  </span>
+                ) : (
+                  <div key={item.href} className="flex items-center gap-1">
+                    <Link
+                      href={item.href}
+                      className="capitalize text-muted-foreground transition-colors hover:text-foreground">
+                      {item.label}
+                    </Link>
+                    <span className="text-muted-foreground/40">/</span>
+                  </div>
+                )
+              )}
+            </div>
           </nav>
         )}
       </div>

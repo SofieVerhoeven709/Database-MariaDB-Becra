@@ -1,7 +1,6 @@
 import {getMaterials, getMaterialGroups, getUnits} from '@/dal/materials'
 import {MaterialTable} from '@/components/custom/materialTable'
 import {getDepartmentById} from '@/dal/department'
-import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -67,11 +66,7 @@ export default async function MaterialPage({params}: PageProps) {
           Manage engineering materials, components, and their specifications.
         </p>
       </div>
-      <MaterialTable
-        initialMaterials={mappedMaterials}
-        materialGroups={mappedGroups}
-        units={mappedUnits}
-      />
+      <MaterialTable initialMaterials={mappedMaterials} materialGroups={mappedGroups} units={mappedUnits} />
     </div>
   )
 }

@@ -47,7 +47,6 @@ const config: runtime.GetPrismaClientConfig = {
     "db"
   ],
   "activeProvider": "mysql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -961,16 +960,6 @@ export interface PrismaClient<
     * ```
     */
   get quoteBecra(): Prisma.QuoteBecraDelegate<ExtArgs, { omit: OmitOpts }>;
-
-  /**
-   * `prisma.roleLevelEmployee`: Exposes CRUD operations for the **RoleLevelEmployee** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more RoleLevelEmployees
-    * const roleLevelEmployees = await prisma.roleLevelEmployee.findMany()
-    * ```
-    */
-  get roleLevelEmployee(): Prisma.RoleLevelEmployeeDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(dirname: string): PrismaClientConstructor {

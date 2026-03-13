@@ -151,11 +151,9 @@ export function MaterialDetail({material, materialGroups, units}: MaterialDetail
       {/* Header */}
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-3">
-          <Link href="/departments/engineering/material">
-            <Button variant="ghost" size="icon" className="h-8 w-8">
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-          </Link>
+          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => router.back()}>
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
           <div>
             <h1 className="text-xl font-bold leading-tight">{material.name ?? material.beNumber}</h1>
             <p className="text-sm text-muted-foreground font-mono">{material.beNumber}</p>

@@ -116,7 +116,7 @@ interface ContactTableProps {
   currentUserLevel: number
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
-  department: string
+  departmentId: string
   functionOptions: SelectOption[]
   departmentExternOptions: SelectOption[]
   titleOptions: SelectOption[]
@@ -129,7 +129,7 @@ export function ContactTable({
   currentUserLevel,
   roleLevelOptions,
   defaultVisibleRoleNames,
-  department,
+  departmentId,
   functionOptions,
   departmentExternOptions,
   titleOptions,
@@ -466,7 +466,7 @@ export function ContactTable({
                   className={`border-border/40 hover:bg-secondary/50 ${c.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/${department}/contact/${c.id}` as Route}
+                      href={`/departments/${departmentId}/contact/${c.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {c.lastName}
                     </Link>
@@ -543,7 +543,7 @@ export function ContactTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${department}/contact/${c.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/contact/${c.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

@@ -38,7 +38,7 @@ function emptyEntry(): MappedMaterialPrice {
     unitPrice: null,
     quantityPrice: null,
     updatedAt: null,
-    companyId: null,
+    companyId: '',
     companyName: null,
     createdBy: '',
     createdByName: '',
@@ -85,7 +85,7 @@ export function MaterialPriceFormDialog({open, onOpenChange, entry, companies, o
             <Label>Supplier Company</Label>
             <Select
               value={form.companyId ?? '__none__'}
-              onValueChange={v => set('companyId', v === '__none__' ? null : v)}>
+              onValueChange={v => set('companyId', v === '__none__' ? '' : v)}>
               <SelectTrigger className="bg-secondary border-border">
                 <SelectValue placeholder="Select company" />
               </SelectTrigger>

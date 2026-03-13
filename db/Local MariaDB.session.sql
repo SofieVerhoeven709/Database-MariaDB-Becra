@@ -1,3 +1,5 @@
+DROP DATABASE IF exists app_db;
+
 CREATE DATABASE IF NOT EXISTS app_db;
 
 USE app_db;
@@ -98,11 +100,9 @@ CREATE TABLE
             active BOOLEAN NOT NULL DEFAULT 1,
             passwordCreatedAt DATETIME NOT NULL,
             createdBy CHAR(36),
-            roleLevelId CHAR(36),
             titleId CHAR(36),
             pictureId CHAR(36),
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT,
             FOREIGN KEY (titleId) REFERENCES Title (id) ON DELETE RESTRICT,
             FOREIGN KEY (pictureId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -1157,7 +1157,9 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            companyId CHAR(36) NOT NULL,
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -1566,6 +1568,15 @@ CREATE TABLE
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE 
+      IF NOT EXISTS RoleLevelEmployee (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            employeeId CHAR(36) NOT NULL,
+            roleLevelId CHAR(36) NOT NULL,
+            FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 -- Select below then right click and run selected query

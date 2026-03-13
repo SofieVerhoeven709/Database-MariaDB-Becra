@@ -5,7 +5,7 @@ import {NextResponse} from 'next/server'
 
 // Helper function to get departments by role
 async function getDepartmentsByRoleContext(context: RoleContextInput) {
-  const {roleLevelId} = context
+  const {roleLevelIds} = context
 
   // 1️⃣ Find TargetType for Department
   const departmentTargetType = await prismaClient.targetType.findFirst({
@@ -23,7 +23,7 @@ async function getDepartmentsByRoleContext(context: RoleContextInput) {
   // 2️⃣ Get visible department targets for this roleLevel
   const visibleDepartmentTargets = await prismaClient.visibilityForRole.findMany({
     where: {
-      roleLevelId,
+      roleLevelId: {in: roleLevelIds},
       visible: true,
       Target: {
         deleted: false,
@@ -62,7 +62,7 @@ export const GET = protectedApiRoute({
   authenticationType: 'cookie',
   routeFn: async ({profile}) => {
     const departments = await getDepartmentsByRoleContext({
-      roleLevelId: profile.roleLevelId!,
+      roleLevelIds: profile.RoleLevelEmployee.map(rle => rle.roleLevelId),
     })
     return NextResponse.json(departments)
   },
@@ -73,9 +73,8 @@ export const POST = publicApiRoute<{}, typeof roleContextInputSchema>({
   schema: roleContextInputSchema,
   routeFn: async ({data}) => {
     const departments = await getDepartmentsByRoleContext({
-      roleLevelId: data.roleLevelId,
+      roleLevelIds: data.roleLevelIds,
     })
-
     return NextResponse.json(departments)
   },
 })

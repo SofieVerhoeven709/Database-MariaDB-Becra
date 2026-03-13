@@ -229,11 +229,17 @@ export const seedDev = async (prisma: PrismaClient) => {
     })
   }
 
-  // 5. Attach admin roleLevel (only if not already set)
-  if (!adminEmployee.roleLevelId) {
-    await prisma.employee.update({
-      where: {id: adminEmployee.id},
-      data: {roleLevelId: adminRoleLevel.id},
+  // 5. Attach admin roleLevel via junction table (only if not already set)
+  const existingRoleLevelEmployee = await prisma.roleLevelEmployee.findFirst({
+    where: {employeeId: adminEmployee.id},
+  })
+  if (!existingRoleLevelEmployee) {
+    await prisma.roleLevelEmployee.create({
+      data: {
+        id: randomUUID(),
+        employeeId: adminEmployee.id,
+        roleLevelId: adminRoleLevel.id,
+      },
     })
   }
 

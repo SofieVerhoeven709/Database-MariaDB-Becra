@@ -86,7 +86,7 @@ interface WorkOrderTableProps {
   currentUserRole: string
   currentUserLevel: number
   projectOptions: {id: string; name: string}[]
-  department: string
+  departmentId: string
 }
 
 export function WorkOrderTable({
@@ -94,7 +94,7 @@ export function WorkOrderTable({
   currentUserRole,
   currentUserLevel,
   projectOptions,
-  department,
+  departmentId,
 }: WorkOrderTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -283,7 +283,7 @@ export function WorkOrderTable({
                   className={`border-border/40 hover:bg-secondary/50 ${w.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/${department}/workOrder/${w.id}` as Route}
+                      href={`/departments/${departmentId}/workOrder/${w.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {w.workOrderNumber ?? '-'}
                     </Link>
@@ -331,7 +331,7 @@ export function WorkOrderTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${department}/workOrder/${w.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/workOrder/${w.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

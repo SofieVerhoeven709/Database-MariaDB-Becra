@@ -1,0 +1,97 @@
+import {FollowUpTable} from '@/components/custom/followUpTable'
+import {getFollowUps} from '@/dal/followUps'
+import {getAllRoleLevels} from '@/dal/roleLevel'
+import {mapFollowUp} from '@/extra/followUps'
+import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+import {mapRoleLevelOptions} from '@/types/roleLevel'
+import {prismaClient} from '@/dal/prismaClient'
+import {getFollowUpTargetOptions} from '@/extra/followUpTargetOptions'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
+
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
+
+export default async function FollowUpsPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [
+    department,
+    followUpsFromDAL,
+    roleLevels,
+    profile,
+    statuses,
+    urgencyTypes,
+    followUpTypes,
+    employees,
+    targetOptions,
+  ] = await Promise.all([
+    getDepartmentById(departmentId),
+    getFollowUps(),
+    getAllRoleLevels(),
+    getSessionProfileFromCookieOrThrow(),
+    prismaClient.status.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+    prismaClient.urgencyType.findMany({
+      where: {deleted: false},
+      orderBy: {name: 'asc'},
+      select: {id: true, name: true},
+    }),
+    prismaClient.followUpType.findMany({
+      where: {deleted: false},
+      orderBy: {name: 'asc'},
+      select: {id: true, name: true},
+    }),
+    prismaClient.employee.findMany({
+      where: {deleted: false},
+      orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
+      select: {id: true, firstName: true, lastName: true},
+    }),
+    getFollowUpTargetOptions(prismaClient),
+  ])
+
+  if (!department) return <p>Department not found</p>
+
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+  const currentUserRoleLevelIds = profile.RoleLevelEmployee.map(rle => rle.RoleLevel.id)
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+
+  const allFollowUps = followUpsFromDAL.map(mapFollowUp)
+  const followUps = isAdmin
+    ? allFollowUps
+    : allFollowUps.filter(f => {
+        const rows = f.visibilityForRoles
+        if (rows.length === 0) return true
+        const myRow = rows.find(r => currentUserRoleLevelIds.includes(r.roleLevelId))
+        return myRow?.visible ?? false
+      })
+
+  const roleLevelOptions = mapRoleLevelOptions(roleLevels)
+  const defaultVisibleRoleNames = [department.name]
+  const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
+
+  return (
+    <main className="px-6 py-8 lg:px-10 lg:py-10">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-8">
+          <h1 className="text-lg font-semibold text-foreground">Follow-ups</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Manage follow-up records and assignments</p>
+        </div>
+
+        <FollowUpTable
+          initialFollowUps={followUps}
+          currentUserRole={currentUserRole}
+          currentUserLevel={currentUserLevel}
+          roleLevelOptions={roleLevelOptions}
+          defaultVisibleRoleNames={defaultVisibleRoleNames}
+          departmentId={departmentId}
+          statusOptions={statuses}
+          urgencyTypeOptions={urgencyTypes}
+          followUpTypeOptions={followUpTypes}
+          employeeOptions={employeeOptions}
+          targetOptions={targetOptions}
+        />
+      </div>
+    </main>
+  )
+}

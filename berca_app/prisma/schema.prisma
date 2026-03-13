@@ -236,7 +236,6 @@ model Department {
   targetId                                String    @db.Char(36)
   Employee_Department_deletedByToEmployee Employee? @relation("Department_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_department_deletedBy")
   Employee_Department_createdByToEmployee Employee  @relation("Department_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_department_createdBy")
-  Employee_Department_deletedByToEmployee Employee? @relation("Department_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_department_deletedBy")
   Target                                  Target    @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_department_target")
 
   @@index([targetId], map: "fk_department_target")

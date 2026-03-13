@@ -1478,7 +1478,6 @@ export const WorkOrderScalarFieldEnum = {
   endDate: 'endDate',
   createdAt: 'createdAt',
   hoursMaterialClosed: 'hoursMaterialClosed',
-  materialClosed: 'materialClosed',
   invoiceSent: 'invoiceSent',
   completed: 'completed',
   createdBy: 'createdBy',

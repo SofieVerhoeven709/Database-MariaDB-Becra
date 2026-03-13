@@ -1116,10 +1116,12 @@ export type CompanyCreateNestedOneWithoutMaterialPriceInput = {
   connect?: Prisma.CompanyWhereUniqueInput
 }
 
-export type CompanyUpdateOneRequiredWithoutMaterialPriceNestedInput = {
+export type CompanyUpdateOneWithoutMaterialPriceNestedInput = {
   create?: Prisma.XOR<Prisma.CompanyCreateWithoutMaterialPriceInput, Prisma.CompanyUncheckedCreateWithoutMaterialPriceInput>
   connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutMaterialPriceInput
   upsert?: Prisma.CompanyUpsertWithoutMaterialPriceInput
+  disconnect?: Prisma.CompanyWhereInput | boolean
+  delete?: Prisma.CompanyWhereInput | boolean
   connect?: Prisma.CompanyWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutMaterialPriceInput, Prisma.CompanyUpdateWithoutMaterialPriceInput>, Prisma.CompanyUncheckedUpdateWithoutMaterialPriceInput>
 }

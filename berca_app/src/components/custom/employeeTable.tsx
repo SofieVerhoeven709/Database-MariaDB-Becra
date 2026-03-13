@@ -81,6 +81,7 @@ interface EmployeeTableProps {
   titleOptions: EmployeeOption[]
   currentUserRole: string
   currentUserLevel: number
+  departmentId: string
 }
 
 export function EmployeeTable({
@@ -89,6 +90,7 @@ export function EmployeeTable({
   titleOptions,
   currentUserRole,
   currentUserLevel,
+  departmentId,
 }: EmployeeTableProps) {
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const [employees, setEmployees] = useState(initialEmployees)
@@ -463,7 +465,7 @@ export function EmployeeTable({
                   {/* Actions */}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/hr/records/${emp.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/records/${emp.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

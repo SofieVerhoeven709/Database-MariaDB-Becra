@@ -48,7 +48,7 @@ export const EMPTY_EMPLOYEE: MappedEmployee = {
   deleted: false,
   deletedAt: null,
   deletedBy: null,
-  roleLevelId: null,
+  roleLevelIds: [],
   titleId: null,
   roleName: '-',
   titleName: '-',
@@ -94,6 +94,7 @@ export function EmployeeFormDialog({
           endDate: employee.endDate ? employee.endDate.split('T')[0] : null,
           birthDate: employee.birthDate ? employee.birthDate.split('T')[0] : null,
           deletedAt: employee.deletedAt ? employee.deletedAt.split('T')[0] : null,
+          roleLevelIds: employee.roleLevelIds ?? [],
         })
       } else {
         setForm({...EMPTY_EMPLOYEE})
@@ -191,25 +192,27 @@ export function EmployeeFormDialog({
                   </Select>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="roleLevelId">Role</Label>
-                  <Select
-                    value={form.roleLevelId ?? ''}
-                    onValueChange={v => {
-                      const role = roles.find(r => r.id === v)
-                      update('roleLevelId', v || null)
-                      update('roleName', role?.name ?? '-')
-                    }}>
-                    <SelectTrigger className={inputStyles}>
-                      <SelectValue placeholder="Select role" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border">
-                      {roles.map(r => (
-                        <SelectItem key={r.id} value={r.id}>
-                          {r.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Label>Roles</Label>
+                  <div className="flex flex-col gap-1.5 rounded-md border border-border bg-secondary p-2 max-h-48 overflow-y-auto">
+                    {roles.map(r => (
+                      <label
+                        key={r.id}
+                        className="flex items-center gap-2 cursor-pointer px-2 py-1 rounded hover:bg-muted">
+                        <input
+                          type="checkbox"
+                          checked={form.roleLevelIds.includes(r.id)}
+                          onChange={e => {
+                            const next = e.target.checked
+                              ? [...form.roleLevelIds, r.id]
+                              : form.roleLevelIds.filter(id => id !== r.id)
+                            update('roleLevelIds', next)
+                          }}
+                          className="accent-accent"
+                        />
+                        <span className="text-sm">{r.name}</span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
               </div>
 

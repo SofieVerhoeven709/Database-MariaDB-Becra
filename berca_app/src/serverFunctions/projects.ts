@@ -5,6 +5,7 @@ import {upsertProjectSchema, updateProjectSchema} from '@/schemas/projectSchemas
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
 import {generateProjectNumber} from '@/lib/utils'
+import {upsertVisibilityRows} from '@/serverFunctions/visibilityForRoles'
 
 export const createProjectAction = protectedServerFunction({
   schema: upsertProjectSchema,
@@ -49,16 +50,7 @@ export const createProjectAction = protectedServerFunction({
     }
 
     // Set visibility
-    if (visibilityForRoles.length > 0) {
-      await prismaClient.visibilityForRole.createMany({
-        data: visibilityForRoles.map(v => ({
-          id: crypto.randomUUID(),
-          targetId: target.id,
-          roleLevelId: v.roleLevelId,
-          visible: v.visible,
-        })),
-      })
-    }
+    await upsertVisibilityRows(target.id, visibilityForRoles)
 
     logger.info(`Project created: ${project.id}`)
     revalidatePath('/projects')
@@ -80,16 +72,7 @@ export const updateProjectAction = protectedServerFunction({
       where: {targetId: project.targetId},
     })
 
-    if (visibilityForRoles.length > 0) {
-      await prismaClient.visibilityForRole.createMany({
-        data: visibilityForRoles.map(v => ({
-          id: crypto.randomUUID(),
-          targetId: project.targetId,
-          roleLevelId: v.roleLevelId,
-          visible: v.visible,
-        })),
-      })
-    }
+    await upsertVisibilityRows(project.targetId, visibilityForRoles)
 
     logger.info(`Project updated: ${id}`)
     revalidatePath('/projects')

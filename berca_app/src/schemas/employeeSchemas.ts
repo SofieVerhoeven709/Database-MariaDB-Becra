@@ -34,7 +34,7 @@ export const employeeSchemas = z.object({
   active: z.boolean().default(true),
   passwordCreatedAt: requiredDateSchema,
   createdBy: z.string().nullable().optional(),
-  roleLevelId: z.string().nullable().optional(),
+  roleLevelIds: z.array(z.string()).optional().default([]),
   titleId: z.string().nullable().optional(),
   pictureId: z.string().nullable().optional(),
   deleted: z.boolean().default(false),

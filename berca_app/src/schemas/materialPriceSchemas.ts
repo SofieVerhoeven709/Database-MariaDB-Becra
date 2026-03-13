@@ -13,7 +13,7 @@ export const createMaterialPriceSchema = z.object({
   additionalInfo: z.string().max(255).nullable().optional(),
   unitPrice: z.coerce.number().nullable().optional(),
   quantityPrice: z.coerce.number().int().nullable().optional(),
-  companyId: z.string().nullable().optional(),
+  companyId: z.string(),
 })
 
 export const updateMaterialPriceSchema = createMaterialPriceSchema.extend({
@@ -21,4 +21,3 @@ export const updateMaterialPriceSchema = createMaterialPriceSchema.extend({
 })
 
 export const materialPriceIdSchema = z.object({id: z.string()})
-

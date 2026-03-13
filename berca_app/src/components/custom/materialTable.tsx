@@ -51,9 +51,10 @@ interface MaterialTableProps {
   initialMaterials: MappedMaterial[]
   materialGroups: MaterialGroup[]
   units: Unit[]
+  departmentId?: string
 }
 
-export function MaterialTable({initialMaterials, materialGroups, units}: MaterialTableProps) {
+export function MaterialTable({initialMaterials, materialGroups, units, departmentId}: MaterialTableProps) {
   const router = useRouter() as unknown as {refresh: () => void; push: (href: string) => void}
   const [materials] = useState(initialMaterials)
   const [search, setSearch] = useState('')
@@ -236,7 +237,7 @@ export function MaterialTable({initialMaterials, materialGroups, units}: Materia
                 <TableRow
                   key={m.id}
                   className="hover:bg-secondary/50 transition-colors cursor-pointer"
-                  onClick={() => router.push(`/departments/engineering/material/${m.id}`)}>
+                  onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
                   <TableCell className="font-mono text-sm font-medium">{m.beNumber}</TableCell>
                   <TableCell className="text-sm">
                     {m.name ?? <span className="text-muted-foreground">—</span>}
@@ -269,7 +270,7 @@ export function MaterialTable({initialMaterials, materialGroups, units}: Materia
                         size="icon"
                         variant="ghost"
                         className="h-7 w-7"
-                        onClick={() => router.push(`/departments/engineering/material/${m.id}`)}>
+                        onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
                         <Eye className="h-3.5 w-3.5" />
                       </Button>
                       <Button

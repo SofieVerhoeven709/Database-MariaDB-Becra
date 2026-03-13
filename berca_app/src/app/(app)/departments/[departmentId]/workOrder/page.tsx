@@ -3,24 +3,32 @@ import {getWorkOrders} from '@/dal/workOrders'
 import {mapWorkOrder} from '@/extra/workOrders'
 import {getProjects} from '@/dal/projects'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function WorkOrdersPage() {
-  const [workOrdersFromDAL, projectsFromDAL, profile] = await Promise.all([
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
+
+export default async function WorkOrdersPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, workOrdersFromDAL, projectsFromDAL, profile] = await Promise.all([
+    getDepartmentById(departmentId),
     getWorkOrders(),
     getProjects(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+  if (!department) return <p>Department not found</p>
+
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   const workOrders = workOrdersFromDAL.map(mapWorkOrder)
-
   const projectOptions = projectsFromDAL.map(p => ({
     id: p.id,
     name: `${p.projectNumber} — ${p.projectName}`,
   }))
-  const department = 'management'
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -35,7 +43,7 @@ export default async function WorkOrdersPage() {
           projectOptions={projectOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
-          department={department}
+          departmentId={departmentId}
         />
       </div>
     </main>

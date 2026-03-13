@@ -6,39 +6,54 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
 import {getFollowUpTargetOptions} from '@/extra/followUpTargetOptions'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function FollowUpsPage() {
-  const [followUpsFromDAL, roleLevels, profile, statuses, urgencyTypes, followUpTypes, employees, targetOptions] =
-    await Promise.all([
-      getFollowUps(),
-      getAllRoleLevels(),
-      getSessionProfileFromCookieOrThrow(),
-      prismaClient.status.findMany({
-        where: {deleted: false},
-        orderBy: {name: 'asc'},
-        select: {id: true, name: true},
-      }),
-      prismaClient.urgencyType.findMany({
-        where: {deleted: false},
-        orderBy: {name: 'asc'},
-        select: {id: true, name: true},
-      }),
-      prismaClient.followUpType.findMany({
-        where: {deleted: false},
-        orderBy: {name: 'asc'},
-        select: {id: true, name: true},
-      }),
-      prismaClient.employee.findMany({
-        where: {deleted: false},
-        orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
-        select: {id: true, firstName: true, lastName: true},
-      }),
-      getFollowUpTargetOptions(prismaClient),
-    ])
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
-  const currentUserRoleLevelId = profile.roleLevelId ?? ''
+export default async function FollowUpsPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [
+    department,
+    followUpsFromDAL,
+    roleLevels,
+    profile,
+    statuses,
+    urgencyTypes,
+    followUpTypes,
+    employees,
+    targetOptions,
+  ] = await Promise.all([
+    getDepartmentById(departmentId),
+    getFollowUps(),
+    getAllRoleLevels(),
+    getSessionProfileFromCookieOrThrow(),
+    prismaClient.status.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+    prismaClient.urgencyType.findMany({
+      where: {deleted: false},
+      orderBy: {name: 'asc'},
+      select: {id: true, name: true},
+    }),
+    prismaClient.followUpType.findMany({
+      where: {deleted: false},
+      orderBy: {name: 'asc'},
+      select: {id: true, name: true},
+    }),
+    prismaClient.employee.findMany({
+      where: {deleted: false},
+      orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
+      select: {id: true, firstName: true, lastName: true},
+    }),
+    getFollowUpTargetOptions(prismaClient),
+  ])
+
+  if (!department) return <p>Department not found</p>
+
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+  const currentUserRoleLevelIds = profile.RoleLevelEmployee.map(rle => rle.RoleLevel.id)
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
   const allFollowUps = followUpsFromDAL.map(mapFollowUp)
@@ -47,13 +62,13 @@ export default async function FollowUpsPage() {
     : allFollowUps.filter(f => {
         const rows = f.visibilityForRoles
         if (rows.length === 0) return true
-        const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
+        const myRow = rows.find(r => currentUserRoleLevelIds.includes(r.roleLevelId))
         return myRow?.visible ?? false
       })
 
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-  const defaultVisibleRoleNames = ['Management']
-  const department = 'management'
+  const defaultVisibleRoleNames = [department.name]
+  const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -69,11 +84,11 @@ export default async function FollowUpsPage() {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          department={department}
+          departmentId={departmentId}
           statusOptions={statuses}
           urgencyTypeOptions={urgencyTypes}
           followUpTypeOptions={followUpTypes}
-          employeeOptions={employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))}
+          employeeOptions={employeeOptions}
           targetOptions={targetOptions}
         />
       </div>

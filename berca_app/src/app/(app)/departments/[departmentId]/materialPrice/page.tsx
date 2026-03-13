@@ -4,19 +4,29 @@ import {mapMaterialPrice} from '@/extra/materialPrices'
 import {MaterialPriceTable} from '@/components/custom/materialPriceTable'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function MaterialPricePage() {
-  const [entriesFromDAL, companiesRaw, profile] = await Promise.all([
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
+
+export default async function MaterialPricePage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, entriesFromDAL, companiesRaw, profile] = await Promise.all([
+    getDepartmentById(departmentId),
     getMaterialPrices(),
     getCompanies(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
-  const entries = entriesFromDAL.map(mapMaterialPrice)
-  const action = DEPARTMENT_ACTIONS.Purchasing?.find(a => a.id === 'materialPrice')
+  if (!department) return <p>Department not found</p>
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+
+  const entries = entriesFromDAL.map(mapMaterialPrice)
+  const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'materialPrice')
 
   const companyOptions = companiesRaw
     .filter(c => !c.deleted && (c.supplier || c.preferredSupplier))

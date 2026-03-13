@@ -5,18 +5,23 @@ import {mapFollowUpStructure} from '@/extra/followUpStructures'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function FollowUpStructuresPage() {
-  const [structuresFromDAL, roleLevels, profile, statuses, urgencyTypes, employees, contacts, followUps] =
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
+
+export default async function FollowUpStructuresPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, structuresFromDAL, roleLevels, profile, statuses, urgencyTypes, employees, contacts, followUps] =
     await Promise.all([
+      getDepartmentById(departmentId),
       getFollowUpStructures(),
       getAllRoleLevels(),
       getSessionProfileFromCookieOrThrow(),
-      prismaClient.status.findMany({
-        where: {deleted: false},
-        orderBy: {name: 'asc'},
-        select: {id: true, name: true},
-      }),
+      prismaClient.status.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
       prismaClient.urgencyType.findMany({
         where: {deleted: false},
         orderBy: {name: 'asc'},
@@ -39,9 +44,10 @@ export default async function FollowUpStructuresPage() {
       }),
     ])
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
-  const currentUserRoleLevelId = profile.roleLevelId ?? ''
+  if (!department) return <p>Department not found</p>
+
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+  const currentUserRoleLevelIds = profile.RoleLevelEmployee.map(rle => rle.RoleLevel.id)
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
   const allStructures = structuresFromDAL.map(mapFollowUpStructure)
@@ -50,13 +56,20 @@ export default async function FollowUpStructuresPage() {
     : allStructures.filter(s => {
         const rows = s.visibilityForRoles
         if (rows.length === 0) return true
-        const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
+        const myRow = rows.find(r => currentUserRoleLevelIds.includes(r.roleLevelId))
         return myRow?.visible ?? false
       })
 
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-  const defaultVisibleRoleNames = ['Management']
-  const department = 'management'
+  const defaultVisibleRoleNames = [department.name]
+  const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
+  const contactOptions = contacts.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))
+  const followUpOptions = followUps.map(f => ({
+    id: f.id,
+    name: f.activityDescription
+      ? f.activityDescription.slice(0, 60) + (f.activityDescription.length > 60 ? '…' : '')
+      : `Follow-up (${f.id.slice(0, 8)})`,
+  }))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -72,17 +85,12 @@ export default async function FollowUpStructuresPage() {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          department={department}
+          departmentId={departmentId}
           statusOptions={statuses}
           urgencyTypeOptions={urgencyTypes}
-          employeeOptions={employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))}
-          contactOptions={contacts.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))}
-          followUpOptions={followUps.map(f => ({
-            id: f.id,
-            name: f.activityDescription
-              ? f.activityDescription.slice(0, 60) + (f.activityDescription.length > 60 ? '…' : '')
-              : `Follow-up (${f.id.slice(0, 8)})`,
-          }))}
+          employeeOptions={employeeOptions}
+          contactOptions={contactOptions}
+          followUpOptions={followUpOptions}
         />
       </div>
     </main>

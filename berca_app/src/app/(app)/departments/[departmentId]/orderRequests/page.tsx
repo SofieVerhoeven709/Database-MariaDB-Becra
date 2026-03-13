@@ -3,19 +3,29 @@ import {mapInventoryOrder} from '@/extra/inventoryOrders'
 import {InventoryOrderTable} from '@/components/custom/inventoryOrderTable'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function OrderRequestsPage() {
-  const [entriesFromDAL, inventoriesRaw, profile] = await Promise.all([
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
+
+export default async function OrderRequestsPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, entriesFromDAL, inventoriesRaw, profile] = await Promise.all([
+    getDepartmentById(departmentId),
     getInventoryOrders(),
     getInventoryForPicker(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
-  const entries = entriesFromDAL.map(mapInventoryOrder)
-  const action = DEPARTMENT_ACTIONS.Purchasing?.find(a => a.id === 'orderRequests')
+  if (!department) return <p>Department not found</p>
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+
+  const entries = entriesFromDAL.map(mapInventoryOrder)
+  const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'orderRequests')
 
   const inventoryOptions = inventoriesRaw.map(i => ({
     id: i.id,

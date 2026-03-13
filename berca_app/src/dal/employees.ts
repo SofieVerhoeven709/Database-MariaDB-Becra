@@ -67,9 +67,10 @@ export async function getEmployeeByUsername(username: string) {
 export async function getEmployees(): Promise<
   (Employee & {
     RoleLevelEmployee: {
+      roleLevelId: string
       RoleLevel: {
         Role: {name: string}
-        SubRole: {name: string}
+        SubRole: {name: string; level: number}
       }
     }[]
     Title_Employee_titleIdToTitle: {name: string} | null

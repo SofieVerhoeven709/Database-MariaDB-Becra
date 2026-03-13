@@ -5,35 +5,36 @@ import {mapContactDetail} from '@/extra/contacts'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 import {notFound} from 'next/navigation'
 
-interface ContactDetailPageProps {
-  params: Promise<{id: string}>
+interface PageProps {
+  params: Promise<{departmentId: string; contactId: string}>
 }
 
-export default async function ContactDetailPage({params}: ContactDetailPageProps) {
-  const {id} = await params
+export default async function ContactDetailPage({params}: PageProps) {
+  const {departmentId, contactId} = await params
 
-  const [contactFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies] = await Promise.all([
-    getContactDetail(id).catch(() => null),
-    getAllRoleLevels(),
-    getSessionProfileFromCookieOrThrow(),
-    prismaClient.function.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-    prismaClient.departmentExtern.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-    prismaClient.title.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-    prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-  ])
+  const [department, contactFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies] =
+    await Promise.all([
+      getDepartmentById(departmentId),
+      getContactDetail(contactId).catch(() => null),
+      getAllRoleLevels(),
+      getSessionProfileFromCookieOrThrow(),
+      prismaClient.function.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      prismaClient.departmentExtern.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      prismaClient.title.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+    ])
 
+  if (!department) return <p>Department not found</p>
   if (!contactFromDAL) notFound()
 
   const contact = mapContactDetail(contactFromDAL)
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
-
-  const defaultVisibleRoleNames = ['Management']
-  const department = 'management'
+  const defaultVisibleRoleNames = [department.name]
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -48,7 +49,7 @@ export default async function ContactDetailPage({params}: ContactDetailPageProps
           departmentExternOptions={departmentExterns}
           titleOptions={titles}
           companyOptions={companies}
-          department={department}
+          departmentId={departmentId}
         />
       </div>
     </main>

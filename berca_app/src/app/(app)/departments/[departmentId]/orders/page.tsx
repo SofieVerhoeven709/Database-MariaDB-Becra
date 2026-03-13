@@ -5,24 +5,34 @@ import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getCompanies} from '@/dal/companies'
 import {getProjects} from '@/dal/projects'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
+
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
 
 function formatShortDate(date: Date) {
   return date.toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
-export default async function PurchaseOrdersPage() {
-  const [purchasesFromDAL, profile, companiesRaw, projectsRaw] = await Promise.all([
+export default async function PurchaseOrdersPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, purchasesFromDAL, profile, companiesRaw, projectsRaw] = await Promise.all([
+    getDepartmentById(departmentId),
     getPurchases(),
     getSessionProfileFromCookieOrThrow(),
     getCompanies(),
     getProjects(),
   ])
 
-  const purchases = purchasesFromDAL.map(mapPurchase)
-  const action = DEPARTMENT_ACTIONS.Purchasing?.find(actionItem => actionItem.id === 'orders')
+  if (!department) return <p>Department not found</p>
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+
+  const purchases = purchasesFromDAL.map(mapPurchase)
+  const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'orders')
 
   const companyOptions = companiesRaw
     .filter(c => !c.deleted)

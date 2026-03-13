@@ -8,9 +8,11 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapPurchaseDetail} from '@/extra/purchases'
 import type {MappedPurchaseDetail} from '@/types/purchase'
 import {PurchaseDetailTable} from '@/components/custom/purchaseDetailTable'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
 interface Props {
-  params: Promise<{id: string}>
+  params: Promise<{departmentId: string; orderId: string}>
 }
 
 function formatDate(date: Date | null | undefined) {
@@ -27,22 +29,23 @@ const STATUS_COLOR: Record<string, string> = {
 }
 
 export default async function PurchaseOrderDetailPage({params}: Props) {
-  const {id} = await params
+  const {departmentId, orderId} = await params
 
-  const [purchase, detailsRaw, projectsRaw, profile] = await Promise.all([
-    getPurchaseById(id),
-    getPurchaseDetails(id),
+  const [department, purchase, detailsRaw, projectsRaw, profile] = await Promise.all([
+    getDepartmentById(departmentId),
+    getPurchaseById(orderId),
+    getPurchaseDetails(orderId),
     getProjects(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
+  if (!department) return <p>Department not found</p>
   if (!purchase) notFound()
 
-  const details: MappedPurchaseDetail[] = detailsRaw.map(d => mapPurchaseDetail(d))
-
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+
+  const details: MappedPurchaseDetail[] = detailsRaw.map(d => mapPurchaseDetail(d))
 
   const projectOptions = projectsRaw
     .filter(p => !p.deleted)
@@ -54,15 +57,13 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-7xl space-y-8">
-        {/* Back link */}
         <Link
-          href="/departments/purchasing/orders"
+          href={`/departments/${departmentId}/orders`}
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="h-4 w-4" />
           Back to Purchase Orders
         </Link>
 
-        {/* Header card */}
         <div className="rounded-xl border border-border/60 bg-card p-6 space-y-5">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="space-y-1">
@@ -81,7 +82,6 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
           </div>
 
-          {/* Meta grid */}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5 pt-2 border-t border-border/50">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
@@ -89,14 +89,12 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
               </span>
               <span className="text-sm text-foreground">{formatDate(purchase.purchaseDate)}</span>
             </div>
-
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                 <Building2 className="h-3 w-3" /> Supplier
               </span>
               <span className="text-sm text-foreground">{purchase.Company?.name ?? '—'}</span>
             </div>
-
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                 <Package className="h-3 w-3" /> Project
@@ -105,14 +103,12 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
                 {purchase.Project ? `${purchase.Project.projectNumber} – ${purchase.Project.projectName}` : '—'}
               </span>
             </div>
-
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                 <Tag className="h-3 w-3" /> Brand
               </span>
               <span className="text-sm text-foreground">{purchase.brandName ?? '—'}</span>
             </div>
-
             <div className="flex flex-col gap-1">
               <span className="text-[10px] uppercase tracking-widest text-muted-foreground flex items-center gap-1">
                 <User className="h-3 w-3" /> Created By
@@ -121,7 +117,6 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
             </div>
           </div>
 
-          {/* Extra fields row */}
           {(purchase.preferredSupplier ?? purchase.additionalInfo) && (
             <div className="grid grid-cols-2 gap-4 pt-2 border-t border-border/50">
               {purchase.preferredSupplier && (
@@ -142,8 +137,12 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
           )}
         </div>
 
-        {/* Line items table */}
-        <PurchaseDetailTable purchaseId={id} initialDetails={details} projects={projectOptions} isAdmin={isAdmin} />
+        <PurchaseDetailTable
+          purchaseId={orderId}
+          initialDetails={details}
+          projects={projectOptions}
+          isAdmin={isAdmin}
+        />
       </div>
     </main>
   )

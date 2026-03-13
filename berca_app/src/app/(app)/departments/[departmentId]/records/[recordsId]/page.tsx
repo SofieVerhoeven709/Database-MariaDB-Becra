@@ -4,26 +4,32 @@ import {mapEmployeeDetail} from '@/extra/employees'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getRoleLevels} from '@/dal/roleLevel'
 import {getTitles} from '@/dal/titles'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 import {notFound} from 'next/navigation'
 
-interface EmployeeDetailPageProps {
-  params: Promise<{id: string}>
+interface PageProps {
+  params: Promise<{departmentId: string; recordsId: string}>
 }
 
-export default async function EmployeeDetailPage({params}: EmployeeDetailPageProps) {
-  const {id} = await params
+export default async function EmployeeDetailPage({params}: PageProps) {
+  const {departmentId, recordsId} = await params
 
-  const [employeeResult, roleLevels, titles, profile] = await Promise.all([
-    getEmployeeDetail(id).catch(() => null),
+  const [department, employeeResult, roleLevels, titles, profile] = await Promise.all([
+    getDepartmentById(departmentId),
+    getEmployeeDetail(recordsId).catch(() => null),
     getRoleLevels(),
     getTitles(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
+  if (!department) return <p>Department not found</p>
   if (!employeeResult) notFound()
 
   const {employee: employeeFromDAL, createdEmployees, deletedEmployees} = employeeResult
   const employee = mapEmployeeDetail(employeeFromDAL, createdEmployees, deletedEmployees)
+
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   const roleOptions = roleLevels!
     .filter(r => !r.deleted)
@@ -34,9 +40,6 @@ export default async function EmployeeDetailPage({params}: EmployeeDetailPagePro
     .sort((a, b) => a.name.localeCompare(b.name))
 
   const titleOptions = titles!.filter(t => !t.deleted).map(t => ({id: t.id, name: t.name}))
-
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

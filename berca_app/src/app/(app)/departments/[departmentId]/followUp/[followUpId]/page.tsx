@@ -5,25 +5,24 @@ import {mapFollowUpDetail} from '@/extra/followUps'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 import {notFound} from 'next/navigation'
 
-interface FollowUpDetailPageProps {
-  params: Promise<{id: string}>
+interface PageProps {
+  params: Promise<{departmentId: string; followUpId: string}>
 }
 
-export default async function FollowUpDetailPage({params}: FollowUpDetailPageProps) {
-  const {id} = await params
+export default async function FollowUpDetailPage({params}: PageProps) {
+  const {departmentId, followUpId} = await params
 
-  const [followUpFromDAL, roleLevels, profile, statuses, urgencyTypes, followUpTypes, employees, contacts] =
+  const [department, followUpFromDAL, roleLevels, profile, statuses, urgencyTypes, followUpTypes, employees, contacts] =
     await Promise.all([
-      getFollowUpDetail(id).catch(() => null),
+      getDepartmentById(departmentId),
+      getFollowUpDetail(followUpId).catch(() => null),
       getAllRoleLevels(),
       getSessionProfileFromCookieOrThrow(),
-      prismaClient.status.findMany({
-        where: {deleted: false},
-        orderBy: {name: 'asc'},
-        select: {id: true, name: true},
-      }),
+      prismaClient.status.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
       prismaClient.urgencyType.findMany({
         where: {deleted: false},
         orderBy: {name: 'asc'},
@@ -46,16 +45,15 @@ export default async function FollowUpDetailPage({params}: FollowUpDetailPagePro
       }),
     ])
 
+  if (!department) return <p>Department not found</p>
   if (!followUpFromDAL) notFound()
 
   const followUp = mapFollowUpDetail(followUpFromDAL)
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
-
-  const defaultVisibleRoleNames = ['Management']
-  const department = 'management'
+  const defaultVisibleRoleNames = [department.name]
+  const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
+  const contactOptions = contacts.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -69,9 +67,9 @@ export default async function FollowUpDetailPage({params}: FollowUpDetailPagePro
           statusOptions={statuses}
           urgencyTypeOptions={urgencyTypes}
           followUpTypeOptions={followUpTypes}
-          employeeOptions={employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))}
-          contactOptions={contacts.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))}
-          department={department}
+          employeeOptions={employeeOptions}
+          contactOptions={contactOptions}
+          departmentId={departmentId}
         />
       </div>
     </main>

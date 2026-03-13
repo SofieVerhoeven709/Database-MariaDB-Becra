@@ -4,32 +4,31 @@ import {mapWorkOrderStructure} from '@/extra/workOrderStructures'
 import {getWorkOrders} from '@/dal/workOrders'
 import {getMaterials} from '@/dal/materials'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function WorkOrderStructuresPage() {
-  const [structuresFromDAL, workOrdersFromDAL, materialsFromDAL, profile] = await Promise.all([
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
+
+export default async function WorkOrderStructuresPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, structuresFromDAL, workOrdersFromDAL, materialsFromDAL, profile] = await Promise.all([
+    getDepartmentById(departmentId),
     getWorkOrderStructures(),
     getWorkOrders(),
     getMaterials(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+  if (!department) return <p>Department not found</p>
+
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   const structures = structuresFromDAL.map(mapWorkOrderStructure)
-
-  const workOrderOptions = workOrdersFromDAL.map(w => ({
-    id: w.id,
-    name: w.workOrderNumber ?? w.id,
-  }))
-
-  const materialOptions = materialsFromDAL.map(m => ({
-    id: m.id,
-    name: m.name ?? '',
-    beNumber: m.beNumber,
-  }))
-
-  const department = 'project'
+  const workOrderOptions = workOrdersFromDAL.map(w => ({id: w.id, name: w.workOrderNumber ?? w.id}))
+  const materialOptions = materialsFromDAL.map(m => ({id: m.id, name: m.name ?? '', beNumber: m.beNumber}))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -45,7 +44,7 @@ export default async function WorkOrderStructuresPage() {
           materialOptions={materialOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
-          department={department}
+          departmentId={departmentId}
         />
       </div>
     </main>

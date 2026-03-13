@@ -5,13 +5,13 @@ import {logger} from '@/lib/logger'
 export const dynamic = 'force-dynamic'
 
 interface PageProps {
-  params: Promise<{id: string}>
+  params: Promise<{departmentId: string}>
 }
 
 export default async function DepartmentPage({params}: PageProps) {
-  const {id} = await params
-  logger.warn(`Department Page loaded for ${id}`)
-  const department = await getDepartmentById(id)
+  const {departmentId} = await params
+  logger.warn(`Department Page loaded for ${departmentId}`)
+  const department = await getDepartmentById(departmentId)
 
   if (!department) return <p>Department not found</p>
 

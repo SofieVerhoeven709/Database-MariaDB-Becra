@@ -5,9 +5,18 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getEmployees} from '@/dal/employees'
 import {mapEmployee} from '@/extra/employees'
 import {prismaClient} from '@/dal/prismaClient'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function TimeRegistriesPage() {
-  const [timeRegistriesFromDAL, employeesFromDAL, hourTypes, workOrders, profile] = await Promise.all([
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
+
+export default async function TimeRegistriesPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, timeRegistriesFromDAL, employeesFromDAL, hourTypes, workOrders, profile] = await Promise.all([
+    getDepartmentById(departmentId),
     getTimeRegistries(),
     getEmployees(),
     prismaClient.hourType.findMany({where: {deleted: false}, orderBy: {name: 'asc'}}),
@@ -19,27 +28,16 @@ export default async function TimeRegistriesPage() {
     getSessionProfileFromCookieOrThrow(),
   ])
 
+  if (!department) return <p>Department not found</p>
+
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+
   const timeRegistries = timeRegistriesFromDAL.map(mapTimeRegistry)
   const employees = employeesFromDAL.map(mapEmployee)
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
-
-  const employeeOptions = employees.map(e => ({
-    id: e.id,
-    firstName: e.firstName,
-    lastName: e.lastName,
-  }))
-
-  const hourTypeOptions = hourTypes.map(ht => ({
-    id: ht.id,
-    name: ht.name,
-  }))
-
-  const workOrderOptions = workOrders.map(wo => ({
-    id: wo.id,
-    workOrderNumber: wo.workOrderNumber,
-  }))
+  const employeeOptions = employees.map(e => ({id: e.id, firstName: e.firstName, lastName: e.lastName}))
+  const hourTypeOptions = hourTypes.map(ht => ({id: ht.id, name: ht.name}))
+  const workOrderOptions = workOrders.map(wo => ({id: wo.id, workOrderNumber: wo.workOrderNumber}))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

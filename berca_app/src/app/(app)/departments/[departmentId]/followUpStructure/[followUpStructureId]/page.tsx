@@ -5,51 +5,50 @@ import {mapFollowUpStructureDetail} from '@/extra/followUpStructures'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 import {notFound} from 'next/navigation'
 
-interface FollowUpStructureDetailPageProps {
-  params: Promise<{id: string}>
+interface PageProps {
+  params: Promise<{departmentId: string; followUpStructureId: string}>
 }
 
-export default async function FollowUpStructureDetailPage({params}: FollowUpStructureDetailPageProps) {
-  const {id} = await params
+export default async function FollowUpStructureDetailPage({params}: PageProps) {
+  const {departmentId, followUpStructureId} = await params
 
-  const [structureFromDAL, roleLevels, profile, statuses, urgencyTypes, employees, contacts] = await Promise.all([
-    getFollowUpStructureDetail(id).catch(() => null),
-    getAllRoleLevels(),
-    getSessionProfileFromCookieOrThrow(),
-    prismaClient.status.findMany({
-      where: {deleted: false},
-      orderBy: {name: 'asc'},
-      select: {id: true, name: true},
-    }),
-    prismaClient.urgencyType.findMany({
-      where: {deleted: false},
-      orderBy: {name: 'asc'},
-      select: {id: true, name: true},
-    }),
-    prismaClient.employee.findMany({
-      where: {deleted: false},
-      orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
-      select: {id: true, firstName: true, lastName: true},
-    }),
-    prismaClient.contact.findMany({
-      where: {deleted: false},
-      orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
-      select: {id: true, firstName: true, lastName: true},
-    }),
-  ])
+  const [department, structureFromDAL, roleLevels, profile, statuses, urgencyTypes, employees, contacts] =
+    await Promise.all([
+      getDepartmentById(departmentId),
+      getFollowUpStructureDetail(followUpStructureId).catch(() => null),
+      getAllRoleLevels(),
+      getSessionProfileFromCookieOrThrow(),
+      prismaClient.status.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      prismaClient.urgencyType.findMany({
+        where: {deleted: false},
+        orderBy: {name: 'asc'},
+        select: {id: true, name: true},
+      }),
+      prismaClient.employee.findMany({
+        where: {deleted: false},
+        orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
+        select: {id: true, firstName: true, lastName: true},
+      }),
+      prismaClient.contact.findMany({
+        where: {deleted: false},
+        orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
+        select: {id: true, firstName: true, lastName: true},
+      }),
+    ])
 
+  if (!department) return <p>Department not found</p>
   if (!structureFromDAL) notFound()
 
   const structure = mapFollowUpStructureDetail(structureFromDAL)
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
-
-  const defaultVisibleRoleNames = ['Management']
-  const department = 'management'
+  const defaultVisibleRoleNames = [department.name]
+  const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
+  const contactOptions = contacts.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -62,9 +61,9 @@ export default async function FollowUpStructureDetailPage({params}: FollowUpStru
           defaultVisibleRoleNames={defaultVisibleRoleNames}
           statusOptions={statuses}
           urgencyTypeOptions={urgencyTypes}
-          employeeOptions={employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))}
-          contactOptions={contacts.map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))}
-          department={department}
+          employeeOptions={employeeOptions}
+          contactOptions={contactOptions}
+          departmentId={departmentId}
         />
       </div>
     </main>

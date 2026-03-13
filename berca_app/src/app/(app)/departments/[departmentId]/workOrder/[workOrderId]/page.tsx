@@ -5,38 +5,35 @@ import {getMaterials} from '@/dal/materials'
 import {mapEmployee} from '@/extra/employees'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {WorkOrderDetail} from '@/components/custom/workOrderDetail'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 import {notFound} from 'next/navigation'
 
-interface WorkOrderDetailPageProps {
-  params: Promise<{id: string}>
+interface PageProps {
+  params: Promise<{departmentId: string; workOrderId: string}>
 }
 
-export default async function WorkOrderDetailPage({params}: WorkOrderDetailPageProps) {
-  const {id} = await params
+export default async function WorkOrderDetailPage({params}: PageProps) {
+  const {departmentId, workOrderId} = await params
 
-  const [workOrder, employeesFromDAL, hourTypes, materialsFromDAL, profile] = await Promise.all([
-    getWorkOrderById(id).catch(() => null),
+  const [department, workOrder, employeesFromDAL, hourTypes, materialsFromDAL, profile] = await Promise.all([
+    getDepartmentById(departmentId),
+    getWorkOrderById(workOrderId).catch(() => null),
     getEmployees(),
     getHourTypes(),
     getMaterials(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
+  if (!department) return <p>Department not found</p>
   if (!workOrder) notFound()
 
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+
   const employees = employeesFromDAL.map(mapEmployee)
-
-  const employeeOptions = employees.map(e => ({
-    id: e.id,
-    firstName: e.firstName,
-    lastName: e.lastName,
-  }))
-
+  const employeeOptions = employees.map(e => ({id: e.id, firstName: e.firstName, lastName: e.lastName}))
   const hourTypeOptions = hourTypes.map(ht => ({id: ht.id, name: ht.name}))
   const materialOptions = materialsFromDAL.map(m => ({id: m.id, name: m.name ?? ''}))
-
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

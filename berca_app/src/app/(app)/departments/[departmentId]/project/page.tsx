@@ -7,41 +7,49 @@ import {mapEmployee} from '@/extra/employees'
 import {getCompanies} from '@/dal/companies'
 import {getAllRoleLevels} from '@/dal/roleLevel'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function ProjectsPage() {
-  const [projectsFromDAL, employeesFromDAL, projectTypes, companies, roleLevels, profile] = await Promise.all([
-    getProjects(),
-    getEmployees(),
-    getProjectTypes(),
-    getCompanies(),
-    getAllRoleLevels(),
-    getSessionProfileFromCookieOrThrow(),
-  ])
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
-  const currentUserRoleLevelId = profile.roleLevelId ?? ''
+export default async function ProjectsPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, projectsFromDAL, employeesFromDAL, projectTypes, companies, roleLevels, profile] =
+    await Promise.all([
+      getDepartmentById(departmentId),
+      getProjects(),
+      getEmployees(),
+      getProjectTypes(),
+      getCompanies(),
+      getAllRoleLevels(),
+      getSessionProfileFromCookieOrThrow(),
+    ])
+
+  if (!department) return <p>Department not found</p>
+
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+  const currentUserRoleLevelIds = profile.RoleLevelEmployee.map(rle => rle.RoleLevel.id)
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const isManagement = currentUserRole === 'Management' || currentUserLevel >= 80
 
   const allProjects = projectsFromDAL.map(mapProject)
-  const projects =
-    isAdmin || isManagement
-      ? allProjects
-      : allProjects.filter(p => {
-          const rows = p.visibilityForRoles
-          if (rows.length === 0) return true
-          const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
-          return myRow?.visible ?? false
-        })
+  const projects = isAdmin
+    ? allProjects
+    : allProjects.filter(p => {
+        const rows = p.visibilityForRoles
+        if (rows.length === 0) return true
+        const myRow = rows.find(r => currentUserRoleLevelIds.includes(r.roleLevelId))
+        return myRow?.visible ?? false
+      })
 
   const projectTypeOptions = projectTypes.map(t => ({id: t.id, name: t.name}))
   const companyOptions = companies.map(c => ({id: c.id, name: c.name}))
   const employees = employeesFromDAL.map(mapEmployee)
   const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-
-  const defaultVisibleRoleNames = ['Project']
+  const defaultVisibleRoleNames = [department.name]
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

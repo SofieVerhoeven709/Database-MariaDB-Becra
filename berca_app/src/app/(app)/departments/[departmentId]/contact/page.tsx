@@ -5,21 +5,32 @@ import {mapContact} from '@/extra/contacts'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function ContactsPage() {
-  const [contactsFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies] = await Promise.all([
-    getContacts(),
-    getAllRoleLevels(),
-    getSessionProfileFromCookieOrThrow(),
-    prismaClient.function.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-    prismaClient.departmentExtern.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-    prismaClient.title.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-    prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-  ])
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
-  const currentUserRoleLevelId = profile.roleLevelId ?? ''
+export default async function ContactsPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, contactsFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies] =
+    await Promise.all([
+      getDepartmentById(departmentId),
+      getContacts(),
+      getAllRoleLevels(),
+      getSessionProfileFromCookieOrThrow(),
+      prismaClient.function.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      prismaClient.departmentExtern.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      prismaClient.title.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+    ])
+
+  if (!department) return <p>Department not found</p>
+
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+  const currentUserRoleLevelIds = profile.RoleLevelEmployee.map(rle => rle.RoleLevel.id)
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
   const allContacts = contactsFromDAL.map(mapContact)
@@ -28,13 +39,12 @@ export default async function ContactsPage() {
     : allContacts.filter(c => {
         const rows = c.visibilityForRoles
         if (rows.length === 0) return true
-        const myRow = rows.find(r => r.roleLevelId === currentUserRoleLevelId)
+        const myRow = rows.find(r => currentUserRoleLevelIds.includes(r.roleLevelId))
         return myRow?.visible ?? false
       })
 
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-  const defaultVisibleRoleNames = ['Management']
-  const department = 'management'
+  const defaultVisibleRoleNames = [department.name]
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -50,7 +60,7 @@ export default async function ContactsPage() {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          department={department}
+          departmentId={departmentId}
           functionOptions={functions}
           departmentExternOptions={departmentExterns}
           titleOptions={titles}

@@ -2,18 +2,27 @@ import {QuoteBecraTable} from '@/components/custom/quoteBecraTable'
 import {getQuoteBecras} from '@/dal/quoteBecra'
 import {mapQuoteBecra} from '@/extra/quoteBecra'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function QuoteBecraPage() {
-  const [quotesFromDAL, profile] = await Promise.all([
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
+
+export default async function QuoteBecraPage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, quotesFromDAL, profile] = await Promise.all([
+    getDepartmentById(departmentId),
     getQuoteBecras(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+  if (!department) return <p>Department not found</p>
+
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const currentUserId = profile.id
   const currentUserName = `${profile.firstName} ${profile.lastName}`
-
   const quotes = quotesFromDAL.map(mapQuoteBecra)
 
   return (

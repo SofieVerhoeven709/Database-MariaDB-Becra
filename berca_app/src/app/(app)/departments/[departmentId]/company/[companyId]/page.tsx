@@ -5,30 +5,31 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {CompanyDetail} from '@/components/custom/companyDetail'
 import {mapCompanyDetail} from '@/extra/companies'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
+import {getDepartmentRoleInfo} from '@/lib/utils'
+import {getDepartmentById} from '@/dal/department'
 
-interface Props {
-  params: Promise<{id: string}>
+interface PageProps {
+  params: Promise<{departmentId: string; companyId: string}>
 }
 
-export default async function CompanyDetailPage({params}: Props) {
-  const {id} = await params
+export default async function CompanyDetailPage({params}: PageProps) {
+  const {departmentId, companyId} = await params
 
-  const [companyRaw, allCompaniesRaw, roleLevels, profile] = await Promise.all([
-    getCompanyDetail(id).catch(() => null),
+  const [department, companyRaw, allCompaniesRaw, roleLevels, profile] = await Promise.all([
+    getDepartmentById(departmentId),
+    getCompanyDetail(companyId).catch(() => null),
     getCompanies(),
     getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
+  if (!department) return <p>Department not found</p>
   if (!companyRaw) notFound()
 
   const company = mapCompanyDetail(companyRaw)
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
-  const defaultVisibleRoleNames = ['Management']
-  const department = 'management'
-
+  const defaultVisibleRoleNames = [department.name]
   const companies = allCompaniesRaw.filter(c => !c.deleted).map(c => ({id: c.id, name: c.name}))
 
   return (
@@ -41,7 +42,7 @@ export default async function CompanyDetailPage({params}: Props) {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          department={department}
+          departmentId={departmentId}
         />
       </div>
     </main>

@@ -4,19 +4,29 @@ import {QuoteSupplierTable} from '@/components/custom/quoteSupplierTable'
 import {DEPARTMENT_ACTIONS} from '@/extra/departmentActions'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getProjects} from '@/dal/projects'
+import {getDepartmentById} from '@/dal/department'
+import {getDepartmentRoleInfo} from '@/lib/utils'
 
-export default async function OrderQuotePage() {
-  const [entriesFromDAL, projectsRaw, profile] = await Promise.all([
+interface PageProps {
+  params: Promise<{departmentId: string}>
+}
+
+export default async function OrderQuotePage({params}: PageProps) {
+  const {departmentId} = await params
+
+  const [department, entriesFromDAL, projectsRaw, profile] = await Promise.all([
+    getDepartmentById(departmentId),
     getQuoteSuppliers(),
     getProjects(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
-  const entries = entriesFromDAL.map(mapQuoteSupplier)
-  const action = DEPARTMENT_ACTIONS.Purchasing?.find(a => a.id === 'orderQuote')
+  if (!department) return <p>Department not found</p>
 
-  const currentUserRole = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.Role.name ?? ''
-  const currentUserLevel = profile.RoleLevel_Employee_roleLevelIdToRoleLevel?.SubRole.level ?? 0
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+
+  const entries = entriesFromDAL.map(mapQuoteSupplier)
+  const action = DEPARTMENT_ACTIONS[department.name]?.find(a => a.id === 'orderQuote')
 
   const projectOptions = projectsRaw
     .filter(p => !p.deleted)

@@ -88,12 +88,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.19.2
- * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
+ * Prisma Client JS version: 6.19.0
+ * Query Engine version: 2ba551f319ab1df4bc874a89965d8b3641056773
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.19.2",
-  engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
+  client: "6.19.0",
+  engine: "2ba551f319ab1df4bc874a89965d8b3641056773"
 }
 
 /**
@@ -6338,6 +6338,7 @@ export type MaterialPerformanceScalarFieldEnum = (typeof MaterialPerformanceScal
 
 export const MaterialPriceScalarFieldEnum = {
   id: 'id',
+  companyId: 'companyId',
   beNumber: 'beNumber',
   orderNr: 'orderNr',
   quoteBecra: 'quoteBecra',
@@ -6354,8 +6355,7 @@ export const MaterialPriceScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy',
-  companyId: 'companyId'
+  deletedBy: 'deletedBy'
 } as const
 
 export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)[keyof typeof MaterialPriceScalarFieldEnum]
@@ -7609,6 +7609,7 @@ export type MaterialPerformanceOrderByRelevanceFieldEnum = (typeof MaterialPerfo
 
 export const MaterialPriceOrderByRelevanceFieldEnum = {
   id: 'id',
+  companyId: 'companyId',
   beNumber: 'beNumber',
   orderNr: 'orderNr',
   quoteBecra: 'quoteBecra',
@@ -7619,8 +7620,7 @@ export const MaterialPriceOrderByRelevanceFieldEnum = {
   brandName: 'brandName',
   additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy',
-  companyId: 'companyId'
+  deletedBy: 'deletedBy'
 } as const
 
 export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderByRelevanceFieldEnum)[keyof typeof MaterialPriceOrderByRelevanceFieldEnum]

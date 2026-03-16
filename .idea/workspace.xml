@@ -4,30 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="03db061c-7d4d-46fd-860f-2adf62d92749" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/components/custom/dashboardNavbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/components/custom/dashboardNavbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/class.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/prismaNamespace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/prismaNamespace.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/prismaNamespaceBrowser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/prismaNamespaceBrowser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Company.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Company.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Department.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Department.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/DepartmentExtern.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/DepartmentExtern.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/DocumentStructure.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/DocumentStructure.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Employee.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Employee.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/FollowUp.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/FollowUp.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/FollowUpStructure.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/FollowUpStructure.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Function.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Function.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/MaterialPrice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/MaterialPrice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/ProjectContact.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/ProjectContact.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Role.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Role.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/RoleLevel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/RoleLevel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/SubRole.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/SubRole.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Title.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Title.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/WarehousePlace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/WarehousePlace.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/query_engine-windows.dll.node" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/query_engine-windows.dll.node" afterDir="false" />
-    </list>
+    <list default="true" id="03db061c-7d4d-46fd-860f-2adf62d92749" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,7 +41,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "Theme-Switch",
+    "git-widget-placeholder": "Dev",
     "javascript.preferred.runtime.type.id": "node",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -103,7 +80,7 @@
       <updated>1771918004689</updated>
       <workItem from="1771918007826" duration="108000" />
       <workItem from="1771918184833" duration="3000" />
-      <workItem from="1773643661078" duration="4249000" />
+      <workItem from="1773643661078" duration="4926000" />
     </task>
     <servers />
   </component>

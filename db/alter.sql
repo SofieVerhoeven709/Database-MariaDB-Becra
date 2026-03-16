@@ -100,12 +100,31 @@ CREATE TABLE IF NOT EXISTS RoleLevelEmployee (
     FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT
 ) ENGINE = InnoDB;
 
--- 25. Migrate existing data (only if Employee still has the roleLevelId column)
-INSERT IGNORE INTO RoleLevelEmployee (id, employeeId, roleLevelId)
-SELECT UUID(), id, roleLevelId
-FROM Employee
-WHERE roleLevelId IS NOT NULL
-  AND NOT EXISTS (SELECT 1 FROM RoleLevelEmployee rle WHERE rle.employeeId = Employee.id);
+-- 25. Migrate existing data (only if roleLevelId column still exists on Employee)
+SET @col_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.COLUMNS 
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Employee'
+    AND COLUMN_NAME = 'roleLevelId'
+);
+
+SET @sql = IF(@col_exists > 0,
+  'INSERT INTO RoleLevelEmployee (id, employeeId, roleLevelId)
+   SELECT UUID(), e.id, e.roleLevelId
+   FROM Employee e
+   WHERE e.roleLevelId IS NOT NULL
+     AND NOT EXISTS (
+       SELECT 1 FROM RoleLevelEmployee rle
+       WHERE rle.employeeId = e.id
+         AND rle.roleLevelId = e.roleLevelId
+     )',
+  'SELECT ''Skipping step 25: roleLevelId already dropped'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 -- 26. Drop FK then column
 ALTER TABLE Employee DROP FOREIGN KEY IF EXISTS fk_employee_rolelevel;
@@ -113,6 +132,25 @@ ALTER TABLE Employee DROP COLUMN IF EXISTS roleLevelId;
 
 -- 27. MaterialPrice: add companyId column and FK
 ALTER TABLE MaterialPrice
-    ADD COLUMN IF NOT EXISTS `companyId` CHAR(36) NOT NULL AFTER `id`,
-    ADD CONSTRAINT fk_materialprice_company
-        FOREIGN KEY (`companyId`) REFERENCES Company (`id`) ON DELETE RESTRICT;
+    ADD COLUMN IF NOT EXISTS `companyId` CHAR(36) NOT NULL AFTER `id`;
+
+-- 27b. MaterialPrice: add FK only if it doesn't exist yet
+SET @fk_exists = (
+  SELECT COUNT(*)
+  FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MaterialPrice'
+    AND CONSTRAINT_NAME = 'fk_materialprice_company'
+);
+
+SET @sql = IF(@fk_exists = 0,
+  'ALTER TABLE MaterialPrice ADD CONSTRAINT fk_materialprice_company FOREIGN KEY (`companyId`) REFERENCES Company (`id`) ON DELETE RESTRICT',
+  'SELECT ''Skipping: fk_materialprice_company already exists'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- 28. TimeRegistry: add stayOver column
+ALTER TABLE TimeRegistry ADD COLUMN IF NOT EXISTS stayOver BOOLEAN NOT NULL DEFAULT 0;

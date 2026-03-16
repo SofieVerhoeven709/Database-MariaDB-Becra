@@ -135,22 +135,33 @@ export function ContactFormDialog({
     setForm(prev => ({...prev, [key]: value}))
   }
 
-  function str(v: string): string | null {
-    return v.trim() || null
-  }
+  const isEdit = !!contact
 
   async function handleSubmit() {
     setSaving(true)
     try {
-      // Save the contact itself (active is preserved on edit since it's part of form state)
+      const trimmedForm: MappedContact = {
+        ...form,
+        firstName: form.firstName.trim(),
+        lastName: form.lastName.trim(),
+        through: form.through?.trim() || null,
+        description: form.description?.trim() || null,
+        info: form.info?.trim() || null,
+        mail1: form.mail1?.trim() || null,
+        mail2: form.mail2?.trim() || null,
+        mail3: form.mail3?.trim() || null,
+        generalPhone: form.generalPhone?.trim() || null,
+        mobilePhone: form.mobilePhone?.trim() || null,
+        homePhone: form.homePhone?.trim() || null,
+      }
       await onSave(
-        form,
+        trimmedForm,
         visibilityRows,
         initialCompanyId !== 'none' ? initialCompanyId : undefined,
-        initialRoleWithCompany || undefined,
+        initialRoleWithCompany?.trim() || undefined,
       )
 
-      // On edit: if a new company was chosen, link it (ends the previous active link automatically)
+      // On edit: if a new company was chosen, link it
       if (isEdit && newCompanyId !== 'none') {
         await addCompanyContactAction({
           contactId: form.id,
@@ -165,8 +176,6 @@ export function ContactFormDialog({
     }
   }
 
-  const isEdit = !!contact
-
   const textField = (
     key: keyof MappedContact,
     label: string,
@@ -180,7 +189,7 @@ export function ContactFormDialog({
       <Input
         type={opts?.type ?? 'text'}
         value={(form[key] as string | null) ?? ''}
-        onChange={e => set(key, str(e.target.value) as MappedContact[typeof key])}
+        onChange={e => set(key, (e.target.value || null) as MappedContact[typeof key])}
         placeholder={opts?.placeholder}
         className="bg-secondary border-border"
       />
@@ -252,7 +261,6 @@ export function ContactFormDialog({
 
     setCompanies(prev => [...prev, {id: created.id, name: created.name}])
 
-    // Auto-select in whichever flow is active
     if (isEdit) {
       setNewCompanyId(created.id)
     } else {
@@ -423,7 +431,7 @@ export function ContactFormDialog({
                   <Label className="text-xs text-muted-foreground">Description</Label>
                   <Textarea
                     value={form.description ?? ''}
-                    onChange={e => set('description', str(e.target.value))}
+                    onChange={e => set('description', e.target.value || null)}
                     rows={2}
                     className="bg-secondary border-border resize-none"
                   />
@@ -433,7 +441,7 @@ export function ContactFormDialog({
                   <Label className="text-xs text-muted-foreground">Info</Label>
                   <Textarea
                     value={form.info ?? ''}
-                    onChange={e => set('info', str(e.target.value))}
+                    onChange={e => set('info', e.target.value || null)}
                     rows={3}
                     className="bg-secondary border-border resize-none"
                   />

@@ -1689,6 +1689,7 @@ model TimeRegistry {
   createdAt                                 DateTime               @db.DateTime(0)
   invoiceTime                               Boolean                @default(false)
   onSite                                    Boolean                @default(false)
+  stayOver                                  Boolean                @default(false)
   createdBy                                 String                 @db.Char(36)
   workOrderId                               String                 @db.Char(36)
   hourTypeId                                String                 @db.Char(36)

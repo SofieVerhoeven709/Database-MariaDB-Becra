@@ -636,6 +636,7 @@ CREATE TABLE
             createdAt DATETIME NOT NULL,
             invoiceTime BOOLEAN NOT NULL DEFAULT 0,
             onSite BOOLEAN NOT NULL DEFAULT 0,
+            stayOver BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             workOrderId CHAR(36) NOT NULL,
             hourTypeId CHAR(36) NOT NULL,

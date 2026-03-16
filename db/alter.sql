@@ -172,3 +172,6 @@ DEALLOCATE PREPARE stmt;
 
 -- 28. TimeRegistry: add stayOver column
 ALTER TABLE TimeRegistry ADD COLUMN IF NOT EXISTS stayOver BOOLEAN NOT NULL DEFAULT 0;
+
+-- 29. TrainingContact: changing clientNumber to attendeeNumber
+ALTER TABLE TrainingContact CHANGE COLUMN IF EXISTS `clientNumber` `attendeeNumber` VARCHAR(100);

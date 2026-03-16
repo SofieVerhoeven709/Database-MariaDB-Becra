@@ -313,7 +313,7 @@ export const addTrainingContactAction = protectedServerFunction({
         id: crypto.randomUUID(),
         contactId: data.contactId,
         trainingId: data.trainingId,
-        clientNumber: data.clientNumber ?? null,
+        attendeeNumber: data.attendeeNumber ?? null,
         succeeded: data.succeeded ?? false,
         attended: data.attended ?? false,
         certificateSent: data.certificateSent ?? false,
@@ -334,7 +334,7 @@ export const updateTrainingContactAction = protectedServerFunction({
     await prismaClient.trainingContact.update({
       where: {id},
       data: {
-        clientNumber: data.clientNumber ?? null,
+        attendeeNumber: data.attendeeNumber ?? null,
         succeeded: data.succeeded,
         attended: data.attended,
         certificateSent: data.certificateSent,

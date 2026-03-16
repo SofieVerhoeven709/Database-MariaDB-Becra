@@ -55,7 +55,7 @@ function YesNoBadge({value}: {value: boolean}) {
 
 type ContactForm = {
   contactId: string
-  clientNumber: string
+  attendeeNumber: string
   succeeded: boolean
   attended: boolean
   certificateSent: boolean
@@ -64,7 +64,7 @@ type ContactForm = {
 
 const emptyContactForm = (): ContactForm => ({
   contactId: 'none',
-  clientNumber: '',
+  attendeeNumber: '',
   succeeded: false,
   attended: false,
   certificateSent: false,
@@ -371,7 +371,7 @@ export function TrainingDetail({
                   <TableHead className={thClass}>Contact</TableHead>
                   <TableHead className={thClass}>Company</TableHead>
                   <TableHead className={thClass}>Function</TableHead>
-                  <TableHead className={thClass}>Client #</TableHead>
+                  <TableHead className={thClass}>Attendee #</TableHead>
                   <TableHead className={thClass}>Attended</TableHead>
                   <TableHead className={thClass}>Succeeded</TableHead>
                   <TableHead className={thClass}>Cert. Sent</TableHead>
@@ -405,9 +405,9 @@ export function TrainingDetail({
                     <TableCell />
                     <TableCell>
                       <Input
-                        value={contactForm.clientNumber}
-                        placeholder="Client #…"
-                        onChange={e => setContactForm(f => ({...f, clientNumber: e.target.value}))}
+                        value={contactForm.attendeeNumber}
+                        placeholder="Attendee #…"
+                        onChange={e => setContactForm(f => ({...f, attendeeNumber: e.target.value}))}
                         className="h-7 text-xs bg-background border-border"
                       />
                     </TableCell>
@@ -456,7 +456,7 @@ export function TrainingDetail({
                             await addTrainingContactAction({
                               trainingId: training.id,
                               contactId: contactForm.contactId,
-                              clientNumber: contactForm.clientNumber || null,
+                              attendeeNumber: contactForm.attendeeNumber || null,
                               attended: contactForm.attended,
                               succeeded: contactForm.succeeded,
                               certificateSent: contactForm.certificateSent,
@@ -501,9 +501,9 @@ export function TrainingDetail({
                             <TableCell className={tdClass}>{tc.contact.functionName ?? '-'}</TableCell>
                             <TableCell>
                               <Input
-                                value={editContactForm.clientNumber}
-                                placeholder="Client #…"
-                                onChange={e => setEditContactForm(f => ({...f, clientNumber: e.target.value}))}
+                                value={editContactForm.attendeeNumber}
+                                placeholder="Attendee #…"
+                                onChange={e => setEditContactForm(f => ({...f, attendeeNumber: e.target.value}))}
                                 className="h-7 text-xs bg-background border-border"
                               />
                             </TableCell>
@@ -549,7 +549,7 @@ export function TrainingDetail({
                                   onClick={async () => {
                                     await updateTrainingContactAction({
                                       id: tc.id,
-                                      clientNumber: editContactForm.clientNumber || null,
+                                      attendeeNumber: editContactForm.attendeeNumber || null,
                                       attended: editContactForm.attended,
                                       succeeded: editContactForm.succeeded,
                                       certificateSent: editContactForm.certificateSent,
@@ -583,7 +583,7 @@ export function TrainingDetail({
                             </TableCell>
                             <TableCell className={tdClass}>{tc.contact.currentCompanyName ?? '-'}</TableCell>
                             <TableCell className={tdClass}>{tc.contact.functionName ?? '-'}</TableCell>
-                            <TableCell className={tdClass}>{tc.clientNumber ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>{tc.attendeeNumber ?? '-'}</TableCell>
                             <TableCell>
                               <YesNoBadge value={tc.attended} />
                             </TableCell>
@@ -635,7 +635,7 @@ export function TrainingDetail({
                                           setEditingContactId(tc.id)
                                           setEditContactForm({
                                             contactId: tc.contact.id,
-                                            clientNumber: tc.clientNumber ?? '',
+                                            attendeeNumber: tc.attendeeNumber ?? '',
                                             attended: tc.attended,
                                             succeeded: tc.succeeded,
                                             certificateSent: tc.certificateSent,

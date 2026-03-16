@@ -123,7 +123,7 @@ export interface TrainingDetailData extends MappedTraining {
 
 export interface MappedTrainingContact {
   id: string
-  clientNumber: string | null
+  attendeeNumber: string | null
   succeeded: boolean
   attended: boolean
   certificateSent: boolean

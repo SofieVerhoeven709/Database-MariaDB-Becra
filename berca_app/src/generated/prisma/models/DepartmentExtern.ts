@@ -283,7 +283,7 @@ export type DepartmentExternCreateInput = {
   Contact?: Prisma.ContactCreateNestedManyWithoutDepartmentExternInput
   Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeInput
   Employee_DepartmentExtern_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeInput
-  Target?: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
+  Target: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
 }
 
 export type DepartmentExternUncheckedCreateInput = {
@@ -294,7 +294,7 @@ export type DepartmentExternUncheckedCreateInput = {
   deletedAt?: Date | string | null
   createdBy: string
   deletedBy?: string | null
-  targetId?: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDepartmentExternInput
 }
 
@@ -330,7 +330,7 @@ export type DepartmentExternCreateManyInput = {
   deletedAt?: Date | string | null
   createdBy: string
   deletedBy?: string | null
-  targetId?: string
+  targetId: string
 }
 
 export type DepartmentExternUpdateManyMutationInput = {
@@ -556,7 +556,7 @@ export type DepartmentExternCreateWithoutContactInput = {
   deletedAt?: Date | string | null
   Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeInput
   Employee_DepartmentExtern_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeInput
-  Target?: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
+  Target: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
 }
 
 export type DepartmentExternUncheckedCreateWithoutContactInput = {
@@ -567,7 +567,7 @@ export type DepartmentExternUncheckedCreateWithoutContactInput = {
   deletedAt?: Date | string | null
   createdBy: string
   deletedBy?: string | null
-  targetId?: string
+  targetId: string
 }
 
 export type DepartmentExternCreateOrConnectWithoutContactInput = {
@@ -616,7 +616,7 @@ export type DepartmentExternCreateWithoutEmployee_DepartmentExtern_deletedByToEm
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDepartmentExternInput
   Employee_DepartmentExtern_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_createdByToEmployeeInput
-  Target?: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
+  Target: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
 }
 
 export type DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {
@@ -626,7 +626,7 @@ export type DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_dele
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  targetId?: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDepartmentExternInput
 }
 
@@ -648,7 +648,7 @@ export type DepartmentExternCreateWithoutEmployee_DepartmentExtern_createdByToEm
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDepartmentExternInput
   Employee_DepartmentExtern_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDepartmentExtern_DepartmentExtern_deletedByToEmployeeInput
-  Target?: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
+  Target: Prisma.TargetCreateNestedOneWithoutDepartmentExternInput
 }
 
 export type DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_createdByToEmployeeInput = {
@@ -658,7 +658,7 @@ export type DepartmentExternUncheckedCreateWithoutEmployee_DepartmentExtern_crea
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  targetId?: string
+  targetId: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDepartmentExternInput
 }
 
@@ -773,7 +773,7 @@ export type DepartmentExternCreateManyEmployee_DepartmentExtern_deletedByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  targetId?: string
+  targetId: string
 }
 
 export type DepartmentExternCreateManyEmployee_DepartmentExtern_createdByToEmployeeInput = {
@@ -783,7 +783,7 @@ export type DepartmentExternCreateManyEmployee_DepartmentExtern_createdByToEmplo
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  targetId?: string
+  targetId: string
 }
 
 export type DepartmentExternUpdateWithoutEmployee_DepartmentExtern_deletedByToEmployeeInput = {

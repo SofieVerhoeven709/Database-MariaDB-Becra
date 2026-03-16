@@ -286,7 +286,7 @@ type TrainingDetailPayload = Prisma.TrainingGetPayload<{
 function mapTrainingContact(tc: TrainingDetailPayload['TrainingContact'][number]): MappedTrainingContact {
   return {
     id: tc.id,
-    clientNumber: tc.clientNumber,
+    attendeeNumber: tc.attendeeNumber,
     succeeded: tc.succeeded,
     attended: tc.attended,
     certificateSent: tc.certificateSent,

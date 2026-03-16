@@ -66,7 +66,7 @@ export function generateCompanyNumber() {
 export function generateTrainingNumber() {
   const now = new Date()
 
-  const year = now.getFullYear().toString().slice(-2) // 26
+  const year = now.getFullYear().toString() // 2026
   const month = String(now.getMonth() + 1).padStart(2, '0') // 02
   const day = String(now.getDate()).padStart(2, '0') // 24
 
@@ -75,6 +75,13 @@ export function generateTrainingNumber() {
     .padStart(2, '0') // two random digits
 
   return `O${year}${month}${day}${random}`
+}
+
+export function generateAttendeeNumber(trainingNumber: string, sequence: number): string {
+  // Strip the leading 'O' from the training number
+  const stripped = trainingNumber.startsWith('O') ? trainingNumber.slice(1) : trainingNumber
+  const seq = String(sequence).padStart(3, '0')
+  return `OPF06${stripped}${seq}`
 }
 
 // Used for admin/global pages

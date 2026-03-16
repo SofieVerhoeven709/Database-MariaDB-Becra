@@ -724,7 +724,17 @@ export function ProjectDetail({
               <Input
                 type="date"
                 value={form.startDate}
-                onChange={e => setForm(f => ({...f, startDate: e.target.value}))}
+                onChange={e => {
+                  const newStart = e.target.value
+                  setForm(f => {
+                    const next = {...f, startDate: newStart}
+                    if (newStart) {
+                      if (f.endDate && f.endDate < newStart) next.endDate = ''
+                      if (f.engineeringStartDate && f.engineeringStartDate < newStart) next.engineeringStartDate = ''
+                    }
+                    return next
+                  })
+                }}
                 className="bg-secondary border-border"
               />
             ) : (
@@ -738,7 +748,15 @@ export function ProjectDetail({
               <Input
                 type="date"
                 value={form.endDate}
-                onChange={e => setForm(f => ({...f, endDate: e.target.value}))}
+                min={form.startDate || undefined}
+                onChange={e => {
+                  const newEnd = e.target.value
+                  setForm(f => {
+                    const next = {...f, endDate: newEnd}
+                    if (newEnd && f.closingDate && f.closingDate < newEnd) next.closingDate = ''
+                    return next
+                  })
+                }}
                 className="bg-secondary border-border"
               />
             ) : (
@@ -752,6 +770,7 @@ export function ProjectDetail({
               <Input
                 type="date"
                 value={form.engineeringStartDate}
+                min={form.startDate || undefined}
                 onChange={e => setForm(f => ({...f, engineeringStartDate: e.target.value}))}
                 className="bg-secondary border-border"
               />
@@ -766,6 +785,7 @@ export function ProjectDetail({
               <Input
                 type="date"
                 value={form.closingDate}
+                min={form.endDate || undefined}
                 onChange={e => setForm(f => ({...f, closingDate: e.target.value}))}
                 className="bg-secondary border-border"
               />
@@ -875,7 +895,7 @@ export function ProjectDetail({
               {project.other_Project.length}
             </Badge>
           </TabsTrigger>
-          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {(isAdmin || currentUserLevel >= 80) && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
         {/* ── Contacts ──────────────────────────────────────────────────────── */}
@@ -1631,7 +1651,7 @@ export function ProjectDetail({
         </TabsContent>
 
         {/* ── Visibility ────────────────────────────────────────────────────── */}
-        {isAdmin && (
+        {(isAdmin || currentUserLevel >= 80) && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab

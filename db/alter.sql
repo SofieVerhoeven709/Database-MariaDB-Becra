@@ -126,8 +126,26 @@ PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 
--- 26. Drop FK then column
-ALTER TABLE Employee DROP FOREIGN KEY IF EXISTS fk_employee_rolelevel;
+-- 26. Drop FK on roleLevelId (look up actual constraint name) then drop column
+SET @fk_name = (
+  SELECT CONSTRAINT_NAME
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Employee'
+    AND COLUMN_NAME = 'roleLevelId'
+    AND REFERENCED_TABLE_NAME IS NOT NULL
+  LIMIT 1
+);
+
+SET @sql = IF(@fk_name IS NOT NULL,
+  CONCAT('ALTER TABLE Employee DROP FOREIGN KEY `', @fk_name, '`'),
+  'SELECT ''No FK to drop on Employee.roleLevelId'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
 ALTER TABLE Employee DROP COLUMN IF EXISTS roleLevelId;
 
 -- 27. MaterialPrice: add companyId column and FK

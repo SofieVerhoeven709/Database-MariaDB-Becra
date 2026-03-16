@@ -12,6 +12,7 @@ import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/cus
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import type {MappedTraining} from '@/types/training'
 import type {RoleLevelOption} from '@/types/roleLevel'
+import {generateTrainingNumber} from '@/lib/utils'
 
 interface TrainingFormDialogProps {
   open: boolean
@@ -27,7 +28,7 @@ interface TrainingFormDialogProps {
 
 const emptyTraining = (): MappedTraining => ({
   id: '',
-  trainingNumber: null,
+  trainingNumber: generateTrainingNumber(),
   trainingDate: new Date().toISOString(),
   closed: false,
   createdAt: new Date().toISOString(),
@@ -92,14 +93,39 @@ export function TrainingFormDialog({
 
           <TabsContent value="details">
             <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Training Number</Label>
-                <Input
-                  value={form.trainingNumber ?? ''}
-                  onChange={e => setForm(f => ({...f, trainingNumber: e.target.value || null}))}
-                  className="bg-secondary border-border"
-                />
+              {/* Training Number — generated + regeneratable on create, locked on edit */}
+              <div className="flex flex-col gap-1.5 sm:col-span-2">
+                <Label className="text-xs text-muted-foreground">
+                  Training Number
+                  {isEdit ? (
+                    <span className="ml-1.5 text-muted-foreground/60">(locked)</span>
+                  ) : (
+                    <span className="ml-1.5 text-muted-foreground/60">(auto-generated)</span>
+                  )}
+                </Label>
+                {isEdit ? (
+                  <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                    {form.trainingNumber ?? '-'}
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <Input
+                      value={form.trainingNumber ?? ''}
+                      readOnly
+                      className="bg-secondary/40 border-border text-muted-foreground flex-1 cursor-default"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="h-10 px-3 border-border text-xs shrink-0"
+                      onClick={() => setForm(f => ({...f, trainingNumber: generateTrainingNumber()}))}>
+                      Regenerate
+                    </Button>
+                  </div>
+                )}
               </div>
+
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Training Date *</Label>
                 <Input
@@ -114,6 +140,7 @@ export function TrainingFormDialog({
                   className="bg-secondary border-border"
                 />
               </div>
+
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Standard *</Label>
                 <Select
@@ -132,6 +159,7 @@ export function TrainingFormDialog({
                   </SelectContent>
                 </Select>
               </div>
+
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Work Order *</Label>
                 <Select
@@ -150,6 +178,7 @@ export function TrainingFormDialog({
                   </SelectContent>
                 </Select>
               </div>
+
               <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2 sm:col-span-2">
                 <Label className="text-xs text-muted-foreground">Closed</Label>
                 <Switch checked={form.closed} onCheckedChange={v => setForm(f => ({...f, closed: v}))} />

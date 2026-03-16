@@ -22,6 +22,7 @@ import {
   updateTrainingContactSchema,
   trainingContactIdSchema,
 } from '@/schemas/trainingSchemas'
+import {generateTrainingNumber} from '@/lib/utils'
 
 const revalidate = () => revalidatePath('/training')
 
@@ -215,11 +216,41 @@ export const createTrainingAction = protectedServerFunction({
   functionName: 'Create training action',
   serverFn: async ({data: {visibilityForRoles, ...data}, profile, logger}) => {
     const target = await createTargetForType('Training', profile.id)
-    await prismaClient.training.create({
-      data: {id: crypto.randomUUID(), ...data, createdBy: profile.id, createdAt: new Date(), targetId: target.id},
-    })
+    const trainingId = crypto.randomUUID()
+    const now = new Date()
+
+    let trainingNumber = data.trainingNumber || generateTrainingNumber()
+    let attempts = 0
+
+    while (attempts < 5) {
+      try {
+        await prismaClient.training.create({
+          data: {
+            ...data,
+            trainingNumber,
+            id: trainingId,
+            createdBy: profile.id,
+            createdAt: now,
+            targetId: target.id,
+          },
+        })
+        break
+      } catch (err: unknown) {
+        const prismaErr = err as {code?: string}
+        if (prismaErr.code === 'P2002') {
+          attempts++
+          trainingNumber = generateTrainingNumber()
+          continue
+        }
+        throw err
+      }
+    }
+
+    if (attempts >= 5) throw new Error('Failed to generate a unique training number after 5 attempts')
+
     if (visibilityForRoles.length > 0) await upsertVisibilityRows(target.id, visibilityForRoles)
-    logger.info('Training created')
+
+    logger.info(`Training created: ${trainingId} with number ${trainingNumber}`)
     revalidate()
   },
 })

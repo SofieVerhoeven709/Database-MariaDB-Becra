@@ -246,6 +246,7 @@ export function ProjectFormDialog({
                   type="date"
                   value={toInputDate(form.engineeringStartDate)}
                   min={toInputDate(form.startDate) || undefined}
+                  max={toInputDate(form.endDate) || undefined}
                   onChange={e => setDateField('engineeringStartDate', e.target.value)}
                   className="bg-secondary border-border"
                 />
@@ -257,7 +258,8 @@ export function ProjectFormDialog({
                 <Input
                   type="date"
                   value={toInputDate(form.closingDate)}
-                  min={toInputDate(form.endDate) || undefined}
+                  min={toInputDate(form.startDate) || undefined}
+                  max={toInputDate(form.endDate) || undefined}
                   onChange={e => setDateField('closingDate', e.target.value)}
                   className="bg-secondary border-border"
                 />

@@ -6768,6 +6768,7 @@ export const TimeRegistryScalarFieldEnum = {
   createdAt: 'createdAt',
   invoiceTime: 'invoiceTime',
   onSite: 'onSite',
+  stayOver: 'stayOver',
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',
   hourTypeId: 'hourTypeId',

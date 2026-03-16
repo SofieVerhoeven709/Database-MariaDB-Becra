@@ -162,6 +162,7 @@ export function TimeRegistryTable({
       endBreak: combineDateAndTime(f.workDate, f.endBreak),
       invoiceTime: f.invoiceTime,
       onSite: f.onSite,
+      stayOver: f.stayOver,
       hourTypeId: f.hourTypeId,
       workOrderId: f.workOrderId,
       employeeIds: f.employeeIds,

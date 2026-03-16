@@ -1,12 +1,5 @@
-import type {Prisma} from '@/generated/prisma/client'
+import type {MaterialPriceWithRelations} from '@/dal/materialPrices'
 import type {MappedMaterialPrice} from '@/types/materialPrice'
-
-type MaterialPriceWithRelations = Prisma.MaterialPriceGetPayload<{
-  include: {
-    Employee: {select: {id: true; firstName: true; lastName: true}}
-    Company: {select: {id: true; name: true}}
-  }
-}>
 
 export function mapMaterialPrice(p: MaterialPriceWithRelations): MappedMaterialPrice {
   return {
@@ -24,8 +17,8 @@ export function mapMaterialPrice(p: MaterialPriceWithRelations): MappedMaterialP
     unitPrice: p.unitPrice?.toString() ?? null,
     quantityPrice: p.quantityPrice?.toString() ?? null,
     updatedAt: p.updatedAt?.toISOString() ?? null,
-    companyId: p.companyId as string,
-    companyName: (p.Company as {id: string; name: string} | null)?.name ?? null,
+    companyId: p.companyId,
+    companyName: p.Company?.name ?? null,
     createdBy: p.createdBy,
     createdByName: `${p.Employee.firstName} ${p.Employee.lastName}`,
     deleted: p.deleted,

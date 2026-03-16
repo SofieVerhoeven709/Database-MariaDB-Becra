@@ -37,6 +37,7 @@ export type TimeRegistryMinAggregateOutputType = {
   createdAt: Date | null
   invoiceTime: boolean | null
   onSite: boolean | null
+  stayOver: boolean | null
   createdBy: string | null
   workOrderId: string | null
   hourTypeId: string | null
@@ -58,6 +59,7 @@ export type TimeRegistryMaxAggregateOutputType = {
   createdAt: Date | null
   invoiceTime: boolean | null
   onSite: boolean | null
+  stayOver: boolean | null
   createdBy: string | null
   workOrderId: string | null
   hourTypeId: string | null
@@ -79,6 +81,7 @@ export type TimeRegistryCountAggregateOutputType = {
   createdAt: number
   invoiceTime: number
   onSite: number
+  stayOver: number
   createdBy: number
   workOrderId: number
   hourTypeId: number
@@ -102,6 +105,7 @@ export type TimeRegistryMinAggregateInputType = {
   createdAt?: true
   invoiceTime?: true
   onSite?: true
+  stayOver?: true
   createdBy?: true
   workOrderId?: true
   hourTypeId?: true
@@ -123,6 +127,7 @@ export type TimeRegistryMaxAggregateInputType = {
   createdAt?: true
   invoiceTime?: true
   onSite?: true
+  stayOver?: true
   createdBy?: true
   workOrderId?: true
   hourTypeId?: true
@@ -144,6 +149,7 @@ export type TimeRegistryCountAggregateInputType = {
   createdAt?: true
   invoiceTime?: true
   onSite?: true
+  stayOver?: true
   createdBy?: true
   workOrderId?: true
   hourTypeId?: true
@@ -238,6 +244,7 @@ export type TimeRegistryGroupByOutputType = {
   createdAt: Date
   invoiceTime: boolean
   onSite: boolean
+  stayOver: boolean
   createdBy: string
   workOrderId: string
   hourTypeId: string
@@ -280,6 +287,7 @@ export type TimeRegistryWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"TimeRegistry"> | Date | string
   invoiceTime?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   onSite?: Prisma.BoolFilter<"TimeRegistry"> | boolean
+  stayOver?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   createdBy?: Prisma.StringFilter<"TimeRegistry"> | string
   workOrderId?: Prisma.StringFilter<"TimeRegistry"> | string
   hourTypeId?: Prisma.StringFilter<"TimeRegistry"> | string
@@ -306,6 +314,7 @@ export type TimeRegistryOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   invoiceTime?: Prisma.SortOrder
   onSite?: Prisma.SortOrder
+  stayOver?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   workOrderId?: Prisma.SortOrder
   hourTypeId?: Prisma.SortOrder
@@ -336,6 +345,7 @@ export type TimeRegistryWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"TimeRegistry"> | Date | string
   invoiceTime?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   onSite?: Prisma.BoolFilter<"TimeRegistry"> | boolean
+  stayOver?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   createdBy?: Prisma.StringFilter<"TimeRegistry"> | string
   workOrderId?: Prisma.StringFilter<"TimeRegistry"> | string
   hourTypeId?: Prisma.StringFilter<"TimeRegistry"> | string
@@ -362,6 +372,7 @@ export type TimeRegistryOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   invoiceTime?: Prisma.SortOrder
   onSite?: Prisma.SortOrder
+  stayOver?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   workOrderId?: Prisma.SortOrder
   hourTypeId?: Prisma.SortOrder
@@ -389,6 +400,7 @@ export type TimeRegistryScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TimeRegistry"> | Date | string
   invoiceTime?: Prisma.BoolWithAggregatesFilter<"TimeRegistry"> | boolean
   onSite?: Prisma.BoolWithAggregatesFilter<"TimeRegistry"> | boolean
+  stayOver?: Prisma.BoolWithAggregatesFilter<"TimeRegistry"> | boolean
   createdBy?: Prisma.StringWithAggregatesFilter<"TimeRegistry"> | string
   workOrderId?: Prisma.StringWithAggregatesFilter<"TimeRegistry"> | string
   hourTypeId?: Prisma.StringWithAggregatesFilter<"TimeRegistry"> | string
@@ -410,6 +422,7 @@ export type TimeRegistryCreateInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
@@ -432,6 +445,7 @@ export type TimeRegistryUncheckedCreateInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   createdBy: string
   workOrderId: string
   hourTypeId: string
@@ -454,6 +468,7 @@ export type TimeRegistryUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -476,6 +491,7 @@ export type TimeRegistryUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -498,6 +514,7 @@ export type TimeRegistryCreateManyInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   createdBy: string
   workOrderId: string
   hourTypeId: string
@@ -519,6 +536,7 @@ export type TimeRegistryUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -536,6 +554,7 @@ export type TimeRegistryUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -573,6 +592,7 @@ export type TimeRegistryCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   invoiceTime?: Prisma.SortOrder
   onSite?: Prisma.SortOrder
+  stayOver?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   workOrderId?: Prisma.SortOrder
   hourTypeId?: Prisma.SortOrder
@@ -594,6 +614,7 @@ export type TimeRegistryMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   invoiceTime?: Prisma.SortOrder
   onSite?: Prisma.SortOrder
+  stayOver?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   workOrderId?: Prisma.SortOrder
   hourTypeId?: Prisma.SortOrder
@@ -615,6 +636,7 @@ export type TimeRegistryMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   invoiceTime?: Prisma.SortOrder
   onSite?: Prisma.SortOrder
+  stayOver?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   workOrderId?: Prisma.SortOrder
   hourTypeId?: Prisma.SortOrder
@@ -823,6 +845,7 @@ export type TimeRegistryCreateWithoutEmployeeInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   HourType: Prisma.HourTypeCreateNestedOneWithoutTimeRegistryInput
@@ -844,6 +867,7 @@ export type TimeRegistryUncheckedCreateWithoutEmployeeInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   workOrderId: string
   hourTypeId: string
   deleted?: boolean
@@ -875,6 +899,7 @@ export type TimeRegistryCreateWithoutEmployee_TimeRegistry_deletedByToEmployeeIn
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
@@ -896,6 +921,7 @@ export type TimeRegistryUncheckedCreateWithoutEmployee_TimeRegistry_deletedByToE
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   createdBy: string
   workOrderId: string
   hourTypeId: string
@@ -946,6 +972,7 @@ export type TimeRegistryScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"TimeRegistry"> | Date | string
   invoiceTime?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   onSite?: Prisma.BoolFilter<"TimeRegistry"> | boolean
+  stayOver?: Prisma.BoolFilter<"TimeRegistry"> | boolean
   createdBy?: Prisma.StringFilter<"TimeRegistry"> | string
   workOrderId?: Prisma.StringFilter<"TimeRegistry"> | string
   hourTypeId?: Prisma.StringFilter<"TimeRegistry"> | string
@@ -983,6 +1010,7 @@ export type TimeRegistryCreateWithoutHourTypeInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
@@ -1004,6 +1032,7 @@ export type TimeRegistryUncheckedCreateWithoutHourTypeInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   createdBy: string
   workOrderId: string
   deleted?: boolean
@@ -1051,6 +1080,7 @@ export type TimeRegistryCreateWithoutTimeRegistryEmployeeInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
@@ -1072,6 +1102,7 @@ export type TimeRegistryUncheckedCreateWithoutTimeRegistryEmployeeInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   createdBy: string
   workOrderId: string
   hourTypeId: string
@@ -1109,6 +1140,7 @@ export type TimeRegistryUpdateWithoutTimeRegistryEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -1130,6 +1162,7 @@ export type TimeRegistryUncheckedUpdateWithoutTimeRegistryEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1151,6 +1184,7 @@ export type TimeRegistryCreateWithoutWorkOrderInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutTimeRegistryInput
@@ -1172,6 +1206,7 @@ export type TimeRegistryUncheckedCreateWithoutWorkOrderInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   createdBy: string
   hourTypeId: string
   deleted?: boolean
@@ -1219,6 +1254,7 @@ export type TimeRegistryCreateManyEmployeeInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   workOrderId: string
   hourTypeId: string
   deleted?: boolean
@@ -1239,6 +1275,7 @@ export type TimeRegistryCreateManyEmployee_TimeRegistry_deletedByToEmployeeInput
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   createdBy: string
   workOrderId: string
   hourTypeId: string
@@ -1259,6 +1296,7 @@ export type TimeRegistryUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   HourType?: Prisma.HourTypeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -1280,6 +1318,7 @@ export type TimeRegistryUncheckedUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1301,6 +1340,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1321,6 +1361,7 @@ export type TimeRegistryUpdateWithoutEmployee_TimeRegistry_deletedByToEmployeeIn
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -1342,6 +1383,7 @@ export type TimeRegistryUncheckedUpdateWithoutEmployee_TimeRegistry_deletedByToE
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1363,6 +1405,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutEmployee_TimeRegistry_deletedB
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1383,6 +1426,7 @@ export type TimeRegistryCreateManyHourTypeInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   createdBy: string
   workOrderId: string
   deleted?: boolean
@@ -1403,6 +1447,7 @@ export type TimeRegistryUpdateWithoutHourTypeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -1424,6 +1469,7 @@ export type TimeRegistryUncheckedUpdateWithoutHourTypeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1445,6 +1491,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutHourTypeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1465,6 +1512,7 @@ export type TimeRegistryCreateManyWorkOrderInput = {
   createdAt: Date | string
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   createdBy: string
   hourTypeId: string
   deleted?: boolean
@@ -1485,6 +1533,7 @@ export type TimeRegistryUpdateWithoutWorkOrderInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTimeRegistryNestedInput
@@ -1506,6 +1555,7 @@ export type TimeRegistryUncheckedUpdateWithoutWorkOrderInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1527,6 +1577,7 @@ export type TimeRegistryUncheckedUpdateManyWithoutWorkOrderInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceTime?: Prisma.BoolFieldUpdateOperationsInput | boolean
   onSite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stayOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   hourTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1578,6 +1629,7 @@ export type TimeRegistrySelect<ExtArgs extends runtime.Types.Extensions.Internal
   createdAt?: boolean
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   createdBy?: boolean
   workOrderId?: boolean
   hourTypeId?: boolean
@@ -1607,6 +1659,7 @@ export type TimeRegistrySelectScalar = {
   createdAt?: boolean
   invoiceTime?: boolean
   onSite?: boolean
+  stayOver?: boolean
   createdBy?: boolean
   workOrderId?: boolean
   hourTypeId?: boolean
@@ -1615,7 +1668,7 @@ export type TimeRegistrySelectScalar = {
   deletedBy?: boolean
 }
 
-export type TimeRegistryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activityDescription" | "additionalInfo" | "invoiceInfo" | "startTime" | "endTime" | "workDate" | "startBreak" | "endBreak" | "createdAt" | "invoiceTime" | "onSite" | "createdBy" | "workOrderId" | "hourTypeId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["timeRegistry"]>
+export type TimeRegistryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "activityDescription" | "additionalInfo" | "invoiceInfo" | "startTime" | "endTime" | "workDate" | "startBreak" | "endBreak" | "createdAt" | "invoiceTime" | "onSite" | "stayOver" | "createdBy" | "workOrderId" | "hourTypeId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["timeRegistry"]>
 export type TimeRegistryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   HourType?: boolean | Prisma.HourTypeDefaultArgs<ExtArgs>
@@ -1647,6 +1700,7 @@ export type $TimeRegistryPayload<ExtArgs extends runtime.Types.Extensions.Intern
     createdAt: Date
     invoiceTime: boolean
     onSite: boolean
+    stayOver: boolean
     createdBy: string
     workOrderId: string
     hourTypeId: string
@@ -2039,6 +2093,7 @@ export interface TimeRegistryFieldRefs {
   readonly createdAt: Prisma.FieldRef<"TimeRegistry", 'DateTime'>
   readonly invoiceTime: Prisma.FieldRef<"TimeRegistry", 'Boolean'>
   readonly onSite: Prisma.FieldRef<"TimeRegistry", 'Boolean'>
+  readonly stayOver: Prisma.FieldRef<"TimeRegistry", 'Boolean'>
   readonly createdBy: Prisma.FieldRef<"TimeRegistry", 'String'>
   readonly workOrderId: Prisma.FieldRef<"TimeRegistry", 'String'>
   readonly hourTypeId: Prisma.FieldRef<"TimeRegistry", 'String'>

@@ -313,65 +313,17 @@ export function EmployeeTable({
               <TableHead className={thClass} onClick={() => toggleSort('username')}>
                 Username <SortIcon field="username" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('role')}>
-                Role Level <SortIcon field="role" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('mail')}>
                 Email <SortIcon field="mail" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('phoneNumber')}>
-                Phone <SortIcon field="phoneNumber" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('birthDate')}>
-                Birth Date <SortIcon field="birthDate" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('startDate')}>
-                Start Date <SortIcon field="startDate" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('endDate')}>
-                End Date <SortIcon field="endDate" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('street')}>
-                Street <SortIcon field="street" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('houseNumber')}>
-                House Nr <SortIcon field="houseNumber" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('busNumber')}>
-                Bus Nr <SortIcon field="busNumber" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('zipCode')}>
-                Zip Code <SortIcon field="zipCode" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('place')}>
-                Place <SortIcon field="place" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('info')}>
-                Info <SortIcon field="info" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('permanentEmployee')}>
                 Permanent <SortIcon field="permanentEmployee" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('checkInfo')}>
-                Check Info <SortIcon field="checkInfo" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('newYearCard')}>
-                New Year Card <SortIcon field="newYearCard" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('active')}>
                 Active <SortIcon field="active" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('pictureId')}>
-                Picture <SortIcon field="pictureId" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('createdAt')}>
-                Created At <SortIcon field="createdAt" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('createdBy')}>
                 Created By <SortIcon field="createdBy" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('passwordCreatedAt')}>
-                Password Created <SortIcon field="passwordCreatedAt" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               {filterDeleted !== 'not-deleted' && (
                 <>
@@ -403,26 +355,7 @@ export function EmployeeTable({
                   <TableCell className={`${tdClass} text-foreground font-medium`}>{emp.firstName}</TableCell>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>{emp.lastName}</TableCell>
                   <TableCell className={tdClass}>{emp.username}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant="outline"
-                      className="border-border text-muted-foreground font-normal whitespace-nowrap">
-                      {emp.roleName}
-                    </Badge>
-                  </TableCell>
                   <TableCell className={tdClass}>{emp.mail ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{emp.phoneNumber ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(emp.birthDate)}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(emp.startDate)}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(emp.endDate)}</TableCell>
-                  <TableCell className={tdClass}>{emp.street ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{emp.houseNumber ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{emp.busNumber ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{emp.zipCode ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{emp.place ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>
-                    <span className="max-w-[200px] truncate inline-block">{emp.info ?? '-'}</span>
-                  </TableCell>
                   <TableCell>
                     {emp.permanentEmployee ? (
                       <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
@@ -432,8 +365,6 @@ export function EmployeeTable({
                       </Badge>
                     )}
                   </TableCell>
-                  <TableCell className={tdClass}>{boolLabel(emp.checkInfo)}</TableCell>
-                  <TableCell className={tdClass}>{boolLabel(emp.newYearCard)}</TableCell>
                   <TableCell>
                     {emp.active ? (
                       <Badge className="bg-accent/15 text-accent border-0 font-medium">Active</Badge>

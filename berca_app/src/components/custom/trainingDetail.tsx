@@ -22,7 +22,7 @@ import {
   hardDeleteTrainingContactAction,
   undeleteTrainingContactAction,
 } from '@/serverFunctions/training'
-import type {TrainingDetailData, MappedTrainingContact} from '@/types/training'
+import type {TrainingDetailData} from '@/types/training'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import type {Route} from 'next'
 
@@ -55,21 +55,26 @@ function YesNoBadge({value}: {value: boolean}) {
 
 type ContactForm = {
   contactId: string
-  attendeeNumber: string
-  succeeded: boolean
   attended: boolean
+  succeeded: boolean
   certificateSent: boolean
   certSentDate: string
 }
 
 const emptyContactForm = (): ContactForm => ({
   contactId: 'none',
-  attendeeNumber: '',
-  succeeded: false,
   attended: false,
+  succeeded: false,
   certificateSent: false,
   certSentDate: '',
 })
+
+type EditContactForm = {
+  attended: boolean
+  succeeded: boolean
+  certificateSent: boolean
+  certSentDate: string
+}
 
 export function TrainingDetail({
   training,
@@ -95,7 +100,12 @@ export function TrainingDetail({
   const [addingContact, setAddingContact] = useState(false)
   const [contactForm, setContactForm] = useState<ContactForm>(emptyContactForm())
   const [editingContactId, setEditingContactId] = useState<string | null>(null)
-  const [editContactForm, setEditContactForm] = useState<ContactForm>(emptyContactForm())
+  const [editContactForm, setEditContactForm] = useState<EditContactForm>({
+    attended: false,
+    succeeded: false,
+    certificateSent: false,
+    certSentDate: '',
+  })
 
   // ── Edit form ──────────────────────────────────────────────────────────────
   const buildForm = () => ({
@@ -189,21 +199,21 @@ export function TrainingDetail({
 
       {/* Info card */}
       <div className="rounded-xl border border-border/60 bg-card p-6 flex flex-col gap-6">
+        {/* Training Details */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Training Details</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Training number — locked, displayed like company/training number */}
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Training Number</Label>
-              {editing ? (
-                <Input
-                  value={form.trainingNumber}
-                  onChange={e => setForm(f => ({...f, trainingNumber: e.target.value}))}
-                  className="bg-secondary border-border"
-                />
-              ) : (
-                <p className="text-sm text-muted-foreground">{training.trainingNumber ?? '-'}</p>
-              )}
+              <Label className="text-xs text-muted-foreground">
+                Training Number
+                <span className="ml-1.5 text-muted-foreground/60">(locked)</span>
+              </Label>
+              <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                {training.trainingNumber ?? '-'}
+              </div>
             </div>
+
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Training Date</Label>
               {editing ? (
@@ -217,6 +227,7 @@ export function TrainingDetail({
                 <p className="text-sm text-muted-foreground">{formatDate(training.trainingDate)}</p>
               )}
             </div>
+
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Standard</Label>
               {editing ? (
@@ -239,6 +250,7 @@ export function TrainingDetail({
                 <p className="text-sm text-muted-foreground">{training.trainingStandardDescriptionShort ?? '-'}</p>
               )}
             </div>
+
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Work Order</Label>
               {editing ? (
@@ -261,14 +273,17 @@ export function TrainingDetail({
                 <p className="text-sm text-muted-foreground">{training.workOrderNumber ?? '-'}</p>
               )}
             </div>
+
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Created By</Label>
               <p className="text-sm text-muted-foreground">{training.createdByName}</p>
             </div>
+
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Created At</Label>
               <p className="text-sm text-muted-foreground">{formatDate(training.createdAt)}</p>
             </div>
+
             <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
               <Label className="text-xs text-muted-foreground">Closed</Label>
               {editing ? (
@@ -280,7 +295,7 @@ export function TrainingDetail({
           </div>
         </div>
 
-        {/* Training Standard info panel */}
+        {/* Standard Details */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Standard Details</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -370,7 +385,6 @@ export function TrainingDetail({
                 <TableRow className="hover:bg-transparent border-border/60">
                   <TableHead className={thClass}>Contact</TableHead>
                   <TableHead className={thClass}>Company</TableHead>
-                  <TableHead className={thClass}>Function</TableHead>
                   <TableHead className={thClass}>Attendee #</TableHead>
                   <TableHead className={thClass}>Attended</TableHead>
                   <TableHead className={thClass}>Succeeded</TableHead>
@@ -386,7 +400,7 @@ export function TrainingDetail({
                 {/* Add row */}
                 {addingContact && (
                   <TableRow className="border-border/40 bg-secondary/30">
-                    <TableCell colSpan={2}>
+                    <TableCell>
                       <Select
                         value={contactForm.contactId}
                         onValueChange={v => setContactForm(f => ({...f, contactId: v}))}>
@@ -402,14 +416,13 @@ export function TrainingDetail({
                         </SelectContent>
                       </Select>
                     </TableCell>
+                    {/* Company — not known until saved */}
                     <TableCell />
+                    {/* Attendee # — auto-generated on save */}
                     <TableCell>
-                      <Input
-                        value={contactForm.attendeeNumber}
-                        placeholder="Attendee #…"
-                        onChange={e => setContactForm(f => ({...f, attendeeNumber: e.target.value}))}
-                        className="h-7 text-xs bg-background border-border"
-                      />
+                      <div className="flex h-7 items-center px-2 text-xs text-muted-foreground/60 italic">
+                        Auto-generated
+                      </div>
                     </TableCell>
                     <TableCell>
                       <input
@@ -456,7 +469,6 @@ export function TrainingDetail({
                             await addTrainingContactAction({
                               trainingId: training.id,
                               contactId: contactForm.contactId,
-                              attendeeNumber: contactForm.attendeeNumber || null,
                               attended: contactForm.attended,
                               succeeded: contactForm.succeeded,
                               certificateSent: contactForm.certificateSent,
@@ -481,7 +493,7 @@ export function TrainingDetail({
 
                 {visibleContacts.length === 0 && !addingContact ? (
                   <TableRow>
-                    <TableCell colSpan={10} className="h-20 text-center text-muted-foreground">
+                    <TableCell colSpan={9} className="h-20 text-center text-muted-foreground">
                       No participants added.
                     </TableCell>
                   </TableRow>
@@ -498,15 +510,8 @@ export function TrainingDetail({
                               {tc.contact.lastName} {tc.contact.firstName}
                             </TableCell>
                             <TableCell className={tdClass}>{tc.contact.currentCompanyName ?? '-'}</TableCell>
-                            <TableCell className={tdClass}>{tc.contact.functionName ?? '-'}</TableCell>
-                            <TableCell>
-                              <Input
-                                value={editContactForm.attendeeNumber}
-                                placeholder="Attendee #…"
-                                onChange={e => setEditContactForm(f => ({...f, attendeeNumber: e.target.value}))}
-                                className="h-7 text-xs bg-background border-border"
-                              />
-                            </TableCell>
+                            {/* Attendee # read-only even in edit mode */}
+                            <TableCell className={tdClass}>{tc.attendeeNumber ?? '-'}</TableCell>
                             <TableCell>
                               <input
                                 type="checkbox"
@@ -527,7 +532,12 @@ export function TrainingDetail({
                               <input
                                 type="checkbox"
                                 checked={editContactForm.certificateSent}
-                                onChange={e => setEditContactForm(f => ({...f, certificateSent: e.target.checked}))}
+                                onChange={e =>
+                                  setEditContactForm(f => ({
+                                    ...f,
+                                    certificateSent: e.target.checked,
+                                  }))
+                                }
                                 className="h-3.5 w-3.5 accent-accent"
                               />
                             </TableCell>
@@ -549,7 +559,6 @@ export function TrainingDetail({
                                   onClick={async () => {
                                     await updateTrainingContactAction({
                                       id: tc.id,
-                                      attendeeNumber: editContactForm.attendeeNumber || null,
                                       attended: editContactForm.attended,
                                       succeeded: editContactForm.succeeded,
                                       certificateSent: editContactForm.certificateSent,
@@ -582,7 +591,6 @@ export function TrainingDetail({
                               </Link>
                             </TableCell>
                             <TableCell className={tdClass}>{tc.contact.currentCompanyName ?? '-'}</TableCell>
-                            <TableCell className={tdClass}>{tc.contact.functionName ?? '-'}</TableCell>
                             <TableCell className={tdClass}>{tc.attendeeNumber ?? '-'}</TableCell>
                             <TableCell>
                               <YesNoBadge value={tc.attended} />
@@ -634,8 +642,6 @@ export function TrainingDetail({
                                         onClick={() => {
                                           setEditingContactId(tc.id)
                                           setEditContactForm({
-                                            contactId: tc.contact.id,
-                                            attendeeNumber: tc.attendeeNumber ?? '',
                                             attended: tc.attended,
                                             succeeded: tc.succeeded,
                                             certificateSent: tc.certificateSent,
@@ -672,6 +678,7 @@ export function TrainingDetail({
           </div>
         </TabsContent>
 
+        {/* ── Visibility tab ────────────────────────────────────────────────── */}
         {isAdmin && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (

@@ -138,11 +138,11 @@ export const addTrainingContactSchema = trainingContactSchema.omit({
   deleted: true,
   deletedAt: true,
   deletedBy: true,
+  attendeeNumber: true,
 })
 
 export const updateTrainingContactSchema = trainingContactSchema.pick({
   id: true,
-  attendeeNumber: true,
   succeeded: true,
   attended: true,
   certificateSent: true,

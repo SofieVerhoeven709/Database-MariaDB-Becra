@@ -77,6 +77,13 @@ export function generateTrainingNumber() {
   return `O${year}${month}${day}${random}`
 }
 
+export function generateAttendeeNumber(trainingNumber: string, sequence: number): string {
+  // Strip the leading 'O' from the training number
+  const stripped = trainingNumber.startsWith('O') ? trainingNumber.slice(1) : trainingNumber
+  const seq = String(sequence).padStart(3, '0')
+  return `OPF06${stripped}${seq}`
+}
+
 // Used for admin/global pages
 export function getGlobalRoleInfo(profile: Profile) {
   const entries = profile.RoleLevelEmployee ?? []

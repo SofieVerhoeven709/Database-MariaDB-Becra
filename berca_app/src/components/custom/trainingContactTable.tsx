@@ -25,6 +25,7 @@ type SortField =
   | 'trainingDate'
   | 'standard'
   | 'company'
+  | 'attendeeNumber'
   | 'attended'
   | 'succeeded'
   | 'certificateSent'
@@ -63,7 +64,6 @@ export interface MappedTrainingContactRow {
     id: string
     firstName: string
     lastName: string
-    functionName: string | null
     currentCompanyName: string | null
   }
   training: {
@@ -77,7 +77,6 @@ export interface MappedTrainingContactRow {
 type ContactForm = {
   trainingId: string
   contactId: string
-  attendeeNumber: string
   attended: boolean
   succeeded: boolean
   certificateSent: boolean
@@ -87,7 +86,6 @@ type ContactForm = {
 const emptyForm = (): ContactForm => ({
   trainingId: 'none',
   contactId: 'none',
-  attendeeNumber: '',
   attended: false,
   succeeded: false,
   certificateSent: false,
@@ -95,7 +93,6 @@ const emptyForm = (): ContactForm => ({
 })
 
 type EditForm = {
-  attendeeNumber: string
   attended: boolean
   succeeded: boolean
   certificateSent: boolean
@@ -134,7 +131,6 @@ export function TrainingContactTable({
 
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editForm, setEditForm] = useState<EditForm>({
-    attendeeNumber: '',
     attended: false,
     succeeded: false,
     certificateSent: false,
@@ -187,6 +183,8 @@ export function TrainingContactTable({
           return s(a.training.trainingStandardDescriptionShort, b.training.trainingStandardDescriptionShort)
         case 'company':
           return s(a.contact.currentCompanyName, b.contact.currentCompanyName)
+        case 'attendeeNumber':
+          return s(a.attendeeNumber, b.attendeeNumber)
         case 'attended':
           return n(a.attended, b.attended)
         case 'succeeded':
@@ -254,7 +252,6 @@ export function TrainingContactTable({
               <TableHead className={thClass} onClick={() => toggleSort('company')}>
                 Company <SortIcon field="company" />
               </TableHead>
-              <TableHead className="whitespace-nowrap text-xs">Function</TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('trainingNumber')}>
                 Training # <SortIcon field="trainingNumber" />
               </TableHead>
@@ -264,7 +261,9 @@ export function TrainingContactTable({
               <TableHead className={thClass} onClick={() => toggleSort('standard')}>
                 Standard <SortIcon field="standard" />
               </TableHead>
-              <TableHead className="whitespace-nowrap text-xs">Attendee #</TableHead>
+              <TableHead className={thClass} onClick={() => toggleSort('attendeeNumber')}>
+                Attendee # <SortIcon field="attendeeNumber" />
+              </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('attended')}>
                 Attended <SortIcon field="attended" />
               </TableHead>
@@ -297,7 +296,7 @@ export function TrainingContactTable({
             {/* Add row */}
             {addingRow && (
               <TableRow className="border-border/40 bg-secondary/30">
-                <TableCell colSpan={2}>
+                <TableCell>
                   <Select value={addForm.contactId} onValueChange={v => setAddForm(f => ({...f, contactId: v}))}>
                     <SelectTrigger className="h-7 text-xs bg-background border-border">
                       <SelectValue placeholder="Select contact…" />
@@ -326,14 +325,11 @@ export function TrainingContactTable({
                     </SelectContent>
                   </Select>
                 </TableCell>
-                <TableCell />
+                {/* Attendee # — auto-generated, shown as placeholder */}
                 <TableCell>
-                  <Input
-                    value={addForm.attendeeNumber}
-                    placeholder="Attendee #…"
-                    onChange={e => setAddForm(f => ({...f, attendeeNumber: e.target.value}))}
-                    className="h-7 text-xs bg-background border-border"
-                  />
+                  <div className="flex h-7 items-center px-2 text-xs text-muted-foreground/60 italic">
+                    Auto-generated
+                  </div>
                 </TableCell>
                 <TableCell>
                   <input
@@ -388,7 +384,6 @@ export function TrainingContactTable({
                         await addTrainingContactAction({
                           trainingId: addForm.trainingId,
                           contactId: addForm.contactId,
-                          attendeeNumber: addForm.attendeeNumber || null,
                           attended: addForm.attended,
                           succeeded: addForm.succeeded,
                           certificateSent: addForm.certificateSent,
@@ -414,7 +409,7 @@ export function TrainingContactTable({
             {/* Data rows */}
             {filtered.length === 0 && !addingRow ? (
               <TableRow>
-                <TableCell colSpan={showDeletedCols ? 17 : 14} className="h-32 text-center text-muted-foreground">
+                <TableCell colSpan={showDeletedCols ? 16 : 13} className="h-32 text-center text-muted-foreground">
                   No training contacts found.
                 </TableCell>
               </TableRow>
@@ -431,18 +426,11 @@ export function TrainingContactTable({
                           {tc.contact.lastName} {tc.contact.firstName}
                         </TableCell>
                         <TableCell className={tdClass}>{tc.contact.currentCompanyName ?? '-'}</TableCell>
-                        <TableCell className={tdClass}>{tc.contact.functionName ?? '-'}</TableCell>
                         <TableCell className={tdClass}>{tc.training.trainingNumber ?? '-'}</TableCell>
                         <TableCell className={tdClass}>{formatDate(tc.training.trainingDate)}</TableCell>
                         <TableCell className={tdClass}>{tc.training.trainingStandardDescriptionShort ?? '-'}</TableCell>
-                        <TableCell>
-                          <Input
-                            value={editForm.attendeeNumber}
-                            placeholder="Attendee #…"
-                            onChange={e => setEditForm(f => ({...f, attendeeNumber: e.target.value}))}
-                            className="h-7 text-xs bg-background border-border"
-                          />
-                        </TableCell>
+                        {/* Attendee # read-only even in edit mode */}
+                        <TableCell className={tdClass}>{tc.attendeeNumber ?? '-'}</TableCell>
                         <TableCell>
                           <input
                             type="checkbox"
@@ -493,7 +481,6 @@ export function TrainingContactTable({
                               onClick={async () => {
                                 await updateTrainingContactAction({
                                   id: tc.id,
-                                  attendeeNumber: editForm.attendeeNumber || null,
                                   attended: editForm.attended,
                                   succeeded: editForm.succeeded,
                                   certificateSent: editForm.certificateSent,
@@ -524,7 +511,6 @@ export function TrainingContactTable({
                           </Link>
                         </TableCell>
                         <TableCell className={tdClass}>{tc.contact.currentCompanyName ?? '-'}</TableCell>
-                        <TableCell className={tdClass}>{tc.contact.functionName ?? '-'}</TableCell>
                         <TableCell className={`${tdClass} text-foreground font-medium`}>
                           <Link
                             href={`/departments/${departmentId}/course/${tc.training.id}` as Route}
@@ -609,7 +595,6 @@ export function TrainingContactTable({
                                     onClick={() => {
                                       setEditingId(tc.id)
                                       setEditForm({
-                                        attendeeNumber: tc.attendeeNumber ?? '',
                                         attended: tc.attended,
                                         succeeded: tc.succeeded,
                                         certificateSent: tc.certificateSent,

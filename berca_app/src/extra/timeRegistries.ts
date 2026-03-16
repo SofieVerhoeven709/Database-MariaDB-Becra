@@ -21,6 +21,7 @@ type TimeRegistryWithRelations = {
   deletedBy: string | null
   Employee: {firstName: string; lastName: string}
   HourType: {name: string}
+  stayOver: boolean
   WorkOrder: {workOrderNumber: string | null}
   TimeRegistryEmployee: {
     id: string
@@ -52,6 +53,7 @@ export function mapTimeRegistry(tr: TimeRegistryWithRelations): MappedTimeRegist
     employeeFirstName: tr.Employee.firstName,
     employeeLastName: tr.Employee.lastName,
     hourTypeName: tr.HourType.name,
+    stayOver: tr.stayOver,
     workOrderNumber: tr.WorkOrder.workOrderNumber,
     additionalEmployees: tr.TimeRegistryEmployee.map(tre => ({
       id: tre.id,

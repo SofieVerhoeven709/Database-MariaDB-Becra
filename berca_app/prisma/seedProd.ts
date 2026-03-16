@@ -493,6 +493,9 @@ export const seedProd = async (prisma: PrismaClient) => {
     {name: 'Training', info: 'Internal or external training hours'},
     {name: 'Public Holiday', info: 'Official public holiday'},
     {name: 'Unpaid Leave', info: 'Approved unpaid leave'},
+    {name: 'SEN (Senior Engineer)', info: 'Senior engineering role'},
+    {name: 'SSEN (Senior Software Engineer)', info: 'Senior software engineering role'},
+    {name: 'TEN (Technical Engineer)', info: 'Technical engineering role'},
   ]
 
   for (const ht of DEFAULT_HOUR_TYPES) {

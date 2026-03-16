@@ -42,6 +42,7 @@ type InlineForm = {
   onSite: boolean
   hourTypeId: string
   employeeIds: string[]
+  stayOver: boolean
 }
 
 const emptyInlineForm = (): InlineForm => ({
@@ -53,6 +54,7 @@ const emptyInlineForm = (): InlineForm => ({
   onSite: false,
   hourTypeId: '',
   employeeIds: [],
+  stayOver: false,
 })
 
 // ─── Compact employee multi-select (inline row only) ─────────────────────────
@@ -148,6 +150,7 @@ export function WorkOrderTimeRegistries({
       hourTypeId: f.hourTypeId,
       workOrderId,
       employeeIds: f.employeeIds,
+      stayOver: f.stayOver,
     }
   }
 
@@ -166,6 +169,7 @@ export function WorkOrderTimeRegistries({
       hourTypeId: f.hourTypeId,
       workOrderId,
       employeeIds: f.employeeIds,
+      stayOver: f.stayOver,
     }
   }
 
@@ -193,6 +197,7 @@ export function WorkOrderTimeRegistries({
       employeeFirstName: tr.Employee.firstName,
       employeeLastName: tr.Employee.lastName,
       hourTypeName: tr.HourType.name,
+      stayOver: tr.stayOver,
       workOrderNumber: null,
       additionalEmployees: tr.TimeRegistryEmployee.map(tre => ({
         id: tre.id,
@@ -290,6 +295,7 @@ export function WorkOrderTimeRegistries({
               <TableHead className={thClass}>End</TableHead>
               <TableHead className={thClass}>On Site</TableHead>
               <TableHead className={thClass}>Invoice Time</TableHead>
+              <TableHead className={thClass}>Stay Over</TableHead>
               <TableHead className={thClass}>Created By</TableHead>
               <TableHead className={thClass}>Employees</TableHead>
               <TableHead className="w-10" />
@@ -356,6 +362,12 @@ export function WorkOrderTimeRegistries({
                     onCheckedChange={v => setInlineForm(f => ({...f, invoiceTime: v}))}
                   />
                 </TableCell>
+                <TableCell>
+                  <Switch
+                    checked={inlineForm.stayOver}
+                    onCheckedChange={v => setInlineForm(f => ({...f, stayOver: v}))}
+                  />
+                </TableCell>
                 <TableCell colSpan={1}>
                   <CompactEmployeeMultiSelect
                     value={inlineForm.employeeIds}
@@ -386,7 +398,7 @@ export function WorkOrderTimeRegistries({
 
             {filtered.length === 0 && !showInline ? (
               <TableRow>
-                <TableCell colSpan={10} className="h-24 text-center text-muted-foreground">
+                <TableCell colSpan={11} className="h-24 text-center text-muted-foreground">
                   No time registries found.
                 </TableCell>
               </TableRow>
@@ -422,6 +434,15 @@ export function WorkOrderTimeRegistries({
                   </TableCell>
                   <TableCell>
                     {tr.invoiceTime ? (
+                      <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                    ) : (
+                      <Badge variant="secondary" className="text-muted-foreground font-medium">
+                        No
+                      </Badge>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {tr.stayOver ? (
                       <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
                     ) : (
                       <Badge variant="secondary" className="text-muted-foreground font-medium">
@@ -573,7 +594,7 @@ export function WorkOrderTimeRegistries({
                   <p className="text-sm text-foreground">{formatDate(detailRecord.createdAt)}</p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
                   <Label className="text-xs text-muted-foreground">On Site</Label>
                   {detailRecord.onSite ? (
@@ -587,6 +608,16 @@ export function WorkOrderTimeRegistries({
                 <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
                   <Label className="text-xs text-muted-foreground">Invoice Time</Label>
                   {detailRecord.invoiceTime ? (
+                    <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                  ) : (
+                    <Badge variant="secondary" className="text-muted-foreground font-medium">
+                      No
+                    </Badge>
+                  )}
+                </div>
+                <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                  <Label className="text-xs text-muted-foreground">Stay Over</Label>
+                  {detailRecord.stayOver ? (
                     <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
                   ) : (
                     <Badge variant="secondary" className="text-muted-foreground font-medium">

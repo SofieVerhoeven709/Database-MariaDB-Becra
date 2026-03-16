@@ -17,6 +17,7 @@ export interface MappedTimeRegistry {
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
+  stayOver: boolean
 
   // Relations
   employeeFirstName: string

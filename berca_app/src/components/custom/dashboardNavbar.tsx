@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
-import {LogOut, LayoutDashboard} from 'lucide-react'
+import type {Route} from 'next'
+import {Check, LogOut, LayoutDashboard} from 'lucide-react'
 import {Avatar, AvatarFallback} from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -10,11 +11,15 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import type {Department, Employee} from '@/generated/prisma/client'
 import {useEffect, useState} from 'react'
 import type {RoleContext, RoleContextInput} from '@/schemas/roleSchemas'
+import {useTheme} from 'next-themes'
 
 interface DashboardNavbarProps {
   employee: EmployeeSafe
@@ -22,28 +27,189 @@ interface DashboardNavbarProps {
   roleContextInput: RoleContextInput
 }
 export type EmployeeSafe = Omit<Employee, 'password_hash'>
+type AppTheme = 'light' | 'dark' | 'high-contrast'
+type BreadcrumbItem = {
+  href: Route
+  label: string
+  isLast: boolean
+}
+
+// ── Breadcrumb helpers ──────────────────────────────────────────────────────
+
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+const isUUID = (s: string) => UUID_REGEX.test(s)
+
+/** Human-readable labels for known path segments */
+const SEGMENT_LABELS: Record<string, string> = {
+  departments: 'Departments',
+  dashboard: 'Dashboard',
+  project: 'Projects',
+  projectBom: 'Project BOMs',
+  projectBomStructure: 'Project BOM Structures',
+  workOrder: 'Work Orders',
+  workOrderSales: 'Work Orders (Sales)',
+  workOrderStructure: 'Work Order Structures',
+  material: 'Materials',
+  materialPrice: 'Material Prices',
+  materialPlace: 'Material Places',
+  followUp: 'Follow Ups',
+  followUpStructure: 'Follow Up Structures',
+  company: 'Companies',
+  contact: 'Contacts',
+  inventory: 'Inventory',
+  purchaseBom: 'Purchase BOMs',
+  quoteBecra: 'Quotes (Becra)',
+  quoteSupplier: 'Quote Suppliers',
+  timeRegistry: 'Time Registry',
+  orders: 'Orders',
+  orderQuote: 'Order Quotes',
+  orderRequests: 'Order Requests',
+  admin: 'Admin',
+  audit: 'Audit',
+  budget: 'Budget',
+  campaigns: 'Campaigns',
+  certificateTraining: 'Certificate Training',
+  certificationTraining: 'Certification Training',
+  companyMonitoring: 'Company Monitoring',
+  course: 'Courses',
+  courseContact: 'Course Contacts',
+  courseStandard: 'Course Standards',
+  departmentVisibility: 'Department Visibility',
+  document: 'Documents',
+  envMonitor: 'Environment Monitoring',
+  healthMonitor: 'Health Monitoring',
+  integrity: 'Integrity',
+  invoicesIn: 'Invoices (In)',
+  invoicesOut: 'Invoices (Out)',
+  maintenance: 'Maintenance',
+  media: 'Media',
+  meetings: 'Meetings',
+  monitoring: 'Monitoring',
+  onboarding: 'Onboarding',
+  performance: 'Performance',
+  place: 'Places',
+  process: 'Processes',
+  qualityCheck: 'Quality Checks',
+  records: 'Records',
+  recruitment: 'Recruitment',
+  reports: 'Reports',
+  safety: 'Safety',
+  safetyAudit: 'Safety Audit',
+  saleReport: 'Sale Reports',
+  schedule: 'Schedule',
+  serialTracked: 'Serial Tracked',
+  spec: 'Specifications',
+  standards: 'Standards',
+  strategy: 'Strategy',
+  warehousePlace: 'Warehouse Places',
+  workflow: 'Workflow',
+  backup: 'Backup',
+  benefits: 'Benefits',
+}
+
+/** Convert camelCase or kebab-case to Title Case for unknown segments */
+const segmentToTitle = (segment: string): string => {
+  if (SEGMENT_LABELS[segment]) return SEGMENT_LABELS[segment]
+  return segment
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/[-_]+/g, ' ')
+    .replace(/^./, s => s.toUpperCase())
+    .trim()
+}
+
+// ───────────────────────────────────────────────────────────────────────────
 
 export function DashboardNavbar({employee, roleContext, roleContextInput}: DashboardNavbarProps) {
   const [departmentMap, setDepartmentMap] = useState<Record<string, string>>({})
+  const [entityNames, setEntityNames] = useState<Record<string, string>>({})
+  const {theme, resolvedTheme, setTheme} = useTheme()
 
+  const applyTheme = (nextTheme: AppTheme) => {
+    setTheme(nextTheme)
+    const root = document.documentElement
+    root.classList.remove('light', 'dark', 'high-contrast')
+    root.classList.add(nextTheme)
+    localStorage.setItem('theme', nextTheme)
+  }
+
+  // Fetch all departments once for label resolution
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const res = await fetch('/api/departments', {
-          method: 'GET',
-        })
-        if (!res.ok) throw new Error('Failed to fetch departments')
-        const data: Department[] = await res.json()
-        const map = Object.fromEntries(data.map(d => [d.id, d.name]))
+        const res = await fetch('/api/departments', {method: 'GET'})
+        if (!res.ok) return
+        const rawData: unknown = await res.json()
+        if (!Array.isArray(rawData)) return
+
+        const departments = rawData.filter(
+          (item): item is Pick<Department, 'id' | 'name'> =>
+            typeof item === 'object' &&
+            item !== null &&
+            typeof (item as {id?: unknown}).id === 'string' &&
+            typeof (item as {name?: unknown}).name === 'string',
+        )
+
+        const map = Object.fromEntries(departments.map(d => [d.id, d.name]))
         setDepartmentMap(map)
       } catch (err) {
         console.error('Error fetching departments for navbar:', err)
       }
     }
-    fetchDepartments()
+    void fetchDepartments()
   }, [roleContextInput])
 
   const pathname = usePathname()
+
+  // Resolve entity names for UUID segments whenever the path changes
+  useEffect(() => {
+    const segments = pathname.split('/').filter(Boolean)
+
+    // Collect UUID segments that aren't department IDs
+    const toFetch: {id: string; type: string}[] = []
+    for (let i = 0; i < segments.length; i++) {
+      const segment = segments[i]
+      if (!isUUID(segment)) continue
+      // Department UUIDs are resolved via departmentMap
+      const parentSegment = segments[i - 1]
+      if (parentSegment === 'departments') continue
+      if (parentSegment) {
+        toFetch.push({id: segment, type: parentSegment})
+      }
+    }
+
+    if (toFetch.length === 0) return
+
+    const controller = new AbortController()
+
+    const fetchNames = async () => {
+      const results = await Promise.all(
+        toFetch.map(async ({id, type}) => {
+          try {
+            const res = await fetch(
+              `/api/breadcrumb?type=${encodeURIComponent(type)}&id=${encodeURIComponent(id)}`,
+              {signal: controller.signal},
+            )
+            if (!res.ok) return {id, name: null}
+            const data = (await res.json()) as {name: string | null}
+            return {id, name: data.name}
+          } catch {
+            return {id, name: null}
+          }
+        }),
+      )
+
+      const namesMap: Record<string, string> = {}
+      for (const {id, name} of results) {
+        if (name) namesMap[id] = name
+      }
+      setEntityNames(namesMap)
+    }
+
+    void fetchNames()
+    return () => controller.abort()
+  }, [pathname])
+
+  const activeTheme = theme === 'system' ? resolvedTheme : theme
 
   const initials = employee.username
     .split(/[\s._-]+/)
@@ -54,13 +220,40 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
 
   const displayRole = roleContext.role.replace(/\sRole$/, '')
 
-  const isHome = pathname === '/dashboard'
+  const routeSegments = pathname.split('/').filter(Boolean)
+  const isDashboardRoute = routeSegments[0] === 'dashboard'
+  const breadcrumbSegments = isDashboardRoute ? routeSegments.slice(1) : routeSegments
+  const isHome = breadcrumbSegments.length === 0
 
-  const pathSegments = pathname.split('/').filter(Boolean).slice(1) // skip 'dashboard'
+  const breadcrumbItems: BreadcrumbItem[] = breadcrumbSegments.map((segment, index) => {
+    const hrefSegments = [
+      ...(isDashboardRoute ? ['dashboard'] : []),
+      ...breadcrumbSegments.slice(0, index + 1),
+    ]
 
-  const breadcrumb = pathSegments
-    .map(segment => departmentMap[segment] || segment) // replace id with name
-    .join(' / ')
+    const isDepartmentsRoot = !isDashboardRoute && index === 0 && segment === 'departments'
+    const isDepartmentId =
+      !isDashboardRoute && isUUID(segment) && breadcrumbSegments[index - 1] === 'departments'
+    const isEntityId = isUUID(segment) && !isDepartmentsRoot && !isDepartmentId
+
+    const getLabel = (): string => {
+      if (isDepartmentsRoot) return 'Departments'
+      if (isDepartmentId) return departmentMap[segment] || segment
+      if (isEntityId) return entityNames[segment] || segment
+      return segmentToTitle(segment)
+    }
+
+    const getHref = (): string => {
+      if (isDepartmentsRoot) return '/dashboard'
+      return `/${hrefSegments.join('/')}`
+    }
+
+    return {
+      href: getHref() as Route<string>,
+      label: getLabel(),
+      isLast: index === breadcrumbSegments.length - 1,
+    }
+  })
 
   return (
     <header className="flex items-center justify-between border-b border-border px-6 py-4">
@@ -74,7 +267,24 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
         {!isHome && (
           <nav className="flex items-center" aria-label="Breadcrumb">
             <span className="mx-2 text-muted-foreground/40">/</span>
-            <span className="text-sm text-muted-foreground capitalize">{breadcrumb || 'Home'}</span>
+            <div className="flex items-center gap-1 text-sm">
+              {breadcrumbItems.map(item =>
+                item.isLast ? (
+                  <span key={item.href} className="capitalize text-foreground" aria-current="page">
+                    {item.label}
+                  </span>
+                ) : (
+                  <div key={item.href} className="flex items-center gap-1">
+                    <Link
+                      href={item.href}
+                      className="capitalize text-muted-foreground transition-colors hover:text-foreground">
+                      {item.label}
+                    </Link>
+                    <span className="text-muted-foreground/40">/</span>
+                  </div>
+                ),
+              )}
+            </div>
           </nav>
         )}
       </div>
@@ -93,6 +303,24 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48 bg-card border-border">
           <DropdownMenuLabel className="text-foreground">My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator className="bg-border" />
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>Theme</DropdownMenuSubTrigger>
+            <DropdownMenuSubContent className="w-44">
+              <DropdownMenuItem onSelect={() => applyTheme('light')}>
+                Light
+                {activeTheme === 'light' && <Check className="ml-auto h-4 w-4" />}
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => applyTheme('dark')}>
+                Dark
+                {activeTheme === 'dark' && <Check className="ml-auto h-4 w-4" />}
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => applyTheme('high-contrast')}>
+                High contrast
+                {activeTheme === 'high-contrast' && <Check className="ml-auto h-4 w-4" />}
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
           <DropdownMenuSeparator className="bg-border" />
           <DropdownMenuItem asChild className="cursor-pointer">
             <Link

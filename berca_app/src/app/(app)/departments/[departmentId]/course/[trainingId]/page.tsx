@@ -1,23 +1,24 @@
-import {TrainingTable} from '@/components/custom/trainingTable'
-import {getTrainings, getTrainingStandards} from '@/dal/training'
+import {TrainingDetail} from '@/components/custom/trainingDetail'
+import {getTrainingDetail, getTrainingStandards} from '@/dal/training'
 import {getAllRoleLevels} from '@/dal/roleLevel'
-import {mapTraining, mapTrainingStandard} from '@/extra/training'
+import {mapTrainingDetail, mapTrainingStandard} from '@/extra/training'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {prismaClient} from '@/dal/prismaClient'
+import {notFound} from 'next/navigation'
 
 interface PageProps {
-  params: Promise<{departmentId: string}>
+  params: Promise<{departmentId: string; trainingId: string}>
 }
 
-export default async function TrainingCoursePage({params}: PageProps) {
-  const {departmentId} = await params
+export default async function TrainingDetailPage({params}: PageProps) {
+  const {departmentId, trainingId} = await params
 
-  const [department, trainingsFromDAL, standardsFromDAL, roleLevels, profile, workOrders] = await Promise.all([
+  const [department, trainingFromDAL, standardsFromDAL, roleLevels, profile, workOrders, contacts] = await Promise.all([
     getDepartmentById(departmentId),
-    getTrainings(),
+    getTrainingDetail(trainingId).catch(() => null),
     getTrainingStandards(),
     getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
@@ -26,43 +27,34 @@ export default async function TrainingCoursePage({params}: PageProps) {
       orderBy: {workOrderNumber: 'asc'},
       select: {id: true, workOrderNumber: true},
     }),
+    prismaClient.contact.findMany({
+      where: {deleted: false},
+      orderBy: [{lastName: 'asc'}, {firstName: 'asc'}],
+      select: {id: true, firstName: true, lastName: true},
+    }),
   ])
 
   if (!department) return <p>Department not found</p>
+  if (!trainingFromDAL) notFound()
 
-  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const currentUserRoleLevelIds = profile.RoleLevelEmployee.map(rle => rle.RoleLevel.id)
-  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-
-  const allTrainings = trainingsFromDAL.map(mapTraining)
-  const trainings = isAdmin
-    ? allTrainings
-    : allTrainings.filter(t => {
-        const rows = t.visibilityForRoles
-        if (rows.length === 0) return true
-        const myRow = rows.find(r => currentUserRoleLevelIds.includes(r.roleLevelId))
-        return myRow?.visible ?? false
-      })
-
+  const training = mapTrainingDetail(trainingFromDAL)
   const standardOptions = standardsFromDAL
     .filter(s => !s.deleted)
     .map(mapTrainingStandard)
     .map(s => ({id: s.id, name: s.descriptionShort ?? s.description ?? s.id}))
 
   const workOrderOptions = workOrders.map(w => ({id: w.id, name: w.workOrderNumber ?? w.id}))
+  const contactOptions = contacts.map(c => ({id: c.id, name: `${c.lastName} ${c.firstName}`}))
 
+  const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
   const defaultVisibleRoleNames = [department.name]
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-8">
-          <h1 className="text-lg font-semibold text-foreground">Training Courses</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Organize and manage internal training programs</p>
-        </div>
-        <TrainingTable
-          initialTrainings={trainings}
+      <div className="mx-auto max-w-5xl">
+        <TrainingDetail
+          training={training}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
@@ -70,6 +62,7 @@ export default async function TrainingCoursePage({params}: PageProps) {
           departmentId={departmentId}
           standardOptions={standardOptions}
           workOrderOptions={workOrderOptions}
+          contactOptions={contactOptions}
         />
       </div>
     </main>

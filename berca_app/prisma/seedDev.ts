@@ -118,7 +118,7 @@ const createdSubRoles: Record<SubRoleName, {id: string; level: number}> = {} as 
   {id: string; level: number}
 >
 
-const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}, {name: 'Internal'}]
+const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}]
 
 // ─── All target type names used across the system ─────────────────────────────
 
@@ -464,6 +464,10 @@ export const seedDev = async (prisma: PrismaClient) => {
   }
 
   console.log('Becra company and address seeded')
+
+  await prisma.projectType.deleteMany({
+    where: {name: 'Internal'},
+  })
 
   // 14. Upsert project types
   for (const pt of PROJECT_TYPES) {

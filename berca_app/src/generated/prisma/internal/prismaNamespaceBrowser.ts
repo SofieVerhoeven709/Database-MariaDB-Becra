@@ -1359,7 +1359,7 @@ export type TrainingScalarFieldEnum = (typeof TrainingScalarFieldEnum)[keyof typ
 
 export const TrainingContactScalarFieldEnum = {
   id: 'id',
-  clientNumber: 'clientNumber',
+  attendeeNumber: 'attendeeNumber',
   certSentDate: 'certSentDate',
   createdAt: 'createdAt',
   succeeded: 'succeeded',
@@ -2507,7 +2507,7 @@ export type TrainingOrderByRelevanceFieldEnum = (typeof TrainingOrderByRelevance
 
 export const TrainingContactOrderByRelevanceFieldEnum = {
   id: 'id',
-  clientNumber: 'clientNumber',
+  attendeeNumber: 'attendeeNumber',
   createdBy: 'createdBy',
   contactId: 'contactId',
   trainingId: 'trainingId',

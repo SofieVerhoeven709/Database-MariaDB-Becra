@@ -23,9 +23,9 @@ export type MaterialWithRelations = Prisma.MaterialGetPayload<{
 export type MaterialWithDetails = Prisma.MaterialGetPayload<{
   include: {
     Unit: true
-    Employee: {select: {id: true; firstName: true; lastName: true}}
-    PreferredSupplierCompany: {select: {id: true; name: true}}
-    MaterialSupplier: {include: {Company: {select: {id: true; name: true}}}}
+    Employee: {select: {id: true, firstName: true, lastName: true}}
+    PreferredSupplierCompany: {select: {id: true, name: true}}
+    MaterialSupplier: {include: {Company: {select: {id: true, name: true}}}}
     Inventory_Inventory_materialIdToMaterial: {
       where: {deleted: false}
       orderBy: {createdAt: 'asc'}
@@ -83,20 +83,17 @@ export async function getMaterialById(id: string): Promise<MaterialWithDetails |
 }
 
 export async function getMaterialGroups(): Promise<MaterialGroupOption[]> {
-  const distinctGroupIds = await prismaClient.material.findMany({
+  return prismaClient.materialGroup.findMany({
     where: {deleted: false},
-    select: {materialGroupId: true},
-    distinct: ['materialGroupId'],
-    orderBy: {materialGroupId: 'asc'},
+    select: {
+      id: true,
+      groupA: true,
+      groupB: true,
+      groupC: true,
+      groupD: true,
+    },
+    orderBy: [{groupA: 'asc'}, {groupB: 'asc'}, {groupC: 'asc'}, {groupD: 'asc'}],
   })
-
-  return distinctGroupIds.map(row => ({
-    id: row.materialGroupId,
-    groupA: row.materialGroupId,
-    groupB: null,
-    groupC: null,
-    groupD: null,
-  }))
 }
 
 export async function getUnits() {

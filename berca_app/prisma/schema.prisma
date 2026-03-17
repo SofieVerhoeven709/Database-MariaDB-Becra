@@ -425,6 +425,7 @@ model Employee {
   InvoiceType                                                                       InvoiceType[]
   InvoiceType_InvoiceType_deletedByToEmployee                                       InvoiceType[]                    @relation("InvoiceType_deletedByToEmployee")
   Material                                                                          Material[]
+  Material_Material_deletedByToEmployee                                             Material[]                       @relation("Material_deletedByToEmployee")
   MaterialAssembly                                                                  MaterialAssembly[]
   MaterialAssembly_MaterialAssembly_deletedByToEmployee                             MaterialAssembly[]               @relation("MaterialAssembly_deletedByToEmployee")
   MaterialCode                                                                      MaterialCode[]
@@ -938,6 +939,7 @@ model Material {
   MaterialGroup                                            MaterialGroup        @relation(fields: [materialGroupId], references: [id], onUpdate: Restrict, map: "Material_ibfk_1")
   Unit                                                     Unit                 @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "Material_ibfk_2")
   Employee                                                 Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")
+  Employee_Material_deletedByToEmployee                    Employee?            @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_6")
   PreferredSupplierCompany                                 Company?             @relation("Material_preferredSupplierCompanyIdToCompany", fields: [preferredSupplierCompanyId], references: [id], onUpdate: Restrict, map: "Material_ibfk_5")
   MaterialMovement                                         MaterialMovement[]
   MaterialOther                                            MaterialOther[]

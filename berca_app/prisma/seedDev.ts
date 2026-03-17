@@ -465,10 +465,6 @@ export const seedDev = async (prisma: PrismaClient) => {
 
   console.log('Becra company and address seeded')
 
-  await prisma.projectType.deleteMany({
-    where: {name: 'Internal'},
-  })
-
   // 14. Upsert project types
   for (const pt of PROJECT_TYPES) {
     const existing = await prisma.projectType.findFirst({where: {name: pt.name}})

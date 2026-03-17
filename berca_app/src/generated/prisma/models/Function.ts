@@ -266,7 +266,7 @@ export type FunctionCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutFunctionInput
-  Employee_Function_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_createdByToEmployeeInput
+  Employee_Function_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_createdByToEmployeeInput
   Employee_Function_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_deletedByToEmployeeInput
 }
 
@@ -276,7 +276,7 @@ export type FunctionUncheckedCreateInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy?: string
+  createdBy: string
   deletedBy?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutFunctionInput
 }
@@ -309,7 +309,7 @@ export type FunctionCreateManyInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy?: string
+  createdBy: string
   deletedBy?: string | null
 }
 
@@ -488,7 +488,7 @@ export type FunctionCreateWithoutContactInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Employee_Function_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_createdByToEmployeeInput
+  Employee_Function_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_createdByToEmployeeInput
   Employee_Function_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_deletedByToEmployeeInput
 }
 
@@ -498,7 +498,7 @@ export type FunctionUncheckedCreateWithoutContactInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy?: string
+  createdBy: string
   deletedBy?: string | null
 }
 
@@ -575,7 +575,7 @@ export type FunctionCreateWithoutEmployee_Function_deletedByToEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutFunctionInput
-  Employee_Function_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_createdByToEmployeeInput
+  Employee_Function_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutFunction_Function_createdByToEmployeeInput
 }
 
 export type FunctionUncheckedCreateWithoutEmployee_Function_deletedByToEmployeeInput = {
@@ -584,7 +584,7 @@ export type FunctionUncheckedCreateWithoutEmployee_Function_deletedByToEmployeeI
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy?: string
+  createdBy: string
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutFunctionInput
 }
 
@@ -658,7 +658,7 @@ export type FunctionCreateManyEmployee_Function_deletedByToEmployeeInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy?: string
+  createdBy: string
 }
 
 export type FunctionUpdateWithoutEmployee_Function_createdByToEmployeeInput = {

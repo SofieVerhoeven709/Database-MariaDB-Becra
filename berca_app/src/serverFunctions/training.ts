@@ -22,7 +22,7 @@ import {
   updateTrainingContactSchema,
   trainingContactIdSchema,
 } from '@/schemas/trainingSchemas'
-import {generateTrainingNumber} from '@/lib/utils'
+import {generateAttendeeNumber, generateTrainingNumber} from '@/lib/utils'
 
 const revalidate = () => revalidatePath('/training')
 
@@ -308,21 +308,54 @@ export const addTrainingContactAction = protectedServerFunction({
   schema: addTrainingContactSchema,
   functionName: 'Add training contact action',
   serverFn: async ({data, profile, logger}) => {
-    await prismaClient.trainingContact.create({
-      data: {
-        id: crypto.randomUUID(),
-        contactId: data.contactId,
-        trainingId: data.trainingId,
-        clientNumber: data.clientNumber ?? null,
-        succeeded: data.succeeded ?? false,
-        attended: data.attended ?? false,
-        certificateSent: data.certificateSent ?? false,
-        certSentDate: data.certSentDate ?? null,
-        createdBy: profile.id,
-        createdAt: new Date(),
-      },
+    // Count existing (non-hard-deleted) contacts on this training to determine sequence
+    const existingCount = await prismaClient.trainingContact.count({
+      where: {trainingId: data.trainingId},
     })
-    logger.info(`Training contact added: contact ${data.contactId} → training ${data.trainingId}`)
+
+    // Fetch the training number for the attendee number prefix
+    const training = await prismaClient.training.findUniqueOrThrow({
+      where: {id: data.trainingId},
+      select: {trainingNumber: true},
+    })
+
+    const trainingNumber = training.trainingNumber ?? data.trainingId
+    let attendeeNumber = generateAttendeeNumber(trainingNumber, existingCount + 1)
+    let attempts = 0
+
+    while (attempts < 5) {
+      try {
+        await prismaClient.trainingContact.create({
+          data: {
+            id: crypto.randomUUID(),
+            contactId: data.contactId,
+            trainingId: data.trainingId,
+            attendeeNumber,
+            succeeded: data.succeeded ?? false,
+            attended: data.attended ?? false,
+            certificateSent: data.certificateSent ?? false,
+            certSentDate: data.certSentDate ?? null,
+            createdBy: profile.id,
+            createdAt: new Date(),
+          },
+        })
+        break
+      } catch (err: unknown) {
+        const prismaErr = err as {code?: string}
+        if (prismaErr.code === 'P2002') {
+          attempts++
+          attendeeNumber = generateAttendeeNumber(trainingNumber, existingCount + 1 + attempts)
+          continue
+        }
+        throw err
+      }
+    }
+
+    if (attempts >= 5) throw new Error('Failed to generate a unique attendee number after 5 attempts')
+
+    logger.info(
+      `Training contact added: contact ${data.contactId} → training ${data.trainingId}, attendee ${attendeeNumber}`,
+    )
     revalidate()
   },
 })
@@ -334,7 +367,6 @@ export const updateTrainingContactAction = protectedServerFunction({
     await prismaClient.trainingContact.update({
       where: {id},
       data: {
-        clientNumber: data.clientNumber ?? null,
         succeeded: data.succeeded,
         attended: data.attended,
         certificateSent: data.certificateSent,

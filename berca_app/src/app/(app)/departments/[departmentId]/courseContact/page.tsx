@@ -59,7 +59,7 @@ export default async function TrainingContactPage({params}: PageProps) {
   const now = new Date()
   const trainingContacts = trainingContactsRaw.map(tc => ({
     id: tc.id,
-    clientNumber: tc.clientNumber,
+    attendeeNumber: tc.attendeeNumber,
     succeeded: tc.succeeded,
     attended: tc.attended,
     certificateSent: tc.certificateSent,

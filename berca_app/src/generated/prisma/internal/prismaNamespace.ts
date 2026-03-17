@@ -6338,7 +6338,6 @@ export type MaterialPerformanceScalarFieldEnum = (typeof MaterialPerformanceScal
 
 export const MaterialPriceScalarFieldEnum = {
   id: 'id',
-  companyId: 'companyId',
   beNumber: 'beNumber',
   orderNr: 'orderNr',
   quoteBecra: 'quoteBecra',
@@ -6355,7 +6354,8 @@ export const MaterialPriceScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  companyId: 'companyId'
 } as const
 
 export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)[keyof typeof MaterialPriceScalarFieldEnum]
@@ -6822,7 +6822,7 @@ export type TrainingScalarFieldEnum = (typeof TrainingScalarFieldEnum)[keyof typ
 
 export const TrainingContactScalarFieldEnum = {
   id: 'id',
-  clientNumber: 'clientNumber',
+  attendeeNumber: 'attendeeNumber',
   certSentDate: 'certSentDate',
   createdAt: 'createdAt',
   succeeded: 'succeeded',
@@ -7610,7 +7610,6 @@ export type MaterialPerformanceOrderByRelevanceFieldEnum = (typeof MaterialPerfo
 
 export const MaterialPriceOrderByRelevanceFieldEnum = {
   id: 'id',
-  companyId: 'companyId',
   beNumber: 'beNumber',
   orderNr: 'orderNr',
   quoteBecra: 'quoteBecra',
@@ -7621,7 +7620,8 @@ export const MaterialPriceOrderByRelevanceFieldEnum = {
   brandName: 'brandName',
   additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  companyId: 'companyId'
 } as const
 
 export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderByRelevanceFieldEnum)[keyof typeof MaterialPriceOrderByRelevanceFieldEnum]
@@ -7970,7 +7970,7 @@ export type TrainingOrderByRelevanceFieldEnum = (typeof TrainingOrderByRelevance
 
 export const TrainingContactOrderByRelevanceFieldEnum = {
   id: 'id',
-  clientNumber: 'clientNumber',
+  attendeeNumber: 'attendeeNumber',
   createdBy: 'createdBy',
   contactId: 'contactId',
   trainingId: 'trainingId',

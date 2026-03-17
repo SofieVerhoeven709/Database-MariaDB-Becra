@@ -705,7 +705,7 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS TrainingContact (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            clientNumber VARCHAR(100),
+            attendeeNumber VARCHAR(100),
             certSentDate DATETIME,
             createdAt DATETIME NOT NULL,
             succeeded BOOLEAN NOT NULL DEFAULT 0,

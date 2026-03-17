@@ -1765,7 +1765,7 @@ model Training {
 
 model TrainingContact {
   id                                           String    @id @db.Char(36)
-  clientNumber                                 String?   @db.VarChar(100)
+  attendeeNumber                               String?   @db.VarChar(100)
   certSentDate                                 DateTime? @db.DateTime(0)
   createdAt                                    DateTime  @db.DateTime(0)
   succeeded                                    Boolean   @default(false)

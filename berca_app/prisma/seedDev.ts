@@ -118,7 +118,7 @@ const createdSubRoles: Record<SubRoleName, {id: string; level: number}> = {} as 
   {id: string; level: number}
 >
 
-const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}, {name: 'Internal'}]
+const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}]
 
 // ─── All target type names used across the system ─────────────────────────────
 
@@ -1386,5 +1386,25 @@ export const seedDev = async (prisma: PrismaClient) => {
   }
 
   console.log('Warehouse places seeded')
+
+  // 20. Upsert CertificateTypes
+  const CERTIFICATE_TYPES = ['BA4', 'BA5', 'BA5 + HS', 'BA5 leidinggevende', 'HS', 'AREI', 'EHBO', 'ATEX']
+
+  for (const name of CERTIFICATE_TYPES) {
+    const existing = await prisma.certificateType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.certificateType.create({
+        data: {
+          id: randomUUID(),
+          name,
+          createdAt: now,
+          createdBy: adminEmployee.id,
+          deleted: false,
+        },
+      })
+    }
+  }
+
+  console.log('Certificate types seeded')
   console.log('Seed complete')
 }

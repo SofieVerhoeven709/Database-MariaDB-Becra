@@ -77,6 +77,7 @@ export const ModelName = {
   InvoiceOut: 'InvoiceOut',
   InvoiceType: 'InvoiceType',
   Material: 'Material',
+  MaterialSupplier: 'MaterialSupplier',
   MaterialAssembly: 'MaterialAssembly',
   MaterialCode: 'MaterialCode',
   MaterialDimension: 'MaterialDimension',
@@ -727,20 +728,32 @@ export const MaterialScalarFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  preferredSupplier: 'preferredSupplier',
+  preferredSupplierCompanyId: 'preferredSupplierCompanyId',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
   rejected: 'rejected',
-  materialGroupId: 'materialGroupId',
   unitId: 'unitId',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  materialGroupIdA: 'materialGroupIdA',
+  materialGroupIdB: 'materialGroupIdB',
+  materialGroupIdC: 'materialGroupIdC',
+  materialGroupIdD: 'materialGroupIdD'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
+
+
+export const MaterialSupplierScalarFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  companyId: 'companyId'
+} as const
+
+export type MaterialSupplierScalarFieldEnum = (typeof MaterialSupplierScalarFieldEnum)[keyof typeof MaterialSupplierScalarFieldEnum]
 
 
 export const MaterialAssemblyScalarFieldEnum = {
@@ -2025,18 +2038,32 @@ export const MaterialOrderByRelevanceFieldEnum = {
   id: 'id',
   beNumber: 'beNumber',
   name: 'name',
+  brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  preferredSupplier: 'preferredSupplier',
+  preferredSupplierCompanyId: 'preferredSupplierCompanyId',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
-  materialGroupId: 'materialGroupId',
+  bePartDoc: 'bePartDoc',
   unitId: 'unitId',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  materialGroupIdA: 'materialGroupIdA',
+  materialGroupIdB: 'materialGroupIdB',
+  materialGroupIdC: 'materialGroupIdC',
+  materialGroupIdD: 'materialGroupIdD'
 } as const
 
 export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
+
+
+export const MaterialSupplierOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  companyId: 'companyId'
+} as const
+
+export type MaterialSupplierOrderByRelevanceFieldEnum = (typeof MaterialSupplierOrderByRelevanceFieldEnum)[keyof typeof MaterialSupplierOrderByRelevanceFieldEnum]
 
 
 export const MaterialAssemblyOrderByRelevanceFieldEnum = {

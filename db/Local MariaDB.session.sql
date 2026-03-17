@@ -636,6 +636,7 @@ CREATE TABLE
             createdAt DATETIME NOT NULL,
             invoiceTime BOOLEAN NOT NULL DEFAULT 0,
             onSite BOOLEAN NOT NULL DEFAULT 0,
+            stayOver BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             workOrderId CHAR(36) NOT NULL,
             hourTypeId CHAR(36) NOT NULL,
@@ -704,7 +705,7 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS TrainingContact (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            clientNumber VARCHAR(100),
+            attendeeNumber VARCHAR(100),
             certSentDate DATETIME,
             createdAt DATETIME NOT NULL,
             succeeded BOOLEAN NOT NULL DEFAULT 0,

@@ -117,7 +117,7 @@ export const trainingIdSchema = trainingSchema.pick({id: true})
 
 export const trainingContactSchema = z.object({
   id: z.string(),
-  clientNumber: z.string().max(100).nullable().optional(),
+  attendeeNumber: z.string().max(100).nullable().optional(),
   certSentDate: dateSchema.optional(),
   succeeded: z.boolean().default(false),
   attended: z.boolean().default(false),
@@ -138,11 +138,11 @@ export const addTrainingContactSchema = trainingContactSchema.omit({
   deleted: true,
   deletedAt: true,
   deletedBy: true,
+  attendeeNumber: true,
 })
 
 export const updateTrainingContactSchema = trainingContactSchema.pick({
   id: true,
-  clientNumber: true,
   succeeded: true,
   attended: true,
   certificateSent: true,

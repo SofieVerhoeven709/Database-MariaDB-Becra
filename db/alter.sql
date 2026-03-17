@@ -1,4 +1,4 @@
-﻿USE app_db;
+﻿USE BecraBV;
 
 -- ============================================================
 -- Idempotent migrations.
@@ -173,58 +173,5 @@ DEALLOCATE PREPARE stmt;
 -- 28. TimeRegistry: add stayOver column
 ALTER TABLE TimeRegistry ADD COLUMN IF NOT EXISTS stayOver BOOLEAN NOT NULL DEFAULT 0;
 
--- 29. Ensure MaterialGroup table exists (used by material spec pages)
-CREATE TABLE IF NOT EXISTS MaterialGroup (
-    id CHAR(36) NOT NULL PRIMARY KEY,
-    groupA VARCHAR(255) NOT NULL,
-    groupB VARCHAR(255),
-    groupC VARCHAR(255),
-    groupD VARCHAR(255),
-    deleted BOOLEAN NOT NULL DEFAULT 0,
-    deletedAt DATETIME,
-    deletedBy CHAR(36),
-    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-) ENGINE = InnoDB;
-
--- 30. Material: brandOrderNr INT -> VARCHAR(255)
-ALTER TABLE Material MODIFY COLUMN IF EXISTS `brandOrderNr` VARCHAR(255) NOT NULL;
-
--- 31. Material: preferredSupplier -> preferredSupplierCompanyId
-ALTER TABLE Material CHANGE COLUMN IF EXISTS `preferredSupplier` `preferredSupplierCompanyId` CHAR(36) NULL;
-
--- 32. Material: normalize invalid preferredSupplierCompanyId values before FK enforcement
-UPDATE Material
-SET preferredSupplierCompanyId = NULL
-WHERE preferredSupplierCompanyId IS NOT NULL
-  AND preferredSupplierCompanyId NOT REGEXP '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$';
-
--- 33. Material: add index and FK for preferredSupplierCompanyId
-ALTER TABLE Material ADD INDEX IF NOT EXISTS `preferredSupplierCompanyId` (`preferredSupplierCompanyId`);
-ALTER TABLE Material DROP FOREIGN KEY IF EXISTS Material_ibfk_5;
-ALTER TABLE Material ADD CONSTRAINT Material_ibfk_5
-    FOREIGN KEY (`preferredSupplierCompanyId`) REFERENCES Company (`id`) ON DELETE SET NULL ON UPDATE RESTRICT;
-
--- 34. MaterialSupplier: junction table for many suppliers per material
-CREATE TABLE IF NOT EXISTS MaterialSupplier (
-    id CHAR(36) NOT NULL PRIMARY KEY,
-    materialId CHAR(36) NOT NULL,
-    companyId CHAR(36) NOT NULL,
-    CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
-    CONSTRAINT MaterialSupplier_ibfk_1 FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE ON UPDATE RESTRICT,
-    CONSTRAINT MaterialSupplier_ibfk_2 FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT ON UPDATE RESTRICT,
-    INDEX materialId (materialId),
-    INDEX companyId (companyId)
-) ENGINE = InnoDB;
-
--- 35. Backfill preferred supplier link into MaterialSupplier relation
-INSERT INTO MaterialSupplier (id, materialId, companyId)
-SELECT UUID(), m.id, m.preferredSupplierCompanyId
-FROM Material m
-WHERE m.preferredSupplierCompanyId IS NOT NULL
-  AND NOT EXISTS (
-      SELECT 1
-      FROM MaterialSupplier ms
-      WHERE ms.materialId = m.id
-        AND ms.companyId = m.preferredSupplierCompanyId
-  );
-
+-- 29. TrainingContact: changing clientNumber to attendeeNumber
+ALTER TABLE TrainingContact CHANGE COLUMN IF EXISTS `clientNumber` `attendeeNumber` VARCHAR(100);

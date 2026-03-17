@@ -287,7 +287,7 @@ export type RoleLevelCreateInput = {
   deletedAt?: Date | string | null
   Role: Prisma.RoleCreateNestedOneWithoutRoleLevelInput
   SubRole: Prisma.SubRoleCreateNestedOneWithoutRoleLevelInput
-  Employee_RoleLevel_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
+  Employee_RoleLevel_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
   Employee_RoleLevel_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_deletedByToEmployeeInput
   RoleLevelEmployee?: Prisma.RoleLevelEmployeeCreateNestedManyWithoutRoleLevelInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutRoleLevelInput
@@ -300,7 +300,7 @@ export type RoleLevelUncheckedCreateInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
   RoleLevelEmployee?: Prisma.RoleLevelEmployeeUncheckedCreateNestedManyWithoutRoleLevelInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutRoleLevelInput
@@ -339,7 +339,7 @@ export type RoleLevelCreateManyInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
 }
 
@@ -652,7 +652,7 @@ export type RoleLevelCreateWithoutEmployee_RoleLevel_deletedByToEmployeeInput = 
   deletedAt?: Date | string | null
   Role: Prisma.RoleCreateNestedOneWithoutRoleLevelInput
   SubRole: Prisma.SubRoleCreateNestedOneWithoutRoleLevelInput
-  Employee_RoleLevel_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
+  Employee_RoleLevel_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
   RoleLevelEmployee?: Prisma.RoleLevelEmployeeCreateNestedManyWithoutRoleLevelInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutRoleLevelInput
 }
@@ -664,7 +664,7 @@ export type RoleLevelUncheckedCreateWithoutEmployee_RoleLevel_deletedByToEmploye
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   RoleLevelEmployee?: Prisma.RoleLevelEmployeeUncheckedCreateNestedManyWithoutRoleLevelInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutRoleLevelInput
 }
@@ -731,7 +731,7 @@ export type RoleLevelCreateWithoutRoleInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   SubRole: Prisma.SubRoleCreateNestedOneWithoutRoleLevelInput
-  Employee_RoleLevel_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
+  Employee_RoleLevel_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
   Employee_RoleLevel_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_deletedByToEmployeeInput
   RoleLevelEmployee?: Prisma.RoleLevelEmployeeCreateNestedManyWithoutRoleLevelInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutRoleLevelInput
@@ -743,7 +743,7 @@ export type RoleLevelUncheckedCreateWithoutRoleInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
   RoleLevelEmployee?: Prisma.RoleLevelEmployeeUncheckedCreateNestedManyWithoutRoleLevelInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutRoleLevelInput
@@ -782,7 +782,7 @@ export type RoleLevelCreateWithoutVisibilityForRoleInput = {
   deletedAt?: Date | string | null
   Role: Prisma.RoleCreateNestedOneWithoutRoleLevelInput
   SubRole: Prisma.SubRoleCreateNestedOneWithoutRoleLevelInput
-  Employee_RoleLevel_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
+  Employee_RoleLevel_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
   Employee_RoleLevel_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_deletedByToEmployeeInput
   RoleLevelEmployee?: Prisma.RoleLevelEmployeeCreateNestedManyWithoutRoleLevelInput
 }
@@ -794,7 +794,7 @@ export type RoleLevelUncheckedCreateWithoutVisibilityForRoleInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
   RoleLevelEmployee?: Prisma.RoleLevelEmployeeUncheckedCreateNestedManyWithoutRoleLevelInput
 }
@@ -845,7 +845,7 @@ export type RoleLevelCreateWithoutSubRoleInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Role: Prisma.RoleCreateNestedOneWithoutRoleLevelInput
-  Employee_RoleLevel_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
+  Employee_RoleLevel_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
   Employee_RoleLevel_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_deletedByToEmployeeInput
   RoleLevelEmployee?: Prisma.RoleLevelEmployeeCreateNestedManyWithoutRoleLevelInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutRoleLevelInput
@@ -857,7 +857,7 @@ export type RoleLevelUncheckedCreateWithoutSubRoleInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
   RoleLevelEmployee?: Prisma.RoleLevelEmployeeUncheckedCreateNestedManyWithoutRoleLevelInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutRoleLevelInput
@@ -896,7 +896,7 @@ export type RoleLevelCreateWithoutRoleLevelEmployeeInput = {
   deletedAt?: Date | string | null
   Role: Prisma.RoleCreateNestedOneWithoutRoleLevelInput
   SubRole: Prisma.SubRoleCreateNestedOneWithoutRoleLevelInput
-  Employee_RoleLevel_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
+  Employee_RoleLevel_createdByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_createdByToEmployeeInput
   Employee_RoleLevel_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutRoleLevel_RoleLevel_deletedByToEmployeeInput
   VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutRoleLevelInput
 }
@@ -908,7 +908,7 @@ export type RoleLevelUncheckedCreateWithoutRoleLevelEmployeeInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutRoleLevelInput
 }
@@ -970,7 +970,7 @@ export type RoleLevelCreateManyEmployee_RoleLevel_deletedByToEmployeeInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
 }
 
 export type RoleLevelUpdateWithoutEmployee_RoleLevel_createdByToEmployeeInput = {
@@ -1047,7 +1047,7 @@ export type RoleLevelCreateManyRoleInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
 }
 
@@ -1091,7 +1091,7 @@ export type RoleLevelCreateManySubRoleInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  createdBy: string
+  createdBy?: string
   deletedBy?: string | null
 }
 

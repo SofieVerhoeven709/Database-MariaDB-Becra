@@ -26,6 +26,7 @@ export interface HourTypeOption {
 export interface WorkOrderOption {
   id: string
   workOrderNumber: string | null
+  description: string | null
 }
 
 export type TimeRegistryFormData = {
@@ -226,7 +227,12 @@ export function TimeRegistryFormDialog({
                 <SelectContent className="bg-card border-border">
                   {workOrders.map(wo => (
                     <SelectItem key={wo.id} value={wo.id}>
-                      {wo.workOrderNumber ?? wo.id}
+                      <div className="flex flex-col">
+                        <span className="font-medium">{wo.workOrderNumber ?? wo.id}</span>
+                        {wo.description && (
+                          <span className="text-xs text-muted-foreground truncate max-w-[300px]">{wo.description}</span>
+                        )}
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>

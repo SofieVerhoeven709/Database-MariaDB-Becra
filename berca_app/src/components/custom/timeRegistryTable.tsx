@@ -221,7 +221,12 @@ export function TimeRegistryTable({
               <SelectItem value="all">All Work Orders</SelectItem>
               {workOrders.map(wo => (
                 <SelectItem key={wo.id} value={wo.id}>
-                  {wo.workOrderNumber ?? wo.id}
+                  <div className="flex flex-col">
+                    <span className="font-medium">{wo.workOrderNumber ?? wo.id}</span>
+                    {wo.description && (
+                      <span className="text-xs text-muted-foreground truncate max-w-[220px]">{wo.description}</span>
+                    )}
+                  </div>
                 </SelectItem>
               ))}
             </SelectContent>

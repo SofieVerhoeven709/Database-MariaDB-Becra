@@ -1,25 +1,55 @@
 import 'server-only'
+import {randomUUID} from 'crypto'
 import {prismaClient} from './prismaClient'
-import type {Material, MaterialGroup, Unit, Employee, Inventory} from '@/generated/prisma/client'
+import type {Prisma} from '@/generated/prisma/client'
 
-export type MaterialWithRelations = Material & {
-  MaterialGroup: MaterialGroup
-  Unit: Unit
-  Employee: Pick<Employee, 'id'> & {firstName: string; lastName: string}
+export type MaterialGroupOption = {
+  id: string
+  groupA: string
+  groupB: string | null
+  groupC: string | null
+  groupD: string | null
 }
 
-export type MaterialWithDetails = MaterialWithRelations & {
-  Inventory_Inventory_materialIdToMaterial: Inventory[]
-}
+export type MaterialWithRelations = Prisma.MaterialGetPayload<{
+  include: {
+    Unit: true
+    Employee: {select: {id: true; firstName: true; lastName: true}}
+    PreferredSupplierCompany: {select: {id: true; name: true}}
+    MaterialSupplier: {include: {Company: {select: {id: true; name: true}}}}
+  }
+}>
+
+export type MaterialWithDetails = Prisma.MaterialGetPayload<{
+  include: {
+    Unit: true
+    Employee: {select: {id: true; firstName: true; lastName: true}}
+    PreferredSupplierCompany: {select: {id: true; name: true}}
+    MaterialSupplier: {include: {Company: {select: {id: true; name: true}}}}
+    Inventory_Inventory_materialIdToMaterial: {
+      where: {deleted: false}
+      orderBy: {createdAt: 'asc'}
+    }
+  }
+}>
 
 export async function getMaterials(): Promise<MaterialWithRelations[]> {
   return prismaClient.material.findMany({
     where: {deleted: false},
     include: {
-      MaterialGroup: true,
       Unit: true,
       Employee: {
         select: {id: true, firstName: true, lastName: true},
+      },
+      PreferredSupplierCompany: {
+        select: {id: true, name: true},
+      },
+      MaterialSupplier: {
+        include: {
+          Company: {
+            select: {id: true, name: true},
+          },
+        },
       },
     },
     orderBy: {beNumber: 'asc'},
@@ -30,24 +60,43 @@ export async function getMaterialById(id: string): Promise<MaterialWithDetails |
   return prismaClient.material.findUnique({
     where: {id},
     include: {
-      MaterialGroup: true,
       Unit: true,
       Employee: {
         select: {id: true, firstName: true, lastName: true},
+      },
+      PreferredSupplierCompany: {
+        select: {id: true, name: true},
+      },
+      MaterialSupplier: {
+        include: {
+          Company: {
+            select: {id: true, name: true},
+          },
+        },
       },
       Inventory_Inventory_materialIdToMaterial: {
         where: {deleted: false},
         orderBy: {createdAt: 'asc'},
       },
     },
-  }) as Promise<MaterialWithDetails | null>
+  })
 }
 
-export async function getMaterialGroups() {
-  return prismaClient.materialGroup.findMany({
+export async function getMaterialGroups(): Promise<MaterialGroupOption[]> {
+  const distinctGroupIds = await prismaClient.material.findMany({
     where: {deleted: false},
-    orderBy: {groupA: 'asc'},
+    select: {materialGroupId: true},
+    distinct: ['materialGroupId'],
+    orderBy: {materialGroupId: 'asc'},
   })
+
+  return distinctGroupIds.map(row => ({
+    id: row.materialGroupId,
+    groupA: row.materialGroupId,
+    groupB: null,
+    groupC: null,
+    groupD: null,
+  }))
 }
 
 export async function getUnits() {
@@ -61,10 +110,11 @@ export async function createMaterial(data: {
   id: string
   beNumber: string
   name?: string | null
-  brandOrderNr: number
+  brandOrderNr: string
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
+  preferredSupplierCompanyId?: string | null
+  supplierCompanyIds?: string[]
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: number | null
@@ -73,7 +123,19 @@ export async function createMaterial(data: {
   unitId: string
   createdBy: string
 }) {
-  return prismaClient.material.create({data})
+  const {supplierCompanyIds = [], ...materialData} = data
+
+  return prismaClient.material.create({
+    data: {
+      ...materialData,
+      MaterialSupplier:
+        supplierCompanyIds.length > 0
+          ? {
+              create: supplierCompanyIds.map(companyId => ({id: randomUUID(), companyId})),
+            }
+          : undefined,
+    },
+  })
 }
 
 export async function updateMaterial(
@@ -81,10 +143,11 @@ export async function updateMaterial(
   data: {
     beNumber?: string
     name?: string | null
-    brandOrderNr?: number
+    brandOrderNr?: string
     shortDescription?: string
     longDescription?: string | null
-    preferredSupplier?: string | null
+    preferredSupplierCompanyId?: string | null
+    supplierCompanyIds?: string[]
     brandName?: string | null
     documentationPlace?: string | null
     bePartDoc?: number | null
@@ -93,7 +156,21 @@ export async function updateMaterial(
     unitId?: string
   },
 ) {
-  return prismaClient.material.update({where: {id}, data})
+  const {supplierCompanyIds, ...materialData} = data
+
+  return prismaClient.material.update({
+    where: {id},
+    data: {
+      ...materialData,
+      MaterialSupplier:
+        supplierCompanyIds === undefined
+          ? undefined
+          : {
+              deleteMany: {},
+              create: supplierCompanyIds.map(companyId => ({id: randomUUID(), companyId})),
+            },
+    },
+  })
 }
 
 export async function softDeleteMaterial(id: string, deletedBy: string) {

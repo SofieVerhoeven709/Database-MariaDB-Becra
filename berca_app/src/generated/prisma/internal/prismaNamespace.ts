@@ -418,6 +418,7 @@ export const ModelName = {
   InvoiceOut: 'InvoiceOut',
   InvoiceType: 'InvoiceType',
   Material: 'Material',
+  MaterialSupplier: 'MaterialSupplier',
   MaterialAssembly: 'MaterialAssembly',
   MaterialCode: 'MaterialCode',
   MaterialDimension: 'MaterialDimension',
@@ -482,7 +483,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyAdress" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentGroup" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee"
+    modelProps: "certificate" | "certificateType" | "company" | "companyAdress" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentGroup" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2331,6 +2332,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MaterialCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MaterialCountAggregateOutputType> | number
+        }
+      }
+    }
+    MaterialSupplier: {
+      payload: Prisma.$MaterialSupplierPayload<ExtArgs>
+      fields: Prisma.MaterialSupplierFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MaterialSupplierFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialSupplierPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MaterialSupplierFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialSupplierPayload>
+        }
+        findFirst: {
+          args: Prisma.MaterialSupplierFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialSupplierPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MaterialSupplierFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialSupplierPayload>
+        }
+        findMany: {
+          args: Prisma.MaterialSupplierFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialSupplierPayload>[]
+        }
+        create: {
+          args: Prisma.MaterialSupplierCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialSupplierPayload>
+        }
+        createMany: {
+          args: Prisma.MaterialSupplierCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MaterialSupplierDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialSupplierPayload>
+        }
+        update: {
+          args: Prisma.MaterialSupplierUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialSupplierPayload>
+        }
+        deleteMany: {
+          args: Prisma.MaterialSupplierDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MaterialSupplierUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MaterialSupplierUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialSupplierPayload>
+        }
+        aggregate: {
+          args: Prisma.MaterialSupplierAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMaterialSupplier>
+        }
+        groupBy: {
+          args: Prisma.MaterialSupplierGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MaterialSupplierGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MaterialSupplierCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MaterialSupplierCountAggregateOutputType> | number
         }
       }
     }
@@ -6190,7 +6257,7 @@ export const MaterialScalarFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  preferredSupplier: 'preferredSupplier',
+  preferredSupplierCompanyId: 'preferredSupplierCompanyId',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -6204,6 +6271,15 @@ export const MaterialScalarFieldEnum = {
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
+
+
+export const MaterialSupplierScalarFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  companyId: 'companyId'
+} as const
+
+export type MaterialSupplierScalarFieldEnum = (typeof MaterialSupplierScalarFieldEnum)[keyof typeof MaterialSupplierScalarFieldEnum]
 
 
 export const MaterialAssemblyScalarFieldEnum = {
@@ -6338,7 +6414,6 @@ export type MaterialPerformanceScalarFieldEnum = (typeof MaterialPerformanceScal
 
 export const MaterialPriceScalarFieldEnum = {
   id: 'id',
-  companyId: 'companyId',
   beNumber: 'beNumber',
   orderNr: 'orderNr',
   quoteBecra: 'quoteBecra',
@@ -6355,7 +6430,8 @@ export const MaterialPriceScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  companyId: 'companyId'
 } as const
 
 export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)[keyof typeof MaterialPriceScalarFieldEnum]
@@ -6768,6 +6844,7 @@ export const TimeRegistryScalarFieldEnum = {
   createdAt: 'createdAt',
   invoiceTime: 'invoiceTime',
   onSite: 'onSite',
+  stayOver: 'stayOver',
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',
   hourTypeId: 'hourTypeId',
@@ -7487,9 +7564,10 @@ export const MaterialOrderByRelevanceFieldEnum = {
   id: 'id',
   beNumber: 'beNumber',
   name: 'name',
+  brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  preferredSupplier: 'preferredSupplier',
+  preferredSupplierCompanyId: 'preferredSupplierCompanyId',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   materialGroupId: 'materialGroupId',
@@ -7499,6 +7577,15 @@ export const MaterialOrderByRelevanceFieldEnum = {
 } as const
 
 export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
+
+
+export const MaterialSupplierOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  companyId: 'companyId'
+} as const
+
+export type MaterialSupplierOrderByRelevanceFieldEnum = (typeof MaterialSupplierOrderByRelevanceFieldEnum)[keyof typeof MaterialSupplierOrderByRelevanceFieldEnum]
 
 
 export const MaterialAssemblyOrderByRelevanceFieldEnum = {
@@ -7609,7 +7696,6 @@ export type MaterialPerformanceOrderByRelevanceFieldEnum = (typeof MaterialPerfo
 
 export const MaterialPriceOrderByRelevanceFieldEnum = {
   id: 'id',
-  companyId: 'companyId',
   beNumber: 'beNumber',
   orderNr: 'orderNr',
   quoteBecra: 'quoteBecra',
@@ -7620,7 +7706,8 @@ export const MaterialPriceOrderByRelevanceFieldEnum = {
   brandName: 'brandName',
   additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  companyId: 'companyId'
 } as const
 
 export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderByRelevanceFieldEnum)[keyof typeof MaterialPriceOrderByRelevanceFieldEnum]
@@ -8308,6 +8395,7 @@ export type GlobalOmitConfig = {
   invoiceOut?: Prisma.InvoiceOutOmit
   invoiceType?: Prisma.InvoiceTypeOmit
   material?: Prisma.MaterialOmit
+  materialSupplier?: Prisma.MaterialSupplierOmit
   materialAssembly?: Prisma.MaterialAssemblyOmit
   materialCode?: Prisma.MaterialCodeOmit
   materialDimension?: Prisma.MaterialDimensionOmit

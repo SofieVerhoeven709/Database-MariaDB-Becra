@@ -1,6 +1,7 @@
 import {getMaterialById, getMaterialGroups, getUnits} from '@/dal/materials'
 import {MaterialDetail} from '@/components/custom/materialDetail'
 import {notFound} from 'next/navigation'
+import {getSupplierCompanies} from '@/dal/companies'
 
 interface MaterialDetailPageProps {
   params: Promise<{materialId: string}>
@@ -8,13 +9,18 @@ interface MaterialDetailPageProps {
 
 export default async function MaterialDetailPage({params}: MaterialDetailPageProps) {
   const {materialId} = await params
-  const [material, groups, units] = await Promise.all([
+  const [material, groups, units, supplierCompanies] = await Promise.all([
     getMaterialById(materialId).catch(() => null),
     getMaterialGroups(),
     getUnits(),
+    getSupplierCompanies(),
   ])
 
   if (!material) notFound()
+
+  const groupLabelById = new Map(
+    groups.map(g => [g.id, [g.groupA, g.groupB, g.groupC, g.groupD].filter(Boolean).join(' / ')]),
+  )
 
   const mappedMaterial = {
     id: material.id,
@@ -23,20 +29,16 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     brandOrderNr: material.brandOrderNr,
     shortDescription: material.shortDescription,
     longDescription: material.longDescription ?? null,
-    preferredSupplier: material.preferredSupplier ?? null,
+    preferredSupplierCompanyId: material.preferredSupplierCompanyId ?? null,
+    preferredSupplierName: material.PreferredSupplierCompany?.name ?? null,
+    supplierCompanyIds: material.MaterialSupplier.map(s => s.companyId),
+    supplierCompanyNames: material.MaterialSupplier.map(s => s.Company.name),
     brandName: material.brandName ?? null,
     documentationPlace: material.documentationPlace ?? null,
     bePartDoc: material.bePartDoc ?? null,
     rejected: material.rejected ?? false,
     materialGroupId: material.materialGroupId,
-    materialGroupLabel: [
-      material.MaterialGroup.groupA,
-      material.MaterialGroup.groupB,
-      material.MaterialGroup.groupC,
-      material.MaterialGroup.groupD,
-    ]
-      .filter(Boolean)
-      .join(' / '),
+    materialGroupLabel: groupLabelById.get(material.materialGroupId) ?? material.materialGroupId,
     unitId: material.unitId,
     unitName: material.Unit.unitName,
     unitAbbreviation: material.Unit.abbreviation,
@@ -73,9 +75,20 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     abbreviation: u.abbreviation,
   }))
 
+  const mappedSupplierCompanies = supplierCompanies.map(c => ({
+    id: c.id,
+    name: c.name,
+    number: c.number,
+  }))
+
   return (
     <div className="p-6 max-w-5xl mx-auto">
-      <MaterialDetail material={mappedMaterial} materialGroups={mappedGroups} units={mappedUnits} />
+      <MaterialDetail
+        material={mappedMaterial}
+        materialGroups={mappedGroups}
+        units={mappedUnits}
+        supplierCompanies={mappedSupplierCompanies}
+      />
     </div>
   )
 }

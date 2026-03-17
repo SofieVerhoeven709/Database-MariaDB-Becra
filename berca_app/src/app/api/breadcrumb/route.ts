@@ -5,6 +5,14 @@ import {NextResponse} from 'next/server'
 type EntityResolver = (id: string) => Promise<string | null>
 
 const entityResolvers: Record<string, EntityResolver> = {
+  departments: async id => {
+    const item = await prismaClient.department.findUnique({where: {id}, select: {name: true}})
+    return item?.name ?? null
+  },
+  department: async id => {
+    const item = await prismaClient.department.findUnique({where: {id}, select: {name: true}})
+    return item?.name ?? null
+  },
   project: async id => {
     const item = await prismaClient.project.findUnique({where: {id}, select: {projectName: true}})
     return item?.projectName ?? null

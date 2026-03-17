@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS BecraBV;
+CREATE DATABASE app_db;
 
-USE BecraBV;
+USE app_db;
 
 CREATE TABLE
       IF NOT EXISTS Role (
@@ -163,32 +163,6 @@ CREATE TABLE
             valid BOOLEAN NOT NULL,
             createdBy CHAR(36) NOT NULL,
             createdAt TIMESTAMP NOT NULL,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME,
-            deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-      ) ENGINE = InnoDB;
-
-CREATE TABLE
-      IF NOT EXISTS Material (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            beNumber VARCHAR(255) NOT NULL,
-            name VARCHAR(255),
-            brandOrderNr INT NOT NULL,
-            shortDescription VARCHAR(255) NOT NULL,
-            longDescription TEXT,
-            preferredSupplier VARCHAR(255),
-            brandName VARCHAR(255),
-            documentationPlace VARCHAR(255),
-            bePartDoc INT,
-            rejected BOOLEAN DEFAULT FALSE,
-            materialGroupId CHAR(36) NOT NULL,
-            unitId CHAR(36) NOT NULL,
-            createdBy CHAR(36) NOT NULL,
-            CONSTRAINT uq_material_beNumber UNIQUE (beNumber),
-            FOREIGN KEY (materialGroupId) REFERENCES MaterialGroup (id) ON DELETE RESTRICT,
-            FOREIGN KEY (unitId) REFERENCES Unit (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
@@ -363,6 +337,43 @@ CREATE TABLE
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS Material (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            beNumber VARCHAR(255) NOT NULL,
+            name VARCHAR(255),
+            brandOrderNr VARCHAR(255) NOT NULL,
+            shortDescription VARCHAR(255) NOT NULL,
+            longDescription TEXT,
+            preferredSupplierCompanyId CHAR(36),
+            brandName VARCHAR(255),
+            documentationPlace VARCHAR(255),
+            bePartDoc INT,
+            rejected BOOLEAN DEFAULT FALSE,
+            materialGroupId CHAR(36) NOT NULL,
+            unitId CHAR(36) NOT NULL,
+            createdBy CHAR(36) NOT NULL,
+            CONSTRAINT uq_material_beNumber UNIQUE (beNumber),
+            FOREIGN KEY (materialGroupId) REFERENCES MaterialGroup (id) ON DELETE RESTRICT,
+            FOREIGN KEY (unitId) REFERENCES Unit (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (preferredSupplierCompanyId) REFERENCES Company (id) ON DELETE SET NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS MaterialSupplier (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            materialId CHAR(36) NOT NULL,
+            companyId CHAR(36) NOT NULL,
+            CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -667,6 +678,7 @@ CREATE TABLE
             createdAt DATETIME NOT NULL,
             invoiceTime BOOLEAN NOT NULL DEFAULT 0,
             onSite BOOLEAN NOT NULL DEFAULT 0,
+            stayOver BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             workOrderId CHAR(36) NOT NULL,
             hourTypeId CHAR(36) NOT NULL,
@@ -1188,7 +1200,9 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            companyId CHAR(36) NOT NULL,
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE

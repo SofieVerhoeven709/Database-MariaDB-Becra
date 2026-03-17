@@ -158,6 +158,11 @@ export type InvoiceType = Prisma.InvoiceTypeModel
  */
 export type Material = Prisma.MaterialModel
 /**
+ * Model MaterialSupplier
+ * 
+ */
+export type MaterialSupplier = Prisma.MaterialSupplierModel
+/**
  * Model MaterialAssembly
  * 
  */

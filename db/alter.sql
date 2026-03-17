@@ -1,4 +1,4 @@
-﻿USE BecraBV;
+﻿USE app_db;
 
 -- ============================================================
 -- Idempotent migrations.
@@ -100,19 +100,131 @@ CREATE TABLE IF NOT EXISTS RoleLevelEmployee (
     FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT
 ) ENGINE = InnoDB;
 
--- 25. Migrate existing data (only if Employee still has the roleLevelId column)
-INSERT IGNORE INTO RoleLevelEmployee (id, employeeId, roleLevelId)
-SELECT UUID(), id, roleLevelId
-FROM Employee
-WHERE roleLevelId IS NOT NULL
-  AND NOT EXISTS (SELECT 1 FROM RoleLevelEmployee rle WHERE rle.employeeId = Employee.id);
+-- 25. Migrate existing data (only if roleLevelId column still exists on Employee)
+SET @col_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.COLUMNS 
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Employee'
+    AND COLUMN_NAME = 'roleLevelId'
+);
 
--- 26. Drop FK then column
-ALTER TABLE Employee DROP FOREIGN KEY IF EXISTS fk_employee_rolelevel;
+SET @sql = IF(@col_exists > 0,
+  'INSERT INTO RoleLevelEmployee (id, employeeId, roleLevelId)
+   SELECT UUID(), e.id, e.roleLevelId
+   FROM Employee e
+   WHERE e.roleLevelId IS NOT NULL
+     AND NOT EXISTS (
+       SELECT 1 FROM RoleLevelEmployee rle
+       WHERE rle.employeeId = e.id
+         AND rle.roleLevelId = e.roleLevelId
+     )',
+  'SELECT ''Skipping step 25: roleLevelId already dropped'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- 26. Drop FK on roleLevelId (look up actual constraint name) then drop column
+SET @fk_name = (
+  SELECT CONSTRAINT_NAME
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Employee'
+    AND COLUMN_NAME = 'roleLevelId'
+    AND REFERENCED_TABLE_NAME IS NOT NULL
+  LIMIT 1
+);
+
+SET @sql = IF(@fk_name IS NOT NULL,
+  CONCAT('ALTER TABLE Employee DROP FOREIGN KEY `', @fk_name, '`'),
+  'SELECT ''No FK to drop on Employee.roleLevelId'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
 ALTER TABLE Employee DROP COLUMN IF EXISTS roleLevelId;
 
 -- 27. MaterialPrice: add companyId column and FK
 ALTER TABLE MaterialPrice
-    ADD COLUMN IF NOT EXISTS `companyId` CHAR(36) NOT NULL AFTER `id`,
-    ADD CONSTRAINT fk_materialprice_company
-        FOREIGN KEY (`companyId`) REFERENCES Company (`id`) ON DELETE RESTRICT;
+    ADD COLUMN IF NOT EXISTS `companyId` CHAR(36) NOT NULL AFTER `id`;
+
+-- 27b. MaterialPrice: add FK only if it doesn't exist yet
+SET @fk_exists = (
+  SELECT COUNT(*)
+  FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MaterialPrice'
+    AND CONSTRAINT_NAME = 'fk_materialprice_company'
+);
+
+SET @sql = IF(@fk_exists = 0,
+  'ALTER TABLE MaterialPrice ADD CONSTRAINT fk_materialprice_company FOREIGN KEY (`companyId`) REFERENCES Company (`id`) ON DELETE RESTRICT',
+  'SELECT ''Skipping: fk_materialprice_company already exists'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- 28. TimeRegistry: add stayOver column
+ALTER TABLE TimeRegistry ADD COLUMN IF NOT EXISTS stayOver BOOLEAN NOT NULL DEFAULT 0;
+
+-- 29. Ensure MaterialGroup table exists (used by material spec pages)
+CREATE TABLE IF NOT EXISTS MaterialGroup (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    groupA VARCHAR(255) NOT NULL,
+    groupB VARCHAR(255),
+    groupC VARCHAR(255),
+    groupD VARCHAR(255),
+    deleted BOOLEAN NOT NULL DEFAULT 0,
+    deletedAt DATETIME,
+    deletedBy CHAR(36),
+    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+) ENGINE = InnoDB;
+
+-- 30. Material: brandOrderNr INT -> VARCHAR(255)
+ALTER TABLE Material MODIFY COLUMN IF EXISTS `brandOrderNr` VARCHAR(255) NOT NULL;
+
+-- 31. Material: preferredSupplier -> preferredSupplierCompanyId
+ALTER TABLE Material CHANGE COLUMN IF EXISTS `preferredSupplier` `preferredSupplierCompanyId` CHAR(36) NULL;
+
+-- 32. Material: normalize invalid preferredSupplierCompanyId values before FK enforcement
+UPDATE Material
+SET preferredSupplierCompanyId = NULL
+WHERE preferredSupplierCompanyId IS NOT NULL
+  AND preferredSupplierCompanyId NOT REGEXP '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$';
+
+-- 33. Material: add index and FK for preferredSupplierCompanyId
+ALTER TABLE Material ADD INDEX IF NOT EXISTS `preferredSupplierCompanyId` (`preferredSupplierCompanyId`);
+ALTER TABLE Material DROP FOREIGN KEY IF EXISTS Material_ibfk_5;
+ALTER TABLE Material ADD CONSTRAINT Material_ibfk_5
+    FOREIGN KEY (`preferredSupplierCompanyId`) REFERENCES Company (`id`) ON DELETE SET NULL ON UPDATE RESTRICT;
+
+-- 34. MaterialSupplier: junction table for many suppliers per material
+CREATE TABLE IF NOT EXISTS MaterialSupplier (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    materialId CHAR(36) NOT NULL,
+    companyId CHAR(36) NOT NULL,
+    CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
+    CONSTRAINT MaterialSupplier_ibfk_1 FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE ON UPDATE RESTRICT,
+    CONSTRAINT MaterialSupplier_ibfk_2 FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    INDEX materialId (materialId),
+    INDEX companyId (companyId)
+) ENGINE = InnoDB;
+
+-- 35. Backfill preferred supplier link into MaterialSupplier relation
+INSERT INTO MaterialSupplier (id, materialId, companyId)
+SELECT UUID(), m.id, m.preferredSupplierCompanyId
+FROM Material m
+WHERE m.preferredSupplierCompanyId IS NOT NULL
+  AND NOT EXISTS (
+      SELECT 1
+      FROM MaterialSupplier ms
+      WHERE ms.materialId = m.id
+        AND ms.companyId = m.preferredSupplierCompanyId
+  );
+

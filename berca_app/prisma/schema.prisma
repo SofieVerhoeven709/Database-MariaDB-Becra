@@ -49,47 +49,49 @@ model CertificateType {
 }
 
 model Company {
-  id                                   String                 @id @db.Char(36)
-  name                                 String                 @db.VarChar(100)
-  number                               String                 @db.VarChar(100)
-  mail                                 String?                @db.VarChar(100)
-  businessPhone                        String?                @db.VarChar(100)
-  website                              String?                @db.VarChar(100)
-  vatNumber                            String?                @db.VarChar(100)
-  bankNumber                           String?                @db.VarChar(100)
-  iban                                 String?                @db.VarChar(100)
-  bic                                  String?                @db.VarChar(100)
-  becraCustomerNumber                  String?                @db.VarChar(100)
-  becraWebsiteLogin                    String?                @db.VarChar(100)
-  supplier                             Boolean                @default(false)
-  preferredSupplier                    Boolean                @default(false)
-  companyActive                        Boolean                @default(true)
-  newsLetter                           Boolean                @default(false)
-  customer                             Boolean                @default(false)
-  potentialCustomer                    Boolean                @default(false)
-  headQuarters                         Boolean                @default(false)
-  potentialSubContractor               Boolean                @default(false)
-  subContractor                        Boolean                @default(false)
-  notes                                String?                @db.Text
-  createdAt                            DateTime               @db.DateTime(0)
-  createdBy                            String                 @db.Char(36)
-  companyId                            String?                @db.Char(36)
-  targetId                             String                 @db.Char(36)
-  deleted                              Boolean                @default(false)
-  deletedAt                            DateTime?              @db.DateTime(0)
-  deletedBy                            String?                @db.Char(36)
-  Employee                             Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_1")
-  Company                              Company?               @relation("CompanyToCompany", fields: [companyId], references: [id], onUpdate: Restrict, map: "Company_ibfk_2")
-  other_Company                        Company[]              @relation("CompanyToCompany")
-  Target                               Target                 @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Company_ibfk_3")
-  Employee_Company_deletedByToEmployee Employee?              @relation("Company_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_4")
-  CompanyAdress                        CompanyAdress[]
-  CompanyContact                       CompanyContact[]
-  DeliveryNoteSupplier                 DeliveryNoteSupplier[]
-  MaterialPrice                        MaterialPrice[]
-  MaterialSerialTrack                  MaterialSerialTrack[]
-  Project                              Project[]
-  Purchase                             Purchase[]
+  id                                                    String                 @id @db.Char(36)
+  name                                                  String                 @db.VarChar(100)
+  number                                                String                 @db.VarChar(100)
+  mail                                                  String?                @db.VarChar(100)
+  businessPhone                                         String?                @db.VarChar(100)
+  website                                               String?                @db.VarChar(100)
+  vatNumber                                             String?                @db.VarChar(100)
+  bankNumber                                            String?                @db.VarChar(100)
+  iban                                                  String?                @db.VarChar(100)
+  bic                                                   String?                @db.VarChar(100)
+  becraCustomerNumber                                   String?                @db.VarChar(100)
+  becraWebsiteLogin                                     String?                @db.VarChar(100)
+  supplier                                              Boolean                @default(false)
+  preferredSupplier                                     Boolean                @default(false)
+  companyActive                                         Boolean                @default(true)
+  newsLetter                                            Boolean                @default(false)
+  customer                                              Boolean                @default(false)
+  potentialCustomer                                     Boolean                @default(false)
+  headQuarters                                          Boolean                @default(false)
+  potentialSubContractor                                Boolean                @default(false)
+  subContractor                                         Boolean                @default(false)
+  notes                                                 String?                @db.Text
+  createdAt                                             DateTime               @db.DateTime(0)
+  createdBy                                             String                 @db.Char(36)
+  companyId                                             String?                @db.Char(36)
+  targetId                                              String                 @db.Char(36)
+  deleted                                               Boolean                @default(false)
+  deletedAt                                             DateTime?              @db.DateTime(0)
+  deletedBy                                             String?                @db.Char(36)
+  Employee                                              Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_1")
+  Company                                               Company?               @relation("CompanyToCompany", fields: [companyId], references: [id], onUpdate: Restrict, map: "Company_ibfk_2")
+  other_Company                                         Company[]              @relation("CompanyToCompany")
+  Target                                                Target                 @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Company_ibfk_3")
+  Employee_Company_deletedByToEmployee                  Employee?              @relation("Company_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_4")
+  CompanyAdress                                         CompanyAdress[]
+  CompanyContact                                        CompanyContact[]
+  DeliveryNoteSupplier                                  DeliveryNoteSupplier[]
+  Material_Material_preferredSupplierCompanyIdToCompany Material[]             @relation("Material_preferredSupplierCompanyIdToCompany")
+  MaterialPrice                                         MaterialPrice[]
+  MaterialSerialTrack                                   MaterialSerialTrack[]
+  MaterialSupplier                                      MaterialSupplier[]
+  Project                                               Project[]
+  Purchase                                              Purchase[]
 
   @@index([companyId], map: "companyId")
   @@index([createdBy], map: "createdBy")
@@ -423,7 +425,6 @@ model Employee {
   InvoiceType                                                                       InvoiceType[]
   InvoiceType_InvoiceType_deletedByToEmployee                                       InvoiceType[]                    @relation("InvoiceType_deletedByToEmployee")
   Material                                                                          Material[]
-  Material_Material_deletedByToEmployee                                             Material[]                       @relation("Material_deletedByToEmployee")
   MaterialAssembly                                                                  MaterialAssembly[]
   MaterialAssembly_MaterialAssembly_deletedByToEmployee                             MaterialAssembly[]               @relation("MaterialAssembly_deletedByToEmployee")
   MaterialCode                                                                      MaterialCode[]
@@ -918,10 +919,10 @@ model Material {
   id                                                       String               @id @db.Char(36)
   beNumber                                                 String               @unique(map: "uq_material_beNumber") @db.VarChar(255)
   name                                                     String?              @db.VarChar(255)
-  brandOrderNr                                             Int
+  brandOrderNr                                             String               @db.VarChar(255)
   shortDescription                                         String               @db.VarChar(255)
   longDescription                                          String?              @db.Text
-  preferredSupplier                                        String?              @db.VarChar(255)
+  preferredSupplierCompanyId                               String?              @db.Char(36)
   brandName                                                String?              @db.VarChar(255)
   documentationPlace                                       String?              @db.VarChar(255)
   bePartDoc                                                Int?
@@ -937,11 +938,12 @@ model Material {
   MaterialGroup                                            MaterialGroup        @relation(fields: [materialGroupId], references: [id], onUpdate: Restrict, map: "Material_ibfk_1")
   Unit                                                     Unit                 @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "Material_ibfk_2")
   Employee                                                 Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")
-  Employee_Material_deletedByToEmployee                    Employee?            @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_4")
+  PreferredSupplierCompany                                 Company?             @relation("Material_preferredSupplierCompanyIdToCompany", fields: [preferredSupplierCompanyId], references: [id], onUpdate: Restrict, map: "Material_ibfk_5")
   MaterialMovement                                         MaterialMovement[]
   MaterialOther                                            MaterialOther[]
   MaterialStructure_MaterialStructure_materialIdToMaterial MaterialStructure[]  @relation("MaterialStructure_materialIdToMaterial")
   MaterialStructure_MaterialStructure_beNumberToMaterial   MaterialStructure[]  @relation("MaterialStructure_beNumberToMaterial")
+  MaterialSupplier                                         MaterialSupplier[]
   Product                                                  Product[]
   WorkOrderStructure                                       WorkOrderStructure[]
 
@@ -949,6 +951,18 @@ model Material {
   @@index([materialGroupId], map: "materialGroupId")
   @@index([unitId], map: "unitId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([preferredSupplierCompanyId], map: "Material_ibfk_5")
+}
+
+model MaterialSupplier {
+  id         String   @id @db.Char(36)
+  materialId String   @db.Char(36)
+  companyId  String   @db.Char(36)
+  Material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialSupplier_ibfk_1")
+  Company    Company  @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "MaterialSupplier_ibfk_2")
+
+  @@unique([materialId, companyId], map: "uq_materialSupplier_material_company")
+  @@index([companyId], map: "companyId")
 }
 
 model MaterialAssembly {
@@ -1114,7 +1128,6 @@ model MaterialPerformance {
 
 model MaterialPrice {
   id                                         String    @id @db.Char(36)
-  companyId                                  String    @db.Char(36)
   beNumber                                   String?   @db.VarChar(255)
   orderNr                                    String?   @db.VarChar(255)
   quoteBecra                                 String?   @db.Char(36)
@@ -1132,6 +1145,7 @@ model MaterialPrice {
   deleted                                    Boolean   @default(false)
   deletedAt                                  DateTime? @db.DateTime(0)
   deletedBy                                  String?   @db.Char(36)
+  companyId                                  String    @db.Char(36)
   Employee                                   Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_1")
   Employee_MaterialPrice_deletedByToEmployee Employee? @relation("MaterialPrice_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_2")
   Company                                    Company   @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_3")
@@ -1689,6 +1703,7 @@ model TimeRegistry {
   createdAt                                 DateTime               @db.DateTime(0)
   invoiceTime                               Boolean                @default(false)
   onSite                                    Boolean                @default(false)
+  stayOver                                  Boolean                @default(false)
   createdBy                                 String                 @db.Char(36)
   workOrderId                               String                 @db.Char(36)
   hourTypeId                                String                 @db.Char(36)

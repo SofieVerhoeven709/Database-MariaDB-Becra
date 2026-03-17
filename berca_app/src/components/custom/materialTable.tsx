@@ -26,6 +26,12 @@ interface Unit {
   abbreviation: string
 }
 
+interface SupplierCompanyOption {
+  id: string
+  name: string
+  number: string
+}
+
 type SortField =
   | 'beNumber'
   | 'name'
@@ -51,10 +57,17 @@ interface MaterialTableProps {
   initialMaterials: MappedMaterial[]
   materialGroups: MaterialGroup[]
   units: Unit[]
+  supplierCompanies: SupplierCompanyOption[]
   departmentId?: string
 }
 
-export function MaterialTable({initialMaterials, materialGroups, units, departmentId}: MaterialTableProps) {
+export function MaterialTable({
+  initialMaterials,
+  materialGroups,
+  units,
+  supplierCompanies,
+  departmentId,
+}: MaterialTableProps) {
   const router = useRouter() as unknown as {refresh: () => void; push: (href: string) => void}
   const [materials] = useState(initialMaterials)
   const [search, setSearch] = useState('')
@@ -91,7 +104,8 @@ export function MaterialTable({initialMaterials, materialGroups, units, departme
         (m.brandName ?? '').toLowerCase().includes(q) ||
         m.materialGroupLabel.toLowerCase().includes(q) ||
         m.unitName.toLowerCase().includes(q) ||
-        (m.preferredSupplier ?? '').toLowerCase().includes(q)
+        (m.preferredSupplierName ?? '').toLowerCase().includes(q) ||
+        m.supplierCompanyNames.some(name => name.toLowerCase().includes(q))
       )
     })
     .sort((a, b) => {
@@ -112,7 +126,8 @@ export function MaterialTable({initialMaterials, materialGroups, units, departme
         'brandOrderNr',
         'shortDescription',
         'longDescription',
-        'preferredSupplier',
+        'preferredSupplierCompanyId',
+        'supplierCompanyIds',
         'brandName',
         'documentationPlace',
         'bePartDoc',
@@ -124,6 +139,12 @@ export function MaterialTable({initialMaterials, materialGroups, units, departme
       const fd = new FormData()
       Object.entries(form).forEach(([k, v]) => {
         if (!schemaFields.has(k)) return
+        if (Array.isArray(v)) {
+          v.forEach(item => {
+            if (item) fd.append(k, String(item))
+          })
+          return
+        }
         // Skip nulls and empty strings — optional fields are simply absent from FormData
         if (v === null || v === undefined || v === '') return
         fd.append(k, String(v))
@@ -315,6 +336,7 @@ export function MaterialTable({initialMaterials, materialGroups, units, departme
         material={editingMaterial}
         materialGroups={materialGroups}
         units={units}
+        supplierCompanies={supplierCompanies}
         onSave={handleSave}
         saving={saving}
         saveError={saveError}

@@ -2,10 +2,13 @@ export interface MappedMaterial {
   id: string
   beNumber: string
   name: string | null
-  brandOrderNr: number
+  brandOrderNr: string
   shortDescription: string
   longDescription: string | null
-  preferredSupplier: string | null
+  preferredSupplierCompanyId: string | null
+  preferredSupplierName: string | null
+  supplierCompanyIds: string[]
+  supplierCompanyNames: string[]
   brandName: string | null
   documentationPlace: string | null
   bePartDoc: number | null

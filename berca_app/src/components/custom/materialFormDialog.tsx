@@ -63,7 +63,10 @@ const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string} = {
   documentationPlace: null,
   bePartDoc: null,
   rejected: false,
-  materialGroupId: '',
+  materialGroupIdA: '',
+  materialGroupIdB: null,
+  materialGroupIdC: null,
+  materialGroupIdD: null,
   unitId: '',
 }
 
@@ -98,15 +101,15 @@ export function MaterialFormDialog({
     setForm(prev => ({...prev, [field]: value}))
   }
 
-      function toggleSupplier(companyId: string) {
-        const current = form.supplierCompanyIds ?? []
-        const next = current.includes(companyId) ? current.filter(id => id !== companyId) : [...current, companyId]
-        update('supplierCompanyIds', next)
+  function toggleSupplier(companyId: string) {
+    const current = form.supplierCompanyIds ?? []
+    const next = current.includes(companyId) ? current.filter(id => id !== companyId) : [...current, companyId]
+    update('supplierCompanyIds', next)
 
-        if (form.preferredSupplierCompanyId && !next.includes(form.preferredSupplierCompanyId)) {
-          update('preferredSupplierCompanyId', null)
-        }
-      }
+    if (form.preferredSupplierCompanyId && !next.includes(form.preferredSupplierCompanyId)) {
+      update('preferredSupplierCompanyId', null)
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -132,12 +135,13 @@ export function MaterialFormDialog({
               <Label htmlFor="beNumber" className="text-xs text-muted-foreground">
                 BE Number
               </Label>
+              <p className="text-xs text-muted-foreground">Leeg laten voor automatische generatie</p>
               <Input
-                  id="beNumber"
-                  className={inputStyles}
-                  value={form.beNumber ?? ''}
-                  onChange={e => update('beNumber', e.target.value)}
-                  placeholder="Leeg laten = automatisch genereren"
+                id="beNumber"
+                className={inputStyles}
+                value={form.beNumber ?? ''}
+                onChange={e => update('beNumber', e.target.value)}
+                placeholder="Leeg laten = automatisch genereren"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -212,11 +216,11 @@ export function MaterialFormDialog({
             />
           </div>
 
-          {/* Row 3: MaterialGroup + Unit */}
+          {/* Row 3: MaterialGroup A + Unit */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label className="text-xs text-muted-foreground">Material Group *</Label>
-              <Select value={form.materialGroupId ?? ''} onValueChange={v => update('materialGroupId', v)} required>
+              <Label className="text-xs text-muted-foreground">Material Group A *</Label>
+              <Select value={form.materialGroupIdA ?? ''} onValueChange={v => update('materialGroupIdA', v)} required>
                 <SelectTrigger className={inputStyles}>
                   <SelectValue placeholder="Select group..." />
                 </SelectTrigger>
@@ -246,8 +250,66 @@ export function MaterialFormDialog({
             </div>
           </div>
 
-          {/* Row 4: Preferred Supplier + Documentation Place */}
+          {/* Row 4: Optional Material Group B/C */}
           <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <Label className="text-xs text-muted-foreground">Material Group B</Label>
+              <Select
+                value={form.materialGroupIdB ?? '__none__'}
+                onValueChange={v => update('materialGroupIdB', v === '__none__' ? null : v)}>
+                <SelectTrigger className={inputStyles}>
+                  <SelectValue placeholder="Select group..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__none__">None</SelectItem>
+                  {materialGroups.map(g => (
+                    <SelectItem key={g.id} value={g.id}>
+                      {groupLabel(g)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label className="text-xs text-muted-foreground">Material Group C</Label>
+              <Select
+                value={form.materialGroupIdC ?? '__none__'}
+                onValueChange={v => update('materialGroupIdC', v === '__none__' ? null : v)}>
+                <SelectTrigger className={inputStyles}>
+                  <SelectValue placeholder="Select group..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__none__">None</SelectItem>
+                  {materialGroups.map(g => (
+                    <SelectItem key={g.id} value={g.id}>
+                      {groupLabel(g)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Row 5: Optional Material Group D + Preferred Supplier */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <Label className="text-xs text-muted-foreground">Material Group D</Label>
+              <Select
+                value={form.materialGroupIdD ?? '__none__'}
+                onValueChange={v => update('materialGroupIdD', v === '__none__' ? null : v)}>
+                <SelectTrigger className={inputStyles}>
+                  <SelectValue placeholder="Select group..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__none__">None</SelectItem>
+                  {materialGroups.map(g => (
+                    <SelectItem key={g.id} value={g.id}>
+                      {groupLabel(g)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="preferredSupplierCompanyId" className="text-xs text-muted-foreground">
                 Preferred Supplier
@@ -272,6 +334,11 @@ export function MaterialFormDialog({
                 </SelectContent>
               </Select>
             </div>
+          </div>
+
+          {/* Row 6: Documentation Place */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2" />
             <div className="flex flex-col gap-2">
               <Label htmlFor="documentationPlace" className="text-xs text-muted-foreground">
                 Documentation Place
@@ -306,7 +373,9 @@ export function MaterialFormDialog({
                 )
               })}
             </div>
-            <p className="text-xs text-muted-foreground">Select one or more suppliers. Preferred supplier is chosen from this selection.</p>
+            <p className="text-xs text-muted-foreground">
+              Select one or more suppliers. Preferred supplier is chosen from this selection.
+            </p>
           </div>
 
           {/* Row 5: BE Part Doc + Rejected */}

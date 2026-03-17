@@ -37,7 +37,10 @@ type SortField =
   | 'name'
   | 'shortDescription'
   | 'brandName'
-  | 'materialGroupLabel'
+  | 'materialGroupLabelA'
+  | 'materialGroupLabelB'
+  | 'materialGroupLabelC'
+  | 'materialGroupLabelD'
   | 'unitName'
   | 'createdByName'
   | 'rejected'
@@ -103,6 +106,10 @@ export function MaterialTable({
         m.shortDescription.toLowerCase().includes(q) ||
         (m.brandName ?? '').toLowerCase().includes(q) ||
         m.materialGroupLabel.toLowerCase().includes(q) ||
+        m.materialGroupLabelA.toLowerCase().includes(q) ||
+        m.materialGroupLabelB.toLowerCase().includes(q) ||
+        m.materialGroupLabelC.toLowerCase().includes(q) ||
+        m.materialGroupLabelD.toLowerCase().includes(q) ||
         m.unitName.toLowerCase().includes(q) ||
         (m.preferredSupplierName ?? '').toLowerCase().includes(q) ||
         m.supplierCompanyNames.some(name => name.toLowerCase().includes(q))
@@ -132,8 +139,23 @@ export function MaterialTable({
         'documentationPlace',
         'bePartDoc',
         'rejected',
-        'materialGroupId',
+        'materialGroupIdA',
+        'materialGroupIdB',
+        'materialGroupIdC',
+        'materialGroupIdD',
         'unitId',
+      ])
+
+      const nullableSchemaFields = new Set([
+        'name',
+        'longDescription',
+        'preferredSupplierCompanyId',
+        'brandName',
+        'documentationPlace',
+        'bePartDoc',
+        'materialGroupIdB',
+        'materialGroupIdC',
+        'materialGroupIdD',
       ])
 
       const fd = new FormData()
@@ -145,8 +167,11 @@ export function MaterialTable({
           })
           return
         }
-        // Skip nulls and empty strings — optional fields are simply absent from FormData
-        if (v === null || v === undefined || v === '') return
+        if (v === undefined) return
+        if (v === null || v === '') {
+          if (nullableSchemaFields.has(k)) fd.append(k, '')
+          return
+        }
         fd.append(k, String(v))
       })
 
@@ -186,7 +211,10 @@ export function MaterialTable({
     {key: 'name', label: 'Name'},
     {key: 'shortDescription', label: 'Description'},
     {key: 'brandName', label: 'Brand'},
-    {key: 'materialGroupLabel', label: 'Group'},
+    {key: 'materialGroupLabelA', label: 'Group A'},
+    {key: 'materialGroupLabelB', label: 'Group B'},
+    {key: 'materialGroupLabelC', label: 'Group C'},
+    {key: 'materialGroupLabelD', label: 'Group D'},
     {key: 'unitName', label: 'Unit'},
     {key: 'rejected', label: 'Status'},
   ]
@@ -269,7 +297,10 @@ export function MaterialTable({
                   <TableCell className="text-sm">
                     {m.brandName ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
-                  <TableCell className="text-sm">{m.materialGroupLabel}</TableCell>
+                  <TableCell className="text-sm">{m.materialGroupLabelA || '—'}</TableCell>
+                  <TableCell className="text-sm">{m.materialGroupLabelB || '—'}</TableCell>
+                  <TableCell className="text-sm">{m.materialGroupLabelC || '—'}</TableCell>
+                  <TableCell className="text-sm">{m.materialGroupLabelD || '—'}</TableCell>
                   <TableCell className="text-sm">
                     {m.unitName}
                     <span className="text-muted-foreground text-xs ml-1">({m.unitAbbreviation})</span>

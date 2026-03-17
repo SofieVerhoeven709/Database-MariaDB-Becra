@@ -1,4 +1,4 @@
-﻿USE BecraBV;
+﻿USE app_db;
 
 -- ============================================================
 -- Idempotent migrations.
@@ -175,3 +175,77 @@ ALTER TABLE TimeRegistry ADD COLUMN IF NOT EXISTS stayOver BOOLEAN NOT NULL DEFA
 
 -- 29. TrainingContact: changing clientNumber to attendeeNumber
 ALTER TABLE TrainingContact CHANGE COLUMN IF EXISTS `clientNumber` `attendeeNumber` VARCHAR(100);
+-- 30. Material.bePartDoc: ensure VARCHAR(255) NULL, without dropping data
+ALTER TABLE Material
+    MODIFY COLUMN IF EXISTS `bePartDoc` VARCHAR(255) NULL;
+
+ALTER TABLE Material
+    ADD COLUMN IF NOT EXISTS `bePartDoc` VARCHAR(255) NULL;
+
+-- 31. Material: split old single materialGroupId into A/B/C/D
+ALTER TABLE Material
+    ADD COLUMN IF NOT EXISTS `materialGroupIdA` CHAR(36) NULL,
+    ADD COLUMN IF NOT EXISTS `materialGroupIdB` CHAR(36) NULL,
+    ADD COLUMN IF NOT EXISTS `materialGroupIdC` CHAR(36) NULL,
+    ADD COLUMN IF NOT EXISTS `materialGroupIdD` CHAR(36) NULL;
+
+-- 31b. Copy existing single materialGroupId into materialGroupIdA
+SET @col_exists = (
+  SELECT COUNT(*)
+  FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND COLUMN_NAME = 'materialGroupId'
+);
+
+SET @sql = IF(@col_exists > 0,
+  'UPDATE Material
+   SET materialGroupIdA = materialGroupId
+   WHERE materialGroupId IS NOT NULL
+     AND materialGroupIdA IS NULL',
+  'SELECT ''Skipping copy: old materialGroupId column not present'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- 31c. Recreate new foreign keys safely
+ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_group_a;
+ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_group_b;
+ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_group_c;
+ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_group_d;
+
+ALTER TABLE Material
+    ADD CONSTRAINT fk_material_group_a
+        FOREIGN KEY (`materialGroupIdA`) REFERENCES MaterialGroup (`id`) ON DELETE SET NULL,
+    ADD CONSTRAINT fk_material_group_b
+        FOREIGN KEY (`materialGroupIdB`) REFERENCES MaterialGroup (`id`) ON DELETE SET NULL,
+    ADD CONSTRAINT fk_material_group_c
+        FOREIGN KEY (`materialGroupIdC`) REFERENCES MaterialGroup (`id`) ON DELETE SET NULL,
+    ADD CONSTRAINT fk_material_group_d
+        FOREIGN KEY (`materialGroupIdD`) REFERENCES MaterialGroup (`id`) ON DELETE SET NULL;
+
+-- 31d. Drop old FK on Material.materialGroupId, if it still exists
+SET @old_fk_name = (
+  SELECT CONSTRAINT_NAME
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND COLUMN_NAME = 'materialGroupId'
+    AND REFERENCED_TABLE_NAME = 'MaterialGroup'
+  LIMIT 1
+);
+
+SET @sql = IF(@old_fk_name IS NOT NULL,
+  CONCAT('ALTER TABLE Material DROP FOREIGN KEY `', @old_fk_name, '`'),
+  'SELECT ''No old FK to drop on Material.materialGroupId'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- 31e. Drop old single materialGroupId column
+ALTER TABLE Material
+    DROP COLUMN IF EXISTS `materialGroupId`;

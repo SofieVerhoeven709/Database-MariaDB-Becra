@@ -23,9 +23,9 @@ export type MaterialWithRelations = Prisma.MaterialGetPayload<{
 export type MaterialWithDetails = Prisma.MaterialGetPayload<{
   include: {
     Unit: true
-    Employee: {select: {id: true, firstName: true, lastName: true}}
-    PreferredSupplierCompany: {select: {id: true, name: true}}
-    MaterialSupplier: {include: {Company: {select: {id: true, name: true}}}}
+    Employee: {select: {id: true; firstName: true; lastName: true}}
+    PreferredSupplierCompany: {select: {id: true; name: true}}
+    MaterialSupplier: {include: {Company: {select: {id: true; name: true}}}}
     Inventory_Inventory_materialIdToMaterial: {
       where: {deleted: false}
       orderBy: {createdAt: 'asc'}
@@ -116,7 +116,10 @@ export async function createMaterial(data: {
   documentationPlace?: string | null
   bePartDoc?: number | null
   rejected?: boolean | null
-  materialGroupId: string
+  materialGroupIdA: string | null
+  materialGroupIdB?: string | null
+  materialGroupIdC?: string | null
+  materialGroupIdD?: string | null
   unitId: string
   createdBy: string
 }) {
@@ -128,7 +131,10 @@ export async function createMaterial(data: {
       MaterialSupplier:
         supplierCompanyIds.length > 0
           ? {
-              create: supplierCompanyIds.map(companyId => ({id: randomUUID(), companyId})),
+              create: supplierCompanyIds.map(companyId => ({
+                id: randomUUID(),
+                companyId,
+              })),
             }
           : undefined,
     },
@@ -149,7 +155,10 @@ export async function updateMaterial(
     documentationPlace?: string | null
     bePartDoc?: number | null
     rejected?: boolean | null
-    materialGroupId?: string
+    materialGroupIdA?: string | null
+    materialGroupIdB?: string | null
+    materialGroupIdC?: string | null
+    materialGroupIdD?: string | null
     unitId?: string
   },
 ) {
@@ -164,7 +173,10 @@ export async function updateMaterial(
           ? undefined
           : {
               deleteMany: {},
-              create: supplierCompanyIds.map(companyId => ({id: randomUUID(), companyId})),
+              create: supplierCompanyIds.map(companyId => ({
+                id: randomUUID(),
+                companyId,
+              })),
             },
     },
   })

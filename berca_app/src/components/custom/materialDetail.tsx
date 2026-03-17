@@ -42,7 +42,14 @@ interface MappedMaterialDetail {
   documentationPlace: string | null
   bePartDoc: number | null
   rejected: boolean | null
-  materialGroupId: string
+  materialGroupIdA: string | null
+  materialGroupIdB: string | null
+  materialGroupIdC: string | null
+  materialGroupIdD: string | null
+  materialGroupLabelA: string
+  materialGroupLabelB: string
+  materialGroupLabelC: string
+  materialGroupLabelD: string
   materialGroupLabel: string
   unitId: string
   unitName: string
@@ -108,7 +115,10 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
     documentationPlace: material.documentationPlace ?? '',
     bePartDoc: material.bePartDoc !== null ? material.bePartDoc : ('' as number | ''),
     rejected: material.rejected ?? false,
-    materialGroupId: material.materialGroupId,
+    materialGroupIdA: material.materialGroupIdA ?? '',
+    materialGroupIdB: material.materialGroupIdB,
+    materialGroupIdC: material.materialGroupIdC,
+    materialGroupIdD: material.materialGroupIdD,
     unitId: material.unitId,
   })
 
@@ -146,7 +156,10 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
       if (form.documentationPlace) fd.append('documentationPlace', form.documentationPlace)
       if (form.bePartDoc !== '') fd.append('bePartDoc', String(form.bePartDoc))
       fd.append('rejected', String(form.rejected))
-      fd.append('materialGroupId', form.materialGroupId)
+      fd.append('materialGroupIdA', form.materialGroupIdA)
+      fd.append('materialGroupIdB', form.materialGroupIdB ?? '')
+      fd.append('materialGroupIdC', form.materialGroupIdC ?? '')
+      fd.append('materialGroupIdD', form.materialGroupIdD ?? '')
       fd.append('unitId', form.unitId)
 
       const result = await updateMaterialAction({success: false}, fd)
@@ -344,9 +357,9 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group</Label>
+              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group A</Label>
               {editing ? (
-                <Select value={form.materialGroupId} onValueChange={v => handleField('materialGroupId', v)}>
+                <Select value={form.materialGroupIdA} onValueChange={v => handleField('materialGroupIdA', v)}>
                   <SelectTrigger className="bg-secondary border-border">
                     <SelectValue placeholder="Select group" />
                   </SelectTrigger>
@@ -359,7 +372,76 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                   </SelectContent>
                 </Select>
               ) : (
-                <p className="text-sm">{material.materialGroupLabel}</p>
+                <p className="text-sm">{material.materialGroupLabelA || <span className="text-muted-foreground">—</span>}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group B</Label>
+              {editing ? (
+                <Select
+                  value={form.materialGroupIdB ?? '__none__'}
+                  onValueChange={v => handleField('materialGroupIdB', v === '__none__' ? null : v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select group" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__none__">None</SelectItem>
+                    {materialGroups.map(g => (
+                      <SelectItem key={g.id} value={g.id}>
+                        {groupLabel(g)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <p className="text-sm">{material.materialGroupLabelB || <span className="text-muted-foreground">—</span>}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group C</Label>
+              {editing ? (
+                <Select
+                  value={form.materialGroupIdC ?? '__none__'}
+                  onValueChange={v => handleField('materialGroupIdC', v === '__none__' ? null : v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select group" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__none__">None</SelectItem>
+                    {materialGroups.map(g => (
+                      <SelectItem key={g.id} value={g.id}>
+                        {groupLabel(g)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <p className="text-sm">{material.materialGroupLabelC || <span className="text-muted-foreground">—</span>}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group D</Label>
+              {editing ? (
+                <Select
+                  value={form.materialGroupIdD ?? '__none__'}
+                  onValueChange={v => handleField('materialGroupIdD', v === '__none__' ? null : v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select group" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__none__">None</SelectItem>
+                    {materialGroups.map(g => (
+                      <SelectItem key={g.id} value={g.id}>
+                        {groupLabel(g)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <p className="text-sm">{material.materialGroupLabelD || <span className="text-muted-foreground">—</span>}</p>
               )}
             </div>
 

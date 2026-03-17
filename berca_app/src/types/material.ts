@@ -13,7 +13,14 @@ export interface MappedMaterial {
   documentationPlace: string | null
   bePartDoc: number | null
   rejected: boolean | null
-  materialGroupId: string
+  materialGroupIdA: string | null
+  materialGroupIdB: string | null
+  materialGroupIdC: string | null
+  materialGroupIdD: string | null
+  materialGroupLabelA: string
+  materialGroupLabelB: string
+  materialGroupLabelC: string
+  materialGroupLabelD: string
   materialGroupLabel: string
   unitId: string
   unitName: string

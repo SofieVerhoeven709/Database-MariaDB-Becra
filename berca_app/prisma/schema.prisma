@@ -926,21 +926,27 @@ model Material {
   preferredSupplierCompanyId                               String?              @db.Char(36)
   brandName                                                String?              @db.VarChar(255)
   documentationPlace                                       String?              @db.VarChar(255)
-  bePartDoc                                                Int?
+  bePartDoc                                                String?              @db.VarChar(255)
   rejected                                                 Boolean?             @default(false)
-  materialGroupId                                          String               @db.Char(36)
   unitId                                                   String               @db.Char(36)
   createdBy                                                String               @db.Char(36)
   deleted                                                  Boolean              @default(false)
   deletedAt                                                DateTime?            @db.DateTime(0)
   deletedBy                                                String?              @db.Char(36)
+  materialGroupIdA                                         String?              @db.Char(36)
+  materialGroupIdB                                         String?              @db.Char(36)
+  materialGroupIdC                                         String?              @db.Char(36)
+  materialGroupIdD                                         String?              @db.Char(36)
   Inventory_Inventory_materialIdToMaterial                 Inventory[]          @relation("Inventory_materialIdToMaterial")
   Inventory_Inventory_beNumberToMaterial                   Inventory?           @relation("Inventory_beNumberToMaterial")
-  MaterialGroup                                            MaterialGroup        @relation(fields: [materialGroupId], references: [id], onUpdate: Restrict, map: "Material_ibfk_1")
   Unit                                                     Unit                 @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "Material_ibfk_2")
   Employee                                                 Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")
   PreferredSupplierCompany                                 Company?             @relation("Material_preferredSupplierCompanyIdToCompany", fields: [preferredSupplierCompanyId], references: [id], onUpdate: Restrict, map: "Material_ibfk_5")
   Employee_Material_deletedByToEmployee                    Employee?            @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_6")
+  MaterialGroup_Material_materialGroupIdAToMaterialGroup   MaterialGroup?       @relation("Material_materialGroupIdAToMaterialGroup", fields: [materialGroupIdA], references: [id], onUpdate: Restrict, map: "fk_material_group_a")
+  MaterialGroup_Material_materialGroupIdBToMaterialGroup   MaterialGroup?       @relation("Material_materialGroupIdBToMaterialGroup", fields: [materialGroupIdB], references: [id], onUpdate: Restrict, map: "fk_material_group_b")
+  MaterialGroup_Material_materialGroupIdCToMaterialGroup   MaterialGroup?       @relation("Material_materialGroupIdCToMaterialGroup", fields: [materialGroupIdC], references: [id], onUpdate: Restrict, map: "fk_material_group_c")
+  MaterialGroup_Material_materialGroupIdDToMaterialGroup   MaterialGroup?       @relation("Material_materialGroupIdDToMaterialGroup", fields: [materialGroupIdD], references: [id], onUpdate: Restrict, map: "fk_material_group_d")
   MaterialMovement                                         MaterialMovement[]
   MaterialOther                                            MaterialOther[]
   MaterialStructure_MaterialStructure_materialIdToMaterial MaterialStructure[]  @relation("MaterialStructure_materialIdToMaterial")
@@ -950,10 +956,13 @@ model Material {
   WorkOrderStructure                                       WorkOrderStructure[]
 
   @@index([createdBy], map: "createdBy")
-  @@index([materialGroupId], map: "materialGroupId")
   @@index([unitId], map: "unitId")
   @@index([deletedBy], map: "deletedBy")
   @@index([preferredSupplierCompanyId], map: "preferredSupplierCompanyId")
+  @@index([materialGroupIdA], map: "fk_material_group_a")
+  @@index([materialGroupIdB], map: "fk_material_group_b")
+  @@index([materialGroupIdC], map: "fk_material_group_c")
+  @@index([materialGroupIdD], map: "fk_material_group_d")
 }
 
 model MaterialSupplier {
@@ -1039,19 +1048,22 @@ model MaterialFamily {
 }
 
 model MaterialGroup {
-  id                             String                           @id @db.Char(36)
-  groupA                         String                           @db.VarChar(255)
-  groupB                         String?                          @db.VarChar(255)
-  groupC                         String?                          @db.VarChar(255)
-  groupD                         String?                          @db.VarChar(255)
-  deleted                        Boolean                          @default(false)
-  deletedAt                      DateTime?                        @db.DateTime(0)
-  deletedBy                      String?                          @db.Char(36)
-  Material                       Material[]
-  Employee                       Employee?                        @relation(fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialGroup_ibfk_1")
-  MaterialSerialTrack            MaterialSerialTrack[]
-  MaterialSerialTrackedStructure MaterialSerialTrackedStructure[]
-  Purchase                       Purchase[]
+  id                                                String                           @id @db.Char(36)
+  groupA                                            String                           @db.VarChar(255)
+  groupB                                            String?                          @db.VarChar(255)
+  groupC                                            String?                          @db.VarChar(255)
+  groupD                                            String?                          @db.VarChar(255)
+  deleted                                           Boolean                          @default(false)
+  deletedAt                                         DateTime?                        @db.DateTime(0)
+  deletedBy                                         String?                          @db.Char(36)
+  Material_Material_materialGroupIdAToMaterialGroup Material[]                       @relation("Material_materialGroupIdAToMaterialGroup")
+  Material_Material_materialGroupIdBToMaterialGroup Material[]                       @relation("Material_materialGroupIdBToMaterialGroup")
+  Material_Material_materialGroupIdCToMaterialGroup Material[]                       @relation("Material_materialGroupIdCToMaterialGroup")
+  Material_Material_materialGroupIdDToMaterialGroup Material[]                       @relation("Material_materialGroupIdDToMaterialGroup")
+  Employee                                          Employee?                        @relation(fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialGroup_ibfk_1")
+  MaterialSerialTrack                               MaterialSerialTrack[]
+  MaterialSerialTrackedStructure                    MaterialSerialTrackedStructure[]
+  Purchase                                          Purchase[]
 
   @@index([deletedBy], map: "deletedBy")
 }

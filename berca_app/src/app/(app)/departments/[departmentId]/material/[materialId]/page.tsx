@@ -8,6 +8,12 @@ interface MaterialDetailPageProps {
 }
 
 export default async function MaterialDetailPage({params}: MaterialDetailPageProps) {
+      const parseBePartDoc = (value: string | null) => {
+        if (value == null || value === '') return null
+        const parsed = Number(value)
+        return Number.isFinite(parsed) ? parsed : null
+      }
+
   const {materialId} = await params
   const [material, groups, units, supplierCompanies] = await Promise.all([
     getMaterialById(materialId).catch(() => null),
@@ -35,10 +41,33 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     supplierCompanyNames: material.MaterialSupplier.map(s => s.Company.name),
     brandName: material.brandName ?? null,
     documentationPlace: material.documentationPlace ?? null,
-    bePartDoc: material.bePartDoc ?? null,
+    bePartDoc: parseBePartDoc(material.bePartDoc),
     rejected: material.rejected ?? false,
-    materialGroupId: material.materialGroupId,
-    materialGroupLabel: groupLabelById.get(material.materialGroupId) ?? material.materialGroupId,
+    materialGroupIdA: material.materialGroupIdA ?? null,
+    materialGroupIdB: material.materialGroupIdB ?? null,
+    materialGroupIdC: material.materialGroupIdC ?? null,
+    materialGroupIdD: material.materialGroupIdD ?? null,
+    materialGroupLabelA: material.materialGroupIdA
+      ? (groupLabelById.get(material.materialGroupIdA) ?? material.materialGroupIdA)
+      : '',
+    materialGroupLabelB: material.materialGroupIdB
+      ? (groupLabelById.get(material.materialGroupIdB) ?? material.materialGroupIdB)
+      : '',
+    materialGroupLabelC: material.materialGroupIdC
+      ? (groupLabelById.get(material.materialGroupIdC) ?? material.materialGroupIdC)
+      : '',
+    materialGroupLabelD: material.materialGroupIdD
+      ? (groupLabelById.get(material.materialGroupIdD) ?? material.materialGroupIdD)
+      : '',
+    materialGroupLabel: [
+      material.materialGroupIdA,
+      material.materialGroupIdB,
+      material.materialGroupIdC,
+      material.materialGroupIdD,
+    ]
+      .filter(Boolean)
+      .map(id => groupLabelById.get(id as string) ?? id)
+      .join(' | '),
     unitId: material.unitId,
     unitName: material.Unit.unitName,
     unitAbbreviation: material.Unit.abbreviation,

@@ -733,12 +733,15 @@ export const MaterialScalarFieldEnum = {
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
   rejected: 'rejected',
-  materialGroupId: 'materialGroupId',
   unitId: 'unitId',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  materialGroupIdA: 'materialGroupIdA',
+  materialGroupIdB: 'materialGroupIdB',
+  materialGroupIdC: 'materialGroupIdC',
+  materialGroupIdD: 'materialGroupIdD'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -2041,10 +2044,14 @@ export const MaterialOrderByRelevanceFieldEnum = {
   preferredSupplierCompanyId: 'preferredSupplierCompanyId',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
-  materialGroupId: 'materialGroupId',
+  bePartDoc: 'bePartDoc',
   unitId: 'unitId',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  materialGroupIdA: 'materialGroupIdA',
+  materialGroupIdB: 'materialGroupIdB',
+  materialGroupIdC: 'materialGroupIdC',
+  materialGroupIdD: 'materialGroupIdD'
 } as const
 
 export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]

@@ -18,8 +18,9 @@ async function generateBeNumber() {
   const START_NUMBER = 1000000
 
   const numericBeNumbers = materials
-    .map(({beNumber}) => Number(beNumber))
-    .filter((num): num is number => Number.isFinite(num))
+    .map(({beNumber}) => beNumber.trim())
+    .filter(beNumber => /^\d+$/.test(beNumber))
+    .map(Number)
 
   if (numericBeNumbers.length === 0) {
     return String(START_NUMBER)
@@ -37,7 +38,10 @@ export const createMaterialAction = protectedFormAction({
     let beNumber = data.beNumber?.trim()
     const preferredSupplierCompanyId = data.preferredSupplierCompanyId ?? null
     const supplierCompanyIds = Array.from(
-      new Set([...(data.supplierCompanyIds ?? []), ...(preferredSupplierCompanyId ? [preferredSupplierCompanyId] : [])]),
+      new Set([
+        ...(data.supplierCompanyIds ?? []),
+        ...(preferredSupplierCompanyId ? [preferredSupplierCompanyId] : []),
+      ]),
     )
 
     if (!beNumber) {
@@ -48,10 +52,13 @@ export const createMaterialAction = protectedFormAction({
       ...data,
       id: data.id || randomUUID(),
       beNumber,
-      brandOrderNr: data.brandOrderNr,
       preferredSupplierCompanyId,
       supplierCompanyIds,
       bePartDoc: data.bePartDoc != null ? Number(data.bePartDoc) : null,
+      materialGroupIdA: data.materialGroupIdA,
+      materialGroupIdB: data.materialGroupIdB ?? null,
+      materialGroupIdC: data.materialGroupIdC ?? null,
+      materialGroupIdD: data.materialGroupIdD ?? null,
       createdBy: profile.id,
     })
 
@@ -69,7 +76,10 @@ export const updateMaterialAction = protectedFormAction({
     const {id, ...rest} = data
     const preferredSupplierCompanyId = rest.preferredSupplierCompanyId ?? null
     const supplierCompanyIds = Array.from(
-      new Set([...(rest.supplierCompanyIds ?? []), ...(preferredSupplierCompanyId ? [preferredSupplierCompanyId] : [])]),
+      new Set([
+        ...(rest.supplierCompanyIds ?? []),
+        ...(preferredSupplierCompanyId ? [preferredSupplierCompanyId] : []),
+      ]),
     )
 
     const updated = await updateMaterial(id, {

@@ -8,6 +8,12 @@ interface PageProps {
 }
 
 export default async function MaterialPage({params}: PageProps) {
+      const parseBePartDoc = (value: string | null) => {
+        if (value == null || value === '') return null
+        const parsed = Number(value)
+        return Number.isFinite(parsed) ? parsed : null
+      }
+
   const {departmentId} = await params
 
   const [department, materials, groups, units, supplierCompanies] = await Promise.all([
@@ -37,10 +43,20 @@ export default async function MaterialPage({params}: PageProps) {
     supplierCompanyNames: m.MaterialSupplier.map(s => s.Company.name),
     brandName: m.brandName ?? null,
     documentationPlace: m.documentationPlace ?? null,
-    bePartDoc: m.bePartDoc ?? null,
+    bePartDoc: parseBePartDoc(m.bePartDoc),
     rejected: m.rejected ?? false,
-    materialGroupId: m.materialGroupId,
-    materialGroupLabel: groupLabelById.get(m.materialGroupId) ?? m.materialGroupId,
+    materialGroupIdA: m.materialGroupIdA ?? null,
+    materialGroupIdB: m.materialGroupIdB ?? null,
+    materialGroupIdC: m.materialGroupIdC ?? null,
+    materialGroupIdD: m.materialGroupIdD ?? null,
+    materialGroupLabelA: m.materialGroupIdA ? (groupLabelById.get(m.materialGroupIdA) ?? m.materialGroupIdA) : '',
+    materialGroupLabelB: m.materialGroupIdB ? (groupLabelById.get(m.materialGroupIdB) ?? m.materialGroupIdB) : '',
+    materialGroupLabelC: m.materialGroupIdC ? (groupLabelById.get(m.materialGroupIdC) ?? m.materialGroupIdC) : '',
+    materialGroupLabelD: m.materialGroupIdD ? (groupLabelById.get(m.materialGroupIdD) ?? m.materialGroupIdD) : '',
+    materialGroupLabel: [m.materialGroupIdA, m.materialGroupIdB, m.materialGroupIdC, m.materialGroupIdD]
+      .filter(Boolean)
+      .map(id => groupLabelById.get(id as string) ?? id)
+      .join(' | '),
     unitId: m.unitId,
     unitName: m.Unit.unitName,
     unitAbbreviation: m.Unit.abbreviation,

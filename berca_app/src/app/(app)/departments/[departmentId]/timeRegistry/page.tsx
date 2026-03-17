@@ -21,8 +21,8 @@ export default async function TimeRegistriesPage({params}: PageProps) {
     getEmployees(),
     prismaClient.hourType.findMany({where: {deleted: false}, orderBy: {name: 'asc'}}),
     prismaClient.workOrder.findMany({
-      where: {deleted: false},
-      select: {id: true, workOrderNumber: true},
+      where: {deleted: false, hoursMaterialClosed: false},
+      select: {id: true, workOrderNumber: true, description: true},
       orderBy: {workOrderNumber: 'asc'},
     }),
     getSessionProfileFromCookieOrThrow(),
@@ -37,7 +37,11 @@ export default async function TimeRegistriesPage({params}: PageProps) {
 
   const employeeOptions = employees.map(e => ({id: e.id, firstName: e.firstName, lastName: e.lastName}))
   const hourTypeOptions = hourTypes.map(ht => ({id: ht.id, name: ht.name}))
-  const workOrderOptions = workOrders.map(wo => ({id: wo.id, workOrderNumber: wo.workOrderNumber}))
+  const workOrderOptions = workOrders.map(wo => ({
+    id: wo.id,
+    workOrderNumber: wo.workOrderNumber,
+    description: wo.description,
+  }))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

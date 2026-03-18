@@ -250,8 +250,8 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
         {/* Details tab */}
         <TabsContent value="details" className="mt-4">
           <div className="rounded-xl border border-border bg-card p-6 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">BE Number</Label>
+            <div className="flex flex-col gap-1.5 md:col-span-2">
+              <Label className="text-xs text-muted-foreground">BE Number</Label>
               {editing ? (
                 <Input value={form.beNumber} onChange={e => handleField('beNumber', e.target.value)} />
               ) : (
@@ -259,17 +259,8 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
               )}
             </div>
 
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Name</Label>
-              {editing ? (
-                <Input value={form.name} onChange={e => handleField('name', e.target.value)} placeholder="—" />
-              ) : (
-                <p className="text-sm">{material.name ?? <span className="text-muted-foreground">—</span>}</p>
-              )}
-            </div>
-
             <div className="flex flex-col gap-1.5 md:col-span-2">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Short Description</Label>
+              <Label className="text-xs text-muted-foreground">Short Description</Label>
               {editing ? (
                 <Input value={form.shortDescription} onChange={e => handleField('shortDescription', e.target.value)} />
               ) : (
@@ -278,7 +269,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5 md:col-span-2">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Long Description</Label>
+              <Label className="text-xs text-muted-foreground">Long Description</Label>
               {editing ? (
                 <Textarea
                   value={form.longDescription}
@@ -294,7 +285,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Brand</Label>
+              <Label className="text-xs text-muted-foreground">Brand Name</Label>
               {editing ? (
                 <Input
                   value={form.brandName}
@@ -307,7 +298,28 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Preferred Supplier</Label>
+              <Label className="text-xs text-muted-foreground">Brand Order Nr</Label>
+              {editing ? (
+                <Input
+                  value={form.brandOrderNr}
+                  onChange={e => handleField('brandOrderNr', e.target.value)}
+                />
+              ) : (
+                <p className="text-sm">{material.brandOrderNr}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5 md:col-span-2">
+              <Label className="text-xs text-muted-foreground">Brand Short Description</Label>
+              {editing ? (
+                <Input value={form.name} onChange={e => handleField('name', e.target.value)} placeholder="—" />
+              ) : (
+                <p className="text-sm">{material.name ?? <span className="text-muted-foreground">—</span>}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Preferred Supplier</Label>
               {editing ? (
                 <Select
                   value={form.preferredSupplierCompanyId}
@@ -334,7 +346,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5 md:col-span-2">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Suppliers</Label>
+              <Label className="text-xs text-muted-foreground">Suppliers</Label>
               {editing ? (
                 <div className="rounded-md border border-border bg-secondary/40 p-3 max-h-44 overflow-y-auto space-y-2">
                   {supplierCompanies.map(company => {
@@ -357,7 +369,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group A</Label>
+              <Label className="text-xs text-muted-foreground">Material Group A</Label>
               {editing ? (
                 <Select value={form.materialGroupIdA} onValueChange={v => handleField('materialGroupIdA', v)}>
                   <SelectTrigger className="bg-secondary border-border">
@@ -377,7 +389,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group B</Label>
+              <Label className="text-xs text-muted-foreground">Material Group B</Label>
               {editing ? (
                 <Select
                   value={form.materialGroupIdB ?? '__none__'}
@@ -400,7 +412,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group C</Label>
+              <Label className="text-xs text-muted-foreground">Material Group C</Label>
               {editing ? (
                 <Select
                   value={form.materialGroupIdC ?? '__none__'}
@@ -423,7 +435,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group D</Label>
+              <Label className="text-xs text-muted-foreground">Material Group D</Label>
               {editing ? (
                 <Select
                   value={form.materialGroupIdD ?? '__none__'}
@@ -446,7 +458,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Unit</Label>
+              <Label className="text-xs text-muted-foreground">Unit</Label>
               {editing ? (
                 <Select value={form.unitId} onValueChange={v => handleField('unitId', v)}>
                   <SelectTrigger className="bg-secondary border-border">
@@ -469,7 +481,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Documentation Place</Label>
+              <Label className="text-xs text-muted-foreground">Documentation Place</Label>
               {editing ? (
                 <Input
                   value={form.documentationPlace}
@@ -484,7 +496,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">BE Part Doc</Label>
+              <Label className="text-xs text-muted-foreground">BE Part Doc</Label>
               {editing ? (
                 <Input
                   type="number"
@@ -498,19 +510,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Brand Order Nr</Label>
-              {editing ? (
-                <Input
-                  value={form.brandOrderNr}
-                  onChange={e => handleField('brandOrderNr', e.target.value)}
-                />
-              ) : (
-                <p className="text-sm">{material.brandOrderNr}</p>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Rejected</Label>
+              <Label className="text-xs text-muted-foreground">Rejected</Label>
               {editing ? (
                 <div className="flex items-center gap-2 h-9">
                   <Switch checked={form.rejected} onCheckedChange={v => handleField('rejected', v)} />

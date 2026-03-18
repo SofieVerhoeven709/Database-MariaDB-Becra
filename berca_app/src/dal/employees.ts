@@ -126,7 +126,7 @@ export async function startSession(employeeId: string, subRole: {name: string}):
  *
  * @param id The id of the session to retrieve.
  */
-export const getSessionProfile = cache((id: string): Promise<SessionWithProfile | null> => {
+export async function getSessionProfile(id: string): Promise<SessionWithProfile | null> {
   return prismaClient.session.findUnique({
     where: {
       id,
@@ -136,7 +136,7 @@ export const getSessionProfile = cache((id: string): Promise<SessionWithProfile 
     },
     include: sessionWithProfileInclude,
   })
-})
+}
 
 /**
  * Stop a given session.

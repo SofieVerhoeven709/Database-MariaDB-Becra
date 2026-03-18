@@ -175,6 +175,7 @@ ALTER TABLE TimeRegistry ADD COLUMN IF NOT EXISTS stayOver BOOLEAN NOT NULL DEFA
 
 -- 29. TrainingContact: changing clientNumber to attendeeNumber
 ALTER TABLE TrainingContact CHANGE COLUMN IF EXISTS `clientNumber` `attendeeNumber` VARCHAR(100);
+
 -- 30. Material.bePartDoc: ensure VARCHAR(255) NULL, without dropping data
 ALTER TABLE Material
     MODIFY COLUMN IF EXISTS `bePartDoc` VARCHAR(255) NULL;
@@ -249,3 +250,56 @@ DEALLOCATE PREPARE stmt;
 -- 31e. Drop old single materialGroupId column
 ALTER TABLE Material
     DROP COLUMN IF EXISTS `materialGroupId`;
+
+
+ALTER TABLE `Material` ADD COLUMN IF NOT EXISTS `preferredSupplierCompanyId` CHAR(36) NULL;
+
+-- 33b. Add index for preferredSupplierCompanyId if it doesn't exist
+SET @idx_exists = (
+  SELECT COUNT(*)
+  FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND INDEX_NAME = 'preferredSupplierCompanyId'
+);
+
+SET @sql = IF(@idx_exists = 0,
+  'CREATE INDEX `preferredSupplierCompanyId` ON `Material`(`preferredSupplierCompanyId`)',
+  'SELECT ''Index preferredSupplierCompanyId already exists'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- 33c. Add foreign key constraint if it doesn't exist
+SET @fk_exists = (
+  SELECT COUNT(*)
+  FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND CONSTRAINT_NAME = 'Material_ibfk_5'
+);
+
+SET @sql = IF(@fk_exists = 0,
+  'ALTER TABLE `Material` ADD CONSTRAINT `Material_ibfk_5` FOREIGN KEY (`preferredSupplierCompanyId`) REFERENCES `Company`(`id`) ON DELETE SET NULL',
+  'SELECT ''FK Material_ibfk_5 already exists'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- 34. Add MaterialSupplier
+CREATE TABLE
+      IF NOT EXISTS MaterialSupplier (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            materialId CHAR(36) NOT NULL,
+            companyId CHAR(36) NOT NULL,
+            CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+-- 35. alter brandordernr to string from int
+ALTER TABLE Material MODIFY COLUMN IF EXISTS `brandOrderNr` VARCHAR(255);

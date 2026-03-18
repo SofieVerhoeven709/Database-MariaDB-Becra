@@ -1,5 +1,8 @@
 import {ContactDetail} from '@/components/custom/contactDetail'
 import {getContactDetail} from '@/dal/contacts'
+import {getFunctions} from '@/dal/functions'
+import {getDepartmentExterns} from '@/dal/departmentExterns'
+import {getTitles} from '@/dal/titles'
 import {getAllRoleLevels} from '@/dal/roleLevel'
 import {mapContactDetail} from '@/extra/contacts'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
@@ -22,9 +25,9 @@ export default async function ContactDetailPage({params}: PageProps) {
       getContactDetail(contactId).catch(() => null),
       getAllRoleLevels(),
       getSessionProfileFromCookieOrThrow(),
-      prismaClient.function.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-      prismaClient.departmentExtern.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-      prismaClient.title.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      getFunctions(),
+      getDepartmentExterns(),
+      getTitles(),
       prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
     ])
 
@@ -45,9 +48,9 @@ export default async function ContactDetailPage({params}: PageProps) {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          functionOptions={functions}
-          departmentExternOptions={departmentExterns}
-          titleOptions={titles}
+          functionOptions={functions ?? []}
+          departmentExternOptions={departmentExterns ?? []}
+          titleOptions={titles ?? []}
           companyOptions={companies}
           departmentId={departmentId}
         />

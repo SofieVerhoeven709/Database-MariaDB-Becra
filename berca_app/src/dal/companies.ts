@@ -41,7 +41,6 @@ export async function getCompanyDetail(id: string) {
         select: {id: true, name: true, number: true, companyActive: true},
       },
       CompanyAdress: {
-        where: {deleted: false},
         orderBy: {createdAt: 'asc'},
       },
       CompanyContact: {
@@ -101,4 +100,3 @@ export async function getSupplierCompanies() {
     orderBy: {name: 'asc'},
   })
 }
-

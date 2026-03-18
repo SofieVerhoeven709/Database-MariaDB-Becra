@@ -30,6 +30,14 @@ export async function getContacts() {
   })
 }
 
+export async function getContactOptions() {
+  return prismaClient.contact.findMany({
+    where: {deleted: false},
+    select: {id: true, firstName: true, lastName: true},
+    orderBy: [{lastName: 'asc'}, {firstName: 'asc'}],
+  })
+}
+
 export async function getContactDetail(id: string) {
   return prismaClient.contact.findUniqueOrThrow({
     where: {id},

@@ -1,5 +1,6 @@
 import {notFound} from 'next/navigation'
 import Link from 'next/link'
+import type {Route} from 'next'
 import {ArrowLeft, Building2, Calendar, Package, Tag, User} from 'lucide-react'
 import {Badge} from '@/components/ui/badge'
 import {getPurchaseById, getPurchaseDetails} from '@/dal/purchases'
@@ -58,7 +59,7 @@ export default async function PurchaseOrderDetailPage({params}: Props) {
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-7xl space-y-8">
         <Link
-          href={`/departments/${departmentId}/orders`}
+          href={`/departments/${departmentId}/orders` as Route}
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="h-4 w-4" />
           Back to Purchase Orders

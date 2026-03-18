@@ -85,3 +85,20 @@ export async function getCompanyDetail(id: string) {
     },
   })
 }
+
+export async function getSupplierCompanies() {
+  return prismaClient.company.findMany({
+    where: {
+      deleted: false,
+      companyActive: true,
+      supplier: true,
+    },
+    select: {
+      id: true,
+      name: true,
+      number: true,
+    },
+    orderBy: {name: 'asc'},
+  })
+}
+

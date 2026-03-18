@@ -136,7 +136,11 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const res = await fetch('/api/departments', {method: 'GET'})
+        const res = await fetch('/api/departments', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(roleContextInput),
+        })
         if (!res.ok) return
         const rawData: unknown = await res.json()
         if (!Array.isArray(rawData)) return
@@ -164,14 +168,12 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
   useEffect(() => {
     const segments = pathname.split('/').filter(Boolean)
 
-    // Collect UUID segments that aren't department IDs
+    // Collect all UUID segments and resolve them via the breadcrumb API
     const toFetch: {id: string; type: string}[] = []
     for (let i = 0; i < segments.length; i++) {
       const segment = segments[i]
       if (!isUUID(segment)) continue
-      // Department UUIDs are resolved via departmentMap
       const parentSegment = segments[i - 1]
-      if (parentSegment === 'departments') continue
       if (parentSegment) {
         toFetch.push({id: segment, type: parentSegment})
       }
@@ -238,7 +240,7 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
 
     const getLabel = (): string => {
       if (isDepartmentsRoot) return 'Departments'
-      if (isDepartmentId) return departmentMap[segment] || segment
+      if (isDepartmentId) return entityNames[segment] || departmentMap[segment] || segment
       if (isEntityId) return entityNames[segment] || segment
       return segmentToTitle(segment)
     }

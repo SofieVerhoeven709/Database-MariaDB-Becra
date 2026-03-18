@@ -26,12 +26,21 @@ interface Unit {
   abbreviation: string
 }
 
+interface SupplierCompanyOption {
+  id: string
+  name: string
+  number: string
+}
+
 type SortField =
   | 'beNumber'
   | 'name'
   | 'shortDescription'
   | 'brandName'
-  | 'materialGroupLabel'
+  | 'materialGroupLabelA'
+  | 'materialGroupLabelB'
+  | 'materialGroupLabelC'
+  | 'materialGroupLabelD'
   | 'unitName'
   | 'createdByName'
   | 'rejected'
@@ -51,10 +60,17 @@ interface MaterialTableProps {
   initialMaterials: MappedMaterial[]
   materialGroups: MaterialGroup[]
   units: Unit[]
+  supplierCompanies: SupplierCompanyOption[]
   departmentId?: string
 }
 
-export function MaterialTable({initialMaterials, materialGroups, units, departmentId}: MaterialTableProps) {
+export function MaterialTable({
+  initialMaterials,
+  materialGroups,
+  units,
+  supplierCompanies,
+  departmentId,
+}: MaterialTableProps) {
   const router = useRouter() as unknown as {refresh: () => void; push: (href: string) => void}
   const [materials] = useState(initialMaterials)
   const [search, setSearch] = useState('')
@@ -90,8 +106,13 @@ export function MaterialTable({initialMaterials, materialGroups, units, departme
         m.shortDescription.toLowerCase().includes(q) ||
         (m.brandName ?? '').toLowerCase().includes(q) ||
         m.materialGroupLabel.toLowerCase().includes(q) ||
+        m.materialGroupLabelA.toLowerCase().includes(q) ||
+        m.materialGroupLabelB.toLowerCase().includes(q) ||
+        m.materialGroupLabelC.toLowerCase().includes(q) ||
+        m.materialGroupLabelD.toLowerCase().includes(q) ||
         m.unitName.toLowerCase().includes(q) ||
-        (m.preferredSupplier ?? '').toLowerCase().includes(q)
+        (m.preferredSupplierName ?? '').toLowerCase().includes(q) ||
+        m.supplierCompanyNames.some(name => name.toLowerCase().includes(q))
       )
     })
     .sort((a, b) => {
@@ -112,20 +133,45 @@ export function MaterialTable({initialMaterials, materialGroups, units, departme
         'brandOrderNr',
         'shortDescription',
         'longDescription',
-        'preferredSupplier',
+        'preferredSupplierCompanyId',
+        'supplierCompanyIds',
         'brandName',
         'documentationPlace',
         'bePartDoc',
         'rejected',
-        'materialGroupId',
+        'materialGroupIdA',
+        'materialGroupIdB',
+        'materialGroupIdC',
+        'materialGroupIdD',
         'unitId',
+      ])
+
+      const nullableSchemaFields = new Set([
+        'name',
+        'longDescription',
+        'preferredSupplierCompanyId',
+        'brandName',
+        'documentationPlace',
+        'bePartDoc',
+        'materialGroupIdB',
+        'materialGroupIdC',
+        'materialGroupIdD',
       ])
 
       const fd = new FormData()
       Object.entries(form).forEach(([k, v]) => {
         if (!schemaFields.has(k)) return
-        // Skip nulls and empty strings — optional fields are simply absent from FormData
-        if (v === null || v === undefined || v === '') return
+        if (Array.isArray(v)) {
+          v.forEach(item => {
+            if (item) fd.append(k, String(item))
+          })
+          return
+        }
+        if (v === undefined) return
+        if (v === null || v === '') {
+          if (nullableSchemaFields.has(k)) fd.append(k, '')
+          return
+        }
         fd.append(k, String(v))
       })
 
@@ -165,7 +211,10 @@ export function MaterialTable({initialMaterials, materialGroups, units, departme
     {key: 'name', label: 'Name'},
     {key: 'shortDescription', label: 'Description'},
     {key: 'brandName', label: 'Brand'},
-    {key: 'materialGroupLabel', label: 'Group'},
+    {key: 'materialGroupLabelA', label: 'Group A'},
+    {key: 'materialGroupLabelB', label: 'Group B'},
+    {key: 'materialGroupLabelC', label: 'Group C'},
+    {key: 'materialGroupLabelD', label: 'Group D'},
     {key: 'unitName', label: 'Unit'},
     {key: 'rejected', label: 'Status'},
   ]
@@ -248,7 +297,10 @@ export function MaterialTable({initialMaterials, materialGroups, units, departme
                   <TableCell className="text-sm">
                     {m.brandName ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
-                  <TableCell className="text-sm">{m.materialGroupLabel}</TableCell>
+                  <TableCell className="text-sm">{m.materialGroupLabelA || '—'}</TableCell>
+                  <TableCell className="text-sm">{m.materialGroupLabelB || '—'}</TableCell>
+                  <TableCell className="text-sm">{m.materialGroupLabelC || '—'}</TableCell>
+                  <TableCell className="text-sm">{m.materialGroupLabelD || '—'}</TableCell>
                   <TableCell className="text-sm">
                     {m.unitName}
                     <span className="text-muted-foreground text-xs ml-1">({m.unitAbbreviation})</span>
@@ -315,6 +367,7 @@ export function MaterialTable({initialMaterials, materialGroups, units, departme
         material={editingMaterial}
         materialGroups={materialGroups}
         units={units}
+        supplierCompanies={supplierCompanies}
         onSave={handleSave}
         saving={saving}
         saveError={saveError}

@@ -284,8 +284,6 @@ CREATE TABLE
             FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
             UNIQUE (invoiceNumber)
       ) ENGINE = InnoDB;
-
-      -- 33. Add preferredSupplierCompanyId column to Material table with FK
 ALTER TABLE `Material` ADD COLUMN IF NOT EXISTS `preferredSupplierCompanyId` CHAR(36) NULL;
 
 -- 33b. Add index for preferredSupplierCompanyId if it doesn't exist
@@ -322,4 +320,8 @@ SET @sql = IF(@fk_exists = 0,
 
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
+<<<<<<< HEAD
 DEALLOCATE PREPARE stmt;
+=======
+DEALLOCATE PREPARE stmt;
+>>>>>>> 15e77f4583eb9d9982fdcc9232541491c374464b

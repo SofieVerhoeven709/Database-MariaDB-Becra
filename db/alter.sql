@@ -320,8 +320,4 @@ SET @sql = IF(@fk_exists = 0,
 
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
-<<<<<<< HEAD
 DEALLOCATE PREPARE stmt;
-=======
-DEALLOCATE PREPARE stmt;
->>>>>>> 15e77f4583eb9d9982fdcc9232541491c374464b

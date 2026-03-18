@@ -3,7 +3,6 @@
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
 import {ArrowLeft, Pencil, X, Save} from 'lucide-react'
-import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -32,15 +31,25 @@ interface MappedMaterialDetail {
   id: string
   beNumber: string
   name: string | null
-  brandOrderNr: number
+  brandOrderNr: string
   shortDescription: string
   longDescription: string | null
-  preferredSupplier: string | null
+  preferredSupplierCompanyId: string | null
+  preferredSupplierName: string | null
+  supplierCompanyIds: string[]
+  supplierCompanyNames: string[]
   brandName: string | null
   documentationPlace: string | null
   bePartDoc: number | null
   rejected: boolean | null
-  materialGroupId: string
+  materialGroupIdA: string | null
+  materialGroupIdB: string | null
+  materialGroupIdC: string | null
+  materialGroupIdD: string | null
+  materialGroupLabelA: string
+  materialGroupLabelB: string
+  materialGroupLabelC: string
+  materialGroupLabelD: string
   materialGroupLabel: string
   unitId: string
   unitName: string
@@ -67,10 +76,17 @@ interface Unit {
   abbreviation: string
 }
 
+interface SupplierCompanyOption {
+  id: string
+  name: string
+  number: string
+}
+
 interface MaterialDetailProps {
   material: MappedMaterialDetail
   materialGroups: MaterialGroup[]
   units: Unit[]
+  supplierCompanies: SupplierCompanyOption[]
 }
 
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
@@ -81,7 +97,7 @@ function formatDate(iso: string | null | undefined) {
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
-export function MaterialDetail({material, materialGroups, units}: MaterialDetailProps) {
+export function MaterialDetail({material, materialGroups, units, supplierCompanies}: MaterialDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -93,17 +109,32 @@ export function MaterialDetail({material, materialGroups, units}: MaterialDetail
     brandOrderNr: material.brandOrderNr,
     shortDescription: material.shortDescription,
     longDescription: material.longDescription ?? '',
-    preferredSupplier: material.preferredSupplier ?? '',
+    preferredSupplierCompanyId: material.preferredSupplierCompanyId ?? '__none__',
+    supplierCompanyIds: material.supplierCompanyIds ?? [],
     brandName: material.brandName ?? '',
     documentationPlace: material.documentationPlace ?? '',
     bePartDoc: material.bePartDoc !== null ? material.bePartDoc : ('' as number | ''),
     rejected: material.rejected ?? false,
-    materialGroupId: material.materialGroupId,
+    materialGroupIdA: material.materialGroupIdA ?? '',
+    materialGroupIdB: material.materialGroupIdB,
+    materialGroupIdC: material.materialGroupIdC,
+    materialGroupIdD: material.materialGroupIdD,
     unitId: material.unitId,
   })
 
   function handleField<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
     setForm(f => ({...f, [key]: value}))
+  }
+
+  function toggleSupplier(companyId: string) {
+    const next = form.supplierCompanyIds.includes(companyId)
+      ? form.supplierCompanyIds.filter(id => id !== companyId)
+      : [...form.supplierCompanyIds, companyId]
+    handleField('supplierCompanyIds', next)
+
+    if (form.preferredSupplierCompanyId !== '__none__' && !next.includes(form.preferredSupplierCompanyId)) {
+      handleField('preferredSupplierCompanyId', '__none__')
+    }
   }
 
   async function handleSave() {
@@ -114,15 +145,21 @@ export function MaterialDetail({material, materialGroups, units}: MaterialDetail
       fd.append('id', material.id)
       fd.append('beNumber', form.beNumber)
       if (form.name) fd.append('name', form.name)
-      fd.append('brandOrderNr', String(form.brandOrderNr))
+      fd.append('brandOrderNr', form.brandOrderNr)
       fd.append('shortDescription', form.shortDescription)
       if (form.longDescription) fd.append('longDescription', form.longDescription)
-      if (form.preferredSupplier) fd.append('preferredSupplier', form.preferredSupplier)
+      if (form.preferredSupplierCompanyId !== '__none__') {
+        fd.append('preferredSupplierCompanyId', form.preferredSupplierCompanyId)
+      }
+      form.supplierCompanyIds.forEach(id => fd.append('supplierCompanyIds', id))
       if (form.brandName) fd.append('brandName', form.brandName)
       if (form.documentationPlace) fd.append('documentationPlace', form.documentationPlace)
       if (form.bePartDoc !== '') fd.append('bePartDoc', String(form.bePartDoc))
       fd.append('rejected', String(form.rejected))
-      fd.append('materialGroupId', form.materialGroupId)
+      fd.append('materialGroupIdA', form.materialGroupIdA)
+      fd.append('materialGroupIdB', form.materialGroupIdB ?? '')
+      fd.append('materialGroupIdC', form.materialGroupIdC ?? '')
+      fd.append('materialGroupIdD', form.materialGroupIdD ?? '')
       fd.append('unitId', form.unitId)
 
       const result = await updateMaterialAction({success: false}, fd)
@@ -272,22 +309,57 @@ export function MaterialDetail({material, materialGroups, units}: MaterialDetail
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground uppercase tracking-wide">Preferred Supplier</Label>
               {editing ? (
-                <Input
-                  value={form.preferredSupplier}
-                  onChange={e => handleField('preferredSupplier', e.target.value)}
-                  placeholder="—"
-                />
+                <Select
+                  value={form.preferredSupplierCompanyId}
+                  onValueChange={v => handleField('preferredSupplierCompanyId', v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select preferred supplier" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__none__">None</SelectItem>
+                    {form.supplierCompanyIds.map(id => {
+                      const company = supplierCompanies.find(c => c.id === id)
+                      if (!company) return null
+                      return (
+                        <SelectItem key={company.id} value={company.id}>
+                          {company.name} ({company.number})
+                        </SelectItem>
+                      )
+                    })}
+                  </SelectContent>
+                </Select>
               ) : (
-                <p className="text-sm">
-                  {material.preferredSupplier ?? <span className="text-muted-foreground">—</span>}
-                </p>
+                <p className="text-sm">{material.preferredSupplierName ?? <span className="text-muted-foreground">—</span>}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5 md:col-span-2">
+              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Suppliers</Label>
+              {editing ? (
+                <div className="rounded-md border border-border bg-secondary/40 p-3 max-h-44 overflow-y-auto space-y-2">
+                  {supplierCompanies.map(company => {
+                    const checked = form.supplierCompanyIds.includes(company.id)
+                    return (
+                      <label key={company.id} className="flex items-center justify-between gap-3 text-sm cursor-pointer">
+                        <span>
+                          {company.name} <span className="text-muted-foreground">({company.number})</span>
+                        </span>
+                        <input type="checkbox" checked={checked} onChange={() => toggleSupplier(company.id)} className="h-4 w-4" />
+                      </label>
+                    )
+                  })}
+                </div>
+              ) : material.supplierCompanyNames.length > 0 ? (
+                <p className="text-sm">{material.supplierCompanyNames.join(', ')}</p>
+              ) : (
+                <p className="text-sm text-muted-foreground">—</p>
               )}
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group</Label>
+              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group A</Label>
               {editing ? (
-                <Select value={form.materialGroupId} onValueChange={v => handleField('materialGroupId', v)}>
+                <Select value={form.materialGroupIdA} onValueChange={v => handleField('materialGroupIdA', v)}>
                   <SelectTrigger className="bg-secondary border-border">
                     <SelectValue placeholder="Select group" />
                   </SelectTrigger>
@@ -300,7 +372,76 @@ export function MaterialDetail({material, materialGroups, units}: MaterialDetail
                   </SelectContent>
                 </Select>
               ) : (
-                <p className="text-sm">{material.materialGroupLabel}</p>
+                <p className="text-sm">{material.materialGroupLabelA || <span className="text-muted-foreground">—</span>}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group B</Label>
+              {editing ? (
+                <Select
+                  value={form.materialGroupIdB ?? '__none__'}
+                  onValueChange={v => handleField('materialGroupIdB', v === '__none__' ? null : v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select group" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__none__">None</SelectItem>
+                    {materialGroups.map(g => (
+                      <SelectItem key={g.id} value={g.id}>
+                        {groupLabel(g)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <p className="text-sm">{material.materialGroupLabelB || <span className="text-muted-foreground">—</span>}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group C</Label>
+              {editing ? (
+                <Select
+                  value={form.materialGroupIdC ?? '__none__'}
+                  onValueChange={v => handleField('materialGroupIdC', v === '__none__' ? null : v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select group" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__none__">None</SelectItem>
+                    {materialGroups.map(g => (
+                      <SelectItem key={g.id} value={g.id}>
+                        {groupLabel(g)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <p className="text-sm">{material.materialGroupLabelC || <span className="text-muted-foreground">—</span>}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground uppercase tracking-wide">Material Group D</Label>
+              {editing ? (
+                <Select
+                  value={form.materialGroupIdD ?? '__none__'}
+                  onValueChange={v => handleField('materialGroupIdD', v === '__none__' ? null : v)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select group" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__none__">None</SelectItem>
+                    {materialGroups.map(g => (
+                      <SelectItem key={g.id} value={g.id}>
+                        {groupLabel(g)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <p className="text-sm">{material.materialGroupLabelD || <span className="text-muted-foreground">—</span>}</p>
               )}
             </div>
 
@@ -360,9 +501,8 @@ export function MaterialDetail({material, materialGroups, units}: MaterialDetail
               <Label className="text-xs text-muted-foreground uppercase tracking-wide">Brand Order Nr</Label>
               {editing ? (
                 <Input
-                  type="number"
-                  value={String(form.brandOrderNr)}
-                  onChange={e => handleField('brandOrderNr', Number(e.target.value))}
+                  value={form.brandOrderNr}
+                  onChange={e => handleField('brandOrderNr', e.target.value)}
                 />
               ) : (
                 <p className="text-sm">{material.brandOrderNr}</p>

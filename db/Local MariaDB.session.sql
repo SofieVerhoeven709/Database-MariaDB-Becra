@@ -177,7 +177,7 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             beNumber VARCHAR(255) NOT NULL,
             name VARCHAR(255),
-            brandOrderNr INT NOT NULL,
+            brandOrderNr VARCHAR(255) NOT NULL,
             shortDescription VARCHAR(255) NOT NULL,
             longDescription TEXT,
             preferredSupplier VARCHAR(255),
@@ -418,6 +418,16 @@ CREATE TABLE
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS MaterialSupplier (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            materialId CHAR(36) NOT NULL,
+            companyId CHAR(36) NOT NULL,
+            CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE

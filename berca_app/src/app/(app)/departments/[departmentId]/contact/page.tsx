@@ -1,5 +1,8 @@
 import {ContactTable} from '@/components/custom/contactTable'
 import {getContacts} from '@/dal/contacts'
+import {getFunctions} from '@/dal/functions'
+import {getDepartmentExterns} from '@/dal/departmentExterns'
+import {getTitles} from '@/dal/titles'
 import {getAllRoleLevels} from '@/dal/roleLevel'
 import {mapContact} from '@/extra/contacts'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
@@ -21,9 +24,9 @@ export default async function ContactsPage({params}: PageProps) {
       getContacts(),
       getAllRoleLevels(),
       getSessionProfileFromCookieOrThrow(),
-      prismaClient.function.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-      prismaClient.departmentExtern.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-      prismaClient.title.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      getFunctions(),
+      getDepartmentExterns(),
+      getTitles(),
       prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
     ])
 
@@ -61,9 +64,9 @@ export default async function ContactsPage({params}: PageProps) {
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
           departmentId={departmentId}
-          functionOptions={functions}
-          departmentExternOptions={departmentExterns}
-          titleOptions={titles}
+          functionOptions={functions ?? []}
+          departmentExternOptions={departmentExterns ?? []}
+          titleOptions={titles ?? []}
           companyOptions={companies}
         />
       </div>

@@ -97,12 +97,11 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
           where: {id: tokenBody.id},
           include: {
             RoleLevelEmployee: {
-              // This is the Employee → RoleLevel relation
               include: {
                 RoleLevel: {
                   include: {
-                    Role: true, // RoleLevel → Role
-                    SubRole: true, // RoleLevel → SubRole
+                    Role: true,
+                    SubRole: true,
                   },
                 },
               },
@@ -117,7 +116,7 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
 
     type RoleLevelEmployeeItem = NonNullable<typeof profile>['RoleLevelEmployee'][0]
 
-    const highestRoleLevel = profile!.RoleLevelEmployee.reduce<RoleLevelEmployeeItem | null>((highest, current) => {
+    const highestRoleLevel = profile?.RoleLevelEmployee.reduce<RoleLevelEmployeeItem | null>((highest, current) => {
       if (!highest) return current
       return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
     }, null)?.RoleLevel
@@ -128,7 +127,7 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
         options.requiredRolesLevel &&
         !options.requiredRolesLevel.some(required => required.id === highestRoleLevel?.id))
     ) {
-      logger.warn(`Unauthorized user ${profile!.id} tried executing API Route.`)
+      logger.warn(`Unauthorized user ${profile?.id} tried executing API Route.`)
       return unauthorized()
     }
 
@@ -141,6 +140,7 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
     } else {
       unvalidatedData = await getFormData(request)
     }
+
     const {data, errors} = validateSchema(schema, unvalidatedData)
 
     if (errors || !data) {

@@ -284,3 +284,42 @@ CREATE TABLE
             FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
             UNIQUE (invoiceNumber)
       ) ENGINE = InnoDB;
+
+      -- 33. Add preferredSupplierCompanyId column to Material table with FK
+ALTER TABLE `Material` ADD COLUMN IF NOT EXISTS `preferredSupplierCompanyId` CHAR(36) NULL;
+
+-- 33b. Add index for preferredSupplierCompanyId if it doesn't exist
+SET @idx_exists = (
+  SELECT COUNT(*)
+  FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND INDEX_NAME = 'preferredSupplierCompanyId'
+);
+
+SET @sql = IF(@idx_exists = 0,
+  'CREATE INDEX `preferredSupplierCompanyId` ON `Material`(`preferredSupplierCompanyId`)',
+  'SELECT ''Index preferredSupplierCompanyId already exists'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- 33c. Add foreign key constraint if it doesn't exist
+SET @fk_exists = (
+  SELECT COUNT(*)
+  FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND CONSTRAINT_NAME = 'Material_ibfk_5'
+);
+
+SET @sql = IF(@fk_exists = 0,
+  'ALTER TABLE `Material` ADD CONSTRAINT `Material_ibfk_5` FOREIGN KEY (`preferredSupplierCompanyId`) REFERENCES `Company`(`id`) ON DELETE SET NULL',
+  'SELECT ''FK Material_ibfk_5 already exists'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;

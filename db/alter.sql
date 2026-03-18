@@ -289,3 +289,13 @@ SET @sql = IF(@fk_exists = 0,
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
+
+CREATE TABLE
+      IF NOT EXISTS MaterialSupplier (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            materialId CHAR(36) NOT NULL,
+            companyId CHAR(36) NOT NULL,
+            CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;

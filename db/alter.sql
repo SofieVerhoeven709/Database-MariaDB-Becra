@@ -61,12 +61,6 @@ ALTER TABLE ProjectContact ADD CONSTRAINT fk_projectcontact_modifiedBy
 -- 15. ProjectContact: idValid -> isValid
 ALTER TABLE ProjectContact CHANGE COLUMN IF EXISTS `idValid` `isValid` BOOLEAN NOT NULL DEFAULT 1;
 
--- 16. InvoiceOut: invoiceInAttachement -> invoiceInAttachment
-ALTER TABLE InvoiceOut CHANGE COLUMN IF EXISTS `invoiceInAttachement` `invoiceInAttachment` VARCHAR(100);
-
--- 17. InvoiceIn: invoiceOutAttachement -> invoiceOutAttachment
-ALTER TABLE InvoiceIn CHANGE COLUMN IF EXISTS `invoiceOutAttachement` `invoiceOutAttachment` VARCHAR(100);
-
 -- 18. QouteBecra -> QuoteBecra
 RENAME TABLE IF EXISTS QouteBecra TO QuoteBecra;
 
@@ -252,35 +246,165 @@ ALTER TABLE Material
     DROP COLUMN IF EXISTS `materialGroupId`;
 
 -- 32. new invoice tables and removing old ones
+-- Drop dependent foreign keys first before dropping tables
+SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS InvoiceIn;
 DROP TABLE IF EXISTS InvoiceOut;
+SET FOREIGN_KEY_CHECKS=1;
 
-CREATE TABLE
-      IF NOT EXISTS InvoiceOut (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            invoiceNumber VARCHAR(255),
-            invoiceDate DATETIME NOT NULL,
-            sentDate DATETIME,
-            dueDate DATETIME NOT NULL,
-            createdAt DATETIME NOT NULL,
-            outstanding BOOLEAN NOT NULL DEFAULT 1,
-            reminderSent BOOLEAN NOT NULL DEFAULT 0,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME,
-            moddifiedAt DATETIME,
-            poNumber VARCHAR(255),
-            humanId VARCHAR(255),
-            createdBy CHAR(36) NOT NULL,
-            deletedBy CHAR(36),
-            modifiedBy CHAR(36),
-            invoiceTypeId CHAR(36) NOT NULL,
-            targetId CHAR(36) NOT NULL,
-            vatMarginId CHAR(36) NOT NULL,
-            FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (modifiedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-            FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
-            UNIQUE (invoiceNumber)
-      ) ENGINE = InnoDB;
+-- 32b. Recreate InvoiceType table
+CREATE TABLE IF NOT EXISTS InvoiceType (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    createdAt DATETIME NOT NULL,
+    createdBy CHAR(36) NOT NULL,
+    FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+    deleted BOOLEAN NOT NULL DEFAULT 0,
+    deletedAt DATETIME,
+    deletedBy CHAR(36),
+    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+) ENGINE = InnoDB;
+
+-- 32c. Recreate InvoiceOut table with proper schema
+CREATE TABLE IF NOT EXISTS InvoiceOut (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    invoiceNumber VARCHAR(100),
+    invoiceDate DATETIME NOT NULL,
+    expireDate DATETIME NOT NULL,
+    payDate DATETIME,
+    invoiceReference VARCHAR(100),
+    invoiceInAttachement VARCHAR(100),
+    deliveryNote TEXT,
+    purchaseOrder TEXT,
+    transactionNumber VARCHAR(100),
+    deliveryInvoiceInfo TEXT,
+    additionalInfo TEXT,
+    info TEXT,
+    deliveryInvoiceCode VARCHAR(100),
+    vatMargin FLOAT NOT NULL,
+    amountWithoutVat FLOAT NOT NULL,
+    sentDate DATETIME,
+    createdAt DATETIME NOT NULL,
+    materialCost BOOLEAN NOT NULL DEFAULT 0,
+    completed BOOLEAN NOT NULL DEFAULT 0,
+    createdBy CHAR(36) NOT NULL,
+    invoiceTypeId CHAR(36) NOT NULL,
+    targetId CHAR(36) NOT NULL,
+    FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
+    FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+    FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+    deleted BOOLEAN NOT NULL DEFAULT 0,
+    deletedAt DATETIME,
+    deletedBy CHAR(36),
+    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+    UNIQUE (invoiceNumber)
+) ENGINE = InnoDB;
+
+-- 32d. Recreate InvoiceIn table
+CREATE TABLE IF NOT EXISTS InvoiceIn (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    invoiceNumber VARCHAR(100),
+    invoiceDate DATETIME NOT NULL,
+    expireDate DATETIME NOT NULL,
+    payDate DATETIME,
+    invoiceReference VARCHAR(100),
+    invoiceOutAttachement VARCHAR(100),
+    deliveryNote TEXT,
+    purchaseOrder TEXT,
+    transactionNumber VARCHAR(100),
+    info TEXT,
+    deliveryInvoiceCode VARCHAR(100),
+    vatMargin FLOAT NOT NULL,
+    amountWithoutVat FLOAT NOT NULL,
+    deliveryBonDate DATETIME,
+    deliveryBon VARCHAR(100),
+    remark TEXT,
+    createdAt DATETIME NOT NULL,
+    completed BOOLEAN NOT NULL DEFAULT 0,
+    masterCard BOOLEAN NOT NULL DEFAULT 0,
+    cash BOOLEAN NOT NULL DEFAULT 0,
+    bankContact BOOLEAN NOT NULL DEFAULT 0,
+    expectedInvoice BOOLEAN NOT NULL DEFAULT 0,
+    private BOOLEAN NOT NULL DEFAULT 0,
+    createdBy CHAR(36) NOT NULL,
+    invoiceTypeId CHAR(36) NOT NULL,
+    targetId CHAR(36) NOT NULL,
+    FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
+    FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+    FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+    deleted BOOLEAN NOT NULL DEFAULT 0,
+    deletedAt DATETIME,
+    deletedBy CHAR(36),
+    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+    UNIQUE (invoiceNumber)
+) ENGINE = InnoDB;
+
+-- 32e. Recreate InvoiceInTarget table
+CREATE TABLE IF NOT EXISTS InvoiceInTarget (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    invoiceInId CHAR(36) NOT NULL,
+    targetId CHAR(36) NOT NULL,
+    FOREIGN KEY (invoiceInId) REFERENCES InvoiceIn (id) ON DELETE RESTRICT,
+    FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+    deleted BOOLEAN NOT NULL DEFAULT 0,
+    deletedAt DATETIME,
+    deletedBy CHAR(36),
+    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+) ENGINE = InnoDB;
+
+-- 32f. Recreate WorkOrderInvoice table
+CREATE TABLE IF NOT EXISTS WorkOrderInvoice (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    invoiceOutId CHAR(36) NOT NULL,
+    workOrderId CHAR(36) NOT NULL,
+    FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE RESTRICT,
+    FOREIGN KEY (workOrderId) REFERENCES WorkOrder (id) ON DELETE RESTRICT,
+    deleted BOOLEAN NOT NULL DEFAULT 0,
+    deletedAt DATETIME,
+    deletedBy CHAR(36),
+    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+) ENGINE = InnoDB;
+
+-- 16. InvoiceOut: invoiceInAttachement -> invoiceInAttachment
+ALTER TABLE InvoiceOut CHANGE COLUMN IF EXISTS `invoiceInAttachement` `invoiceInAttachment` VARCHAR(100);
+
+-- 17. InvoiceIn: invoiceOutAttachement -> invoiceOutAttachment
+ALTER TABLE InvoiceIn CHANGE COLUMN IF EXISTS `invoiceOutAttachement` `invoiceOutAttachment` VARCHAR(100);
+-- 33. Add preferredSupplierCompanyId column to Material table with FK
+ALTER TABLE `Material` ADD COLUMN IF NOT EXISTS `preferredSupplierCompanyId` CHAR(36) NULL;
+
+-- 33b. Add index for preferredSupplierCompanyId if it doesn't exist
+SET @idx_exists = (
+  SELECT COUNT(*)
+  FROM information_schema.STATISTICS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND INDEX_NAME = 'preferredSupplierCompanyId'
+);
+
+SET @sql = IF(@idx_exists = 0,
+  'CREATE INDEX `preferredSupplierCompanyId` ON `Material`(`preferredSupplierCompanyId`)',
+  'SELECT ''Index preferredSupplierCompanyId already exists'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- 33c. Add foreign key constraint if it doesn't exist
+SET @fk_exists = (
+  SELECT COUNT(*)
+  FROM information_schema.TABLE_CONSTRAINTS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND CONSTRAINT_NAME = 'Material_ibfk_5'
+);
+
+SET @sql = IF(@fk_exists = 0,
+  'ALTER TABLE `Material` ADD CONSTRAINT `Material_ibfk_5` FOREIGN KEY (`preferredSupplierCompanyId`) REFERENCES `Company`(`id`) ON DELETE SET NULL',
+  'SELECT ''FK Material_ibfk_5 already exists'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;

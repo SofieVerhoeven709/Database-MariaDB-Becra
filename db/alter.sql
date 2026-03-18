@@ -251,39 +251,7 @@ DEALLOCATE PREPARE stmt;
 ALTER TABLE Material
     DROP COLUMN IF EXISTS `materialGroupId`;
 
--- 32. new invoice tables and removing old ones
-DROP TABLE IF EXISTS InvoiceIn;
-DROP TABLE IF EXISTS InvoiceOut;
 
-CREATE TABLE
-      IF NOT EXISTS InvoiceOut (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            invoiceNumber VARCHAR(255),
-            invoiceDate DATETIME NOT NULL,
-            sentDate DATETIME,
-            dueDate DATETIME NOT NULL,
-            createdAt DATETIME NOT NULL,
-            outstanding BOOLEAN NOT NULL DEFAULT 1,
-            reminderSent BOOLEAN NOT NULL DEFAULT 0,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME,
-            moddifiedAt DATETIME,
-            poNumber VARCHAR(255),
-            humanId VARCHAR(255),
-            createdBy CHAR(36) NOT NULL,
-            deletedBy CHAR(36),
-            modifiedBy CHAR(36),
-            invoiceTypeId CHAR(36) NOT NULL,
-            targetId CHAR(36) NOT NULL,
-            vatMarginId CHAR(36) NOT NULL,
-            FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (modifiedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-            FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
-            UNIQUE (invoiceNumber)
-      ) ENGINE = InnoDB;
 ALTER TABLE `Material` ADD COLUMN IF NOT EXISTS `preferredSupplierCompanyId` CHAR(36) NULL;
 
 -- 33b. Add index for preferredSupplierCompanyId if it doesn't exist

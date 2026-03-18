@@ -17,6 +17,7 @@ import {CompanyFormDialog} from '@/components/custom/companyFormDialog'
 import {createCompanyAndReturnIdAction} from '@/serverFunctions/companies'
 import {addCompanyContactAction} from '@/serverFunctions/companyContact'
 import type {MappedCompany} from '@/types/company'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 interface SelectOption {
   id: string
@@ -40,6 +41,7 @@ interface ContactFormDialogProps {
   departmentExternOptions: SelectOption[]
   titleOptions: SelectOption[]
   companyOptions: SelectOption[]
+  countryOptions: CountryOption[]
 }
 
 const emptyContact = (): MappedContact => ({
@@ -101,6 +103,7 @@ export function ContactFormDialog({
   departmentExternOptions,
   titleOptions,
   companyOptions,
+  countryOptions,
 }: ContactFormDialogProps) {
   const [form, setForm] = useState<MappedContact>(emptyContact())
   const [saving, setSaving] = useState(false)
@@ -255,6 +258,7 @@ export function ContactFormDialog({
         zipCode: a.zipCode,
         place: a.place,
         typeAdress: a.typeAdress,
+        countryId: a.countryId,
       })),
       visibilityForRoles: visRows,
     })
@@ -521,6 +525,7 @@ export function ContactFormDialog({
         canDelete={false}
         roleLevelOptions={roleLevelOptions}
         defaultVisibleRoleNames={defaultVisibleRoleNames}
+        countryOptions={countryOptions}
       />
     </>
   )

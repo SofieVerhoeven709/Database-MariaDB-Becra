@@ -33,6 +33,7 @@ export const companySchema = z.object({
   deletedBy: z.string().nullable().optional(),
 })
 
+// ── Address ───────────────────────────────────────────────────────────────────
 const addressInputSchema = z.object({
   street: z.string().max(100).nullable().optional(),
   houseNumber: z.string().max(100).nullable().optional(),
@@ -40,6 +41,7 @@ const addressInputSchema = z.object({
   zipCode: z.string().max(100).nullable().optional(),
   place: z.string().max(100).nullable().optional(),
   typeAdress: z.string().max(100).nullable().optional(),
+  countryId: z.string().nullable().optional(),
 })
 
 export const createCompanySchema = companySchema
@@ -79,6 +81,7 @@ export const companyAddressSchema = z.object({
   zipCode: z.string().max(100).nullable().optional(),
   place: z.string().max(100).nullable().optional(),
   typeAdress: z.string().max(100).nullable().optional(),
+  countryId: z.string().nullable().optional(),
   createdAt: requiredDateSchema,
   createdBy: z.string(),
   companyId: z.string(),

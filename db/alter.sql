@@ -299,3 +299,5 @@ CREATE TABLE
             FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
             FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
+
+      ALTER TABLE Material MODIFY COLUMN IF EXISTS `brandOrderNr` VARCHAR(255);

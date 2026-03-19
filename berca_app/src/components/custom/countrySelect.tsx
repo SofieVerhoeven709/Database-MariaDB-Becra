@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Plus, Loader2} from 'lucide-react'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Input} from '@/components/ui/input'
@@ -13,31 +13,45 @@ export interface CountryOption {
 }
 
 interface CountrySelectProps {
-  value: string | null // countryId or null
+  /** The currently selected countryId, or null for none */
+  value: string | null
+  /** The name matching value — used to inject the current entry into the list if it's missing */
+  currentName?: string | null
   onChange: (id: string | null, name: string | null) => void
-  countries: CountryOption[] // initial list from server
+  countries: CountryOption[]
   className?: string
 }
 
 const NONE = '__none__'
 const CREATE = '__create__'
 
-/**
- * Dropdown that lists existing countries + an inline "Create new" flow.
- * When the user types a new name and confirms, it calls the server action,
- * appends the new country to the local list, and selects it.
- */
-export function CountrySelect({value, onChange, countries, className}: CountrySelectProps) {
-  const [options, setOptions] = useState<CountryOption[]>(countries)
+export function CountrySelect({value, currentName, onChange, countries, className}: CountrySelectProps) {
+  // Merge the server list with the currently-selected country so the trigger
+  // always has a matching <SelectItem> to display — even if the country was
+  // created in a previous session and `countries` was fetched before it existed.
+  function buildOptions(base: CountryOption[], selectedId: string | null, selectedName: string | null | undefined) {
+    if (!selectedId || !selectedName) return base
+    const already = base.some(o => o.id === selectedId)
+    if (already) return base
+    return [{id: selectedId, name: selectedName}, ...base].sort((a, b) => a.name.localeCompare(b.name))
+  }
+
+  const [options, setOptions] = useState<CountryOption[]>(() => buildOptions(countries, value, currentName))
   const [creatingMode, setCreatingMode] = useState(false)
   const [newName, setNewName] = useState('')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // Re-sync when the parent passes a new countries list (e.g. dialog re-opened)
+  // and make sure the current selection is always present.
+  useEffect(() => {
+    setOptions(buildOptions(countries, value, currentName))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [countries, value, currentName])
+
   async function handleCreate() {
     const trimmed = newName.trim()
     if (!trimmed) return
-    // Prevent duplicates (case-insensitive)
     const existing = options.find(o => o.name.toLowerCase() === trimmed.toLowerCase())
     if (existing) {
       onChange(existing.id, existing.name)

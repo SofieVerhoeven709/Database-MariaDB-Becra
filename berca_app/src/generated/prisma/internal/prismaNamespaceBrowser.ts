@@ -904,7 +904,6 @@ export const MaterialPriceScalarFieldEnum = {
   additionalInfo: 'additionalInfo',
   unitPrice: 'unitPrice',
   quantityPrice: 'quantityPrice',
-  packingUnits: 'packingUnits',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',

@@ -37,11 +37,11 @@ function emptyEntry(): MappedMaterialPrice {
     additionalInfo: null,
     unitPrice: null,
     quantityPrice: null,
+    packingUnits: null,
     updatedAt: null,
     companyId: '',
     companyName: null,
     createdBy: '',
-    createdByName: '',
     deleted: false,
     deletedAt: null,
     deletedBy: null,
@@ -107,7 +107,7 @@ export function MaterialPriceFormDialog({open, onOpenChange, entry, companies, o
               id="beNumber"
               value={form.beNumber ?? ''}
               onChange={e => set('beNumber', e.target.value || null)}
-              placeholder="e.g. BE-0001"
+              placeholder="e.g. 10000001"
               className="bg-secondary border-border"
             />
           </div>
@@ -148,13 +148,13 @@ export function MaterialPriceFormDialog({open, onOpenChange, entry, companies, o
             />
           </div>
 
-          {/* Unit Price & Quantity */}
-          <div className="grid grid-cols-2 gap-3">
+          {/* Unit Price + Unit Quantity + Packing Units */}
+          <div className="grid grid-cols-3 gap-3">
             <div className="grid gap-1.5">
               <Label htmlFor="unitPrice">Unit Price (€)</Label>
               <Input
                 id="unitPrice"
-                type="number"
+                type="decimal"
                 step="0.01"
                 value={form.unitPrice ?? ''}
                 onChange={e => set('unitPrice', e.target.value || null)}
@@ -163,17 +163,35 @@ export function MaterialPriceFormDialog({open, onOpenChange, entry, companies, o
               />
             </div>
             <div className="grid gap-1.5">
-              <Label htmlFor="quantityPrice">Quantity</Label>
+              <Label htmlFor="quantityPrice">Unit Quantity</Label>
               <Input
                 id="quantityPrice"
-                type="number"
+                type="decimal"
+                step="0.001"
+                min="0"
                 value={form.quantityPrice ?? ''}
                 onChange={e => set('quantityPrice', e.target.value || null)}
-                placeholder="1"
+                placeholder="6.12"
+                className="bg-secondary border-border"
+              />
+            </div>
+            <div className="grid gap-1.5">
+              <Label htmlFor="packingUnits">Packing Units</Label>
+              <Input
+                id="packingUnits"
+                type="number"
+                min="1"
+                step="1"
+                value={form.packingUnits ?? ''}
+                onChange={e => set('packingUnits', e.target.value || null)}
+                placeholder="5"
                 className="bg-secondary border-border"
               />
             </div>
           </div>
+          <p className="-mt-2 text-xs text-muted-foreground">
+            Leave Unit Quantity or Packing Units empty to copy defaults from the preferred supplier when available.
+          </p>
 
           {/* Order Nr */}
           <div className="grid gap-1.5">

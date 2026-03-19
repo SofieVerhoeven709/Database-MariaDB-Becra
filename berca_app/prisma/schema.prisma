@@ -122,7 +122,7 @@ model CompanyAdress {
   @@index([companyId], map: "companyId")
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
-  @@index([countryId], map: "countryId")
+  @@index([countryId], map: "fk_companyadress_country")
 }
 
 model CompanyContact {
@@ -465,8 +465,8 @@ model Employee {
   Project                                                                           Project[]
   Project_Project_deletedByToEmployee                                               Project[]                        @relation("Project_deletedByToEmployee")
   ProjectContact_ProjectContact_createdByToEmployee                                 ProjectContact[]                 @relation("ProjectContact_createdByToEmployee")
-  ProjectContact_ProjectContact_modifiedByToEmployee                                ProjectContact[]                 @relation("ProjectContact_modifiedByToEmployee")
   ProjectContact_ProjectContact_deletedByToEmployee                                 ProjectContact[]                 @relation("ProjectContact_deletedByToEmployee")
+  ProjectContact_ProjectContact_modifiedByToEmployee                                ProjectContact[]                 @relation("ProjectContact_modifiedByToEmployee")
   ProjectType                                                                       ProjectType[]
   ProjectType_ProjectType_deletedByToEmployee                                       ProjectType[]                    @relation("ProjectType_deletedByToEmployee")
   Purchase                                                                          Purchase[]
@@ -553,10 +553,10 @@ model FollowUp {
   deletedAt                              DateTime?           @db.DateTime(0)
   deletedBy                              String?             @db.Char(36)
   UrgencyType                            UrgencyType         @relation(fields: [urgencyTypeId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_1")
+  DocumentStructure                      DocumentStructure?  @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_5")
   Employee_FollowUp_ownedByToEmployee    Employee            @relation("FollowUp_ownedByToEmployee", fields: [ownedBy], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_2")
   Status                                 Status              @relation(fields: [statusId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_3")
   Employee_FollowUp_executedByToEmployee Employee            @relation("FollowUp_executedByToEmployee", fields: [executedBy], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_4")
-  DocumentStructure                      DocumentStructure?  @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_5")
   Employee_FollowUp_createdByToEmployee  Employee            @relation("FollowUp_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_6")
   FollowUpType                           FollowUpType        @relation(fields: [followUpTypeId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_7")
   Target                                 Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_8")
@@ -605,11 +605,11 @@ model FollowUpStructure {
   UrgencyType                                     UrgencyType        @relation(fields: [urgencyTypeId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_1")
   Target                                          Target             @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_10")
   Employee_FollowUpStructure_deletedByToEmployee  Employee?          @relation("FollowUpStructure_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_11")
+  DocumentStructure                               DocumentStructure? @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_6")
   Employee_FollowUpStructure_ownedByToEmployee    Employee           @relation("FollowUpStructure_ownedByToEmployee", fields: [ownedBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_2")
   Status                                          Status             @relation(fields: [statusId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_3")
   Employee_FollowUpStructure_executedByToEmployee Employee           @relation("FollowUpStructure_executedByToEmployee", fields: [executedBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_4")
   FollowUp                                        FollowUp           @relation(fields: [followUpId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_5")
-  DocumentStructure                               DocumentStructure? @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_6")
   Contact                                         Contact            @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_7")
   Employee_FollowUpStructure_taskForToEmployee    Employee           @relation("FollowUpStructure_taskForToEmployee", fields: [taskFor], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_8")
   Employee_FollowUpStructure_createdByToEmployee  Employee           @relation("FollowUpStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_9")
@@ -964,11 +964,11 @@ model Material {
   @@index([createdBy], map: "createdBy")
   @@index([unitId], map: "unitId")
   @@index([deletedBy], map: "deletedBy")
-  @@index([preferredSupplierCompanyId], map: "fk_material_preferredSupplierCompanyId")
-  @@index([materialGroupIdA], map: "materialGroupIdA")
-  @@index([materialGroupIdB], map: "materialGroupIdB")
-  @@index([materialGroupIdC], map: "materialGroupIdC")
-  @@index([materialGroupIdD], map: "materialGroupIdD")
+  @@index([materialGroupIdA], map: "fk_material_group_a")
+  @@index([materialGroupIdB], map: "fk_material_group_b")
+  @@index([materialGroupIdC], map: "fk_material_group_c")
+  @@index([materialGroupIdD], map: "fk_material_group_d")
+  @@index([preferredSupplierCompanyId], map: "preferredSupplierCompanyId")
 }
 
 model MaterialSupplier {
@@ -1172,7 +1172,7 @@ model MaterialPrice {
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
-  @@index([companyId], map: "companyId")
+  @@index([companyId], map: "fk_materialprice_company")
 }
 
 model MaterialSerialTrack {
@@ -1448,15 +1448,15 @@ model ProjectContact {
   deletedBy                                    String?   @db.Char(36)
   Employee_ProjectContact_createdByToEmployee  Employee  @relation("ProjectContact_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_1")
   Project                                      Project   @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_2")
-  Employee_ProjectContact_modifiedByToEmployee Employee  @relation("ProjectContact_modifiedByToEmployee", fields: [modifiedBy], references: [id], onUpdate: Restrict, map: "fk_projectcontact_modifiedBy")
   Contact                                      Contact   @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_4")
   Employee_ProjectContact_deletedByToEmployee  Employee? @relation("ProjectContact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_5")
+  Employee_ProjectContact_modifiedByToEmployee Employee  @relation("ProjectContact_modifiedByToEmployee", fields: [modifiedBy], references: [id], onUpdate: Restrict, map: "fk_projectcontact_modifiedBy")
 
   @@index([contactId], map: "contactId")
   @@index([createdBy], map: "createdBy")
   @@index([projectId], map: "projectId")
   @@index([deletedBy], map: "deletedBy")
-  @@index([modifiedBy], map: "modifiedBy")
+  @@index([modifiedBy], map: "fk_projectcontact_modifiedBy")
 }
 
 model ProjectType {
@@ -1938,7 +1938,7 @@ model WarehousePlace {
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
-  @@index([serialTrackedId], map: "serialTrackedId")
+  @@index([serialTrackedId], map: "fk_warehouseplace_serialtrack")
 }
 
 model WorkOrder {

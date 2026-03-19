@@ -123,11 +123,12 @@ export async function createMaterial(data: {
   unitId: string
   createdBy: string
 }) {
-  const {supplierCompanyIds = [], ...materialData} = data
+  const {supplierCompanyIds = [], bePartDoc, ...materialData} = data
 
   return prismaClient.material.create({
     data: {
       ...materialData,
+      bePartDoc: bePartDoc != null ? String(bePartDoc) : null,
       MaterialSupplier:
         supplierCompanyIds.length > 0
           ? {
@@ -137,7 +138,7 @@ export async function createMaterial(data: {
               })),
             }
           : undefined,
-    },
+    } as Prisma.MaterialUncheckedCreateInput,
   })
 }
 
@@ -162,12 +163,13 @@ export async function updateMaterial(
     unitId?: string
   },
 ) {
-  const {supplierCompanyIds, ...materialData} = data
+  const {supplierCompanyIds, bePartDoc, ...materialData} = data
 
   return prismaClient.material.update({
     where: {id},
     data: {
       ...materialData,
+      bePartDoc: bePartDoc !== undefined ? (bePartDoc != null ? String(bePartDoc) : null) : undefined,
       MaterialSupplier:
         supplierCompanyIds === undefined
           ? undefined
@@ -178,7 +180,7 @@ export async function updateMaterial(
                 companyId,
               })),
             },
-    },
+    } as Prisma.MaterialUncheckedUpdateInput,
   })
 }
 

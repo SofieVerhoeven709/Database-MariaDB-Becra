@@ -30,6 +30,7 @@ import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import type {Route} from 'next'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import type {ContactDetailData} from '@/types/contact'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 interface SelectOption {
   id: string
@@ -47,6 +48,7 @@ interface ContactDetailProps {
   titleOptions: SelectOption[]
   companyOptions: SelectOption[]
   departmentId: string
+  countryOptions: CountryOption[]
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -85,6 +87,7 @@ export function ContactDetail({
   titleOptions,
   companyOptions,
   departmentId,
+  countryOptions,
 }: ContactDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -144,6 +147,7 @@ export function ContactDetail({
         zipCode: a.zipCode,
         place: a.place,
         typeAdress: a.typeAdress,
+        countryId: a.countryId,
       })),
       visibilityForRoles: visRows,
     })
@@ -364,7 +368,6 @@ export function ContactDetail({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {textRow('First Name', contact.firstName, 'firstName')}
             {textRow('Last Name', contact.lastName, 'lastName')}
-            {/* Birth date */}
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Birth Date</Label>
               {editing ? (
@@ -382,7 +385,6 @@ export function ContactDetail({
             {selectRow('Title', contact.titleName, 'titleId', titleOptions)}
             {selectRow('Function', contact.functionName, 'functionId', functionOptions)}
             {selectRow('Ext. Department', contact.departmentExternName, 'departmentExternId', departmentExternOptions)}
-            {/* Created By / At */}
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Created By</Label>
               <p className="text-sm text-muted-foreground">{contact.createdByName}</p>
@@ -880,7 +882,6 @@ export function ContactDetail({
         {/* ── Projects ─────────────────────────────────────────────────────── */}
         <TabsContent value="projects" className="mt-3">
           <div className="flex flex-col gap-6">
-            {/* Active */}
             <div>
               <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
                 Active ({activeProjects.length})
@@ -938,7 +939,6 @@ export function ContactDetail({
               </div>
             </div>
 
-            {/* Closed */}
             {closedProjects.length > 0 && (
               <div>
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
@@ -1139,6 +1139,7 @@ export function ContactDetail({
         canDelete={false}
         roleLevelOptions={roleLevelOptions}
         defaultVisibleRoleNames={defaultVisibleRoleNames}
+        countryOptions={countryOptions}
       />
     </div>
   )

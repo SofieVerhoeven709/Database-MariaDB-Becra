@@ -1,5 +1,8 @@
 import {ContactDetail} from '@/components/custom/contactDetail'
 import {getContactDetail} from '@/dal/contacts'
+import {getFunctions} from '@/dal/functions'
+import {getDepartmentExterns} from '@/dal/departmentExterns'
+import {getTitles} from '@/dal/titles'
 import {getAllRoleLevels} from '@/dal/roleLevel'
 import {mapContactDetail} from '@/extra/contacts'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
@@ -8,6 +11,7 @@ import {prismaClient} from '@/dal/prismaClient'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {notFound} from 'next/navigation'
+import {getCountries} from '@/dal/countries'
 
 interface PageProps {
   params: Promise<{departmentId: string; contactId: string}>
@@ -16,16 +20,17 @@ interface PageProps {
 export default async function ContactDetailPage({params}: PageProps) {
   const {departmentId, contactId} = await params
 
-  const [department, contactFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies] =
+  const [department, contactFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies, countries] =
     await Promise.all([
       getDepartmentById(departmentId),
       getContactDetail(contactId).catch(() => null),
       getAllRoleLevels(),
       getSessionProfileFromCookieOrThrow(),
-      prismaClient.function.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-      prismaClient.departmentExtern.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
-      prismaClient.title.findMany({orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      getFunctions(),
+      getDepartmentExterns(),
+      getTitles(),
       prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      getCountries(),
     ])
 
   if (!department) return <p>Department not found</p>
@@ -45,11 +50,12 @@ export default async function ContactDetailPage({params}: PageProps) {
           currentUserLevel={currentUserLevel}
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
-          functionOptions={functions}
-          departmentExternOptions={departmentExterns}
-          titleOptions={titles}
+          functionOptions={functions ?? []}
+          departmentExternOptions={departmentExterns ?? []}
+          titleOptions={titles ?? []}
           companyOptions={companies}
           departmentId={departmentId}
+          countryOptions={countries}
         />
       </div>
     </main>

@@ -129,61 +129,19 @@ export function MaterialFormDialog({
             onSave(form)
           }}
           className="flex flex-col gap-5">
-          {/* Row 1: BE Number + Brand Order Nr */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="beNumber" className="text-xs text-muted-foreground">
-                BE Number
-              </Label>
-              <p className="text-xs text-muted-foreground">Leeg laten voor automatische generatie</p>
-              <Input
-                id="beNumber"
-                className={inputStyles}
-                value={form.beNumber ?? ''}
-                onChange={e => update('beNumber', e.target.value)}
-                placeholder="Leeg laten = automatisch genereren"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="brandOrderNr" className="text-xs text-muted-foreground">
-                Brand Order Nr *
-              </Label>
-              <Input
-                id="brandOrderNr"
-                className={inputStyles}
-                value={form.brandOrderNr ?? ''}
-                onChange={e => update('brandOrderNr', e.target.value)}
-                required
-              />
-            </div>
-          </div>
-
-          {/* Row 2: Material Name + Brand Name */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="name" className="text-xs text-muted-foreground">
-                Name
-              </Label>
-              <Input
-                id="name"
-                className={inputStyles}
-                value={form.name ?? ''}
-                onChange={e => update('name', e.target.value || null)}
-                placeholder="Material name"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="brandName" className="text-xs text-muted-foreground">
-                Brand Name
-              </Label>
-              <Input
-                id="brandName"
-                className={inputStyles}
-                value={form.brandName ?? ''}
-                onChange={e => update('brandName', e.target.value || null)}
-                placeholder="Brand name"
-              />
-            </div>
+          {/* Be Number */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="beNumber" className="text-xs text-muted-foreground">
+              BE Number
+            </Label>
+            <p className="text-xs text-muted-foreground">Leeg laten voor automatische generatie</p>
+            <Input
+              id="beNumber"
+              className={inputStyles}
+              value={form.beNumber ?? ''}
+              onChange={e => update('beNumber', e.target.value)}
+              placeholder="Leeg laten = automatisch genereren"
+            />
           </div>
 
           {/* Short Description */}
@@ -213,6 +171,48 @@ export function MaterialFormDialog({
               value={form.longDescription ?? ''}
               onChange={e => update('longDescription', e.target.value || null)}
               placeholder="Detailed description..."
+            />
+          </div>
+
+          {/* Brand Name + Brand Order Nr */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="brandName" className="text-xs text-muted-foreground">
+                Brand Name
+              </Label>
+              <Input
+                id="brandName"
+                className={inputStyles}
+                value={form.brandName ?? ''}
+                onChange={e => update('brandName', e.target.value || null)}
+                placeholder="Brand name"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="brandOrderNr" className="text-xs text-muted-foreground">
+                Brand Order Nr *
+              </Label>
+              <Input
+                id="brandOrderNr"
+                className={inputStyles}
+                value={form.brandOrderNr ?? ''}
+                onChange={e => update('brandOrderNr', e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          {/* Brand Short Description */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="name" className="text-xs text-muted-foreground">
+              Brand Short Description
+            </Label>
+            <Input
+              id="name"
+              className={inputStyles}
+              value={form.name ?? ''}
+              onChange={e => update('name', e.target.value || null)}
+              placeholder="Brand short description"
             />
           </div>
 

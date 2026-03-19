@@ -15,6 +15,7 @@ import {getDepartmentExterns} from '@/dal/departmentExterns'
 import {getTitles} from '@/dal/titles'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import {getCountries} from '@/dal/countries'
 
 interface PageProps {
   params: Promise<{departmentId: string; projectId: string}>
@@ -36,6 +37,7 @@ export default async function ProjectDetailPage({params}: PageProps) {
     functions,
     departmentExterns,
     titles,
+    countries,
   ] = await Promise.all([
     getDepartmentById(departmentId),
     getProjectById(projectId).catch(() => null),
@@ -49,6 +51,7 @@ export default async function ProjectDetailPage({params}: PageProps) {
     getFunctions(),
     getDepartmentExterns(),
     getTitles(),
+    getCountries(),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -92,6 +95,7 @@ export default async function ProjectDetailPage({params}: PageProps) {
           departmentExternOptions={departmentExternOptions}
           titleOptions={titleOptions}
           departmentId={departmentId}
+          countryOptions={countries}
         />
       </div>
     </main>

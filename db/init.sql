@@ -1,6 +1,6 @@
-CREATE DATABASE app_db;
+CREATE DATABASE BecraBV;
 
-USE app_db;
+USE BecraBV;
 
 CREATE TABLE
       IF NOT EXISTS Role (
@@ -175,7 +175,7 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             beNumber VARCHAR(255) NOT NULL,
             name VARCHAR(255),
-            brandOrderNr VARCHAR(255),
+            brandOrderNr VARCHAR(255) NULL,
             shortDescription VARCHAR(255) NOT NULL,
             longDescription TEXT,
             brandName VARCHAR(255),

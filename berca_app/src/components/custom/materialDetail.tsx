@@ -108,7 +108,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
   const [form, setForm] = useState({
     beNumber: material.beNumber,
     name: material.name ?? '',
-    brandOrderNr: material.brandOrderNr,
+    brandOrderNr: material.brandOrderNr ?? '',
     shortDescription: material.shortDescription,
     longDescription: material.longDescription ?? '',
     preferredSupplierCompanyId: material.preferredSupplierCompanyId ?? '__none__',
@@ -156,7 +156,8 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
         fd.append('preferredSupplierCompanyId', form.preferredSupplierCompanyId)
       }
       if (form.preferredSupplierOrderId) fd.append('preferredSupplierOrderId', form.preferredSupplierOrderId)
-      if (form.preferredSupplierShortDescription) fd.append('preferredSupplierShortDescription', form.preferredSupplierShortDescription)
+      if (form.preferredSupplierShortDescription)
+        fd.append('preferredSupplierShortDescription', form.preferredSupplierShortDescription)
       form.supplierCompanyIds.forEach(id => fd.append('supplierCompanyIds', id))
       if (form.brandName) fd.append('brandName', form.brandName)
       if (form.documentationPlace) fd.append('documentationPlace', form.documentationPlace)
@@ -330,7 +331,9 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                   placeholder="e.g. ABC-123"
                 />
               ) : (
-                <p className="text-sm">{material.preferredSupplierOrderId ?? <span className="text-muted-foreground">—</span>}</p>
+                <p className="text-sm">
+                  {material.preferredSupplierOrderId ?? <span className="text-muted-foreground">—</span>}
+                </p>
               )}
             </div>
 

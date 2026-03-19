@@ -53,6 +53,8 @@ export const createMaterialAction = protectedFormAction({
       id: data.id || randomUUID(),
       beNumber,
       preferredSupplierCompanyId,
+      preferredSupplierOrderId: data.preferredSupplierOrderId ?? null,
+      preferredSupplierShortDescription: data.preferredSupplierShortDescription ?? null,
       supplierCompanyIds,
       bePartDoc: data.bePartDoc != null ? Number(data.bePartDoc) : null,
       materialGroupIdA: data.materialGroupIdA,

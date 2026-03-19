@@ -88,12 +88,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.19.2
- * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
+ * Prisma Client JS version: 6.19.0
+ * Query Engine version: 2ba551f319ab1df4bc874a89965d8b3641056773
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.19.2",
-  engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
+  client: "6.19.0",
+  engine: "2ba551f319ab1df4bc874a89965d8b3641056773"
 }
 
 /**
@@ -6325,7 +6325,6 @@ export const MaterialScalarFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -6348,7 +6347,10 @@ export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typ
 export const MaterialSupplierScalarFieldEnum = {
   id: 'id',
   materialId: 'materialId',
-  companyId: 'companyId'
+  companyId: 'companyId',
+  supplierOrderNr: 'supplierOrderNr',
+  shortDescription: 'shortDescription',
+  isPreferred: 'isPreferred'
 } as const
 
 export type MaterialSupplierScalarFieldEnum = (typeof MaterialSupplierScalarFieldEnum)[keyof typeof MaterialSupplierScalarFieldEnum]
@@ -7653,7 +7655,6 @@ export const MaterialOrderByRelevanceFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
-  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -7673,7 +7674,9 @@ export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevance
 export const MaterialSupplierOrderByRelevanceFieldEnum = {
   id: 'id',
   materialId: 'materialId',
-  companyId: 'companyId'
+  companyId: 'companyId',
+  supplierOrderNr: 'supplierOrderNr',
+  shortDescription: 'shortDescription'
 } as const
 
 export type MaterialSupplierOrderByRelevanceFieldEnum = (typeof MaterialSupplierOrderByRelevanceFieldEnum)[keyof typeof MaterialSupplierOrderByRelevanceFieldEnum]

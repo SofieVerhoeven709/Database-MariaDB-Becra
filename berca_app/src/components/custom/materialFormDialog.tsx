@@ -48,6 +48,97 @@ function groupLabel(group: MaterialGroup) {
   return [group.groupA, group.groupB, group.groupC, group.groupD].filter(Boolean).join(' / ')
 }
 
+interface PreferredSupplierPickerProps {
+  selectedCompanyId: string | null
+  onSelect: (companyId: string | null) => void
+  availableCompanies: SupplierCompanyOption[]
+  inputStyles: string
+}
+
+function PreferredSupplierPicker({
+  selectedCompanyId,
+  onSelect,
+  availableCompanies,
+  inputStyles,
+}: PreferredSupplierPickerProps) {
+  const [search, setSearch] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
+
+  const filtered = availableCompanies.filter(
+    c =>
+      c.name.toLowerCase().includes(search.toLowerCase()) || c.number.toLowerCase().includes(search.toLowerCase()),
+  )
+
+  const selectedCompany = availableCompanies.find(c => c.id === selectedCompanyId)
+
+  // Show search text if user is typing, otherwise show selected company
+  const displayValue = isFocused ? search : search || (selectedCompany ? `${selectedCompany.name} (${selectedCompany.number})` : '')
+
+  const handleClear = () => {
+    onSelect(null)
+    setSearch('')
+    setIsOpen(false)
+  }
+
+  const handleSelect = (companyId: string) => {
+    onSelect(companyId)
+    setSearch('')
+    setIsOpen(false)
+    setIsFocused(false)
+  }
+
+  return (
+    <div className="relative">
+      <Input
+        className={inputStyles}
+        placeholder="Type to search suppliers..."
+        value={displayValue}
+        onChange={e => {
+          setSearch(e.target.value)
+          setIsOpen(true)
+        }}
+        onFocus={() => {
+          setIsFocused(true)
+          setIsOpen(true)
+        }}
+        onBlur={() => {
+          setIsFocused(false)
+          // Close dropdown after a brief delay to allow click handlers to fire
+          setTimeout(() => setIsOpen(false), 150)
+        }}
+      />
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 mt-1 bg-secondary border border-border rounded-md max-h-48 overflow-y-auto z-50">
+          {selectedCompanyId && (
+            <div
+              className="px-2 py-1.5 text-sm text-muted-foreground hover:bg-secondary/80 cursor-pointer border-b border-border"
+              onClick={() => handleClear()}>
+              Clear Selection
+            </div>
+          )}
+          {filtered.map(company => (
+            <div
+              key={company.id}
+              className={`px-2 py-1.5 text-sm cursor-pointer hover:bg-secondary/80 ${
+                selectedCompanyId === company.id ? 'bg-secondary/80 font-semibold' : ''
+              }`}
+              onClick={() => handleSelect(company.id)}>
+              {company.name} ({company.number})
+            </div>
+          ))}
+          {filtered.length === 0 && search && (
+            <div className="px-2 py-1.5 text-xs text-muted-foreground">No suppliers match your search</div>
+          )}
+          {availableCompanies.length === 0 && !search && (
+            <div className="px-2 py-1.5 text-xs text-muted-foreground">No suppliers available. Add suppliers first.</div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string} = {
   id: '',
   beNumber: '',
@@ -56,7 +147,9 @@ const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string} = {
   shortDescription: '',
   longDescription: null,
   preferredSupplierCompanyId: null,
-  preferredSupplierName: null,
+  preferredSupplierCompanyName: null,
+  preferredSupplierOrderId: null,
+  preferredSupplierShortDescription: null,
   supplierCompanyIds: [],
   supplierCompanyNames: [],
   brandName: null,
@@ -290,7 +383,7 @@ export function MaterialFormDialog({
             </div>
           </div>
 
-          {/* Row 5: Optional Material Group D + Preferred Supplier */}
+          {/* Row 5: Optional Material Group D + Preferred Supplier Order ID */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label className="text-xs text-muted-foreground">Material Group D</Label>
@@ -311,29 +404,49 @@ export function MaterialFormDialog({
               </Select>
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="preferredSupplierCompanyId" className="text-xs text-muted-foreground">
-                Preferred Supplier
+              <Label htmlFor="preferredSupplierOrderId" className="text-xs text-muted-foreground">
+                Preferred Supplier Order ID
               </Label>
-              <Select
-                value={form.preferredSupplierCompanyId ?? '__none__'}
-                onValueChange={v => update('preferredSupplierCompanyId', v === '__none__' ? null : v)}>
-                <SelectTrigger className={inputStyles}>
-                  <SelectValue placeholder="Select preferred supplier..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="__none__">None</SelectItem>
-                  {(form.supplierCompanyIds ?? []).map(companyId => {
-                    const company = supplierCompanies.find(c => c.id === companyId)
-                    if (!company) return null
-                    return (
-                      <SelectItem key={company.id} value={company.id}>
-                        {company.name} ({company.number})
-                      </SelectItem>
-                    )
-                  })}
-                </SelectContent>
-              </Select>
+              <Input
+                id="preferredSupplierOrderId"
+                className={inputStyles}
+                value={typeof form.preferredSupplierOrderId === 'string' ? form.preferredSupplierOrderId : ''}
+                onChange={e => update('preferredSupplierOrderId', e.target.value || null)}
+                placeholder="e.g. ABC-123"
+              />
             </div>
+          </div>
+
+          {/* Preferred Supplier Short Description */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="preferredSupplierShortDescription" className="text-xs text-muted-foreground">
+              Preferred Supplier Short Description
+            </Label>
+            <Input
+              id="preferredSupplierShortDescription"
+              className={inputStyles}
+              value={
+                typeof form.preferredSupplierShortDescription === 'string' ? form.preferredSupplierShortDescription : ''
+              }
+              onChange={e => update('preferredSupplierShortDescription', e.target.value || null)}
+              placeholder="Short description or notes about the preferred supplier"
+            />
+          </div>
+
+          {/* Preferred Supplier Company - Searchable */}
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs text-muted-foreground">Preferred Supplier Company</Label>
+            <PreferredSupplierPicker
+              selectedCompanyId={form.preferredSupplierCompanyId ?? null}
+              onSelect={companyId => update('preferredSupplierCompanyId', companyId)}
+              availableCompanies={supplierCompanies}
+              inputStyles={inputStyles}
+            />
+            {form.preferredSupplierCompanyId && (
+              <p className="text-xs text-muted-foreground">
+                Must be added to suppliers first to be used as preferred supplier.
+              </p>
+            )}
           </div>
 
           {/* Row 6: Documentation Place */}
@@ -374,7 +487,7 @@ export function MaterialFormDialog({
               })}
             </div>
             <p className="text-xs text-muted-foreground">
-              Select one or more suppliers. Preferred supplier is chosen from this selection.
+              Select one or more suppliers. Preferred supplier must be selected from this list.
             </p>
           </div>
 

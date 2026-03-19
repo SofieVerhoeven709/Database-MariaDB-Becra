@@ -35,7 +35,9 @@ interface MappedMaterialDetail {
   shortDescription: string
   longDescription: string | null
   preferredSupplierCompanyId: string | null
-  preferredSupplierName: string | null
+  preferredSupplierCompanyName: string | null
+  preferredSupplierOrderId: string | null
+  preferredSupplierShortDescription: string | null
   supplierCompanyIds: string[]
   supplierCompanyNames: string[]
   brandName: string | null
@@ -110,6 +112,8 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
     shortDescription: material.shortDescription,
     longDescription: material.longDescription ?? '',
     preferredSupplierCompanyId: material.preferredSupplierCompanyId ?? '__none__',
+    preferredSupplierOrderId: material.preferredSupplierOrderId ?? '',
+    preferredSupplierShortDescription: material.preferredSupplierShortDescription ?? '',
     supplierCompanyIds: material.supplierCompanyIds ?? [],
     brandName: material.brandName ?? '',
     documentationPlace: material.documentationPlace ?? '',
@@ -151,6 +155,8 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
       if (form.preferredSupplierCompanyId !== '__none__') {
         fd.append('preferredSupplierCompanyId', form.preferredSupplierCompanyId)
       }
+      if (form.preferredSupplierOrderId) fd.append('preferredSupplierOrderId', form.preferredSupplierOrderId)
+      if (form.preferredSupplierShortDescription) fd.append('preferredSupplierShortDescription', form.preferredSupplierShortDescription)
       form.supplierCompanyIds.forEach(id => fd.append('supplierCompanyIds', id))
       if (form.brandName) fd.append('brandName', form.brandName)
       if (form.documentationPlace) fd.append('documentationPlace', form.documentationPlace)
@@ -316,7 +322,35 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Preferred Supplier</Label>
+              <Label className="text-xs text-muted-foreground">Preferred Supplier Order ID</Label>
+              {editing ? (
+                <Input
+                  value={form.preferredSupplierOrderId}
+                  onChange={e => handleField('preferredSupplierOrderId', e.target.value)}
+                  placeholder="e.g. ABC-123"
+                />
+              ) : (
+                <p className="text-sm">{material.preferredSupplierOrderId ?? <span className="text-muted-foreground">—</span>}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5 md:col-span-2">
+              <Label className="text-xs text-muted-foreground">Preferred Supplier Short Description</Label>
+              {editing ? (
+                <Input
+                  value={form.preferredSupplierShortDescription}
+                  onChange={e => handleField('preferredSupplierShortDescription', e.target.value)}
+                  placeholder="Short description or notes"
+                />
+              ) : (
+                <p className="text-sm">
+                  {material.preferredSupplierShortDescription ?? <span className="text-muted-foreground">—</span>}
+                </p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Preferred Supplier Company</Label>
               {editing ? (
                 <Select
                   value={form.preferredSupplierCompanyId}
@@ -339,7 +373,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                 </Select>
               ) : (
                 <p className="text-sm">
-                  {material.preferredSupplierName ?? <span className="text-muted-foreground">—</span>}
+                  {material.preferredSupplierCompanyName ?? <span className="text-muted-foreground">—</span>}
                 </p>
               )}
             </div>

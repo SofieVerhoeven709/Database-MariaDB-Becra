@@ -25,6 +25,16 @@ const nullableUuidSchema = z.preprocess(
   z.string().uuid().nullable().optional(),
 )
 
+const preferredSupplierOrderIdSchema = z.preprocess(
+  val => (val === '' || val == null ? null : val),
+  z.string().trim().max(255).nullable().optional(),
+)
+
+const preferredSupplierShortDescriptionSchema = z.preprocess(
+  val => (val === '' || val == null ? null : val),
+  z.string().trim().max(255).nullable().optional(),
+)
+
 export const materialSchema = z.object({
   id: z.string().uuid(),
   beNumber: beNumberSchema,
@@ -33,6 +43,8 @@ export const materialSchema = z.object({
   shortDescription: z.string().min(1).max(255),
   longDescription: z.string().nullable().optional(),
   preferredSupplierCompanyId: nullableUuidSchema,
+  preferredSupplierOrderId: preferredSupplierOrderIdSchema,
+  preferredSupplierShortDescription: preferredSupplierShortDescriptionSchema,
   supplierCompanyIds: supplierCompanyIdsSchema,
   brandName: z.string().max(255).nullable().optional(),
   documentationPlace: z.string().max(255).nullable().optional(),

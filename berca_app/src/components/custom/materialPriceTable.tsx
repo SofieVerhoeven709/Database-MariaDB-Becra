@@ -41,6 +41,18 @@ function formatPrice(val: string | null | undefined) {
   return new Intl.NumberFormat('en-BE', {style: 'currency', currency: 'EUR'}).format(n)
 }
 
+function parseNullableNumber(value: string | null | undefined) {
+  if (!value) return null
+  const parsed = parseFloat(value)
+  return Number.isNaN(parsed) ? null : parsed
+}
+
+function parseNullableInteger(value: string | null | undefined) {
+  if (!value) return null
+  const parsed = parseInt(value, 10)
+  return Number.isNaN(parsed) ? null : parsed
+}
+
 interface MaterialPriceTableProps {
   initialEntries: MappedMaterialPrice[]
   companies: MaterialPriceOption[]
@@ -138,8 +150,9 @@ export function MaterialPriceTable({
         brandName: e.brandName,
         rejected: e.rejected,
         additionalInfo: e.additionalInfo,
-        unitPrice: e.unitPrice ? parseFloat(e.unitPrice) : null,
-        quantityPrice: e.quantityPrice ? parseInt(e.quantityPrice) : null,
+        unitPrice: parseNullableNumber(e.unitPrice),
+        quantityPrice: parseNullableNumber(e.quantityPrice),
+        packingUnits: parseNullableInteger(e.packingUnits),
         companyId: e.companyId,
       })
     } else {
@@ -154,8 +167,9 @@ export function MaterialPriceTable({
         brandName: e.brandName,
         rejected: e.rejected,
         additionalInfo: e.additionalInfo,
-        unitPrice: e.unitPrice ? parseFloat(e.unitPrice) : null,
-        quantityPrice: e.quantityPrice ? parseInt(e.quantityPrice) : null,
+        unitPrice: parseNullableNumber(e.unitPrice),
+        quantityPrice: parseNullableNumber(e.quantityPrice),
+        packingUnits: parseNullableInteger(e.packingUnits),
         companyId: e.companyId,
       })
     }
@@ -234,7 +248,8 @@ export function MaterialPriceTable({
               <TableHead className={thClass} onClick={() => toggleSort('unitPrice')}>
                 Unit Price <SortIcon field="unitPrice" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className="text-xs whitespace-nowrap">Qty</TableHead>
+              <TableHead className="text-xs whitespace-nowrap">Unit Qty</TableHead>
+              <TableHead className="text-xs whitespace-nowrap">Packing</TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('updatedAt')}>
                 Updated <SortIcon field="updatedAt" sortField={sortField} sortDir={sortDir} />
               </TableHead>
@@ -246,7 +261,7 @@ export function MaterialPriceTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="h-28 text-center text-muted-foreground">
+                <TableCell colSpan={9} className="h-28 text-center text-muted-foreground">
                   No material price entries match the current filters.
                 </TableCell>
               </TableRow>
@@ -289,6 +304,7 @@ export function MaterialPriceTable({
                     {formatPrice(entry.unitPrice)}
                   </TableCell>
                   <TableCell className={tdClass}>{entry.quantityPrice ?? '—'}</TableCell>
+                  <TableCell className={tdClass}>{entry.packingUnits ?? '—'}</TableCell>
                   <TableCell className={tdClass}>{formatDate(entry.updatedAt)}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">

@@ -37,7 +37,6 @@ function emptyEntry(): MappedMaterialPrice {
     additionalInfo: null,
     unitPrice: null,
     quantityPrice: null,
-    packingUnits: null,
     updatedAt: null,
     companyId: '',
     companyName: null,
@@ -148,8 +147,8 @@ export function MaterialPriceFormDialog({open, onOpenChange, entry, companies, o
             />
           </div>
 
-          {/* Unit Price + Unit Quantity + Packing Units */}
-          <div className="grid grid-cols-3 gap-3">
+          {/* Unit Price + Unit Quantity */}
+          <div className="grid grid-cols-2 gap-3">
             <div className="grid gap-1.5">
               <Label htmlFor="unitPrice">Unit Price (€)</Label>
               <Input
@@ -175,22 +174,9 @@ export function MaterialPriceFormDialog({open, onOpenChange, entry, companies, o
                 className="bg-secondary border-border"
               />
             </div>
-            <div className="grid gap-1.5">
-              <Label htmlFor="packingUnits">Packing Units</Label>
-              <Input
-                id="packingUnits"
-                type="number"
-                min="1"
-                step="1"
-                value={form.packingUnits ?? ''}
-                onChange={e => set('packingUnits', e.target.value || null)}
-                placeholder="5"
-                className="bg-secondary border-border"
-              />
-            </div>
           </div>
           <p className="-mt-2 text-xs text-muted-foreground">
-            Leave Unit Quantity or Packing Units empty to copy defaults from the preferred supplier when available.
+            Leave Unit Quantity empty to copy defaults from the preferred supplier when available.
           </p>
 
           {/* Order Nr */}

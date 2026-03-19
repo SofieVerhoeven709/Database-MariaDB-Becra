@@ -52,7 +52,6 @@ export async function createMaterialPrice(data: {
   additionalInfo?: string | null
   unitPrice?: number | null
   quantityPrice?: number | null
-  packingUnits?: number | null
   companyId: string
   createdBy: string
 }) {
@@ -74,7 +73,6 @@ export async function updateMaterialPrice(
     additionalInfo?: string | null
     unitPrice?: number | null
     quantityPrice?: number | null
-    packingUnits?: number | null
     companyId: string
     updatedAt?: Date
   },

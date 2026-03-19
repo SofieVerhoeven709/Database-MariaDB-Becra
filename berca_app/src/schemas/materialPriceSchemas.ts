@@ -21,9 +21,6 @@ export const createMaterialPriceSchema = z.object({
     value => value == null || (value > 0 && Number.isInteger(value * 1000)),
     'Unit quantity moet groter zijn dan 0 en max 3 cijfers na de komma hebben',
   ),
-  packingUnits: nullableNumberInput.refine(value => value == null || (Number.isInteger(value) && value >= 1), {
-    message: 'Packing units moet een geheel getal van minstens 1 zijn',
-  }),
   companyId: z.string(),
 })
 

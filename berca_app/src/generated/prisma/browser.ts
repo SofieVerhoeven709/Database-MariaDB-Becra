@@ -412,3 +412,28 @@ export type RoleLevelEmployee = Prisma.RoleLevelEmployeeModel
  * 
  */
 export type Country = Prisma.CountryModel
+/**
+ * Model InvoiceOutContact
+ * 
+ */
+export type InvoiceOutContact = Prisma.InvoiceOutContactModel
+/**
+ * Model InvoiceSentType
+ * 
+ */
+export type InvoiceSentType = Prisma.InvoiceSentTypeModel
+/**
+ * Model InvoiceStatus
+ * 
+ */
+export type InvoiceStatus = Prisma.InvoiceStatusModel
+/**
+ * Model PaymentMethod
+ * 
+ */
+export type PaymentMethod = Prisma.PaymentMethodModel
+/**
+ * Model VatMargin
+ * 
+ */
+export type VatMargin = Prisma.VatMarginModel

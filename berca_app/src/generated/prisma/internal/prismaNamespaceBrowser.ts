@@ -127,7 +127,12 @@ export const ModelName = {
   DepartmentExtern: 'DepartmentExtern',
   QuoteBecra: 'QuoteBecra',
   RoleLevelEmployee: 'RoleLevelEmployee',
-  Country: 'Country'
+  Country: 'Country',
+  InvoiceOutContact: 'InvoiceOutContact',
+  InvoiceSentType: 'InvoiceSentType',
+  InvoiceStatus: 'InvoiceStatus',
+  PaymentMethod: 'PaymentMethod',
+  VatMargin: 'VatMargin'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -633,34 +638,26 @@ export type InventoryStructureScalarFieldEnum = (typeof InventoryStructureScalar
 export const InvoiceInScalarFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
+  poNumber: 'poNumber',
+  humanId: 'humanId',
   invoiceDate: 'invoiceDate',
-  expireDate: 'expireDate',
-  payDate: 'payDate',
-  invoiceReference: 'invoiceReference',
-  invoiceOutAttachment: 'invoiceOutAttachment',
-  deliveryNote: 'deliveryNote',
-  purchaseOrder: 'purchaseOrder',
-  transactionNumber: 'transactionNumber',
-  info: 'info',
-  deliveryInvoiceCode: 'deliveryInvoiceCode',
-  vatMargin: 'vatMargin',
-  amountWithoutVat: 'amountWithoutVat',
-  deliveryBonDate: 'deliveryBonDate',
-  deliveryBon: 'deliveryBon',
-  remark: 'remark',
   createdAt: 'createdAt',
-  completed: 'completed',
-  masterCard: 'masterCard',
-  cash: 'cash',
-  bankContact: 'bankContact',
-  expectedInvoice: 'expectedInvoice',
-  private: 'private',
+  dueDate: 'dueDate',
+  deletedAt: 'deletedAt',
+  modifiedAt: 'modifiedAt',
+  reminderSent: 'reminderSent',
+  outstanding: 'outstanding',
+  deleted: 'deleted',
+  deletedBy: 'deletedBy',
   createdBy: 'createdBy',
+  modifiedBy: 'modifiedBy',
   invoiceTypeId: 'invoiceTypeId',
   targetId: 'targetId',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  paymentMethodId: 'paymentMethodId',
+  invoiceSentTypeId: 'invoiceSentTypeId',
+  invoiceStatusId: 'invoiceStatusId',
+  vatMarginId: 'vatMarginId',
+  companyId: 'companyId'
 } as const
 
 export type InvoiceInScalarFieldEnum = (typeof InvoiceInScalarFieldEnum)[keyof typeof InvoiceInScalarFieldEnum]
@@ -681,30 +678,26 @@ export type InvoiceInTargetScalarFieldEnum = (typeof InvoiceInTargetScalarFieldE
 export const InvoiceOutScalarFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
+  poNumber: 'poNumber',
+  humanId: 'humanId',
   invoiceDate: 'invoiceDate',
-  expireDate: 'expireDate',
-  payDate: 'payDate',
-  invoiceReference: 'invoiceReference',
-  invoiceInAttachment: 'invoiceInAttachment',
-  deliveryNote: 'deliveryNote',
-  purchaseOrder: 'purchaseOrder',
-  transactionNumber: 'transactionNumber',
-  deliveryInvoiceInfo: 'deliveryInvoiceInfo',
-  additionalInfo: 'additionalInfo',
-  info: 'info',
-  deliveryInvoiceCode: 'deliveryInvoiceCode',
-  vatMargin: 'vatMargin',
-  amountWithoutVat: 'amountWithoutVat',
-  sentDate: 'sentDate',
   createdAt: 'createdAt',
-  materialCost: 'materialCost',
-  completed: 'completed',
+  dueDate: 'dueDate',
+  sentDate: 'sentDate',
+  deletedAt: 'deletedAt',
+  modifiedAt: 'modifiedAt',
+  reminderSent: 'reminderSent',
+  outstanding: 'outstanding',
+  deleted: 'deleted',
+  deletedBy: 'deletedBy',
   createdBy: 'createdBy',
+  modifiedBy: 'modifiedBy',
   invoiceTypeId: 'invoiceTypeId',
   targetId: 'targetId',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  paymentMethodId: 'paymentMethodId',
+  invoiceSentTypeId: 'invoiceSentTypeId',
+  invoiceStatusId: 'invoiceStatusId',
+  vatMarginId: 'vatMarginId'
 } as const
 
 export type InvoiceOutScalarFieldEnum = (typeof InvoiceOutScalarFieldEnum)[keyof typeof InvoiceOutScalarFieldEnum]
@@ -1619,6 +1612,67 @@ export const CountryScalarFieldEnum = {
 export type CountryScalarFieldEnum = (typeof CountryScalarFieldEnum)[keyof typeof CountryScalarFieldEnum]
 
 
+export const InvoiceOutContactScalarFieldEnum = {
+  id: 'id',
+  contactId: 'contactId',
+  invoiceOutId: 'invoiceOutId'
+} as const
+
+export type InvoiceOutContactScalarFieldEnum = (typeof InvoiceOutContactScalarFieldEnum)[keyof typeof InvoiceOutContactScalarFieldEnum]
+
+
+export const InvoiceSentTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type InvoiceSentTypeScalarFieldEnum = (typeof InvoiceSentTypeScalarFieldEnum)[keyof typeof InvoiceSentTypeScalarFieldEnum]
+
+
+export const InvoiceStatusScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type InvoiceStatusScalarFieldEnum = (typeof InvoiceStatusScalarFieldEnum)[keyof typeof InvoiceStatusScalarFieldEnum]
+
+
+export const PaymentMethodScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type PaymentMethodScalarFieldEnum = (typeof PaymentMethodScalarFieldEnum)[keyof typeof PaymentMethodScalarFieldEnum]
+
+
+export const VatMarginScalarFieldEnum = {
+  id: 'id',
+  vat: 'vat',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type VatMarginScalarFieldEnum = (typeof VatMarginScalarFieldEnum)[keyof typeof VatMarginScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1992,19 +2046,18 @@ export type InventoryStructureOrderByRelevanceFieldEnum = (typeof InventoryStruc
 export const InvoiceInOrderByRelevanceFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
-  invoiceReference: 'invoiceReference',
-  invoiceOutAttachment: 'invoiceOutAttachment',
-  deliveryNote: 'deliveryNote',
-  purchaseOrder: 'purchaseOrder',
-  transactionNumber: 'transactionNumber',
-  info: 'info',
-  deliveryInvoiceCode: 'deliveryInvoiceCode',
-  deliveryBon: 'deliveryBon',
-  remark: 'remark',
+  poNumber: 'poNumber',
+  humanId: 'humanId',
+  deletedBy: 'deletedBy',
   createdBy: 'createdBy',
+  modifiedBy: 'modifiedBy',
   invoiceTypeId: 'invoiceTypeId',
   targetId: 'targetId',
-  deletedBy: 'deletedBy'
+  paymentMethodId: 'paymentMethodId',
+  invoiceSentTypeId: 'invoiceSentTypeId',
+  invoiceStatusId: 'invoiceStatusId',
+  vatMarginId: 'vatMarginId',
+  companyId: 'companyId'
 } as const
 
 export type InvoiceInOrderByRelevanceFieldEnum = (typeof InvoiceInOrderByRelevanceFieldEnum)[keyof typeof InvoiceInOrderByRelevanceFieldEnum]
@@ -2023,19 +2076,17 @@ export type InvoiceInTargetOrderByRelevanceFieldEnum = (typeof InvoiceInTargetOr
 export const InvoiceOutOrderByRelevanceFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
-  invoiceReference: 'invoiceReference',
-  invoiceInAttachment: 'invoiceInAttachment',
-  deliveryNote: 'deliveryNote',
-  purchaseOrder: 'purchaseOrder',
-  transactionNumber: 'transactionNumber',
-  deliveryInvoiceInfo: 'deliveryInvoiceInfo',
-  additionalInfo: 'additionalInfo',
-  info: 'info',
-  deliveryInvoiceCode: 'deliveryInvoiceCode',
+  poNumber: 'poNumber',
+  humanId: 'humanId',
+  deletedBy: 'deletedBy',
   createdBy: 'createdBy',
+  modifiedBy: 'modifiedBy',
   invoiceTypeId: 'invoiceTypeId',
   targetId: 'targetId',
-  deletedBy: 'deletedBy'
+  paymentMethodId: 'paymentMethodId',
+  invoiceSentTypeId: 'invoiceSentTypeId',
+  invoiceStatusId: 'invoiceStatusId',
+  vatMarginId: 'vatMarginId'
 } as const
 
 export type InvoiceOutOrderByRelevanceFieldEnum = (typeof InvoiceOutOrderByRelevanceFieldEnum)[keyof typeof InvoiceOutOrderByRelevanceFieldEnum]
@@ -2737,4 +2788,52 @@ export const CountryOrderByRelevanceFieldEnum = {
 } as const
 
 export type CountryOrderByRelevanceFieldEnum = (typeof CountryOrderByRelevanceFieldEnum)[keyof typeof CountryOrderByRelevanceFieldEnum]
+
+
+export const InvoiceOutContactOrderByRelevanceFieldEnum = {
+  id: 'id',
+  contactId: 'contactId',
+  invoiceOutId: 'invoiceOutId'
+} as const
+
+export type InvoiceOutContactOrderByRelevanceFieldEnum = (typeof InvoiceOutContactOrderByRelevanceFieldEnum)[keyof typeof InvoiceOutContactOrderByRelevanceFieldEnum]
+
+
+export const InvoiceSentTypeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type InvoiceSentTypeOrderByRelevanceFieldEnum = (typeof InvoiceSentTypeOrderByRelevanceFieldEnum)[keyof typeof InvoiceSentTypeOrderByRelevanceFieldEnum]
+
+
+export const InvoiceStatusOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type InvoiceStatusOrderByRelevanceFieldEnum = (typeof InvoiceStatusOrderByRelevanceFieldEnum)[keyof typeof InvoiceStatusOrderByRelevanceFieldEnum]
+
+
+export const PaymentMethodOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type PaymentMethodOrderByRelevanceFieldEnum = (typeof PaymentMethodOrderByRelevanceFieldEnum)[keyof typeof PaymentMethodOrderByRelevanceFieldEnum]
+
+
+export const VatMarginOrderByRelevanceFieldEnum = {
+  id: 'id',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type VatMarginOrderByRelevanceFieldEnum = (typeof VatMarginOrderByRelevanceFieldEnum)[keyof typeof VatMarginOrderByRelevanceFieldEnum]
 

@@ -11,6 +11,7 @@ import {prismaClient} from '@/dal/prismaClient'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {notFound} from 'next/navigation'
+import {getCountries} from '@/dal/countries'
 
 interface PageProps {
   params: Promise<{departmentId: string; contactId: string}>
@@ -19,7 +20,7 @@ interface PageProps {
 export default async function ContactDetailPage({params}: PageProps) {
   const {departmentId, contactId} = await params
 
-  const [department, contactFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies] =
+  const [department, contactFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies, countries] =
     await Promise.all([
       getDepartmentById(departmentId),
       getContactDetail(contactId).catch(() => null),
@@ -29,6 +30,7 @@ export default async function ContactDetailPage({params}: PageProps) {
       getDepartmentExterns(),
       getTitles(),
       prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      getCountries(),
     ])
 
   if (!department) return <p>Department not found</p>
@@ -53,6 +55,7 @@ export default async function ContactDetailPage({params}: PageProps) {
           titleOptions={titles ?? []}
           companyOptions={companies}
           departmentId={departmentId}
+          countryOptions={countries}
         />
       </div>
     </main>

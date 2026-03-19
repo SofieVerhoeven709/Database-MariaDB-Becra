@@ -21,6 +21,7 @@ import {
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 type SortField =
   | 'name'
@@ -81,6 +82,7 @@ interface CompanyTableProps {
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
   departmentId: string
+  countryOptions: CountryOption[]
 }
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -113,6 +115,7 @@ export function CompanyTable({
   roleLevelOptions,
   defaultVisibleRoleNames,
   departmentId,
+  countryOptions,
 }: CompanyTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -208,7 +211,6 @@ export function CompanyTable({
     })
 
   async function handleSave(c: MappedCompany, visibilityRows: VisibilityRow[]) {
-    // Core editable fields — present in both schemas
     const core = {
       name: c.name,
       number: c.number,
@@ -246,6 +248,7 @@ export function CompanyTable({
           zipCode: a.zipCode,
           place: a.place,
           typeAdress: a.typeAdress,
+          countryId: a.countryId,
         })),
         visibilityForRoles: visibilityRows,
       })
@@ -537,6 +540,7 @@ export function CompanyTable({
         canDelete={canDelete}
         roleLevelOptions={roleLevelOptions}
         defaultVisibleRoleNames={defaultVisibleRoleNames}
+        countryOptions={countryOptions}
       />
     </div>
   )

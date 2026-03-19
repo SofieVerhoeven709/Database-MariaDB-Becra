@@ -31,7 +31,7 @@ interface MappedMaterialDetail {
   id: string
   beNumber: string
   name: string | null
-  brandOrderNr: string
+  brandOrderNr: string | null
   shortDescription: string
   longDescription: string | null
   preferredSupplierCompanyId: string | null
@@ -145,7 +145,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
       fd.append('id', material.id)
       fd.append('beNumber', form.beNumber)
       if (form.name) fd.append('name', form.name)
-      fd.append('brandOrderNr', form.brandOrderNr)
+      fd.append('brandOrderNr', form.brandOrderNr ?? '')
       fd.append('shortDescription', form.shortDescription)
       if (form.longDescription) fd.append('longDescription', form.longDescription)
       if (form.preferredSupplierCompanyId !== '__none__') {
@@ -300,10 +300,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Brand Order Nr</Label>
               {editing ? (
-                <Input
-                  value={form.brandOrderNr}
-                  onChange={e => handleField('brandOrderNr', e.target.value)}
-                />
+                <Input value={form.brandOrderNr ?? ''} onChange={e => handleField('brandOrderNr', e.target.value)} />
               ) : (
                 <p className="text-sm">{material.brandOrderNr}</p>
               )}
@@ -341,7 +338,9 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                   </SelectContent>
                 </Select>
               ) : (
-                <p className="text-sm">{material.preferredSupplierName ?? <span className="text-muted-foreground">—</span>}</p>
+                <p className="text-sm">
+                  {material.preferredSupplierName ?? <span className="text-muted-foreground">—</span>}
+                </p>
               )}
             </div>
 
@@ -352,11 +351,18 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                   {supplierCompanies.map(company => {
                     const checked = form.supplierCompanyIds.includes(company.id)
                     return (
-                      <label key={company.id} className="flex items-center justify-between gap-3 text-sm cursor-pointer">
+                      <label
+                        key={company.id}
+                        className="flex items-center justify-between gap-3 text-sm cursor-pointer">
                         <span>
                           {company.name} <span className="text-muted-foreground">({company.number})</span>
                         </span>
-                        <input type="checkbox" checked={checked} onChange={() => toggleSupplier(company.id)} className="h-4 w-4" />
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => toggleSupplier(company.id)}
+                          className="h-4 w-4"
+                        />
                       </label>
                     )
                   })}
@@ -384,7 +390,9 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                   </SelectContent>
                 </Select>
               ) : (
-                <p className="text-sm">{material.materialGroupLabelA || <span className="text-muted-foreground">—</span>}</p>
+                <p className="text-sm">
+                  {material.materialGroupLabelA || <span className="text-muted-foreground">—</span>}
+                </p>
               )}
             </div>
 
@@ -407,7 +415,9 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                   </SelectContent>
                 </Select>
               ) : (
-                <p className="text-sm">{material.materialGroupLabelB || <span className="text-muted-foreground">—</span>}</p>
+                <p className="text-sm">
+                  {material.materialGroupLabelB || <span className="text-muted-foreground">—</span>}
+                </p>
               )}
             </div>
 
@@ -430,7 +440,9 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                   </SelectContent>
                 </Select>
               ) : (
-                <p className="text-sm">{material.materialGroupLabelC || <span className="text-muted-foreground">—</span>}</p>
+                <p className="text-sm">
+                  {material.materialGroupLabelC || <span className="text-muted-foreground">—</span>}
+                </p>
               )}
             </div>
 
@@ -453,7 +465,9 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                   </SelectContent>
                 </Select>
               ) : (
-                <p className="text-sm">{material.materialGroupLabelD || <span className="text-muted-foreground">—</span>}</p>
+                <p className="text-sm">
+                  {material.materialGroupLabelD || <span className="text-muted-foreground">—</span>}
+                </p>
               )}
             </div>
 

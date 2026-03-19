@@ -10,6 +10,7 @@ import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import {getCountries} from '@/dal/countries'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -18,7 +19,7 @@ interface PageProps {
 export default async function ContactsPage({params}: PageProps) {
   const {departmentId} = await params
 
-  const [department, contactsFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies] =
+  const [department, contactsFromDAL, roleLevels, profile, functions, departmentExterns, titles, companies, countries] =
     await Promise.all([
       getDepartmentById(departmentId),
       getContacts(),
@@ -28,6 +29,7 @@ export default async function ContactsPage({params}: PageProps) {
       getDepartmentExterns(),
       getTitles(),
       prismaClient.company.findMany({where: {deleted: false}, orderBy: {name: 'asc'}, select: {id: true, name: true}}),
+      getCountries(),
     ])
 
   if (!department) return <p>Department not found</p>
@@ -68,6 +70,7 @@ export default async function ContactsPage({params}: PageProps) {
           departmentExternOptions={departmentExterns ?? []}
           titleOptions={titles ?? []}
           companyOptions={companies}
+          countryOptions={countries}
         />
       </div>
     </main>

@@ -9,18 +9,23 @@ import type {
 import type {VisibilityWithRoleLevel} from '@/extra/visibilityForRole'
 import {mapVisibility} from '@/extra/visibilityForRole'
 
+// ── CompanyAdress with optional Country join ──────────────────────────────────
+type AddressWithCountry = CompanyAdress & {
+  Country?: {id: string; name: string} | null
+}
+
 type CompanyWithRelations = Company & {
   Company: Company | null
   Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
   Employee_Company_deletedByToEmployee: Pick<Employee, 'id' | 'firstName' | 'lastName'> | null
-  CompanyAdress: CompanyAdress[]
+  CompanyAdress: AddressWithCountry[]
   Target: {
     id: string
     VisibilityForRole: VisibilityWithRoleLevel[]
   }
 }
 
-function mapAddress(a: CompanyAdress): MappedCompanyAddress {
+function mapAddress(a: AddressWithCountry): MappedCompanyAddress {
   return {
     id: a.id,
     street: a.street,
@@ -29,6 +34,8 @@ function mapAddress(a: CompanyAdress): MappedCompanyAddress {
     zipCode: a.zipCode,
     place: a.place,
     typeAdress: a.typeAdress,
+    countryId: a.countryId ?? null,
+    countryName: a.Country?.name ?? null,
     createdAt: a.createdAt.toISOString(),
     createdBy: a.createdBy,
     companyId: a.companyId,
@@ -79,12 +86,13 @@ export function mapCompany(c: CompanyWithRelations): MappedCompany {
   }
 }
 
+// ── Detail mapper ─────────────────────────────────────────────────────────────
 type CompanyDetailPayload = Prisma.CompanyGetPayload<{
   include: {
     Employee: {select: {id: true; firstName: true; lastName: true}}
     Company: {select: {id: true; name: true}}
     other_Company: {select: {id: true; name: true; number: true; companyActive: true}}
-    CompanyAdress: true
+    CompanyAdress: {include: {Country: {select: {id: true; name: true}}}}
     CompanyContact: {
       include: {
         Contact: {
@@ -129,6 +137,8 @@ function mapDetailAddress(a: CompanyDetailPayload['CompanyAdress'][number]): Map
     zipCode: a.zipCode,
     place: a.place,
     typeAdress: a.typeAdress,
+    countryId: a.countryId ?? null,
+    countryName: (a as {Country?: {name: string} | null}).Country?.name ?? null,
     createdAt: a.createdAt.toISOString(),
     createdBy: a.createdBy,
     companyId: a.companyId,

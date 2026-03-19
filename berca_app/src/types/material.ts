@@ -2,7 +2,7 @@ export interface MappedMaterial {
   id: string
   beNumber: string
   name: string | null
-  brandOrderNr: string
+  brandOrderNr: string | null
   shortDescription: string
   longDescription: string | null
   preferredSupplierCompanyId: string | null

@@ -171,6 +171,39 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
+      IF NOT EXISTS Material (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            beNumber VARCHAR(255) NOT NULL,
+            name VARCHAR(255),
+            brandOrderNr VARCHAR(255),
+            shortDescription VARCHAR(255) NOT NULL,
+            longDescription TEXT,
+            preferredSupplier VARCHAR(255),
+            brandName VARCHAR(255),
+            documentationPlace VARCHAR(255),
+            bePartDoc VARCHAR(255) NULL,
+            rejected BOOLEAN DEFAULT FALSE,
+            materialGroupIdA CHAR(36) NULL,
+            materialGroupIdB CHAR(36) NULL,
+            materialGroupIdC CHAR(36) NULL,
+            materialGroupIdD CHAR(36) NULL,
+            preferredSupplierCompanyId CHAR(36) NULL,
+            unitId CHAR(36) NOT NULL,
+            createdBy CHAR(36) NOT NULL,
+            CONSTRAINT uq_material_beNumber UNIQUE (beNumber),
+            FOREIGN KEY (materialGroupIdA) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
+            FOREIGN KEY (materialGroupIdB) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
+            FOREIGN KEY (materialGroupIdC) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
+            FOREIGN KEY (materialGroupIdD) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
+            FOREIGN KEY (unitId) REFERENCES Unit (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
       IF NOT EXISTS Session (
             id CHAR(36) NOT NULL PRIMARY KEY,
             activeFrom DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -206,89 +239,56 @@ CREATE TABLE
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
--- ============================================================
--- Idempotent ALTERs: add createdBy / deletedBy columns + FKs
--- to tables that were created before Employee existed.
--- ADD COLUMN IF NOT EXISTS guards the column; FK is added in
--- the same statement (safe on a fresh database).
--- ============================================================
+ALTER TABLE Role ADD createdBy CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_role_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
--- Role: createdBy
-ALTER TABLE Role
-    ADD COLUMN IF NOT EXISTS createdBy CHAR(36) NOT NULL DEFAULT '',
-    ADD CONSTRAINT fk_role_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE SubRole ADD createdBy CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_subRole_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
--- SubRole: createdBy
-ALTER TABLE SubRole
-    ADD COLUMN IF NOT EXISTS createdBy CHAR(36) NOT NULL DEFAULT '',
-    ADD CONSTRAINT fk_subRole_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE RoleLevel ADD createdBy CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_roleLevel_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
--- RoleLevel: createdBy
-ALTER TABLE RoleLevel
-    ADD COLUMN IF NOT EXISTS createdBy CHAR(36) NOT NULL DEFAULT '',
-    ADD CONSTRAINT fk_roleLevel_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE Function ADD createdBy CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_function_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
--- Function: createdBy
-ALTER TABLE `Function`
-    ADD COLUMN IF NOT EXISTS createdBy CHAR(36) NOT NULL DEFAULT '',
-    ADD CONSTRAINT fk_function_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE Title ADD createdBy CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_title_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
--- Title: createdBy
-ALTER TABLE Title
-    ADD COLUMN IF NOT EXISTS createdBy CHAR(36) NOT NULL DEFAULT '',
-    ADD CONSTRAINT fk_title_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE DocumentStructure ADD createdBy CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_documentStructure_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
--- DocumentStructure: createdBy, revisedById, managedById, targetId
-ALTER TABLE DocumentStructure
-    ADD COLUMN IF NOT EXISTS createdBy CHAR(36) NOT NULL DEFAULT '',
-    ADD CONSTRAINT fk_documentStructure_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-    ADD COLUMN IF NOT EXISTS revisedById CHAR(36) NOT NULL DEFAULT '',
-    ADD CONSTRAINT fk_documentStructure_revisedBy FOREIGN KEY (revisedById) REFERENCES Employee (id) ON DELETE RESTRICT,
-    ADD COLUMN IF NOT EXISTS managedById CHAR(36) NOT NULL DEFAULT '',
-    ADD CONSTRAINT fk_documentStructure_managedBy FOREIGN KEY (managedById) REFERENCES Employee (id) ON DELETE RESTRICT,
-    ADD COLUMN IF NOT EXISTS targetId CHAR(36) NOT NULL DEFAULT '',
-    ADD CONSTRAINT fk_documentStructure_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
+ALTER TABLE DocumentStructure ADD revisedById CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_documentStructure_revisedBy FOREIGN KEY (revisedById) REFERENCES Employee (id) ON DELETE RESTRICT;
 
--- Department: targetId
-ALTER TABLE Department
-    ADD COLUMN IF NOT EXISTS targetId CHAR(36) NOT NULL DEFAULT '',
-    ADD CONSTRAINT fk_department_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
+ALTER TABLE DocumentStructure ADD managedById CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_documentStructure_managedBy FOREIGN KEY (managedById) REFERENCES Employee (id) ON DELETE RESTRICT;
 
--- DepartmentExtern: targetId
-ALTER TABLE DepartmentExtern
-    ADD COLUMN IF NOT EXISTS targetId CHAR(36) NOT NULL DEFAULT '',
-    ADD CONSTRAINT fk_departmentextern_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
+ALTER TABLE DocumentStructure ADD targetId CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_documentStructure_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
 
--- Role: deletedBy
-ALTER TABLE Role
-    ADD COLUMN IF NOT EXISTS deletedBy CHAR(36) NULL,
-    ADD CONSTRAINT fk_role_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE Department ADD targetId CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_department_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
 
--- SubRole: deletedBy
-ALTER TABLE SubRole
-    ADD COLUMN IF NOT EXISTS deletedBy CHAR(36) NULL,
-    ADD CONSTRAINT fk_subRole_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE DepartmentExtern ADD targetId CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_departmentextern_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
 
--- RoleLevel: deletedBy
-ALTER TABLE RoleLevel
-    ADD COLUMN IF NOT EXISTS deletedBy CHAR(36) NULL,
-    ADD CONSTRAINT fk_roleLevel_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE Role ADD deletedBy CHAR(36) NULL,
+ADD CONSTRAINT fk_role_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
--- Function: deletedBy
-ALTER TABLE `Function`
-    ADD COLUMN IF NOT EXISTS deletedBy CHAR(36) NULL,
-    ADD CONSTRAINT fk_function_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE SubRole ADD deletedBy CHAR(36) NULL,
+ADD CONSTRAINT fk_subRole_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
--- Title: deletedBy
-ALTER TABLE Title
-    ADD COLUMN IF NOT EXISTS deletedBy CHAR(36) NULL,
-    ADD CONSTRAINT fk_title_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE RoleLevel ADD deletedBy CHAR(36) NULL,
+ADD CONSTRAINT fk_roleLevel_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
--- DocumentStructure: deletedBy
-ALTER TABLE DocumentStructure
-    ADD COLUMN IF NOT EXISTS deletedBy CHAR(36) NULL,
-    ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE Function ADD deletedBy CHAR(36) NULL,
+ADD CONSTRAINT fk_function_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
+ALTER TABLE Title ADD deletedBy CHAR(36) NULL,
+ADD CONSTRAINT fk_title_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+
+ALTER TABLE DocumentStructure ADD deletedBy CHAR(36) NULL,
+ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
 
 CREATE TABLE
@@ -317,7 +317,7 @@ CREATE TABLE
             becraCustomerNumber VARCHAR(100),
             becraWebsiteLogin VARCHAR(100),
             supplier BOOLEAN NOT NULL DEFAULT 0,
-            prefferedSupplier BOOLEAN NOT NULL DEFAULT 0,
+            preferredSupplier BOOLEAN NOT NULL DEFAULT 0,
             companyActive BOOLEAN NOT NULL DEFAULT 1,
             newsLetter BOOLEAN NOT NULL DEFAULT 0,
             customer BOOLEAN NOT NULL DEFAULT 0,
@@ -339,42 +339,7 @@ CREATE TABLE
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-CREATE TABLE
-      IF NOT EXISTS Material (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            beNumber VARCHAR(255) NOT NULL,
-            name VARCHAR(255),
-            brandOrderNr VARCHAR(255) NOT NULL,
-            shortDescription VARCHAR(255) NOT NULL,
-            longDescription TEXT,
-            preferredSupplierCompanyId CHAR(36),
-            brandName VARCHAR(255),
-            documentationPlace VARCHAR(255),
-            bePartDoc INT,
-            rejected BOOLEAN DEFAULT FALSE,
-            materialGroupId CHAR(36) NOT NULL,
-            unitId CHAR(36) NOT NULL,
-            createdBy CHAR(36) NOT NULL,
-            CONSTRAINT uq_material_beNumber UNIQUE (beNumber),
-            FOREIGN KEY (materialGroupId) REFERENCES MaterialGroup (id) ON DELETE RESTRICT,
-            FOREIGN KEY (unitId) REFERENCES Unit (id) ON DELETE RESTRICT,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (preferredSupplierCompanyId) REFERENCES Company (id) ON DELETE SET NULL,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME,
-            deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-      ) ENGINE = InnoDB;
-
-CREATE TABLE
-      IF NOT EXISTS MaterialSupplier (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            materialId CHAR(36) NOT NULL,
-            companyId CHAR(36) NOT NULL,
-            CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
-            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
-            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT
-      ) ENGINE = InnoDB;
+ALTER TABLE Material ADD CONSTRAINT fk_material_preferredSupplierCompanyId FOREIGN KEY (preferredSupplierCompanyId) REFERENCES Company (id) ON DELETE SET NULL;
 
 CREATE TABLE
       IF NOT EXISTS Contact (
@@ -424,6 +389,19 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
+      IF NOT EXISTS Country (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            createdBy CHAR(36) NOT NULL,
+            deletedBy CHAR(36) NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
       IF NOT EXISTS CompanyAdress (
             id CHAR(36) NOT NULL PRIMARY KEY,
             street VARCHAR(100),
@@ -435,6 +413,8 @@ CREATE TABLE
             typeAdress VARCHAR(100),
             createdBy CHAR(36) NOT NULL,
             companyId CHAR(36) NOT NULL,
+            countryId CHAR(36) NULL,
+            FOREIGN KEY (countryId) REFERENCES Country (id) ON DELETE SET NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE CASCADE,
             deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -460,6 +440,16 @@ CREATE TABLE
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS MaterialSupplier (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            materialId CHAR(36) NOT NULL,
+            companyId CHAR(36) NOT NULL,
+            CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -706,15 +696,15 @@ CREATE TABLE
             description TEXT,
             extraInfo TEXT,
             createdAt DATETIME NOT NULL,
-            moddifiedAt DATETIME,
-            idValid BOOLEAN NOT NULL DEFAULT 1,
+            modifiedAt DATETIME,
+            isValid BOOLEAN NOT NULL DEFAULT 1,
             createdBy CHAR(36) NOT NULL,
-            moddifiedBy CHAR(36) NOT NULL,
+            modifiedBy CHAR(36) NOT NULL,
             projectId CHAR(36) NOT NULL,
             contactId CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT,
-            FOREIGN KEY (moddifiedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (modifiedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (contactId) REFERENCES Contact (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
@@ -797,7 +787,7 @@ CREATE TABLE
             expireDate DATETIME NOT NULL,
             payDate DATETIME,
             invoiceReference VARCHAR(100),
-            invoiceInAttachement VARCHAR(100),
+            invoiceInAttachment VARCHAR(100),
             deliveryNote TEXT,
             purchaseOrder TEXT,
             transactionNumber VARCHAR(100),
@@ -832,7 +822,7 @@ CREATE TABLE
             expireDate DATETIME NOT NULL,
             payDate DATETIME,
             invoiceReference VARCHAR(100),
-            invoiceOutAttachement VARCHAR(100),
+            invoiceOutAttachment VARCHAR(100),
             deliveryNote TEXT,
             purchaseOrder TEXT,
             transactionNumber VARCHAR(100),
@@ -909,14 +899,14 @@ CREATE TABLE
             statusId CHAR(36) NOT NULL,
             executedBy CHAR(36) NOT NULL,
             urgencyTypeId CHAR(36) NOT NULL,
-            documentId CHAR(36) NOT NULL,
+            documentId CHAR(36),
             targetId CHAR(36) NOT NULL,
             followUpTypeId CHAR(36) NOT NULL,
             FOREIGN KEY (urgencyTypeId) REFERENCES UrgencyType (id) ON DELETE RESTRICT,
             FOREIGN KEY (ownedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (statusId) REFERENCES Status (id) ON DELETE RESTRICT,
             FOREIGN KEY (executedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (documentId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
+            FOREIGN KEY (documentId) REFERENCES DocumentStructure (id) ON DELETE SET NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (followUpTypeId) REFERENCES FollowUpType (id) ON DELETE RESTRICT,
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
@@ -947,7 +937,7 @@ CREATE TABLE
             executedBy CHAR(36) NOT NULL,
             urgencyTypeId CHAR(36) NOT NULL,
             followUpId CHAR(36) NOT NULL,
-            documentId CHAR(36) NOT NULL,
+            documentId CHAR(36),
             contactId CHAR(36) NOT NULL,
             taskFor CHAR(36) NOT NULL,
             targetId CHAR(36) NOT NULL,
@@ -956,7 +946,7 @@ CREATE TABLE
             FOREIGN KEY (statusId) REFERENCES Status (id) ON DELETE RESTRICT,
             FOREIGN KEY (executedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (followUpId) REFERENCES FollowUp (id) ON DELETE RESTRICT,
-            FOREIGN KEY (documentId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
+            FOREIGN KEY (documentId) REFERENCES DocumentStructure (id) ON DELETE SET NULL,
             FOREIGN KEY (contactId) REFERENCES Contact (id) ON DELETE RESTRICT,
             FOREIGN KEY (taskFor) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
@@ -998,7 +988,7 @@ CREATE TABLE
             place VARCHAR(255) NOT NULL,
             shortDescription VARCHAR(255) NOT NULL,
             longDescription TEXT NOT NULL,
-            serieNumber VARCHAR(255) NOT NULL,
+            serialNumber VARCHAR(255) NOT NULL,
             quantityInStock INT NOT NULL,
             minQuantityInStock INT NOT NULL,
             maxQuantityInStock INT NOT NULL,
@@ -1185,7 +1175,7 @@ CREATE TABLE
             beNumber VARCHAR(255),
             orderNr VARCHAR(255),
             quoteBecra CHAR(36),
-            supllierOrderNr VARCHAR(255),
+            supplierOrderNr VARCHAR(255),
             brandOrderNr VARCHAR(255),
             shortDescription VARCHAR(255),
             longDescription TEXT,
@@ -1193,7 +1183,7 @@ CREATE TABLE
             updatedAt DATETIME,
             rejected BOOLEAN,
             additionalInfo VARCHAR(255),
-            unitPrice INT,
+            unitPrice Decimal(10,2),
             quantityPrice INT,
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
@@ -1221,7 +1211,7 @@ CREATE TABLE
             fromLocation VARCHAR(255),
             toLocation VARCHAR(255),
             updatedAt DATETIME,
-            preferedSupplier VARCHAR(255),
+            preferredSupplier VARCHAR(255),
             rejected BOOLEAN DEFAULT FALSE,
             additionalInfo VARCHAR(255),
             projectId CHAR(36),
@@ -1240,23 +1230,26 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS WarehousePlace (
             id CHAR(36) NOT NULL PRIMARY KEY,
+            abbreviation VARCHAR(255) NOT NULL,
+            beNumber VARCHAR(255),
+            serialTrackedId CHAR(36),
             place VARCHAR(255),
             shelf VARCHAR(255),
             `column` VARCHAR(255),
             layer VARCHAR(255),
             layerPlace VARCHAR(255),
             information VARCHAR(255),
-            volume INT NOT NULL,
+            quantityInStock INT NOT NULL,
             createdAt DATETIME NOT NULL,
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (serialTrackedId) REFERENCES MaterialSerialTrack (id) ON DELETE SET NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
--- Inventory: unique constraint on beNumber
 ALTER TABLE Inventory ADD CONSTRAINT uq_inventory_beNumber UNIQUE (beNumber);
 
 CREATE TABLE
@@ -1270,7 +1263,7 @@ CREATE TABLE
             date DATETIME,
             expiredDate DATETIME,
             docRevision INT,
-            valid BOOLEAN DEFAULT 1,
+            valid BOOLEAN DEFAULT TRUE,
             additionalInfo VARCHAR(255),
             referenceDocId CHAR(36),
             createdBy CHAR(36),
@@ -1357,7 +1350,7 @@ CREATE TABLE
             beParentPart VARCHAR(255),
             serialCode VARCHAR(255),
             tag VARCHAR(255),
-            preferedSupplier VARCHAR(255),
+            preferredSupplier VARCHAR(255),
             brandName VARCHAR(255),
             brandOrderNr VARCHAR(255),
             unit VARCHAR(255),
@@ -1455,7 +1448,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      IF NOT EXISTS QouteBecra (
+      IF NOT EXISTS QuoteBecra (
             id CHAR(36) NOT NULL PRIMARY KEY,
             description TEXT,
             validDate BOOLEAN NOT NULL,
@@ -1528,7 +1521,7 @@ CREATE TABLE
             status VARCHAR(255),
             shortDescription VARCHAR(255),
             description VARCHAR(255),
-            preferedSupplier VARCHAR(255),
+            preferredSupplier VARCHAR(255),
             additionalInfo VARCHAR(255),
             updatedAt DATETIME,
             createdBy CHAR(36) NOT NULL,
@@ -1548,9 +1541,9 @@ CREATE TABLE
             projectId CHAR(36),
             purchaseId CHAR(36),
             beNumber VARCHAR(255),
-            unitPrice INT,
+            unitPrice Decimal(10,2),
             quantity INT,
-            totalCost INT,
+            totalCost Decimal(10,2),
             status VARCHAR(255),
             additionalInfo VARCHAR(255),
             updatedAt DATETIME,

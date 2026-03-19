@@ -5,7 +5,9 @@ const companyInclude = {
   Company: true,
   Employee: {select: {id: true, firstName: true, lastName: true}},
   Employee_Company_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
-  CompanyAdress: true,
+  CompanyAdress: {
+    include: {Country: {select: {id: true, name: true}}},
+  },
   Target: {
     include: {
       VisibilityForRole: {
@@ -41,6 +43,7 @@ export async function getCompanyDetail(id: string) {
         select: {id: true, name: true, number: true, companyActive: true},
       },
       CompanyAdress: {
+        include: {Country: {select: {id: true, name: true}}},
         orderBy: {createdAt: 'asc'},
       },
       CompanyContact: {

@@ -12,7 +12,10 @@ const booleanFromString = z.preprocess(
 
 const beNumberSchema = z.string().trim().min(1).max(255).regex(/^\d+$/, 'BE number mag enkel cijfers bevatten')
 
-const brandOrderNrSchema = z.string().trim().min(1).max(255)
+const brandOrderNrSchema = z.preprocess(
+  val => (val === '' || val == null ? null : val),
+  z.string().trim().max(255).nullable().optional(),
+)
 
 const supplierCompanyIdsSchema = z.preprocess(val => {
   if (Array.isArray(val)) return val

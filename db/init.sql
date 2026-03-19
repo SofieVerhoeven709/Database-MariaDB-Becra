@@ -175,7 +175,7 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             beNumber VARCHAR(255) NOT NULL,
             name VARCHAR(255),
-            brandOrderNr VARCHAR(255),
+            brandOrderNr VARCHAR(255) NULL,
             shortDescription VARCHAR(255) NOT NULL,
             longDescription TEXT,
             brandName VARCHAR(255),

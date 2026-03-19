@@ -30,6 +30,7 @@ export const invoiceOutSchema = z.object({
 export const createInvoiceOutSchema = invoiceOutSchema.omit({
   id: true,
   createdAt: true,
+  invoiceNumber: true,
   createdBy: true,
   deleted: true,
   deletedAt: true,
@@ -79,6 +80,7 @@ export const invoiceInSchema = z.object({
 export const createInvoiceInSchema = invoiceInSchema.omit({
   id: true,
   createdAt: true,
+  invoiceNumber: true,
   createdBy: true,
   deleted: true,
   deletedAt: true,

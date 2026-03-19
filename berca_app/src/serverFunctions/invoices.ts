@@ -12,6 +12,7 @@ import {
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
 import {z} from 'zod/v4'
+import {generateInvoiceInNumber, generateInvoiceOutNumber} from '@/lib/utils'
 
 // ─── Work order lookup (called client-side from dialog) ────────────────────────
 export async function getActiveWorkOrdersForProjectAction(projectId: string) {
@@ -22,7 +23,6 @@ export async function getActiveWorkOrdersForProjectAction(projectId: string) {
   })
 }
 
-// ─── InvoiceOut ────────────────────────────────────────────────────────────────
 export const createInvoiceOutAction = protectedServerFunction({
   schema: createInvoiceOutSchema.extend({
     workOrderIds: z.array(z.string()).default([]),
@@ -30,22 +30,58 @@ export const createInvoiceOutAction = protectedServerFunction({
   functionName: 'Create invoice out action',
   serverFn: async ({data: {workOrderIds, ...data}, logger, profile}) => {
     logger.info(`Creating invoice out, createdBy: ${profile.id}`)
+
     const target = await createTargetForType('InvoiceOut', profile.id)
     const id = crypto.randomUUID()
     const now = new Date()
+    const year = now.getFullYear()
 
-    await prismaClient.invoiceOut.create({
-      data: {
-        ...data,
-        id,
-        targetId: target.id,
-        createdBy: profile.id,
-        createdAt: now,
-        invoiceDate: new Date(data.invoiceDate),
-        dueDate: new Date(data.dueDate),
-        sentDate: data.sentDate ? new Date(data.sentDate) : null,
-      },
-    })
+    let attempts = 0
+    let invoiceNumber = ''
+
+    while (attempts < 5) {
+      try {
+        // 🔥 recompute sequence every attempt
+        const last = await prismaClient.invoiceOut.findFirst({
+          where: {invoiceNumber: {startsWith: String(year)}},
+          orderBy: {invoiceNumber: 'desc'},
+          select: {invoiceNumber: true},
+        })
+
+        const lastSeq = last ? parseInt(last.invoiceNumber.slice(4)) - 100 : 0
+
+        invoiceNumber = generateInvoiceOutNumber(year, lastSeq + 1)
+
+        await prismaClient.invoiceOut.create({
+          data: {
+            ...data,
+            id,
+            invoiceNumber,
+            targetId: target.id,
+            createdBy: profile.id,
+            createdAt: now,
+            invoiceDate: new Date(data.invoiceDate),
+            dueDate: new Date(data.dueDate),
+            sentDate: data.sentDate ? new Date(data.sentDate) : null,
+          },
+        })
+
+        break
+      } catch (err: unknown) {
+        const prismaErr = err as {code?: string}
+
+        if (prismaErr.code === 'P2002') {
+          attempts++
+          continue
+        }
+
+        throw err
+      }
+    }
+
+    if (attempts >= 5) {
+      throw new Error('Failed to generate a unique invoice OUT number after 5 attempts')
+    }
 
     if (workOrderIds.length > 0) {
       await prismaClient.workOrderInvoice.createMany({
@@ -56,14 +92,13 @@ export const createInvoiceOutAction = protectedServerFunction({
         })),
       })
 
-      // Close hours/materials on all linked work orders
       await prismaClient.workOrder.updateMany({
         where: {id: {in: workOrderIds}},
         data: {hoursMaterialClosed: true},
       })
     }
 
-    logger.info(`Invoice out created: ${id} with ${workOrderIds.length} work order(s)`)
+    logger.info(`Invoice out created: ${id} (${invoiceNumber}) with ${workOrderIds.length} work order(s)`)
     revalidatePath('/invoicesOut')
   },
 })
@@ -140,23 +175,59 @@ export const createInvoiceInAction = protectedServerFunction({
   functionName: 'Create invoice in action',
   serverFn: async ({data, logger, profile}) => {
     logger.info(`Creating invoice in, createdBy: ${profile.id}`)
+
     const target = await createTargetForType('InvoiceIn', profile.id)
     const id = crypto.randomUUID()
     const now = new Date()
+    const year = now.getFullYear()
 
-    await prismaClient.invoiceIn.create({
-      data: {
-        ...data,
-        id,
-        targetId: target.id,
-        createdBy: profile.id,
-        createdAt: now,
-        invoiceDate: new Date(data.invoiceDate),
-        dueDate: new Date(data.dueDate),
-      },
-    })
+    let attempts = 0
+    let invoiceNumber = ''
 
-    logger.info(`Invoice in created: ${id}`)
+    while (attempts < 5) {
+      try {
+        // 🔥 recompute sequence every attempt
+        const last = await prismaClient.invoiceIn.findFirst({
+          where: {invoiceNumber: {startsWith: String(year)}},
+          orderBy: {invoiceNumber: 'desc'},
+          select: {invoiceNumber: true},
+        })
+
+        const lastSeq = last ? parseInt(last.invoiceNumber.slice(4)) : 0
+
+        invoiceNumber = generateInvoiceInNumber(year, lastSeq + 1)
+
+        await prismaClient.invoiceIn.create({
+          data: {
+            ...data,
+            id,
+            invoiceNumber,
+            targetId: target.id,
+            createdBy: profile.id,
+            createdAt: now,
+            invoiceDate: new Date(data.invoiceDate),
+            dueDate: new Date(data.dueDate),
+          },
+        })
+
+        break
+      } catch (err: unknown) {
+        const prismaErr = err as {code?: string}
+
+        if (prismaErr.code === 'P2002') {
+          attempts++
+          continue
+        }
+
+        throw err
+      }
+    }
+
+    if (attempts >= 5) {
+      throw new Error('Failed to generate a unique invoice IN number after 5 attempts')
+    }
+
+    logger.info(`Invoice in created: ${id} (${invoiceNumber})`)
     revalidatePath('/invoicesIn')
   },
 })

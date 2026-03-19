@@ -111,6 +111,8 @@ export async function createMaterial(data: {
   shortDescription: string
   longDescription?: string | null
   preferredSupplierCompanyId?: string | null
+  preferredSupplierOrderId?: string | null
+  preferredSupplierShortDescription?: string | null
   supplierCompanyIds?: string[]
   brandName?: string | null
   documentationPlace?: string | null
@@ -151,6 +153,8 @@ export async function updateMaterial(
     shortDescription?: string
     longDescription?: string | null
     preferredSupplierCompanyId?: string | null
+    preferredSupplierOrderId?: string | null
+    preferredSupplierShortDescription?: string | null
     supplierCompanyIds?: string[]
     brandName?: string | null
     documentationPlace?: string | null

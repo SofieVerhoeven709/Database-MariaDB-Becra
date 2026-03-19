@@ -1,6 +1,5 @@
-import type {MappedInvoiceOut, MappedInvoiceIn, MappedInvoiceOutContact} from '@/types/invoice'
+import {MappedInvoiceIn, MappedInvoiceOut, MappedInvoiceOutContact} from '@/types/invoice'
 
-// ─── InvoiceOut ────────────────────────────────────────────────────────────────
 type InvoiceOutRaw = {
   id: string
   invoiceNumber: string
@@ -25,9 +24,7 @@ type InvoiceOutRaw = {
   invoiceStatusId: string
   vatMarginId: string
   InvoiceType: {id: string; name: string}
-  Employee_InvoiceOut_createdByToEmployee: {id: string; firstName: string; lastName: string}
-  Employee_InvoiceOut_deletedByToEmployee: {id: string; firstName: string; lastName: string} | null
-  Employee_InvoiceOut_modifiedByToEmployee: {id: string; firstName: string; lastName: string} | null
+  Employee: {id: string; firstName: string; lastName: string}
   PaymentMethod: {id: string; name: string}
   InvoiceSentType: {id: string; name: string}
   InvoiceStatus: {id: string; name: string}
@@ -62,15 +59,11 @@ export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
     outstanding: r.outstanding,
     deleted: r.deleted,
     deletedBy: r.deletedBy,
-    deletedByName: r.Employee_InvoiceOut_deletedByToEmployee
-      ? `${r.Employee_InvoiceOut_deletedByToEmployee.firstName} ${r.Employee_InvoiceOut_deletedByToEmployee.lastName}`
-      : null,
+    deletedByName: null,
     createdBy: r.createdBy,
-    createdByName: `${r.Employee_InvoiceOut_createdByToEmployee.firstName} ${r.Employee_InvoiceOut_createdByToEmployee.lastName}`,
+    createdByName: `${r.Employee.firstName} ${r.Employee.lastName}`,
     modifiedBy: r.modifiedBy,
-    modifiedByName: r.Employee_InvoiceOut_modifiedByToEmployee
-      ? `${r.Employee_InvoiceOut_modifiedByToEmployee.firstName} ${r.Employee_InvoiceOut_modifiedByToEmployee.lastName}`
-      : null,
+    modifiedByName: null,
     invoiceTypeId: r.invoiceTypeId,
     invoiceTypeName: r.InvoiceType.name,
     targetId: r.targetId,
@@ -94,7 +87,6 @@ export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
   }
 }
 
-// ─── InvoiceIn ─────────────────────────────────────────────────────────────────
 type InvoiceInRaw = {
   id: string
   invoiceNumber: string
@@ -119,9 +111,7 @@ type InvoiceInRaw = {
   vatMarginId: string
   companyId: string
   InvoiceType: {id: string; name: string}
-  Employee_InvoiceIn_createdByToEmployee: {id: string; firstName: string; lastName: string}
-  Employee_InvoiceIn_deletedByToEmployee: {id: string; firstName: string; lastName: string} | null
-  Employee_InvoiceIn_modifiedByToEmployee: {id: string; firstName: string; lastName: string} | null
+  Employee: {id: string; firstName: string; lastName: string}
   PaymentMethod: {id: string; name: string}
   InvoiceSentType: {id: string; name: string}
   InvoiceStatus: {id: string; name: string}
@@ -144,15 +134,11 @@ export function mapInvoiceIn(r: InvoiceInRaw): MappedInvoiceIn {
     outstanding: r.outstanding,
     deleted: r.deleted,
     deletedBy: r.deletedBy,
-    deletedByName: r.Employee_InvoiceIn_deletedByToEmployee
-      ? `${r.Employee_InvoiceIn_deletedByToEmployee.firstName} ${r.Employee_InvoiceIn_deletedByToEmployee.lastName}`
-      : null,
+    deletedByName: null,
     createdBy: r.createdBy,
-    createdByName: `${r.Employee_InvoiceIn_createdByToEmployee.firstName} ${r.Employee_InvoiceIn_createdByToEmployee.lastName}`,
+    createdByName: `${r.Employee.firstName} ${r.Employee.lastName}`,
     modifiedBy: r.modifiedBy,
-    modifiedByName: r.Employee_InvoiceIn_modifiedByToEmployee
-      ? `${r.Employee_InvoiceIn_modifiedByToEmployee.firstName} ${r.Employee_InvoiceIn_modifiedByToEmployee.lastName}`
-      : null,
+    modifiedByName: null,
     invoiceTypeId: r.invoiceTypeId,
     invoiceTypeName: r.InvoiceType.name,
     targetId: r.targetId,

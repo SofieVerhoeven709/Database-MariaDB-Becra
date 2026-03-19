@@ -4,9 +4,7 @@ import {prismaClient} from '@/dal/prismaClient'
 // ─── Shared includes ───────────────────────────────────────────────────────────
 const invoiceOutInclude = {
   InvoiceType: {select: {id: true, name: true}},
-  Employee_InvoiceOut_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
-  Employee_InvoiceOut_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
-  Employee_InvoiceOut_modifiedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
+  Employee: {select: {id: true, firstName: true, lastName: true}},
   PaymentMethod: {select: {id: true, name: true}},
   InvoiceSentType: {select: {id: true, name: true}},
   InvoiceStatus: {select: {id: true, name: true}},
@@ -28,9 +26,7 @@ const invoiceOutInclude = {
 
 const invoiceInInclude = {
   InvoiceType: {select: {id: true, name: true}},
-  Employee_InvoiceIn_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
-  Employee_InvoiceIn_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
-  Employee_InvoiceIn_modifiedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
+  Employee: {select: {id: true, firstName: true, lastName: true}},
   PaymentMethod: {select: {id: true, name: true}},
   InvoiceSentType: {select: {id: true, name: true}},
   InvoiceStatus: {select: {id: true, name: true}},

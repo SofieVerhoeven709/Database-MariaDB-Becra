@@ -286,7 +286,7 @@ export function InvoiceOutTable({
                   className={`border-border/40 hover:bg-secondary/50 ${inv.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/${departmentId}/invoices-out/${inv.id}` as Route}
+                      href={`/departments/${departmentId}/invoicesOut/${inv.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {inv.invoiceNumber}
                     </Link>

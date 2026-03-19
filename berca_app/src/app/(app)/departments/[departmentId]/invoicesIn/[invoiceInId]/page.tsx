@@ -15,11 +15,11 @@ import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
 interface PageProps {
-  params: Promise<{departmentId: string; invoiceId: string}>
+  params: Promise<{departmentId: string; invoiceInId: string}>
 }
 
 export default async function InvoiceInDetailPage({params}: PageProps) {
-  const {departmentId, invoiceId} = await params
+  const {departmentId, invoiceInId} = await params
 
   const [
     department,
@@ -33,7 +33,7 @@ export default async function InvoiceInDetailPage({params}: PageProps) {
     profile,
   ] = await Promise.all([
     getDepartmentById(departmentId),
-    getInvoiceInById(invoiceId).catch(() => null),
+    getInvoiceInById(invoiceInId).catch(() => null),
     getInvoiceTypes(),
     getPaymentMethods(),
     getInvoiceSentTypes(),

@@ -42,7 +42,7 @@ interface CompanyFormDialogProps {
   canDelete: boolean
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
-  countryOptions: CountryOption[]
+  countryOptions: CountryOption[] // ← NEW
 }
 
 const emptyCompany = (): MappedCompany => ({
@@ -90,8 +90,8 @@ type AddrForm = {
   zipCode: string | null
   place: string | null
   typeAdress: string | null
-  countryId: string | null
-  countryName: string | null
+  countryId: string | null // ← NEW
+  countryName: string | null // ← NEW (local display only)
   companyId: string
 }
 
@@ -174,6 +174,7 @@ function AddrFields({
         <Label className="text-xs text-muted-foreground">Country</Label>
         <CountrySelect
           value={value.countryId}
+          currentName={value.countryName}
           onChange={(id, name) => onChange({...value, countryId: id, countryName: name})}
           countries={countryOptions}
         />

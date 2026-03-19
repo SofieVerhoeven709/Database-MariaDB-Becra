@@ -44,6 +44,7 @@ import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/cus
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {ContactFormDialog} from '@/components/custom/contactFormDialog'
 import {WorkOrderFormDialog} from '@/components/custom/workOrderFormDialog'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 interface Option {
   id: string
@@ -79,6 +80,7 @@ interface ProjectDetailProps {
   departmentExternOptions: Option[]
   titleOptions: Option[]
   departmentId: string
+  countryOptions: CountryOption[]
 }
 
 function formatDate(date: Date | null) {
@@ -128,6 +130,7 @@ export function ProjectDetail({
   departmentExternOptions,
   titleOptions,
   departmentId,
+  countryOptions,
 }: ProjectDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
@@ -1769,6 +1772,7 @@ export function ProjectDetail({
         departmentExternOptions={departmentExternOptions}
         titleOptions={titleOptions}
         companyOptions={companies}
+        countryOptions={countryOptions}
       />
 
       <WorkOrderFormDialog

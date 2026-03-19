@@ -6,6 +6,7 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
+import {getCountries} from '@/dal/countries'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -14,11 +15,12 @@ interface PageProps {
 export default async function CompaniesPage({params}: PageProps) {
   const {departmentId} = await params
 
-  const [department, companiesFromDAL, roleLevels, profile] = await Promise.all([
+  const [department, companiesFromDAL, roleLevels, profile, countries] = await Promise.all([
     getDepartmentById(departmentId),
     getCompanies(),
     getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
+    getCountries(),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -55,6 +57,7 @@ export default async function CompaniesPage({params}: PageProps) {
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
           departmentId={departmentId}
+          countryOptions={countries}
         />
       </div>
     </main>

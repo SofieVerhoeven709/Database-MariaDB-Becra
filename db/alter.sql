@@ -1,96 +1,96 @@
 ﻿USE BecraBV;
-
+ 
 -- ============================================================
 -- Idempotent migrations.
 -- Safe to run multiple times on both old and fresh databases.
 -- Uses MariaDB 11 native IF EXISTS / IF NOT EXISTS DDL --
 -- no stored procedures or DELIMITER required.
 -- ============================================================
-
+ 
 -- 1. WarehousePlace: volume -> quantityInStock
 ALTER TABLE WarehousePlace CHANGE COLUMN IF EXISTS `volume` `quantityInStock` INT NOT NULL;
-
+ 
 -- 2. WarehousePlace: add abbreviation column
 ALTER TABLE WarehousePlace ADD COLUMN IF NOT EXISTS `abbreviation` VARCHAR(255) NOT NULL AFTER `id`;
-
+ 
 -- 3. WarehousePlace: add beNumber column
 ALTER TABLE WarehousePlace ADD COLUMN IF NOT EXISTS `beNumber` VARCHAR(255) AFTER `abbreviation`;
-
+ 
 -- 4a. WarehousePlace: add serialTrackedId column
 ALTER TABLE WarehousePlace ADD COLUMN IF NOT EXISTS `serialTrackedId` CHAR(36) AFTER `beNumber`;
-
+ 
 -- 4b. WarehousePlace: add FK fk_warehouseplace_serialtrack (skip if already exists)
 ALTER TABLE WarehousePlace DROP FOREIGN KEY IF EXISTS fk_warehouseplace_serialtrack;
 ALTER TABLE WarehousePlace ADD CONSTRAINT fk_warehouseplace_serialtrack
     FOREIGN KEY (`serialTrackedId`) REFERENCES MaterialSerialTrack (`id`) ON DELETE SET NULL;
-
+ 
 -- 5. PurchaseDetail: volume -> quantityInStock
 ALTER TABLE PurchaseDetail CHANGE COLUMN IF EXISTS `volume` `quantityInStock` INT NOT NULL;
-
+ 
 -- 6. MaterialPrice: unitPrice INT -> DECIMAL(10,2)
 ALTER TABLE MaterialPrice MODIFY COLUMN IF EXISTS `unitPrice` DECIMAL(10, 2);
-
+ 
 -- 7. PurchaseDetail: unitPrice INT -> DECIMAL(10,2)
 ALTER TABLE PurchaseDetail MODIFY COLUMN IF EXISTS `unitPrice` DECIMAL(10, 2);
-
+ 
 -- 8. PurchaseDetail: totalCost INT -> DECIMAL(10,2)
 ALTER TABLE PurchaseDetail MODIFY COLUMN IF EXISTS `totalCost` DECIMAL(10, 2);
-
+ 
 -- 9. Inventory: serieNumber -> serialNumber
 ALTER TABLE Inventory CHANGE COLUMN IF EXISTS `serieNumber` `serialNumber` VARCHAR(255) NOT NULL;
-
+ 
 -- 10. Purchase: preferedSupplier -> preferredSupplier
 ALTER TABLE Purchase CHANGE COLUMN IF EXISTS `preferedSupplier` `preferredSupplier` VARCHAR(255);
-
+ 
 -- 11. Company: prefferedSupplier -> preferredSupplier
 ALTER TABLE Company CHANGE COLUMN IF EXISTS `prefferedSupplier` `preferredSupplier` BOOLEAN NOT NULL DEFAULT 0;
-
+ 
 -- 12. Contact: trough -> through
 ALTER TABLE Contact CHANGE COLUMN IF EXISTS `trough` `through` VARCHAR(100);
-
+ 
 -- 13. ProjectContact: moddifiedAt -> modifiedAt
 ALTER TABLE ProjectContact CHANGE COLUMN IF EXISTS `moddifiedAt` `modifiedAt` DATETIME;
-
+ 
 -- 14. ProjectContact: moddifiedBy -> modifiedBy (drop old FK, rename column, re-add FK)
 ALTER TABLE ProjectContact DROP FOREIGN KEY IF EXISTS ProjectContact_ibfk_3;
 ALTER TABLE ProjectContact CHANGE COLUMN IF EXISTS `moddifiedBy` `modifiedBy` CHAR(36) NOT NULL;
 ALTER TABLE ProjectContact DROP FOREIGN KEY IF EXISTS fk_projectcontact_modifiedBy;
 ALTER TABLE ProjectContact ADD CONSTRAINT fk_projectcontact_modifiedBy
     FOREIGN KEY (`modifiedBy`) REFERENCES Employee (`id`) ON DELETE RESTRICT;
-
+ 
 -- 15. ProjectContact: idValid -> isValid
 ALTER TABLE ProjectContact CHANGE COLUMN IF EXISTS `idValid` `isValid` BOOLEAN NOT NULL DEFAULT 1;
-
+ 
 -- 16. InvoiceOut: invoiceInAttachement -> invoiceInAttachment
 ALTER TABLE InvoiceOut CHANGE COLUMN IF EXISTS `invoiceInAttachement` `invoiceInAttachment` VARCHAR(100);
-
+ 
 -- 17. InvoiceIn: invoiceOutAttachement -> invoiceOutAttachment
 ALTER TABLE InvoiceIn CHANGE COLUMN IF EXISTS `invoiceOutAttachement` `invoiceOutAttachment` VARCHAR(100);
-
+ 
 -- 18. QouteBecra -> QuoteBecra
 RENAME TABLE IF EXISTS QouteBecra TO QuoteBecra;
-
+ 
 -- 19. MaterialPrice: supllierOrderNr -> supplierOrderNr
 ALTER TABLE MaterialPrice CHANGE COLUMN IF EXISTS `supllierOrderNr` `supplierOrderNr` VARCHAR(255);
-
+ 
 -- 20. MaterialSerialTrack: preferedSupplier -> preferredSupplier
 ALTER TABLE MaterialSerialTrack CHANGE COLUMN IF EXISTS `preferedSupplier` `preferredSupplier` VARCHAR(255);
-
+ 
 -- 21. MaterialSerialTrackedStructure: preferedSupplier -> preferredSupplier
 ALTER TABLE MaterialSerialTrackedStructure CHANGE COLUMN IF EXISTS `preferedSupplier` `preferredSupplier` VARCHAR(255);
-
+ 
 -- 22. FollowUp.documentId: NOT NULL -> nullable, FK RESTRICT -> SET NULL
 ALTER TABLE FollowUp
     DROP FOREIGN KEY IF EXISTS FollowUp_ibfk_5,
     MODIFY COLUMN `documentId` CHAR(36) NULL,
     ADD CONSTRAINT FOREIGN KEY (`documentId`) REFERENCES DocumentStructure (`id`) ON DELETE SET NULL;
-
--- 23. FollowUpStructure.documentId: NOT NULL -> nullable, FK RESTRICT -> SET NULL  
+ 
+-- 23. FollowUpStructure.documentId: NOT NULL -> nullable, FK RESTRICT -> SET NULL
 ALTER TABLE FollowUpStructure
     DROP FOREIGN KEY IF EXISTS FollowUpStructure_ibfk_6,
     MODIFY COLUMN `documentId` CHAR(36) NULL,
     ADD CONSTRAINT FOREIGN KEY (`documentId`) REFERENCES DocumentStructure (`id`) ON DELETE SET NULL;
-    
+ 
 -- 24. RoleLevel: extract roleLevelId from Employee into junction table
 CREATE TABLE IF NOT EXISTS RoleLevelEmployee (
     id CHAR(36) NOT NULL PRIMARY KEY,
@@ -99,8 +99,8 @@ CREATE TABLE IF NOT EXISTS RoleLevelEmployee (
     FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
     FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT
 ) ENGINE = InnoDB;
-
--- 25. Migrate existing data (only if roleLevelId column still exists on Employee)
+ 
+-- 25. Migrate existing roleLevelId data from Employee into RoleLevelEmployee (only if column still exists)
 SET @col_exists = (
   SELECT COUNT(*) 
   FROM information_schema.COLUMNS 
@@ -108,7 +108,7 @@ SET @col_exists = (
     AND TABLE_NAME = 'Employee'
     AND COLUMN_NAME = 'roleLevelId'
 );
-
+ 
 SET @sql = IF(@col_exists > 0,
   'INSERT INTO RoleLevelEmployee (id, employeeId, roleLevelId)
    SELECT UUID(), e.id, e.roleLevelId
@@ -121,12 +121,12 @@ SET @sql = IF(@col_exists > 0,
      )',
   'SELECT ''Skipping step 25: roleLevelId already dropped'''
 );
-
+ 
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
-
--- 26. Drop FK on roleLevelId (look up actual constraint name) then drop column
+ 
+-- 26. Drop FK on Employee.roleLevelId (look up actual constraint name) then drop column
 SET @fk_name = (
   SELECT CONSTRAINT_NAME
   FROM information_schema.KEY_COLUMN_USAGE
@@ -136,23 +136,23 @@ SET @fk_name = (
     AND REFERENCED_TABLE_NAME IS NOT NULL
   LIMIT 1
 );
-
+ 
 SET @sql = IF(@fk_name IS NOT NULL,
   CONCAT('ALTER TABLE Employee DROP FOREIGN KEY `', @fk_name, '`'),
   'SELECT ''No FK to drop on Employee.roleLevelId'''
 );
-
+ 
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
-
+ 
 ALTER TABLE Employee DROP COLUMN IF EXISTS roleLevelId;
-
--- 27. MaterialPrice: add companyId column and FK
+ 
+-- 27a. MaterialPrice: add companyId column
 ALTER TABLE MaterialPrice
     ADD COLUMN IF NOT EXISTS `companyId` CHAR(36) NOT NULL AFTER `id`;
-
--- 27b. MaterialPrice: add FK only if it doesn't exist yet
+ 
+-- 27b. MaterialPrice: add FK fk_materialprice_company (skip if already exists)
 SET @fk_exists = (
   SELECT COUNT(*)
   FROM information_schema.TABLE_CONSTRAINTS
@@ -160,37 +160,37 @@ SET @fk_exists = (
     AND TABLE_NAME = 'MaterialPrice'
     AND CONSTRAINT_NAME = 'fk_materialprice_company'
 );
-
+ 
 SET @sql = IF(@fk_exists = 0,
   'ALTER TABLE MaterialPrice ADD CONSTRAINT fk_materialprice_company FOREIGN KEY (`companyId`) REFERENCES Company (`id`) ON DELETE RESTRICT',
   'SELECT ''Skipping: fk_materialprice_company already exists'''
 );
-
+ 
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
-
+ 
 -- 28. TimeRegistry: add stayOver column
 ALTER TABLE TimeRegistry ADD COLUMN IF NOT EXISTS stayOver BOOLEAN NOT NULL DEFAULT 0;
-
--- 29. TrainingContact: changing clientNumber to attendeeNumber
+ 
+-- 29. TrainingContact: clientNumber -> attendeeNumber
 ALTER TABLE TrainingContact CHANGE COLUMN IF EXISTS `clientNumber` `attendeeNumber` VARCHAR(100);
-
+ 
 -- 30. Material.bePartDoc: ensure VARCHAR(255) NULL, without dropping data
 ALTER TABLE Material
     MODIFY COLUMN IF EXISTS `bePartDoc` VARCHAR(255) NULL;
-
+ 
 ALTER TABLE Material
     ADD COLUMN IF NOT EXISTS `bePartDoc` VARCHAR(255) NULL;
-
+ 
 -- 31. Material: split old single materialGroupId into A/B/C/D
 ALTER TABLE Material
     ADD COLUMN IF NOT EXISTS `materialGroupIdA` CHAR(36) NULL,
     ADD COLUMN IF NOT EXISTS `materialGroupIdB` CHAR(36) NULL,
     ADD COLUMN IF NOT EXISTS `materialGroupIdC` CHAR(36) NULL,
     ADD COLUMN IF NOT EXISTS `materialGroupIdD` CHAR(36) NULL;
-
--- 31b. Copy existing single materialGroupId into materialGroupIdA
+ 
+-- 31b. Copy existing single materialGroupId into materialGroupIdA (only if column still exists)
 SET @col_exists = (
   SELECT COUNT(*)
   FROM information_schema.COLUMNS
@@ -198,7 +198,7 @@ SET @col_exists = (
     AND TABLE_NAME = 'Material'
     AND COLUMN_NAME = 'materialGroupId'
 );
-
+ 
 SET @sql = IF(@col_exists > 0,
   'UPDATE Material
    SET materialGroupIdA = materialGroupId
@@ -206,17 +206,17 @@ SET @sql = IF(@col_exists > 0,
      AND materialGroupIdA IS NULL',
   'SELECT ''Skipping copy: old materialGroupId column not present'''
 );
-
+ 
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
-
--- 31c. Recreate new foreign keys safely
+ 
+-- 31c. Recreate new foreign keys on materialGroupIdA/B/C/D safely
 ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_group_a;
 ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_group_b;
 ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_group_c;
 ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_group_d;
-
+ 
 ALTER TABLE Material
     ADD CONSTRAINT fk_material_group_a
         FOREIGN KEY (`materialGroupIdA`) REFERENCES MaterialGroup (`id`) ON DELETE SET NULL,
@@ -226,8 +226,8 @@ ALTER TABLE Material
         FOREIGN KEY (`materialGroupIdC`) REFERENCES MaterialGroup (`id`) ON DELETE SET NULL,
     ADD CONSTRAINT fk_material_group_d
         FOREIGN KEY (`materialGroupIdD`) REFERENCES MaterialGroup (`id`) ON DELETE SET NULL;
-
--- 31d. Drop old FK on Material.materialGroupId, if it still exists
+ 
+-- 31d. Drop old FK on Material.materialGroupId (look up actual constraint name)
 SET @old_fk_name = (
   SELECT CONSTRAINT_NAME
   FROM information_schema.KEY_COLUMN_USAGE
@@ -237,24 +237,24 @@ SET @old_fk_name = (
     AND REFERENCED_TABLE_NAME = 'MaterialGroup'
   LIMIT 1
 );
-
+ 
 SET @sql = IF(@old_fk_name IS NOT NULL,
   CONCAT('ALTER TABLE Material DROP FOREIGN KEY `', @old_fk_name, '`'),
   'SELECT ''No old FK to drop on Material.materialGroupId'''
 );
-
+ 
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
-
+ 
 -- 31e. Drop old single materialGroupId column
 ALTER TABLE Material
     DROP COLUMN IF EXISTS `materialGroupId`;
-
-
+ 
+-- 32. Material: add preferredSupplierCompanyId column
 ALTER TABLE `Material` ADD COLUMN IF NOT EXISTS `preferredSupplierCompanyId` CHAR(36) NULL;
-
--- 33b. Add index for preferredSupplierCompanyId if it doesn't exist
+ 
+-- 32b. Material: add index on preferredSupplierCompanyId (skip if already exists)
 SET @idx_exists = (
   SELECT COUNT(*)
   FROM information_schema.STATISTICS
@@ -262,17 +262,17 @@ SET @idx_exists = (
     AND TABLE_NAME = 'Material'
     AND INDEX_NAME = 'preferredSupplierCompanyId'
 );
-
+ 
 SET @sql = IF(@idx_exists = 0,
   'CREATE INDEX `preferredSupplierCompanyId` ON `Material`(`preferredSupplierCompanyId`)',
   'SELECT ''Index preferredSupplierCompanyId already exists'''
 );
-
+ 
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
-
--- 33c. Add foreign key constraint if it doesn't exist
+ 
+-- 32c. Material: add FK Material_ibfk_5 on preferredSupplierCompanyId (skip if already exists)
 SET @fk_exists = (
   SELECT COUNT(*)
   FROM information_schema.TABLE_CONSTRAINTS
@@ -280,16 +280,17 @@ SET @fk_exists = (
     AND TABLE_NAME = 'Material'
     AND CONSTRAINT_NAME = 'Material_ibfk_5'
 );
-
+ 
 SET @sql = IF(@fk_exists = 0,
   'ALTER TABLE `Material` ADD CONSTRAINT `Material_ibfk_5` FOREIGN KEY (`preferredSupplierCompanyId`) REFERENCES `Company`(`id`) ON DELETE SET NULL',
   'SELECT ''FK Material_ibfk_5 already exists'''
 );
-
+ 
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
-
+ 
+-- 33. Add MaterialSupplier junction table (material <-> company many-to-many)
 CREATE TABLE
       IF NOT EXISTS MaterialSupplier (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -299,5 +300,28 @@ CREATE TABLE
             FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
             FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
-
-      ALTER TABLE Material MODIFY COLUMN IF EXISTS `brandOrderNr` VARCHAR(255);
+ 
+-- 34. Material: brandOrderNr INT -> VARCHAR(255)
+ALTER TABLE Material MODIFY COLUMN IF EXISTS `brandOrderNr` VARCHAR(255);
+ 
+-- 35. Add Country table
+CREATE TABLE
+      IF NOT EXISTS Country (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            createdBy CHAR(36) NOT NULL,
+            deletedBy CHAR(36) NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+ 
+-- 36a. CompanyAdress: add countryId column
+ALTER TABLE CompanyAdress ADD COLUMN IF NOT EXISTS `countryId` CHAR(36) NULL;
+ 
+-- 36b. CompanyAdress: add FK fk_companyadress_country (skip if already exists)
+ALTER TABLE CompanyAdress DROP FOREIGN KEY IF EXISTS fk_companyadress_country;
+ALTER TABLE CompanyAdress ADD CONSTRAINT fk_companyadress_country
+    FOREIGN KEY (`countryId`) REFERENCES Country (`id`) ON DELETE SET NULL;

@@ -21,6 +21,7 @@ import {
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 type SortField =
   | 'lastName'
@@ -121,6 +122,7 @@ interface ContactTableProps {
   departmentExternOptions: SelectOption[]
   titleOptions: SelectOption[]
   companyOptions: SelectOption[]
+  countryOptions: CountryOption[]
 }
 
 export function ContactTable({
@@ -134,6 +136,7 @@ export function ContactTable({
   departmentExternOptions,
   titleOptions,
   companyOptions,
+  countryOptions,
 }: ContactTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -311,7 +314,6 @@ export function ContactTable({
   }
 
   const showDeletedCols = filterDeleted !== 'not-deleted'
-  // base col count: 27 data cols + 1 actions = 28
   const baseColCount = 30
   const colCount = showDeletedCols ? baseColCount + 3 : baseColCount
 
@@ -633,6 +635,7 @@ export function ContactTable({
         departmentExternOptions={departmentExternOptions}
         titleOptions={titleOptions}
         companyOptions={companyOptions}
+        countryOptions={countryOptions}
       />
     </div>
   )

@@ -177,19 +177,26 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             beNumber VARCHAR(255) NOT NULL,
             name VARCHAR(255),
-            brandOrderNr VARCHAR(255) NOT NULL,
+            brandOrderNr VARCHAR(255),
             shortDescription VARCHAR(255) NOT NULL,
             longDescription TEXT,
             preferredSupplier VARCHAR(255),
             brandName VARCHAR(255),
             documentationPlace VARCHAR(255),
-            bePartDoc INT,
+            bePartDoc VARCHAR(255) NULL,
             rejected BOOLEAN DEFAULT FALSE,
-            materialGroupId CHAR(36) NOT NULL,
+            materialGroupIdA CHAR(36) NULL,
+            materialGroupIdB CHAR(36) NULL,
+            materialGroupIdC CHAR(36) NULL,
+            materialGroupIdD CHAR(36) NULL,
+            preferredSupplierCompanyId CHAR(36) NULL,
             unitId CHAR(36) NOT NULL,
             createdBy CHAR(36) NOT NULL,
             CONSTRAINT uq_material_beNumber UNIQUE (beNumber),
-            FOREIGN KEY (materialGroupId) REFERENCES MaterialGroup (id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialGroupIdA) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
+            FOREIGN KEY (materialGroupIdB) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
+            FOREIGN KEY (materialGroupIdC) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
+            FOREIGN KEY (materialGroupIdD) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
             FOREIGN KEY (unitId) REFERENCES Unit (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -334,6 +341,8 @@ CREATE TABLE
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
+ALTER TABLE Material ADD CONSTRAINT fk_material_preferredSupplierCompanyId FOREIGN KEY (preferredSupplierCompanyId) REFERENCES Company (id) ON DELETE SET NULL;
+
 CREATE TABLE
       IF NOT EXISTS Contact (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -382,6 +391,19 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
+      IF NOT EXISTS Country (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            createdBy CHAR(36) NOT NULL,
+            deletedBy CHAR(36) NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
       IF NOT EXISTS CompanyAdress (
             id CHAR(36) NOT NULL PRIMARY KEY,
             street VARCHAR(100),
@@ -393,6 +415,8 @@ CREATE TABLE
             typeAdress VARCHAR(100),
             createdBy CHAR(36) NOT NULL,
             companyId CHAR(36) NOT NULL,
+            countryId CHAR(36) NULL,
+            FOREIGN KEY (countryId) REFERENCES Country (id) ON DELETE SET NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE CASCADE,
             deleted BOOLEAN NOT NULL DEFAULT 0,

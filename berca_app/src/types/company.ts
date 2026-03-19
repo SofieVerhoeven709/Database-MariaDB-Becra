@@ -8,6 +8,8 @@ export interface MappedCompanyAddress {
   zipCode: string | null
   place: string | null
   typeAdress: string | null
+  countryId: string | null
+  countryName: string | null
   createdAt: string
   createdBy: string
   companyId: string

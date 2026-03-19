@@ -434,3 +434,8 @@ export type QuoteBecra = Prisma.QuoteBecraModel
  * 
  */
 export type RoleLevelEmployee = Prisma.RoleLevelEmployeeModel
+/**
+ * Model Country
+ * 
+ */
+export type Country = Prisma.CountryModel

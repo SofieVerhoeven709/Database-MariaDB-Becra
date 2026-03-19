@@ -17,11 +17,10 @@ export const createMaterialPriceAction = protectedServerFunction({
     logger.info(`Creating material price, createdBy: ${profile.id}`)
 
     let quantityPrice = data.quantityPrice ?? null
-    let packingUnits = data.packingUnits ?? null
     const normalizedBeNumber = data.beNumber?.trim() || null
 
-    // If unit quantity/packing are omitted, copy defaults from preferred supplier for this BE number.
-    if (normalizedBeNumber && (quantityPrice == null || packingUnits == null)) {
+    // If unit quantity is omitted, copy default from preferred supplier for this BE number.
+    if (normalizedBeNumber && quantityPrice == null) {
       const material = await prismaClient.material.findFirst({
         where: {beNumber: normalizedBeNumber, deleted: false},
         select: {preferredSupplierCompanyId: true},
@@ -34,14 +33,14 @@ export const createMaterialPriceAction = protectedServerFunction({
             companyId: material.preferredSupplierCompanyId,
             deleted: false,
           },
-          select: {quantityPrice: true, packingUnits: true},
+          select: {quantityPrice: true},
           orderBy: {updatedAt: 'desc'},
         })
 
         if (preferredSupplierPrice) {
-          quantityPrice ??=
-            preferredSupplierPrice.quantityPrice != null ? Number(preferredSupplierPrice.quantityPrice.toString()) : null
-          packingUnits ??= preferredSupplierPrice.packingUnits
+          quantityPrice ??= preferredSupplierPrice.quantityPrice != null
+            ? Number(preferredSupplierPrice.quantityPrice.toString())
+            : null
         }
       }
     }
@@ -61,7 +60,6 @@ export const createMaterialPriceAction = protectedServerFunction({
         additionalInfo: data.additionalInfo ?? null,
         unitPrice: data.unitPrice ?? null,
         quantityPrice,
-        packingUnits,
         companyId: data.companyId,
         createdBy: profile.id,
         updatedAt: new Date(),
@@ -91,7 +89,6 @@ export const updateMaterialPriceAction = protectedServerFunction({
         additionalInfo: rest.additionalInfo ?? null,
         unitPrice: rest.unitPrice ?? null,
         quantityPrice: rest.quantityPrice ?? null,
-        packingUnits: rest.packingUnits ?? null,
         companyId: rest.companyId,
         updatedAt: new Date(),
       },

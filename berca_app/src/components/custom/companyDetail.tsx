@@ -37,6 +37,8 @@ import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import type {Route} from 'next'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import type {CompanyDetailData} from '@/types/company'
+import {CountrySelect} from '@/components/custom/countrySelect'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 interface SelectOption {
   id: string
@@ -55,6 +57,7 @@ interface CompanyDetailProps {
   functionOptions: SelectOption[]
   departmentExternOptions: SelectOption[]
   titleOptions: SelectOption[]
+  countryOptions: CountryOption[]
 }
 
 function formatDate(date: string | null) {
@@ -92,6 +95,7 @@ export function CompanyDetail({
   functionOptions,
   departmentExternOptions,
   titleOptions,
+  countryOptions,
 }: CompanyDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -187,6 +191,8 @@ export function CompanyDetail({
     zipCode: string
     place: string
     typeAdress: string
+    countryId: string | null
+    countryName: string | null
   }
   const emptyAddrForm = (): AddrForm => ({
     street: '',
@@ -195,6 +201,8 @@ export function CompanyDetail({
     zipCode: '',
     place: '',
     typeAdress: '',
+    countryId: null,
+    countryName: null,
   })
 
   const [addingAddr, setAddingAddr] = useState(false)
@@ -213,8 +221,10 @@ export function CompanyDetail({
       zipCode: newAddrForm.zipCode || null,
       place: newAddrForm.place || null,
       typeAdress: newAddrForm.typeAdress || null,
+      countryId: newAddrForm.countryId,
     })
     setAddingAddr(false)
+    setNewAddrForm(emptyAddrForm())
     router.refresh()
   }
 
@@ -228,6 +238,7 @@ export function CompanyDetail({
       zipCode: editAddrForm.zipCode || null,
       place: editAddrForm.place || null,
       typeAdress: editAddrForm.typeAdress || null,
+      countryId: editAddrForm.countryId,
     })
     setEditingAddrId(null)
     router.refresh()
@@ -256,6 +267,8 @@ export function CompanyDetail({
     busNumber: string | null
     zipCode: string | null
     place: string | null
+    countryId: string | null
+    countryName: string | null
   }) {
     setEditingAddrId(a.id)
     setEditAddrForm({
@@ -265,6 +278,8 @@ export function CompanyDetail({
       busNumber: a.busNumber ?? '',
       zipCode: a.zipCode ?? '',
       place: a.place ?? '',
+      countryId: a.countryId,
+      countryName: a.countryName,
     })
   }
 
@@ -663,7 +678,6 @@ export function CompanyDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/* ── Add row ── */}
                 {addingContact && (
                   <TableRow className="border-border/40 bg-secondary/30">
                     <TableCell>
@@ -763,7 +777,6 @@ export function CompanyDetail({
                   </TableRow>
                 )}
 
-                {/* ── Existing rows ── */}
                 {visibleContacts.length === 0 && !addingContact ? (
                   <TableRow>
                     <TableCell colSpan={9} className="h-20 text-center text-muted-foreground">
@@ -1110,6 +1123,7 @@ export function CompanyDetail({
                   <TableHead className={thClass}>Bus #</TableHead>
                   <TableHead className={thClass}>Zip Code</TableHead>
                   <TableHead className={thClass}>Place</TableHead>
+                  <TableHead className={thClass}>Country</TableHead> {/* ← NEW */}
                   <TableHead className={thClass}>Status</TableHead>
                   <TableHead className="w-24">
                     <span className="sr-only">Actions</span>
@@ -1130,6 +1144,14 @@ export function CompanyDetail({
                         />
                       </TableCell>
                     ))}
+                    {/* Country cell in add row */}
+                    <TableCell className="min-w-[160px]">
+                      <CountrySelect
+                        value={newAddrForm.countryId}
+                        onChange={(id, name) => setNewAddrForm(f => ({...f, countryId: id, countryName: name}))}
+                        countries={countryOptions}
+                      />
+                    </TableCell>
                     <TableCell />
                     <TableCell>
                       <div className="flex items-center gap-1">
@@ -1155,7 +1177,7 @@ export function CompanyDetail({
                 {/* ── Existing rows ── */}
                 {visibleAddresses.length === 0 && !addingAddr ? (
                   <TableRow>
-                    <TableCell colSpan={8} className="h-20 text-center text-muted-foreground">
+                    <TableCell colSpan={9} className="h-20 text-center text-muted-foreground">
                       No addresses recorded.
                     </TableCell>
                   </TableRow>
@@ -1179,6 +1201,16 @@ export function CompanyDetail({
                                 </TableCell>
                               ),
                             )}
+                            {/* Country cell in edit row */}
+                            <TableCell className="min-w-[160px]">
+                              <CountrySelect
+                                value={editAddrForm.countryId}
+                                onChange={(id, name) =>
+                                  setEditAddrForm(f => ({...f, countryId: id, countryName: name}))
+                                }
+                                countries={countryOptions}
+                              />
+                            </TableCell>
                             <TableCell />
                             <TableCell>
                               <div className="flex items-center gap-1">
@@ -1215,6 +1247,7 @@ export function CompanyDetail({
                             <TableCell className={tdClass}>{a.busNumber ?? '-'}</TableCell>
                             <TableCell className={tdClass}>{a.zipCode ?? '-'}</TableCell>
                             <TableCell className={tdClass}>{a.place ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>{a.countryName ?? '-'}</TableCell> {/* ← NEW */}
                             <TableCell>
                               {a.deleted ? (
                                 <Badge variant="destructive" className="font-medium text-xs">
@@ -1374,6 +1407,7 @@ export function CompanyDetail({
         departmentExternOptions={departmentExternOptions}
         titleOptions={titleOptions}
         companyOptions={companies}
+        countryOptions={countryOptions}
       />
     </div>
   )

@@ -11,6 +11,7 @@ import {mapCompanyDetail} from '@/extra/companies'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {getDepartmentById} from '@/dal/department'
+import {getCountries} from '@/dal/countries'
 
 interface PageProps {
   params: Promise<{departmentId: string; companyId: string}>
@@ -29,6 +30,7 @@ export default async function CompanyDetailPage({params}: PageProps) {
     functions,
     departmentExterns,
     titles,
+    countries,
   ] = await Promise.all([
     getDepartmentById(departmentId),
     getCompanyDetail(companyId).catch(() => null),
@@ -39,6 +41,7 @@ export default async function CompanyDetailPage({params}: PageProps) {
     getFunctions(),
     getDepartmentExterns(),
     getTitles(),
+    getCountries(),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -66,6 +69,7 @@ export default async function CompanyDetailPage({params}: PageProps) {
           functionOptions={functions ?? []}
           departmentExternOptions={departmentExterns ?? []}
           titleOptions={titles ?? []}
+          countryOptions={countries}
         />
       </div>
     </main>

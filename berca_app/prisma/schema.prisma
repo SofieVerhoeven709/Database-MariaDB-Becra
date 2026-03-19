@@ -928,7 +928,6 @@ model Material {
   brandOrderNr                                             String?              @db.VarChar(255)
   shortDescription                                         String               @db.VarChar(255)
   longDescription                                          String?              @db.Text
-  preferredSupplier                                        String?              @db.VarChar(255)
   brandName                                                String?              @db.VarChar(255)
   documentationPlace                                       String?              @db.VarChar(255)
   bePartDoc                                                String?              @db.VarChar(255)
@@ -972,11 +971,14 @@ model Material {
 }
 
 model MaterialSupplier {
-  id         String   @id @db.Char(36)
-  materialId String   @db.Char(36)
-  companyId  String   @db.Char(36)
-  Material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialSupplier_ibfk_1")
-  Company    Company  @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "MaterialSupplier_ibfk_2")
+  id               String   @id @db.Char(36)
+  materialId       String   @db.Char(36)
+  companyId        String   @db.Char(36)
+  supplierOrderNr  String?  @db.VarChar(255)
+  shortDescription String?  @db.VarChar(255)
+  isPreferred      Boolean  @default(false)
+  Material         Material @relation(fields: [materialId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialSupplier_ibfk_1")
+  Company          Company  @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "MaterialSupplier_ibfk_2")
 
   @@unique([materialId, companyId], map: "uq_materialSupplier_material_company")
   @@index([companyId], map: "companyId")
@@ -1160,7 +1162,7 @@ model MaterialPrice {
   rejected                                   Boolean?
   additionalInfo                             String?   @db.VarChar(255)
   unitPrice                                  Decimal?  @db.Decimal(10, 2)
-  quantityPrice                              Int?
+  quantityPrice                              Decimal?  @db.Decimal(10, 3)
   createdBy                                  String    @db.Char(36)
   deleted                                    Boolean   @default(false)
   deletedAt                                  DateTime? @db.DateTime(0)

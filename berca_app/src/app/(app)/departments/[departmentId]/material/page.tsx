@@ -30,7 +30,13 @@ export default async function MaterialPage({params}: PageProps) {
     groups.map(g => [g.id, [g.groupA, g.groupB, g.groupC, g.groupD].filter(Boolean).join(' / ')]),
   )
 
-  const mappedMaterials = materials.map(m => ({
+  const mappedMaterials = materials.map(m => {
+    const preferredSupplierEntry =
+      m.MaterialSupplier.find(s => s.companyId === m.preferredSupplierCompanyId) ??
+      m.MaterialSupplier.find(s => s.isPreferred) ??
+      null
+
+    return {
     id: m.id,
     beNumber: m.beNumber,
     name: m.name ?? null,
@@ -39,8 +45,8 @@ export default async function MaterialPage({params}: PageProps) {
     longDescription: m.longDescription ?? null,
     preferredSupplierCompanyId: m.preferredSupplierCompanyId ?? null,
     preferredSupplierCompanyName: m.PreferredSupplierCompany?.name ?? null,
-    preferredSupplierOrderId: m.preferredSupplierOrderId ?? null,
-    preferredSupplierShortDescription: m.preferredSupplierShortDescription ?? null,
+    preferredSupplierOrderId: preferredSupplierEntry?.supplierOrderNr ?? null,
+    preferredSupplierShortDescription: preferredSupplierEntry?.shortDescription ?? null,
     supplierCompanyIds: m.MaterialSupplier.map(s => s.companyId),
     supplierCompanyNames: m.MaterialSupplier.map(s => s.Company.name),
     brandName: m.brandName ?? null,
@@ -67,7 +73,8 @@ export default async function MaterialPage({params}: PageProps) {
     deleted: m.deleted,
     deletedAt: m.deletedAt?.toISOString() ?? null,
     deletedBy: m.deletedBy ?? null,
-  }))
+  }
+  })
 
   const mappedGroups = groups.map(g => ({
     id: g.id,

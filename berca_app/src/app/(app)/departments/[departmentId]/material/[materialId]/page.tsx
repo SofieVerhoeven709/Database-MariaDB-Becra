@@ -28,6 +28,11 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     groups.map(g => [g.id, [g.groupA, g.groupB, g.groupC, g.groupD].filter(Boolean).join(' / ')]),
   )
 
+  const preferredSupplierEntry =
+    material.MaterialSupplier.find(s => s.companyId === material.preferredSupplierCompanyId) ??
+    material.MaterialSupplier.find(s => s.isPreferred) ??
+    null
+
   const mappedMaterial = {
     id: material.id,
     beNumber: material.beNumber,
@@ -37,8 +42,8 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     longDescription: material.longDescription ?? null,
     preferredSupplierCompanyId: material.preferredSupplierCompanyId ?? null,
     preferredSupplierCompanyName: material.PreferredSupplierCompany?.name ?? null,
-    preferredSupplierOrderId: material.preferredSupplierOrderId ?? null,
-    preferredSupplierShortDescription: material.preferredSupplierShortDescription ?? null,
+    preferredSupplierOrderId: preferredSupplierEntry?.supplierOrderNr ?? null,
+    preferredSupplierShortDescription: preferredSupplierEntry?.shortDescription ?? null,
     supplierCompanyIds: material.MaterialSupplier.map(s => s.companyId),
     supplierCompanyNames: material.MaterialSupplier.map(s => s.Company.name),
     brandName: material.brandName ?? null,

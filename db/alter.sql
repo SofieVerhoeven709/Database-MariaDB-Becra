@@ -1,4 +1,4 @@
-﻿USE BecraBV;
+﻿USE app_db;
  
 -- ============================================================
 -- Idempotent migrations.

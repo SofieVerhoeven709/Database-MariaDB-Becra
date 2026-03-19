@@ -28,18 +28,27 @@ export type MaterialSupplierMinAggregateOutputType = {
   id: string | null
   materialId: string | null
   companyId: string | null
+  supplierOrderNr: string | null
+  shortDescription: string | null
+  isPreferred: boolean | null
 }
 
 export type MaterialSupplierMaxAggregateOutputType = {
   id: string | null
   materialId: string | null
   companyId: string | null
+  supplierOrderNr: string | null
+  shortDescription: string | null
+  isPreferred: boolean | null
 }
 
 export type MaterialSupplierCountAggregateOutputType = {
   id: number
   materialId: number
   companyId: number
+  supplierOrderNr: number
+  shortDescription: number
+  isPreferred: number
   _all: number
 }
 
@@ -48,18 +57,27 @@ export type MaterialSupplierMinAggregateInputType = {
   id?: true
   materialId?: true
   companyId?: true
+  supplierOrderNr?: true
+  shortDescription?: true
+  isPreferred?: true
 }
 
 export type MaterialSupplierMaxAggregateInputType = {
   id?: true
   materialId?: true
   companyId?: true
+  supplierOrderNr?: true
+  shortDescription?: true
+  isPreferred?: true
 }
 
 export type MaterialSupplierCountAggregateInputType = {
   id?: true
   materialId?: true
   companyId?: true
+  supplierOrderNr?: true
+  shortDescription?: true
+  isPreferred?: true
   _all?: true
 }
 
@@ -139,6 +157,9 @@ export type MaterialSupplierGroupByOutputType = {
   id: string
   materialId: string
   companyId: string
+  supplierOrderNr: string | null
+  shortDescription: string | null
+  isPreferred: boolean
   _count: MaterialSupplierCountAggregateOutputType | null
   _min: MaterialSupplierMinAggregateOutputType | null
   _max: MaterialSupplierMaxAggregateOutputType | null
@@ -166,6 +187,9 @@ export type MaterialSupplierWhereInput = {
   id?: Prisma.StringFilter<"MaterialSupplier"> | string
   materialId?: Prisma.StringFilter<"MaterialSupplier"> | string
   companyId?: Prisma.StringFilter<"MaterialSupplier"> | string
+  supplierOrderNr?: Prisma.StringNullableFilter<"MaterialSupplier"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"MaterialSupplier"> | string | null
+  isPreferred?: Prisma.BoolFilter<"MaterialSupplier"> | boolean
   Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
 }
@@ -174,6 +198,9 @@ export type MaterialSupplierOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  supplierOrderNr?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPreferred?: Prisma.SortOrder
   Material?: Prisma.MaterialOrderByWithRelationInput
   Company?: Prisma.CompanyOrderByWithRelationInput
   _relevance?: Prisma.MaterialSupplierOrderByRelevanceInput
@@ -187,6 +214,9 @@ export type MaterialSupplierWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.MaterialSupplierWhereInput | Prisma.MaterialSupplierWhereInput[]
   materialId?: Prisma.StringFilter<"MaterialSupplier"> | string
   companyId?: Prisma.StringFilter<"MaterialSupplier"> | string
+  supplierOrderNr?: Prisma.StringNullableFilter<"MaterialSupplier"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"MaterialSupplier"> | string | null
+  isPreferred?: Prisma.BoolFilter<"MaterialSupplier"> | boolean
   Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
   Company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
 }, "id" | "materialId_companyId">
@@ -195,6 +225,9 @@ export type MaterialSupplierOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  supplierOrderNr?: Prisma.SortOrderInput | Prisma.SortOrder
+  shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPreferred?: Prisma.SortOrder
   _count?: Prisma.MaterialSupplierCountOrderByAggregateInput
   _max?: Prisma.MaterialSupplierMaxOrderByAggregateInput
   _min?: Prisma.MaterialSupplierMinOrderByAggregateInput
@@ -207,10 +240,16 @@ export type MaterialSupplierScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"MaterialSupplier"> | string
   materialId?: Prisma.StringWithAggregatesFilter<"MaterialSupplier"> | string
   companyId?: Prisma.StringWithAggregatesFilter<"MaterialSupplier"> | string
+  supplierOrderNr?: Prisma.StringNullableWithAggregatesFilter<"MaterialSupplier"> | string | null
+  shortDescription?: Prisma.StringNullableWithAggregatesFilter<"MaterialSupplier"> | string | null
+  isPreferred?: Prisma.BoolWithAggregatesFilter<"MaterialSupplier"> | boolean
 }
 
 export type MaterialSupplierCreateInput = {
   id: string
+  supplierOrderNr?: string | null
+  shortDescription?: string | null
+  isPreferred?: boolean
   Material: Prisma.MaterialCreateNestedOneWithoutMaterialSupplierInput
   Company: Prisma.CompanyCreateNestedOneWithoutMaterialSupplierInput
 }
@@ -219,10 +258,16 @@ export type MaterialSupplierUncheckedCreateInput = {
   id: string
   materialId: string
   companyId: string
+  supplierOrderNr?: string | null
+  shortDescription?: string | null
+  isPreferred?: boolean
 }
 
 export type MaterialSupplierUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPreferred?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Material?: Prisma.MaterialUpdateOneRequiredWithoutMaterialSupplierNestedInput
   Company?: Prisma.CompanyUpdateOneRequiredWithoutMaterialSupplierNestedInput
 }
@@ -231,22 +276,34 @@ export type MaterialSupplierUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPreferred?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type MaterialSupplierCreateManyInput = {
   id: string
   materialId: string
   companyId: string
+  supplierOrderNr?: string | null
+  shortDescription?: string | null
+  isPreferred?: boolean
 }
 
 export type MaterialSupplierUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPreferred?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type MaterialSupplierUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPreferred?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type MaterialSupplierListRelationFilter = {
@@ -274,18 +331,27 @@ export type MaterialSupplierCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  supplierOrderNr?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
+  isPreferred?: Prisma.SortOrder
 }
 
 export type MaterialSupplierMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  supplierOrderNr?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
+  isPreferred?: Prisma.SortOrder
 }
 
 export type MaterialSupplierMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
+  supplierOrderNr?: Prisma.SortOrder
+  shortDescription?: Prisma.SortOrder
+  isPreferred?: Prisma.SortOrder
 }
 
 export type MaterialSupplierCreateNestedManyWithoutCompanyInput = {
@@ -374,12 +440,18 @@ export type MaterialSupplierUncheckedUpdateManyWithoutMaterialNestedInput = {
 
 export type MaterialSupplierCreateWithoutCompanyInput = {
   id: string
+  supplierOrderNr?: string | null
+  shortDescription?: string | null
+  isPreferred?: boolean
   Material: Prisma.MaterialCreateNestedOneWithoutMaterialSupplierInput
 }
 
 export type MaterialSupplierUncheckedCreateWithoutCompanyInput = {
   id: string
   materialId: string
+  supplierOrderNr?: string | null
+  shortDescription?: string | null
+  isPreferred?: boolean
 }
 
 export type MaterialSupplierCreateOrConnectWithoutCompanyInput = {
@@ -415,16 +487,25 @@ export type MaterialSupplierScalarWhereInput = {
   id?: Prisma.StringFilter<"MaterialSupplier"> | string
   materialId?: Prisma.StringFilter<"MaterialSupplier"> | string
   companyId?: Prisma.StringFilter<"MaterialSupplier"> | string
+  supplierOrderNr?: Prisma.StringNullableFilter<"MaterialSupplier"> | string | null
+  shortDescription?: Prisma.StringNullableFilter<"MaterialSupplier"> | string | null
+  isPreferred?: Prisma.BoolFilter<"MaterialSupplier"> | boolean
 }
 
 export type MaterialSupplierCreateWithoutMaterialInput = {
   id: string
+  supplierOrderNr?: string | null
+  shortDescription?: string | null
+  isPreferred?: boolean
   Company: Prisma.CompanyCreateNestedOneWithoutMaterialSupplierInput
 }
 
 export type MaterialSupplierUncheckedCreateWithoutMaterialInput = {
   id: string
   companyId: string
+  supplierOrderNr?: string | null
+  shortDescription?: string | null
+  isPreferred?: boolean
 }
 
 export type MaterialSupplierCreateOrConnectWithoutMaterialInput = {
@@ -456,41 +537,65 @@ export type MaterialSupplierUpdateManyWithWhereWithoutMaterialInput = {
 export type MaterialSupplierCreateManyCompanyInput = {
   id: string
   materialId: string
+  supplierOrderNr?: string | null
+  shortDescription?: string | null
+  isPreferred?: boolean
 }
 
 export type MaterialSupplierUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPreferred?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Material?: Prisma.MaterialUpdateOneRequiredWithoutMaterialSupplierNestedInput
 }
 
 export type MaterialSupplierUncheckedUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPreferred?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type MaterialSupplierUncheckedUpdateManyWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPreferred?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type MaterialSupplierCreateManyMaterialInput = {
   id: string
   companyId: string
+  supplierOrderNr?: string | null
+  shortDescription?: string | null
+  isPreferred?: boolean
 }
 
 export type MaterialSupplierUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPreferred?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Company?: Prisma.CompanyUpdateOneRequiredWithoutMaterialSupplierNestedInput
 }
 
 export type MaterialSupplierUncheckedUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPreferred?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type MaterialSupplierUncheckedUpdateManyWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPreferred?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -499,6 +604,9 @@ export type MaterialSupplierSelect<ExtArgs extends runtime.Types.Extensions.Inte
   id?: boolean
   materialId?: boolean
   companyId?: boolean
+  supplierOrderNr?: boolean
+  shortDescription?: boolean
+  isPreferred?: boolean
   Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["materialSupplier"]>
@@ -509,9 +617,12 @@ export type MaterialSupplierSelectScalar = {
   id?: boolean
   materialId?: boolean
   companyId?: boolean
+  supplierOrderNr?: boolean
+  shortDescription?: boolean
+  isPreferred?: boolean
 }
 
-export type MaterialSupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "companyId", ExtArgs["result"]["materialSupplier"]>
+export type MaterialSupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "companyId" | "supplierOrderNr" | "shortDescription" | "isPreferred", ExtArgs["result"]["materialSupplier"]>
 export type MaterialSupplierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
@@ -527,6 +638,9 @@ export type $MaterialSupplierPayload<ExtArgs extends runtime.Types.Extensions.In
     id: string
     materialId: string
     companyId: string
+    supplierOrderNr: string | null
+    shortDescription: string | null
+    isPreferred: boolean
   }, ExtArgs["result"]["materialSupplier"]>
   composites: {}
 }
@@ -901,6 +1015,9 @@ export interface MaterialSupplierFieldRefs {
   readonly id: Prisma.FieldRef<"MaterialSupplier", 'String'>
   readonly materialId: Prisma.FieldRef<"MaterialSupplier", 'String'>
   readonly companyId: Prisma.FieldRef<"MaterialSupplier", 'String'>
+  readonly supplierOrderNr: Prisma.FieldRef<"MaterialSupplier", 'String'>
+  readonly shortDescription: Prisma.FieldRef<"MaterialSupplier", 'String'>
+  readonly isPreferred: Prisma.FieldRef<"MaterialSupplier", 'Boolean'>
 }
     
 

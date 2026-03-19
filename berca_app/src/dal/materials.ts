@@ -125,7 +125,14 @@ export async function createMaterial(data: {
   unitId: string
   createdBy: string
 }) {
-  const {supplierCompanyIds = [], bePartDoc, ...materialData} = data
+  const {
+    supplierCompanyIds = [],
+    bePartDoc,
+    preferredSupplierCompanyId,
+    preferredSupplierOrderId,
+    preferredSupplierShortDescription,
+    ...materialData
+  } = data
 
   return prismaClient.material.create({
     data: {
@@ -137,6 +144,10 @@ export async function createMaterial(data: {
               create: supplierCompanyIds.map(companyId => ({
                 id: randomUUID(),
                 companyId,
+                isPreferred: preferredSupplierCompanyId === companyId,
+                supplierOrderNr: preferredSupplierCompanyId === companyId ? preferredSupplierOrderId ?? null : null,
+                shortDescription:
+                  preferredSupplierCompanyId === companyId ? preferredSupplierShortDescription ?? null : null,
               })),
             }
           : undefined,
@@ -167,7 +178,14 @@ export async function updateMaterial(
     unitId?: string
   },
 ) {
-  const {supplierCompanyIds, bePartDoc, ...materialData} = data
+  const {
+    supplierCompanyIds,
+    bePartDoc,
+    preferredSupplierCompanyId,
+    preferredSupplierOrderId,
+    preferredSupplierShortDescription,
+    ...materialData
+  } = data
 
   return prismaClient.material.update({
     where: {id},
@@ -182,6 +200,10 @@ export async function updateMaterial(
               create: supplierCompanyIds.map(companyId => ({
                 id: randomUUID(),
                 companyId,
+                isPreferred: preferredSupplierCompanyId === companyId,
+                supplierOrderNr: preferredSupplierCompanyId === companyId ? preferredSupplierOrderId ?? null : null,
+                shortDescription:
+                  preferredSupplierCompanyId === companyId ? preferredSupplierShortDescription ?? null : null,
               })),
             },
     } as Prisma.MaterialUncheckedUpdateInput,

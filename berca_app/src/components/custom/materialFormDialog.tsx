@@ -410,7 +410,7 @@ export function MaterialFormDialog({
               <Input
                 id="preferredSupplierOrderId"
                 className={inputStyles}
-                value={form.preferredSupplierOrderId ?? ''}
+                value={typeof form.preferredSupplierOrderId === 'string' ? form.preferredSupplierOrderId : ''}
                 onChange={e => update('preferredSupplierOrderId', e.target.value || null)}
                 placeholder="e.g. ABC-123"
               />
@@ -425,7 +425,9 @@ export function MaterialFormDialog({
             <Input
               id="preferredSupplierShortDescription"
               className={inputStyles}
-              value={form.preferredSupplierShortDescription ?? ''}
+              value={
+                typeof form.preferredSupplierShortDescription === 'string' ? form.preferredSupplierShortDescription : ''
+              }
               onChange={e => update('preferredSupplierShortDescription', e.target.value || null)}
               placeholder="Short description or notes about the preferred supplier"
             />
@@ -435,7 +437,7 @@ export function MaterialFormDialog({
           <div className="flex flex-col gap-2">
             <Label className="text-xs text-muted-foreground">Preferred Supplier Company</Label>
             <PreferredSupplierPicker
-              selectedCompanyId={form.preferredSupplierCompanyId}
+              selectedCompanyId={form.preferredSupplierCompanyId ?? null}
               onSelect={companyId => update('preferredSupplierCompanyId', companyId)}
               availableCompanies={supplierCompanies}
               inputStyles={inputStyles}

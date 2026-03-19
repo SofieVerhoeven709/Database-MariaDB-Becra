@@ -1123,7 +1123,7 @@ export function CompanyDetail({
                   <TableHead className={thClass}>Bus #</TableHead>
                   <TableHead className={thClass}>Zip Code</TableHead>
                   <TableHead className={thClass}>Place</TableHead>
-                  <TableHead className={thClass}>Country</TableHead> {/* ← NEW */}
+                  <TableHead className={thClass}>Country</TableHead>
                   <TableHead className={thClass}>Status</TableHead>
                   <TableHead className="w-24">
                     <span className="sr-only">Actions</span>
@@ -1247,7 +1247,7 @@ export function CompanyDetail({
                             <TableCell className={tdClass}>{a.busNumber ?? '-'}</TableCell>
                             <TableCell className={tdClass}>{a.zipCode ?? '-'}</TableCell>
                             <TableCell className={tdClass}>{a.place ?? '-'}</TableCell>
-                            <TableCell className={tdClass}>{a.countryName ?? '-'}</TableCell> {/* ← NEW */}
+                            <TableCell className={tdClass}>{a.countryName ?? '-'}</TableCell>
                             <TableCell>
                               {a.deleted ? (
                                 <Badge variant="destructive" className="font-medium text-xs">

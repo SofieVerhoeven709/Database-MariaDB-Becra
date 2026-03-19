@@ -2,7 +2,9 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Pencil, X, Save, Plus, Trash2} from 'lucide-react'
+import Link from 'next/link'
+import type {Route} from 'next'
+import {ArrowLeft, Pencil, X, Save, Plus, Trash2, ExternalLink} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -44,9 +46,11 @@ interface InvoiceOutDetailProps {
   invoiceSentTypes: InvoiceLookup[]
   invoiceStatuses: InvoiceLookup[]
   vatMargins: VatMarginOption[]
+  // Only contacts from the companies linked via work orders → projects
   contactOptions: InvoiceLookup[]
   currentUserLevel: number
   currentUserRole: string
+  departmentId: string
 }
 
 type EditForm = {
@@ -78,6 +82,7 @@ export function InvoiceOutDetail({
   contactOptions,
   currentUserLevel,
   currentUserRole,
+  departmentId,
 }: InvoiceOutDetailProps) {
   const router = useRouter()
   const canEdit = currentUserLevel >= 20
@@ -104,12 +109,27 @@ export function InvoiceOutDetail({
   const [form, setForm] = useState<EditForm>(buildForm)
   const s = <K extends keyof EditForm>(key: K, v: EditForm[K]) => setForm(f => ({...f, [key]: v}))
 
-  // Contact management
   const [addingContact, setAddingContact] = useState(false)
   const [newContactId, setNewContactId] = useState('none')
 
   const linkedContactIds = new Set(invoice.contacts.map(c => c.contactId))
   const availableContacts = contactOptions.filter(c => !linkedContactIds.has(c.id))
+
+  // Unique projects from work orders
+  const projectsOnInvoice = Array.from(
+    new Map(
+      invoice.workOrders.map(wo => [
+        wo.projectId,
+        {
+          projectId: wo.projectId,
+          projectNumber: wo.projectNumber,
+          projectName: wo.projectName,
+          companyId: wo.companyId,
+          companyName: wo.companyName,
+        },
+      ]),
+    ).values(),
+  )
 
   async function handleSave() {
     setSaving(true)
@@ -201,10 +221,9 @@ export function InvoiceOutDetail({
         )}
       </div>
 
-      {/* Info card */}
+      {/* ── Info card ─────────────────────────────────────────────────────── */}
       <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Invoice Number */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Invoice Number</Label>
             {editing ? (
@@ -218,7 +237,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          {/* Human ID */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Human ID</Label>
             {editing ? (
@@ -232,7 +250,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          {/* PO Number */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">PO Number</Label>
             {editing ? (
@@ -246,7 +263,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          {/* Invoice Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Invoice Date</Label>
             {editing ? (
@@ -261,7 +277,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          {/* Due Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Due Date</Label>
             {editing ? (
@@ -276,7 +291,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          {/* Sent Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Sent Date</Label>
             {editing ? (
@@ -291,7 +305,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          {/* Invoice Type */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Invoice Type</Label>
             {editing ? (
@@ -312,7 +325,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          {/* Status */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Status</Label>
             {editing ? (
@@ -335,7 +347,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          {/* Payment Method */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Payment Method</Label>
             {editing ? (
@@ -356,7 +367,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          {/* Sent Type */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Sent Type</Label>
             {editing ? (
@@ -377,7 +387,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          {/* VAT */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">VAT Margin</Label>
             {editing ? (
@@ -398,7 +407,6 @@ export function InvoiceOutDetail({
             )}
           </div>
 
-          {/* Meta */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created By</Label>
             <p className="text-sm text-muted-foreground">{invoice.createdByName}</p>
@@ -416,7 +424,6 @@ export function InvoiceOutDetail({
             </div>
           )}
 
-          {/* Booleans */}
           <div className="sm:col-span-2 lg:col-span-3 grid grid-cols-2 gap-3">
             {[
               {key: 'outstanding' as const, label: 'Outstanding'},
@@ -437,7 +444,105 @@ export function InvoiceOutDetail({
         </div>
       </div>
 
-      {/* Contacts */}
+      {/* ── Work Orders & Projects ─────────────────────────────────────────── */}
+      {invoice.workOrders.length > 0 && (
+        <div className="rounded-xl border border-border/60 bg-card p-4">
+          <h2 className="text-sm font-medium text-foreground mb-4">
+            Work Orders
+            <Badge variant="secondary" className="ml-2 text-xs">
+              {invoice.workOrders.length}
+            </Badge>
+          </h2>
+
+          {/* Project + company summary cards */}
+          {projectsOnInvoice.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {projectsOnInvoice.map(p => (
+                <div
+                  key={p.projectId}
+                  className="flex items-center gap-3 rounded-lg border border-border bg-secondary/40 px-3 py-2">
+                  <div>
+                    <p className="text-xs font-medium text-foreground">
+                      {p.projectNumber} — {p.projectName}
+                    </p>
+                    <p className="text-xs text-muted-foreground">{p.companyName}</p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Link href={`/departments/${departmentId}/project/${p.projectId}` as Route}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6 text-muted-foreground hover:text-accent hover:bg-accent/10"
+                        title="Open project">
+                        <ExternalLink className="h-3 w-3" />
+                      </Button>
+                    </Link>
+                    <Link href={`/departments/${departmentId}/company/${p.companyId}` as Route}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6 text-muted-foreground hover:text-accent hover:bg-accent/10"
+                        title="Open company">
+                        <ExternalLink className="h-3 w-3" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="rounded-lg border border-border/60 overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent border-border/60">
+                  <TableHead className={thClass}>Work Order #</TableHead>
+                  <TableHead className={thClass}>Description</TableHead>
+                  <TableHead className={thClass}>Project</TableHead>
+                  <TableHead className={thClass}>Company</TableHead>
+                  <TableHead className={thClass}>Completed</TableHead>
+                  <TableHead className={thClass}>Hours Closed</TableHead>
+                  <TableHead className="w-10">
+                    <span className="sr-only">Open</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {invoice.workOrders.map(wo => (
+                  <TableRow key={wo.id} className="border-border/40 hover:bg-secondary/50">
+                    <TableCell className={`${tdClass} text-foreground font-medium`}>
+                      {wo.workOrderNumber ?? '(no number)'}
+                    </TableCell>
+                    <TableCell className={tdClass}>{wo.description ?? '-'}</TableCell>
+                    <TableCell className={tdClass}>
+                      {wo.projectNumber} — {wo.projectName}
+                    </TableCell>
+                    <TableCell className={tdClass}>{wo.companyName}</TableCell>
+                    <TableCell>
+                      <BoolBadge value={wo.completed} />
+                    </TableCell>
+                    <TableCell>
+                      <BoolBadge value={wo.hoursMaterialClosed} />
+                    </TableCell>
+                    <TableCell>
+                      <Link href={`/departments/${departmentId}/workOrder/${wo.id}` as Route}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      )}
+
+      {/* ── Contacts ──────────────────────────────────────────────────────── */}
       <div className="rounded-xl border border-border/60 bg-card p-4">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-medium text-foreground">
@@ -446,7 +551,7 @@ export function InvoiceOutDetail({
               {invoice.contacts.length}
             </Badge>
           </h2>
-          {canEdit && !addingContact && (
+          {canEdit && !addingContact && availableContacts.length > 0 && (
             <Button
               size="sm"
               variant="outline"
@@ -456,6 +561,12 @@ export function InvoiceOutDetail({
             </Button>
           )}
         </div>
+
+        {invoice.workOrders.length === 0 && (
+          <p className="text-xs text-muted-foreground mb-3">
+            No work orders linked — contacts are sourced from project companies.
+          </p>
+        )}
 
         {addingContact && (
           <div className="flex items-center gap-2 mb-4 p-3 rounded-lg border border-border bg-secondary/30">

@@ -1,5 +1,11 @@
-import {MappedInvoiceIn, MappedInvoiceOut, MappedInvoiceOutContact} from '@/types/invoice'
+import type {
+  MappedInvoiceOut,
+  MappedInvoiceIn,
+  MappedInvoiceOutContact,
+  MappedInvoiceOutWorkOrder,
+} from '@/types/invoice'
 
+// ─── InvoiceOut ────────────────────────────────────────────────────────────────
 type InvoiceOutRaw = {
   id: string
   invoiceNumber: string
@@ -39,6 +45,27 @@ type InvoiceOutRaw = {
       lastName: string
       mail1: string | null
       generalPhone: string | null
+    }
+  }[]
+  WorkOrderInvoice: {
+    id: string
+    invoiceOutId: string
+    workOrderId: string
+    deleted: boolean
+    WorkOrder: {
+      id: string
+      workOrderNumber: string | null
+      description: string | null
+      completed: boolean
+      hoursMaterialClosed: boolean
+      projectId: string
+      Project: {
+        id: string
+        projectNumber: string
+        projectName: string
+        companyId: string
+        Company: {id: string; name: string}
+      }
     }
   }[]
 }
@@ -84,9 +111,25 @@ export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
         contactPhone: c.Contact.generalPhone,
       }),
     ),
+    workOrders: r.WorkOrderInvoice.map(
+      (w): MappedInvoiceOutWorkOrder => ({
+        id: w.WorkOrder.id,
+        workOrderInvoiceId: w.id,
+        workOrderNumber: w.WorkOrder.workOrderNumber,
+        description: w.WorkOrder.description,
+        completed: w.WorkOrder.completed,
+        hoursMaterialClosed: w.WorkOrder.hoursMaterialClosed,
+        projectId: w.WorkOrder.Project.id,
+        projectNumber: w.WorkOrder.Project.projectNumber,
+        projectName: w.WorkOrder.Project.projectName,
+        companyId: w.WorkOrder.Project.Company.id,
+        companyName: w.WorkOrder.Project.Company.name,
+      }),
+    ),
   }
 }
 
+// ─── InvoiceIn ─────────────────────────────────────────────────────────────────
 type InvoiceInRaw = {
   id: string
   invoiceNumber: string

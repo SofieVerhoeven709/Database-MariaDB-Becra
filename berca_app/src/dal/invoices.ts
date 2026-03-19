@@ -22,6 +22,30 @@ const invoiceOutInclude = {
       },
     },
   },
+  WorkOrderInvoice: {
+    where: {deleted: false},
+    include: {
+      WorkOrder: {
+        select: {
+          id: true,
+          workOrderNumber: true,
+          description: true,
+          completed: true,
+          hoursMaterialClosed: true,
+          projectId: true,
+          Project: {
+            select: {
+              id: true,
+              projectNumber: true,
+              projectName: true,
+              companyId: true,
+              Company: {select: {id: true, name: true}},
+            },
+          },
+        },
+      },
+    },
+  },
 } as const
 
 const invoiceInInclude = {
@@ -64,6 +88,31 @@ export async function getInvoiceInById(id: string) {
   })
 }
 
+// ─── Company contacts for invoice (contacts linked to the project's company) ──
+export async function getCompanyContactsForInvoice(companyIds: string[]) {
+  if (companyIds.length === 0) return []
+  return prismaClient.companyContact.findMany({
+    where: {
+      deleted: false,
+      companyId: {in: companyIds},
+      endDate: null,
+    },
+    select: {
+      id: true,
+      Contact: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          mail1: true,
+          generalPhone: true,
+        },
+      },
+    },
+    orderBy: {Contact: {lastName: 'asc'}},
+  })
+}
+
 // ─── Lookup tables ─────────────────────────────────────────────────────────────
 export async function getInvoiceTypes() {
   return prismaClient.invoiceType.findMany({
@@ -102,5 +151,26 @@ export async function getVatMargins() {
     where: {deleted: false},
     select: {id: true, vat: true},
     orderBy: {vat: 'asc'},
+  })
+}
+
+export async function getOpenProjects() {
+  return prismaClient.project.findMany({
+    where: {deleted: false, isOpen: true, isClosed: false},
+    select: {
+      id: true,
+      projectNumber: true,
+      projectName: true,
+      Company: {select: {name: true}},
+    },
+    orderBy: {projectNumber: 'asc'},
+  })
+}
+
+export async function getActiveWorkOrdersForProject(projectId: string) {
+  return prismaClient.workOrder.findMany({
+    where: {deleted: false, completed: false, projectId},
+    select: {id: true, workOrderNumber: true, description: true},
+    orderBy: {workOrderNumber: 'asc'},
   })
 }

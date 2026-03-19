@@ -10,14 +10,14 @@ import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Badge} from '@/components/ui/badge'
-import type {MappedInvoiceOut} from '@/types/invoice'
-import type {InvoiceLookup, VatMarginOption} from '@/types/invoice'
+import type {MappedInvoiceOut, InvoiceLookup, VatMarginOption} from '@/types/invoice'
 import {
   softDeleteInvoiceOutAction,
   hardDeleteInvoiceOutAction,
   undeleteInvoiceOutAction,
 } from '@/serverFunctions/invoices'
 import {InvoiceOutFormDialog} from '@/components/custom/invoiceOutFormDialog'
+import type {ProjectOption} from '@/components/custom/invoiceOutFormDialog'
 
 type SortField =
   | 'invoiceNumber'
@@ -80,6 +80,7 @@ interface InvoiceOutTableProps {
   invoiceStatuses: InvoiceLookup[]
   vatMargins: VatMarginOption[]
   contactOptions: InvoiceLookup[]
+  projectOptions: ProjectOption[]
 }
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -116,6 +117,7 @@ export function InvoiceOutTable({
   invoiceStatuses,
   vatMargins,
   contactOptions,
+  projectOptions,
 }: InvoiceOutTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
@@ -319,7 +321,7 @@ export function InvoiceOutTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${departmentId}/invoices-out/${inv.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/invoicesOut/${inv.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"
@@ -395,6 +397,7 @@ export function InvoiceOutTable({
         invoiceStatuses={invoiceStatuses}
         vatMargins={vatMargins}
         contactOptions={contactOptions}
+        projectOptions={projectOptions}
         onSaved={() => {
           setDialogOpen(false)
           router.refresh()

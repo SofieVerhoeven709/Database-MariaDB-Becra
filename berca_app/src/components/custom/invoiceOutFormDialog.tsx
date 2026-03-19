@@ -6,9 +6,28 @@ import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Switch} from '@/components/ui/switch'
+import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
+import {Checkbox} from '@/components/ui/checkbox'
 import type {MappedInvoiceOut, InvoiceLookup, VatMarginOption} from '@/types/invoice'
-import {createInvoiceOutAction, updateInvoiceOutAction} from '@/serverFunctions/invoices'
+import {
+  createInvoiceOutAction,
+  updateInvoiceOutAction,
+  getActiveWorkOrdersForProjectAction,
+} from '@/serverFunctions/invoices'
+
+export interface ProjectOption {
+  id: string
+  projectNumber: string
+  projectName: string
+  companyName: string
+}
+
+export interface WorkOrderOption {
+  id: string
+  workOrderNumber: string | null
+  description: string | null
+}
 
 interface InvoiceOutFormDialogProps {
   open: boolean
@@ -20,6 +39,7 @@ interface InvoiceOutFormDialogProps {
   invoiceStatuses: InvoiceLookup[]
   vatMargins: VatMarginOption[]
   contactOptions: InvoiceLookup[]
+  projectOptions: ProjectOption[]
   onSaved: () => void
 }
 
@@ -60,7 +80,7 @@ function emptyForm(inv: MappedInvoiceOut | null): FormState {
       invoiceStatusId: '',
       vatMarginId: '',
       reminderSent: false,
-      outstanding: false,
+      outstanding: true,
     }
   }
   return {
@@ -89,17 +109,41 @@ export function InvoiceOutFormDialog({
   invoiceSentTypes,
   invoiceStatuses,
   vatMargins,
+  projectOptions,
   onSaved,
 }: InvoiceOutFormDialogProps) {
   const [form, setForm] = useState<FormState>(() => emptyForm(invoice))
   const [saving, setSaving] = useState(false)
 
+  // Project + work order selection (create only)
+  const [selectedProjectId, setSelectedProjectId] = useState('')
+  const [workOrders, setWorkOrders] = useState<WorkOrderOption[]>([])
+  const [selectedWorkOrderIds, setSelectedWorkOrderIds] = useState<string[]>([])
+  const [loadingWorkOrders, setLoadingWorkOrders] = useState(false)
+
   useEffect(() => {
     setForm(emptyForm(invoice))
+    setSelectedProjectId('')
+    setWorkOrders([])
+    setSelectedWorkOrderIds([])
   }, [invoice?.id, open])
+
+  useEffect(() => {
+    if (!selectedProjectId || invoice) return
+    setWorkOrders([])
+    setSelectedWorkOrderIds([])
+    setLoadingWorkOrders(true)
+    getActiveWorkOrdersForProjectAction(selectedProjectId)
+      .then(setWorkOrders)
+      .finally(() => setLoadingWorkOrders(false))
+  }, [selectedProjectId, invoice])
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm(f => ({...f, [key]: value}))
+  }
+
+  function toggleWorkOrder(id: string) {
+    setSelectedWorkOrderIds(prev => (prev.includes(id) ? prev.filter(w => w !== id) : [...prev, id]))
   }
 
   const isValid =
@@ -135,7 +179,7 @@ export function InvoiceOutFormDialog({
       if (invoice) {
         await updateInvoiceOutAction({id: invoice.id, ...payload})
       } else {
-        await createInvoiceOutAction(payload)
+        await createInvoiceOutAction({...payload, workOrderIds: selectedWorkOrderIds})
       }
       onSaved()
     } finally {
@@ -144,6 +188,7 @@ export function InvoiceOutFormDialog({
   }
 
   const isEdit = !!invoice
+  const selectedProject = projectOptions.find(p => p.id === selectedProjectId)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -153,6 +198,75 @@ export function InvoiceOutFormDialog({
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-5 py-3 sm:grid-cols-2">
+          {/* ── Project + Work Orders (create only) ── */}
+          {!isEdit && (
+            <div className="sm:col-span-2 flex flex-col gap-3">
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Project</Label>
+                <Select value={selectedProjectId} onValueChange={setSelectedProjectId}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select project…" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    {projectOptions.map(p => (
+                      <SelectItem key={p.id} value={p.id}>
+                        {p.projectNumber} — {p.projectName}
+                        <span className="ml-1 text-muted-foreground text-xs">({p.companyName})</span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {selectedProjectId && (
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs text-muted-foreground">Active Work Orders</Label>
+                    {selectedWorkOrderIds.length > 0 && (
+                      <Badge variant="secondary" className="text-xs">
+                        {selectedWorkOrderIds.length} selected
+                      </Badge>
+                    )}
+                  </div>
+                  {loadingWorkOrders ? (
+                    <p className="text-xs text-muted-foreground py-2">Loading work orders…</p>
+                  ) : workOrders.length === 0 ? (
+                    <p className="text-xs text-muted-foreground py-2">No active work orders for this project.</p>
+                  ) : (
+                    <div className="rounded-lg border border-border bg-secondary/40 divide-y divide-border/60">
+                      {workOrders.map(wo => (
+                        <label
+                          key={wo.id}
+                          className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-secondary/80 transition-colors">
+                          <Checkbox
+                            checked={selectedWorkOrderIds.includes(wo.id)}
+                            onCheckedChange={() => toggleWorkOrder(wo.id)}
+                          />
+                          <div className="flex flex-col gap-0.5">
+                            <span className="text-sm text-foreground font-medium">
+                              {wo.workOrderNumber ?? '(no number)'}
+                            </span>
+                            {wo.description && (
+                              <span className="text-xs text-muted-foreground line-clamp-1">{wo.description}</span>
+                            )}
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {selectedProject && (
+                <p className="text-xs text-muted-foreground">
+                  Billing: <span className="text-foreground">{selectedProject.companyName}</span>
+                </p>
+              )}
+
+              <div className="border-t border-border/60 pt-1" />
+            </div>
+          )}
+
           {/* Invoice Number */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Invoice Number *</Label>
@@ -267,7 +381,7 @@ export function InvoiceOutFormDialog({
             </Select>
           </div>
 
-          {/* Invoice Sent Type */}
+          {/* Sent Type */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Sent Type *</Label>
             <Select value={form.invoiceSentTypeId} onValueChange={v => set('invoiceSentTypeId', v)}>

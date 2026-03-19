@@ -5,6 +5,7 @@ import {
   getInvoiceSentTypes,
   getInvoiceStatuses,
   getVatMargins,
+  getOpenProjects,
 } from '@/dal/invoices'
 import {getContactOptions} from '@/dal/contacts'
 import {mapInvoiceOut} from '@/extra/invoices'
@@ -29,6 +30,7 @@ export default async function InvoicesOutPage({params}: PageProps) {
     invoiceStatuses,
     vatMargins,
     contactOptions,
+    projectsRaw,
     profile,
   ] = await Promise.all([
     getDepartmentById(departmentId),
@@ -39,6 +41,7 @@ export default async function InvoicesOutPage({params}: PageProps) {
     getInvoiceStatuses(),
     getVatMargins(),
     getContactOptions(),
+    getOpenProjects(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
@@ -47,6 +50,12 @@ export default async function InvoicesOutPage({params}: PageProps) {
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const invoices = invoicesRaw.map(mapInvoiceOut)
   const mappedContacts = (contactOptions ?? []).map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))
+  const projectOptions = projectsRaw.map(p => ({
+    id: p.id,
+    projectNumber: p.projectNumber,
+    projectName: p.projectName,
+    companyName: p.Company.name,
+  }))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
@@ -67,6 +76,7 @@ export default async function InvoicesOutPage({params}: PageProps) {
           invoiceStatuses={invoiceStatuses}
           vatMargins={vatMargins}
           contactOptions={mappedContacts}
+          projectOptions={projectOptions}
         />
       </div>
     </main>

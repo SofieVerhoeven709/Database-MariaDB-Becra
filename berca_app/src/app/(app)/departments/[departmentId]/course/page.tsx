@@ -22,7 +22,7 @@ export default async function TrainingCoursePage({params}: PageProps) {
     getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
     prismaClient.workOrder.findMany({
-      where: {deleted: false},
+      where: {deleted: false, hoursMaterialClosed: false},
       orderBy: {workOrderNumber: 'asc'},
       select: {id: true, workOrderNumber: true},
     }),

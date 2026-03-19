@@ -1,5 +1,3 @@
-import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
-
 // ─── Shared lookup types ───────────────────────────────────────────────────────
 export interface InvoiceLookup {
   id: string
@@ -12,6 +10,20 @@ export interface VatMarginOption {
 }
 
 // ─── InvoiceOut ────────────────────────────────────────────────────────────────
+export interface MappedInvoiceOutWorkOrder {
+  id: string
+  workOrderInvoiceId: string
+  workOrderNumber: string | null
+  description: string | null
+  completed: boolean
+  hoursMaterialClosed: boolean
+  projectId: string
+  projectNumber: string
+  projectName: string
+  companyId: string
+  companyName: string
+}
+
 export interface MappedInvoiceOut {
   id: string
   invoiceNumber: string
@@ -44,6 +56,7 @@ export interface MappedInvoiceOut {
   vatMarginId: string
   vatMarginVat: number
   contacts: MappedInvoiceOutContact[]
+  workOrders: MappedInvoiceOutWorkOrder[]
 }
 
 export interface MappedInvoiceOutContact {

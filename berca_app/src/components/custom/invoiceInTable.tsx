@@ -306,7 +306,7 @@ export function InvoiceInTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${departmentId}/invoices-in/${inv.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/invoicesIn/${inv.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

@@ -11,12 +11,24 @@ import {
 } from '@/schemas/invoiceSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
+import {z} from 'zod/v4'
+
+// ─── Work order lookup (called client-side from dialog) ────────────────────────
+export async function getActiveWorkOrdersForProjectAction(projectId: string) {
+  return prismaClient.workOrder.findMany({
+    where: {deleted: false, completed: false, projectId},
+    select: {id: true, workOrderNumber: true, description: true},
+    orderBy: {workOrderNumber: 'asc'},
+  })
+}
 
 // ─── InvoiceOut ────────────────────────────────────────────────────────────────
 export const createInvoiceOutAction = protectedServerFunction({
-  schema: createInvoiceOutSchema,
+  schema: createInvoiceOutSchema.extend({
+    workOrderIds: z.array(z.string()).default([]),
+  }),
   functionName: 'Create invoice out action',
-  serverFn: async ({data, logger, profile}) => {
+  serverFn: async ({data: {workOrderIds, ...data}, logger, profile}) => {
     logger.info(`Creating invoice out, createdBy: ${profile.id}`)
     const target = await createTargetForType('InvoiceOut', profile.id)
     const id = crypto.randomUUID()
@@ -35,8 +47,24 @@ export const createInvoiceOutAction = protectedServerFunction({
       },
     })
 
-    logger.info(`Invoice out created: ${id}`)
-    revalidatePath('/invoices-out')
+    if (workOrderIds.length > 0) {
+      await prismaClient.workOrderInvoice.createMany({
+        data: workOrderIds.map((workOrderId: string) => ({
+          id: crypto.randomUUID(),
+          invoiceOutId: id,
+          workOrderId,
+        })),
+      })
+
+      // Close hours/materials on all linked work orders
+      await prismaClient.workOrder.updateMany({
+        where: {id: {in: workOrderIds}},
+        data: {hoursMaterialClosed: true},
+      })
+    }
+
+    logger.info(`Invoice out created: ${id} with ${workOrderIds.length} work order(s)`)
+    revalidatePath('/invoicesOut')
   },
 })
 
@@ -56,7 +84,7 @@ export const updateInvoiceOutAction = protectedServerFunction({
       },
     })
     logger.info(`Invoice out updated: ${id}`)
-    revalidatePath('/invoices-out')
+    revalidatePath('/invoicesOut')
   },
 })
 
@@ -69,7 +97,7 @@ export const softDeleteInvoiceOutAction = protectedServerFunction({
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
     })
     logger.info(`Invoice out soft deleted: ${id}`)
-    revalidatePath('/invoices-out')
+    revalidatePath('/invoicesOut')
   },
 })
 
@@ -79,7 +107,7 @@ export const hardDeleteInvoiceOutAction = protectedServerFunction({
   serverFn: async ({data: {id}, logger}) => {
     await prismaClient.invoiceOut.delete({where: {id}})
     logger.info(`Invoice out hard deleted: ${id}`)
-    revalidatePath('/invoices-out')
+    revalidatePath('/invoicesOut')
   },
 })
 
@@ -89,45 +117,21 @@ export const undeleteInvoiceOutAction = protectedServerFunction({
   serverFn: async ({data: {id}, logger}) => {
     await prismaClient.invoiceOut.update({where: {id}, data: {deleted: false, deletedAt: null, deletedBy: null}})
     logger.info(`Invoice out undeleted: ${id}`)
-    revalidatePath('/invoices-out')
+    revalidatePath('/invoicesOut')
   },
 })
 
 // ─── InvoiceOut contacts ───────────────────────────────────────────────────────
-export const addInvoiceOutContactAction = protectedServerFunction({
-  schema: import('@/schemas/invoiceSchemas').then(m =>
-    m.invoiceOutSchema.pick({id: true}).extend({contactId: import('zod/v4').then(z => z.z.string())}),
-  ) as never,
-  functionName: 'Add invoice out contact action',
-  serverFn: async ({
-    data,
-    logger,
-  }: {
-    data: {invoiceOutId: string; contactId: string}
-    logger: {info: (s: string) => void}
-  }) => {
-    await prismaClient.invoiceOutContact.create({
-      data: {
-        id: crypto.randomUUID(),
-        invoiceOutId: data.invoiceOutId,
-        contactId: data.contactId,
-      },
-    })
-    logger.info(`Contact ${data.contactId} added to invoice out ${data.invoiceOutId}`)
-    revalidatePath('/invoices-out')
-  },
-})
-
 export async function addInvoiceOutContactDirectAction(invoiceOutId: string, contactId: string) {
   await prismaClient.invoiceOutContact.create({
     data: {id: crypto.randomUUID(), invoiceOutId, contactId},
   })
-  revalidatePath('/invoices-out')
+  revalidatePath('/invoicesOut')
 }
 
 export async function removeInvoiceOutContactDirectAction(invoiceOutContactId: string) {
   await prismaClient.invoiceOutContact.delete({where: {id: invoiceOutContactId}})
-  revalidatePath('/invoices-out')
+  revalidatePath('/invoicesOut')
 }
 
 // ─── InvoiceIn ─────────────────────────────────────────────────────────────────
@@ -153,7 +157,7 @@ export const createInvoiceInAction = protectedServerFunction({
     })
 
     logger.info(`Invoice in created: ${id}`)
-    revalidatePath('/invoices-in')
+    revalidatePath('/invoicesIn')
   },
 })
 
@@ -172,7 +176,7 @@ export const updateInvoiceInAction = protectedServerFunction({
       },
     })
     logger.info(`Invoice in updated: ${id}`)
-    revalidatePath('/invoices-in')
+    revalidatePath('/invoicesIn')
   },
 })
 
@@ -185,7 +189,7 @@ export const softDeleteInvoiceInAction = protectedServerFunction({
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
     })
     logger.info(`Invoice in soft deleted: ${id}`)
-    revalidatePath('/invoices-in')
+    revalidatePath('/invoicesIn')
   },
 })
 
@@ -195,7 +199,7 @@ export const hardDeleteInvoiceInAction = protectedServerFunction({
   serverFn: async ({data: {id}, logger}) => {
     await prismaClient.invoiceIn.delete({where: {id}})
     logger.info(`Invoice in hard deleted: ${id}`)
-    revalidatePath('/invoices-in')
+    revalidatePath('/invoicesIn')
   },
 })
 
@@ -205,6 +209,6 @@ export const undeleteInvoiceInAction = protectedServerFunction({
   serverFn: async ({data: {id}, logger}) => {
     await prismaClient.invoiceIn.update({where: {id}, data: {deleted: false, deletedAt: null, deletedBy: null}})
     logger.info(`Invoice in undeleted: ${id}`)
-    revalidatePath('/invoices-in')
+    revalidatePath('/invoicesIn')
   },
 })

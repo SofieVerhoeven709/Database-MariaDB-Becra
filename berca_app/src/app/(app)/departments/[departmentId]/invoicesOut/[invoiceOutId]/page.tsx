@@ -1,72 +1,68 @@
+import {notFound} from 'next/navigation'
 import {
-  getInvoicesIn,
+  getInvoiceOutById,
   getInvoiceTypes,
   getPaymentMethods,
   getInvoiceSentTypes,
   getInvoiceStatuses,
   getVatMargins,
 } from '@/dal/invoices'
-import {getCompanies} from '@/dal/companies'
-import {mapInvoiceIn} from '@/extra/invoices'
-import {InvoiceInTable} from '@/components/custom/invoiceInTable'
+import {getContactOptions} from '@/dal/contacts'
+import {mapInvoiceOut} from '@/extra/invoices'
+import {InvoiceOutDetail} from '@/components/custom/invoiceOutDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
 interface PageProps {
-  params: Promise<{departmentId: string}>
+  params: Promise<{departmentId: string; invoiceId: string}>
 }
 
-export default async function InvoicesInPage({params}: PageProps) {
-  const {departmentId} = await params
+export default async function InvoiceOutDetailPage({params}: PageProps) {
+  const {departmentId, invoiceId} = await params
 
   const [
     department,
-    invoicesRaw,
+    invoiceRaw,
     invoiceTypes,
     paymentMethods,
     invoiceSentTypes,
     invoiceStatuses,
     vatMargins,
-    companiesRaw,
+    contactOptions,
     profile,
   ] = await Promise.all([
     getDepartmentById(departmentId),
-    getInvoicesIn(),
+    getInvoiceOutById(invoiceId).catch(() => null),
     getInvoiceTypes(),
     getPaymentMethods(),
     getInvoiceSentTypes(),
     getInvoiceStatuses(),
     getVatMargins(),
-    getCompanies(),
+    getContactOptions(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
   if (!department) return <p>Department not found</p>
+  if (!invoiceRaw) notFound()
 
+  const invoice = mapInvoiceOut(invoiceRaw)
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const invoices = invoicesRaw.map(mapInvoiceIn)
-  const companyOptions = companiesRaw.filter(c => !c.deleted).map(c => ({id: c.id, name: c.name}))
+  const mappedContacts = (contactOptions ?? []).map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <h1 className="text-lg font-semibold text-foreground">Incoming Invoices</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Manage invoices received from suppliers</p>
-        </div>
-
-        <InvoiceInTable
-          initialInvoices={invoices}
-          currentUserRole={currentUserRole}
-          currentUserLevel={currentUserLevel}
-          departmentId={departmentId}
+      <div className="mx-auto max-w-5xl">
+        <InvoiceOutDetail
+          invoice={invoice}
           invoiceTypes={invoiceTypes}
           paymentMethods={paymentMethods}
           invoiceSentTypes={invoiceSentTypes}
           invoiceStatuses={invoiceStatuses}
           vatMargins={vatMargins}
-          companyOptions={companyOptions}
+          contactOptions={mappedContacts}
+          currentUserRole={currentUserRole}
+          currentUserLevel={currentUserLevel}
         />
       </div>
     </main>

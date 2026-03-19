@@ -167,9 +167,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         invoiceNumber: true
         invoiceDate: true
         createdAt: true
-        completed: true
-        amountWithoutVat: true
-        InvoiceType: {select: {name: true}}
+        InvoiceStatus: {select: {name: true}}
       }
     }
     InvoiceOut: {
@@ -178,9 +176,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         invoiceNumber: true
         invoiceDate: true
         createdAt: true
-        completed: true
-        amountWithoutVat: true
-        InvoiceType: {select: {name: true}}
+        InvoiceStatus: {select: {name: true}}
       }
     }
     Purchase: {
@@ -224,10 +220,10 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {id: true; workOrderNumber: true; deletedAt: true; Project: {select: {projectName: true}}}
     }
     InvoiceIn_InvoiceIn_deletedByToEmployee: {
-      select: {id: true; invoiceNumber: true; invoiceDate: true; deletedAt: true; amountWithoutVat: true}
+      select: {id: true; invoiceNumber: true; invoiceDate: true; deletedAt: true}
     }
     InvoiceOut_InvoiceOut_deletedByToEmployee: {
-      select: {id: true; invoiceNumber: true; invoiceDate: true; deletedAt: true; amountWithoutVat: true}
+      select: {id: true; invoiceNumber: true; invoiceDate: true; deletedAt: true}
     }
     DocumentStructure_DocumentStructure_createdByToEmployee: {
       select: {id: true; documentNumber: true; descriptionShort: true; createdAt: true; valid: true}
@@ -565,8 +561,8 @@ export function mapEmployeeDetail(
     ...e.InvoiceIn.map(i => ({
       id: i.id,
       type: 'Invoice In' as const,
-      label: i.invoiceNumber ?? '(no number)',
-      detail: `${i.InvoiceType.name} · €${i.amountWithoutVat.toFixed(2)}`,
+      label: i.invoiceNumber,
+      detail: i.InvoiceStatus.name,
       date: i.invoiceDate.toISOString(),
       deletedAt: null,
       href: null,
@@ -574,8 +570,8 @@ export function mapEmployeeDetail(
     ...e.InvoiceOut.map(i => ({
       id: i.id,
       type: 'Invoice Out' as const,
-      label: i.invoiceNumber ?? '(no number)',
-      detail: `${i.InvoiceType.name} · €${i.amountWithoutVat.toFixed(2)}`,
+      label: i.invoiceNumber,
+      detail: i.InvoiceStatus.name,
       date: i.invoiceDate.toISOString(),
       deletedAt: null,
       href: null,
@@ -731,8 +727,8 @@ export function mapEmployeeDetail(
     ...e.InvoiceIn_InvoiceIn_deletedByToEmployee.map(i => ({
       id: i.id,
       type: 'Invoice In' as const,
-      label: i.invoiceNumber ?? '(no number)',
-      detail: `€${i.amountWithoutVat.toFixed(2)}`,
+      label: i.invoiceNumber,
+      detail: null,
       date: i.invoiceDate.toISOString(),
       deletedAt: i.deletedAt?.toISOString() ?? null,
       href: null,
@@ -740,8 +736,8 @@ export function mapEmployeeDetail(
     ...e.InvoiceOut_InvoiceOut_deletedByToEmployee.map(i => ({
       id: i.id,
       type: 'Invoice Out' as const,
-      label: i.invoiceNumber ?? '(no number)',
-      detail: `€${i.amountWithoutVat.toFixed(2)}`,
+      label: i.invoiceNumber,
+      detail: null,
       date: i.invoiceDate.toISOString(),
       deletedAt: i.deletedAt?.toISOString() ?? null,
       href: null,

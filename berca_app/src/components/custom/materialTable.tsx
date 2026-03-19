@@ -72,7 +72,7 @@ export function MaterialTable({
   departmentId,
 }: MaterialTableProps) {
   const router = useRouter() as unknown as {refresh: () => void; push: (href: string) => void}
-  const [materials] = useState(initialMaterials)
+  const materials = initialMaterials
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState<SortField>('beNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
@@ -111,7 +111,7 @@ export function MaterialTable({
         m.materialGroupLabelC.toLowerCase().includes(q) ||
         m.materialGroupLabelD.toLowerCase().includes(q) ||
         m.unitName.toLowerCase().includes(q) ||
-        (m.preferredSupplierName ?? '').toLowerCase().includes(q) ||
+        (m.preferredSupplierCompanyName ?? '').toLowerCase().includes(q) ||
         m.supplierCompanyNames.some(name => name.toLowerCase().includes(q))
       )
     })
@@ -148,6 +148,7 @@ export function MaterialTable({
 
       const nullableSchemaFields = new Set([
         'name',
+        'brandOrderNr',
         'longDescription',
         'preferredSupplierCompanyId',
         'brandName',

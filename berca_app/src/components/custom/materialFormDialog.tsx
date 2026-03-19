@@ -66,14 +66,15 @@ function PreferredSupplierPicker({
   const [isFocused, setIsFocused] = useState(false)
 
   const filtered = availableCompanies.filter(
-    c =>
-      c.name.toLowerCase().includes(search.toLowerCase()) || c.number.toLowerCase().includes(search.toLowerCase()),
+    c => c.name.toLowerCase().includes(search.toLowerCase()) || c.number.toLowerCase().includes(search.toLowerCase()),
   )
 
   const selectedCompany = availableCompanies.find(c => c.id === selectedCompanyId)
 
   // Show search text if user is typing, otherwise show selected company
-  const displayValue = isFocused ? search : search || (selectedCompany ? `${selectedCompany.name} (${selectedCompany.number})` : '')
+  const displayValue = isFocused
+    ? search
+    : search || (selectedCompany ? `${selectedCompany.name} (${selectedCompany.number})` : '')
 
   const handleClear = () => {
     onSelect(null)
@@ -131,7 +132,9 @@ function PreferredSupplierPicker({
             <div className="px-2 py-1.5 text-xs text-muted-foreground">No suppliers match your search</div>
           )}
           {availableCompanies.length === 0 && !search && (
-            <div className="px-2 py-1.5 text-xs text-muted-foreground">No suppliers available. Add suppliers first.</div>
+            <div className="px-2 py-1.5 text-xs text-muted-foreground">
+              No suppliers available. Add suppliers first.
+            </div>
           )}
         </div>
       )}
@@ -283,14 +286,13 @@ export function MaterialFormDialog({
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="brandOrderNr" className="text-xs text-muted-foreground">
-                Brand Order Nr *
+                Brand Order Nr
               </Label>
               <Input
                 id="brandOrderNr"
                 className={inputStyles}
                 value={form.brandOrderNr ?? ''}
-                onChange={e => update('brandOrderNr', e.target.value)}
-                required
+                onChange={e => update('brandOrderNr', e.target.value || null)}
               />
             </div>
           </div>

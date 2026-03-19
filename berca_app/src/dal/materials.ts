@@ -107,7 +107,7 @@ export async function createMaterial(data: {
   id: string
   beNumber: string
   name?: string | null
-  brandOrderNr: string
+  brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
   preferredSupplierCompanyId?: string | null
@@ -145,9 +145,9 @@ export async function createMaterial(data: {
                 id: randomUUID(),
                 companyId,
                 isPreferred: preferredSupplierCompanyId === companyId,
-                supplierOrderNr: preferredSupplierCompanyId === companyId ? preferredSupplierOrderId ?? null : null,
+                supplierOrderNr: preferredSupplierCompanyId === companyId ? (preferredSupplierOrderId ?? null) : null,
                 shortDescription:
-                  preferredSupplierCompanyId === companyId ? preferredSupplierShortDescription ?? null : null,
+                  preferredSupplierCompanyId === companyId ? (preferredSupplierShortDescription ?? null) : null,
               })),
             }
           : undefined,
@@ -160,7 +160,7 @@ export async function updateMaterial(
   data: {
     beNumber?: string
     name?: string | null
-    brandOrderNr?: string
+    brandOrderNr?: string | null
     shortDescription?: string
     longDescription?: string | null
     preferredSupplierCompanyId?: string | null
@@ -201,9 +201,9 @@ export async function updateMaterial(
                 id: randomUUID(),
                 companyId,
                 isPreferred: preferredSupplierCompanyId === companyId,
-                supplierOrderNr: preferredSupplierCompanyId === companyId ? preferredSupplierOrderId ?? null : null,
+                supplierOrderNr: preferredSupplierCompanyId === companyId ? (preferredSupplierOrderId ?? null) : null,
                 shortDescription:
-                  preferredSupplierCompanyId === companyId ? preferredSupplierShortDescription ?? null : null,
+                  preferredSupplierCompanyId === companyId ? (preferredSupplierShortDescription ?? null) : null,
               })),
             },
     } as Prisma.MaterialUncheckedUpdateInput,

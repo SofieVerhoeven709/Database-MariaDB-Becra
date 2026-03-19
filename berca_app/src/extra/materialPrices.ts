@@ -16,6 +16,7 @@ export function mapMaterialPrice(p: MaterialPriceWithRelations): MappedMaterialP
     additionalInfo: p.additionalInfo ?? null,
     unitPrice: p.unitPrice?.toString() ?? null,
     quantityPrice: p.quantityPrice?.toString() ?? null,
+    packingUnits: p.packingUnits?.toString() ?? null,
     updatedAt: p.updatedAt?.toISOString() ?? null,
     companyId: p.companyId,
     companyName: p.Company?.name ?? null,

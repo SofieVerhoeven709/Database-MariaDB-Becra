@@ -1154,7 +1154,8 @@ model MaterialPrice {
   rejected                                   Boolean?
   additionalInfo                             String?   @db.VarChar(255)
   unitPrice                                  Decimal?  @db.Decimal(10, 2)
-  quantityPrice                              Int?
+  quantityPrice                              Decimal?  @db.Decimal(10, 3)
+  packingUnits                               Int?
   createdBy                                  String    @db.Char(36)
   deleted                                    Boolean   @default(false)
   deletedAt                                  DateTime? @db.DateTime(0)

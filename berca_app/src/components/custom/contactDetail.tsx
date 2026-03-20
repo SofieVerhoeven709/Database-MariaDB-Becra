@@ -504,7 +504,7 @@ export function ContactDetail({
               {contact.followUps.length}
             </Badge>
           </TabsTrigger>
-          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {(isAdmin || currentUserLevel === 80) && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
         {/* ── Companies ────────────────────────────────────────────────────── */}
@@ -1093,7 +1093,7 @@ export function ContactDetail({
         </TabsContent>
 
         {/* ── Visibility ───────────────────────────────────────────────────── */}
-        {isAdmin && (
+        {(isAdmin || currentUserLevel === 80) && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab

@@ -618,7 +618,7 @@ export function CompanyDetail({
               </Badge>
             </TabsTrigger>
           )}
-          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {(isAdmin || currentUserLevel === 80) && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
         {/* ── Contacts ─────────────────────────────────────────────────────── */}
@@ -1359,7 +1359,7 @@ export function CompanyDetail({
         )}
 
         {/* ── Visibility ───────────────────────────────────────────────────── */}
-        {isAdmin && (
+        {(isAdmin || currentUserLevel === 80) && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab

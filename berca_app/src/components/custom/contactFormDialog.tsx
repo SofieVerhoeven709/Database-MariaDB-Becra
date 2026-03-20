@@ -287,7 +287,7 @@ export function ContactFormDialog({
               <TabsTrigger value="identity">Identity</TabsTrigger>
               <TabsTrigger value="contact">Contact Info</TabsTrigger>
               <TabsTrigger value="flags">Flags</TabsTrigger>
-              {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+              <TabsTrigger value="visibility">Visibility</TabsTrigger>
             </TabsList>
 
             <TabsContent value="identity">
@@ -488,17 +488,15 @@ export function ContactFormDialog({
               </div>
             </TabsContent>
 
-            {isAdmin && (
-              <TabsContent value="visibility">
-                <div className="py-3">
-                  <VisibilityForRoleTab
-                    roleLevelOptions={roleLevelOptions}
-                    value={visibilityRows}
-                    onChange={setVisibilityRows}
-                  />
-                </div>
-              </TabsContent>
-            )}
+            <TabsContent value="visibility">
+              <div className="py-3">
+                <VisibilityForRoleTab
+                  roleLevelOptions={roleLevelOptions}
+                  value={visibilityRows}
+                  onChange={setVisibilityRows}
+                />
+              </div>
+            </TabsContent>
           </Tabs>
 
           <DialogFooter className="pt-2">

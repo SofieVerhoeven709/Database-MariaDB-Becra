@@ -449,6 +449,9 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             materialId CHAR(36) NOT NULL,
             companyId CHAR(36) NOT NULL,
+            supplierOrderNr VARCHAR(255) NULL,
+            shortDescription VARCHAR(255) NULL,
+            isPreferred BOOLEAN NOT NULL DEFAULT 0,
             CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
             FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
             FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT

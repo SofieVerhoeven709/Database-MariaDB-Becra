@@ -30,9 +30,10 @@ export default async function EmployeeDetailPage({params}: PageProps) {
   const employee = mapEmployeeDetail(employeeFromDAL, createdEmployees, deletedEmployees)
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
   const roleOptions = roleLevels!
-    .filter(r => !r.deleted)
+    .filter(r => !r.deleted && (isAdmin || (r.Role.name != 'Administrator' && r.SubRole.level != 100)))
     .map(r => ({
       id: r.id,
       name: `${r.Role.name.replace(' Role', '')} / ${r.SubRole.name}`,

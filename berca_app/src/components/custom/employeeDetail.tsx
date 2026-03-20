@@ -336,8 +336,11 @@ export function EmployeeDetail({
   titleOptions,
 }: EmployeeDetailProps) {
   const router = useRouter()
-  const isAdmin = currentUserLevel >= 80
-  const canEdit = currentUserLevel >= 20
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -669,7 +672,7 @@ export function EmployeeDetail({
               {employee.createdMainRecords.length + employee.createdOtherRecords.length}
             </Badge>
           </TabsTrigger>
-          {isAdmin && (
+          {canDelete && (
             <TabsTrigger value="deleted">
               Deleted
               <Badge variant="secondary" className="ml-2 text-xs">
@@ -898,8 +901,8 @@ export function EmployeeDetail({
           </Tabs>
         </TabsContent>
 
-        {/* ══ SECTION 3 — DELETED (admin only) ═══════════════════════════════ */}
-        {isAdmin && (
+        {/* ══ SECTION 3 — DELETED (Manager and up) ═══════════════════════════════ */}
+        {canDelete && (
           <TabsContent value="deleted" className="mt-3">
             <Tabs defaultValue="deleted-main">
               <TabsList className="bg-secondary border border-border/60 mb-3">

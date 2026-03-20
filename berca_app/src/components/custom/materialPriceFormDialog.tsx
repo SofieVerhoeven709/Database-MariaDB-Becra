@@ -135,9 +135,9 @@ export function MaterialPriceFormDialog({open, onOpenChange, entry, companies, o
             />
           </div>
 
-          {/* Brand Order Nr */}
+          {/* Brand Order No. */}
           <div className="grid gap-1.5">
-            <Label htmlFor="brandOrderNr">Brand Order Nr</Label>
+            <Label htmlFor="brandOrderNr">Brand Order No.</Label>
             <Input
               id="brandOrderNr"
               value={form.brandOrderNr ?? ''}
@@ -179,9 +179,9 @@ export function MaterialPriceFormDialog({open, onOpenChange, entry, companies, o
             Leave Unit Quantity empty to copy defaults from the preferred supplier when available.
           </p>
 
-          {/* Order Nr */}
+          {/* Order No. */}
           <div className="grid gap-1.5">
-            <Label htmlFor="orderNr">Order Nr</Label>
+            <Label htmlFor="orderNr">Order No.</Label>
             <Input
               id="orderNr"
               value={form.orderNr ?? ''}
@@ -191,9 +191,9 @@ export function MaterialPriceFormDialog({open, onOpenChange, entry, companies, o
             />
           </div>
 
-          {/* Supplier Order Nr */}
+          {/* Supplier Order No. */}
           <div className="grid gap-1.5">
-            <Label htmlFor="supplierOrderNr">Supplier Order Nr</Label>
+            <Label htmlFor="supplierOrderNr">Supplier Order No.</Label>
             <Input
               id="supplierOrderNr"
               value={form.supplierOrderNr ?? ''}

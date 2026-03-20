@@ -11,6 +11,7 @@ export interface MappedMaterial {
   preferredSupplierShortDescription: string | null
   supplierCompanyIds: string[]
   supplierCompanyNames: string[]
+  parentBeNumbers: string[]
   brandName: string | null
   documentationPlace: string | null
   bePartDoc: number | null

@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
@@ -32,6 +32,11 @@ interface SupplierCompanyOption {
   number: string
 }
 
+interface ParentPartOption {
+  beNumber: string
+  shortDescription: string
+}
+
 type SortField =
   | 'beNumber'
   | 'name'
@@ -42,6 +47,7 @@ type SortField =
   | 'materialGroupLabelC'
   | 'materialGroupLabelD'
   | 'unitName'
+  | 'parentBeNumbers'
   | 'createdByName'
   | 'rejected'
 type SortDir = 'asc' | 'desc'
@@ -61,6 +67,7 @@ interface MaterialTableProps {
   materialGroups: MaterialGroup[]
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
+  parentPartOptions: ParentPartOption[]
   departmentId?: string
 }
 
@@ -69,10 +76,11 @@ export function MaterialTable({
   materialGroups,
   units,
   supplierCompanies,
+  parentPartOptions,
   departmentId,
 }: MaterialTableProps) {
   const router = useRouter() as unknown as {refresh: () => void; push: (href: string) => void}
-  const [materials] = useState(initialMaterials)
+  const materials = initialMaterials
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState<SortField>('beNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
@@ -81,6 +89,11 @@ export function MaterialTable({
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
+
+  const parentPartBeNumbersInUse = useMemo(
+    () => [...new Set(materials.flatMap(m => m.parentBeNumbers))],
+    [materials],
+  )
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -111,7 +124,8 @@ export function MaterialTable({
         m.materialGroupLabelC.toLowerCase().includes(q) ||
         m.materialGroupLabelD.toLowerCase().includes(q) ||
         m.unitName.toLowerCase().includes(q) ||
-        (m.preferredSupplierName ?? '').toLowerCase().includes(q) ||
+        m.parentBeNumbers.some(parent => parent.toLowerCase().includes(q)) ||
+        (m.preferredSupplierCompanyName ?? '').toLowerCase().includes(q) ||
         m.supplierCompanyNames.some(name => name.toLowerCase().includes(q))
       )
     })
@@ -134,7 +148,10 @@ export function MaterialTable({
         'shortDescription',
         'longDescription',
         'preferredSupplierCompanyId',
+        'preferredSupplierOrderId',
+        'preferredSupplierShortDescription',
         'supplierCompanyIds',
+        'parentBeNumbers',
         'brandName',
         'documentationPlace',
         'bePartDoc',
@@ -148,8 +165,11 @@ export function MaterialTable({
 
       const nullableSchemaFields = new Set([
         'name',
+        'brandOrderNr',
         'longDescription',
         'preferredSupplierCompanyId',
+        'preferredSupplierOrderId',
+        'preferredSupplierShortDescription',
         'brandName',
         'documentationPlace',
         'bePartDoc',
@@ -216,6 +236,7 @@ export function MaterialTable({
     {key: 'materialGroupLabelC', label: 'Group C'},
     {key: 'materialGroupLabelD', label: 'Group D'},
     {key: 'unitName', label: 'Unit'},
+    {key: 'parentBeNumbers', label: 'Parent Parts'},
     {key: 'rejected', label: 'Status'},
   ]
 
@@ -305,6 +326,16 @@ export function MaterialTable({
                     {m.unitName}
                     <span className="text-muted-foreground text-xs ml-1">({m.unitAbbreviation})</span>
                   </TableCell>
+                  <TableCell className="text-sm max-w-[220px]">
+                    {m.parentBeNumbers.length > 0 ? (
+                      <span title={m.parentBeNumbers.join(', ')}>
+                        {m.parentBeNumbers.slice(0, 2).join(', ')}
+                        {m.parentBeNumbers.length > 2 ? ` +${m.parentBeNumbers.length - 2}` : ''}
+                      </span>
+                    ) : (
+                      <span className="text-muted-foreground">—</span>
+                    )}
+                  </TableCell>
                   <TableCell>
                     {m.rejected ? (
                       <Badge variant="destructive" className="text-xs">
@@ -368,6 +399,8 @@ export function MaterialTable({
         materialGroups={materialGroups}
         units={units}
         supplierCompanies={supplierCompanies}
+        parentPartOptions={parentPartOptions}
+        parentPartBeNumbersInUse={parentPartBeNumbersInUse}
         onSave={handleSave}
         saving={saving}
         saveError={saveError}

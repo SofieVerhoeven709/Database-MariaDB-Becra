@@ -16,7 +16,6 @@ export interface MappedMaterialPrice {
   companyId: string
   companyName: string | null
   createdBy: string
-  createdByName: string
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null

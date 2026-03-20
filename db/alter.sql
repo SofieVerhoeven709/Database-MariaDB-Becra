@@ -326,6 +326,54 @@ ALTER TABLE CompanyAdress DROP FOREIGN KEY IF EXISTS fk_companyadress_country;
 ALTER TABLE CompanyAdress ADD CONSTRAINT fk_companyadress_country
     FOREIGN KEY (`countryId`) REFERENCES Country (`id`) ON DELETE SET NULL;
 
+-- 37a. MaterialSupplier: add supplierOrderNr column
+ALTER TABLE MaterialSupplier ADD COLUMN IF NOT EXISTS `supplierOrderNr` VARCHAR(255) NULL;
+
+-- 37b. MaterialSupplier: add shortDescription column
+ALTER TABLE MaterialSupplier ADD COLUMN IF NOT EXISTS `shortDescription` VARCHAR(255) NULL;
+
+-- 37c. MaterialSupplier: add isPreferred column
+ALTER TABLE MaterialSupplier ADD COLUMN IF NOT EXISTS `isPreferred` BOOLEAN NOT NULL DEFAULT 0;
+
+-- 37d. Migrate existing preferredSupplierOrderId and preferredSupplierShortDescription from Material to MaterialSupplier (for preferred suppliers only)
+SET @col_order_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.COLUMNS 
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND COLUMN_NAME = 'preferredSupplierOrderId'
+);
+
+SET @col_desc_exists = (
+  SELECT COUNT(*) 
+  FROM information_schema.COLUMNS 
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND COLUMN_NAME = 'preferredSupplierShortDescription'
+);
+
+SET @sql = IF(@col_order_exists > 0 OR @col_desc_exists > 0,
+  'UPDATE MaterialSupplier ms
+   INNER JOIN Material m ON ms.materialId = m.id AND ms.companyId = m.preferredSupplierCompanyId
+   SET ms.supplierOrderNr = IF(@col_order_exists > 0, m.preferredSupplierOrderId, null),
+       ms.shortDescription = IF(@col_desc_exists > 0, m.preferredSupplierShortDescription, null),
+       ms.isPreferred = 1
+   WHERE m.preferredSupplierCompanyId IS NOT NULL',
+  'SELECT ''Skipping step 37d: old columns already dropped'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- 37e. Drop old preferredSupplierOrderId column from Material
+ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierOrderId`;
+
+-- 37f. Drop old preferredSupplierShortDescription column from Material
+ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
+
+-- 38. MaterialSupplier: add shortDescription column
+ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
 -- 37a. Drop old tables (disable FK checks to avoid constraint errors)
 SET FOREIGN_KEY_CHECKS = 0;
 

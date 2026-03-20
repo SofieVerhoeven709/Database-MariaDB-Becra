@@ -6109,6 +6109,7 @@ export const CompanyScalarFieldEnum = {
   id: 'id',
   name: 'name',
   number: 'number',
+  idOld: 'idOld',
   mail: 'mail',
   businessPhone: 'businessPhone',
   website: 'website',
@@ -6671,7 +6672,10 @@ export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typ
 export const MaterialSupplierScalarFieldEnum = {
   id: 'id',
   materialId: 'materialId',
-  companyId: 'companyId'
+  companyId: 'companyId',
+  supplierOrderNr: 'supplierOrderNr',
+  shortDescription: 'shortDescription',
+  isPreferred: 'isPreferred'
 } as const
 
 export type MaterialSupplierScalarFieldEnum = (typeof MaterialSupplierScalarFieldEnum)[keyof typeof MaterialSupplierScalarFieldEnum]
@@ -7641,6 +7645,7 @@ export const CompanyOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
   number: 'number',
+  idOld: 'idOld',
   mail: 'mail',
   businessPhone: 'businessPhone',
   website: 'website',
@@ -8054,7 +8059,9 @@ export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevance
 export const MaterialSupplierOrderByRelevanceFieldEnum = {
   id: 'id',
   materialId: 'materialId',
-  companyId: 'companyId'
+  companyId: 'companyId',
+  supplierOrderNr: 'supplierOrderNr',
+  shortDescription: 'shortDescription'
 } as const
 
 export type MaterialSupplierOrderByRelevanceFieldEnum = (typeof MaterialSupplierOrderByRelevanceFieldEnum)[keyof typeof MaterialSupplierOrderByRelevanceFieldEnum]

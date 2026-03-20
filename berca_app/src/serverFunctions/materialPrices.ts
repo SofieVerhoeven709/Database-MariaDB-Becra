@@ -15,10 +15,40 @@ export const createMaterialPriceAction = protectedServerFunction({
   functionName: 'Create material price action',
   serverFn: async ({data, profile, logger}) => {
     logger.info(`Creating material price, createdBy: ${profile.id}`)
+
+    let quantityPrice = data.quantityPrice ?? null
+    const normalizedBeNumber = data.beNumber?.trim() || null
+
+    // If unit quantity is omitted, copy default from preferred supplier for this BE number.
+    if (normalizedBeNumber && quantityPrice == null) {
+      const material = await prismaClient.material.findFirst({
+        where: {beNumber: normalizedBeNumber, deleted: false},
+        select: {preferredSupplierCompanyId: true},
+      })
+
+      if (material?.preferredSupplierCompanyId) {
+        const preferredSupplierPrice = await prismaClient.materialPrice.findFirst({
+          where: {
+            beNumber: normalizedBeNumber,
+            companyId: material.preferredSupplierCompanyId,
+            deleted: false,
+          },
+          select: {quantityPrice: true},
+          orderBy: {updatedAt: 'desc'},
+        })
+
+        if (preferredSupplierPrice) {
+          quantityPrice ??= preferredSupplierPrice.quantityPrice != null
+            ? Number(preferredSupplierPrice.quantityPrice.toString())
+            : null
+        }
+      }
+    }
+
     await prismaClient.materialPrice.create({
       data: {
         id: crypto.randomUUID(),
-        beNumber: data.beNumber ?? null,
+        beNumber: normalizedBeNumber,
         orderNr: data.orderNr ?? null,
         quoteBecra: data.quoteBecra ?? null,
         supplierOrderNr: data.supplierOrderNr ?? null,
@@ -29,7 +59,7 @@ export const createMaterialPriceAction = protectedServerFunction({
         rejected: data.rejected ?? null,
         additionalInfo: data.additionalInfo ?? null,
         unitPrice: data.unitPrice ?? null,
-        quantityPrice: data.quantityPrice ?? null,
+        quantityPrice,
         companyId: data.companyId,
         createdBy: profile.id,
         updatedAt: new Date(),

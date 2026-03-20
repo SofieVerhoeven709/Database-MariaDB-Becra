@@ -12,7 +12,10 @@ const booleanFromString = z.preprocess(
 
 const beNumberSchema = z.string().trim().min(1).max(255).regex(/^\d+$/, 'BE number mag enkel cijfers bevatten')
 
-const brandOrderNrSchema = z.string().trim().min(1).max(255)
+const brandOrderNrSchema = z.preprocess(
+  val => (val === '' || val == null ? null : val),
+  z.string().trim().max(255).nullable().optional(),
+)
 
 const supplierCompanyIdsSchema = z.preprocess(val => {
   if (Array.isArray(val)) return val
@@ -20,9 +23,25 @@ const supplierCompanyIdsSchema = z.preprocess(val => {
   return [val]
 }, z.array(z.string().uuid()).default([]))
 
+const parentBeNumbersSchema = z.preprocess(val => {
+  if (Array.isArray(val)) return val
+  if (val == null || val === '') return []
+  return [val]
+}, z.array(z.string().trim().regex(/^\d+$/, 'Parent BE number mag enkel cijfers bevatten')).default([]))
+
 const nullableUuidSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),
   z.string().uuid().nullable().optional(),
+)
+
+const preferredSupplierOrderIdSchema = z.preprocess(
+  val => (val === '' || val == null ? null : val),
+  z.string().trim().max(255).nullable().optional(),
+)
+
+const preferredSupplierShortDescriptionSchema = z.preprocess(
+  val => (val === '' || val == null ? null : val),
+  z.string().trim().max(255).nullable().optional(),
 )
 
 export const materialSchema = z.object({
@@ -33,7 +52,10 @@ export const materialSchema = z.object({
   shortDescription: z.string().min(1).max(255),
   longDescription: z.string().nullable().optional(),
   preferredSupplierCompanyId: nullableUuidSchema,
+  preferredSupplierOrderId: preferredSupplierOrderIdSchema,
+  preferredSupplierShortDescription: preferredSupplierShortDescriptionSchema,
   supplierCompanyIds: supplierCompanyIdsSchema,
+  parentBeNumbers: parentBeNumbersSchema,
   brandName: z.string().max(255).nullable().optional(),
   documentationPlace: z.string().max(255).nullable().optional(),
   bePartDoc: z.coerce.number().int().nullable().optional(),

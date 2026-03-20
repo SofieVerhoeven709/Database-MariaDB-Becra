@@ -41,6 +41,12 @@ function formatPrice(val: string | null | undefined) {
   return new Intl.NumberFormat('en-BE', {style: 'currency', currency: 'EUR'}).format(n)
 }
 
+function parseNullableNumber(value: string | null | undefined) {
+  if (!value) return null
+  const parsed = parseFloat(value)
+  return Number.isNaN(parsed) ? null : parsed
+}
+
 interface MaterialPriceTableProps {
   initialEntries: MappedMaterialPrice[]
   companies: MaterialPriceOption[]
@@ -138,8 +144,8 @@ export function MaterialPriceTable({
         brandName: e.brandName,
         rejected: e.rejected,
         additionalInfo: e.additionalInfo,
-        unitPrice: e.unitPrice ? parseFloat(e.unitPrice) : null,
-        quantityPrice: e.quantityPrice ? parseInt(e.quantityPrice) : null,
+        unitPrice: parseNullableNumber(e.unitPrice),
+        quantityPrice: parseNullableNumber(e.quantityPrice),
         companyId: e.companyId,
       })
     } else {
@@ -154,8 +160,8 @@ export function MaterialPriceTable({
         brandName: e.brandName,
         rejected: e.rejected,
         additionalInfo: e.additionalInfo,
-        unitPrice: e.unitPrice ? parseFloat(e.unitPrice) : null,
-        quantityPrice: e.quantityPrice ? parseInt(e.quantityPrice) : null,
+        unitPrice: parseNullableNumber(e.unitPrice),
+        quantityPrice: parseNullableNumber(e.quantityPrice),
         companyId: e.companyId,
       })
     }
@@ -234,7 +240,7 @@ export function MaterialPriceTable({
               <TableHead className={thClass} onClick={() => toggleSort('unitPrice')}>
                 Unit Price <SortIcon field="unitPrice" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className="text-xs whitespace-nowrap">Qty</TableHead>
+              <TableHead className="text-xs whitespace-nowrap">Unit Qty</TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('updatedAt')}>
                 Updated <SortIcon field="updatedAt" sortField={sortField} sortDir={sortDir} />
               </TableHead>

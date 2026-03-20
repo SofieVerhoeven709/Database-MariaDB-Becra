@@ -3,6 +3,8 @@ import {randomUUID} from 'crypto'
 import {prismaClient} from './prismaClient'
 import type {Prisma} from '@/generated/prisma/client'
 
+const PARENT_PART_MANAGEMENT = 'PARENT_PART'
+
 export type MaterialGroupOption = {
   id: string
   groupA: string
@@ -11,29 +13,7 @@ export type MaterialGroupOption = {
   groupD: string | null
 }
 
-export type MaterialWithRelations = Prisma.MaterialGetPayload<{
-  include: {
-    Unit: true
-    Employee: {select: {id: true; firstName: true; lastName: true}}
-    PreferredSupplierCompany: {select: {id: true; name: true}}
-    MaterialSupplier: {include: {Company: {select: {id: true; name: true}}}}
-  }
-}>
-
-export type MaterialWithDetails = Prisma.MaterialGetPayload<{
-  include: {
-    Unit: true
-    Employee: {select: {id: true; firstName: true; lastName: true}}
-    PreferredSupplierCompany: {select: {id: true; name: true}}
-    MaterialSupplier: {include: {Company: {select: {id: true; name: true}}}}
-    Inventory_Inventory_materialIdToMaterial: {
-      where: {deleted: false}
-      orderBy: {createdAt: 'asc'}
-    }
-  }
-}>
-
-export async function getMaterials(): Promise<MaterialWithRelations[]> {
+export async function getMaterials() {
   return prismaClient.material.findMany({
     where: {deleted: false},
     include: {
@@ -51,12 +31,21 @@ export async function getMaterials(): Promise<MaterialWithRelations[]> {
           },
         },
       },
+      MaterialStructure_MaterialStructure_materialIdToMaterial: {
+        where: {deleted: false, management: PARENT_PART_MANAGEMENT},
+        select: {
+          beNumber: true,
+          Material_MaterialStructure_beNumberToMaterial: {
+            select: {shortDescription: true},
+          },
+        },
+      },
     },
     orderBy: {beNumber: 'asc'},
   })
 }
 
-export async function getMaterialById(id: string): Promise<MaterialWithDetails | null> {
+export async function getMaterialById(id: string) {
   return prismaClient.material.findUnique({
     where: {id},
     include: {
@@ -71,6 +60,15 @@ export async function getMaterialById(id: string): Promise<MaterialWithDetails |
         include: {
           Company: {
             select: {id: true, name: true},
+          },
+        },
+      },
+      MaterialStructure_MaterialStructure_materialIdToMaterial: {
+        where: {deleted: false, management: PARENT_PART_MANAGEMENT},
+        select: {
+          beNumber: true,
+          Material_MaterialStructure_beNumberToMaterial: {
+            select: {shortDescription: true},
           },
         },
       },
@@ -114,6 +112,7 @@ export async function createMaterial(data: {
   preferredSupplierOrderId?: string | null
   preferredSupplierShortDescription?: string | null
   supplierCompanyIds?: string[]
+  parentBeNumbers?: string[]
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: number | null
@@ -127,12 +126,15 @@ export async function createMaterial(data: {
 }) {
   const {
     supplierCompanyIds = [],
+    parentBeNumbers = [],
     bePartDoc,
     preferredSupplierCompanyId,
     preferredSupplierOrderId,
     preferredSupplierShortDescription,
     ...materialData
   } = data
+
+  const uniqueParentBeNumbers = Array.from(new Set(parentBeNumbers)).filter(parentBeNumber => parentBeNumber !== data.beNumber)
 
   return prismaClient.material.create({
     data: {
@@ -148,6 +150,17 @@ export async function createMaterial(data: {
                 supplierOrderNr: preferredSupplierCompanyId === companyId ? (preferredSupplierOrderId ?? null) : null,
                 shortDescription:
                   preferredSupplierCompanyId === companyId ? (preferredSupplierShortDescription ?? null) : null,
+              })),
+            }
+          : undefined,
+      MaterialStructure_MaterialStructure_materialIdToMaterial:
+        uniqueParentBeNumbers.length > 0
+          ? {
+              create: uniqueParentBeNumbers.map(parentBeNumber => ({
+                id: randomUUID(),
+                beNumber: parentBeNumber,
+                management: PARENT_PART_MANAGEMENT,
+                createdBy: data.createdBy,
               })),
             }
           : undefined,
@@ -167,6 +180,7 @@ export async function updateMaterial(
     preferredSupplierOrderId?: string | null
     preferredSupplierShortDescription?: string | null
     supplierCompanyIds?: string[]
+    parentBeNumbers?: string[]
     brandName?: string | null
     documentationPlace?: string | null
     bePartDoc?: number | null
@@ -180,12 +194,17 @@ export async function updateMaterial(
 ) {
   const {
     supplierCompanyIds,
+    parentBeNumbers,
     bePartDoc,
     preferredSupplierCompanyId,
     preferredSupplierOrderId,
     preferredSupplierShortDescription,
     ...materialData
   } = data
+
+  const uniqueParentBeNumbers = parentBeNumbers
+    ? Array.from(new Set(parentBeNumbers)).filter(parentBeNumber => parentBeNumber !== materialData.beNumber)
+    : undefined
 
   return prismaClient.material.update({
     where: {id},
@@ -204,6 +223,17 @@ export async function updateMaterial(
                 supplierOrderNr: preferredSupplierCompanyId === companyId ? (preferredSupplierOrderId ?? null) : null,
                 shortDescription:
                   preferredSupplierCompanyId === companyId ? (preferredSupplierShortDescription ?? null) : null,
+              })),
+            },
+      MaterialStructure_MaterialStructure_materialIdToMaterial:
+        uniqueParentBeNumbers === undefined
+          ? undefined
+          : {
+              deleteMany: {management: PARENT_PART_MANAGEMENT},
+              create: uniqueParentBeNumbers.map(parentBeNumber => ({
+                id: randomUUID(),
+                beNumber: parentBeNumber,
+                management: PARENT_PART_MANAGEMENT,
               })),
             },
     } as Prisma.MaterialUncheckedUpdateInput,

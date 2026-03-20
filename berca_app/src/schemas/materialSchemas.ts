@@ -23,6 +23,12 @@ const supplierCompanyIdsSchema = z.preprocess(val => {
   return [val]
 }, z.array(z.string().uuid()).default([]))
 
+const parentBeNumbersSchema = z.preprocess(val => {
+  if (Array.isArray(val)) return val
+  if (val == null || val === '') return []
+  return [val]
+}, z.array(z.string().trim().regex(/^\d+$/, 'Parent BE number mag enkel cijfers bevatten')).default([]))
+
 const nullableUuidSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),
   z.string().uuid().nullable().optional(),
@@ -49,6 +55,7 @@ export const materialSchema = z.object({
   preferredSupplierOrderId: preferredSupplierOrderIdSchema,
   preferredSupplierShortDescription: preferredSupplierShortDescriptionSchema,
   supplierCompanyIds: supplierCompanyIdsSchema,
+  parentBeNumbers: parentBeNumbersSchema,
   brandName: z.string().max(255).nullable().optional(),
   documentationPlace: z.string().max(255).nullable().optional(),
   bePartDoc: z.coerce.number().int().nullable().optional(),

@@ -371,3 +371,6 @@ ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierOrderId`;
 
 -- 37f. Drop old preferredSupplierShortDescription column from Material
 ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
+
+-- 38. MaterialSupplier: add shortDescription column
+ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;

@@ -9,7 +9,6 @@ import type {
 import type {VisibilityWithRoleLevel} from '@/extra/visibilityForRole'
 import {mapVisibility} from '@/extra/visibilityForRole'
 
-// ── CompanyAdress with optional Country join ──────────────────────────────────
 type AddressWithCountry = CompanyAdress & {
   Country?: {id: string; name: string} | null
 }
@@ -50,6 +49,7 @@ export function mapCompany(c: CompanyWithRelations): MappedCompany {
     id: c.id,
     name: c.name,
     number: c.number,
+    idOld: c.idOld ?? null,
     mail: c.mail,
     businessPhone: c.businessPhone,
     website: c.website,
@@ -194,6 +194,7 @@ export function mapCompanyDetail(c: CompanyDetailPayload): CompanyDetailData {
     id: c.id,
     name: c.name,
     number: c.number,
+    idOld: c.idOld ?? null,
     mail: c.mail,
     businessPhone: c.businessPhone,
     website: c.website,

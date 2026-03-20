@@ -58,7 +58,7 @@ export function WorkOrderDetail({
   const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80 || currentUserRole === 'Project'
 
   const permissions = {
-    canAdd: currentUserLevel >= 20,
+    canAdd: currentUserLevel >= 20 && !workOrder.hoursMaterialClosed,
     canDelete,
     isAdmin,
   }

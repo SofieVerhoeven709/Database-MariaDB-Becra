@@ -23,6 +23,8 @@ interface TrainingStandardFormDialogProps {
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
   certificateOptions: {id: string; name: string}[]
+  /** Whether the current user can manage visibility (level >= 80) */
+  canManageVisibility: boolean
 }
 
 const emptyStandard = (): MappedTrainingStandard => ({
@@ -52,6 +54,7 @@ export function TrainingStandardFormDialog({
   roleLevelOptions,
   defaultVisibleRoleNames,
   certificateOptions,
+  canManageVisibility,
 }: TrainingStandardFormDialogProps) {
   const [form, setForm] = useState<MappedTrainingStandard>(emptyStandard())
   const [saving, setSaving] = useState(false)
@@ -86,7 +89,7 @@ export function TrainingStandardFormDialog({
         <Tabs defaultValue="details">
           <TabsList className="bg-secondary border border-border/60">
             <TabsTrigger value="details">Details</TabsTrigger>
-            {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+            {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
           </TabsList>
 
           <TabsContent value="details">
@@ -145,7 +148,7 @@ export function TrainingStandardFormDialog({
             </div>
           </TabsContent>
 
-          {isAdmin && (
+          {canManageVisibility && (
             <TabsContent value="visibility">
               <div className="py-3">
                 <VisibilityForRoleTab

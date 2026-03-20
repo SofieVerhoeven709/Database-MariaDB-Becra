@@ -24,6 +24,8 @@ interface TrainingFormDialogProps {
   defaultVisibleRoleNames: string[]
   standardOptions: {id: string; name: string}[]
   workOrderOptions: {id: string; name: string}[]
+  /** Whether the current user can manage visibility (level >= 80) */
+  canManageVisibility: boolean
 }
 
 const emptyTraining = (): MappedTraining => ({
@@ -54,6 +56,7 @@ export function TrainingFormDialog({
   defaultVisibleRoleNames,
   standardOptions,
   workOrderOptions,
+  canManageVisibility,
 }: TrainingFormDialogProps) {
   const [form, setForm] = useState<MappedTraining>(emptyTraining())
   const [saving, setSaving] = useState(false)
@@ -88,12 +91,12 @@ export function TrainingFormDialog({
         <Tabs defaultValue="details">
           <TabsList className="bg-secondary border border-border/60">
             <TabsTrigger value="details">Details</TabsTrigger>
-            {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+            {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
           </TabsList>
 
           <TabsContent value="details">
             <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
-              {/* Training Number — generated + regeneratable on create, locked on edit */}
+              {/* Training Number — auto-generated on create, locked on edit */}
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <Label className="text-xs text-muted-foreground">
                   Training Number
@@ -186,7 +189,7 @@ export function TrainingFormDialog({
             </div>
           </TabsContent>
 
-          {isAdmin && (
+          {canManageVisibility && (
             <TabsContent value="visibility">
               <div className="py-3">
                 <VisibilityForRoleTab

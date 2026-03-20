@@ -30,6 +30,8 @@ interface ProjectFormDialogProps {
   onSave: (project: MappedProject, visibilityRows: VisibilityRow[]) => Promise<void>
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
+  /** Whether the current user can manage visibility (level >= 80) */
+  canManageVisibility: boolean
 }
 
 function toInputDate(iso: string | null) {
@@ -75,6 +77,7 @@ export function ProjectFormDialog({
   onSave,
   roleLevelOptions,
   defaultVisibleRoleNames,
+  canManageVisibility,
 }: ProjectFormDialogProps) {
   const [form, setForm] = useState<MappedProject>(emptyProject())
   const [saving, setSaving] = useState(false)
@@ -112,8 +115,6 @@ export function ProjectFormDialog({
   }
 
   const isEdit = !!project
-
-  // Parent project options: exclude self
   const parentOptions = projects.filter(p => p.id !== form.id && !p.deleted)
 
   return (
@@ -126,16 +127,21 @@ export function ProjectFormDialog({
         <Tabs defaultValue="details">
           <TabsList className="bg-secondary border border-border/60">
             <TabsTrigger value="details">Details</TabsTrigger>
-            <TabsTrigger value="visibility">Visibility</TabsTrigger>
+            {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
           </TabsList>
 
-          {/* ── Details ───────────────────────────────────────────────────── */}
+          {/* ── Details ── */}
           <TabsContent value="details">
             <div className="grid grid-cols-1 gap-5 py-3 sm:grid-cols-2">
-              {/* Project Number */}
+              {/* Project Number — always read-only, auto-generated */}
               <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Project Number *</Label>
-                <Input value={form.projectNumber} readOnly className="bg-secondary border-border" />
+                <Label className="text-xs text-muted-foreground">
+                  Project Number *
+                  <span className="ml-1.5 text-muted-foreground/60">{isEdit ? '(locked)' : '(auto-generated)'}</span>
+                </Label>
+                <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                  {form.projectNumber}
+                </div>
               </div>
 
               <div className="flex flex-col gap-1.5">
@@ -147,7 +153,6 @@ export function ProjectFormDialog({
                 />
               </div>
 
-              {/* Company */}
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Company *</Label>
                 <Select value={form.companyId} onValueChange={v => set('companyId', v)}>
@@ -164,7 +169,6 @@ export function ProjectFormDialog({
                 </Select>
               </div>
 
-              {/* Project Type */}
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Project Type *</Label>
                 <Select value={form.projectTypeId} onValueChange={v => set('projectTypeId', v)}>
@@ -181,7 +185,6 @@ export function ProjectFormDialog({
                 </Select>
               </div>
 
-              {/* Parent Project */}
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <Label className="text-xs text-muted-foreground">Parent Project</Label>
                 <Select
@@ -201,7 +204,6 @@ export function ProjectFormDialog({
                 </Select>
               </div>
 
-              {/* Start Date */}
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Start Date</Label>
                 <Input
@@ -210,7 +212,6 @@ export function ProjectFormDialog({
                   onChange={e => {
                     const newStart = e.target.value
                     setDateField('startDate', newStart)
-                    // Clear dependent dates that would fall before the new start date
                     if (newStart) {
                       if (form.endDate && toInputDate(form.endDate) < newStart) setDateField('endDate', '')
                       if (form.engineeringStartDate && toInputDate(form.engineeringStartDate) < newStart)
@@ -221,7 +222,6 @@ export function ProjectFormDialog({
                 />
               </div>
 
-              {/* End Date */}
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">End Date</Label>
                 <Input
@@ -231,7 +231,6 @@ export function ProjectFormDialog({
                   onChange={e => {
                     const newEnd = e.target.value
                     setDateField('endDate', newEnd)
-                    // Clear closing date if it would fall before the new end date
                     if (newEnd && form.closingDate && toInputDate(form.closingDate) < newEnd)
                       setDateField('closingDate', '')
                   }}
@@ -239,7 +238,6 @@ export function ProjectFormDialog({
                 />
               </div>
 
-              {/* Engineering Start Date */}
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Engineering Start Date</Label>
                 <Input
@@ -252,7 +250,6 @@ export function ProjectFormDialog({
                 />
               </div>
 
-              {/* Closing Date */}
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Closing Date</Label>
                 <Input
@@ -265,7 +262,6 @@ export function ProjectFormDialog({
                 />
               </div>
 
-              {/* Description */}
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <Label className="text-xs text-muted-foreground">Description</Label>
                 <Textarea
@@ -276,7 +272,6 @@ export function ProjectFormDialog({
                 />
               </div>
 
-              {/* Extra Info */}
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <Label className="text-xs text-muted-foreground">Extra Info</Label>
                 <Textarea
@@ -287,7 +282,6 @@ export function ProjectFormDialog({
                 />
               </div>
 
-              {/* Toggles */}
               <div className="sm:col-span-2 grid grid-cols-2 gap-4 sm:grid-cols-4">
                 {(
                   [
@@ -308,16 +302,18 @@ export function ProjectFormDialog({
             </div>
           </TabsContent>
 
-          {/* ── Visibility ────────────────────────────────────────────────── */}
-          <TabsContent value="visibility">
-            <div className="py-3">
-              <VisibilityForRoleTab
-                roleLevelOptions={roleLevelOptions}
-                value={visibilityRows}
-                onChange={setVisibilityRows}
-              />
-            </div>
-          </TabsContent>
+          {/* ── Visibility (level >= 80 only) ── */}
+          {canManageVisibility && (
+            <TabsContent value="visibility">
+              <div className="py-3">
+                <VisibilityForRoleTab
+                  roleLevelOptions={roleLevelOptions}
+                  value={visibilityRows}
+                  onChange={setVisibilityRows}
+                />
+              </div>
+            </TabsContent>
+          )}
         </Tabs>
 
         <DialogFooter className="pt-2">

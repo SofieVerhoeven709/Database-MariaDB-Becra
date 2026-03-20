@@ -35,6 +35,7 @@ export const createMaterialAction = protectedFormAction({
   functionName: 'Create material',
   globalErrorMessage: 'Could not create the material, please try again.',
   serverFn: async ({data, profile, logger}) => {
+    const {brandOrderNr, ...restData} = data
     let beNumber = data.beNumber?.trim()
     const preferredSupplierCompanyId = data.preferredSupplierCompanyId ?? null
     const supplierCompanyIds = Array.from(
@@ -49,10 +50,13 @@ export const createMaterialAction = protectedFormAction({
     }
 
     const material = await createMaterial({
-      ...data,
+      ...restData,
       id: data.id || randomUUID(),
       beNumber,
+      brandOrderNr: brandOrderNr ?? null,
       preferredSupplierCompanyId,
+      preferredSupplierOrderId: data.preferredSupplierOrderId ?? null,
+      preferredSupplierShortDescription: data.preferredSupplierShortDescription ?? null,
       supplierCompanyIds,
       bePartDoc: data.bePartDoc != null ? Number(data.bePartDoc) : null,
       materialGroupIdA: data.materialGroupIdA,
@@ -84,7 +88,7 @@ export const updateMaterialAction = protectedFormAction({
 
     const updated = await updateMaterial(id, {
       ...rest,
-      brandOrderNr: rest.brandOrderNr,
+      brandOrderNr: rest.brandOrderNr ?? null,
       preferredSupplierCompanyId,
       supplierCompanyIds,
       bePartDoc: rest.bePartDoc != null ? Number(rest.bePartDoc) : rest.bePartDoc,

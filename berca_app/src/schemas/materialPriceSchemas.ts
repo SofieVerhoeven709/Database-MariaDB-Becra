@@ -1,5 +1,10 @@
 import {z} from 'zod/v4'
 
+const nullableNumberInput = z.preprocess(value => {
+  if (value === '' || value == null) return null
+  return value
+}, z.coerce.number().nullable().optional())
+
 export const createMaterialPriceSchema = z.object({
   beNumber: z.string().max(255).nullable().optional(),
   orderNr: z.string().max(255).nullable().optional(),
@@ -11,8 +16,11 @@ export const createMaterialPriceSchema = z.object({
   brandName: z.string().max(255).nullable().optional(),
   rejected: z.boolean().nullable().optional(),
   additionalInfo: z.string().max(255).nullable().optional(),
-  unitPrice: z.coerce.number().nullable().optional(),
-  quantityPrice: z.coerce.number().int().nullable().optional(),
+  unitPrice: nullableNumberInput,
+  quantityPrice: nullableNumberInput.refine(
+    value => value == null || (value > 0 && Number.isInteger(value * 1000)),
+    'Unit quantity moet groter zijn dan 0 en max 3 cijfers na de komma hebben',
+  ),
   companyId: z.string(),
 })
 

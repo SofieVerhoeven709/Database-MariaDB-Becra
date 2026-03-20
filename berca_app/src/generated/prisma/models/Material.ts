@@ -31,7 +31,6 @@ export type MaterialMinAggregateOutputType = {
   brandOrderNr: string | null
   shortDescription: string | null
   longDescription: string | null
-  preferredSupplier: string | null
   brandName: string | null
   documentationPlace: string | null
   bePartDoc: string | null
@@ -55,7 +54,6 @@ export type MaterialMaxAggregateOutputType = {
   brandOrderNr: string | null
   shortDescription: string | null
   longDescription: string | null
-  preferredSupplier: string | null
   brandName: string | null
   documentationPlace: string | null
   bePartDoc: string | null
@@ -79,7 +77,6 @@ export type MaterialCountAggregateOutputType = {
   brandOrderNr: number
   shortDescription: number
   longDescription: number
-  preferredSupplier: number
   brandName: number
   documentationPlace: number
   bePartDoc: number
@@ -105,7 +102,6 @@ export type MaterialMinAggregateInputType = {
   brandOrderNr?: true
   shortDescription?: true
   longDescription?: true
-  preferredSupplier?: true
   brandName?: true
   documentationPlace?: true
   bePartDoc?: true
@@ -129,7 +125,6 @@ export type MaterialMaxAggregateInputType = {
   brandOrderNr?: true
   shortDescription?: true
   longDescription?: true
-  preferredSupplier?: true
   brandName?: true
   documentationPlace?: true
   bePartDoc?: true
@@ -153,7 +148,6 @@ export type MaterialCountAggregateInputType = {
   brandOrderNr?: true
   shortDescription?: true
   longDescription?: true
-  preferredSupplier?: true
   brandName?: true
   documentationPlace?: true
   bePartDoc?: true
@@ -250,7 +244,6 @@ export type MaterialGroupByOutputType = {
   brandOrderNr: string | null
   shortDescription: string
   longDescription: string | null
-  preferredSupplier: string | null
   brandName: string | null
   documentationPlace: string | null
   bePartDoc: string | null
@@ -295,7 +288,6 @@ export type MaterialWhereInput = {
   brandOrderNr?: Prisma.StringNullableFilter<"Material"> | string | null
   shortDescription?: Prisma.StringFilter<"Material"> | string
   longDescription?: Prisma.StringNullableFilter<"Material"> | string | null
-  preferredSupplier?: Prisma.StringNullableFilter<"Material"> | string | null
   brandName?: Prisma.StringNullableFilter<"Material"> | string | null
   documentationPlace?: Prisma.StringNullableFilter<"Material"> | string | null
   bePartDoc?: Prisma.StringNullableFilter<"Material"> | string | null
@@ -336,7 +328,6 @@ export type MaterialOrderByWithRelationInput = {
   brandOrderNr?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
-  preferredSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
   brandName?: Prisma.SortOrderInput | Prisma.SortOrder
   documentationPlace?: Prisma.SortOrderInput | Prisma.SortOrder
   bePartDoc?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -381,7 +372,6 @@ export type MaterialWhereUniqueInput = Prisma.AtLeast<{
   brandOrderNr?: Prisma.StringNullableFilter<"Material"> | string | null
   shortDescription?: Prisma.StringFilter<"Material"> | string
   longDescription?: Prisma.StringNullableFilter<"Material"> | string | null
-  preferredSupplier?: Prisma.StringNullableFilter<"Material"> | string | null
   brandName?: Prisma.StringNullableFilter<"Material"> | string | null
   documentationPlace?: Prisma.StringNullableFilter<"Material"> | string | null
   bePartDoc?: Prisma.StringNullableFilter<"Material"> | string | null
@@ -422,7 +412,6 @@ export type MaterialOrderByWithAggregationInput = {
   brandOrderNr?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
-  preferredSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
   brandName?: Prisma.SortOrderInput | Prisma.SortOrder
   documentationPlace?: Prisma.SortOrderInput | Prisma.SortOrder
   bePartDoc?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -452,7 +441,6 @@ export type MaterialScalarWhereWithAggregatesInput = {
   brandOrderNr?: Prisma.StringNullableWithAggregatesFilter<"Material"> | string | null
   shortDescription?: Prisma.StringWithAggregatesFilter<"Material"> | string
   longDescription?: Prisma.StringNullableWithAggregatesFilter<"Material"> | string | null
-  preferredSupplier?: Prisma.StringNullableWithAggregatesFilter<"Material"> | string | null
   brandName?: Prisma.StringNullableWithAggregatesFilter<"Material"> | string | null
   documentationPlace?: Prisma.StringNullableWithAggregatesFilter<"Material"> | string | null
   bePartDoc?: Prisma.StringNullableWithAggregatesFilter<"Material"> | string | null
@@ -476,7 +464,6 @@ export type MaterialCreateInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -509,7 +496,6 @@ export type MaterialUncheckedCreateInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -542,7 +528,6 @@ export type MaterialUpdateInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -575,7 +560,6 @@ export type MaterialUncheckedUpdateInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -608,7 +592,6 @@ export type MaterialCreateManyInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -632,7 +615,6 @@ export type MaterialUpdateManyMutationInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -648,7 +630,6 @@ export type MaterialUncheckedUpdateManyInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -693,7 +674,6 @@ export type MaterialCountOrderByAggregateInput = {
   brandOrderNr?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  preferredSupplier?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   documentationPlace?: Prisma.SortOrder
   bePartDoc?: Prisma.SortOrder
@@ -717,7 +697,6 @@ export type MaterialMaxOrderByAggregateInput = {
   brandOrderNr?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  preferredSupplier?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   documentationPlace?: Prisma.SortOrder
   bePartDoc?: Prisma.SortOrder
@@ -741,7 +720,6 @@ export type MaterialMinOrderByAggregateInput = {
   brandOrderNr?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
-  preferredSupplier?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   documentationPlace?: Prisma.SortOrder
   bePartDoc?: Prisma.SortOrder
@@ -1240,7 +1218,6 @@ export type MaterialCreateWithoutPreferredSupplierCompanyInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1272,7 +1249,6 @@ export type MaterialUncheckedCreateWithoutPreferredSupplierCompanyInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1333,7 +1309,6 @@ export type MaterialScalarWhereInput = {
   brandOrderNr?: Prisma.StringNullableFilter<"Material"> | string | null
   shortDescription?: Prisma.StringFilter<"Material"> | string
   longDescription?: Prisma.StringNullableFilter<"Material"> | string | null
-  preferredSupplier?: Prisma.StringNullableFilter<"Material"> | string | null
   brandName?: Prisma.StringNullableFilter<"Material"> | string | null
   documentationPlace?: Prisma.StringNullableFilter<"Material"> | string | null
   bePartDoc?: Prisma.StringNullableFilter<"Material"> | string | null
@@ -1357,7 +1332,6 @@ export type MaterialCreateWithoutEmployeeInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1389,7 +1363,6 @@ export type MaterialUncheckedCreateWithoutEmployeeInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1431,7 +1404,6 @@ export type MaterialCreateWithoutEmployee_Material_deletedByToEmployeeInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1463,7 +1435,6 @@ export type MaterialUncheckedCreateWithoutEmployee_Material_deletedByToEmployeeI
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1537,7 +1508,6 @@ export type MaterialCreateWithoutInventory_Inventory_materialIdToMaterialInput =
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1569,7 +1539,6 @@ export type MaterialUncheckedCreateWithoutInventory_Inventory_materialIdToMateri
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1606,7 +1575,6 @@ export type MaterialCreateWithoutInventory_Inventory_beNumberToMaterialInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1638,7 +1606,6 @@ export type MaterialUncheckedCreateWithoutInventory_Inventory_beNumberToMaterial
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1686,7 +1653,6 @@ export type MaterialUpdateWithoutInventory_Inventory_materialIdToMaterialInput =
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1718,7 +1684,6 @@ export type MaterialUncheckedUpdateWithoutInventory_Inventory_materialIdToMateri
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1761,7 +1726,6 @@ export type MaterialUpdateWithoutInventory_Inventory_beNumberToMaterialInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1793,7 +1757,6 @@ export type MaterialUncheckedUpdateWithoutInventory_Inventory_beNumberToMaterial
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1825,7 +1788,6 @@ export type MaterialCreateWithoutMaterialSupplierInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1857,7 +1819,6 @@ export type MaterialUncheckedCreateWithoutMaterialSupplierInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -1905,7 +1866,6 @@ export type MaterialUpdateWithoutMaterialSupplierInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1937,7 +1897,6 @@ export type MaterialUncheckedUpdateWithoutMaterialSupplierInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1969,7 +1928,6 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdAToMateri
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2001,7 +1959,6 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2043,7 +2000,6 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdBToMateri
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2075,7 +2031,6 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2117,7 +2072,6 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdCToMateri
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2149,7 +2103,6 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2191,7 +2144,6 @@ export type MaterialCreateWithoutMaterialGroup_Material_materialGroupIdDToMateri
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2223,7 +2175,6 @@ export type MaterialUncheckedCreateWithoutMaterialGroup_Material_materialGroupId
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2329,7 +2280,6 @@ export type MaterialCreateWithoutMaterialMovementInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2361,7 +2311,6 @@ export type MaterialUncheckedCreateWithoutMaterialMovementInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2409,7 +2358,6 @@ export type MaterialUpdateWithoutMaterialMovementInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2441,7 +2389,6 @@ export type MaterialUncheckedUpdateWithoutMaterialMovementInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2473,7 +2420,6 @@ export type MaterialCreateWithoutMaterialOtherInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2505,7 +2451,6 @@ export type MaterialUncheckedCreateWithoutMaterialOtherInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2553,7 +2498,6 @@ export type MaterialUpdateWithoutMaterialOtherInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2585,7 +2529,6 @@ export type MaterialUncheckedUpdateWithoutMaterialOtherInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2617,7 +2560,6 @@ export type MaterialCreateWithoutMaterialStructure_MaterialStructure_materialIdT
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2649,7 +2591,6 @@ export type MaterialUncheckedCreateWithoutMaterialStructure_MaterialStructure_ma
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2686,7 +2627,6 @@ export type MaterialCreateWithoutMaterialStructure_MaterialStructure_beNumberToM
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2718,7 +2658,6 @@ export type MaterialUncheckedCreateWithoutMaterialStructure_MaterialStructure_be
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2766,7 +2705,6 @@ export type MaterialUpdateWithoutMaterialStructure_MaterialStructure_materialIdT
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2798,7 +2736,6 @@ export type MaterialUncheckedUpdateWithoutMaterialStructure_MaterialStructure_ma
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2841,7 +2778,6 @@ export type MaterialUpdateWithoutMaterialStructure_MaterialStructure_beNumberToM
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2873,7 +2809,6 @@ export type MaterialUncheckedUpdateWithoutMaterialStructure_MaterialStructure_be
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2905,7 +2840,6 @@ export type MaterialCreateWithoutProductInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2937,7 +2871,6 @@ export type MaterialUncheckedCreateWithoutProductInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -2985,7 +2918,6 @@ export type MaterialUpdateWithoutProductInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3017,7 +2949,6 @@ export type MaterialUncheckedUpdateWithoutProductInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3049,7 +2980,6 @@ export type MaterialCreateWithoutUnitInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -3081,7 +3011,6 @@ export type MaterialUncheckedCreateWithoutUnitInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -3139,7 +3068,6 @@ export type MaterialCreateWithoutWorkOrderStructureInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -3171,7 +3099,6 @@ export type MaterialUncheckedCreateWithoutWorkOrderStructureInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -3219,7 +3146,6 @@ export type MaterialUpdateWithoutWorkOrderStructureInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3251,7 +3177,6 @@ export type MaterialUncheckedUpdateWithoutWorkOrderStructureInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3283,7 +3208,6 @@ export type MaterialCreateManyPreferredSupplierCompanyInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -3306,7 +3230,6 @@ export type MaterialUpdateWithoutPreferredSupplierCompanyInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3338,7 +3261,6 @@ export type MaterialUncheckedUpdateWithoutPreferredSupplierCompanyInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3370,7 +3292,6 @@ export type MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3393,7 +3314,6 @@ export type MaterialCreateManyEmployeeInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -3416,7 +3336,6 @@ export type MaterialCreateManyEmployee_Material_deletedByToEmployeeInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -3439,7 +3358,6 @@ export type MaterialUpdateWithoutEmployeeInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3471,7 +3389,6 @@ export type MaterialUncheckedUpdateWithoutEmployeeInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3503,7 +3420,6 @@ export type MaterialUncheckedUpdateManyWithoutEmployeeInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3526,7 +3442,6 @@ export type MaterialUpdateWithoutEmployee_Material_deletedByToEmployeeInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3558,7 +3473,6 @@ export type MaterialUncheckedUpdateWithoutEmployee_Material_deletedByToEmployeeI
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3590,7 +3504,6 @@ export type MaterialUncheckedUpdateManyWithoutEmployee_Material_deletedByToEmplo
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3613,7 +3526,6 @@ export type MaterialCreateManyMaterialGroup_Material_materialGroupIdAToMaterialG
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -3636,7 +3548,6 @@ export type MaterialCreateManyMaterialGroup_Material_materialGroupIdBToMaterialG
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -3659,7 +3570,6 @@ export type MaterialCreateManyMaterialGroup_Material_materialGroupIdCToMaterialG
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -3682,7 +3592,6 @@ export type MaterialCreateManyMaterialGroup_Material_materialGroupIdDToMaterialG
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -3705,7 +3614,6 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdAToMateri
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3737,7 +3645,6 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3769,7 +3676,6 @@ export type MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGro
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3792,7 +3698,6 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdBToMateri
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3824,7 +3729,6 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3856,7 +3760,6 @@ export type MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGro
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3879,7 +3782,6 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdCToMateri
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3911,7 +3813,6 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3943,7 +3844,6 @@ export type MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGro
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3966,7 +3866,6 @@ export type MaterialUpdateWithoutMaterialGroup_Material_materialGroupIdDToMateri
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3998,7 +3897,6 @@ export type MaterialUncheckedUpdateWithoutMaterialGroup_Material_materialGroupId
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4030,7 +3928,6 @@ export type MaterialUncheckedUpdateManyWithoutMaterialGroup_Material_materialGro
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4053,7 +3950,6 @@ export type MaterialCreateManyUnitInput = {
   brandOrderNr?: string | null
   shortDescription: string
   longDescription?: string | null
-  preferredSupplier?: string | null
   brandName?: string | null
   documentationPlace?: string | null
   bePartDoc?: string | null
@@ -4076,7 +3972,6 @@ export type MaterialUpdateWithoutUnitInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4108,7 +4003,6 @@ export type MaterialUncheckedUpdateWithoutUnitInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4140,7 +4034,6 @@ export type MaterialUncheckedUpdateManyWithoutUnitInput = {
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.StringFieldUpdateOperationsInput | string
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bePartDoc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4257,7 +4150,6 @@ export type MaterialSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   brandOrderNr?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  preferredSupplier?: boolean
   brandName?: boolean
   documentationPlace?: boolean
   bePartDoc?: boolean
@@ -4301,7 +4193,6 @@ export type MaterialSelectScalar = {
   brandOrderNr?: boolean
   shortDescription?: boolean
   longDescription?: boolean
-  preferredSupplier?: boolean
   brandName?: boolean
   documentationPlace?: boolean
   bePartDoc?: boolean
@@ -4318,7 +4209,7 @@ export type MaterialSelectScalar = {
   deletedBy?: boolean
 }
 
-export type MaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "beNumber" | "name" | "brandOrderNr" | "shortDescription" | "longDescription" | "preferredSupplier" | "brandName" | "documentationPlace" | "bePartDoc" | "rejected" | "materialGroupIdA" | "materialGroupIdB" | "materialGroupIdC" | "materialGroupIdD" | "preferredSupplierCompanyId" | "unitId" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["material"]>
+export type MaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "beNumber" | "name" | "brandOrderNr" | "shortDescription" | "longDescription" | "brandName" | "documentationPlace" | "bePartDoc" | "rejected" | "materialGroupIdA" | "materialGroupIdB" | "materialGroupIdC" | "materialGroupIdD" | "preferredSupplierCompanyId" | "unitId" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["material"]>
 export type MaterialInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Inventory_Inventory_materialIdToMaterial?: boolean | Prisma.Material$Inventory_Inventory_materialIdToMaterialArgs<ExtArgs>
   Inventory_Inventory_beNumberToMaterial?: boolean | Prisma.Material$Inventory_Inventory_beNumberToMaterialArgs<ExtArgs>
@@ -4368,7 +4259,6 @@ export type $MaterialPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     brandOrderNr: string | null
     shortDescription: string
     longDescription: string | null
-    preferredSupplier: string | null
     brandName: string | null
     documentationPlace: string | null
     bePartDoc: string | null
@@ -4775,7 +4665,6 @@ export interface MaterialFieldRefs {
   readonly brandOrderNr: Prisma.FieldRef<"Material", 'String'>
   readonly shortDescription: Prisma.FieldRef<"Material", 'String'>
   readonly longDescription: Prisma.FieldRef<"Material", 'String'>
-  readonly preferredSupplier: Prisma.FieldRef<"Material", 'String'>
   readonly brandName: Prisma.FieldRef<"Material", 'String'>
   readonly documentationPlace: Prisma.FieldRef<"Material", 'String'>
   readonly bePartDoc: Prisma.FieldRef<"Material", 'String'>

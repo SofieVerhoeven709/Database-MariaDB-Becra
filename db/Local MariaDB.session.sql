@@ -850,7 +850,7 @@ CREATE TABLE
             deletedAt DATETIME,
             modifiedAt DATETIME,
             reminderSent BOOLEAN NOT NULL DEFAULT 0,
-            outstanding BOOLEAN NOT NULL DEFAULT 0,
+            outstanding BOOLEAN NOT NULL DEFAULT 1,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedBy CHAR(36),
             createdBy CHAR(36) NOT NULL,

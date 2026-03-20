@@ -24,7 +24,6 @@ interface InvoiceInFormDialogProps {
 }
 
 type FormState = {
-  invoiceNumber: string
   poNumber: string
   humanId: string
   invoiceDate: string
@@ -48,7 +47,6 @@ function emptyForm(inv: MappedInvoiceIn | null): FormState {
   const today = new Date().toISOString().slice(0, 10)
   if (!inv) {
     return {
-      invoiceNumber: '',
       poNumber: '',
       humanId: '',
       invoiceDate: today,
@@ -64,7 +62,6 @@ function emptyForm(inv: MappedInvoiceIn | null): FormState {
     }
   }
   return {
-    invoiceNumber: inv.invoiceNumber,
     poNumber: inv.poNumber ?? '',
     humanId: inv.humanId ?? '',
     invoiceDate: toDateInput(inv.invoiceDate),
@@ -104,7 +101,6 @@ export function InvoiceInFormDialog({
   }
 
   const isValid =
-    form.invoiceNumber.trim() &&
     form.invoiceDate &&
     form.dueDate &&
     form.invoiceTypeId &&
@@ -119,7 +115,6 @@ export function InvoiceInFormDialog({
     setSaving(true)
     try {
       const payload = {
-        invoiceNumber: form.invoiceNumber.trim(),
         poNumber: form.poNumber || null,
         humanId: form.humanId || null,
         invoiceDate: new Date(form.invoiceDate),
@@ -135,7 +130,7 @@ export function InvoiceInFormDialog({
       }
 
       if (invoice) {
-        await updateInvoiceInAction({id: invoice.id, ...payload})
+        await updateInvoiceInAction({id: invoice.id, invoiceNumber: invoice.invoiceNumber, ...payload})
       } else {
         await createInvoiceInAction(payload)
       }
@@ -155,17 +150,17 @@ export function InvoiceInFormDialog({
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-5 py-3 sm:grid-cols-2">
-          {/* Invoice Number */}
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Invoice Number *</Label>
-            <Input
-              value={form.invoiceNumber}
-              onChange={e => set('invoiceNumber', e.target.value)}
-              className="bg-secondary border-border"
-            />
+          {/* ── Invoice number — read-only on edit, auto-generated on create ── */}
+          <div className="flex flex-col gap-1.5 sm:col-span-2">
+            <Label className="text-xs text-muted-foreground">
+              Invoice Number
+              <span className="ml-1.5 text-muted-foreground/60">{isEdit ? '(locked)' : '(auto-generated)'}</span>
+            </Label>
+            <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+              {isEdit ? invoice.invoiceNumber : 'Will be assigned on save'}
+            </div>
           </div>
 
-          {/* Human ID */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Human ID</Label>
             <Input
@@ -175,7 +170,6 @@ export function InvoiceInFormDialog({
             />
           </div>
 
-          {/* PO Number */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">PO Number</Label>
             <Input
@@ -185,7 +179,6 @@ export function InvoiceInFormDialog({
             />
           </div>
 
-          {/* Company */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Company *</Label>
             <Select value={form.companyId} onValueChange={v => set('companyId', v)}>
@@ -202,7 +195,6 @@ export function InvoiceInFormDialog({
             </Select>
           </div>
 
-          {/* Invoice Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Invoice Date *</Label>
             <Input
@@ -213,7 +205,6 @@ export function InvoiceInFormDialog({
             />
           </div>
 
-          {/* Due Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Due Date *</Label>
             <Input
@@ -224,7 +215,6 @@ export function InvoiceInFormDialog({
             />
           </div>
 
-          {/* Invoice Type */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Invoice Type *</Label>
             <Select value={form.invoiceTypeId} onValueChange={v => set('invoiceTypeId', v)}>
@@ -241,7 +231,6 @@ export function InvoiceInFormDialog({
             </Select>
           </div>
 
-          {/* Invoice Status */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Status *</Label>
             <Select value={form.invoiceStatusId} onValueChange={v => set('invoiceStatusId', v)}>
@@ -258,7 +247,6 @@ export function InvoiceInFormDialog({
             </Select>
           </div>
 
-          {/* Payment Method */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Payment Method *</Label>
             <Select value={form.paymentMethodId} onValueChange={v => set('paymentMethodId', v)}>
@@ -275,7 +263,6 @@ export function InvoiceInFormDialog({
             </Select>
           </div>
 
-          {/* Sent Type */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Sent Type *</Label>
             <Select value={form.invoiceSentTypeId} onValueChange={v => set('invoiceSentTypeId', v)}>
@@ -292,7 +279,6 @@ export function InvoiceInFormDialog({
             </Select>
           </div>
 
-          {/* VAT Margin */}
           <div className="flex flex-col gap-1.5 sm:col-span-2">
             <Label className="text-xs text-muted-foreground">VAT Margin *</Label>
             <Select value={form.vatMarginId} onValueChange={v => set('vatMarginId', v)}>
@@ -309,7 +295,6 @@ export function InvoiceInFormDialog({
             </Select>
           </div>
 
-          {/* Toggles */}
           <div className="sm:col-span-2 grid grid-cols-2 gap-3">
             {[
               {key: 'outstanding' as const, label: 'Outstanding'},

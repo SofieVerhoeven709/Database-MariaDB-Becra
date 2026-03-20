@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
@@ -12,10 +12,13 @@ import {Switch} from '@/components/ui/switch'
 import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {Checkbox} from '@/components/ui/checkbox'
 import {
   updateInvoiceOutAction,
   addInvoiceOutContactDirectAction,
   removeInvoiceOutContactDirectAction,
+  getActiveWorkOrdersForProjectAction,
+  addWorkOrdersToInvoiceAction,
 } from '@/serverFunctions/invoices'
 import type {MappedInvoiceOut, InvoiceLookup, VatMarginOption} from '@/types/invoice'
 
@@ -39,6 +42,12 @@ function BoolBadge({value}: {value: boolean}) {
   )
 }
 
+interface WorkOrderOption {
+  id: string
+  workOrderNumber: string | null
+  description: string | null
+}
+
 interface InvoiceOutDetailProps {
   invoice: MappedInvoiceOut
   invoiceTypes: InvoiceLookup[]
@@ -46,7 +55,6 @@ interface InvoiceOutDetailProps {
   invoiceSentTypes: InvoiceLookup[]
   invoiceStatuses: InvoiceLookup[]
   vatMargins: VatMarginOption[]
-  // Only contacts from the companies linked via work orders → projects
   contactOptions: InvoiceLookup[]
   currentUserLevel: number
   currentUserRole: string
@@ -54,7 +62,6 @@ interface InvoiceOutDetailProps {
 }
 
 type EditForm = {
-  invoiceNumber: string
   poNumber: string
   humanId: string
   invoiceDate: string
@@ -85,11 +92,12 @@ export function InvoiceOutDetail({
   departmentId,
 }: InvoiceOutDetailProps) {
   const router = useRouter()
-  const canEdit = currentUserLevel >= 20
+  const canEdit = currentUserLevel >= 40
   const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
 
+  const isDraft = invoice.invoiceStatusName === 'Draft'
+
   const buildForm = (): EditForm => ({
-    invoiceNumber: invoice.invoiceNumber,
     poNumber: invoice.poNumber ?? '',
     humanId: invoice.humanId ?? '',
     invoiceDate: toDateInput(invoice.invoiceDate),
@@ -109,11 +117,39 @@ export function InvoiceOutDetail({
   const [form, setForm] = useState<EditForm>(buildForm)
   const s = <K extends keyof EditForm>(key: K, v: EditForm[K]) => setForm(f => ({...f, [key]: v}))
 
+  // Contact management
   const [addingContact, setAddingContact] = useState(false)
   const [newContactId, setNewContactId] = useState('none')
-
   const linkedContactIds = new Set(invoice.contacts.map(c => c.contactId))
   const availableContacts = contactOptions.filter(c => !linkedContactIds.has(c.id))
+
+  // Work order management (draft only)
+  const [availableWorkOrders, setAvailableWorkOrders] = useState<WorkOrderOption[]>([])
+  const [selectedNewWorkOrderIds, setSelectedNewWorkOrderIds] = useState<string[]>([])
+  const [loadingWorkOrders, setLoadingWorkOrders] = useState(false)
+  const [addingWorkOrders, setAddingWorkOrders] = useState(false)
+  const [savingWorkOrders, setSavingWorkOrders] = useState(false)
+
+  const linkedWorkOrderIds = new Set(invoice.workOrders.map(wo => wo.id))
+
+  // Derive unique project IDs from linked work orders
+  const linkedProjectIds = [...new Set(invoice.workOrders.map(wo => wo.projectId))]
+
+  useEffect(() => {
+    if (!addingWorkOrders || !isDraft) return
+    setLoadingWorkOrders(true)
+    Promise.all(linkedProjectIds.map(pid => getActiveWorkOrdersForProjectAction(pid)))
+      .then(results => {
+        const all = results.flat()
+        // Filter out already-linked work orders
+        setAvailableWorkOrders(all.filter(wo => !linkedWorkOrderIds.has(wo.id)))
+      })
+      .finally(() => setLoadingWorkOrders(false))
+  }, [addingWorkOrders])
+
+  function toggleNewWorkOrder(id: string) {
+    setSelectedNewWorkOrderIds(prev => (prev.includes(id) ? prev.filter(w => w !== id) : [...prev, id]))
+  }
 
   // Unique projects from work orders
   const projectsOnInvoice = Array.from(
@@ -136,7 +172,7 @@ export function InvoiceOutDetail({
     try {
       await updateInvoiceOutAction({
         id: invoice.id,
-        invoiceNumber: form.invoiceNumber,
+        invoiceNumber: invoice.invoiceNumber,
         poNumber: form.poNumber || null,
         humanId: form.humanId || null,
         invoiceDate: new Date(form.invoiceDate),
@@ -173,6 +209,20 @@ export function InvoiceOutDetail({
   async function handleRemoveContact(id: string) {
     await removeInvoiceOutContactDirectAction(id)
     router.refresh()
+  }
+
+  async function handleAddWorkOrders() {
+    if (selectedNewWorkOrderIds.length === 0) return
+    setSavingWorkOrders(true)
+    try {
+      // Add WorkOrderInvoice rows and close hours/materials
+      await addWorkOrdersToInvoiceAction(invoice.id, selectedNewWorkOrderIds)
+      setSelectedNewWorkOrderIds([])
+      setAddingWorkOrders(false)
+      router.refresh()
+    } finally {
+      setSavingWorkOrders(false)
+    }
   }
 
   return (
@@ -221,20 +271,12 @@ export function InvoiceOutDetail({
         )}
       </div>
 
-      {/* ── Info card ─────────────────────────────────────────────────────── */}
+      {/* Info card */}
       <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Invoice Number</Label>
-            {editing ? (
-              <Input
-                value={form.invoiceNumber}
-                onChange={e => s('invoiceNumber', e.target.value)}
-                className="bg-secondary border-border"
-              />
-            ) : (
-              <p className="text-sm text-muted-foreground">{invoice.invoiceNumber}</p>
-            )}
+            <p className="text-sm text-muted-foreground">{invoice.invoiceNumber}</p>
           </div>
 
           <div className="flex flex-col gap-1.5">
@@ -444,54 +486,119 @@ export function InvoiceOutDetail({
         </div>
       </div>
 
-      {/* ── Work Orders & Projects ─────────────────────────────────────────── */}
-      {invoice.workOrders.length > 0 && (
-        <div className="rounded-xl border border-border/60 bg-card p-4">
-          <h2 className="text-sm font-medium text-foreground mb-4">
+      {/* Work Orders */}
+      <div className="rounded-xl border border-border/60 bg-card p-4">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-sm font-medium text-foreground">
             Work Orders
             <Badge variant="secondary" className="ml-2 text-xs">
               {invoice.workOrders.length}
             </Badge>
           </h2>
-
-          {/* Project + company summary cards */}
-          {projectsOnInvoice.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-4">
-              {projectsOnInvoice.map(p => (
-                <div
-                  key={p.projectId}
-                  className="flex items-center gap-3 rounded-lg border border-border bg-secondary/40 px-3 py-2">
-                  <div>
-                    <p className="text-xs font-medium text-foreground">
-                      {p.projectNumber} — {p.projectName}
-                    </p>
-                    <p className="text-xs text-muted-foreground">{p.companyName}</p>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Link href={`/departments/${departmentId}/project/${p.projectId}` as Route}>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6 text-muted-foreground hover:text-accent hover:bg-accent/10"
-                        title="Open project">
-                        <ExternalLink className="h-3 w-3" />
-                      </Button>
-                    </Link>
-                    <Link href={`/departments/${departmentId}/company/${p.companyId}` as Route}>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6 text-muted-foreground hover:text-accent hover:bg-accent/10"
-                        title="Open company">
-                        <ExternalLink className="h-3 w-3" />
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
+          {canEdit && isDraft && linkedProjectIds.length > 0 && !addingWorkOrders && (
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-xs h-7 border-border gap-1"
+              onClick={() => setAddingWorkOrders(true)}>
+              <Plus className="h-3.5 w-3.5" /> Add Work Orders
+            </Button>
           )}
+        </div>
 
+        {/* Add work orders panel */}
+        {addingWorkOrders && isDraft && (
+          <div className="mb-4 p-3 rounded-lg border border-border bg-secondary/30 flex flex-col gap-3">
+            <p className="text-xs font-medium text-foreground">Select additional work orders from linked projects</p>
+            {loadingWorkOrders ? (
+              <p className="text-xs text-muted-foreground">Loading…</p>
+            ) : availableWorkOrders.length === 0 ? (
+              <p className="text-xs text-muted-foreground">No additional active work orders available.</p>
+            ) : (
+              <div className="rounded-lg border border-border bg-secondary/40 divide-y divide-border/60">
+                {availableWorkOrders.map(wo => (
+                  <label
+                    key={wo.id}
+                    className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-secondary/80 transition-colors">
+                    <Checkbox
+                      checked={selectedNewWorkOrderIds.includes(wo.id)}
+                      onCheckedChange={() => toggleNewWorkOrder(wo.id)}
+                    />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-sm text-foreground font-medium">{wo.workOrderNumber ?? '(no number)'}</span>
+                      {wo.description && (
+                        <span className="text-xs text-muted-foreground line-clamp-1">{wo.description}</span>
+                      )}
+                    </div>
+                  </label>
+                ))}
+              </div>
+            )}
+            <div className="flex gap-2">
+              <Button
+                size="sm"
+                className="h-7 text-xs bg-accent text-accent-foreground hover:bg-accent/80"
+                disabled={selectedNewWorkOrderIds.length === 0 || savingWorkOrders}
+                onClick={handleAddWorkOrders}>
+                {savingWorkOrders
+                  ? 'Adding…'
+                  : `Add ${selectedNewWorkOrderIds.length > 0 ? `(${selectedNewWorkOrderIds.length})` : ''}`}
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="h-7 text-xs border-border"
+                onClick={() => {
+                  setAddingWorkOrders(false)
+                  setSelectedNewWorkOrderIds([])
+                }}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Project summary cards */}
+        {projectsOnInvoice.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {projectsOnInvoice.map(p => (
+              <div
+                key={p.projectId}
+                className="flex items-center gap-3 rounded-lg border border-border bg-secondary/40 px-3 py-2">
+                <div>
+                  <p className="text-xs font-medium text-foreground">
+                    {p.projectNumber} — {p.projectName}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{p.companyName}</p>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Link href={`/departments/${departmentId}/project/${p.projectId}` as Route}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6 text-muted-foreground hover:text-accent hover:bg-accent/10"
+                      title="Open project">
+                      <ExternalLink className="h-3 w-3" />
+                    </Button>
+                  </Link>
+                  <Link href={`/departments/${departmentId}/company/${p.companyId}` as Route}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6 text-muted-foreground hover:text-accent hover:bg-accent/10"
+                      title="Open company">
+                      <ExternalLink className="h-3 w-3" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {invoice.workOrders.length === 0 ? (
+          <p className="text-sm text-muted-foreground text-center py-4">No work orders linked.</p>
+        ) : (
           <div className="rounded-lg border border-border/60 overflow-x-auto">
             <Table>
               <TableHeader>
@@ -539,10 +646,10 @@ export function InvoiceOutDetail({
               </TableBody>
             </Table>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      {/* ── Contacts ──────────────────────────────────────────────────────── */}
+      {/* Contacts */}
       <div className="rounded-xl border border-border/60 bg-card p-4">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-medium text-foreground">
@@ -561,12 +668,6 @@ export function InvoiceOutDetail({
             </Button>
           )}
         </div>
-
-        {invoice.workOrders.length === 0 && (
-          <p className="text-xs text-muted-foreground mb-3">
-            No work orders linked — contacts are sourced from project companies.
-          </p>
-        )}
 
         {addingContact && (
           <div className="flex items-center gap-2 mb-4 p-3 rounded-lg border border-border bg-secondary/30">

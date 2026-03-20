@@ -123,6 +123,23 @@ export const updateInvoiceOutAction = protectedServerFunction({
   },
 })
 
+// ─── Add extra work orders to an existing invoice (draft only) ────────────────
+export async function addWorkOrdersToInvoiceAction(invoiceOutId: string, workOrderIds: string[]) {
+  if (workOrderIds.length === 0) return
+  await prismaClient.workOrderInvoice.createMany({
+    data: workOrderIds.map(workOrderId => ({
+      id: crypto.randomUUID(),
+      invoiceOutId,
+      workOrderId,
+    })),
+  })
+  await prismaClient.workOrder.updateMany({
+    where: {id: {in: workOrderIds}},
+    data: {hoursMaterialClosed: true},
+  })
+  revalidatePath('/invoicesOut')
+}
+
 export const softDeleteInvoiceOutAction = protectedServerFunction({
   schema: invoiceOutIdSchema,
   functionName: 'Soft delete invoice out action',

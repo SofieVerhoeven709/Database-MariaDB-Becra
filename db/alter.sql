@@ -372,9 +372,10 @@ ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierOrderId`;
 -- 37f. Drop old preferredSupplierShortDescription column from Material
 ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
 
--- 38. MaterialSupplier: add shortDescription column
+-- 38. Company: add idOld column
 ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
--- 37a. Drop old tables (disable FK checks to avoid constraint errors)
+
+-- 39a. Drop old tables (disable FK checks to avoid constraint errors)
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS InvoiceOutContact;
@@ -383,7 +384,7 @@ DROP TABLE IF EXISTS InvoiceIn;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
--- 37b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
+-- 39b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
 CREATE TABLE IF NOT EXISTS VatMargin (
       id CHAR(36) NOT NULL PRIMARY KEY,
       vat FLOAT NOT NULL,
@@ -432,7 +433,7 @@ CREATE TABLE IF NOT EXISTS PaymentMethod (
       FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
 ) ENGINE = InnoDB;
 
--- 37c. Create new InvoiceOut
+-- 39c. Create new InvoiceOut
 CREATE TABLE IF NOT EXISTS InvoiceOut (
       id CHAR(36) NOT NULL PRIMARY KEY,
       invoiceNumber VARCHAR(255) NOT NULL,
@@ -468,7 +469,7 @@ CREATE TABLE IF NOT EXISTS InvoiceOut (
       UNIQUE (invoiceNumber)
 ) ENGINE = InnoDB;
 
--- 37d. Create new InvoiceIn
+-- 39d. Create new InvoiceIn
 CREATE TABLE IF NOT EXISTS InvoiceIn (
       id CHAR(36) NOT NULL PRIMARY KEY,
       invoiceNumber VARCHAR(255) NOT NULL,
@@ -505,7 +506,7 @@ CREATE TABLE IF NOT EXISTS InvoiceIn (
       UNIQUE (invoiceNumber)
 ) ENGINE = InnoDB;
 
--- 37e. Recreate InvoiceOutContact
+-- 39e. Recreate InvoiceOutContact
 CREATE TABLE IF NOT EXISTS InvoiceOutContact (
       id CHAR(36) NOT NULL PRIMARY KEY,
       contactId CHAR(36) NOT NULL,

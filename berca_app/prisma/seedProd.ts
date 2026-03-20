@@ -118,9 +118,7 @@ const createdSubRoles: Record<SubRoleName, {id: string; level: number}> = {} as 
   {id: string; level: number}
 >
 
-const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}, {name: 'Internal'}]
-
-// ─── All target type names used across the system ─────────────────────────────
+const PROJECT_TYPES = [{name: 'Engineering'}, {name: 'Training'}, {name: 'Consulting'}]
 
 const ALL_TARGET_TYPES = [
   'Department',
@@ -141,15 +139,9 @@ const ALL_TARGET_TYPES = [
   'DepartmentExtern',
 ]
 
-// ─── Urgency types ────────────────────────────────────────────────────────────
-
 const URGENCY_TYPES = ['Low', 'Medium', 'High', 'Critical']
 
-// ─── Statuses ─────────────────────────────────────────────────────────────────
-
 const STATUSES = ['Open', 'In Progress', 'Pending', 'On Hold', 'Resolved', 'Closed', 'Cancelled']
-
-// ─── Follow-up types ──────────────────────────────────────────────────────────
 
 const FOLLOW_UP_TYPES = [
   'Sales',
@@ -161,6 +153,18 @@ const FOLLOW_UP_TYPES = [
   'Task',
   'Complaint',
 ]
+
+// ─── Invoice lookup data ───────────────────────────────────────────────────────
+
+const VAT_MARGINS = [0, 6, 12, 21]
+
+const INVOICE_STATUSES = ['Draft', 'Sent', 'Received', 'Overdue', 'Paid', 'Cancelled', 'Disputed']
+
+const INVOICE_SENT_TYPES = ['Email', 'Post', 'Hand Delivery', 'Portal', 'Fax']
+
+const PAYMENT_METHODS = ['Bank Transfer', 'Cash', 'Credit Card', 'Debit Card', 'Direct Debit', 'Cheque']
+
+const INVOICE_TYPES = ['Standard', 'Credit Note', 'Proforma', 'Recurring', 'Intercompany']
 
 export const seedProd = async (prisma: PrismaClient) => {
   console.log('Running DEVELOPMENT seed (administrator)')
@@ -190,12 +194,7 @@ export const seedProd = async (prisma: PrismaClient) => {
   let adminRole = await prisma.role.findFirst({where: {name: 'Administrator'}})
   if (!adminRole) {
     adminRole = await prisma.role.create({
-      data: {
-        id: randomUUID(),
-        name: 'Administrator',
-        createdAt: now,
-        createdBy: adminEmployee.id,
-      },
+      data: {id: randomUUID(), name: 'Administrator', createdAt: now, createdBy: adminEmployee.id},
     })
   }
 
@@ -203,13 +202,7 @@ export const seedProd = async (prisma: PrismaClient) => {
   let adminSubRole = await prisma.subRole.findFirst({where: {name: 'Administrator'}})
   if (!adminSubRole) {
     adminSubRole = await prisma.subRole.create({
-      data: {
-        id: randomUUID(),
-        name: 'Administrator',
-        level: 100,
-        createdAt: now,
-        createdBy: adminEmployee.id,
-      },
+      data: {id: randomUUID(), name: 'Administrator', level: 100, createdAt: now, createdBy: adminEmployee.id},
     })
   }
 
@@ -229,48 +222,24 @@ export const seedProd = async (prisma: PrismaClient) => {
     })
   }
 
-  // 5. Attach admin roleLevel via junction table (only if not already set)
+  // 5. Attach admin roleLevel via junction table
   const existingRoleLevelEmployee = await prisma.roleLevelEmployee.findFirst({
     where: {employeeId: adminEmployee.id},
   })
   if (!existingRoleLevelEmployee) {
     await prisma.roleLevelEmployee.create({
-      data: {
-        id: randomUUID(),
-        employeeId: adminEmployee.id,
-        roleLevelId: adminRoleLevel.id,
-      },
+      data: {id: randomUUID(), employeeId: adminEmployee.id, roleLevelId: adminRoleLevel.id},
     })
   }
 
   console.log('Administrator account ready')
-
-  // Keep material-related pages empty by default (only table/actions visible).
-  await prisma.materialPrice.updateMany({
-    where: {deleted: false},
-    data: {deleted: true, deletedAt: now, deletedBy: adminEmployee.id},
-  })
-  await prisma.material.updateMany({
-    where: {deleted: false},
-    data: {deleted: true, deletedAt: now, deletedBy: adminEmployee.id},
-  })
-  await prisma.unit.updateMany({
-    where: {deleted: false},
-    data: {deleted: true, deletedAt: now, deletedBy: adminEmployee.id, valid: false},
-  })
 
   // 6. Upsert shared subRoles
   for (const sub of SUB_ROLES) {
     let existing = await prisma.subRole.findFirst({where: {name: sub.name}})
     if (!existing) {
       existing = await prisma.subRole.create({
-        data: {
-          id: randomUUID(),
-          name: sub.name,
-          level: sub.level,
-          createdAt: now,
-          createdBy: adminEmployee.id,
-        },
+        data: {id: randomUUID(), name: sub.name, level: sub.level, createdAt: now, createdBy: adminEmployee.id},
       })
     }
     createdSubRoles[sub.name] = {id: existing.id, level: existing.level}
@@ -293,22 +262,15 @@ export const seedProd = async (prisma: PrismaClient) => {
 
   console.log('Target types seeded')
 
-  // Resolve the two target types needed for departments and companies below
-  const departmentTargetType = await prisma.targetType.findFirst({where: {name: 'Department'}})!
-  const companyTargetType = await prisma.targetType.findFirst({where: {name: 'Company'}})!
+  const departmentTargetType = await prisma.targetType.findFirst({where: {name: 'Department'}})
+  const companyTargetType = await prisma.targetType.findFirst({where: {name: 'Company'}})
 
   // 8. Upsert UrgencyTypes
   for (const name of URGENCY_TYPES) {
     const existing = await prisma.urgencyType.findFirst({where: {name}})
     if (!existing) {
       await prisma.urgencyType.create({
-        data: {
-          id: randomUUID(),
-          name,
-          createdAt: now,
-          createdBy: adminEmployee.id,
-          deleted: false,
-        },
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
       })
     }
   }
@@ -320,13 +282,7 @@ export const seedProd = async (prisma: PrismaClient) => {
     const existing = await prisma.status.findFirst({where: {name}})
     if (!existing) {
       await prisma.status.create({
-        data: {
-          id: randomUUID(),
-          name,
-          createdAt: now,
-          createdBy: adminEmployee.id,
-          deleted: false,
-        },
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
       })
     }
   }
@@ -338,13 +294,7 @@ export const seedProd = async (prisma: PrismaClient) => {
     const existing = await prisma.followUpType.findFirst({where: {name}})
     if (!existing) {
       await prisma.followUpType.create({
-        data: {
-          id: randomUUID(),
-          name,
-          createdAt: now,
-          createdBy: adminEmployee.id,
-          deleted: false,
-        },
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
       })
     }
   }
@@ -357,12 +307,7 @@ export const seedProd = async (prisma: PrismaClient) => {
     if (existingDept) continue
 
     const deptTarget = await prisma.target.create({
-      data: {
-        id: randomUUID(),
-        createdAt: now,
-        createdBy: adminEmployee.id,
-        targetTypeId: departmentTargetType!.id,
-      },
+      data: {id: randomUUID(), createdAt: now, createdBy: adminEmployee.id, targetTypeId: departmentTargetType!.id},
     })
 
     await prisma.department.create({
@@ -380,12 +325,7 @@ export const seedProd = async (prisma: PrismaClient) => {
     })
 
     const departmentRole = await prisma.role.create({
-      data: {
-        id: randomUUID(),
-        name: `${dept.name} Role`,
-        createdAt: now,
-        createdBy: adminEmployee.id,
-      },
+      data: {id: randomUUID(), name: `${dept.name} Role`, createdAt: now, createdBy: adminEmployee.id},
     })
 
     for (const sub of SUB_ROLES) {
@@ -400,12 +340,7 @@ export const seedProd = async (prisma: PrismaClient) => {
       })
 
       await prisma.visibilityForRole.create({
-        data: {
-          id: randomUUID(),
-          visible: true,
-          roleLevelId: adminRoleLevel.id,
-          targetId: deptTarget.id,
-        },
+        data: {id: randomUUID(), visible: true, roleLevelId: adminRoleLevel.id, targetId: deptTarget.id},
       })
     }
   }
@@ -419,13 +354,7 @@ export const seedProd = async (prisma: PrismaClient) => {
     const existing = await prisma.title.findFirst({where: {name: titleName}})
     if (!existing) {
       await prisma.title.create({
-        data: {
-          id: randomUUID(),
-          name: titleName,
-          createdAt: now,
-          createdBy: adminEmployee.id,
-          deleted: false,
-        },
+        data: {id: randomUUID(), name: titleName, createdAt: now, createdBy: adminEmployee.id, deleted: false},
       })
     }
   }
@@ -436,12 +365,7 @@ export const seedProd = async (prisma: PrismaClient) => {
   let becraCompany = await prisma.company.findFirst({where: {name: 'Becra BV'}})
   if (!becraCompany) {
     const becraTarget = await prisma.target.create({
-      data: {
-        id: randomUUID(),
-        createdAt: now,
-        createdBy: adminEmployee.id,
-        targetTypeId: companyTargetType!.id,
-      },
+      data: {id: randomUUID(), createdAt: now, createdBy: adminEmployee.id, targetTypeId: companyTargetType!.id},
     })
 
     becraCompany = await prisma.company.create({
@@ -484,13 +408,7 @@ export const seedProd = async (prisma: PrismaClient) => {
     const existing = await prisma.projectType.findFirst({where: {name: pt.name}})
     if (!existing) {
       await prisma.projectType.create({
-        data: {
-          id: randomUUID(),
-          name: pt.name,
-          createdAt: now,
-          createdBy: adminEmployee.id,
-          deleted: false,
-        },
+        data: {id: randomUUID(), name: pt.name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
       })
     }
   }
@@ -529,5 +447,79 @@ export const seedProd = async (prisma: PrismaClient) => {
   }
 
   console.log('Default hour types seeded')
+
+  // 16. Upsert CertificateTypes
+  const CERTIFICATE_TYPES = ['BA4', 'BA5', 'BA5 + HS', 'BA5 leidinggevende', 'HS', 'AREI', 'EHBO', 'ATEX']
+
+  for (const name of CERTIFICATE_TYPES) {
+    const existing = await prisma.certificateType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.certificateType.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('Certificate types seeded')
+
+  // 17. Upsert VatMargins
+  for (const vat of VAT_MARGINS) {
+    const existing = await prisma.vatMargin.findFirst({where: {vat}})
+    if (!existing) {
+      await prisma.vatMargin.create({
+        data: {id: randomUUID(), vat, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('VAT margins seeded')
+
+  // 18. Upsert InvoiceStatuses
+  for (const name of INVOICE_STATUSES) {
+    const existing = await prisma.invoiceStatus.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.invoiceStatus.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('Invoice statuses seeded')
+
+  // 19. Upsert InvoiceSentTypes
+  for (const name of INVOICE_SENT_TYPES) {
+    const existing = await prisma.invoiceSentType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.invoiceSentType.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('Invoice sent types seeded')
+
+  // 20. Upsert PaymentMethods
+  for (const name of PAYMENT_METHODS) {
+    const existing = await prisma.paymentMethod.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.paymentMethod.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('Payment methods seeded')
+
+  // 21. Upsert InvoiceTypes
+  for (const name of INVOICE_TYPES) {
+    const existing = await prisma.invoiceType.findFirst({where: {name}})
+    if (!existing) {
+      await prisma.invoiceType.create({
+        data: {id: randomUUID(), name, createdAt: now, createdBy: adminEmployee.id, deleted: false},
+      })
+    }
+  }
+
+  console.log('Invoice types seeded')
   console.log('Seed complete')
 }

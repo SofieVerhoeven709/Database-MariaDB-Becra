@@ -991,6 +991,56 @@ export interface PrismaClient<
     * ```
     */
   get country(): Prisma.CountryDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.invoiceOutContact`: Exposes CRUD operations for the **InvoiceOutContact** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InvoiceOutContacts
+    * const invoiceOutContacts = await prisma.invoiceOutContact.findMany()
+    * ```
+    */
+  get invoiceOutContact(): Prisma.InvoiceOutContactDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.invoiceSentType`: Exposes CRUD operations for the **InvoiceSentType** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InvoiceSentTypes
+    * const invoiceSentTypes = await prisma.invoiceSentType.findMany()
+    * ```
+    */
+  get invoiceSentType(): Prisma.InvoiceSentTypeDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.invoiceStatus`: Exposes CRUD operations for the **InvoiceStatus** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InvoiceStatuses
+    * const invoiceStatuses = await prisma.invoiceStatus.findMany()
+    * ```
+    */
+  get invoiceStatus(): Prisma.InvoiceStatusDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.paymentMethod`: Exposes CRUD operations for the **PaymentMethod** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PaymentMethods
+    * const paymentMethods = await prisma.paymentMethod.findMany()
+    * ```
+    */
+  get paymentMethod(): Prisma.PaymentMethodDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.vatMargin`: Exposes CRUD operations for the **VatMargin** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VatMargins
+    * const vatMargins = await prisma.vatMargin.findMany()
+    * ```
+    */
+  get vatMargin(): Prisma.VatMarginDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(dirname: string): PrismaClientConstructor {

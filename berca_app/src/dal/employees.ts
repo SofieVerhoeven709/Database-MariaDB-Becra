@@ -376,9 +376,7 @@ export async function getEmployeeDetail(id: string) {
             invoiceNumber: true,
             invoiceDate: true,
             createdAt: true,
-            completed: true,
-            amountWithoutVat: true,
-            InvoiceType: {select: {name: true}},
+            InvoiceStatus: {select: {name: true}},
           },
         },
         InvoiceOut: {
@@ -390,9 +388,7 @@ export async function getEmployeeDetail(id: string) {
             invoiceNumber: true,
             invoiceDate: true,
             createdAt: true,
-            completed: true,
-            amountWithoutVat: true,
-            InvoiceType: {select: {name: true}},
+            InvoiceStatus: {select: {name: true}},
           },
         },
         Purchase: {
@@ -852,13 +848,13 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: true},
           orderBy: {deletedAt: 'desc'},
           take: 50,
-          select: {id: true, invoiceNumber: true, invoiceDate: true, deletedAt: true, amountWithoutVat: true},
+          select: {id: true, invoiceNumber: true, invoiceDate: true, deletedAt: true},
         },
         InvoiceOut_InvoiceOut_deletedByToEmployee: {
           where: {deleted: true},
           orderBy: {deletedAt: 'desc'},
           take: 50,
-          select: {id: true, invoiceNumber: true, invoiceDate: true, deletedAt: true, amountWithoutVat: true},
+          select: {id: true, invoiceNumber: true, invoiceDate: true, deletedAt: true},
         },
         Purchase_Purchase_deletedByToEmployee: {
           where: {deleted: true},

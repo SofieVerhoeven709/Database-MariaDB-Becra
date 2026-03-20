@@ -309,6 +309,7 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             number VARCHAR(100) NOT NULL,
+            idOld VARCHAR(100),
             mail VARCHAR(100),
             businessPhone VARCHAR(100),
             website VARCHAR(100),

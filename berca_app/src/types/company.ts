@@ -22,6 +22,7 @@ export interface MappedCompany {
   id: string
   name: string
   number: string
+  idOld: string | null
   mail: string | null
   businessPhone: string | null
   website: string | null
@@ -96,6 +97,7 @@ export interface CompanyDetailData {
   id: string
   name: string
   number: string
+  idOld: string | null
   mail: string | null
   businessPhone: string | null
   website: string | null

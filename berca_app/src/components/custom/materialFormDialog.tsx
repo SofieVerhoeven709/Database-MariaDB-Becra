@@ -30,6 +30,11 @@ interface SupplierCompanyOption {
   number: string
 }
 
+interface ParentPartOption {
+  beNumber: string
+  shortDescription: string
+}
+
 interface MaterialFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -37,6 +42,8 @@ interface MaterialFormDialogProps {
   materialGroups: MaterialGroup[]
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
+  parentPartOptions?: ParentPartOption[]
+  parentPartBeNumbersInUse?: string[]
   onSave: (material: Partial<MappedMaterial> & {id: string}) => void
   saving?: boolean
   saveError?: string | null
@@ -155,6 +162,7 @@ const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string} = {
   preferredSupplierShortDescription: null,
   supplierCompanyIds: [],
   supplierCompanyNames: [],
+  parentBeNumbers: [],
   brandName: null,
   documentationPlace: null,
   bePartDoc: null,
@@ -173,6 +181,8 @@ export function MaterialFormDialog({
   materialGroups,
   units,
   supplierCompanies,
+  parentPartOptions: _parentPartOptions,
+  parentPartBeNumbersInUse = [],
   onSave,
   saving = false,
   saveError = null,
@@ -183,13 +193,22 @@ export function MaterialFormDialog({
     material ? {...material} : {...EMPTY_MATERIAL, id: crypto.randomUUID()}
 
   const [form, setForm] = useState<Partial<MappedMaterial> & {id: string}>(makeForm)
+  const [isParentPartEnabled, setIsParentPartEnabled] = useState(parentPartBeNumbersInUse.includes(form.beNumber ?? ''))
+  const [hasParentParts, setHasParentParts] = useState((form.parentBeNumbers ?? []).length > 0)
+  const [parentPartSearch, setParentPartSearch] = useState('')
 
   // Sync form state when the dialogue opens or switches between materials.
   // The lint rule warns against sync setState in effects, but this is intentional:
   // we only update when `open` transitions to true or the edited material changes.
 
   useEffect(() => {
-    if (open) setForm(makeForm())
+    if (open) {
+      const nextForm = makeForm()
+      setForm(nextForm)
+      setIsParentPartEnabled(parentPartBeNumbersInUse.includes(nextForm.beNumber ?? ''))
+      setHasParentParts((nextForm.parentBeNumbers ?? []).length > 0)
+      setParentPartSearch('')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, material?.id])
 
@@ -206,6 +225,32 @@ export function MaterialFormDialog({
       update('preferredSupplierCompanyId', null)
     }
   }
+
+  function toggleParentBeNumber(beNumber: string) {
+    const current = form.parentBeNumbers ?? []
+    const next = current.includes(beNumber) ? current.filter(item => item !== beNumber) : [...current, beNumber]
+    update('parentBeNumbers', next)
+  }
+
+  function setParentPartsEnabled(enabled: boolean) {
+    setHasParentParts(enabled)
+    if (!enabled) {
+      update('parentBeNumbers', [])
+      setParentPartSearch('')
+    }
+  }
+
+  const filteredParentPartOptions = (_parentPartOptions ?? [])
+    .filter(option => option.beNumber !== form.beNumber)
+    .filter(option => {
+      if (!parentPartSearch) return true
+      const q = parentPartSearch.toLowerCase()
+      return option.beNumber.toLowerCase().includes(q) || option.shortDescription.toLowerCase().includes(q)
+    })
+
+  const selectedSupplierCompanies = supplierCompanies.filter(company =>
+    (form.supplierCompanyIds ?? []).includes(company.id),
+  )
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -230,14 +275,24 @@ export function MaterialFormDialog({
             <Label htmlFor="beNumber" className="text-xs text-muted-foreground">
               BE Number
             </Label>
-            <p className="text-xs text-muted-foreground">Leeg laten voor automatische generatie</p>
+            <p className="text-xs text-muted-foreground">Leave empty for automatic generation</p>
             <Input
               id="beNumber"
               className={inputStyles}
               value={form.beNumber ?? ''}
               onChange={e => update('beNumber', e.target.value)}
-              placeholder="Leeg laten = automatisch genereren"
+              placeholder="Leave empty = generate automatically"
             />
+          </div>
+
+          <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">
+            <div className="flex flex-col">
+              <Label className="text-xs text-muted-foreground">Is parent part</Label>
+              <p className="text-xs text-muted-foreground">
+                Toggle to mark this material as a parent part.
+              </p>
+            </div>
+            <Switch checked={isParentPartEnabled} onCheckedChange={setIsParentPartEnabled} aria-label="Is parent part" />
           </div>
 
           {/* Short Description */}
@@ -270,7 +325,7 @@ export function MaterialFormDialog({
             />
           </div>
 
-          {/* Brand Name + Brand Order Nr */}
+          {/* Brand Name + Brand Order No. */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="brandName" className="text-xs text-muted-foreground">
@@ -286,7 +341,7 @@ export function MaterialFormDialog({
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="brandOrderNr" className="text-xs text-muted-foreground">
-                Brand Order Nr
+                Brand Order No.
               </Label>
               <Input
                 id="brandOrderNr"
@@ -441,14 +496,14 @@ export function MaterialFormDialog({
             <PreferredSupplierPicker
               selectedCompanyId={form.preferredSupplierCompanyId ?? null}
               onSelect={companyId => update('preferredSupplierCompanyId', companyId)}
-              availableCompanies={supplierCompanies}
+              availableCompanies={selectedSupplierCompanies}
               inputStyles={inputStyles}
             />
-            {form.preferredSupplierCompanyId && (
-              <p className="text-xs text-muted-foreground">
-                Must be added to suppliers first to be used as preferred supplier.
-              </p>
-            )}
+            {selectedSupplierCompanies.length === 0 ? (
+              <p className="text-xs text-muted-foreground">Select at least one supplier first.</p>
+            ) : form.preferredSupplierCompanyId ? (
+              <p className="text-xs text-muted-foreground">Preferred supplier is selected from your supplier list.</p>
+            ) : null}
           </div>
 
           {/* Row 6: Documentation Place */}
@@ -491,6 +546,54 @@ export function MaterialFormDialog({
             <p className="text-xs text-muted-foreground">
               Select one or more suppliers. Preferred supplier must be selected from this list.
             </p>
+          </div>
+
+          {/* Parent Parts Button */}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <Label className="text-xs text-muted-foreground">Uses parent parts</Label>
+              <Button
+                type="button"
+                size="sm"
+                variant={hasParentParts ? 'default' : 'outline'}
+                onClick={() => setParentPartsEnabled(!hasParentParts)}>
+                {hasParentParts ? 'Has parent parts' : 'No parent parts'}
+              </Button>
+            </div>
+
+            {hasParentParts && (
+              <>
+                <Input
+                  className={inputStyles}
+                  placeholder="Search by BE number or short description"
+                  value={parentPartSearch}
+                  onChange={e => setParentPartSearch(e.target.value)}
+                />
+                <div className="rounded-md border border-border bg-secondary/40 p-3 max-h-44 overflow-y-auto space-y-2">
+                  {filteredParentPartOptions.map(option => {
+                    const checked = (form.parentBeNumbers ?? []).includes(option.beNumber)
+                    return (
+                      <label key={option.beNumber} className="flex items-center justify-between gap-3 text-sm cursor-pointer">
+                        <span className="truncate">
+                          <span className="font-mono">{option.beNumber}</span>{' '}
+                          <span className="text-muted-foreground">- {option.shortDescription}</span>
+                        </span>
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => toggleParentBeNumber(option.beNumber)}
+                          className="h-4 w-4"
+                        />
+                      </label>
+                    )
+                  })}
+                  {filteredParentPartOptions.length === 0 && (
+                    <p className="text-xs text-muted-foreground">No parent parts found.</p>
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground">A material can have multiple parent parts.</p>
+              </>
+            )}
           </div>
 
           {/* Row 5: BE Part Doc + Rejected */}

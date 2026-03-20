@@ -2,17 +2,35 @@ import {getMaterials, getMaterialGroups, getUnits} from '@/dal/materials'
 import {MaterialTable} from '@/components/custom/materialTable'
 import {getDepartmentById} from '@/dal/department'
 import {getSupplierCompanies} from '@/dal/companies'
+import type {MappedMaterial} from '@/types/material'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
 }
 
+function getParentBeNumbers(material: unknown): string[] {
+  if (!material || typeof material !== 'object') return []
+
+  const links =
+    (material as {MaterialStructure_MaterialStructure_materialIdToMaterial?: unknown})
+      .MaterialStructure_MaterialStructure_materialIdToMaterial
+  if (!Array.isArray(links)) return []
+
+  return links
+    .map(link => {
+      if (!link || typeof link !== 'object') return null
+      const beNumber = (link as {beNumber?: unknown}).beNumber
+      return typeof beNumber === 'string' ? beNumber : null
+    })
+    .filter((value): value is string => value !== null)
+}
+
 export default async function MaterialPage({params}: PageProps) {
-      const parseBePartDoc = (value: string | null) => {
-        if (value == null || value === '') return null
-        const parsed = Number(value)
-        return Number.isFinite(parsed) ? parsed : null
-      }
+  const parseBePartDoc = (value: string | null) => {
+    if (value == null || value === '') return null
+    const parsed = Number(value)
+    return Number.isFinite(parsed) ? parsed : null
+  }
 
   const {departmentId} = await params
 
@@ -30,50 +48,51 @@ export default async function MaterialPage({params}: PageProps) {
     groups.map(g => [g.id, [g.groupA, g.groupB, g.groupC, g.groupD].filter(Boolean).join(' / ')]),
   )
 
-  const mappedMaterials = materials.map(m => {
+  const mappedMaterials: MappedMaterial[] = materials.map(m => {
     const preferredSupplierEntry =
       m.MaterialSupplier.find(s => s.companyId === m.preferredSupplierCompanyId) ??
       m.MaterialSupplier.find(s => s.isPreferred) ??
       null
 
     return {
-    id: m.id,
-    beNumber: m.beNumber,
-    name: m.name ?? null,
-    brandOrderNr: m.brandOrderNr,
-    shortDescription: m.shortDescription,
-    longDescription: m.longDescription ?? null,
-    preferredSupplierCompanyId: m.preferredSupplierCompanyId ?? null,
-    preferredSupplierCompanyName: m.PreferredSupplierCompany?.name ?? null,
-    preferredSupplierOrderId: preferredSupplierEntry?.supplierOrderNr ?? null,
-    preferredSupplierShortDescription: preferredSupplierEntry?.shortDescription ?? null,
-    supplierCompanyIds: m.MaterialSupplier.map(s => s.companyId),
-    supplierCompanyNames: m.MaterialSupplier.map(s => s.Company.name),
-    brandName: m.brandName ?? null,
-    documentationPlace: m.documentationPlace ?? null,
-    bePartDoc: parseBePartDoc(m.bePartDoc),
-    rejected: m.rejected ?? false,
-    materialGroupIdA: m.materialGroupIdA ?? null,
-    materialGroupIdB: m.materialGroupIdB ?? null,
-    materialGroupIdC: m.materialGroupIdC ?? null,
-    materialGroupIdD: m.materialGroupIdD ?? null,
-    materialGroupLabelA: m.materialGroupIdA ? (groupLabelById.get(m.materialGroupIdA) ?? m.materialGroupIdA) : '',
-    materialGroupLabelB: m.materialGroupIdB ? (groupLabelById.get(m.materialGroupIdB) ?? m.materialGroupIdB) : '',
-    materialGroupLabelC: m.materialGroupIdC ? (groupLabelById.get(m.materialGroupIdC) ?? m.materialGroupIdC) : '',
-    materialGroupLabelD: m.materialGroupIdD ? (groupLabelById.get(m.materialGroupIdD) ?? m.materialGroupIdD) : '',
-    materialGroupLabel: [m.materialGroupIdA, m.materialGroupIdB, m.materialGroupIdC, m.materialGroupIdD]
-      .filter(Boolean)
-      .map(id => groupLabelById.get(id as string) ?? id)
-      .join(' | '),
-    unitId: m.unitId,
-    unitName: m.Unit.unitName,
-    unitAbbreviation: m.Unit.abbreviation,
-    createdBy: m.createdBy,
-    createdByName: `${m.Employee.firstName} ${m.Employee.lastName}`,
-    deleted: m.deleted,
-    deletedAt: m.deletedAt?.toISOString() ?? null,
-    deletedBy: m.deletedBy ?? null,
-  }
+      id: m.id,
+      beNumber: m.beNumber,
+      name: m.name ?? null,
+      brandOrderNr: m.brandOrderNr,
+      shortDescription: m.shortDescription,
+      longDescription: m.longDescription ?? null,
+      preferredSupplierCompanyId: m.preferredSupplierCompanyId ?? null,
+      preferredSupplierCompanyName: m.PreferredSupplierCompany?.name ?? null,
+      preferredSupplierOrderId: preferredSupplierEntry?.supplierOrderNr ?? null,
+      preferredSupplierShortDescription: preferredSupplierEntry?.shortDescription ?? null,
+      supplierCompanyIds: m.MaterialSupplier.map(s => s.companyId),
+      supplierCompanyNames: m.MaterialSupplier.map(s => s.Company.name),
+      parentBeNumbers: getParentBeNumbers(m),
+      brandName: m.brandName ?? null,
+      documentationPlace: m.documentationPlace ?? null,
+      bePartDoc: parseBePartDoc(m.bePartDoc),
+      rejected: m.rejected ?? false,
+      materialGroupIdA: m.materialGroupIdA ?? null,
+      materialGroupIdB: m.materialGroupIdB ?? null,
+      materialGroupIdC: m.materialGroupIdC ?? null,
+      materialGroupIdD: m.materialGroupIdD ?? null,
+      materialGroupLabelA: m.materialGroupIdA ? (groupLabelById.get(m.materialGroupIdA) ?? m.materialGroupIdA) : '',
+      materialGroupLabelB: m.materialGroupIdB ? (groupLabelById.get(m.materialGroupIdB) ?? m.materialGroupIdB) : '',
+      materialGroupLabelC: m.materialGroupIdC ? (groupLabelById.get(m.materialGroupIdC) ?? m.materialGroupIdC) : '',
+      materialGroupLabelD: m.materialGroupIdD ? (groupLabelById.get(m.materialGroupIdD) ?? m.materialGroupIdD) : '',
+      materialGroupLabel: [m.materialGroupIdA, m.materialGroupIdB, m.materialGroupIdC, m.materialGroupIdD]
+        .filter(Boolean)
+        .map(id => groupLabelById.get(id as string) ?? id)
+        .join(' | '),
+      unitId: m.unitId,
+      unitName: m.Unit.unitName,
+      unitAbbreviation: m.Unit.abbreviation,
+      createdBy: m.createdBy,
+      createdByName: `${m.Employee.firstName} ${m.Employee.lastName}`,
+      deleted: m.deleted,
+      deletedAt: m.deletedAt?.toISOString() ?? null,
+      deletedBy: m.deletedBy ?? null,
+    }
   })
 
   const mappedGroups = groups.map(g => ({
@@ -96,6 +115,13 @@ export default async function MaterialPage({params}: PageProps) {
     number: c.number,
   }))
 
+  const mappedParentPartOptions = materials
+    .filter(m => typeof m.beNumber === 'string' && m.beNumber.length > 0)
+    .map(m => ({
+      beNumber: m.beNumber,
+      shortDescription: m.shortDescription,
+    }))
+
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <div className="mb-6">
@@ -110,6 +136,7 @@ export default async function MaterialPage({params}: PageProps) {
         units={mappedUnits}
         supplierCompanies={mappedSupplierCompanies}
         departmentId={departmentId}
+        parentPartOptions={mappedParentPartOptions}
       />
     </div>
   )

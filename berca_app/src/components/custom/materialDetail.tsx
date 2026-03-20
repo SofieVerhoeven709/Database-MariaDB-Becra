@@ -305,7 +305,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Brand Order Nr</Label>
+              <Label className="text-xs text-muted-foreground">Brand Order No.</Label>
               {editing ? (
                 <Input value={form.brandOrderNr ?? ''} onChange={e => handleField('brandOrderNr', e.target.value)} />
               ) : (
@@ -591,7 +591,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                   <TableHead className={thClass}>In Stock</TableHead>
                   <TableHead className={thClass}>Min</TableHead>
                   <TableHead className={thClass}>Max</TableHead>
-                  <TableHead className={thClass}>Serie Nr</TableHead>
+                  <TableHead className={thClass}>Serial No.</TableHead>
                   <TableHead className={thClass}>Valid Until</TableHead>
                   <TableHead className={thClass}>Status</TableHead>
                 </TableRow>

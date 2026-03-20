@@ -25,6 +25,12 @@ export const createCompanyAction = protectedServerFunction({
     const companyId = crypto.randomUUID()
     const now = new Date()
 
+    // If a first address is provided with no typeAdress, default it to Headquarters.
+    const normalizedAddresses = addresses.map((a, i) => ({
+      ...a,
+      typeAdress: i === 0 && !a.typeAdress ? 'Headquarters' : (a.typeAdress ?? null),
+    }))
+
     // Retry loop — regenerate number on unique constraint collision (P2002)
     let companyNumber = data.number || generateCompanyNumber()
     let attempts = 0
@@ -42,7 +48,7 @@ export const createCompanyAction = protectedServerFunction({
               targetId: target.id,
             },
           }),
-          ...addresses.map(a =>
+          ...normalizedAddresses.map(a =>
             prismaClient.companyAdress.create({
               data: {
                 ...a,
@@ -139,8 +145,17 @@ export const createCompanyAddressAction = protectedServerFunction({
   schema: createCompanyAddressSchema,
   functionName: 'Create company address action',
   serverFn: async ({data, logger, profile}) => {
+    // If this is the first non-deleted address for the company, default typeAdress to Headquarters.
+    const existingCount = await prismaClient.companyAdress.count({
+      where: {companyId: data.companyId, deleted: false},
+    })
+    const normalizedData = {
+      ...data,
+      typeAdress: existingCount === 0 && !data.typeAdress ? 'Headquarters' : (data.typeAdress ?? null),
+    }
+
     const address = await prismaClient.companyAdress.create({
-      data: {...data, id: crypto.randomUUID(), createdBy: profile.id, createdAt: new Date()},
+      data: {...normalizedData, id: crypto.randomUUID(), createdBy: profile.id, createdAt: new Date()},
     })
     logger.info(`Company address created: ${address.id}`)
     revalidatePath('/companies')

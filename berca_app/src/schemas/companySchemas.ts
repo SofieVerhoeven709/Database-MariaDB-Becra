@@ -6,6 +6,7 @@ export const companySchema = z.object({
   id: z.string(),
   name: z.string().min(1).max(100),
   number: z.string().min(1).max(100),
+  idOld: z.string().max(100).nullable().optional(),
   mail: z.string().max(100).nullable().optional(),
   businessPhone: z.string().max(100).nullable().optional(),
   website: z.string().max(100).nullable().optional(),
@@ -33,7 +34,6 @@ export const companySchema = z.object({
   deletedBy: z.string().nullable().optional(),
 })
 
-// ── Address ───────────────────────────────────────────────────────────────────
 const addressInputSchema = z.object({
   street: z.string().max(100).nullable().optional(),
   houseNumber: z.string().max(100).nullable().optional(),

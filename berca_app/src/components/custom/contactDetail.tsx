@@ -51,7 +51,6 @@ interface ContactDetailProps {
   countryOptions: CountryOption[]
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
@@ -75,7 +74,6 @@ function isActiveCompanyLink(endDate: string | null) {
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 const thClass = 'whitespace-nowrap text-xs'
 
-// ─── Component ────────────────────────────────────────────────────────────────
 export function ContactDetail({
   contact,
   currentUserRole,
@@ -91,14 +89,15 @@ export function ContactDetail({
 }: ContactDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canEdit = currentUserLevel >= 20
+  const canEdit = currentUserLevel >= 40
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [showAllCompanies, setShowAllCompanies] = useState(false)
   const [showDeletedCompanies, setShowDeletedCompanies] = useState(false)
 
-  // ─── Company link state ────────────────────────────────────────────────────
   type CompanyForm = {companyId: string; roleWithCompany: string; startedDate: string; endDate: string}
   const emptyCompanyForm = (): CompanyForm => ({
     companyId: 'none',
@@ -112,7 +111,6 @@ export function ContactDetail({
   const [editingCompanyId, setEditingCompanyId] = useState<string | null>(null)
   const [editCompanyForm, setEditCompanyForm] = useState<CompanyForm>(emptyCompanyForm)
 
-  // ─── Create company dialog ─────────────────────────────────────────────────
   const [companies, setCompanies] = useState(companyOptions)
   const [companyDialogOpen, setCompanyDialogOpen] = useState(false)
 
@@ -120,6 +118,7 @@ export function ContactDetail({
     const created = await createCompanyAndReturnIdAction({
       name: c.name,
       number: c.number,
+      idOld: c.idOld,
       mail: c.mail,
       businessPhone: c.businessPhone,
       website: c.website,
@@ -151,13 +150,11 @@ export function ContactDetail({
       })),
       visibilityForRoles: visRows,
     })
-
     setCompanies(prev => [...prev, {id: created.id, name: created.name}])
     setCompanyForm(f => ({...f, companyId: created.id}))
     setCompanyDialogOpen(false)
   }
 
-  // ─── Edit form ─────────────────────────────────────────────────────────────
   const buildForm = () => ({
     firstName: contact.firstName,
     lastName: contact.lastName,
@@ -193,7 +190,6 @@ export function ContactDetail({
   const s = <K extends keyof ReturnType<typeof buildForm>>(key: K, v: ReturnType<typeof buildForm>[K]) =>
     setForm(f => ({...f, [key]: v}))
 
-  // ─── Visibility ────────────────────────────────────────────────────────────
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(contact.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
   )
@@ -247,7 +243,6 @@ export function ContactDetail({
     }
   }
 
-  // ─── Derived ───────────────────────────────────────────────────────────────
   const hasDeletedCompanies = contact.companies.some(cc => cc.deleted)
   const nonDeletedCompanies = contact.companies.filter(cc => !cc.deleted)
   const activeCompanies = nonDeletedCompanies.filter(cc => isActiveCompanyLink(cc.endDate))
@@ -259,7 +254,6 @@ export function ContactDetail({
   const activeProjects = contact.projects.filter(p => p.project.isOpen && !p.project.isClosed)
   const closedProjects = contact.projects.filter(p => p.project.isClosed || !p.project.isOpen)
 
-  // ─── Reusable field renderers ──────────────────────────────────────────────
   const textRow = (label: string, val: string | null, formKey?: keyof typeof form, opts?: {type?: string}) => (
     <div className="flex flex-col gap-1.5">
       <Label className="text-xs text-muted-foreground">{label}</Label>
@@ -317,7 +311,6 @@ export function ContactDetail({
 
   return (
     <div className="flex flex-col gap-6">
-      {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Button
@@ -352,17 +345,17 @@ export function ContactDetail({
               </Button>
             </>
           ) : (
-            <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-              <Pencil className="h-4 w-4" />
-              Edit
-            </Button>
+            canEdit && (
+              <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
+                <Pencil className="h-4 w-4" />
+                Edit
+              </Button>
+            )
           )}
         </div>
       </div>
 
-      {/* ── Info card ──────────────────────────────────────────────────────── */}
       <div className="rounded-xl border border-border/60 bg-card p-6 flex flex-col gap-6">
-        {/* Identity */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Identity</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -395,8 +388,6 @@ export function ContactDetail({
             </div>
           </div>
         </div>
-
-        {/* Contact info */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Contact Info</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -408,8 +399,6 @@ export function ContactDetail({
             {textRow('Home Phone', contact.homePhone, 'homePhone', {type: 'tel'})}
           </div>
         </div>
-
-        {/* Description / Info */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Description</Label>
@@ -438,8 +427,6 @@ export function ContactDetail({
             )}
           </div>
         </div>
-
-        {/* Flags — General */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">General Flags</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -451,8 +438,6 @@ export function ContactDetail({
             {toggleRow('Mailing', contact.mailing, 'mailing')}
           </div>
         </div>
-
-        {/* Flags — Training */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">
             Training &amp; Advice Flags
@@ -477,7 +462,6 @@ export function ContactDetail({
         </div>
       </div>
 
-      {/* ── Tabs ───────────────────────────────────────────────────────────── */}
       <Tabs defaultValue="companies">
         <TabsList className="bg-secondary border border-border/60 flex-wrap h-auto gap-1">
           <TabsTrigger value="companies">
@@ -504,10 +488,9 @@ export function ContactDetail({
               {contact.followUps.length}
             </Badge>
           </TabsTrigger>
-          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
-        {/* ── Companies ────────────────────────────────────────────────────── */}
         <TabsContent value="companies" className="mt-3">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
@@ -545,7 +528,6 @@ export function ContactDetail({
               </Button>
             )}
           </div>
-
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -563,7 +545,6 @@ export function ContactDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/* Add row */}
                 {addingCompany && (
                   <TableRow className="border-border/40 bg-secondary/30">
                     <TableCell colSpan={2}>
@@ -670,8 +651,6 @@ export function ContactDetail({
                     </TableCell>
                   </TableRow>
                 )}
-
-                {/* Existing rows */}
                 {visibleCompanies.length === 0 && !addingCompany ? (
                   <TableRow>
                     <TableCell colSpan={8} className="h-20 text-center text-muted-foreground">
@@ -802,7 +781,6 @@ export function ContactDetail({
                                         variant="ghost"
                                         size="icon"
                                         className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                                        title="Permanently delete"
                                         onClick={async () => {
                                           await hardDeleteCompanyContactAction({id: cc.id})
                                           router.refresh()
@@ -851,12 +829,11 @@ export function ContactDetail({
                                         <ExternalLink className="h-3.5 w-3.5" />
                                       </Button>
                                     </Link>
-                                    {canEdit && (
+                                    {canDelete && (
                                       <Button
                                         variant="ghost"
                                         size="icon"
                                         className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                                        title="Delete"
                                         onClick={async () => {
                                           await softDeleteCompanyContactAction({id: cc.id})
                                           router.refresh()
@@ -879,7 +856,6 @@ export function ContactDetail({
           </div>
         </TabsContent>
 
-        {/* ── Projects ─────────────────────────────────────────────────────── */}
         <TabsContent value="projects" className="mt-3">
           <div className="flex flex-col gap-6">
             <div>
@@ -938,7 +914,6 @@ export function ContactDetail({
                 </Table>
               </div>
             </div>
-
             {closedProjects.length > 0 && (
               <div>
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
@@ -992,7 +967,6 @@ export function ContactDetail({
           </div>
         </TabsContent>
 
-        {/* ── Trainings ────────────────────────────────────────────────────── */}
         <TabsContent value="trainings" className="mt-3">
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
@@ -1042,7 +1016,6 @@ export function ContactDetail({
           </div>
         </TabsContent>
 
-        {/* ── Follow-ups ───────────────────────────────────────────────────── */}
         <TabsContent value="followups" className="mt-3">
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
@@ -1092,8 +1065,7 @@ export function ContactDetail({
           </div>
         </TabsContent>
 
-        {/* ── Visibility ───────────────────────────────────────────────────── */}
-        {isAdmin && (
+        {canManageVisibility && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab
@@ -1128,7 +1100,6 @@ export function ContactDetail({
         )}
       </Tabs>
 
-      {/* ── Create company dialog ───────────────────────────────────────────── */}
       <CompanyFormDialog
         open={companyDialogOpen}
         onOpenChange={setCompanyDialogOpen}
@@ -1137,6 +1108,8 @@ export function ContactDetail({
         onSave={handleSaveCompany}
         isAdmin={isAdmin}
         canDelete={false}
+        canEditNumber={false}
+        canManageVisibility={false}
         roleLevelOptions={roleLevelOptions}
         defaultVisibleRoleNames={defaultVisibleRoleNames}
         countryOptions={countryOptions}

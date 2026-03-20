@@ -39,6 +39,7 @@ interface FollowUpFormDialogProps {
   followUpTypeOptions: SelectOption[]
   employeeOptions: SelectOption[]
   targetOptions: TargetOptions
+  canManageVisibility: boolean
 }
 
 const emptyFollowUp = (): MappedFollowUp => ({
@@ -91,6 +92,7 @@ export function FollowUpFormDialog({
   followUpTypeOptions,
   employeeOptions,
   targetOptions,
+  canManageVisibility,
 }: FollowUpFormDialogProps) {
   const [form, setForm] = useState<MappedFollowUp>(emptyFollowUp())
   const [saving, setSaving] = useState(false)
@@ -228,7 +230,7 @@ export function FollowUpFormDialog({
             {!isEdit && <TabsTrigger value="target">Target</TabsTrigger>}
             <TabsTrigger value="assignment">Assignment</TabsTrigger>
             <TabsTrigger value="flags">Flags</TabsTrigger>
-            {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+            {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
           </TabsList>
 
           {/* ── Details ──────────────────────────────────────────────────── */}
@@ -332,7 +334,7 @@ export function FollowUpFormDialog({
           </TabsContent>
 
           {/* ── Visibility ───────────────────────────────────────────────── */}
-          {isAdmin && (
+          {canManageVisibility && (
             <TabsContent value="visibility">
               <div className="py-3">
                 <VisibilityForRoleTab

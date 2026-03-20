@@ -92,8 +92,11 @@ export function InvoiceOutDetail({
   departmentId,
 }: InvoiceOutDetailProps) {
   const router = useRouter()
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canEdit = currentUserLevel >= 40
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const isDraft = invoice.invoiceStatusName === 'Draft'
 

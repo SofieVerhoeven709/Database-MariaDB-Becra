@@ -72,7 +72,11 @@ export function InvoiceInDetail({
   currentUserRole,
 }: InvoiceInDetailProps) {
   const router = useRouter()
-  const canEdit = currentUserLevel >= 20
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const buildForm = (): EditForm => ({
     invoiceNumber: invoice.invoiceNumber,

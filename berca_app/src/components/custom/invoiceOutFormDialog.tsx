@@ -44,7 +44,6 @@ interface InvoiceOutFormDialogProps {
 }
 
 type FormState = {
-  invoiceNumber: string
   poNumber: string
   humanId: string
   invoiceDate: string
@@ -68,7 +67,6 @@ function emptyForm(inv: MappedInvoiceOut | null): FormState {
   const today = new Date().toISOString().slice(0, 10)
   if (!inv) {
     return {
-      invoiceNumber: '',
       poNumber: '',
       humanId: '',
       invoiceDate: today,
@@ -84,7 +82,6 @@ function emptyForm(inv: MappedInvoiceOut | null): FormState {
     }
   }
   return {
-    invoiceNumber: inv.invoiceNumber,
     poNumber: inv.poNumber ?? '',
     humanId: inv.humanId ?? '',
     invoiceDate: toDateInput(inv.invoiceDate),
@@ -115,7 +112,6 @@ export function InvoiceOutFormDialog({
   const [form, setForm] = useState<FormState>(() => emptyForm(invoice))
   const [saving, setSaving] = useState(false)
 
-  // Project + work order selection (create only)
   const [selectedProjectId, setSelectedProjectId] = useState('')
   const [workOrders, setWorkOrders] = useState<WorkOrderOption[]>([])
   const [selectedWorkOrderIds, setSelectedWorkOrderIds] = useState<string[]>([])
@@ -146,22 +142,24 @@ export function InvoiceOutFormDialog({
     setSelectedWorkOrderIds(prev => (prev.includes(id) ? prev.filter(w => w !== id) : [...prev, id]))
   }
 
+  const isEdit = !!invoice
+
   const isValid =
-    form.invoiceNumber.trim() &&
     form.invoiceDate &&
     form.dueDate &&
     form.invoiceTypeId &&
     form.paymentMethodId &&
     form.invoiceSentTypeId &&
     form.invoiceStatusId &&
-    form.vatMarginId
+    form.vatMarginId &&
+    // On create, require at least 1 work order
+    (isEdit || selectedWorkOrderIds.length > 0)
 
   async function handleSubmit() {
     if (!isValid) return
     setSaving(true)
     try {
       const payload = {
-        invoiceNumber: form.invoiceNumber.trim(),
         poNumber: form.poNumber || null,
         humanId: form.humanId || null,
         invoiceDate: new Date(form.invoiceDate),
@@ -177,7 +175,7 @@ export function InvoiceOutFormDialog({
       }
 
       if (invoice) {
-        await updateInvoiceOutAction({id: invoice.id, ...payload})
+        await updateInvoiceOutAction({id: invoice.id, invoiceNumber: invoice.invoiceNumber, ...payload})
       } else {
         await createInvoiceOutAction({...payload, workOrderIds: selectedWorkOrderIds})
       }
@@ -187,7 +185,6 @@ export function InvoiceOutFormDialog({
     }
   }
 
-  const isEdit = !!invoice
   const selectedProject = projectOptions.find(p => p.id === selectedProjectId)
 
   return (
@@ -198,11 +195,25 @@ export function InvoiceOutFormDialog({
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-5 py-3 sm:grid-cols-2">
-          {/* ── Project + Work Orders (create only) ── */}
+          {/* Invoice number */}
+          <div className="flex flex-col gap-1.5 sm:col-span-2">
+            <Label className="text-xs text-muted-foreground">
+              Invoice Number
+              <span className="ml-1.5 text-muted-foreground/60">{isEdit ? '(locked)' : '(auto-generated)'}</span>
+            </Label>
+            <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+              {isEdit ? invoice.invoiceNumber : 'Will be assigned on save'}
+            </div>
+          </div>
+
+          {/* Project + Work Orders (create only) */}
           {!isEdit && (
             <div className="sm:col-span-2 flex flex-col gap-3">
               <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Project</Label>
+                <Label className="text-xs text-muted-foreground">
+                  Project *
+                  <span className="ml-1.5 text-muted-foreground/60">(required — select to pick work orders)</span>
+                </Label>
                 <Select value={selectedProjectId} onValueChange={setSelectedProjectId}>
                   <SelectTrigger className="bg-secondary border-border">
                     <SelectValue placeholder="Select project…" />
@@ -221,7 +232,9 @@ export function InvoiceOutFormDialog({
               {selectedProjectId && (
                 <div className="flex flex-col gap-1.5">
                   <div className="flex items-center justify-between">
-                    <Label className="text-xs text-muted-foreground">Active Work Orders</Label>
+                    <Label className="text-xs text-muted-foreground">
+                      Work Orders *<span className="ml-1.5 text-muted-foreground/60">(select at least one)</span>
+                    </Label>
                     {selectedWorkOrderIds.length > 0 && (
                       <Badge variant="secondary" className="text-xs">
                         {selectedWorkOrderIds.length} selected
@@ -257,7 +270,13 @@ export function InvoiceOutFormDialog({
                 </div>
               )}
 
-              {selectedProject && (
+              {!selectedProjectId && <p className="text-xs text-amber-500">Select a project to choose work orders.</p>}
+
+              {selectedProjectId && selectedWorkOrderIds.length === 0 && (
+                <p className="text-xs text-amber-500">At least one work order must be selected.</p>
+              )}
+
+              {selectedProject && selectedWorkOrderIds.length > 0 && (
                 <p className="text-xs text-muted-foreground">
                   Billing: <span className="text-foreground">{selectedProject.companyName}</span>
                 </p>
@@ -267,17 +286,6 @@ export function InvoiceOutFormDialog({
             </div>
           )}
 
-          {/* Invoice Number */}
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Invoice Number *</Label>
-            <Input
-              value={form.invoiceNumber}
-              onChange={e => set('invoiceNumber', e.target.value)}
-              className="bg-secondary border-border"
-            />
-          </div>
-
-          {/* Human ID */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Human ID</Label>
             <Input
@@ -287,7 +295,6 @@ export function InvoiceOutFormDialog({
             />
           </div>
 
-          {/* PO Number */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">PO Number</Label>
             <Input
@@ -297,7 +304,6 @@ export function InvoiceOutFormDialog({
             />
           </div>
 
-          {/* Invoice Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Invoice Date *</Label>
             <Input
@@ -308,7 +314,6 @@ export function InvoiceOutFormDialog({
             />
           </div>
 
-          {/* Due Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Due Date *</Label>
             <Input
@@ -319,7 +324,6 @@ export function InvoiceOutFormDialog({
             />
           </div>
 
-          {/* Sent Date */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Sent Date</Label>
             <Input
@@ -330,7 +334,6 @@ export function InvoiceOutFormDialog({
             />
           </div>
 
-          {/* Invoice Type */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Invoice Type *</Label>
             <Select value={form.invoiceTypeId} onValueChange={v => set('invoiceTypeId', v)}>
@@ -347,7 +350,6 @@ export function InvoiceOutFormDialog({
             </Select>
           </div>
 
-          {/* Invoice Status */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Status *</Label>
             <Select value={form.invoiceStatusId} onValueChange={v => set('invoiceStatusId', v)}>
@@ -364,7 +366,6 @@ export function InvoiceOutFormDialog({
             </Select>
           </div>
 
-          {/* Payment Method */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Payment Method *</Label>
             <Select value={form.paymentMethodId} onValueChange={v => set('paymentMethodId', v)}>
@@ -381,7 +382,6 @@ export function InvoiceOutFormDialog({
             </Select>
           </div>
 
-          {/* Sent Type */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Sent Type *</Label>
             <Select value={form.invoiceSentTypeId} onValueChange={v => set('invoiceSentTypeId', v)}>
@@ -398,7 +398,6 @@ export function InvoiceOutFormDialog({
             </Select>
           </div>
 
-          {/* VAT Margin */}
           <div className="flex flex-col gap-1.5 sm:col-span-2">
             <Label className="text-xs text-muted-foreground">VAT Margin *</Label>
             <Select value={form.vatMarginId} onValueChange={v => set('vatMarginId', v)}>
@@ -415,7 +414,6 @@ export function InvoiceOutFormDialog({
             </Select>
           </div>
 
-          {/* Toggles */}
           <div className="sm:col-span-2 grid grid-cols-2 gap-3">
             {[
               {key: 'outstanding' as const, label: 'Outstanding'},

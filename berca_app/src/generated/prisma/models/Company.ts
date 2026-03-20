@@ -2427,6 +2427,7 @@ export type CompanyCreateWithoutInvoiceInInput = {
   id: string
   name: string
   number: string
+  idOld?: string | null
   mail?: string | null
   businessPhone?: string | null
   website?: string | null
@@ -2469,6 +2470,7 @@ export type CompanyUncheckedCreateWithoutInvoiceInInput = {
   id: string
   name: string
   number: string
+  idOld?: string | null
   mail?: string | null
   businessPhone?: string | null
   website?: string | null
@@ -2527,6 +2529,7 @@ export type CompanyUpdateWithoutInvoiceInInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2569,6 +2572,7 @@ export type CompanyUncheckedUpdateWithoutInvoiceInInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null

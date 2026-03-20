@@ -177,15 +177,7 @@ export function InvoiceInDetail({
           {/* Invoice Number */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Invoice Number</Label>
-            {editing ? (
-              <Input
-                value={form.invoiceNumber}
-                onChange={e => s('invoiceNumber', e.target.value)}
-                className="bg-secondary border-border"
-              />
-            ) : (
-              <p className="text-sm text-muted-foreground">{invoice.invoiceNumber}</p>
-            )}
+            <p className="text-sm text-muted-foreground">{invoice.invoiceNumber}</p>
           </div>
 
           {/* Human ID */}

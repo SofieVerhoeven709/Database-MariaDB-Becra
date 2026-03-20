@@ -84,6 +84,14 @@ export function generateAttendeeNumber(trainingNumber: string, sequence: number)
   return `OPF06${stripped}${seq}`
 }
 
+export function generateInvoiceInNumber(year: number, sequence: number): string {
+  return `${year}${String(sequence).padStart(4, '0')}`
+}
+
+export function generateInvoiceOutNumber(year: number, sequence: number): string {
+  return `${year}${String(sequence + 100).padStart(4, '0')}`
+}
+
 // Used for admin/global pages
 export function getGlobalRoleInfo(profile: Profile) {
   const entries = profile.RoleLevelEmployee ?? []

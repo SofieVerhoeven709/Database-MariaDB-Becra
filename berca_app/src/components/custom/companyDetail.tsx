@@ -99,8 +99,10 @@ export function CompanyDetail({
 }: CompanyDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canEdit = currentUserLevel >= 20
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
+  const canEdit = currentUserLevel >= 40
+  const canEditNumber = currentUserLevel >= 80
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -110,6 +112,7 @@ export function CompanyDetail({
   const buildForm = () => ({
     name: company.name,
     number: company.number,
+    idOld: company.idOld ?? '',
     mail: company.mail ?? '',
     businessPhone: company.businessPhone ?? '',
     website: company.website ?? '',
@@ -136,7 +139,6 @@ export function CompanyDetail({
   const s = <K extends keyof ReturnType<typeof buildForm>>(key: K, v: ReturnType<typeof buildForm>[K]) =>
     setForm(f => ({...f, [key]: v}))
 
-  // ─── Visibility ────────────────────────────────────────────────────────────
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(company.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
   )
@@ -148,12 +150,14 @@ export function CompanyDetail({
   }
 
   async function handleSave() {
+    if (!form.number.trim()) return
     setSaving(true)
     try {
       await updateCompanyAction({
         id: company.id,
         name: form.name,
         number: form.number,
+        idOld: form.idOld || null,
         mail: form.mail || null,
         businessPhone: form.businessPhone || null,
         website: form.website || null,
@@ -211,7 +215,6 @@ export function CompanyDetail({
   const [editAddrForm, setEditAddrForm] = useState<AddrForm>(emptyAddrForm)
   const [showDeletedAddrs, setShowDeletedAddrs] = useState(false)
 
-  // ─── Address handlers ──────────────────────────────────────────────────────
   async function handleAddAddr() {
     await createCompanyAddressAction({
       companyId: company.id,
@@ -301,7 +304,6 @@ export function CompanyDetail({
   const [showDeletedContacts, setShowDeletedContacts] = useState(false)
   const [contactDialogOpen, setContactDialogOpen] = useState(false)
 
-  // ─── Contact link handlers ─────────────────────────────────────────────────
   async function handleAddContactLink() {
     if (contactLinkForm.contactId === 'none') return
     await addCompanyContactAction({
@@ -451,10 +453,12 @@ export function CompanyDetail({
               </Button>
             </>
           ) : (
-            <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-              <Pencil className="h-4 w-4" />
-              Edit
-            </Button>
+            canEdit && (
+              <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
+                <Pencil className="h-4 w-4" />
+                Edit
+              </Button>
+            )
           )}
         </div>
       </div>
@@ -462,10 +466,59 @@ export function CompanyDetail({
       {/* ── Info card ──────────────────────────────────────────────────────── */}
       <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {/* ── Number ── */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">
+              Number *{!canEditNumber && editing && <span className="ml-1.5 text-muted-foreground/60">(locked)</span>}
+            </Label>
+            {editing ? (
+              canEditNumber ? (
+                <Input
+                  value={form.number}
+                  onChange={e => s('number', e.target.value)}
+                  className="bg-secondary border-border"
+                />
+              ) : (
+                <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                  {form.number}
+                </div>
+              )
+            ) : (
+              <p className="text-sm text-muted-foreground">{company.number}</p>
+            )}
+          </div>
+
+          {/* ── Name ── */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Name</Label>
+            {editing ? (
+              <Input
+                value={form.name}
+                onChange={e => s('name', e.target.value)}
+                className="bg-secondary border-border"
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground">{company.name}</p>
+            )}
+          </div>
+
+          {/* ── Old ID ── */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Old ID</Label>
+            {editing ? (
+              <Input
+                value={form.idOld}
+                onChange={e => s('idOld', e.target.value)}
+                placeholder="Legacy identifier…"
+                className="bg-secondary border-border"
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground">{company.idOld ?? '-'}</p>
+            )}
+          </div>
+
           {(
             [
-              {key: 'name', label: 'Name'},
-              {key: 'number', label: 'Number'},
               {key: 'mail', label: 'Email'},
               {key: 'businessPhone', label: 'Business Phone'},
               {key: 'website', label: 'Website'},
@@ -484,7 +537,6 @@ export function CompanyDetail({
                   value={form[key]}
                   onChange={e => s(key, e.target.value)}
                   className="bg-secondary border-border"
-                  disabled={key === 'number'}
                 />
               ) : (
                 <p className="text-sm">
@@ -618,7 +670,7 @@ export function CompanyDetail({
               </Badge>
             </TabsTrigger>
           )}
-          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
         {/* ── Contacts ─────────────────────────────────────────────────────── */}
@@ -776,7 +828,6 @@ export function CompanyDetail({
                     </TableCell>
                   </TableRow>
                 )}
-
                 {visibleContacts.length === 0 && !addingContact ? (
                   <TableRow>
                     <TableCell colSpan={9} className="h-20 text-center text-muted-foreground">
@@ -933,7 +984,7 @@ export function CompanyDetail({
                                         <ExternalLink className="h-3.5 w-3.5" />
                                       </Button>
                                     </Link>
-                                    {canEdit && (
+                                    {canDelete && (
                                       <Button
                                         variant="ghost"
                                         size="icon"
@@ -1025,7 +1076,6 @@ export function CompanyDetail({
                 </Table>
               </div>
             </div>
-
             {closedProjects.length > 0 && (
               <div>
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
@@ -1105,14 +1155,14 @@ export function CompanyDetail({
                 variant="outline"
                 className="text-xs h-7 border-border gap-1"
                 onClick={() => {
+                  const hasActiveAddresses = company.addresses.some(a => !a.deleted)
                   setAddingAddr(true)
-                  setNewAddrForm(emptyAddrForm())
+                  setNewAddrForm({...emptyAddrForm(), typeAdress: hasActiveAddresses ? '' : 'Headquarters'})
                 }}>
                 <Plus className="h-3.5 w-3.5" /> Add Address
               </Button>
             )}
           </div>
-
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -1131,7 +1181,6 @@ export function CompanyDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/* ── Add row ── */}
                 {addingAddr && (
                   <TableRow className="border-border/40 bg-secondary/30">
                     {(['typeAdress', 'street', 'houseNumber', 'busNumber', 'zipCode', 'place'] as const).map(field => (
@@ -1144,7 +1193,6 @@ export function CompanyDetail({
                         />
                       </TableCell>
                     ))}
-                    {/* Country cell in add row */}
                     <TableCell className="min-w-[160px]">
                       <CountrySelect
                         value={newAddrForm.countryId}
@@ -1173,8 +1221,6 @@ export function CompanyDetail({
                     </TableCell>
                   </TableRow>
                 )}
-
-                {/* ── Existing rows ── */}
                 {visibleAddresses.length === 0 && !addingAddr ? (
                   <TableRow>
                     <TableCell colSpan={9} className="h-20 text-center text-muted-foreground">
@@ -1201,10 +1247,10 @@ export function CompanyDetail({
                                 </TableCell>
                               ),
                             )}
-                            {/* Country cell in edit row */}
                             <TableCell className="min-w-[160px]">
                               <CountrySelect
                                 value={editAddrForm.countryId}
+                                currentName={editAddrForm.countryName}
                                 onChange={(id, name) =>
                                   setEditAddrForm(f => ({...f, countryId: id, countryName: name}))
                                 }
@@ -1359,7 +1405,7 @@ export function CompanyDetail({
         )}
 
         {/* ── Visibility ───────────────────────────────────────────────────── */}
-        {isAdmin && (
+        {canManageVisibility && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab
@@ -1408,6 +1454,7 @@ export function CompanyDetail({
         titleOptions={titleOptions}
         companyOptions={companies}
         countryOptions={countryOptions}
+        canManageVisibility={canManageVisibility}
       />
     </div>
   )

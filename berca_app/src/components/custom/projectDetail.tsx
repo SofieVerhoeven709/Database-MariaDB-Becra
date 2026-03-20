@@ -50,13 +50,11 @@ interface Option {
   id: string
   name: string
 }
-
 interface EmployeeOption {
   id: string
   firstName: string
   lastName: string
 }
-
 interface AvailablePurchase {
   id: string
   orderNumber: string | null
@@ -96,18 +94,9 @@ function toInputDate(date: Date | null) {
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 const thClass = 'whitespace-nowrap text-xs'
 
-// ─── Permission thresholds ────────────────────────────────────────────────────
-const PERM = {
-  contacts: 20,
-  purchases: 60,
-  materials: 80,
-  workOrders: 80,
-  delete: 80,
-} as const
-
+const PERM = {contacts: 20, purchases: 60, materials: 80, workOrders: 80, delete: 80} as const
 const PURCHASE_STATUS_OPTIONS = ['Pending', 'Ordered', 'Delivered', 'Cancelled', 'On Hold']
 
-// ─── Empty form states ────────────────────────────────────────────────────────
 const emptyContact = () => ({contactId: '', description: ''})
 const emptyPurchase = () => ({orderNumber: '', shortDescription: '', status: '', companyId: ''})
 const emptyMaterial = () => ({becraCode: '', shortDescription: '', brandName: '', transactionType: ''})
@@ -142,7 +131,6 @@ export function ProjectDetail({
   const [showDeletedSubProjects, setShowDeletedSubProjects] = useState(false)
   const [workOrderDialogOpen, setWorkOrderDialogOpen] = useState(false)
 
-  // ─── Project edit form ────────────────────────────────────────────────────
   const [form, setForm] = useState({
     projectNumber: project.projectNumber,
     projectName: project.projectName,
@@ -160,48 +148,31 @@ export function ProjectDetail({
     isClosed: project.isClosed,
   })
 
-  // ─── Inline row visibility ────────────────────────────────────────────────
   const [showInlineContact, setShowInlineContact] = useState(false)
   const [showInlinePurchase, setShowInlinePurchase] = useState(false)
   const [showInlineMaterial, setShowInlineMaterial] = useState(false)
-
-  // ─── Inline row form states ───────────────────────────────────────────────
   const [inlineContact, setInlineContact] = useState(emptyContact())
   const [inlinePurchase, setInlinePurchase] = useState(emptyPurchase())
   const [inlineMaterial, setInlineMaterial] = useState(emptyMaterial())
-
-  // ─── Dialog visibility ────────────────────────────────────────────────────
   const [dialogContact, setDialogContact] = useState(false)
   const [dialogPurchase, setDialogPurchase] = useState(false)
   const [dialogLinkPurchase, setDialogLinkPurchase] = useState(false)
   const [dialogMaterial, setDialogMaterial] = useState(false)
   const [nestedContactDialog, setNestedContactDialog] = useState(false)
-
-  // ─── Edit dialog visibility ───────────────────────────────────────────────
   const [editContactDialog, setEditContactDialog] = useState(false)
   const [editPurchaseDialog, setEditPurchaseDialog] = useState(false)
-
-  // ─── Edit form states ─────────────────────────────────────────────────────
   const [editContactForm, setEditContactForm] = useState(emptyContactEdit())
   const [editPurchaseForm, setEditPurchaseForm] = useState(emptyPurchaseEdit())
-
-  // ─── Delete confirm state ─────────────────────────────────────────────────
   const [deleteTarget, setDeleteTarget] = useState<{
     type: 'contact' | 'purchase' | 'workorder'
     id: string
     label: string
     action: 'soft' | 'hard' | 'undelete'
   } | null>(null)
-
-  // ─── Dialog form states ───────────────────────────────────────────────────
   const [dialogContactForm, setDialogContactForm] = useState(emptyContact())
   const [dialogPurchaseForm, setDialogPurchaseForm] = useState(emptyPurchase())
   const [dialogMaterialForm, setDialogMaterialForm] = useState(emptyMaterial())
-
-  // ─── Local contacts list ──────────────────────────────────────────────────
   const [localContacts, setLocalContacts] = useState(contacts)
-
-  // ─── Saving states ────────────────────────────────────────────────────────
   const [linkPurchaseId, setLinkPurchaseId] = useState('')
   const [savingNewPurchase, setSavingNewPurchase] = useState(false)
   const [savingLinkPurchase, setSavingLinkPurchase] = useState(false)
@@ -209,21 +180,22 @@ export function ProjectDetail({
   const [savingEdit, setSavingEdit] = useState(false)
   const [savingDelete, setSavingDelete] = useState(false)
 
-  // ─── Visibility state ─────────────────────────────────────────────────────
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(initialVisibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
   )
 
   const can = (level: number) => currentUserLevel >= level
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canDelete = isAdmin || currentUserLevel >= PERM.delete
-  const canManageWorkOrders = isAdmin || currentUserLevel >= PERM.workOrders
-  const workOrderProjectOptions = [
-    {
-      id: project.id,
-      name: `${project.projectNumber} — ${project.projectName}`,
-    },
-  ]
+  // Level thresholds:
+  //   >= 40  can edit project fields
+  //   >= 60  can add contacts / purchases (via PERM.contacts / PERM.purchases)
+  //   >= 80  can delete + manage work orders + manage visibility
+  const canEdit = currentUserLevel >= 40
+  const canDelete = currentUserLevel >= 80
+  const canManageWorkOrders = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
+
+  const workOrderProjectOptions = [{id: project.id, name: `${project.projectNumber} — ${project.projectName}`}]
 
   function handleCancel() {
     setForm({
@@ -280,7 +252,6 @@ export function ProjectDetail({
     }
   }
 
-  // ─── Inline submit handlers ───────────────────────────────────────────────
   async function handleInlineContactSave() {
     if (!inlineContact.contactId) return
     await createProjectContactAction({
@@ -308,13 +279,10 @@ export function ProjectDetail({
   }
 
   async function handleInlineMaterialSave() {
-    // TODO: await createMaterialSerialTrackAction({...inlineMaterial, projectId: project.id})
     setInlineMaterial(emptyMaterial())
     setShowInlineMaterial(false)
     router.refresh()
   }
-
-  // ─── Dialog submit handlers ───────────────────────────────────────────────
 
   async function handleDialogContactSave() {
     if (!dialogContactForm.contactId) return
@@ -374,7 +342,6 @@ export function ProjectDetail({
       initialCompanyId: initialCompanyId ?? null,
       initialRoleWithCompany: initialRoleWithCompany ?? null,
     })
-
     const newOption = {id: created.id, name: `${created.firstName} ${created.lastName}`}
     setLocalContacts(prev => [...prev, newOption])
     setDialogContactForm(f => ({...f, contactId: created.id}))
@@ -404,10 +371,7 @@ export function ProjectDetail({
     if (!linkPurchaseId) return
     setSavingLinkPurchase(true)
     try {
-      await updatePurchaseAction({
-        id: linkPurchaseId,
-        projectId: project.id,
-      })
+      await updatePurchaseAction({id: linkPurchaseId, projectId: project.id})
       setLinkPurchaseId('')
       setDialogLinkPurchase(false)
       router.refresh()
@@ -417,13 +381,10 @@ export function ProjectDetail({
   }
 
   async function handleDialogMaterialSave() {
-    // TODO: await createMaterialSerialTrackAction({...dialogMaterialForm, projectId: project.id})
     setDialogMaterialForm(emptyMaterial())
     setDialogMaterial(false)
     router.refresh()
   }
-
-  // ─── Edit handlers ────────────────────────────────────────────────────────
 
   function openEditContact(pc: {id: string; description: string | null; extraInfo: string | null; isValid: boolean}) {
     setEditContactForm({
@@ -486,8 +447,6 @@ export function ProjectDetail({
     }
   }
 
-  // ─── Delete handler ───────────────────────────────────────────────────────
-
   async function handleConfirmDelete() {
     if (!deleteTarget) return
     setSavingDelete(true)
@@ -513,7 +472,6 @@ export function ProjectDetail({
     }
   }
 
-  // ─── Reusable tab action bar ──────────────────────────────────────────────
   function TabActions({
     canAdd,
     onInline,
@@ -543,7 +501,6 @@ export function ProjectDetail({
     )
   }
 
-  // ─── Reusable row action buttons ──────────────────────────────────────────
   function RowActions({
     onEdit,
     onSoftDelete,
@@ -641,10 +598,12 @@ export function ProjectDetail({
               </Button>
             </>
           ) : (
-            <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-              <Pencil className="h-4 w-4" />
-              Edit
-            </Button>
+            canEdit && (
+              <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
+                <Pencil className="h-4 w-4" />
+                Edit
+              </Button>
+            )
           )}
         </div>
       </div>
@@ -660,7 +619,6 @@ export function ProjectDetail({
               <p className="text-sm text-foreground font-medium">{project.projectNumber}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project Name</Label>
             {editing ? (
@@ -673,7 +631,6 @@ export function ProjectDetail({
               <p className="text-sm text-foreground font-medium">{project.projectName}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Company</Label>
             {editing ? (
@@ -693,7 +650,6 @@ export function ProjectDetail({
               <p className="text-sm text-muted-foreground">{project.Company.name}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project Type</Label>
             {editing ? (
@@ -715,12 +671,10 @@ export function ProjectDetail({
               </Badge>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Parent Project</Label>
             <p className="text-sm text-muted-foreground">{project.Project?.projectNumber ?? '-'}</p>
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Start Date</Label>
             {editing ? (
@@ -744,7 +698,6 @@ export function ProjectDetail({
               <p className="text-sm text-muted-foreground">{formatDate(project.startDate)}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">End Date</Label>
             {editing ? (
@@ -766,7 +719,6 @@ export function ProjectDetail({
               <p className="text-sm text-muted-foreground">{formatDate(project.endDate)}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Engineering Start</Label>
             {editing ? (
@@ -781,7 +733,6 @@ export function ProjectDetail({
               <p className="text-sm text-muted-foreground">{formatDate(project.engineeringStartDate)}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Closing Date</Label>
             {editing ? (
@@ -796,19 +747,16 @@ export function ProjectDetail({
               <p className="text-sm text-muted-foreground">{formatDate(project.closingDate)}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created By</Label>
             <p className="text-sm text-muted-foreground">
               {project.Employee.firstName} {project.Employee.lastName}
             </p>
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created At</Label>
             <p className="text-sm text-muted-foreground">{formatDate(project.createdAt)}</p>
           </div>
-
           <div className="sm:col-span-2 lg:col-span-3 grid grid-cols-2 sm:grid-cols-4 gap-4">
             {(
               [
@@ -834,7 +782,6 @@ export function ProjectDetail({
               </div>
             ))}
           </div>
-
           <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-3">
             <Label className="text-xs text-muted-foreground">Description</Label>
             {editing ? (
@@ -848,7 +795,6 @@ export function ProjectDetail({
               <p className="text-sm text-muted-foreground whitespace-pre-wrap">{project.description ?? '-'}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-3">
             <Label className="text-xs text-muted-foreground">Extra Info</Label>
             {editing ? (
@@ -898,10 +844,10 @@ export function ProjectDetail({
               {project.other_Project.length}
             </Badge>
           </TabsTrigger>
-          {(isAdmin || currentUserLevel >= 80) && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
-        {/* ── Contacts ──────────────────────────────────────────────────────── */}
+        {/* ── Contacts ── */}
         <TabsContent value="contacts" className="mt-3">
           <TabActions
             canAdd={can(PERM.contacts)}
@@ -1071,7 +1017,7 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Work Orders ───────────────────────────────────────────────────── */}
+        {/* ── Work Orders ── */}
         <TabsContent value="workorders" className="mt-3">
           {canManageWorkOrders && (
             <div className="flex items-center gap-2 mb-3">
@@ -1214,7 +1160,7 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Purchases ─────────────────────────────────────────────────────── */}
+        {/* ── Purchases ── */}
         <TabsContent value="purchases" className="mt-3">
           {can(PERM.purchases) && (
             <div className="flex items-center gap-2 mb-3">
@@ -1445,7 +1391,7 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Material Tracks ───────────────────────────────────────────────── */}
+        {/* ── Material Tracks ── */}
         <TabsContent value="materials" className="mt-3">
           <TabActions
             canAdd={can(PERM.materials)}
@@ -1564,7 +1510,7 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Sub-projects ──────────────────────────────────────────────────── */}
+        {/* ── Sub-projects ── */}
         <TabsContent value="subprojects" className="mt-3">
           {canDelete && (
             <div className="flex justify-end mb-2">
@@ -1653,8 +1599,8 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Visibility ────────────────────────────────────────────────────── */}
-        {(isAdmin || currentUserLevel >= 80) && (
+        {/* ── Visibility ── */}
+        {canManageVisibility && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab
@@ -1695,7 +1641,7 @@ export function ProjectDetail({
         )}
       </Tabs>
 
-      {/* ── Contact Dialog ───────────────────────────────────────────────────── */}
+      {/* ── Contact Dialog ── */}
       <Dialog open={dialogContact} onOpenChange={setDialogContact}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>
@@ -1759,7 +1705,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Nested Contact Creator ───────────────────────────────────────────── */}
+      {/* ── Nested Contact Creator ── */}
       <ContactFormDialog
         open={nestedContactDialog}
         onOpenChange={setNestedContactDialog}
@@ -1773,6 +1719,7 @@ export function ProjectDetail({
         titleOptions={titleOptions}
         companyOptions={companies}
         countryOptions={countryOptions}
+        canManageVisibility={canManageVisibility}
       />
 
       <WorkOrderFormDialog
@@ -1782,7 +1729,7 @@ export function ProjectDetail({
         projectOptions={workOrderProjectOptions}
       />
 
-      {/* ── Edit Contact Dialog ──────────────────────────────────────────────── */}
+      {/* ── Edit Contact Dialog ── */}
       <Dialog open={editContactDialog} onOpenChange={setEditContactDialog}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>
@@ -1829,7 +1776,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Edit Purchase Dialog ─────────────────────────────────────────────── */}
+      {/* ── Edit Purchase Dialog ── */}
       <Dialog open={editPurchaseDialog} onOpenChange={setEditPurchaseDialog}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>
@@ -1901,7 +1848,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Delete Confirm Dialog ────────────────────────────────────────────── */}
+      {/* ── Delete Confirm Dialog ── */}
       <Dialog open={!!deleteTarget} onOpenChange={open => !open && setDeleteTarget(null)}>
         <DialogContent className="bg-card border-border max-w-sm">
           <DialogHeader>
@@ -1946,7 +1893,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Create Purchase Dialog ───────────────────────────────────────────── */}
+      {/* ── Create Purchase Dialog ── */}
       <Dialog open={dialogPurchase} onOpenChange={setDialogPurchase}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>
@@ -2023,7 +1970,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Link Existing Purchase Dialog ────────────────────────────────────── */}
+      {/* ── Link Existing Purchase Dialog ── */}
       <Dialog open={dialogLinkPurchase} onOpenChange={setDialogLinkPurchase}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>
@@ -2069,7 +2016,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Material Dialog ──────────────────────────────────────────────────── */}
+      {/* ── Material Dialog ── */}
       <Dialog open={dialogMaterial} onOpenChange={setDialogMaterial}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>

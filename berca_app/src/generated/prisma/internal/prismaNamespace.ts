@@ -7743,11 +7743,13 @@ export type VatMarginScalarFieldEnum = (typeof VatMarginScalarFieldEnum)[keyof t
 export const PriceListScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  repeatUse: 'repeatUse',
   createdAt: 'createdAt',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type PriceListScalarFieldEnum = (typeof PriceListScalarFieldEnum)[keyof typeof PriceListScalarFieldEnum]
@@ -8945,7 +8947,8 @@ export const PriceListOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type PriceListOrderByRelevanceFieldEnum = (typeof PriceListOrderByRelevanceFieldEnum)[keyof typeof PriceListOrderByRelevanceFieldEnum]

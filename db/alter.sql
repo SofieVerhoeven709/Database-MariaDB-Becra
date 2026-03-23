@@ -526,17 +526,21 @@ UPDATE Company SET officialName = name WHERE officialName IS NULL;
 ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
 -- 41. Create PriceList table
-CREATE TABLE IF NOT EXISTS PriceList (
-      id CHAR(36) NOT NULL PRIMARY KEY,
-      name VARCHAR(100) NOT NULL,
-      createdAt DATETIME NOT NULL,
-      createdBy CHAR(36) NOT NULL,
-      deleted BOOLEAN NOT NULL DEFAULT 0,
-      deletedAt DATETIME,
-      deletedBy CHAR(36),
-      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-) ENGINE = InnoDB;
+CREATE TABLE
+      IF NOT EXISTS PriceList (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            repeatUse BOOLEAN NOT NULL DEFAULT 0,
+            createdAt DATETIME NOT NULL,
+            createdBy CHAR(36) NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            targetId CHAR(36) NOT NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
 
 -- 42. Create PriceListItem table
 CREATE TABLE 

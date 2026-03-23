@@ -210,6 +210,7 @@ export type TargetWhereInput = {
   InvoiceIn?: Prisma.InvoiceInListRelationFilter
   InvoiceInTarget?: Prisma.InvoiceInTargetListRelationFilter
   InvoiceOut?: Prisma.InvoiceOutListRelationFilter
+  PriceList?: Prisma.PriceListListRelationFilter
   Project?: Prisma.ProjectListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TargetType?: Prisma.XOR<Prisma.TargetTypeScalarRelationFilter, Prisma.TargetTypeWhereInput>
@@ -241,6 +242,7 @@ export type TargetOrderByWithRelationInput = {
   InvoiceIn?: Prisma.InvoiceInOrderByRelationAggregateInput
   InvoiceInTarget?: Prisma.InvoiceInTargetOrderByRelationAggregateInput
   InvoiceOut?: Prisma.InvoiceOutOrderByRelationAggregateInput
+  PriceList?: Prisma.PriceListOrderByRelationAggregateInput
   Project?: Prisma.ProjectOrderByRelationAggregateInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   TargetType?: Prisma.TargetTypeOrderByWithRelationInput
@@ -276,6 +278,7 @@ export type TargetWhereUniqueInput = Prisma.AtLeast<{
   InvoiceIn?: Prisma.InvoiceInListRelationFilter
   InvoiceInTarget?: Prisma.InvoiceInTargetListRelationFilter
   InvoiceOut?: Prisma.InvoiceOutListRelationFilter
+  PriceList?: Prisma.PriceListListRelationFilter
   Project?: Prisma.ProjectListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TargetType?: Prisma.XOR<Prisma.TargetTypeScalarRelationFilter, Prisma.TargetTypeWhereInput>
@@ -330,6 +333,7 @@ export type TargetCreateInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -361,6 +365,7 @@ export type TargetUncheckedCreateInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -386,6 +391,7 @@ export type TargetUpdateInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -417,6 +423,7 @@ export type TargetUncheckedUpdateInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -881,6 +888,20 @@ export type TargetUpdateOneRequiredWithoutDepartmentExternNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TargetUpdateToOneWithWhereWithoutDepartmentExternInput, Prisma.TargetUpdateWithoutDepartmentExternInput>, Prisma.TargetUncheckedUpdateWithoutDepartmentExternInput>
 }
 
+export type TargetCreateNestedOneWithoutPriceListInput = {
+  create?: Prisma.XOR<Prisma.TargetCreateWithoutPriceListInput, Prisma.TargetUncheckedCreateWithoutPriceListInput>
+  connectOrCreate?: Prisma.TargetCreateOrConnectWithoutPriceListInput
+  connect?: Prisma.TargetWhereUniqueInput
+}
+
+export type TargetUpdateOneRequiredWithoutPriceListNestedInput = {
+  create?: Prisma.XOR<Prisma.TargetCreateWithoutPriceListInput, Prisma.TargetUncheckedCreateWithoutPriceListInput>
+  connectOrCreate?: Prisma.TargetCreateOrConnectWithoutPriceListInput
+  upsert?: Prisma.TargetUpsertWithoutPriceListInput
+  connect?: Prisma.TargetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TargetUpdateToOneWithWhereWithoutPriceListInput, Prisma.TargetUpdateWithoutPriceListInput>, Prisma.TargetUncheckedUpdateWithoutPriceListInput>
+}
+
 export type TargetCreateWithoutCertificateInput = {
   id: string
   createdAt: Date | string
@@ -897,6 +918,7 @@ export type TargetCreateWithoutCertificateInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -927,6 +949,7 @@ export type TargetUncheckedCreateWithoutCertificateInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -967,6 +990,7 @@ export type TargetUpdateWithoutCertificateInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -997,6 +1021,7 @@ export type TargetUncheckedUpdateWithoutCertificateInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -1021,6 +1046,7 @@ export type TargetCreateWithoutCompanyInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -1051,6 +1077,7 @@ export type TargetUncheckedCreateWithoutCompanyInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -1091,6 +1118,7 @@ export type TargetUpdateWithoutCompanyInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -1121,6 +1149,7 @@ export type TargetUncheckedUpdateWithoutCompanyInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -1145,6 +1174,7 @@ export type TargetCreateWithoutContactInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -1175,6 +1205,7 @@ export type TargetUncheckedCreateWithoutContactInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -1215,6 +1246,7 @@ export type TargetUpdateWithoutContactInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -1245,6 +1277,7 @@ export type TargetUncheckedUpdateWithoutContactInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -1269,6 +1302,7 @@ export type TargetCreateWithoutDepartmentInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -1299,6 +1333,7 @@ export type TargetUncheckedCreateWithoutDepartmentInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -1339,6 +1374,7 @@ export type TargetUpdateWithoutDepartmentInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -1369,6 +1405,7 @@ export type TargetUncheckedUpdateWithoutDepartmentInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -1393,6 +1430,7 @@ export type TargetCreateWithoutDocumentStructureInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -1423,6 +1461,7 @@ export type TargetUncheckedCreateWithoutDocumentStructureInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -1463,6 +1502,7 @@ export type TargetUpdateWithoutDocumentStructureInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -1493,6 +1533,7 @@ export type TargetUncheckedUpdateWithoutDocumentStructureInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -1518,6 +1559,7 @@ export type TargetCreateWithoutEmployeeInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
   Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
@@ -1547,6 +1589,7 @@ export type TargetUncheckedCreateWithoutEmployeeInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -1582,6 +1625,7 @@ export type TargetCreateWithoutEmployee_Target_deletedByToEmployeeInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -1611,6 +1655,7 @@ export type TargetUncheckedCreateWithoutEmployee_Target_deletedByToEmployeeInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -1690,6 +1735,7 @@ export type TargetCreateWithoutFollowUpInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -1720,6 +1766,7 @@ export type TargetUncheckedCreateWithoutFollowUpInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -1760,6 +1807,7 @@ export type TargetUpdateWithoutFollowUpInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -1790,6 +1838,7 @@ export type TargetUncheckedUpdateWithoutFollowUpInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -1814,6 +1863,7 @@ export type TargetCreateWithoutFollowUpStructureInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -1844,6 +1894,7 @@ export type TargetUncheckedCreateWithoutFollowUpStructureInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -1884,6 +1935,7 @@ export type TargetUpdateWithoutFollowUpStructureInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -1914,6 +1966,7 @@ export type TargetUncheckedUpdateWithoutFollowUpStructureInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -1938,6 +1991,7 @@ export type TargetCreateWithoutFollowUpTargetInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -1968,6 +2022,7 @@ export type TargetUncheckedCreateWithoutFollowUpTargetInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -2008,6 +2063,7 @@ export type TargetUpdateWithoutFollowUpTargetInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -2038,6 +2094,7 @@ export type TargetUncheckedUpdateWithoutFollowUpTargetInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -2062,6 +2119,7 @@ export type TargetCreateWithoutInvoiceInInput = {
   FollowUpTarget?: Prisma.FollowUpTargetCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -2092,6 +2150,7 @@ export type TargetUncheckedCreateWithoutInvoiceInInput = {
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -2132,6 +2191,7 @@ export type TargetUpdateWithoutInvoiceInInput = {
   FollowUpTarget?: Prisma.FollowUpTargetUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -2162,6 +2222,7 @@ export type TargetUncheckedUpdateWithoutInvoiceInInput = {
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -2186,6 +2247,7 @@ export type TargetCreateWithoutInvoiceInTargetInput = {
   FollowUpTarget?: Prisma.FollowUpTargetCreateNestedManyWithoutTargetInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -2216,6 +2278,7 @@ export type TargetUncheckedCreateWithoutInvoiceInTargetInput = {
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -2256,6 +2319,7 @@ export type TargetUpdateWithoutInvoiceInTargetInput = {
   FollowUpTarget?: Prisma.FollowUpTargetUpdateManyWithoutTargetNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -2286,6 +2350,7 @@ export type TargetUncheckedUpdateWithoutInvoiceInTargetInput = {
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -2310,6 +2375,7 @@ export type TargetCreateWithoutInvoiceOutInput = {
   FollowUpTarget?: Prisma.FollowUpTargetCreateNestedManyWithoutTargetInput
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -2340,6 +2406,7 @@ export type TargetUncheckedCreateWithoutInvoiceOutInput = {
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -2380,6 +2447,7 @@ export type TargetUpdateWithoutInvoiceOutInput = {
   FollowUpTarget?: Prisma.FollowUpTargetUpdateManyWithoutTargetNestedInput
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -2410,6 +2478,7 @@ export type TargetUncheckedUpdateWithoutInvoiceOutInput = {
   FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -2435,6 +2504,7 @@ export type TargetCreateWithoutProjectInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
   Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
@@ -2465,6 +2535,7 @@ export type TargetUncheckedCreateWithoutProjectInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutTargetInput
@@ -2505,6 +2576,7 @@ export type TargetUpdateWithoutProjectInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
   Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
@@ -2535,6 +2607,7 @@ export type TargetUncheckedUpdateWithoutProjectInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedUpdateManyWithoutTargetNestedInput
@@ -2559,6 +2632,7 @@ export type TargetCreateWithoutTargetTypeInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
@@ -2588,6 +2662,7 @@ export type TargetUncheckedCreateWithoutTargetTypeInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -2639,6 +2714,7 @@ export type TargetCreateWithoutTrainingInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -2669,6 +2745,7 @@ export type TargetUncheckedCreateWithoutTrainingInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutTargetInput
@@ -2709,6 +2786,7 @@ export type TargetUpdateWithoutTrainingInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -2739,6 +2817,7 @@ export type TargetUncheckedUpdateWithoutTrainingInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedUpdateManyWithoutTargetNestedInput
@@ -2763,6 +2842,7 @@ export type TargetCreateWithoutTrainingStandardInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -2793,6 +2873,7 @@ export type TargetUncheckedCreateWithoutTrainingStandardInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutTargetInput
@@ -2833,6 +2914,7 @@ export type TargetUpdateWithoutTrainingStandardInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -2863,6 +2945,7 @@ export type TargetUncheckedUpdateWithoutTrainingStandardInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   VisibilityForRole?: Prisma.VisibilityForRoleUncheckedUpdateManyWithoutTargetNestedInput
@@ -2887,6 +2970,7 @@ export type TargetCreateWithoutVisibilityForRoleInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -2917,6 +3001,7 @@ export type TargetUncheckedCreateWithoutVisibilityForRoleInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -2957,6 +3042,7 @@ export type TargetUpdateWithoutVisibilityForRoleInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -2987,6 +3073,7 @@ export type TargetUncheckedUpdateWithoutVisibilityForRoleInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -3011,6 +3098,7 @@ export type TargetCreateWithoutWorkOrderInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -3041,6 +3129,7 @@ export type TargetUncheckedCreateWithoutWorkOrderInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -3081,6 +3170,7 @@ export type TargetUpdateWithoutWorkOrderInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -3111,6 +3201,7 @@ export type TargetUncheckedUpdateWithoutWorkOrderInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -3135,6 +3226,7 @@ export type TargetCreateWithoutWorkOrderStructureInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -3165,6 +3257,7 @@ export type TargetUncheckedCreateWithoutWorkOrderStructureInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -3205,6 +3298,7 @@ export type TargetUpdateWithoutWorkOrderStructureInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -3235,6 +3329,7 @@ export type TargetUncheckedUpdateWithoutWorkOrderStructureInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -3258,6 +3353,7 @@ export type TargetCreateWithoutDepartmentExternInput = {
   InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
   TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
@@ -3288,6 +3384,7 @@ export type TargetUncheckedCreateWithoutDepartmentExternInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  PriceList?: Prisma.PriceListUncheckedCreateNestedManyWithoutTargetInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
@@ -3328,6 +3425,7 @@ export type TargetUpdateWithoutDepartmentExternInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -3351,6 +3449,135 @@ export type TargetUncheckedUpdateWithoutDepartmentExternInput = {
   Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
   Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
+  FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
+  FollowUpTarget?: Prisma.FollowUpTargetUncheckedUpdateManyWithoutTargetNestedInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
+  Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
+  VisibilityForRole?: Prisma.VisibilityForRoleUncheckedUpdateManyWithoutTargetNestedInput
+  WorkOrder?: Prisma.WorkOrderUncheckedUpdateManyWithoutTargetNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedUpdateManyWithoutTargetNestedInput
+}
+
+export type TargetCreateWithoutPriceListInput = {
+  id: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Certificate?: Prisma.CertificateCreateNestedManyWithoutTargetInput
+  Company?: Prisma.CompanyCreateNestedManyWithoutTargetInput
+  Contact?: Prisma.ContactCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentCreateNestedManyWithoutTargetInput
+  DepartmentExtern?: Prisma.DepartmentExternCreateNestedManyWithoutTargetInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutTargetInput
+  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutTargetInput
+  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutTargetInput
+  FollowUpTarget?: Prisma.FollowUpTargetCreateNestedManyWithoutTargetInput
+  InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutTargetInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetCreateNestedManyWithoutTargetInput
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutTargetInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutTargetInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutTargetInput
+  TargetType: Prisma.TargetTypeCreateNestedOneWithoutTargetInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTarget_Target_deletedByToEmployeeInput
+  Training?: Prisma.TrainingCreateNestedManyWithoutTargetInput
+  TrainingStandard?: Prisma.TrainingStandardCreateNestedManyWithoutTargetInput
+  VisibilityForRole?: Prisma.VisibilityForRoleCreateNestedManyWithoutTargetInput
+  WorkOrder?: Prisma.WorkOrderCreateNestedManyWithoutTargetInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedManyWithoutTargetInput
+}
+
+export type TargetUncheckedCreateWithoutPriceListInput = {
+  id: string
+  createdAt: Date | string
+  createdBy: string
+  targetTypeId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  Certificate?: Prisma.CertificateUncheckedCreateNestedManyWithoutTargetInput
+  Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutTargetInput
+  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutTargetInput
+  Department?: Prisma.DepartmentUncheckedCreateNestedManyWithoutTargetInput
+  DepartmentExtern?: Prisma.DepartmentExternUncheckedCreateNestedManyWithoutTargetInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutTargetInput
+  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutTargetInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutTargetInput
+  FollowUpTarget?: Prisma.FollowUpTargetUncheckedCreateNestedManyWithoutTargetInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutTargetInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedCreateNestedManyWithoutTargetInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutTargetInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutTargetInput
+  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTargetInput
+  TrainingStandard?: Prisma.TrainingStandardUncheckedCreateNestedManyWithoutTargetInput
+  VisibilityForRole?: Prisma.VisibilityForRoleUncheckedCreateNestedManyWithoutTargetInput
+  WorkOrder?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutTargetInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUncheckedCreateNestedManyWithoutTargetInput
+}
+
+export type TargetCreateOrConnectWithoutPriceListInput = {
+  where: Prisma.TargetWhereUniqueInput
+  create: Prisma.XOR<Prisma.TargetCreateWithoutPriceListInput, Prisma.TargetUncheckedCreateWithoutPriceListInput>
+}
+
+export type TargetUpsertWithoutPriceListInput = {
+  update: Prisma.XOR<Prisma.TargetUpdateWithoutPriceListInput, Prisma.TargetUncheckedUpdateWithoutPriceListInput>
+  create: Prisma.XOR<Prisma.TargetCreateWithoutPriceListInput, Prisma.TargetUncheckedCreateWithoutPriceListInput>
+  where?: Prisma.TargetWhereInput
+}
+
+export type TargetUpdateToOneWithWhereWithoutPriceListInput = {
+  where?: Prisma.TargetWhereInput
+  data: Prisma.XOR<Prisma.TargetUpdateWithoutPriceListInput, Prisma.TargetUncheckedUpdateWithoutPriceListInput>
+}
+
+export type TargetUpdateWithoutPriceListInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Certificate?: Prisma.CertificateUpdateManyWithoutTargetNestedInput
+  Company?: Prisma.CompanyUpdateManyWithoutTargetNestedInput
+  Contact?: Prisma.ContactUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUpdateManyWithoutTargetNestedInput
+  DepartmentExtern?: Prisma.DepartmentExternUpdateManyWithoutTargetNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutTargetNestedInput
+  FollowUp?: Prisma.FollowUpUpdateManyWithoutTargetNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutTargetNestedInput
+  FollowUpTarget?: Prisma.FollowUpTargetUpdateManyWithoutTargetNestedInput
+  InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
+  InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
+  TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
+  Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
+  Training?: Prisma.TrainingUpdateManyWithoutTargetNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUpdateManyWithoutTargetNestedInput
+  VisibilityForRole?: Prisma.VisibilityForRoleUpdateManyWithoutTargetNestedInput
+  WorkOrder?: Prisma.WorkOrderUpdateManyWithoutTargetNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateManyWithoutTargetNestedInput
+}
+
+export type TargetUncheckedUpdateWithoutPriceListInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  targetTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Certificate?: Prisma.CertificateUncheckedUpdateManyWithoutTargetNestedInput
+  Company?: Prisma.CompanyUncheckedUpdateManyWithoutTargetNestedInput
+  Contact?: Prisma.ContactUncheckedUpdateManyWithoutTargetNestedInput
+  Department?: Prisma.DepartmentUncheckedUpdateManyWithoutTargetNestedInput
+  DepartmentExtern?: Prisma.DepartmentExternUncheckedUpdateManyWithoutTargetNestedInput
   DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutTargetNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutTargetNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutTargetNestedInput
@@ -3401,6 +3628,7 @@ export type TargetUpdateWithoutEmployeeInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
   Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
@@ -3430,6 +3658,7 @@ export type TargetUncheckedUpdateWithoutEmployeeInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -3464,6 +3693,7 @@ export type TargetUpdateWithoutEmployee_Target_deletedByToEmployeeInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   TargetType?: Prisma.TargetTypeUpdateOneRequiredWithoutTargetNestedInput
@@ -3493,6 +3723,7 @@ export type TargetUncheckedUpdateWithoutEmployee_Target_deletedByToEmployeeInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -3536,6 +3767,7 @@ export type TargetUpdateWithoutTargetTypeInput = {
   InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutTargetNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTargetNestedInput
   Employee_Target_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTarget_Target_deletedByToEmployeeNestedInput
@@ -3565,6 +3797,7 @@ export type TargetUncheckedUpdateWithoutTargetTypeInput = {
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceInTarget?: Prisma.InvoiceInTargetUncheckedUpdateManyWithoutTargetNestedInput
   InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutTargetNestedInput
+  PriceList?: Prisma.PriceListUncheckedUpdateManyWithoutTargetNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutTargetNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTargetNestedInput
   TrainingStandard?: Prisma.TrainingStandardUncheckedUpdateManyWithoutTargetNestedInput
@@ -3600,6 +3833,7 @@ export type TargetCountOutputType = {
   InvoiceIn: number
   InvoiceInTarget: number
   InvoiceOut: number
+  PriceList: number
   Project: number
   Training: number
   TrainingStandard: number
@@ -3621,6 +3855,7 @@ export type TargetCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   InvoiceIn?: boolean | TargetCountOutputTypeCountInvoiceInArgs
   InvoiceInTarget?: boolean | TargetCountOutputTypeCountInvoiceInTargetArgs
   InvoiceOut?: boolean | TargetCountOutputTypeCountInvoiceOutArgs
+  PriceList?: boolean | TargetCountOutputTypeCountPriceListArgs
   Project?: boolean | TargetCountOutputTypeCountProjectArgs
   Training?: boolean | TargetCountOutputTypeCountTrainingArgs
   TrainingStandard?: boolean | TargetCountOutputTypeCountTrainingStandardArgs
@@ -3726,6 +3961,13 @@ export type TargetCountOutputTypeCountInvoiceOutArgs<ExtArgs extends runtime.Typ
 /**
  * TargetCountOutputType without action
  */
+export type TargetCountOutputTypeCountPriceListArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PriceListWhereInput
+}
+
+/**
+ * TargetCountOutputType without action
+ */
 export type TargetCountOutputTypeCountProjectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ProjectWhereInput
 }
@@ -3786,6 +4028,7 @@ export type TargetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   InvoiceIn?: boolean | Prisma.Target$InvoiceInArgs<ExtArgs>
   InvoiceInTarget?: boolean | Prisma.Target$InvoiceInTargetArgs<ExtArgs>
   InvoiceOut?: boolean | Prisma.Target$InvoiceOutArgs<ExtArgs>
+  PriceList?: boolean | Prisma.Target$PriceListArgs<ExtArgs>
   Project?: boolean | Prisma.Target$ProjectArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   TargetType?: boolean | Prisma.TargetTypeDefaultArgs<ExtArgs>
@@ -3824,6 +4067,7 @@ export type TargetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   InvoiceIn?: boolean | Prisma.Target$InvoiceInArgs<ExtArgs>
   InvoiceInTarget?: boolean | Prisma.Target$InvoiceInTargetArgs<ExtArgs>
   InvoiceOut?: boolean | Prisma.Target$InvoiceOutArgs<ExtArgs>
+  PriceList?: boolean | Prisma.Target$PriceListArgs<ExtArgs>
   Project?: boolean | Prisma.Target$ProjectArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   TargetType?: boolean | Prisma.TargetTypeDefaultArgs<ExtArgs>
@@ -3851,6 +4095,7 @@ export type $TargetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     InvoiceIn: Prisma.$InvoiceInPayload<ExtArgs>[]
     InvoiceInTarget: Prisma.$InvoiceInTargetPayload<ExtArgs>[]
     InvoiceOut: Prisma.$InvoiceOutPayload<ExtArgs>[]
+    PriceList: Prisma.$PriceListPayload<ExtArgs>[]
     Project: Prisma.$ProjectPayload<ExtArgs>[]
     Employee: Prisma.$EmployeePayload<ExtArgs>
     TargetType: Prisma.$TargetTypePayload<ExtArgs>
@@ -4221,6 +4466,7 @@ export interface Prisma__TargetClient<T, Null = never, ExtArgs extends runtime.T
   InvoiceIn<T extends Prisma.Target$InvoiceInArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$InvoiceInArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   InvoiceInTarget<T extends Prisma.Target$InvoiceInTargetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$InvoiceInTargetArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceInTargetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   InvoiceOut<T extends Prisma.Target$InvoiceOutArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$InvoiceOutArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceOutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  PriceList<T extends Prisma.Target$PriceListArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$PriceListArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceListPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Project<T extends Prisma.Target$ProjectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Target$ProjectArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   TargetType<T extends Prisma.TargetTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetTypeClient<runtime.Types.Result.GetResult<Prisma.$TargetTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -4894,6 +5140,30 @@ export type Target$InvoiceOutArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.InvoiceOutScalarFieldEnum | Prisma.InvoiceOutScalarFieldEnum[]
+}
+
+/**
+ * Target.PriceList
+ */
+export type Target$PriceListArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PriceList
+   */
+  select?: Prisma.PriceListSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PriceList
+   */
+  omit?: Prisma.PriceListOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PriceListInclude<ExtArgs> | null
+  where?: Prisma.PriceListWhereInput
+  orderBy?: Prisma.PriceListOrderByWithRelationInput | Prisma.PriceListOrderByWithRelationInput[]
+  cursor?: Prisma.PriceListWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PriceListScalarFieldEnum | Prisma.PriceListScalarFieldEnum[]
 }
 
 /**

@@ -1702,6 +1702,7 @@ model Target {
   InvoiceIn                           InvoiceIn[]
   InvoiceInTarget                     InvoiceInTarget[]
   InvoiceOut                          InvoiceOut[]
+  PriceList                           PriceList[]
   Project                             Project[]
   Employee                            Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_1")
   TargetType                          TargetType           @relation(fields: [targetTypeId], references: [id], onUpdate: Restrict, map: "Target_ibfk_2")
@@ -2241,19 +2242,23 @@ model VatMargin {
 
 model PriceList {
   id                                     String          @id @db.Char(36)
-  name                                   String          @db.VarChar(100)
+  name                                   String          @db.VarChar(255)
+  repeatUse                              Boolean         @default(false)
   createdAt                              DateTime        @db.DateTime(0)
   createdBy                              String          @db.Char(36)
   deleted                                Boolean         @default(false)
   deletedAt                              DateTime?       @db.DateTime(0)
   deletedBy                              String?         @db.Char(36)
+  targetId                               String          @db.Char(36)
   Employee_PriceList_createdByToEmployee Employee        @relation("PriceList_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_1")
   Employee_PriceList_deletedByToEmployee Employee?       @relation("PriceList_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_2")
+  Target                                 Target          @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_3")
   PriceListItem                          PriceListItem[]
   Project                                Project[]
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
+  @@index([targetId], map: "targetId")
 }
 
 model PriceListItem {

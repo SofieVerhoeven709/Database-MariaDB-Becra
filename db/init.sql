@@ -841,14 +841,17 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS PriceList (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            name VARCHAR(100) NOT NULL,
+            name VARCHAR(255) NOT NULL,
+            repeatUse BOOLEAN NOT NULL DEFAULT 0,
             createdAt DATETIME NOT NULL,
             createdBy CHAR(36) NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
+            targetId CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 ALTER TABLE Project ADD CONSTRAINT fk_project_pricelist FOREIGN KEY (`priceListId`) REFERENCES PriceList (`id`) ON DELETE RESTRICT;

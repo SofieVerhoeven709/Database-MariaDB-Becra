@@ -106,7 +106,10 @@ export function InvoiceInTable({
 }: InvoiceInTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [search, setSearch] = useState('')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
@@ -213,15 +216,17 @@ export function InvoiceInTable({
             </SelectContent>
           </Select>
         </div>
-        <Button
-          onClick={() => {
-            setEditingInvoice(null)
-            setDialogOpen(true)
-          }}
-          className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-          <Plus className="h-4 w-4" />
-          New Invoice In
-        </Button>
+        {canCreate && (
+          <Button
+            onClick={() => {
+              setEditingInvoice(null)
+              setDialogOpen(true)
+            }}
+            className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+            <Plus className="h-4 w-4" />
+            New Invoice In
+          </Button>
+        )}
       </div>
 
       {/* Table */}
@@ -316,16 +321,18 @@ export function InvoiceInTable({
                       </Link>
                       {!inv.deleted && (
                         <>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                            onClick={() => {
-                              setEditingInvoice(inv)
-                              setDialogOpen(true)
-                            }}>
-                            <Pencil className="h-3.5 w-3.5" />
-                          </Button>
+                          {canEdit && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                              onClick={() => {
+                                setEditingInvoice(inv)
+                                setDialogOpen(true)
+                              }}>
+                              <Pencil className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
                           {canDelete && (
                             <Button
                               variant="ghost"

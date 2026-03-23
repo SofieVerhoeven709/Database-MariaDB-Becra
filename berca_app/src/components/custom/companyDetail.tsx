@@ -112,6 +112,7 @@ export function CompanyDetail({
   const buildForm = () => ({
     name: company.name,
     number: company.number,
+    officialName: company.officialName,
     idOld: company.idOld ?? '',
     mail: company.mail ?? '',
     businessPhone: company.businessPhone ?? '',
@@ -156,6 +157,7 @@ export function CompanyDetail({
       await updateCompanyAction({
         id: company.id,
         name: form.name,
+        officialName: form.officialName,
         number: form.number,
         idOld: form.idOld || null,
         mail: form.mail || null,
@@ -499,6 +501,19 @@ export function CompanyDetail({
               />
             ) : (
               <p className="text-sm text-muted-foreground">{company.name}</p>
+            )}
+          </div>
+          {/* ── Official Name ── */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Official Name</Label>
+            {editing ? (
+              <Input
+                value={form.officialName}
+                onChange={e => s('officialName', e.target.value)}
+                className="bg-secondary border-border"
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground">{company.officialName}</p>
             )}
           </div>
 

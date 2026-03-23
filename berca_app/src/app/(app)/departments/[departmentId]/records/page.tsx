@@ -25,10 +25,11 @@ export default async function RecordPage({params}: PageProps) {
   if (!department) return <p>Department not found</p>
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
 
   const employees = employeesFromDAL.map(mapEmployee)
   const roleOptions = roleLevels!
-    .filter(t => !t.deleted)
+    .filter(t => !t.deleted && (isAdmin || (t.Role.name !== 'Administrator' && t.SubRole.level !== 100)))
     .map(r => ({id: r.id, name: `${r.Role.name.replace(' Role', '')} / ${r.SubRole.name}`}))
     .sort((a, b) => a.name.localeCompare(b.name))
   const titleOptions = titles!.filter(t => !t.deleted).map(t => ({id: t.id, name: t.name}))

@@ -1,7 +1,7 @@
 import {z} from 'zod/v4'
 import {requiredDateSchema, dateSchema} from '@/schemas/schemaHelpers'
 
-// ─── InvoiceOut ────────────────────────────────────────────────────────────────
+// ─── InvoiceOut ───────────────────────────────────────────────────────────────
 export const invoiceOutSchema = z.object({
   id: z.string(),
   invoiceNumber: z.string().min(1).max(255),
@@ -27,18 +27,24 @@ export const invoiceOutSchema = z.object({
   vatMarginId: z.string(),
 })
 
-export const createInvoiceOutSchema = invoiceOutSchema.omit({
-  id: true,
-  createdAt: true,
-  invoiceNumber: true,
-  createdBy: true,
-  deleted: true,
-  deletedAt: true,
-  deletedBy: true,
-  modifiedAt: true,
-  modifiedBy: true,
-  targetId: true,
-})
+export const createInvoiceOutSchema = invoiceOutSchema
+  .omit({
+    id: true,
+    createdAt: true,
+    invoiceNumber: true,
+    createdBy: true,
+    deleted: true,
+    deletedAt: true,
+    deletedBy: true,
+    modifiedAt: true,
+    modifiedBy: true,
+    targetId: true,
+  })
+  .extend({
+    // When provided, the server uses this number directly instead of auto-generating.
+    // When absent, the server queries the DB for the next sequence and generates one.
+    invoiceNumber: z.string().min(1).max(255).optional(),
+  })
 
 export const updateInvoiceOutSchema = invoiceOutSchema.omit({
   createdAt: true,
@@ -51,7 +57,7 @@ export const updateInvoiceOutSchema = invoiceOutSchema.omit({
 
 export const invoiceOutIdSchema = invoiceOutSchema.pick({id: true})
 
-// ─── InvoiceIn ─────────────────────────────────────────────────────────────────
+// ─── InvoiceIn ────────────────────────────────────────────────────────────────
 export const invoiceInSchema = z.object({
   id: z.string(),
   invoiceNumber: z.string().min(1).max(255),
@@ -77,18 +83,24 @@ export const invoiceInSchema = z.object({
   companyId: z.string(),
 })
 
-export const createInvoiceInSchema = invoiceInSchema.omit({
-  id: true,
-  createdAt: true,
-  invoiceNumber: true,
-  createdBy: true,
-  deleted: true,
-  deletedAt: true,
-  deletedBy: true,
-  modifiedAt: true,
-  modifiedBy: true,
-  targetId: true,
-})
+export const createInvoiceInSchema = invoiceInSchema
+  .omit({
+    id: true,
+    createdAt: true,
+    invoiceNumber: true,
+    createdBy: true,
+    deleted: true,
+    deletedAt: true,
+    deletedBy: true,
+    modifiedAt: true,
+    modifiedBy: true,
+    targetId: true,
+  })
+  .extend({
+    // When provided, the server uses this number directly instead of auto-generating.
+    // When absent, the server queries the DB for the next sequence and generates one.
+    invoiceNumber: z.string().min(1).max(255).optional(),
+  })
 
 export const updateInvoiceInSchema = invoiceInSchema.omit({
   createdAt: true,

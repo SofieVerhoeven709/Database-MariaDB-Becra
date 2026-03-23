@@ -9,6 +9,9 @@ import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedInvoiceIn, InvoiceLookup, VatMarginOption} from '@/types/invoice'
 import {createInvoiceInAction, updateInvoiceInAction} from '@/serverFunctions/invoices'
+// TODO: create this server action — should return generateInvoiceInNumber(currentYear, nextSequence)
+// e.g. export async function getNextInvoiceInNumberAction(): Promise<string>
+import {getNextInvoiceInNumberAction} from '@/serverFunctions/invoices'
 
 interface InvoiceInFormDialogProps {
   open: boolean
@@ -24,6 +27,7 @@ interface InvoiceInFormDialogProps {
 }
 
 type FormState = {
+  invoiceNumber: string
   poNumber: string
   humanId: string
   invoiceDate: string
@@ -47,6 +51,7 @@ function emptyForm(inv: MappedInvoiceIn | null): FormState {
   const today = new Date().toISOString().slice(0, 10)
   if (!inv) {
     return {
+      invoiceNumber: '',
       poNumber: '',
       humanId: '',
       invoiceDate: today,
@@ -62,6 +67,7 @@ function emptyForm(inv: MappedInvoiceIn | null): FormState {
     }
   }
   return {
+    invoiceNumber: inv.invoiceNumber,
     poNumber: inv.poNumber ?? '',
     humanId: inv.humanId ?? '',
     invoiceDate: toDateInput(inv.invoiceDate),
@@ -91,16 +97,46 @@ export function InvoiceInFormDialog({
 }: InvoiceInFormDialogProps) {
   const [form, setForm] = useState<FormState>(() => emptyForm(invoice))
   const [saving, setSaving] = useState(false)
+  const [numberLoading, setNumberLoading] = useState(false)
+  const [numberError, setNumberError] = useState<string | null>(null)
 
+  const isEdit = !!invoice
+
+  // On open for create mode: fetch next invoice number
   useEffect(() => {
-    setForm(emptyForm(invoice))
+    const base = emptyForm(invoice)
+    setForm(base)
+    setNumberError(null)
+
+    if (!invoice && open) {
+      setNumberLoading(true)
+      getNextInvoiceInNumberAction()
+        .then(n => setForm(f => ({...f, invoiceNumber: n})))
+        .catch(() => setNumberError('Could not fetch next number.'))
+        .finally(() => setNumberLoading(false))
+    }
   }, [invoice?.id, open])
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm(f => ({...f, [key]: value}))
+    if (key === 'invoiceNumber') setNumberError(null)
+  }
+
+  async function handleRegenerate() {
+    setNumberLoading(true)
+    setNumberError(null)
+    try {
+      const n = await getNextInvoiceInNumberAction()
+      setForm(f => ({...f, invoiceNumber: n}))
+    } catch {
+      setNumberError('Could not fetch next number.')
+    } finally {
+      setNumberLoading(false)
+    }
   }
 
   const isValid =
+    form.invoiceNumber.trim() &&
     form.invoiceDate &&
     form.dueDate &&
     form.invoiceTypeId &&
@@ -115,6 +151,7 @@ export function InvoiceInFormDialog({
     setSaving(true)
     try {
       const payload = {
+        invoiceNumber: form.invoiceNumber.trim(),
         poNumber: form.poNumber || null,
         humanId: form.humanId || null,
         invoiceDate: new Date(form.invoiceDate),
@@ -130,7 +167,7 @@ export function InvoiceInFormDialog({
       }
 
       if (invoice) {
-        await updateInvoiceInAction({id: invoice.id, invoiceNumber: invoice.invoiceNumber, ...payload})
+        await updateInvoiceInAction({id: invoice.id, ...payload})
       } else {
         await createInvoiceInAction(payload)
       }
@@ -140,8 +177,6 @@ export function InvoiceInFormDialog({
     }
   }
 
-  const isEdit = !!invoice
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card border-border">
@@ -150,15 +185,39 @@ export function InvoiceInFormDialog({
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-5 py-3 sm:grid-cols-2">
-          {/* ── Invoice number — read-only on edit, auto-generated on create ── */}
+          {/* Invoice Number */}
           <div className="flex flex-col gap-1.5 sm:col-span-2">
             <Label className="text-xs text-muted-foreground">
-              Invoice Number
-              <span className="ml-1.5 text-muted-foreground/60">{isEdit ? '(locked)' : '(auto-generated)'}</span>
+              Invoice Number *
+              {isEdit && <span className="ml-1.5 text-muted-foreground/60">(locked — edit from detail page)</span>}
             </Label>
-            <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
-              {isEdit ? invoice.invoiceNumber : 'Will be assigned on save'}
-            </div>
+            {isEdit ? (
+              <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                {form.invoiceNumber}
+              </div>
+            ) : (
+              <div className="flex flex-col gap-1">
+                <div className="flex gap-2">
+                  <Input
+                    value={numberLoading ? '' : form.invoiceNumber}
+                    placeholder={numberLoading ? 'Fetching next number…' : 'Invoice number…'}
+                    onChange={e => set('invoiceNumber', e.target.value)}
+                    disabled={numberLoading}
+                    className={`bg-secondary border-border flex-1 ${numberError ? 'border-destructive' : ''}`}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-10 px-3 border-border text-xs shrink-0"
+                    onClick={handleRegenerate}
+                    disabled={numberLoading}>
+                    {numberLoading ? 'Loading…' : 'Regenerate'}
+                  </Button>
+                </div>
+                {numberError && <p className="text-xs text-destructive">{numberError}</p>}
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col gap-1.5">

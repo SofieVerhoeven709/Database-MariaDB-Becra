@@ -93,6 +93,10 @@ export function EmployeeTable({
   departmentId,
 }: EmployeeTableProps) {
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
   const [employees, setEmployees] = useState(initialEmployees)
   const [search, setSearch] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -290,10 +294,12 @@ export function EmployeeTable({
             </SelectContent>
           </Select>
         </div>
-        <Button onClick={handleCreate} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-          <Plus className="h-4 w-4" />
-          New Employee
-        </Button>
+        {canCreate && (
+          <Button onClick={handleCreate} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+            <Plus className="h-4 w-4" />
+            New Employee
+          </Button>
+        )}
       </div>
 
       {/* Table with horizontal scroll */}
@@ -407,17 +413,19 @@ export function EmployeeTable({
                           </span>
                         </Button>
                       </Link>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                        onClick={() => handleEdit(emp)}>
-                        <Pencil className="h-3.5 w-3.5" />
-                        <span className="sr-only">
-                          Edit {emp.firstName} {emp.lastName}
-                        </span>
-                      </Button>
-                      {!emp.deleted && (
+                      {canEdit && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          onClick={() => handleEdit(emp)}>
+                          <Pencil className="h-3.5 w-3.5" />
+                          <span className="sr-only">
+                            Edit {emp.firstName} {emp.lastName}
+                          </span>
+                        </Button>
+                      )}
+                      {!emp.deleted && canDelete && (
                         <Button
                           variant="ghost"
                           size="icon"

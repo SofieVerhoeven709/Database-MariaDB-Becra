@@ -372,6 +372,7 @@ export const seedDev = async (prisma: PrismaClient) => {
       data: {
         id: randomUUID(),
         name: 'Becra BV',
+        officialName: 'Becra BV',
         number: 'BECRA-001',
         mail: 'info@becra.be',
         businessPhone: '+32 495 19 43 68',

@@ -89,14 +89,17 @@ export function TrainingDetail({
 }: TrainingDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canEdit = currentUserLevel >= 20
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
+  // Level thresholds:
+  //   >= 40  can edit + add participants
+  //   >= 80  can delete + manage visibility
+  const canEdit = currentUserLevel >= 40
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [showDeletedContacts, setShowDeletedContacts] = useState(false)
 
-  // ── Contact link state ─────────────────────────────────────────────────────
   const [addingContact, setAddingContact] = useState(false)
   const [contactForm, setContactForm] = useState<ContactForm>(emptyContactForm())
   const [editingContactId, setEditingContactId] = useState<string | null>(null)
@@ -107,7 +110,6 @@ export function TrainingDetail({
     certSentDate: '',
   })
 
-  // ── Edit form ──────────────────────────────────────────────────────────────
   const buildForm = () => ({
     trainingNumber: training.trainingNumber ?? '',
     trainingDate: training.trainingDate.slice(0, 10),
@@ -148,7 +150,6 @@ export function TrainingDetail({
     }
   }
 
-  // ── Derived ────────────────────────────────────────────────────────────────
   const nonDeletedContacts = training.contacts.filter(c => !c.deleted)
   const visibleContacts = showDeletedContacts ? training.contacts : nonDeletedContacts
   const hasDeletedContacts = training.contacts.some(c => c.deleted)
@@ -189,25 +190,25 @@ export function TrainingDetail({
               </Button>
             </>
           ) : (
-            <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-              <Pencil className="h-4 w-4" />
-              Edit
-            </Button>
+            canEdit && (
+              <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
+                <Pencil className="h-4 w-4" />
+                Edit
+              </Button>
+            )
           )}
         </div>
       </div>
 
       {/* Info card */}
       <div className="rounded-xl border border-border/60 bg-card p-6 flex flex-col gap-6">
-        {/* Training Details */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Training Details</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {/* Training number — locked, displayed like company/training number */}
+            {/* Training number — always locked */}
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">
-                Training Number
-                <span className="ml-1.5 text-muted-foreground/60">(locked)</span>
+                Training Number<span className="ml-1.5 text-muted-foreground/60">(locked)</span>
               </Label>
               <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
                 {training.trainingNumber ?? '-'}
@@ -348,10 +349,10 @@ export function TrainingDetail({
               {nonDeletedContacts.length}
             </Badge>
           </TabsTrigger>
-          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
-        {/* ── Contacts tab ──────────────────────────────────────────────────── */}
+        {/* ── Contacts tab ── */}
         <TabsContent value="contacts" className="mt-3">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
@@ -397,7 +398,6 @@ export function TrainingDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/* Add row */}
                 {addingContact && (
                   <TableRow className="border-border/40 bg-secondary/30">
                     <TableCell>
@@ -416,9 +416,7 @@ export function TrainingDetail({
                         </SelectContent>
                       </Select>
                     </TableCell>
-                    {/* Company — not known until saved */}
                     <TableCell />
-                    {/* Attendee # — auto-generated on save */}
                     <TableCell>
                       <div className="flex h-7 items-center px-2 text-xs text-muted-foreground/60 italic">
                         Auto-generated
@@ -510,7 +508,6 @@ export function TrainingDetail({
                               {tc.contact.lastName} {tc.contact.firstName}
                             </TableCell>
                             <TableCell className={tdClass}>{tc.contact.currentCompanyName ?? '-'}</TableCell>
-                            {/* Attendee # read-only even in edit mode */}
                             <TableCell className={tdClass}>{tc.attendeeNumber ?? '-'}</TableCell>
                             <TableCell>
                               <input
@@ -532,12 +529,7 @@ export function TrainingDetail({
                               <input
                                 type="checkbox"
                                 checked={editContactForm.certificateSent}
-                                onChange={e =>
-                                  setEditContactForm(f => ({
-                                    ...f,
-                                    certificateSent: e.target.checked,
-                                  }))
-                                }
+                                onChange={e => setEditContactForm(f => ({...f, certificateSent: e.target.checked}))}
                                 className="h-3.5 w-3.5 accent-accent"
                               />
                             </TableCell>
@@ -678,8 +670,7 @@ export function TrainingDetail({
           </div>
         </TabsContent>
 
-        {/* ── Visibility tab ────────────────────────────────────────────────── */}
-        {isAdmin && (
+        {canManageVisibility && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab

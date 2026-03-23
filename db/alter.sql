@@ -514,3 +514,13 @@ CREATE TABLE IF NOT EXISTS InvoiceOutContact (
       FOREIGN KEY (contactId) REFERENCES Contact (id) ON DELETE RESTRICT,
       FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE RESTRICT
 ) ENGINE = InnoDB;
+
+-- 40. Company: add officialName column
+-- Step 1: Add column as nullable (won't break existing rows)
+ALTER TABLE Company ADD COLUMN IF NOT EXISTS officialName VARCHAR(255) NULL;
+
+-- Step 2: Fill in existing rows (copy from 'name' as a sensible default)
+UPDATE Company SET officialName = name WHERE officialName IS NULL;
+
+-- Step 3: Now enforce NOT NULL since all rows are filled
+ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;

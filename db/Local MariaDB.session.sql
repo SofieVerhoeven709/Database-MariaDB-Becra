@@ -893,7 +893,7 @@ CREATE TABLE
             invoiceSentTypeId CHAR(36) NOT NULL,
             invoiceStatusId CHAR(36) NOT NULL,
             vatMarginId CHAR(36) NOT NULL,
-            priceListId CHAR(36) NOT,
+            priceListId CHAR(36),
             FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,

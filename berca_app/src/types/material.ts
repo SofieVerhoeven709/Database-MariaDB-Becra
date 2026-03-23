@@ -30,6 +30,7 @@ export interface MappedMaterial {
   unitAbbreviation: string
   createdBy: string
   createdByName: string
+  createdAt: string | null
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null

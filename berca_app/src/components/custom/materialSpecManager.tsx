@@ -32,6 +32,8 @@ export interface MappedMaterialGroup {
   groupB: string | null
   groupC: string | null
   groupD: string | null
+  createdAt: string | null
+  createdByName: string | null
   deleted: boolean
 }
 
@@ -42,6 +44,8 @@ export interface MappedUnit {
   abbreviation: string
   shortDescription: string | null
   longDescription: string | null
+  createdAt: string | null
+  createdByName: string | null
   valid: boolean
   deleted: boolean
 }
@@ -53,6 +57,8 @@ export interface MappedPerformance {
   materialFamilyId: string | null
   shortDescription: string | null
   longDescription: string | null
+  createdAt: string | null
+  createdByName: string | null
   deleted: boolean
 }
 
@@ -87,9 +93,31 @@ function SortIndicator({active, dir}: {active: boolean; dir: 'asc' | 'desc'}) {
   )
 }
 
+function formatDateTime(value: string | null) {
+  if (!value) return '-'
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return '-'
+  return date.toLocaleString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
 // ─── Material Group Tab ───────────────────────────────────────────────────────
 
-const EMPTY_GROUP: MappedMaterialGroup = {id: '', groupA: '', groupB: null, groupC: null, groupD: null, deleted: false}
+const EMPTY_GROUP: MappedMaterialGroup = {
+  id: '',
+  groupA: '',
+  groupB: null,
+  groupC: null,
+  groupD: null,
+  createdAt: null,
+  createdByName: null,
+  deleted: false,
+}
 
 function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]}) {
   const [groups, setGroups] = useState(initialGroups)
@@ -201,6 +229,7 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group B</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group C</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group D</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
@@ -210,7 +239,7 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={7} className="text-center text-muted-foreground py-10">
                   No material groups found
                 </TableCell>
               </TableRow>
@@ -221,6 +250,12 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
                   <TableCell className="text-sm text-muted-foreground">{g.groupB ?? '—'}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{g.groupC ?? '—'}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{g.groupD ?? '—'}</TableCell>
+                  <TableCell className="text-sm">
+                    <div className="flex flex-col leading-tight">
+                      <span>{g.createdByName ?? '-'}</span>
+                      <span className="text-xs text-muted-foreground">{formatDateTime(g.createdAt)}</span>
+                    </div>
+                  </TableCell>
                   <TableCell>
                     {g.deleted ? (
                       <Badge
@@ -345,6 +380,8 @@ const EMPTY_UNIT: MappedUnit = {
   abbreviation: '',
   shortDescription: null,
   longDescription: null,
+  createdAt: null,
+  createdByName: null,
   valid: true,
   deleted: false,
 }
@@ -495,6 +532,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Description
               </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
@@ -504,7 +542,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={8} className="text-center text-muted-foreground py-10">
                   No units found
                 </TableCell>
               </TableRow>
@@ -535,6 +573,12 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
                     className="text-sm text-muted-foreground max-w-[200px] truncate"
                     title={u.shortDescription ?? undefined}>
                     {u.shortDescription ?? '—'}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    <div className="flex flex-col leading-tight">
+                      <span>{u.createdByName ?? '-'}</span>
+                      <span className="text-xs text-muted-foreground">{formatDateTime(u.createdAt)}</span>
+                    </div>
                   </TableCell>
                   <TableCell>
                     {u.deleted ? (
@@ -689,6 +733,8 @@ const EMPTY_PERFORMANCE: MappedPerformance = {
   materialFamilyId: null,
   shortDescription: null,
   longDescription: null,
+  createdAt: null,
+  createdByName: null,
   deleted: false,
 }
 
@@ -824,6 +870,7 @@ function PerformanceTab({
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Short Description
               </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
@@ -833,7 +880,7 @@ function PerformanceTab({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={7} className="text-center text-muted-foreground py-10">
                   No performance specs found
                 </TableCell>
               </TableRow>
@@ -847,6 +894,12 @@ function PerformanceTab({
                     className="text-sm text-muted-foreground max-w-[220px] truncate"
                     title={p.shortDescription ?? undefined}>
                     {p.shortDescription ?? '—'}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    <div className="flex flex-col leading-tight">
+                      <span>{p.createdByName ?? '-'}</span>
+                      <span className="text-xs text-muted-foreground">{formatDateTime(p.createdAt)}</span>
+                    </div>
                   </TableCell>
                   <TableCell>
                     {p.deleted ? (

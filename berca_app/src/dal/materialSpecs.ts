@@ -1,7 +1,7 @@
 import 'server-only'
 import {prismaClient} from './prismaClient'
 import {Prisma as PrismaClientLib} from '@/generated/prisma/client'
-import type {Unit, MaterialPerformance, MaterialSpec, MaterialFamily} from '@/generated/prisma/client'
+import type {Unit, MaterialPerformance, MaterialSpec, MaterialFamily, Employee} from '@/generated/prisma/client'
 import type {Prisma} from '@/generated/prisma/client'
 
 // ─── MaterialGroup ───────────────────────────────────────────────────────────
@@ -82,9 +82,16 @@ export function softDeleteMaterialGroup(id: string, deletedBy: string) {
 
 // ─── Unit ────────────────────────────────────────────────────────────────────
 
-export async function getUnits(includeDeleted = false): Promise<Unit[]> {
+export type UnitWithCreator = Unit & {
+  Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
+}
+
+export async function getUnits(includeDeleted = false): Promise<UnitWithCreator[]> {
   return prismaClient.unit.findMany({
     where: includeDeleted ? undefined : {deleted: false},
+    include: {
+      Employee: {select: {id: true, firstName: true, lastName: true}},
+    },
     orderBy: {unitName: 'asc'},
   })
 }
@@ -124,9 +131,16 @@ export async function getMaterialFamilies(): Promise<MaterialFamily[]> {
 
 // ─── MaterialPerformance ──────────────────────────────────────────────────────
 
-export async function getMaterialPerformances(includeDeleted = false): Promise<MaterialPerformance[]> {
+export type MaterialPerformanceWithCreator = MaterialPerformance & {
+  Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'> | null
+}
+
+export async function getMaterialPerformances(includeDeleted = false): Promise<MaterialPerformanceWithCreator[]> {
   return prismaClient.materialPerformance.findMany({
     where: includeDeleted ? undefined : {deleted: false},
+    include: {
+      Employee: {select: {id: true, firstName: true, lastName: true}},
+    },
     orderBy: {name: 'asc'},
   })
 }

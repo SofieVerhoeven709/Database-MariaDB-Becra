@@ -41,6 +41,8 @@ function emptyEntry(): MappedMaterialPrice {
     companyId: '',
     companyName: null,
     createdBy: '',
+    createdByName: '',
+    createdAt: null,
     deleted: false,
     deletedAt: null,
     deletedBy: null,

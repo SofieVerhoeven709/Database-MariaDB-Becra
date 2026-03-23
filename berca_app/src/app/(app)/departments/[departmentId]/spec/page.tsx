@@ -22,6 +22,8 @@ export default async function SpecPage() {
     groupB: g.groupB,
     groupC: g.groupC,
     groupD: g.groupD,
+    createdAt: null,
+    createdByName: null,
     deleted: g.deleted,
   }))
 
@@ -32,6 +34,8 @@ export default async function SpecPage() {
     abbreviation: u.abbreviation,
     shortDescription: u.shortDescription ?? null,
     longDescription: u.longDescription ?? null,
+    createdAt: u.createdAt.toISOString(),
+    createdByName: `${u.Employee.firstName} ${u.Employee.lastName}`,
     valid: u.valid,
     deleted: u.deleted,
   }))
@@ -43,6 +47,8 @@ export default async function SpecPage() {
     materialFamilyId: p.materialFamilyId ?? null,
     shortDescription: p.shortDescription ?? null,
     longDescription: p.longDescription ?? null,
+    createdAt: p.createdAt.toISOString(),
+    createdByName: p.Employee ? `${p.Employee.firstName} ${p.Employee.lastName}` : null,
     deleted: p.deleted,
   }))
 

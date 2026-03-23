@@ -24,9 +24,7 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
 
   if (!material) notFound()
 
-  const groupLabelById = new Map(
-    groups.map(g => [g.id, [g.groupA, g.groupB, g.groupC, g.groupD].filter(Boolean).join(' / ')]),
-  )
+  const groupById = new Map(groups.map(g => [g.id, g]))
 
   const preferredSupplierEntry =
     material.MaterialSupplier.find(s => s.companyId === material.preferredSupplierCompanyId) ??
@@ -55,16 +53,16 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     materialGroupIdC: material.materialGroupIdC ?? null,
     materialGroupIdD: material.materialGroupIdD ?? null,
     materialGroupLabelA: material.materialGroupIdA
-      ? (groupLabelById.get(material.materialGroupIdA) ?? material.materialGroupIdA)
+      ? (groupById.get(material.materialGroupIdA)?.groupA ?? material.materialGroupIdA)
       : '',
     materialGroupLabelB: material.materialGroupIdB
-      ? (groupLabelById.get(material.materialGroupIdB) ?? material.materialGroupIdB)
+      ? (groupById.get(material.materialGroupIdB)?.groupB ?? material.materialGroupIdB)
       : '',
     materialGroupLabelC: material.materialGroupIdC
-      ? (groupLabelById.get(material.materialGroupIdC) ?? material.materialGroupIdC)
+      ? (groupById.get(material.materialGroupIdC)?.groupC ?? material.materialGroupIdC)
       : '',
     materialGroupLabelD: material.materialGroupIdD
-      ? (groupLabelById.get(material.materialGroupIdD) ?? material.materialGroupIdD)
+      ? (groupById.get(material.materialGroupIdD)?.groupD ?? material.materialGroupIdD)
       : '',
     materialGroupLabel: [
       material.materialGroupIdA,
@@ -73,7 +71,11 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
       material.materialGroupIdD,
     ]
       .filter(Boolean)
-      .map(id => groupLabelById.get(id as string) ?? id)
+      .map(id => {
+        const group = groupById.get(id as string)
+        if (!group) return id as string
+        return [group.groupA, group.groupB, group.groupC, group.groupD].filter(Boolean).join(' / ')
+      })
       .join(' | '),
     unitId: material.unitId,
     unitName: material.Unit.unitName,

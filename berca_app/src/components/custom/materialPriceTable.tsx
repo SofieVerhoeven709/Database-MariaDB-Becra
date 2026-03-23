@@ -17,7 +17,7 @@ import {
   hardDeleteMaterialPriceAction,
 } from '@/serverFunctions/materialPrices'
 
-type SortField = 'beNumber' | 'companyName' | 'brandName' | 'unitPrice' | 'updatedAt'
+type SortField = 'beNumber' | 'companyName' | 'brandName' | 'unitPrice' | 'createdByName' | 'createdAt'
 type SortDir = 'asc' | 'desc'
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -29,9 +29,15 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
   )
 }
 
-function formatDate(iso: string | null | undefined) {
+function formatDateTime(iso: string | null | undefined) {
   if (!iso) return '-'
-  return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+  return new Date(iso).toLocaleString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
 }
 
 function formatPrice(val: string | null | undefined) {
@@ -80,7 +86,7 @@ export function MaterialPriceTable({
 
   const [search, setSearch] = useState('')
   const [companyFilter, setCompanyFilter] = useState<string>('all')
-  const [sortField, setSortField] = useState<SortField>('updatedAt')
+  const [sortField, setSortField] = useState<SortField>('createdAt')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<MappedMaterialPrice | null>(null)
@@ -115,8 +121,10 @@ export function MaterialPriceTable({
           const pb = parseFloat(b.unitPrice ?? '0')
           return dir * (pa - pb)
         }
-        case 'updatedAt':
-          return cmpStr(a.updatedAt, b.updatedAt)
+        case 'createdByName':
+          return cmpStr(a.createdByName, b.createdByName)
+        case 'createdAt':
+          return cmpStr(a.createdAt, b.createdAt)
         default:
           return 0
       }
@@ -241,8 +249,8 @@ export function MaterialPriceTable({
                 Unit Price <SortIcon field="unitPrice" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className="text-xs whitespace-nowrap">Unit Qty</TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('updatedAt')}>
-                Updated <SortIcon field="updatedAt" sortField={sortField} sortDir={sortDir} />
+              <TableHead className={thClass} onClick={() => toggleSort('createdByName')}>
+                Created <SortIcon field="createdByName" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className="w-20">
                 <span className="sr-only">Actions</span>
@@ -295,7 +303,12 @@ export function MaterialPriceTable({
                     {formatPrice(entry.unitPrice)}
                   </TableCell>
                   <TableCell className={tdClass}>{entry.quantityPrice ?? '—'}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(entry.updatedAt)}</TableCell>
+                  <TableCell className={tdClass}>
+                    <div className="flex flex-col leading-tight">
+                      <span>{entry.createdByName || '-'}</span>
+                      <span className="text-xs text-muted-foreground">{formatDateTime(entry.createdAt)}</span>
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
                       <Button

@@ -49,6 +49,7 @@ type SortField =
   | 'unitName'
   | 'parentBeNumbers'
   | 'createdByName'
+  | 'createdAt'
   | 'rejected'
 type SortDir = 'asc' | 'desc'
 type FilterRejected = 'all' | 'active' | 'rejected'
@@ -60,6 +61,19 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
   ) : (
     <ChevronDown className="inline h-3.5 w-3.5 ml-1" />
   )
+}
+
+function formatDateTime(value: string | null) {
+  if (!value) return '-'
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return '-'
+  return date.toLocaleString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
 }
 
 interface MaterialTableProps {
@@ -237,6 +251,7 @@ export function MaterialTable({
     {key: 'materialGroupLabelD', label: 'Group D'},
     {key: 'unitName', label: 'Unit'},
     {key: 'parentBeNumbers', label: 'Parent Parts'},
+    {key: 'createdByName', label: 'Created'},
     {key: 'rejected', label: 'Status'},
   ]
 
@@ -335,6 +350,12 @@ export function MaterialTable({
                     ) : (
                       <span className="text-muted-foreground">—</span>
                     )}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    <div className="flex flex-col leading-tight">
+                      <span>{m.createdByName || '-'}</span>
+                      <span className="text-xs text-muted-foreground">{formatDateTime(m.createdAt)}</span>
+                    </div>
                   </TableCell>
                   <TableCell>
                     {m.rejected ? (

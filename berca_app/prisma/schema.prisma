@@ -1824,6 +1824,7 @@ model Training {
   deleted                               Boolean           @default(false)
   deletedAt                             DateTime?         @db.DateTime(0)
   deletedBy                             String?           @db.Char(36)
+  InvoiceOutItem                        InvoiceOutItem[]
   WorkOrder                             WorkOrder         @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "Training_ibfk_1")
   Employee                              Employee          @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Training_ibfk_2")
   TrainingStandard                      TrainingStandard  @relation(fields: [trainingStandardId], references: [id], onUpdate: Restrict, map: "Training_ibfk_3")
@@ -1839,24 +1840,23 @@ model Training {
 }
 
 model TrainingContact {
-  id                                           String           @id @db.Char(36)
-  attendeeNumber                               String?          @db.VarChar(100)
-  certSentDate                                 DateTime?        @db.DateTime(0)
-  createdAt                                    DateTime         @db.DateTime(0)
-  succeeded                                    Boolean          @default(false)
-  attended                                     Boolean          @default(false)
-  certificateSent                              Boolean          @default(false)
-  createdBy                                    String           @db.Char(36)
-  contactId                                    String           @db.Char(36)
-  trainingId                                   String           @db.Char(36)
-  deleted                                      Boolean          @default(false)
-  deletedAt                                    DateTime?        @db.DateTime(0)
-  deletedBy                                    String?          @db.Char(36)
-  InvoiceOutItem                               InvoiceOutItem[]
-  Contact                                      Contact          @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "TrainingContact_ibfk_1")
-  Employee                                     Employee         @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "TrainingContact_ibfk_2")
-  Training                                     Training         @relation(fields: [trainingId], references: [id], onUpdate: Restrict, map: "TrainingContact_ibfk_3")
-  Employee_TrainingContact_deletedByToEmployee Employee?        @relation("TrainingContact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "TrainingContact_ibfk_4")
+  id                                           String    @id @db.Char(36)
+  attendeeNumber                               String?   @db.VarChar(100)
+  certSentDate                                 DateTime? @db.DateTime(0)
+  createdAt                                    DateTime  @db.DateTime(0)
+  succeeded                                    Boolean   @default(false)
+  attended                                     Boolean   @default(false)
+  certificateSent                              Boolean   @default(false)
+  createdBy                                    String    @db.Char(36)
+  contactId                                    String    @db.Char(36)
+  trainingId                                   String    @db.Char(36)
+  deleted                                      Boolean   @default(false)
+  deletedAt                                    DateTime? @db.DateTime(0)
+  deletedBy                                    String?   @db.Char(36)
+  Contact                                      Contact   @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "TrainingContact_ibfk_1")
+  Employee                                     Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "TrainingContact_ibfk_2")
+  Training                                     Training  @relation(fields: [trainingId], references: [id], onUpdate: Restrict, map: "TrainingContact_ibfk_3")
+  Employee_TrainingContact_deletedByToEmployee Employee? @relation("TrainingContact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "TrainingContact_ibfk_4")
 
   @@index([contactId], map: "contactId")
   @@index([createdBy], map: "createdBy")
@@ -2248,7 +2248,7 @@ model InvoiceOutItem {
   invoiceOutId                                String              @db.Char(36)
   timeRegistryId                              String?             @db.Char(36)
   workOrderStructureId                        String?             @db.Char(36)
-  trainingContactId                           String?             @db.Char(36)
+  trainingId                                  String?             @db.Char(36)
   description                                 String              @db.VarChar(255)
   quantity                                    Decimal             @db.Decimal(10, 2)
   unitPrice                                   Decimal             @db.Decimal(10, 2)
@@ -2261,7 +2261,7 @@ model InvoiceOutItem {
   InvoiceOut                                  InvoiceOut          @relation(fields: [invoiceOutId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "InvoiceOutItem_ibfk_2")
   TimeRegistry                                TimeRegistry?       @relation(fields: [timeRegistryId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOutItem_ibfk_3")
   WorkOrderStructure                          WorkOrderStructure? @relation(fields: [workOrderStructureId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOutItem_ibfk_4")
-  TrainingContact                             TrainingContact?    @relation(fields: [trainingContactId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOutItem_ibfk_5")
+  Training                                    Training?           @relation(fields: [trainingId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOutItem_ibfk_5")
   Employee_InvoiceOutItem_createdByToEmployee Employee            @relation("InvoiceOutItem_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceOutItem_ibfk_1")
   Employee_InvoiceOutItem_deletedByToEmployee Employee?           @relation("InvoiceOutItem_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InvoiceOutItem_ibfk_6")
 
@@ -2269,8 +2269,8 @@ model InvoiceOutItem {
   @@index([deletedBy], map: "deletedBy")
   @@index([invoiceOutId], map: "invoiceOutId")
   @@index([timeRegistryId], map: "timeRegistryId")
-  @@index([trainingContactId], map: "trainingContactId")
   @@index([workOrderStructureId], map: "workOrderStructureId")
+  @@index([trainingId], map: "trainingId")
 }
 
 model PriceList {

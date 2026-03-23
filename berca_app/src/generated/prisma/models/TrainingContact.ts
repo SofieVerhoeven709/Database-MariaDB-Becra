@@ -246,7 +246,6 @@ export type TrainingContactWhereInput = {
   deleted?: Prisma.BoolFilter<"TrainingContact"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"TrainingContact"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"TrainingContact"> | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemListRelationFilter
   Contact?: Prisma.XOR<Prisma.ContactScalarRelationFilter, Prisma.ContactWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Training?: Prisma.XOR<Prisma.TrainingScalarRelationFilter, Prisma.TrainingWhereInput>
@@ -267,7 +266,6 @@ export type TrainingContactOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  InvoiceOutItem?: Prisma.InvoiceOutItemOrderByRelationAggregateInput
   Contact?: Prisma.ContactOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Training?: Prisma.TrainingOrderByWithRelationInput
@@ -292,7 +290,6 @@ export type TrainingContactWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"TrainingContact"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"TrainingContact"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"TrainingContact"> | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemListRelationFilter
   Contact?: Prisma.XOR<Prisma.ContactScalarRelationFilter, Prisma.ContactWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Training?: Prisma.XOR<Prisma.TrainingScalarRelationFilter, Prisma.TrainingWhereInput>
@@ -347,7 +344,6 @@ export type TrainingContactCreateInput = {
   certificateSent?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingContactInput
   Contact: Prisma.ContactCreateNestedOneWithoutTrainingContactInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingContactInput
   Training: Prisma.TrainingCreateNestedOneWithoutTrainingContactInput
@@ -368,7 +364,6 @@ export type TrainingContactUncheckedCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingContactInput
 }
 
 export type TrainingContactUpdateInput = {
@@ -381,7 +376,6 @@ export type TrainingContactUpdateInput = {
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingContactNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutTrainingContactNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingContactNestedInput
   Training?: Prisma.TrainingUpdateOneRequiredWithoutTrainingContactNestedInput
@@ -402,7 +396,6 @@ export type TrainingContactUncheckedUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingContactNestedInput
 }
 
 export type TrainingContactCreateManyInput = {
@@ -511,11 +504,6 @@ export type TrainingContactMinOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-}
-
-export type TrainingContactNullableScalarRelationFilter = {
-  is?: Prisma.TrainingContactWhereInput | null
-  isNot?: Prisma.TrainingContactWhereInput | null
 }
 
 export type TrainingContactCreateNestedManyWithoutContactInput = {
@@ -686,22 +674,6 @@ export type TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput = {
   deleteMany?: Prisma.TrainingContactScalarWhereInput | Prisma.TrainingContactScalarWhereInput[]
 }
 
-export type TrainingContactCreateNestedOneWithoutInvoiceOutItemInput = {
-  create?: Prisma.XOR<Prisma.TrainingContactCreateWithoutInvoiceOutItemInput, Prisma.TrainingContactUncheckedCreateWithoutInvoiceOutItemInput>
-  connectOrCreate?: Prisma.TrainingContactCreateOrConnectWithoutInvoiceOutItemInput
-  connect?: Prisma.TrainingContactWhereUniqueInput
-}
-
-export type TrainingContactUpdateOneWithoutInvoiceOutItemNestedInput = {
-  create?: Prisma.XOR<Prisma.TrainingContactCreateWithoutInvoiceOutItemInput, Prisma.TrainingContactUncheckedCreateWithoutInvoiceOutItemInput>
-  connectOrCreate?: Prisma.TrainingContactCreateOrConnectWithoutInvoiceOutItemInput
-  upsert?: Prisma.TrainingContactUpsertWithoutInvoiceOutItemInput
-  disconnect?: Prisma.TrainingContactWhereInput | boolean
-  delete?: Prisma.TrainingContactWhereInput | boolean
-  connect?: Prisma.TrainingContactWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TrainingContactUpdateToOneWithWhereWithoutInvoiceOutItemInput, Prisma.TrainingContactUpdateWithoutInvoiceOutItemInput>, Prisma.TrainingContactUncheckedUpdateWithoutInvoiceOutItemInput>
-}
-
 export type TrainingContactCreateWithoutContactInput = {
   id: string
   attendeeNumber?: string | null
@@ -712,7 +684,6 @@ export type TrainingContactCreateWithoutContactInput = {
   certificateSent?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingContactInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingContactInput
   Training: Prisma.TrainingCreateNestedOneWithoutTrainingContactInput
   Employee_TrainingContact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTrainingContact_TrainingContact_deletedByToEmployeeInput
@@ -731,7 +702,6 @@ export type TrainingContactUncheckedCreateWithoutContactInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingContactInput
 }
 
 export type TrainingContactCreateOrConnectWithoutContactInput = {
@@ -789,7 +759,6 @@ export type TrainingContactCreateWithoutEmployeeInput = {
   certificateSent?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingContactInput
   Contact: Prisma.ContactCreateNestedOneWithoutTrainingContactInput
   Training: Prisma.TrainingCreateNestedOneWithoutTrainingContactInput
   Employee_TrainingContact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTrainingContact_TrainingContact_deletedByToEmployeeInput
@@ -808,7 +777,6 @@ export type TrainingContactUncheckedCreateWithoutEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingContactInput
 }
 
 export type TrainingContactCreateOrConnectWithoutEmployeeInput = {
@@ -831,7 +799,6 @@ export type TrainingContactCreateWithoutEmployee_TrainingContact_deletedByToEmpl
   certificateSent?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingContactInput
   Contact: Prisma.ContactCreateNestedOneWithoutTrainingContactInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingContactInput
   Training: Prisma.TrainingCreateNestedOneWithoutTrainingContactInput
@@ -850,7 +817,6 @@ export type TrainingContactUncheckedCreateWithoutEmployee_TrainingContact_delete
   trainingId: string
   deleted?: boolean
   deletedAt?: Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingContactInput
 }
 
 export type TrainingContactCreateOrConnectWithoutEmployee_TrainingContact_deletedByToEmployeeInput = {
@@ -905,7 +871,6 @@ export type TrainingContactCreateWithoutTrainingInput = {
   certificateSent?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingContactInput
   Contact: Prisma.ContactCreateNestedOneWithoutTrainingContactInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingContactInput
   Employee_TrainingContact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTrainingContact_TrainingContact_deletedByToEmployeeInput
@@ -924,7 +889,6 @@ export type TrainingContactUncheckedCreateWithoutTrainingInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingContactInput
 }
 
 export type TrainingContactCreateOrConnectWithoutTrainingInput = {
@@ -953,86 +917,6 @@ export type TrainingContactUpdateManyWithWhereWithoutTrainingInput = {
   data: Prisma.XOR<Prisma.TrainingContactUpdateManyMutationInput, Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingInput>
 }
 
-export type TrainingContactCreateWithoutInvoiceOutItemInput = {
-  id: string
-  attendeeNumber?: string | null
-  certSentDate?: Date | string | null
-  createdAt: Date | string
-  succeeded?: boolean
-  attended?: boolean
-  certificateSent?: boolean
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Contact: Prisma.ContactCreateNestedOneWithoutTrainingContactInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingContactInput
-  Training: Prisma.TrainingCreateNestedOneWithoutTrainingContactInput
-  Employee_TrainingContact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTrainingContact_TrainingContact_deletedByToEmployeeInput
-}
-
-export type TrainingContactUncheckedCreateWithoutInvoiceOutItemInput = {
-  id: string
-  attendeeNumber?: string | null
-  certSentDate?: Date | string | null
-  createdAt: Date | string
-  succeeded?: boolean
-  attended?: boolean
-  certificateSent?: boolean
-  createdBy: string
-  contactId: string
-  trainingId: string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-}
-
-export type TrainingContactCreateOrConnectWithoutInvoiceOutItemInput = {
-  where: Prisma.TrainingContactWhereUniqueInput
-  create: Prisma.XOR<Prisma.TrainingContactCreateWithoutInvoiceOutItemInput, Prisma.TrainingContactUncheckedCreateWithoutInvoiceOutItemInput>
-}
-
-export type TrainingContactUpsertWithoutInvoiceOutItemInput = {
-  update: Prisma.XOR<Prisma.TrainingContactUpdateWithoutInvoiceOutItemInput, Prisma.TrainingContactUncheckedUpdateWithoutInvoiceOutItemInput>
-  create: Prisma.XOR<Prisma.TrainingContactCreateWithoutInvoiceOutItemInput, Prisma.TrainingContactUncheckedCreateWithoutInvoiceOutItemInput>
-  where?: Prisma.TrainingContactWhereInput
-}
-
-export type TrainingContactUpdateToOneWithWhereWithoutInvoiceOutItemInput = {
-  where?: Prisma.TrainingContactWhereInput
-  data: Prisma.XOR<Prisma.TrainingContactUpdateWithoutInvoiceOutItemInput, Prisma.TrainingContactUncheckedUpdateWithoutInvoiceOutItemInput>
-}
-
-export type TrainingContactUpdateWithoutInvoiceOutItemInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  attendeeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  succeeded?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  attended?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Contact?: Prisma.ContactUpdateOneRequiredWithoutTrainingContactNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingContactNestedInput
-  Training?: Prisma.TrainingUpdateOneRequiredWithoutTrainingContactNestedInput
-  Employee_TrainingContact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTrainingContact_TrainingContact_deletedByToEmployeeNestedInput
-}
-
-export type TrainingContactUncheckedUpdateWithoutInvoiceOutItemInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  attendeeNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  certSentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  succeeded?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  attended?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  contactId?: Prisma.StringFieldUpdateOperationsInput | string
-  trainingId?: Prisma.StringFieldUpdateOperationsInput | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
 export type TrainingContactCreateManyContactInput = {
   id: string
   attendeeNumber?: string | null
@@ -1058,7 +942,6 @@ export type TrainingContactUpdateWithoutContactInput = {
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingContactNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingContactNestedInput
   Training?: Prisma.TrainingUpdateOneRequiredWithoutTrainingContactNestedInput
   Employee_TrainingContact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTrainingContact_TrainingContact_deletedByToEmployeeNestedInput
@@ -1077,7 +960,6 @@ export type TrainingContactUncheckedUpdateWithoutContactInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingContactNestedInput
 }
 
 export type TrainingContactUncheckedUpdateManyWithoutContactInput = {
@@ -1135,7 +1017,6 @@ export type TrainingContactUpdateWithoutEmployeeInput = {
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingContactNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutTrainingContactNestedInput
   Training?: Prisma.TrainingUpdateOneRequiredWithoutTrainingContactNestedInput
   Employee_TrainingContact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTrainingContact_TrainingContact_deletedByToEmployeeNestedInput
@@ -1154,7 +1035,6 @@ export type TrainingContactUncheckedUpdateWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingContactNestedInput
 }
 
 export type TrainingContactUncheckedUpdateManyWithoutEmployeeInput = {
@@ -1182,7 +1062,6 @@ export type TrainingContactUpdateWithoutEmployee_TrainingContact_deletedByToEmpl
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingContactNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutTrainingContactNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingContactNestedInput
   Training?: Prisma.TrainingUpdateOneRequiredWithoutTrainingContactNestedInput
@@ -1201,7 +1080,6 @@ export type TrainingContactUncheckedUpdateWithoutEmployee_TrainingContact_delete
   trainingId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingContactNestedInput
 }
 
 export type TrainingContactUncheckedUpdateManyWithoutEmployee_TrainingContact_deletedByToEmployeeInput = {
@@ -1244,7 +1122,6 @@ export type TrainingContactUpdateWithoutTrainingInput = {
   certificateSent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingContactNestedInput
   Contact?: Prisma.ContactUpdateOneRequiredWithoutTrainingContactNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingContactNestedInput
   Employee_TrainingContact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTrainingContact_TrainingContact_deletedByToEmployeeNestedInput
@@ -1263,7 +1140,6 @@ export type TrainingContactUncheckedUpdateWithoutTrainingInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingContactNestedInput
 }
 
 export type TrainingContactUncheckedUpdateManyWithoutTrainingInput = {
@@ -1282,35 +1158,6 @@ export type TrainingContactUncheckedUpdateManyWithoutTrainingInput = {
 }
 
 
-/**
- * Count Type TrainingContactCountOutputType
- */
-
-export type TrainingContactCountOutputType = {
-  InvoiceOutItem: number
-}
-
-export type TrainingContactCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InvoiceOutItem?: boolean | TrainingContactCountOutputTypeCountInvoiceOutItemArgs
-}
-
-/**
- * TrainingContactCountOutputType without action
- */
-export type TrainingContactCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the TrainingContactCountOutputType
-   */
-  select?: Prisma.TrainingContactCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * TrainingContactCountOutputType without action
- */
-export type TrainingContactCountOutputTypeCountInvoiceOutItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InvoiceOutItemWhereInput
-}
-
 
 export type TrainingContactSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1326,12 +1173,10 @@ export type TrainingContactSelect<ExtArgs extends runtime.Types.Extensions.Inter
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  InvoiceOutItem?: boolean | Prisma.TrainingContact$InvoiceOutItemArgs<ExtArgs>
   Contact?: boolean | Prisma.ContactDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Training?: boolean | Prisma.TrainingDefaultArgs<ExtArgs>
   Employee_TrainingContact_deletedByToEmployee?: boolean | Prisma.TrainingContact$Employee_TrainingContact_deletedByToEmployeeArgs<ExtArgs>
-  _count?: boolean | Prisma.TrainingContactCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["trainingContact"]>
 
 
@@ -1354,18 +1199,15 @@ export type TrainingContactSelectScalar = {
 
 export type TrainingContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "attendeeNumber" | "certSentDate" | "createdAt" | "succeeded" | "attended" | "certificateSent" | "createdBy" | "contactId" | "trainingId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["trainingContact"]>
 export type TrainingContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  InvoiceOutItem?: boolean | Prisma.TrainingContact$InvoiceOutItemArgs<ExtArgs>
   Contact?: boolean | Prisma.ContactDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Training?: boolean | Prisma.TrainingDefaultArgs<ExtArgs>
   Employee_TrainingContact_deletedByToEmployee?: boolean | Prisma.TrainingContact$Employee_TrainingContact_deletedByToEmployeeArgs<ExtArgs>
-  _count?: boolean | Prisma.TrainingContactCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $TrainingContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TrainingContact"
   objects: {
-    InvoiceOutItem: Prisma.$InvoiceOutItemPayload<ExtArgs>[]
     Contact: Prisma.$ContactPayload<ExtArgs>
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Training: Prisma.$TrainingPayload<ExtArgs>
@@ -1725,7 +1567,6 @@ readonly fields: TrainingContactFieldRefs;
  */
 export interface Prisma__TrainingContactClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  InvoiceOutItem<T extends Prisma.TrainingContact$InvoiceOutItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingContact$InvoiceOutItemArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceOutItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Contact<T extends Prisma.ContactDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ContactDefaultArgs<ExtArgs>>): Prisma.Prisma__ContactClient<runtime.Types.Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Training<T extends Prisma.TrainingDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingDefaultArgs<ExtArgs>>): Prisma.Prisma__TrainingClient<runtime.Types.Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -2112,30 +1953,6 @@ export type TrainingContactDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many TrainingContacts to delete.
    */
   limit?: number
-}
-
-/**
- * TrainingContact.InvoiceOutItem
- */
-export type TrainingContact$InvoiceOutItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InvoiceOutItem
-   */
-  select?: Prisma.InvoiceOutItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the InvoiceOutItem
-   */
-  omit?: Prisma.InvoiceOutItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InvoiceOutItemInclude<ExtArgs> | null
-  where?: Prisma.InvoiceOutItemWhereInput
-  orderBy?: Prisma.InvoiceOutItemOrderByWithRelationInput | Prisma.InvoiceOutItemOrderByWithRelationInput[]
-  cursor?: Prisma.InvoiceOutItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.InvoiceOutItemScalarFieldEnum | Prisma.InvoiceOutItemScalarFieldEnum[]
 }
 
 /**

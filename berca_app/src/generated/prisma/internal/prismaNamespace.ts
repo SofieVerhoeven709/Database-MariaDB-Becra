@@ -7810,7 +7810,7 @@ export const InvoiceOutItemScalarFieldEnum = {
   invoiceOutId: 'invoiceOutId',
   timeRegistryId: 'timeRegistryId',
   workOrderStructureId: 'workOrderStructureId',
-  trainingContactId: 'trainingContactId',
+  trainingId: 'trainingId',
   description: 'description',
   quantity: 'quantity',
   unitPrice: 'unitPrice',
@@ -9030,7 +9030,7 @@ export const InvoiceOutItemOrderByRelevanceFieldEnum = {
   invoiceOutId: 'invoiceOutId',
   timeRegistryId: 'timeRegistryId',
   workOrderStructureId: 'workOrderStructureId',
-  trainingContactId: 'trainingContactId',
+  trainingId: 'trainingId',
   description: 'description',
   deletedBy: 'deletedBy',
   createdBy: 'createdBy'

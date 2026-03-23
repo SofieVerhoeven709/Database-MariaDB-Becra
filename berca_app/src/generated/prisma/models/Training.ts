@@ -238,6 +238,7 @@ export type TrainingWhereInput = {
   deleted?: Prisma.BoolFilter<"Training"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Training"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"Training"> | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemListRelationFilter
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
@@ -259,6 +260,7 @@ export type TrainingOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  InvoiceOutItem?: Prisma.InvoiceOutItemOrderByRelationAggregateInput
   WorkOrder?: Prisma.WorkOrderOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   TrainingStandard?: Prisma.TrainingStandardOrderByWithRelationInput
@@ -284,6 +286,7 @@ export type TrainingWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"Training"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Training"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"Training"> | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemListRelationFilter
   WorkOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   TrainingStandard?: Prisma.XOR<Prisma.TrainingStandardScalarRelationFilter, Prisma.TrainingStandardWhereInput>
@@ -336,6 +339,7 @@ export type TrainingCreateInput = {
   closed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingInput
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
@@ -357,6 +361,7 @@ export type TrainingUncheckedCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingInput
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -368,6 +373,7 @@ export type TrainingUpdateInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
@@ -389,6 +395,7 @@ export type TrainingUncheckedUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingNestedInput
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -496,6 +503,11 @@ export type TrainingMinOrderByAggregateInput = {
 export type TrainingScalarRelationFilter = {
   is?: Prisma.TrainingWhereInput
   isNot?: Prisma.TrainingWhereInput
+}
+
+export type TrainingNullableScalarRelationFilter = {
+  is?: Prisma.TrainingWhereInput | null
+  isNot?: Prisma.TrainingWhereInput | null
 }
 
 export type TrainingCreateNestedManyWithoutEmployeeInput = {
@@ -722,6 +734,22 @@ export type TrainingUncheckedUpdateManyWithoutWorkOrderNestedInput = {
   deleteMany?: Prisma.TrainingScalarWhereInput | Prisma.TrainingScalarWhereInput[]
 }
 
+export type TrainingCreateNestedOneWithoutInvoiceOutItemInput = {
+  create?: Prisma.XOR<Prisma.TrainingCreateWithoutInvoiceOutItemInput, Prisma.TrainingUncheckedCreateWithoutInvoiceOutItemInput>
+  connectOrCreate?: Prisma.TrainingCreateOrConnectWithoutInvoiceOutItemInput
+  connect?: Prisma.TrainingWhereUniqueInput
+}
+
+export type TrainingUpdateOneWithoutInvoiceOutItemNestedInput = {
+  create?: Prisma.XOR<Prisma.TrainingCreateWithoutInvoiceOutItemInput, Prisma.TrainingUncheckedCreateWithoutInvoiceOutItemInput>
+  connectOrCreate?: Prisma.TrainingCreateOrConnectWithoutInvoiceOutItemInput
+  upsert?: Prisma.TrainingUpsertWithoutInvoiceOutItemInput
+  disconnect?: Prisma.TrainingWhereInput | boolean
+  delete?: Prisma.TrainingWhereInput | boolean
+  connect?: Prisma.TrainingWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TrainingUpdateToOneWithWhereWithoutInvoiceOutItemInput, Prisma.TrainingUpdateWithoutInvoiceOutItemInput>, Prisma.TrainingUncheckedUpdateWithoutInvoiceOutItemInput>
+}
+
 export type TrainingCreateWithoutEmployeeInput = {
   id: string
   trainingNumber?: string | null
@@ -730,6 +758,7 @@ export type TrainingCreateWithoutEmployeeInput = {
   closed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingInput
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
@@ -749,6 +778,7 @@ export type TrainingUncheckedCreateWithoutEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingInput
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -770,6 +800,7 @@ export type TrainingCreateWithoutEmployee_Training_deletedByToEmployeeInput = {
   closed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingInput
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
@@ -789,6 +820,7 @@ export type TrainingUncheckedCreateWithoutEmployee_Training_deletedByToEmployeeI
   targetId: string
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingInput
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -860,6 +892,7 @@ export type TrainingCreateWithoutTargetInput = {
   closed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingInput
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
@@ -879,6 +912,7 @@ export type TrainingUncheckedCreateWithoutTargetInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingInput
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -916,6 +950,7 @@ export type TrainingCreateWithoutTrainingContactInput = {
   closed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingInput
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
@@ -936,6 +971,7 @@ export type TrainingUncheckedCreateWithoutTrainingContactInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingInput
 }
 
 export type TrainingCreateOrConnectWithoutTrainingContactInput = {
@@ -962,6 +998,7 @@ export type TrainingUpdateWithoutTrainingContactInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
@@ -982,6 +1019,7 @@ export type TrainingUncheckedUpdateWithoutTrainingContactInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingCreateWithoutTrainingStandardInput = {
@@ -992,6 +1030,7 @@ export type TrainingCreateWithoutTrainingStandardInput = {
   closed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingInput
   WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
@@ -1011,6 +1050,7 @@ export type TrainingUncheckedCreateWithoutTrainingStandardInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingInput
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -1048,6 +1088,7 @@ export type TrainingCreateWithoutWorkOrderInput = {
   closed?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemCreateNestedManyWithoutTrainingInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
   TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
   Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
@@ -1067,6 +1108,7 @@ export type TrainingUncheckedCreateWithoutWorkOrderInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingInput
   TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
 }
 
@@ -1094,6 +1136,86 @@ export type TrainingUpdateWithWhereUniqueWithoutWorkOrderInput = {
 export type TrainingUpdateManyWithWhereWithoutWorkOrderInput = {
   where: Prisma.TrainingScalarWhereInput
   data: Prisma.XOR<Prisma.TrainingUpdateManyMutationInput, Prisma.TrainingUncheckedUpdateManyWithoutWorkOrderInput>
+}
+
+export type TrainingCreateWithoutInvoiceOutItemInput = {
+  id: string
+  trainingNumber?: string | null
+  trainingDate: Date | string
+  createdAt: Date | string
+  closed?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  WorkOrder: Prisma.WorkOrderCreateNestedOneWithoutTrainingInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingInput
+  TrainingStandard: Prisma.TrainingStandardCreateNestedOneWithoutTrainingInput
+  Target: Prisma.TargetCreateNestedOneWithoutTrainingInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTraining_Training_deletedByToEmployeeInput
+  TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutTrainingInput
+}
+
+export type TrainingUncheckedCreateWithoutInvoiceOutItemInput = {
+  id: string
+  trainingNumber?: string | null
+  trainingDate: Date | string
+  createdAt: Date | string
+  closed?: boolean
+  createdBy: string
+  workOrderId: string
+  trainingStandardId: string
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutTrainingInput
+}
+
+export type TrainingCreateOrConnectWithoutInvoiceOutItemInput = {
+  where: Prisma.TrainingWhereUniqueInput
+  create: Prisma.XOR<Prisma.TrainingCreateWithoutInvoiceOutItemInput, Prisma.TrainingUncheckedCreateWithoutInvoiceOutItemInput>
+}
+
+export type TrainingUpsertWithoutInvoiceOutItemInput = {
+  update: Prisma.XOR<Prisma.TrainingUpdateWithoutInvoiceOutItemInput, Prisma.TrainingUncheckedUpdateWithoutInvoiceOutItemInput>
+  create: Prisma.XOR<Prisma.TrainingCreateWithoutInvoiceOutItemInput, Prisma.TrainingUncheckedCreateWithoutInvoiceOutItemInput>
+  where?: Prisma.TrainingWhereInput
+}
+
+export type TrainingUpdateToOneWithWhereWithoutInvoiceOutItemInput = {
+  where?: Prisma.TrainingWhereInput
+  data: Prisma.XOR<Prisma.TrainingUpdateWithoutInvoiceOutItemInput, Prisma.TrainingUncheckedUpdateWithoutInvoiceOutItemInput>
+}
+
+export type TrainingUpdateWithoutInvoiceOutItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
+  TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
+  Employee_Training_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTraining_Training_deletedByToEmployeeNestedInput
+  TrainingContact?: Prisma.TrainingContactUpdateManyWithoutTrainingNestedInput
+}
+
+export type TrainingUncheckedUpdateWithoutInvoiceOutItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
+  trainingStandardId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
 export type TrainingCreateManyEmployeeInput = {
@@ -1132,6 +1254,7 @@ export type TrainingUpdateWithoutEmployeeInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
@@ -1151,6 +1274,7 @@ export type TrainingUncheckedUpdateWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingNestedInput
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1176,6 +1300,7 @@ export type TrainingUpdateWithoutEmployee_Training_deletedByToEmployeeInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
@@ -1195,6 +1320,7 @@ export type TrainingUncheckedUpdateWithoutEmployee_Training_deletedByToEmployeeI
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingNestedInput
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1234,6 +1360,7 @@ export type TrainingUpdateWithoutTargetInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
@@ -1253,6 +1380,7 @@ export type TrainingUncheckedUpdateWithoutTargetInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingNestedInput
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1292,6 +1420,7 @@ export type TrainingUpdateWithoutTrainingStandardInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingNestedInput
   WorkOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutTrainingNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
@@ -1311,6 +1440,7 @@ export type TrainingUncheckedUpdateWithoutTrainingStandardInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingNestedInput
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1350,6 +1480,7 @@ export type TrainingUpdateWithoutWorkOrderInput = {
   closed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUpdateManyWithoutTrainingNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingNestedInput
   TrainingStandard?: Prisma.TrainingStandardUpdateOneRequiredWithoutTrainingNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingNestedInput
@@ -1369,6 +1500,7 @@ export type TrainingUncheckedUpdateWithoutWorkOrderInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  InvoiceOutItem?: Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingNestedInput
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutTrainingNestedInput
 }
 
@@ -1392,10 +1524,12 @@ export type TrainingUncheckedUpdateManyWithoutWorkOrderInput = {
  */
 
 export type TrainingCountOutputType = {
+  InvoiceOutItem: number
   TrainingContact: number
 }
 
 export type TrainingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  InvoiceOutItem?: boolean | TrainingCountOutputTypeCountInvoiceOutItemArgs
   TrainingContact?: boolean | TrainingCountOutputTypeCountTrainingContactArgs
 }
 
@@ -1407,6 +1541,13 @@ export type TrainingCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
    * Select specific fields to fetch from the TrainingCountOutputType
    */
   select?: Prisma.TrainingCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * TrainingCountOutputType without action
+ */
+export type TrainingCountOutputTypeCountInvoiceOutItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvoiceOutItemWhereInput
 }
 
 /**
@@ -1430,6 +1571,7 @@ export type TrainingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
+  InvoiceOutItem?: boolean | Prisma.Training$InvoiceOutItemArgs<ExtArgs>
   WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   TrainingStandard?: boolean | Prisma.TrainingStandardDefaultArgs<ExtArgs>
@@ -1458,6 +1600,7 @@ export type TrainingSelectScalar = {
 
 export type TrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "trainingNumber" | "trainingDate" | "createdAt" | "closed" | "createdBy" | "workOrderId" | "trainingStandardId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["training"]>
 export type TrainingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  InvoiceOutItem?: boolean | Prisma.Training$InvoiceOutItemArgs<ExtArgs>
   WorkOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   TrainingStandard?: boolean | Prisma.TrainingStandardDefaultArgs<ExtArgs>
@@ -1470,6 +1613,7 @@ export type TrainingInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type $TrainingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Training"
   objects: {
+    InvoiceOutItem: Prisma.$InvoiceOutItemPayload<ExtArgs>[]
     WorkOrder: Prisma.$WorkOrderPayload<ExtArgs>
     Employee: Prisma.$EmployeePayload<ExtArgs>
     TrainingStandard: Prisma.$TrainingStandardPayload<ExtArgs>
@@ -1830,6 +1974,7 @@ readonly fields: TrainingFieldRefs;
  */
 export interface Prisma__TrainingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  InvoiceOutItem<T extends Prisma.Training$InvoiceOutItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Training$InvoiceOutItemArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceOutItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   WorkOrder<T extends Prisma.WorkOrderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WorkOrderDefaultArgs<ExtArgs>>): Prisma.Prisma__WorkOrderClient<runtime.Types.Result.GetResult<Prisma.$WorkOrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   TrainingStandard<T extends Prisma.TrainingStandardDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingStandardDefaultArgs<ExtArgs>>): Prisma.Prisma__TrainingStandardClient<runtime.Types.Result.GetResult<Prisma.$TrainingStandardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -2217,6 +2362,30 @@ export type TrainingDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Trainings to delete.
    */
   limit?: number
+}
+
+/**
+ * Training.InvoiceOutItem
+ */
+export type Training$InvoiceOutItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvoiceOutItem
+   */
+  select?: Prisma.InvoiceOutItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InvoiceOutItem
+   */
+  omit?: Prisma.InvoiceOutItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvoiceOutItemInclude<ExtArgs> | null
+  where?: Prisma.InvoiceOutItemWhereInput
+  orderBy?: Prisma.InvoiceOutItemOrderByWithRelationInput | Prisma.InvoiceOutItemOrderByWithRelationInput[]
+  cursor?: Prisma.InvoiceOutItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvoiceOutItemScalarFieldEnum | Prisma.InvoiceOutItemScalarFieldEnum[]
 }
 
 /**

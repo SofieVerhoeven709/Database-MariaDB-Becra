@@ -575,7 +575,7 @@ CREATE TABLE
             invoiceOutId CHAR(36) NOT NULL,
             timeRegistryId CHAR(36) NULL,
             workOrderStructureId CHAR(36) NULL,
-            trainingContactId CHAR(36) NULL,
+            trainingId CHAR(36) NULL,
             description VARCHAR(255) NOT NULL,
             quantity DECIMAL(10,2) NOT NULL,
             unitPrice DECIMAL(10,2) NOT NULL,
@@ -588,7 +588,7 @@ CREATE TABLE
             FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE CASCADE,
             FOREIGN KEY (timeRegistryId) REFERENCES TimeRegistry (id) ON DELETE RESTRICT,
             FOREIGN KEY (workOrderStructureId) REFERENCES WorkOrderStructure (id) ON DELETE RESTRICT,
-            FOREIGN KEY (trainingContactId) REFERENCES TrainingContact (id) ON DELETE RESTRICT,
+            FOREIGN KEY (trainingId) REFERENCES Training (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;

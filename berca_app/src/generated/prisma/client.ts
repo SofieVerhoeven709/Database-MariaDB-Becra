@@ -465,11 +465,6 @@ export type PaymentMethod = Prisma.PaymentMethodModel
  */
 export type VatMargin = Prisma.VatMarginModel
 /**
- * Model InvoiceOutItem
- * 
- */
-export type InvoiceOutItem = Prisma.InvoiceOutItemModel
-/**
  * Model PriceList
  * 
  */

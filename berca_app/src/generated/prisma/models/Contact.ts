@@ -58,6 +58,7 @@ export type ContactMinAggregateOutputType = {
   titleId: string | null
   businessCardId: string | null
   targetId: string | null
+  companyAdressId: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
@@ -97,6 +98,7 @@ export type ContactMaxAggregateOutputType = {
   titleId: string | null
   businessCardId: string | null
   targetId: string | null
+  companyAdressId: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
@@ -136,6 +138,7 @@ export type ContactCountAggregateOutputType = {
   titleId: number
   businessCardId: number
   targetId: number
+  companyAdressId: number
   deleted: number
   deletedAt: number
   deletedBy: number
@@ -177,6 +180,7 @@ export type ContactMinAggregateInputType = {
   titleId?: true
   businessCardId?: true
   targetId?: true
+  companyAdressId?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
@@ -216,6 +220,7 @@ export type ContactMaxAggregateInputType = {
   titleId?: true
   businessCardId?: true
   targetId?: true
+  companyAdressId?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
@@ -255,6 +260,7 @@ export type ContactCountAggregateInputType = {
   titleId?: true
   businessCardId?: true
   targetId?: true
+  companyAdressId?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
@@ -367,6 +373,7 @@ export type ContactGroupByOutputType = {
   titleId: string | null
   businessCardId: string | null
   targetId: string
+  companyAdressId: string | null
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
@@ -427,6 +434,7 @@ export type ContactWhereInput = {
   titleId?: Prisma.StringNullableFilter<"Contact"> | string | null
   businessCardId?: Prisma.StringNullableFilter<"Contact"> | string | null
   targetId?: Prisma.StringFilter<"Contact"> | string
+  companyAdressId?: Prisma.StringNullableFilter<"Contact"> | string | null
   deleted?: Prisma.BoolFilter<"Contact"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Contact"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"Contact"> | string | null
@@ -438,6 +446,7 @@ export type ContactWhereInput = {
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   Employee_Contact_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  CompanyAdress?: Prisma.XOR<Prisma.CompanyAdressNullableScalarRelationFilter, Prisma.CompanyAdressWhereInput> | null
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
   InvoiceOutContact?: Prisma.InvoiceOutContactListRelationFilter
   ProjectContact?: Prisma.ProjectContactListRelationFilter
@@ -478,6 +487,7 @@ export type ContactOrderByWithRelationInput = {
   titleId?: Prisma.SortOrderInput | Prisma.SortOrder
   businessCardId?: Prisma.SortOrderInput | Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  companyAdressId?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -489,6 +499,7 @@ export type ContactOrderByWithRelationInput = {
   DocumentStructure?: Prisma.DocumentStructureOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  CompanyAdress?: Prisma.CompanyAdressOrderByWithRelationInput
   FollowUpStructure?: Prisma.FollowUpStructureOrderByRelationAggregateInput
   InvoiceOutContact?: Prisma.InvoiceOutContactOrderByRelationAggregateInput
   ProjectContact?: Prisma.ProjectContactOrderByRelationAggregateInput
@@ -533,6 +544,7 @@ export type ContactWhereUniqueInput = Prisma.AtLeast<{
   titleId?: Prisma.StringNullableFilter<"Contact"> | string | null
   businessCardId?: Prisma.StringNullableFilter<"Contact"> | string | null
   targetId?: Prisma.StringFilter<"Contact"> | string
+  companyAdressId?: Prisma.StringNullableFilter<"Contact"> | string | null
   deleted?: Prisma.BoolFilter<"Contact"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Contact"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"Contact"> | string | null
@@ -544,6 +556,7 @@ export type ContactWhereUniqueInput = Prisma.AtLeast<{
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
   Employee_Contact_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  CompanyAdress?: Prisma.XOR<Prisma.CompanyAdressNullableScalarRelationFilter, Prisma.CompanyAdressWhereInput> | null
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
   InvoiceOutContact?: Prisma.InvoiceOutContactListRelationFilter
   ProjectContact?: Prisma.ProjectContactListRelationFilter
@@ -584,6 +597,7 @@ export type ContactOrderByWithAggregationInput = {
   titleId?: Prisma.SortOrderInput | Prisma.SortOrder
   businessCardId?: Prisma.SortOrderInput | Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  companyAdressId?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -629,6 +643,7 @@ export type ContactScalarWhereWithAggregatesInput = {
   titleId?: Prisma.StringNullableWithAggregatesFilter<"Contact"> | string | null
   businessCardId?: Prisma.StringNullableWithAggregatesFilter<"Contact"> | string | null
   targetId?: Prisma.StringWithAggregatesFilter<"Contact"> | string
+  companyAdressId?: Prisma.StringNullableWithAggregatesFilter<"Contact"> | string | null
   deleted?: Prisma.BoolWithAggregatesFilter<"Contact"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Contact"> | Date | string | null
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Contact"> | string | null
@@ -672,6 +687,7 @@ export type ContactCreateInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
@@ -712,6 +728,7 @@ export type ContactUncheckedCreateInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -760,6 +777,7 @@ export type ContactUpdateInput = {
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
@@ -800,6 +818,7 @@ export type ContactUncheckedUpdateInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -844,6 +863,7 @@ export type ContactCreateManyInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -915,9 +935,20 @@ export type ContactUncheckedUpdateManyInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ContactListRelationFilter = {
+  every?: Prisma.ContactWhereInput
+  some?: Prisma.ContactWhereInput
+  none?: Prisma.ContactWhereInput
+}
+
+export type ContactOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ContactScalarRelationFilter = {
@@ -965,6 +996,7 @@ export type ContactCountOrderByAggregateInput = {
   titleId?: Prisma.SortOrder
   businessCardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  companyAdressId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
@@ -1004,6 +1036,7 @@ export type ContactMaxOrderByAggregateInput = {
   titleId?: Prisma.SortOrder
   businessCardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  companyAdressId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
@@ -1043,19 +1076,52 @@ export type ContactMinOrderByAggregateInput = {
   titleId?: Prisma.SortOrder
   businessCardId?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  companyAdressId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
 }
 
-export type ContactListRelationFilter = {
-  every?: Prisma.ContactWhereInput
-  some?: Prisma.ContactWhereInput
-  none?: Prisma.ContactWhereInput
+export type ContactCreateNestedManyWithoutCompanyAdressInput = {
+  create?: Prisma.XOR<Prisma.ContactCreateWithoutCompanyAdressInput, Prisma.ContactUncheckedCreateWithoutCompanyAdressInput> | Prisma.ContactCreateWithoutCompanyAdressInput[] | Prisma.ContactUncheckedCreateWithoutCompanyAdressInput[]
+  connectOrCreate?: Prisma.ContactCreateOrConnectWithoutCompanyAdressInput | Prisma.ContactCreateOrConnectWithoutCompanyAdressInput[]
+  createMany?: Prisma.ContactCreateManyCompanyAdressInputEnvelope
+  connect?: Prisma.ContactWhereUniqueInput | Prisma.ContactWhereUniqueInput[]
 }
 
-export type ContactOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type ContactUncheckedCreateNestedManyWithoutCompanyAdressInput = {
+  create?: Prisma.XOR<Prisma.ContactCreateWithoutCompanyAdressInput, Prisma.ContactUncheckedCreateWithoutCompanyAdressInput> | Prisma.ContactCreateWithoutCompanyAdressInput[] | Prisma.ContactUncheckedCreateWithoutCompanyAdressInput[]
+  connectOrCreate?: Prisma.ContactCreateOrConnectWithoutCompanyAdressInput | Prisma.ContactCreateOrConnectWithoutCompanyAdressInput[]
+  createMany?: Prisma.ContactCreateManyCompanyAdressInputEnvelope
+  connect?: Prisma.ContactWhereUniqueInput | Prisma.ContactWhereUniqueInput[]
+}
+
+export type ContactUpdateManyWithoutCompanyAdressNestedInput = {
+  create?: Prisma.XOR<Prisma.ContactCreateWithoutCompanyAdressInput, Prisma.ContactUncheckedCreateWithoutCompanyAdressInput> | Prisma.ContactCreateWithoutCompanyAdressInput[] | Prisma.ContactUncheckedCreateWithoutCompanyAdressInput[]
+  connectOrCreate?: Prisma.ContactCreateOrConnectWithoutCompanyAdressInput | Prisma.ContactCreateOrConnectWithoutCompanyAdressInput[]
+  upsert?: Prisma.ContactUpsertWithWhereUniqueWithoutCompanyAdressInput | Prisma.ContactUpsertWithWhereUniqueWithoutCompanyAdressInput[]
+  createMany?: Prisma.ContactCreateManyCompanyAdressInputEnvelope
+  set?: Prisma.ContactWhereUniqueInput | Prisma.ContactWhereUniqueInput[]
+  disconnect?: Prisma.ContactWhereUniqueInput | Prisma.ContactWhereUniqueInput[]
+  delete?: Prisma.ContactWhereUniqueInput | Prisma.ContactWhereUniqueInput[]
+  connect?: Prisma.ContactWhereUniqueInput | Prisma.ContactWhereUniqueInput[]
+  update?: Prisma.ContactUpdateWithWhereUniqueWithoutCompanyAdressInput | Prisma.ContactUpdateWithWhereUniqueWithoutCompanyAdressInput[]
+  updateMany?: Prisma.ContactUpdateManyWithWhereWithoutCompanyAdressInput | Prisma.ContactUpdateManyWithWhereWithoutCompanyAdressInput[]
+  deleteMany?: Prisma.ContactScalarWhereInput | Prisma.ContactScalarWhereInput[]
+}
+
+export type ContactUncheckedUpdateManyWithoutCompanyAdressNestedInput = {
+  create?: Prisma.XOR<Prisma.ContactCreateWithoutCompanyAdressInput, Prisma.ContactUncheckedCreateWithoutCompanyAdressInput> | Prisma.ContactCreateWithoutCompanyAdressInput[] | Prisma.ContactUncheckedCreateWithoutCompanyAdressInput[]
+  connectOrCreate?: Prisma.ContactCreateOrConnectWithoutCompanyAdressInput | Prisma.ContactCreateOrConnectWithoutCompanyAdressInput[]
+  upsert?: Prisma.ContactUpsertWithWhereUniqueWithoutCompanyAdressInput | Prisma.ContactUpsertWithWhereUniqueWithoutCompanyAdressInput[]
+  createMany?: Prisma.ContactCreateManyCompanyAdressInputEnvelope
+  set?: Prisma.ContactWhereUniqueInput | Prisma.ContactWhereUniqueInput[]
+  disconnect?: Prisma.ContactWhereUniqueInput | Prisma.ContactWhereUniqueInput[]
+  delete?: Prisma.ContactWhereUniqueInput | Prisma.ContactWhereUniqueInput[]
+  connect?: Prisma.ContactWhereUniqueInput | Prisma.ContactWhereUniqueInput[]
+  update?: Prisma.ContactUpdateWithWhereUniqueWithoutCompanyAdressInput | Prisma.ContactUpdateWithWhereUniqueWithoutCompanyAdressInput[]
+  updateMany?: Prisma.ContactUpdateManyWithWhereWithoutCompanyAdressInput | Prisma.ContactUpdateManyWithWhereWithoutCompanyAdressInput[]
+  deleteMany?: Prisma.ContactScalarWhereInput | Prisma.ContactScalarWhereInput[]
 }
 
 export type ContactCreateNestedOneWithoutCompanyContactInput = {
@@ -1422,6 +1488,163 @@ export type ContactUpdateOneRequiredWithoutInvoiceOutContactNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ContactUpdateToOneWithWhereWithoutInvoiceOutContactInput, Prisma.ContactUpdateWithoutInvoiceOutContactInput>, Prisma.ContactUncheckedUpdateWithoutInvoiceOutContactInput>
 }
 
+export type ContactCreateWithoutCompanyAdressInput = {
+  id: string
+  firstName: string
+  lastName: string
+  mail1?: string | null
+  mail2?: string | null
+  mail3?: string | null
+  generalPhone?: string | null
+  homePhone?: string | null
+  mobilePhone?: string | null
+  info?: string | null
+  birthDate?: Date | string | null
+  through?: string | null
+  description?: string | null
+  createdAt: Date | string
+  infoCorrect?: boolean
+  checkInfo?: boolean
+  newYearCard?: boolean
+  active?: boolean
+  newsLetter?: boolean
+  mailing?: boolean
+  trainingAdvice?: boolean
+  contactForTrainingAndAdvice?: boolean
+  customerTrainingAndAdvice?: boolean
+  potentialCustomerTrainingAndAdvice?: boolean
+  potentialTeacherTrainingAndAdvice?: boolean
+  teacherTrainingAndAdvice?: boolean
+  participantTrainingAndAdvice?: boolean
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutContactInput
+  Employee: Prisma.EmployeeCreateNestedOneWithoutContactInput
+  Function?: Prisma.FunctionCreateNestedOneWithoutContactInput
+  DepartmentExtern?: Prisma.DepartmentExternCreateNestedOneWithoutContactInput
+  Title?: Prisma.TitleCreateNestedOneWithoutContactInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
+  Target: Prisma.TargetCreateNestedOneWithoutContactInput
+  Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
+  InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
+  ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
+  TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutContactInput
+}
+
+export type ContactUncheckedCreateWithoutCompanyAdressInput = {
+  id: string
+  firstName: string
+  lastName: string
+  mail1?: string | null
+  mail2?: string | null
+  mail3?: string | null
+  generalPhone?: string | null
+  homePhone?: string | null
+  mobilePhone?: string | null
+  info?: string | null
+  birthDate?: Date | string | null
+  through?: string | null
+  description?: string | null
+  createdAt: Date | string
+  infoCorrect?: boolean
+  checkInfo?: boolean
+  newYearCard?: boolean
+  active?: boolean
+  newsLetter?: boolean
+  mailing?: boolean
+  trainingAdvice?: boolean
+  contactForTrainingAndAdvice?: boolean
+  customerTrainingAndAdvice?: boolean
+  potentialCustomerTrainingAndAdvice?: boolean
+  potentialTeacherTrainingAndAdvice?: boolean
+  teacherTrainingAndAdvice?: boolean
+  participantTrainingAndAdvice?: boolean
+  createdBy: string
+  functionId?: string | null
+  departmentExternId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutContactInput
+  InvoiceOutContact?: Prisma.InvoiceOutContactUncheckedCreateNestedManyWithoutContactInput
+  ProjectContact?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
+  TrainingContact?: Prisma.TrainingContactUncheckedCreateNestedManyWithoutContactInput
+}
+
+export type ContactCreateOrConnectWithoutCompanyAdressInput = {
+  where: Prisma.ContactWhereUniqueInput
+  create: Prisma.XOR<Prisma.ContactCreateWithoutCompanyAdressInput, Prisma.ContactUncheckedCreateWithoutCompanyAdressInput>
+}
+
+export type ContactCreateManyCompanyAdressInputEnvelope = {
+  data: Prisma.ContactCreateManyCompanyAdressInput | Prisma.ContactCreateManyCompanyAdressInput[]
+  skipDuplicates?: boolean
+}
+
+export type ContactUpsertWithWhereUniqueWithoutCompanyAdressInput = {
+  where: Prisma.ContactWhereUniqueInput
+  update: Prisma.XOR<Prisma.ContactUpdateWithoutCompanyAdressInput, Prisma.ContactUncheckedUpdateWithoutCompanyAdressInput>
+  create: Prisma.XOR<Prisma.ContactCreateWithoutCompanyAdressInput, Prisma.ContactUncheckedCreateWithoutCompanyAdressInput>
+}
+
+export type ContactUpdateWithWhereUniqueWithoutCompanyAdressInput = {
+  where: Prisma.ContactWhereUniqueInput
+  data: Prisma.XOR<Prisma.ContactUpdateWithoutCompanyAdressInput, Prisma.ContactUncheckedUpdateWithoutCompanyAdressInput>
+}
+
+export type ContactUpdateManyWithWhereWithoutCompanyAdressInput = {
+  where: Prisma.ContactScalarWhereInput
+  data: Prisma.XOR<Prisma.ContactUpdateManyMutationInput, Prisma.ContactUncheckedUpdateManyWithoutCompanyAdressInput>
+}
+
+export type ContactScalarWhereInput = {
+  AND?: Prisma.ContactScalarWhereInput | Prisma.ContactScalarWhereInput[]
+  OR?: Prisma.ContactScalarWhereInput[]
+  NOT?: Prisma.ContactScalarWhereInput | Prisma.ContactScalarWhereInput[]
+  id?: Prisma.StringFilter<"Contact"> | string
+  firstName?: Prisma.StringFilter<"Contact"> | string
+  lastName?: Prisma.StringFilter<"Contact"> | string
+  mail1?: Prisma.StringNullableFilter<"Contact"> | string | null
+  mail2?: Prisma.StringNullableFilter<"Contact"> | string | null
+  mail3?: Prisma.StringNullableFilter<"Contact"> | string | null
+  generalPhone?: Prisma.StringNullableFilter<"Contact"> | string | null
+  homePhone?: Prisma.StringNullableFilter<"Contact"> | string | null
+  mobilePhone?: Prisma.StringNullableFilter<"Contact"> | string | null
+  info?: Prisma.StringNullableFilter<"Contact"> | string | null
+  birthDate?: Prisma.DateTimeNullableFilter<"Contact"> | Date | string | null
+  through?: Prisma.StringNullableFilter<"Contact"> | string | null
+  description?: Prisma.StringNullableFilter<"Contact"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Contact"> | Date | string
+  infoCorrect?: Prisma.BoolFilter<"Contact"> | boolean
+  checkInfo?: Prisma.BoolFilter<"Contact"> | boolean
+  newYearCard?: Prisma.BoolFilter<"Contact"> | boolean
+  active?: Prisma.BoolFilter<"Contact"> | boolean
+  newsLetter?: Prisma.BoolFilter<"Contact"> | boolean
+  mailing?: Prisma.BoolFilter<"Contact"> | boolean
+  trainingAdvice?: Prisma.BoolFilter<"Contact"> | boolean
+  contactForTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
+  customerTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
+  potentialCustomerTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
+  potentialTeacherTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
+  teacherTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
+  participantTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
+  createdBy?: Prisma.StringFilter<"Contact"> | string
+  functionId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  departmentExternId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  titleId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  businessCardId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  targetId?: Prisma.StringFilter<"Contact"> | string
+  companyAdressId?: Prisma.StringNullableFilter<"Contact"> | string | null
+  deleted?: Prisma.BoolFilter<"Contact"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Contact"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Contact"> | string | null
+}
+
 export type ContactCreateWithoutCompanyContactInput = {
   id: string
   firstName: string
@@ -1459,6 +1682,7 @@ export type ContactCreateWithoutCompanyContactInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
@@ -1499,6 +1723,7 @@ export type ContactUncheckedCreateWithoutCompanyContactInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -1561,6 +1786,7 @@ export type ContactUpdateWithoutCompanyContactInput = {
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
@@ -1601,6 +1827,7 @@ export type ContactUncheckedUpdateWithoutCompanyContactInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1647,6 +1874,7 @@ export type ContactCreateWithoutDocumentStructureInput = {
   Title?: Prisma.TitleCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
@@ -1686,6 +1914,7 @@ export type ContactUncheckedCreateWithoutDocumentStructureInput = {
   departmentExternId?: string | null
   titleId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -1720,48 +1949,6 @@ export type ContactUpdateWithWhereUniqueWithoutDocumentStructureInput = {
 export type ContactUpdateManyWithWhereWithoutDocumentStructureInput = {
   where: Prisma.ContactScalarWhereInput
   data: Prisma.XOR<Prisma.ContactUpdateManyMutationInput, Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureInput>
-}
-
-export type ContactScalarWhereInput = {
-  AND?: Prisma.ContactScalarWhereInput | Prisma.ContactScalarWhereInput[]
-  OR?: Prisma.ContactScalarWhereInput[]
-  NOT?: Prisma.ContactScalarWhereInput | Prisma.ContactScalarWhereInput[]
-  id?: Prisma.StringFilter<"Contact"> | string
-  firstName?: Prisma.StringFilter<"Contact"> | string
-  lastName?: Prisma.StringFilter<"Contact"> | string
-  mail1?: Prisma.StringNullableFilter<"Contact"> | string | null
-  mail2?: Prisma.StringNullableFilter<"Contact"> | string | null
-  mail3?: Prisma.StringNullableFilter<"Contact"> | string | null
-  generalPhone?: Prisma.StringNullableFilter<"Contact"> | string | null
-  homePhone?: Prisma.StringNullableFilter<"Contact"> | string | null
-  mobilePhone?: Prisma.StringNullableFilter<"Contact"> | string | null
-  info?: Prisma.StringNullableFilter<"Contact"> | string | null
-  birthDate?: Prisma.DateTimeNullableFilter<"Contact"> | Date | string | null
-  through?: Prisma.StringNullableFilter<"Contact"> | string | null
-  description?: Prisma.StringNullableFilter<"Contact"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Contact"> | Date | string
-  infoCorrect?: Prisma.BoolFilter<"Contact"> | boolean
-  checkInfo?: Prisma.BoolFilter<"Contact"> | boolean
-  newYearCard?: Prisma.BoolFilter<"Contact"> | boolean
-  active?: Prisma.BoolFilter<"Contact"> | boolean
-  newsLetter?: Prisma.BoolFilter<"Contact"> | boolean
-  mailing?: Prisma.BoolFilter<"Contact"> | boolean
-  trainingAdvice?: Prisma.BoolFilter<"Contact"> | boolean
-  contactForTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
-  customerTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
-  potentialCustomerTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
-  potentialTeacherTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
-  teacherTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
-  participantTrainingAndAdvice?: Prisma.BoolFilter<"Contact"> | boolean
-  createdBy?: Prisma.StringFilter<"Contact"> | string
-  functionId?: Prisma.StringNullableFilter<"Contact"> | string | null
-  departmentExternId?: Prisma.StringNullableFilter<"Contact"> | string | null
-  titleId?: Prisma.StringNullableFilter<"Contact"> | string | null
-  businessCardId?: Prisma.StringNullableFilter<"Contact"> | string | null
-  targetId?: Prisma.StringFilter<"Contact"> | string
-  deleted?: Prisma.BoolFilter<"Contact"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Contact"> | Date | string | null
-  deletedBy?: Prisma.StringNullableFilter<"Contact"> | string | null
 }
 
 export type ContactCreateWithoutEmployeeInput = {
@@ -1801,6 +1988,7 @@ export type ContactCreateWithoutEmployeeInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
@@ -1840,6 +2028,7 @@ export type ContactUncheckedCreateWithoutEmployeeInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -1897,6 +2086,7 @@ export type ContactCreateWithoutEmployee_Contact_deletedByToEmployeeInput = {
   Title?: Prisma.TitleCreateNestedOneWithoutContactInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
@@ -1937,6 +2127,7 @@ export type ContactUncheckedCreateWithoutEmployee_Contact_deletedByToEmployeeInp
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutContactInput
@@ -2026,6 +2217,7 @@ export type ContactCreateWithoutFollowUpStructureInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutContactInput
@@ -2065,6 +2257,7 @@ export type ContactUncheckedCreateWithoutFollowUpStructureInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -2128,6 +2321,7 @@ export type ContactUpdateWithoutFollowUpStructureInput = {
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutContactNestedInput
@@ -2167,6 +2361,7 @@ export type ContactUncheckedUpdateWithoutFollowUpStructureInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2213,6 +2408,7 @@ export type ContactCreateWithoutFunctionInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
@@ -2252,6 +2448,7 @@ export type ContactUncheckedCreateWithoutFunctionInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -2326,6 +2523,7 @@ export type ContactCreateWithoutProjectContactInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutContactInput
@@ -2365,6 +2563,7 @@ export type ContactUncheckedCreateWithoutProjectContactInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -2428,6 +2627,7 @@ export type ContactUpdateWithoutProjectContactInput = {
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutContactNestedInput
@@ -2467,6 +2667,7 @@ export type ContactUncheckedUpdateWithoutProjectContactInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2513,6 +2714,7 @@ export type ContactCreateWithoutTargetInput = {
   Title?: Prisma.TitleCreateNestedOneWithoutContactInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
@@ -2552,6 +2754,7 @@ export type ContactUncheckedCreateWithoutTargetInput = {
   departmentExternId?: string | null
   titleId?: string | null
   businessCardId?: string | null
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -2625,6 +2828,7 @@ export type ContactCreateWithoutTitleInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
@@ -2664,6 +2868,7 @@ export type ContactUncheckedCreateWithoutTitleInput = {
   departmentExternId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -2738,6 +2943,7 @@ export type ContactCreateWithoutTrainingContactInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
@@ -2777,6 +2983,7 @@ export type ContactUncheckedCreateWithoutTrainingContactInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -2840,6 +3047,7 @@ export type ContactUpdateWithoutTrainingContactInput = {
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
@@ -2879,6 +3087,7 @@ export type ContactUncheckedUpdateWithoutTrainingContactInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2925,6 +3134,7 @@ export type ContactCreateWithoutDepartmentExternInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   InvoiceOutContact?: Prisma.InvoiceOutContactCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
@@ -2964,6 +3174,7 @@ export type ContactUncheckedCreateWithoutDepartmentExternInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -3038,6 +3249,7 @@ export type ContactCreateWithoutInvoiceOutContactInput = {
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutContactInput
   Target: Prisma.TargetCreateNestedOneWithoutContactInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutContact_Contact_deletedByToEmployeeInput
+  CompanyAdress?: Prisma.CompanyAdressCreateNestedOneWithoutContactInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutContactInput
   ProjectContact?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
   TrainingContact?: Prisma.TrainingContactCreateNestedManyWithoutContactInput
@@ -3077,6 +3289,7 @@ export type ContactUncheckedCreateWithoutInvoiceOutContactInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -3140,6 +3353,7 @@ export type ContactUpdateWithoutInvoiceOutContactInput = {
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
   TrainingContact?: Prisma.TrainingContactUpdateManyWithoutContactNestedInput
@@ -3179,6 +3393,7 @@ export type ContactUncheckedUpdateWithoutInvoiceOutContactInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3186,6 +3401,172 @@ export type ContactUncheckedUpdateWithoutInvoiceOutContactInput = {
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
   TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutContactNestedInput
+}
+
+export type ContactCreateManyCompanyAdressInput = {
+  id: string
+  firstName: string
+  lastName: string
+  mail1?: string | null
+  mail2?: string | null
+  mail3?: string | null
+  generalPhone?: string | null
+  homePhone?: string | null
+  mobilePhone?: string | null
+  info?: string | null
+  birthDate?: Date | string | null
+  through?: string | null
+  description?: string | null
+  createdAt: Date | string
+  infoCorrect?: boolean
+  checkInfo?: boolean
+  newYearCard?: boolean
+  active?: boolean
+  newsLetter?: boolean
+  mailing?: boolean
+  trainingAdvice?: boolean
+  contactForTrainingAndAdvice?: boolean
+  customerTrainingAndAdvice?: boolean
+  potentialCustomerTrainingAndAdvice?: boolean
+  potentialTeacherTrainingAndAdvice?: boolean
+  teacherTrainingAndAdvice?: boolean
+  participantTrainingAndAdvice?: boolean
+  createdBy: string
+  functionId?: string | null
+  departmentExternId?: string | null
+  titleId?: string | null
+  businessCardId?: string | null
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type ContactUpdateWithoutCompanyAdressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mail2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mail3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  generalPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobilePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  through?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  infoCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mailing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  contactForTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customerTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialCustomerTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  CompanyContact?: Prisma.CompanyContactUpdateManyWithoutContactNestedInput
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutContactNestedInput
+  Function?: Prisma.FunctionUpdateOneWithoutContactNestedInput
+  DepartmentExtern?: Prisma.DepartmentExternUpdateOneWithoutContactNestedInput
+  Title?: Prisma.TitleUpdateOneWithoutContactNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
+  Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
+  InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
+  ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
+  TrainingContact?: Prisma.TrainingContactUpdateManyWithoutContactNestedInput
+}
+
+export type ContactUncheckedUpdateWithoutCompanyAdressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mail2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mail3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  generalPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobilePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  through?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  infoCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mailing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  contactForTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customerTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialCustomerTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentExternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutContactNestedInput
+  InvoiceOutContact?: Prisma.InvoiceOutContactUncheckedUpdateManyWithoutContactNestedInput
+  ProjectContact?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
+  TrainingContact?: Prisma.TrainingContactUncheckedUpdateManyWithoutContactNestedInput
+}
+
+export type ContactUncheckedUpdateManyWithoutCompanyAdressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  mail1?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mail2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mail3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  generalPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobilePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  through?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  infoCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  checkInfo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newYearCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mailing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  contactForTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customerTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialCustomerTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialTeacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  teacherTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  participantTrainingAndAdvice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  functionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentExternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ContactCreateManyDocumentStructureInput = {
@@ -3221,6 +3602,7 @@ export type ContactCreateManyDocumentStructureInput = {
   departmentExternId?: string | null
   titleId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -3263,6 +3645,7 @@ export type ContactUpdateWithoutDocumentStructureInput = {
   Title?: Prisma.TitleUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
@@ -3302,6 +3685,7 @@ export type ContactUncheckedUpdateWithoutDocumentStructureInput = {
   departmentExternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3345,6 +3729,7 @@ export type ContactUncheckedUpdateManyWithoutDocumentStructureInput = {
   departmentExternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3383,6 +3768,7 @@ export type ContactCreateManyEmployeeInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -3422,6 +3808,7 @@ export type ContactCreateManyEmployee_Contact_deletedByToEmployeeInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
 }
@@ -3463,6 +3850,7 @@ export type ContactUpdateWithoutEmployeeInput = {
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
@@ -3502,6 +3890,7 @@ export type ContactUncheckedUpdateWithoutEmployeeInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3545,6 +3934,7 @@ export type ContactUncheckedUpdateManyWithoutEmployeeInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3587,6 +3977,7 @@ export type ContactUpdateWithoutEmployee_Contact_deletedByToEmployeeInput = {
   Title?: Prisma.TitleUpdateOneWithoutContactNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
@@ -3627,6 +4018,7 @@ export type ContactUncheckedUpdateWithoutEmployee_Contact_deletedByToEmployeeInp
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutContactNestedInput
@@ -3670,6 +4062,7 @@ export type ContactUncheckedUpdateManyWithoutEmployee_Contact_deletedByToEmploye
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -3707,6 +4100,7 @@ export type ContactCreateManyFunctionInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -3749,6 +4143,7 @@ export type ContactUpdateWithoutFunctionInput = {
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
@@ -3788,6 +4183,7 @@ export type ContactUncheckedUpdateWithoutFunctionInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3831,6 +4227,7 @@ export type ContactUncheckedUpdateManyWithoutFunctionInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3869,6 +4266,7 @@ export type ContactCreateManyTargetInput = {
   departmentExternId?: string | null
   titleId?: string | null
   businessCardId?: string | null
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -3911,6 +4309,7 @@ export type ContactUpdateWithoutTargetInput = {
   Title?: Prisma.TitleUpdateOneWithoutContactNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
@@ -3950,6 +4349,7 @@ export type ContactUncheckedUpdateWithoutTargetInput = {
   departmentExternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3993,6 +4393,7 @@ export type ContactUncheckedUpdateManyWithoutTargetInput = {
   departmentExternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4031,6 +4432,7 @@ export type ContactCreateManyTitleInput = {
   departmentExternId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -4073,6 +4475,7 @@ export type ContactUpdateWithoutTitleInput = {
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
@@ -4112,6 +4515,7 @@ export type ContactUncheckedUpdateWithoutTitleInput = {
   departmentExternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4155,6 +4559,7 @@ export type ContactUncheckedUpdateManyWithoutTitleInput = {
   departmentExternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4193,6 +4598,7 @@ export type ContactCreateManyDepartmentExternInput = {
   titleId?: string | null
   businessCardId?: string | null
   targetId: string
+  companyAdressId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
@@ -4235,6 +4641,7 @@ export type ContactUpdateWithoutDepartmentExternInput = {
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutContactNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutContactNestedInput
   Employee_Contact_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutContact_Contact_deletedByToEmployeeNestedInput
+  CompanyAdress?: Prisma.CompanyAdressUpdateOneWithoutContactNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutContactNestedInput
   InvoiceOutContact?: Prisma.InvoiceOutContactUpdateManyWithoutContactNestedInput
   ProjectContact?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
@@ -4274,6 +4681,7 @@ export type ContactUncheckedUpdateWithoutDepartmentExternInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4317,6 +4725,7 @@ export type ContactUncheckedUpdateManyWithoutDepartmentExternInput = {
   titleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessCardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyAdressId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4423,6 +4832,7 @@ export type ContactSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   titleId?: boolean
   businessCardId?: boolean
   targetId?: boolean
+  companyAdressId?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
@@ -4434,6 +4844,7 @@ export type ContactSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   DocumentStructure?: boolean | Prisma.Contact$DocumentStructureArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   Employee_Contact_deletedByToEmployee?: boolean | Prisma.Contact$Employee_Contact_deletedByToEmployeeArgs<ExtArgs>
+  CompanyAdress?: boolean | Prisma.Contact$CompanyAdressArgs<ExtArgs>
   FollowUpStructure?: boolean | Prisma.Contact$FollowUpStructureArgs<ExtArgs>
   InvoiceOutContact?: boolean | Prisma.Contact$InvoiceOutContactArgs<ExtArgs>
   ProjectContact?: boolean | Prisma.Contact$ProjectContactArgs<ExtArgs>
@@ -4477,12 +4888,13 @@ export type ContactSelectScalar = {
   titleId?: boolean
   businessCardId?: boolean
   targetId?: boolean
+  companyAdressId?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
 }
 
-export type ContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "mail1" | "mail2" | "mail3" | "generalPhone" | "homePhone" | "mobilePhone" | "info" | "birthDate" | "through" | "description" | "createdAt" | "infoCorrect" | "checkInfo" | "newYearCard" | "active" | "newsLetter" | "mailing" | "trainingAdvice" | "contactForTrainingAndAdvice" | "customerTrainingAndAdvice" | "potentialCustomerTrainingAndAdvice" | "potentialTeacherTrainingAndAdvice" | "teacherTrainingAndAdvice" | "participantTrainingAndAdvice" | "createdBy" | "functionId" | "departmentExternId" | "titleId" | "businessCardId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["contact"]>
+export type ContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "mail1" | "mail2" | "mail3" | "generalPhone" | "homePhone" | "mobilePhone" | "info" | "birthDate" | "through" | "description" | "createdAt" | "infoCorrect" | "checkInfo" | "newYearCard" | "active" | "newsLetter" | "mailing" | "trainingAdvice" | "contactForTrainingAndAdvice" | "customerTrainingAndAdvice" | "potentialCustomerTrainingAndAdvice" | "potentialTeacherTrainingAndAdvice" | "teacherTrainingAndAdvice" | "participantTrainingAndAdvice" | "createdBy" | "functionId" | "departmentExternId" | "titleId" | "businessCardId" | "targetId" | "companyAdressId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["contact"]>
 export type ContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   CompanyContact?: boolean | Prisma.Contact$CompanyContactArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -4492,6 +4904,7 @@ export type ContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   DocumentStructure?: boolean | Prisma.Contact$DocumentStructureArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
   Employee_Contact_deletedByToEmployee?: boolean | Prisma.Contact$Employee_Contact_deletedByToEmployeeArgs<ExtArgs>
+  CompanyAdress?: boolean | Prisma.Contact$CompanyAdressArgs<ExtArgs>
   FollowUpStructure?: boolean | Prisma.Contact$FollowUpStructureArgs<ExtArgs>
   InvoiceOutContact?: boolean | Prisma.Contact$InvoiceOutContactArgs<ExtArgs>
   ProjectContact?: boolean | Prisma.Contact$ProjectContactArgs<ExtArgs>
@@ -4510,6 +4923,7 @@ export type $ContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs> | null
     Target: Prisma.$TargetPayload<ExtArgs>
     Employee_Contact_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    CompanyAdress: Prisma.$CompanyAdressPayload<ExtArgs> | null
     FollowUpStructure: Prisma.$FollowUpStructurePayload<ExtArgs>[]
     InvoiceOutContact: Prisma.$InvoiceOutContactPayload<ExtArgs>[]
     ProjectContact: Prisma.$ProjectContactPayload<ExtArgs>[]
@@ -4549,6 +4963,7 @@ export type $ContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     titleId: string | null
     businessCardId: string | null
     targetId: string
+    companyAdressId: string | null
     deleted: boolean
     deletedAt: Date | null
     deletedBy: string | null
@@ -4900,6 +5315,7 @@ export interface Prisma__ContactClient<T, Null = never, ExtArgs extends runtime.
   DocumentStructure<T extends Prisma.Contact$DocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contact$DocumentStructureArgs<ExtArgs>>): Prisma.Prisma__DocumentStructureClient<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_Contact_deletedByToEmployee<T extends Prisma.Contact$Employee_Contact_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contact$Employee_Contact_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  CompanyAdress<T extends Prisma.Contact$CompanyAdressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contact$CompanyAdressArgs<ExtArgs>>): Prisma.Prisma__CompanyAdressClient<runtime.Types.Result.GetResult<Prisma.$CompanyAdressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   FollowUpStructure<T extends Prisma.Contact$FollowUpStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contact$FollowUpStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   InvoiceOutContact<T extends Prisma.Contact$InvoiceOutContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contact$InvoiceOutContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceOutContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ProjectContact<T extends Prisma.Contact$ProjectContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contact$ProjectContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4966,6 +5382,7 @@ export interface ContactFieldRefs {
   readonly titleId: Prisma.FieldRef<"Contact", 'String'>
   readonly businessCardId: Prisma.FieldRef<"Contact", 'String'>
   readonly targetId: Prisma.FieldRef<"Contact", 'String'>
+  readonly companyAdressId: Prisma.FieldRef<"Contact", 'String'>
   readonly deleted: Prisma.FieldRef<"Contact", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"Contact", 'DateTime'>
   readonly deletedBy: Prisma.FieldRef<"Contact", 'String'>
@@ -5428,6 +5845,25 @@ export type Contact$Employee_Contact_deletedByToEmployeeArgs<ExtArgs extends run
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * Contact.CompanyAdress
+ */
+export type Contact$CompanyAdressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CompanyAdress
+   */
+  select?: Prisma.CompanyAdressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CompanyAdress
+   */
+  omit?: Prisma.CompanyAdressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompanyAdressInclude<ExtArgs> | null
+  where?: Prisma.CompanyAdressWhereInput
 }
 
 /**

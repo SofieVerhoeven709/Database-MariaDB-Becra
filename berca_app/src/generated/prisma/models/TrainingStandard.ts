@@ -246,7 +246,6 @@ export type TrainingStandardWhereInput = {
   deleted?: Prisma.BoolFilter<"TrainingStandard"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"TrainingStandard"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
-  PriceListItem?: Prisma.PriceListItemListRelationFilter
   Training?: Prisma.TrainingListRelationFilter
   TrainingDocument?: Prisma.TrainingDocumentListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -269,7 +268,6 @@ export type TrainingStandardOrderByWithRelationInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  PriceListItem?: Prisma.PriceListItemOrderByRelationAggregateInput
   Training?: Prisma.TrainingOrderByRelationAggregateInput
   TrainingDocument?: Prisma.TrainingDocumentOrderByRelationAggregateInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
@@ -296,7 +294,6 @@ export type TrainingStandardWhereUniqueInput = Prisma.AtLeast<{
   deleted?: Prisma.BoolFilter<"TrainingStandard"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"TrainingStandard"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"TrainingStandard"> | string | null
-  PriceListItem?: Prisma.PriceListItemListRelationFilter
   Training?: Prisma.TrainingListRelationFilter
   TrainingDocument?: Prisma.TrainingDocumentListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
@@ -353,7 +350,6 @@ export type TrainingStandardCreateInput = {
   repeat?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
@@ -376,7 +372,6 @@ export type TrainingStandardUncheckedCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -391,7 +386,6 @@ export type TrainingStandardUpdateInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
@@ -414,7 +408,6 @@ export type TrainingStandardUncheckedUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
@@ -530,11 +523,6 @@ export type TrainingStandardMinOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-}
-
-export type TrainingStandardNullableScalarRelationFilter = {
-  is?: Prisma.TrainingStandardWhereInput | null
-  isNot?: Prisma.TrainingStandardWhereInput | null
 }
 
 export type TrainingStandardCreateNestedManyWithoutCertificateInput = {
@@ -733,22 +721,6 @@ export type TrainingStandardUpdateOneRequiredWithoutTrainingDocumentNestedInput 
   update?: Prisma.XOR<Prisma.XOR<Prisma.TrainingStandardUpdateToOneWithWhereWithoutTrainingDocumentInput, Prisma.TrainingStandardUpdateWithoutTrainingDocumentInput>, Prisma.TrainingStandardUncheckedUpdateWithoutTrainingDocumentInput>
 }
 
-export type TrainingStandardCreateNestedOneWithoutPriceListItemInput = {
-  create?: Prisma.XOR<Prisma.TrainingStandardCreateWithoutPriceListItemInput, Prisma.TrainingStandardUncheckedCreateWithoutPriceListItemInput>
-  connectOrCreate?: Prisma.TrainingStandardCreateOrConnectWithoutPriceListItemInput
-  connect?: Prisma.TrainingStandardWhereUniqueInput
-}
-
-export type TrainingStandardUpdateOneWithoutPriceListItemNestedInput = {
-  create?: Prisma.XOR<Prisma.TrainingStandardCreateWithoutPriceListItemInput, Prisma.TrainingStandardUncheckedCreateWithoutPriceListItemInput>
-  connectOrCreate?: Prisma.TrainingStandardCreateOrConnectWithoutPriceListItemInput
-  upsert?: Prisma.TrainingStandardUpsertWithoutPriceListItemInput
-  disconnect?: Prisma.TrainingStandardWhereInput | boolean
-  delete?: Prisma.TrainingStandardWhereInput | boolean
-  connect?: Prisma.TrainingStandardWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TrainingStandardUpdateToOneWithWhereWithoutPriceListItemInput, Prisma.TrainingStandardUpdateWithoutPriceListItemInput>, Prisma.TrainingStandardUncheckedUpdateWithoutPriceListItemInput>
-}
-
 export type TrainingStandardCreateWithoutCertificateInput = {
   id: string
   description?: string | null
@@ -759,7 +731,6 @@ export type TrainingStandardCreateWithoutCertificateInput = {
   repeat?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
@@ -780,7 +751,6 @@ export type TrainingStandardUncheckedCreateWithoutCertificateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -840,7 +810,6 @@ export type TrainingStandardCreateWithoutEmployeeInput = {
   repeat?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
   Certificate: Prisma.CertificateCreateNestedOneWithoutTrainingStandardInput
@@ -861,7 +830,6 @@ export type TrainingStandardUncheckedCreateWithoutEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -886,7 +854,6 @@ export type TrainingStandardCreateWithoutEmployee_TrainingStandard_deletedByToEm
   repeat?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
@@ -907,7 +874,6 @@ export type TrainingStandardUncheckedCreateWithoutEmployee_TrainingStandard_dele
   targetId: string
   deleted?: boolean
   deletedAt?: Date | string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -964,7 +930,6 @@ export type TrainingStandardCreateWithoutTargetInput = {
   repeat?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
@@ -985,7 +950,6 @@ export type TrainingStandardUncheckedCreateWithoutTargetInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
@@ -1026,7 +990,6 @@ export type TrainingStandardCreateWithoutTrainingInput = {
   repeat?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
   Certificate: Prisma.CertificateCreateNestedOneWithoutTrainingStandardInput
@@ -1048,7 +1011,6 @@ export type TrainingStandardUncheckedCreateWithoutTrainingInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutTrainingStandardInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
 
@@ -1078,7 +1040,6 @@ export type TrainingStandardUpdateWithoutTrainingInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
   Certificate?: Prisma.CertificateUpdateOneRequiredWithoutTrainingStandardNestedInput
@@ -1100,7 +1061,6 @@ export type TrainingStandardUncheckedUpdateWithoutTrainingInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
 
@@ -1114,7 +1074,6 @@ export type TrainingStandardCreateWithoutTrainingDocumentInput = {
   repeat?: boolean
   deleted?: boolean
   deletedAt?: Date | string | null
-  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
   Certificate: Prisma.CertificateCreateNestedOneWithoutTrainingStandardInput
@@ -1136,7 +1095,6 @@ export type TrainingStandardUncheckedCreateWithoutTrainingDocumentInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutTrainingStandardInput
   Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
 }
 
@@ -1166,7 +1124,6 @@ export type TrainingStandardUpdateWithoutTrainingDocumentInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
   Certificate?: Prisma.CertificateUpdateOneRequiredWithoutTrainingStandardNestedInput
@@ -1188,96 +1145,7 @@ export type TrainingStandardUncheckedUpdateWithoutTrainingDocumentInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
-}
-
-export type TrainingStandardCreateWithoutPriceListItemInput = {
-  id: string
-  description?: string | null
-  descriptionShort?: string | null
-  location?: string | null
-  createdAt: Date | string
-  certificate?: boolean
-  repeat?: boolean
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Training?: Prisma.TrainingCreateNestedManyWithoutTrainingStandardInput
-  TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutTrainingStandardInput
-  Employee: Prisma.EmployeeCreateNestedOneWithoutTrainingStandardInput
-  Certificate: Prisma.CertificateCreateNestedOneWithoutTrainingStandardInput
-  Target: Prisma.TargetCreateNestedOneWithoutTrainingStandardInput
-  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeInput
-}
-
-export type TrainingStandardUncheckedCreateWithoutPriceListItemInput = {
-  id: string
-  description?: string | null
-  descriptionShort?: string | null
-  location?: string | null
-  createdAt: Date | string
-  certificate?: boolean
-  repeat?: boolean
-  createdBy: string
-  certificateId: string
-  targetId: string
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-  Training?: Prisma.TrainingUncheckedCreateNestedManyWithoutTrainingStandardInput
-  TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutTrainingStandardInput
-}
-
-export type TrainingStandardCreateOrConnectWithoutPriceListItemInput = {
-  where: Prisma.TrainingStandardWhereUniqueInput
-  create: Prisma.XOR<Prisma.TrainingStandardCreateWithoutPriceListItemInput, Prisma.TrainingStandardUncheckedCreateWithoutPriceListItemInput>
-}
-
-export type TrainingStandardUpsertWithoutPriceListItemInput = {
-  update: Prisma.XOR<Prisma.TrainingStandardUpdateWithoutPriceListItemInput, Prisma.TrainingStandardUncheckedUpdateWithoutPriceListItemInput>
-  create: Prisma.XOR<Prisma.TrainingStandardCreateWithoutPriceListItemInput, Prisma.TrainingStandardUncheckedCreateWithoutPriceListItemInput>
-  where?: Prisma.TrainingStandardWhereInput
-}
-
-export type TrainingStandardUpdateToOneWithWhereWithoutPriceListItemInput = {
-  where?: Prisma.TrainingStandardWhereInput
-  data: Prisma.XOR<Prisma.TrainingStandardUpdateWithoutPriceListItemInput, Prisma.TrainingStandardUncheckedUpdateWithoutPriceListItemInput>
-}
-
-export type TrainingStandardUpdateWithoutPriceListItemInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
-  TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
-  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
-  Certificate?: Prisma.CertificateUpdateOneRequiredWithoutTrainingStandardNestedInput
-  Target?: Prisma.TargetUpdateOneRequiredWithoutTrainingStandardNestedInput
-  Employee_TrainingStandard_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutTrainingStandard_TrainingStandard_deletedByToEmployeeNestedInput
-}
-
-export type TrainingStandardUncheckedUpdateWithoutPriceListItemInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  descriptionShort?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  certificate?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  certificateId?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
-  TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
 
 export type TrainingStandardCreateManyCertificateInput = {
@@ -1305,7 +1173,6 @@ export type TrainingStandardUpdateWithoutCertificateInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
@@ -1326,7 +1193,6 @@ export type TrainingStandardUncheckedUpdateWithoutCertificateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
@@ -1386,7 +1252,6 @@ export type TrainingStandardUpdateWithoutEmployeeInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
   Certificate?: Prisma.CertificateUpdateOneRequiredWithoutTrainingStandardNestedInput
@@ -1407,7 +1272,6 @@ export type TrainingStandardUncheckedUpdateWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
@@ -1437,7 +1301,6 @@ export type TrainingStandardUpdateWithoutEmployee_TrainingStandard_deletedByToEm
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
@@ -1458,7 +1321,6 @@ export type TrainingStandardUncheckedUpdateWithoutEmployee_TrainingStandard_dele
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
@@ -1503,7 +1365,6 @@ export type TrainingStandardUpdateWithoutTargetInput = {
   repeat?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutTrainingStandardNestedInput
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutTrainingStandardNestedInput
@@ -1524,7 +1385,6 @@ export type TrainingStandardUncheckedUpdateWithoutTargetInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutTrainingStandardNestedInput
   Training?: Prisma.TrainingUncheckedUpdateManyWithoutTrainingStandardNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutTrainingStandardNestedInput
 }
@@ -1550,13 +1410,11 @@ export type TrainingStandardUncheckedUpdateManyWithoutTargetInput = {
  */
 
 export type TrainingStandardCountOutputType = {
-  PriceListItem: number
   Training: number
   TrainingDocument: number
 }
 
 export type TrainingStandardCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  PriceListItem?: boolean | TrainingStandardCountOutputTypeCountPriceListItemArgs
   Training?: boolean | TrainingStandardCountOutputTypeCountTrainingArgs
   TrainingDocument?: boolean | TrainingStandardCountOutputTypeCountTrainingDocumentArgs
 }
@@ -1569,13 +1427,6 @@ export type TrainingStandardCountOutputTypeDefaultArgs<ExtArgs extends runtime.T
    * Select specific fields to fetch from the TrainingStandardCountOutputType
    */
   select?: Prisma.TrainingStandardCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * TrainingStandardCountOutputType without action
- */
-export type TrainingStandardCountOutputTypeCountPriceListItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PriceListItemWhereInput
 }
 
 /**
@@ -1607,7 +1458,6 @@ export type TrainingStandardSelect<ExtArgs extends runtime.Types.Extensions.Inte
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  PriceListItem?: boolean | Prisma.TrainingStandard$PriceListItemArgs<ExtArgs>
   Training?: boolean | Prisma.TrainingStandard$TrainingArgs<ExtArgs>
   TrainingDocument?: boolean | Prisma.TrainingStandard$TrainingDocumentArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -1637,7 +1487,6 @@ export type TrainingStandardSelectScalar = {
 
 export type TrainingStandardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "descriptionShort" | "location" | "createdAt" | "certificate" | "repeat" | "createdBy" | "certificateId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["trainingStandard"]>
 export type TrainingStandardInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  PriceListItem?: boolean | Prisma.TrainingStandard$PriceListItemArgs<ExtArgs>
   Training?: boolean | Prisma.TrainingStandard$TrainingArgs<ExtArgs>
   TrainingDocument?: boolean | Prisma.TrainingStandard$TrainingDocumentArgs<ExtArgs>
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -1650,7 +1499,6 @@ export type TrainingStandardInclude<ExtArgs extends runtime.Types.Extensions.Int
 export type $TrainingStandardPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TrainingStandard"
   objects: {
-    PriceListItem: Prisma.$PriceListItemPayload<ExtArgs>[]
     Training: Prisma.$TrainingPayload<ExtArgs>[]
     TrainingDocument: Prisma.$TrainingDocumentPayload<ExtArgs>[]
     Employee: Prisma.$EmployeePayload<ExtArgs>
@@ -2012,7 +1860,6 @@ readonly fields: TrainingStandardFieldRefs;
  */
 export interface Prisma__TrainingStandardClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  PriceListItem<T extends Prisma.TrainingStandard$PriceListItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingStandard$PriceListItemArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceListItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Training<T extends Prisma.TrainingStandard$TrainingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingStandard$TrainingArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   TrainingDocument<T extends Prisma.TrainingStandard$TrainingDocumentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingStandard$TrainingDocumentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -2401,30 +2248,6 @@ export type TrainingStandardDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many TrainingStandards to delete.
    */
   limit?: number
-}
-
-/**
- * TrainingStandard.PriceListItem
- */
-export type TrainingStandard$PriceListItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PriceListItem
-   */
-  select?: Prisma.PriceListItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PriceListItem
-   */
-  omit?: Prisma.PriceListItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PriceListItemInclude<ExtArgs> | null
-  where?: Prisma.PriceListItemWhereInput
-  orderBy?: Prisma.PriceListItemOrderByWithRelationInput | Prisma.PriceListItemOrderByWithRelationInput[]
-  cursor?: Prisma.PriceListItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PriceListItemScalarFieldEnum | Prisma.PriceListItemScalarFieldEnum[]
 }
 
 /**

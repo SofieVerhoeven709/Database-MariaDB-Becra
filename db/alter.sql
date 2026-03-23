@@ -543,52 +543,31 @@ CREATE TABLE
       IF NOT EXISTS PriceListItem (
             id CHAR(36) NOT NULL PRIMARY KEY,
             priceListId CHAR(36) NOT NULL,
+            description VARCHAR(255) NOT NULL,
+            unit VARCHAR(100) NOT NULL,
             price DECIMAL(10,2) NOT NULL,
-            hourTypeId CHAR(36) NULL,
-            materialId CHAR(36) NULL,
-            trainingStandardId CHAR(36) NULL,
             createdAt DATETIME NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
             createdBy CHAR(36) NOT NULL,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
-            FOREIGN KEY (hourTypeId) REFERENCES HourType (id) ON DELETE RESTRICT,
-            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
-            FOREIGN KEY (trainingStandardId) REFERENCES TrainingStandard (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
 -- 43a. InvoiceOut: add priceListId column
-ALTER TABLE InvoiceOut ADD COLUMN IF NOT EXISTS `priceListId` CHAR(36) NULL;
+ALTER TABLE Project ADD COLUMN IF NOT EXISTS `priceListId` CHAR(36) NULL;
 
 -- 43b. InvoiceOut: add FK fk_invoiceout_pricelist (skip if already exists)
-ALTER TABLE InvoiceOut DROP FOREIGN KEY IF EXISTS fk_invoiceout_pricelist;
-ALTER TABLE InvoiceOut ADD CONSTRAINT fk_invoiceout_pricelist
+ALTER TABLE Project DROP FOREIGN KEY IF EXISTS fk_project_pricelist;
+ALTER TABLE Project ADD CONSTRAINT fk_project_pricelist
     FOREIGN KEY (`priceListId`) REFERENCES PriceList (`id`) ON DELETE RESTRICT;
 
--- 44. Create InvoiceOutItem table
-CREATE TABLE 
-      IF NOT EXISTS InvoiceOutItem (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            invoiceOutId CHAR(36) NOT NULL,
-            timeRegistryId CHAR(36) NULL,
-            workOrderStructureId CHAR(36) NULL,
-            trainingId CHAR(36) NULL,
-            description VARCHAR(255) NOT NULL,
-            quantity DECIMAL(10,2) NOT NULL,
-            unitPrice DECIMAL(10,2) NOT NULL,
-            total DECIMAL(10,2) NOT NULL,
-            createdAt DATETIME NOT NULL,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME,
-            deletedBy CHAR(36),
-            createdBy CHAR(36) NOT NULL,
-            FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE CASCADE,
-            FOREIGN KEY (timeRegistryId) REFERENCES TimeRegistry (id) ON DELETE RESTRICT,
-            FOREIGN KEY (workOrderStructureId) REFERENCES WorkOrderStructure (id) ON DELETE RESTRICT,
-            FOREIGN KEY (trainingId) REFERENCES Training (id) ON DELETE RESTRICT,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-      ) ENGINE = InnoDB;
+-- 44a. InvoiceOut: add priceListId column
+ALTER TABLE Contact ADD COLUMN IF NOT EXISTS `companyAdressId` CHAR(36) NULL;
+
+-- 44b. InvoiceOut: add FK fk_invoiceout_pricelist (skip if already exists)
+ALTER TABLE Contact DROP FOREIGN KEY IF EXISTS fk_contact_companyAdress;
+ALTER TABLE Contact ADD CONSTRAINT fk_contact_companyAdress
+    FOREIGN KEY (`companyAdressId`) REFERENCES CompanyAdress (`id`) ON DELETE SET NULL;

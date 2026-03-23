@@ -201,6 +201,7 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group B</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group C</TableHead>
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group D</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -209,7 +210,7 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={6} className="text-center text-muted-foreground py-10">
                   No material groups found
                 </TableCell>
               </TableRow>
@@ -220,6 +221,23 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
                   <TableCell className="text-sm text-muted-foreground">{g.groupB ?? '—'}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{g.groupC ?? '—'}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{g.groupD ?? '—'}</TableCell>
+                  <TableCell>
+                    {g.deleted ? (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-red-500/15 text-red-700 dark:text-red-400 flex items-center gap-1 w-fit">
+                        <X className="h-3 w-3" />
+                        Deleted
+                      </Badge>
+                    ) : (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-green-500/15 text-green-700 dark:text-green-400 flex items-center gap-1 w-fit">
+                        <Check className="h-3 w-3" />
+                        Not deleted
+                      </Badge>
+                    )}
+                  </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
                       <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(g)}>
@@ -335,6 +353,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
   const [units, setUnits] = useState(initialUnits)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'deleted'>('all')
+  const [validFilter, setValidFilter] = useState<'all' | 'valid' | 'invalid'>('all')
   const [sortField, setSortField] = useState<UnitSortField>('unitName')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -399,6 +418,11 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
       return true
     })
     .filter(u => {
+      if (validFilter === 'valid') return u.valid
+      if (validFilter === 'invalid') return !u.valid
+      return true
+    })
+    .filter(u => {
       if (!search) return true
       const q = search.toLowerCase()
       return u.unitName.toLowerCase().includes(q) || u.abbreviation.toLowerCase().includes(q)
@@ -439,6 +463,16 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
             <SelectItem value="deleted">Deleted</SelectItem>
           </SelectContent>
         </Select>
+        <Select value={validFilter} onValueChange={value => setValidFilter(value as 'all' | 'valid' | 'invalid')}>
+          <SelectTrigger className="w-36 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All validities</SelectItem>
+            <SelectItem value="valid">Valid</SelectItem>
+            <SelectItem value="invalid">Invalid</SelectItem>
+          </SelectContent>
+        </Select>
         <Button onClick={openNew} className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
           New unit
@@ -461,6 +495,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Description
               </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -469,7 +504,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={7} className="text-center text-muted-foreground py-10">
                   No units found
                 </TableCell>
               </TableRow>
@@ -500,6 +535,23 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
                     className="text-sm text-muted-foreground max-w-[200px] truncate"
                     title={u.shortDescription ?? undefined}>
                     {u.shortDescription ?? '—'}
+                  </TableCell>
+                  <TableCell>
+                    {u.deleted ? (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-red-500/15 text-red-700 dark:text-red-400 flex items-center gap-1 w-fit">
+                        <X className="h-3 w-3" />
+                        Deleted
+                      </Badge>
+                    ) : (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-green-500/15 text-green-700 dark:text-green-400 flex items-center gap-1 w-fit">
+                        <Check className="h-3 w-3" />
+                        Not deleted
+                      </Badge>
+                    )}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
@@ -772,6 +824,7 @@ function PerformanceTab({
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Short Description
               </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -780,7 +833,7 @@ function PerformanceTab({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={6} className="text-center text-muted-foreground py-10">
                   No performance specs found
                 </TableCell>
               </TableRow>
@@ -794,6 +847,23 @@ function PerformanceTab({
                     className="text-sm text-muted-foreground max-w-[220px] truncate"
                     title={p.shortDescription ?? undefined}>
                     {p.shortDescription ?? '—'}
+                  </TableCell>
+                  <TableCell>
+                    {p.deleted ? (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-red-500/15 text-red-700 dark:text-red-400 flex items-center gap-1 w-fit">
+                        <X className="h-3 w-3" />
+                        Deleted
+                      </Badge>
+                    ) : (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-green-500/15 text-green-700 dark:text-green-400 flex items-center gap-1 w-fit">
+                        <Check className="h-3 w-3" />
+                        Not deleted
+                      </Badge>
+                    )}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">

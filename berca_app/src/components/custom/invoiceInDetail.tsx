@@ -72,11 +72,9 @@ export function InvoiceInDetail({
   currentUserRole,
 }: InvoiceInDetailProps) {
   const router = useRouter()
-  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canEdit = currentUserLevel >= 40
-  const canCreate = currentUserLevel >= 60
-  const canDelete = currentUserLevel >= 80
-  const canManageVisibility = currentUserLevel >= 80
+  // Invoice number is editable only for level >= 80, matching company number behaviour
+  const canEditNumber = currentUserLevel >= 80
 
   const buildForm = (): EditForm => ({
     invoiceNumber: invoice.invoiceNumber,
@@ -97,14 +95,23 @@ export function InvoiceInDetail({
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState<EditForm>(buildForm)
-  const s = <K extends keyof EditForm>(key: K, v: EditForm[K]) => setForm(f => ({...f, [key]: v}))
+  const [numberError, setNumberError] = useState<string | null>(null)
+
+  const s = <K extends keyof EditForm>(key: K, v: EditForm[K]) => {
+    setForm(f => ({...f, [key]: v}))
+    if (key === 'invoiceNumber') setNumberError(null)
+  }
 
   async function handleSave() {
+    if (!form.invoiceNumber.trim()) {
+      setNumberError('Invoice number is required.')
+      return
+    }
     setSaving(true)
     try {
       await updateInvoiceInAction({
         id: invoice.id,
-        invoiceNumber: form.invoiceNumber,
+        invoiceNumber: form.invoiceNumber.trim(),
         poNumber: form.poNumber || null,
         humanId: form.humanId || null,
         invoiceDate: new Date(form.invoiceDate),
@@ -127,6 +134,7 @@ export function InvoiceInDetail({
 
   function handleCancel() {
     setForm(buildForm())
+    setNumberError(null)
     setEditing(false)
   }
 
@@ -180,8 +188,28 @@ export function InvoiceInDetail({
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {/* Invoice Number */}
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Invoice Number</Label>
-            <p className="text-sm text-muted-foreground">{invoice.invoiceNumber}</p>
+            <Label className="text-xs text-muted-foreground">
+              Invoice Number
+              {editing && !canEditNumber && <span className="ml-1.5 text-muted-foreground/60">(locked)</span>}
+            </Label>
+            {editing ? (
+              canEditNumber ? (
+                <div className="flex flex-col gap-1">
+                  <Input
+                    value={form.invoiceNumber}
+                    onChange={e => s('invoiceNumber', e.target.value)}
+                    className={`bg-secondary border-border ${numberError ? 'border-destructive' : ''}`}
+                  />
+                  {numberError && <p className="text-xs text-destructive">{numberError}</p>}
+                </div>
+              ) : (
+                <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                  {form.invoiceNumber}
+                </div>
+              )
+            ) : (
+              <p className="text-sm text-muted-foreground">{invoice.invoiceNumber}</p>
+            )}
           </div>
 
           {/* Human ID */}

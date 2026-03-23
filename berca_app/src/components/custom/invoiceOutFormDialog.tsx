@@ -15,6 +15,9 @@ import {
   updateInvoiceOutAction,
   getActiveWorkOrdersForProjectAction,
 } from '@/serverFunctions/invoices'
+// TODO: create this server action — should return generateInvoiceOutNumber(currentYear, nextSequence)
+// e.g. export async function getNextInvoiceOutNumberAction(): Promise<string>
+import {getNextInvoiceOutNumberAction} from '@/serverFunctions/invoices'
 
 export interface ProjectOption {
   id: string
@@ -44,6 +47,7 @@ interface InvoiceOutFormDialogProps {
 }
 
 type FormState = {
+  invoiceNumber: string
   poNumber: string
   humanId: string
   invoiceDate: string
@@ -67,6 +71,7 @@ function emptyForm(inv: MappedInvoiceOut | null): FormState {
   const today = new Date().toISOString().slice(0, 10)
   if (!inv) {
     return {
+      invoiceNumber: '',
       poNumber: '',
       humanId: '',
       invoiceDate: today,
@@ -82,6 +87,7 @@ function emptyForm(inv: MappedInvoiceOut | null): FormState {
     }
   }
   return {
+    invoiceNumber: inv.invoiceNumber,
     poNumber: inv.poNumber ?? '',
     humanId: inv.humanId ?? '',
     invoiceDate: toDateInput(inv.invoiceDate),
@@ -111,17 +117,32 @@ export function InvoiceOutFormDialog({
 }: InvoiceOutFormDialogProps) {
   const [form, setForm] = useState<FormState>(() => emptyForm(invoice))
   const [saving, setSaving] = useState(false)
+  const [numberLoading, setNumberLoading] = useState(false)
+  const [numberError, setNumberError] = useState<string | null>(null)
 
   const [selectedProjectId, setSelectedProjectId] = useState('')
   const [workOrders, setWorkOrders] = useState<WorkOrderOption[]>([])
   const [selectedWorkOrderIds, setSelectedWorkOrderIds] = useState<string[]>([])
   const [loadingWorkOrders, setLoadingWorkOrders] = useState(false)
 
+  const isEdit = !!invoice
+
+  // On open: reset form, fetch next number for create mode
   useEffect(() => {
-    setForm(emptyForm(invoice))
+    const base = emptyForm(invoice)
+    setForm(base)
     setSelectedProjectId('')
     setWorkOrders([])
     setSelectedWorkOrderIds([])
+    setNumberError(null)
+
+    if (!invoice && open) {
+      setNumberLoading(true)
+      getNextInvoiceOutNumberAction()
+        .then(n => setForm(f => ({...f, invoiceNumber: n})))
+        .catch(() => setNumberError('Could not fetch next number.'))
+        .finally(() => setNumberLoading(false))
+    }
   }, [invoice?.id, open])
 
   useEffect(() => {
@@ -136,15 +157,28 @@ export function InvoiceOutFormDialog({
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm(f => ({...f, [key]: value}))
+    if (key === 'invoiceNumber') setNumberError(null)
+  }
+
+  async function handleRegenerate() {
+    setNumberLoading(true)
+    setNumberError(null)
+    try {
+      const n = await getNextInvoiceOutNumberAction()
+      setForm(f => ({...f, invoiceNumber: n}))
+    } catch {
+      setNumberError('Could not fetch next number.')
+    } finally {
+      setNumberLoading(false)
+    }
   }
 
   function toggleWorkOrder(id: string) {
     setSelectedWorkOrderIds(prev => (prev.includes(id) ? prev.filter(w => w !== id) : [...prev, id]))
   }
 
-  const isEdit = !!invoice
-
   const isValid =
+    form.invoiceNumber.trim() &&
     form.invoiceDate &&
     form.dueDate &&
     form.invoiceTypeId &&
@@ -152,7 +186,6 @@ export function InvoiceOutFormDialog({
     form.invoiceSentTypeId &&
     form.invoiceStatusId &&
     form.vatMarginId &&
-    // On create, require at least 1 work order
     (isEdit || selectedWorkOrderIds.length > 0)
 
   async function handleSubmit() {
@@ -160,6 +193,7 @@ export function InvoiceOutFormDialog({
     setSaving(true)
     try {
       const payload = {
+        invoiceNumber: form.invoiceNumber.trim(),
         poNumber: form.poNumber || null,
         humanId: form.humanId || null,
         invoiceDate: new Date(form.invoiceDate),
@@ -175,7 +209,7 @@ export function InvoiceOutFormDialog({
       }
 
       if (invoice) {
-        await updateInvoiceOutAction({id: invoice.id, invoiceNumber: invoice.invoiceNumber, ...payload})
+        await updateInvoiceOutAction({id: invoice.id, ...payload})
       } else {
         await createInvoiceOutAction({...payload, workOrderIds: selectedWorkOrderIds})
       }
@@ -195,15 +229,39 @@ export function InvoiceOutFormDialog({
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-5 py-3 sm:grid-cols-2">
-          {/* Invoice number */}
+          {/* Invoice Number */}
           <div className="flex flex-col gap-1.5 sm:col-span-2">
             <Label className="text-xs text-muted-foreground">
-              Invoice Number
-              <span className="ml-1.5 text-muted-foreground/60">{isEdit ? '(locked)' : '(auto-generated)'}</span>
+              Invoice Number *
+              {isEdit && <span className="ml-1.5 text-muted-foreground/60">(locked — edit from detail page)</span>}
             </Label>
-            <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
-              {isEdit ? invoice.invoiceNumber : 'Will be assigned on save'}
-            </div>
+            {isEdit ? (
+              <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                {form.invoiceNumber}
+              </div>
+            ) : (
+              <div className="flex flex-col gap-1">
+                <div className="flex gap-2">
+                  <Input
+                    value={numberLoading ? '' : form.invoiceNumber}
+                    placeholder={numberLoading ? 'Fetching next number…' : 'Invoice number…'}
+                    onChange={e => set('invoiceNumber', e.target.value)}
+                    disabled={numberLoading}
+                    className={`bg-secondary border-border flex-1 ${numberError ? 'border-destructive' : ''}`}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-10 px-3 border-border text-xs shrink-0"
+                    onClick={handleRegenerate}
+                    disabled={numberLoading}>
+                    {numberLoading ? 'Loading…' : 'Regenerate'}
+                  </Button>
+                </div>
+                {numberError && <p className="text-xs text-destructive">{numberError}</p>}
+              </div>
+            )}
           </div>
 
           {/* Project + Work Orders (create only) */}

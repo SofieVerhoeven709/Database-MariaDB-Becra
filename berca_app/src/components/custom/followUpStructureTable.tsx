@@ -134,8 +134,10 @@ export function FollowUpStructureTable({
 }: FollowUpStructureTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
-  const canEdit = currentUserLevel >= 20
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [search, setSearch] = useState('')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
@@ -294,7 +296,7 @@ export function FollowUpStructureTable({
             </SelectContent>
           </Select>
         </div>
-        {canEdit && (
+        {canCreate && (
           <Button
             onClick={() => {
               setEditingStructure(null)
@@ -457,7 +459,7 @@ export function FollowUpStructureTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${departmentId}/followupstructure/${s.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/followUpStructure/${s.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"
@@ -543,6 +545,7 @@ export function FollowUpStructureTable({
         employeeOptions={employeeOptions}
         contactOptions={contactOptions}
         followUpOptions={followUpOptions}
+        canManageVisibility={canManageVisibility}
       />
     </div>
   )

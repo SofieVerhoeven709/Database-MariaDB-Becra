@@ -183,6 +183,7 @@ export type CertificateTypeScalarFieldEnum = (typeof CertificateTypeScalarFieldE
 export const CompanyScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  officialName: 'officialName',
   number: 'number',
   idOld: 'idOld',
   mail: 'mail',
@@ -1719,6 +1720,7 @@ export type CertificateTypeOrderByRelevanceFieldEnum = (typeof CertificateTypeOr
 export const CompanyOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
+  officialName: 'officialName',
   number: 'number',
   idOld: 'idOld',
   mail: 'mail',

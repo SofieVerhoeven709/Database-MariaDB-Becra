@@ -58,7 +58,14 @@ export function CertificateTable({
 }: CertificateTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
+  // Level thresholds:
+  //   >= 40  can edit certificates / types
+  //   >= 60  can create new certificates / types
+  //   >= 80  can delete + manage visibility
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   // ── Certificate state ──────────────────────────────────────────────────────
   const [search, setSearch] = useState('')
@@ -172,7 +179,7 @@ export function CertificateTable({
           </TabsTrigger>
         </TabsList>
 
-        {/* ── Certificates tab ─────────────────────────────────────────────── */}
+        {/* ── Certificates tab ── */}
         <TabsContent value="certificates" className="mt-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center flex-1">
@@ -196,14 +203,16 @@ export function CertificateTable({
                 </SelectContent>
               </Select>
             </div>
-            <Button
-              onClick={() => {
-                setEditingCert(null)
-                setCertDialogOpen(true)
-              }}
-              className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-              <Plus className="h-4 w-4" /> New Certificate
-            </Button>
+            {canCreate && (
+              <Button
+                onClick={() => {
+                  setEditingCert(null)
+                  setCertDialogOpen(true)
+                }}
+                className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+                <Plus className="h-4 w-4" /> New Certificate
+              </Button>
+            )}
           </div>
 
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
@@ -283,31 +292,29 @@ export function CertificateTable({
                               <ExternalLink className="h-3.5 w-3.5" />
                             </Button>
                           </Link>
-                          {!c.deleted && (
-                            <>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                                onClick={() => {
-                                  setEditingCert(c)
-                                  setCertDialogOpen(true)
-                                }}>
-                                <Pencil className="h-3.5 w-3.5" />
-                              </Button>
-                              {canDelete && (
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                                  onClick={async () => {
-                                    await softDeleteCertificateAction({id: c.id})
-                                    router.refresh()
-                                  }}>
-                                  <Trash2 className="h-3.5 w-3.5" />
-                                </Button>
-                              )}
-                            </>
+                          {!c.deleted && canEdit && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                              onClick={() => {
+                                setEditingCert(c)
+                                setCertDialogOpen(true)
+                              }}>
+                              <Pencil className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
+                          {!c.deleted && canDelete && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                              onClick={async () => {
+                                await softDeleteCertificateAction({id: c.id})
+                                router.refresh()
+                              }}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
                           )}
                           {c.deleted && (
                             <>
@@ -350,7 +357,7 @@ export function CertificateTable({
           </p>
         </TabsContent>
 
-        {/* ── Certificate Types tab ─────────────────────────────────────────── */}
+        {/* ── Certificate Types tab ── */}
         <TabsContent value="types" className="mt-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center flex-1">
@@ -374,14 +381,16 @@ export function CertificateTable({
                 </SelectContent>
               </Select>
             </div>
-            <Button
-              onClick={() => {
-                setEditingType(null)
-                setTypeDialogOpen(true)
-              }}
-              className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-              <Plus className="h-4 w-4" /> New Type
-            </Button>
+            {canCreate && (
+              <Button
+                onClick={() => {
+                  setEditingType(null)
+                  setTypeDialogOpen(true)
+                }}
+                className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+                <Plus className="h-4 w-4" /> New Type
+              </Button>
+            )}
           </div>
 
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
@@ -435,31 +444,29 @@ export function CertificateTable({
                       )}
                       <TableCell>
                         <div className="flex items-center gap-1">
-                          {!t.deleted && (
-                            <>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                                onClick={() => {
-                                  setEditingType(t)
-                                  setTypeDialogOpen(true)
-                                }}>
-                                <Pencil className="h-3.5 w-3.5" />
-                              </Button>
-                              {canDelete && (
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                                  onClick={async () => {
-                                    await softDeleteCertificateTypeAction({id: t.id})
-                                    router.refresh()
-                                  }}>
-                                  <Trash2 className="h-3.5 w-3.5" />
-                                </Button>
-                              )}
-                            </>
+                          {!t.deleted && canEdit && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                              onClick={() => {
+                                setEditingType(t)
+                                setTypeDialogOpen(true)
+                              }}>
+                              <Pencil className="h-3.5 w-3.5" />
+                            </Button>
+                          )}
+                          {!t.deleted && canDelete && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                              onClick={async () => {
+                                await softDeleteCertificateTypeAction({id: t.id})
+                                router.refresh()
+                              }}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
                           )}
                           {t.deleted && (
                             <>
@@ -512,6 +519,7 @@ export function CertificateTable({
         roleLevelOptions={roleLevelOptions}
         defaultVisibleRoleNames={defaultVisibleRoleNames}
         certificateTypeOptions={certificateTypeOptions}
+        canManageVisibility={canManageVisibility}
       />
 
       <CertificateTypeFormDialog

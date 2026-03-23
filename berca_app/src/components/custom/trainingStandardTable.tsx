@@ -52,7 +52,14 @@ export function TrainingStandardTable({
 }: TrainingStandardTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
+  // Level thresholds:
+  //   >= 40  can edit standard fields
+  //   >= 60  can create new standards
+  //   >= 80  can delete + manage visibility
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [search, setSearch] = useState('')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
@@ -147,14 +154,16 @@ export function TrainingStandardTable({
             </SelectContent>
           </Select>
         </div>
-        <Button
-          onClick={() => {
-            setEditing(null)
-            setDialogOpen(true)
-          }}
-          className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-          <Plus className="h-4 w-4" /> New Standard
-        </Button>
+        {canCreate && (
+          <Button
+            onClick={() => {
+              setEditing(null)
+              setDialogOpen(true)
+            }}
+            className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+            <Plus className="h-4 w-4" /> New Standard
+          </Button>
+        )}
       </div>
 
       <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
@@ -250,31 +259,29 @@ export function TrainingStandardTable({
                           <ExternalLink className="h-3.5 w-3.5" />
                         </Button>
                       </Link>
-                      {!s.deleted && (
-                        <>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                            onClick={() => {
-                              setEditing(s)
-                              setDialogOpen(true)
-                            }}>
-                            <Pencil className="h-3.5 w-3.5" />
-                          </Button>
-                          {canDelete && (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                              onClick={async () => {
-                                await softDeleteTrainingStandardAction({id: s.id})
-                                router.refresh()
-                              }}>
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </Button>
-                          )}
-                        </>
+                      {!s.deleted && canEdit && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          onClick={() => {
+                            setEditing(s)
+                            setDialogOpen(true)
+                          }}>
+                          <Pencil className="h-3.5 w-3.5" />
+                        </Button>
+                      )}
+                      {!s.deleted && canDelete && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                          onClick={async () => {
+                            await softDeleteTrainingStandardAction({id: s.id})
+                            router.refresh()
+                          }}>
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
                       )}
                       {s.deleted && (
                         <>
@@ -325,6 +332,7 @@ export function TrainingStandardTable({
         roleLevelOptions={roleLevelOptions}
         defaultVisibleRoleNames={defaultVisibleRoleNames}
         certificateOptions={certificateOptions}
+        canManageVisibility={canManageVisibility}
       />
     </div>
   )

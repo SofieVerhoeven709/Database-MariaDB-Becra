@@ -14,6 +14,8 @@ import {useRouter} from 'next/navigation'
 interface WorkOrderOption {
   id: string
   name: string
+  description?: string | null
+  isMaterialHoursClosed?: boolean
 }
 
 interface WorkOrderStructureFormDialogProps {
@@ -114,11 +116,18 @@ export function WorkOrderStructureFormDialog({
                 <SelectValue placeholder="Select work order" />
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
-                {workOrderOptions.map(w => (
-                  <SelectItem key={w.id} value={w.id}>
-                    {w.name}
-                  </SelectItem>
-                ))}
+                {workOrderOptions
+                  .filter(w => !w.isMaterialHoursClosed)
+                  .map(w => (
+                    <SelectItem key={w.id} value={w.id}>
+                      <div className="flex flex-col">
+                        <span className="font-medium">{w.name}</span>
+                        {w.description && (
+                          <span className="text-xs text-muted-foreground truncate max-w-[300px]">{w.description}</span>
+                        )}
+                      </div>
+                    </SelectItem>
+                  ))}
               </SelectContent>
             </Select>
           </div>

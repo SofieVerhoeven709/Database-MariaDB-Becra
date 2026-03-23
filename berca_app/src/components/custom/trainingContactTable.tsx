@@ -60,12 +60,7 @@ export interface MappedTrainingContactRow {
   deleted: boolean
   deletedAt: string | null
   deletedByName: string | null
-  contact: {
-    id: string
-    firstName: string
-    lastName: string
-    currentCompanyName: string | null
-  }
+  contact: {id: string; firstName: string; lastName: string; currentCompanyName: string | null}
   training: {
     id: string
     trainingNumber: string | null
@@ -82,7 +77,6 @@ type ContactForm = {
   certificateSent: boolean
   certSentDate: string
 }
-
 const emptyForm = (): ContactForm => ({
   trainingId: 'none',
   contactId: 'none',
@@ -91,13 +85,7 @@ const emptyForm = (): ContactForm => ({
   certificateSent: false,
   certSentDate: '',
 })
-
-type EditForm = {
-  attended: boolean
-  succeeded: boolean
-  certificateSent: boolean
-  certSentDate: string
-}
+type EditForm = {attended: boolean; succeeded: boolean; certificateSent: boolean; certSentDate: string}
 
 interface TrainingContactTableProps {
   initialTrainingContacts: MappedTrainingContactRow[]
@@ -118,17 +106,18 @@ export function TrainingContactTable({
 }: TrainingContactTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canEdit = currentUserLevel >= 20
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
+  // Level thresholds:
+  //   >= 40  can edit + add participants
+  //   >= 80  can delete
+  const canEdit = currentUserLevel >= 40
+  const canDelete = currentUserLevel >= 80
 
   const [search, setSearch] = useState('')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
   const [sortField, setSortField] = useState<SortField>('trainingDate')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
-
   const [addingRow, setAddingRow] = useState(false)
   const [addForm, setAddForm] = useState<ContactForm>(emptyForm())
-
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editForm, setEditForm] = useState<EditForm>({
     attended: false,
@@ -325,7 +314,6 @@ export function TrainingContactTable({
                     </SelectContent>
                   </Select>
                 </TableCell>
-                {/* Attendee # — auto-generated, shown as placeholder */}
                 <TableCell>
                   <div className="flex h-7 items-center px-2 text-xs text-muted-foreground/60 italic">
                     Auto-generated
@@ -406,7 +394,6 @@ export function TrainingContactTable({
               </TableRow>
             )}
 
-            {/* Data rows */}
             {filtered.length === 0 && !addingRow ? (
               <TableRow>
                 <TableCell colSpan={showDeletedCols ? 16 : 13} className="h-32 text-center text-muted-foreground">
@@ -429,7 +416,6 @@ export function TrainingContactTable({
                         <TableCell className={tdClass}>{tc.training.trainingNumber ?? '-'}</TableCell>
                         <TableCell className={tdClass}>{formatDate(tc.training.trainingDate)}</TableCell>
                         <TableCell className={tdClass}>{tc.training.trainingStandardDescriptionShort ?? '-'}</TableCell>
-                        {/* Attendee # read-only even in edit mode */}
                         <TableCell className={tdClass}>{tc.attendeeNumber ?? '-'}</TableCell>
                         <TableCell>
                           <input

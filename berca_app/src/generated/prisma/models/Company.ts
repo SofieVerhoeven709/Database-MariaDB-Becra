@@ -27,6 +27,7 @@ export type AggregateCompany = {
 export type CompanyMinAggregateOutputType = {
   id: string | null
   name: string | null
+  officialName: string | null
   number: string | null
   idOld: string | null
   mail: string | null
@@ -60,6 +61,7 @@ export type CompanyMinAggregateOutputType = {
 export type CompanyMaxAggregateOutputType = {
   id: string | null
   name: string | null
+  officialName: string | null
   number: string | null
   idOld: string | null
   mail: string | null
@@ -93,6 +95,7 @@ export type CompanyMaxAggregateOutputType = {
 export type CompanyCountAggregateOutputType = {
   id: number
   name: number
+  officialName: number
   number: number
   idOld: number
   mail: number
@@ -128,6 +131,7 @@ export type CompanyCountAggregateOutputType = {
 export type CompanyMinAggregateInputType = {
   id?: true
   name?: true
+  officialName?: true
   number?: true
   idOld?: true
   mail?: true
@@ -161,6 +165,7 @@ export type CompanyMinAggregateInputType = {
 export type CompanyMaxAggregateInputType = {
   id?: true
   name?: true
+  officialName?: true
   number?: true
   idOld?: true
   mail?: true
@@ -194,6 +199,7 @@ export type CompanyMaxAggregateInputType = {
 export type CompanyCountAggregateInputType = {
   id?: true
   name?: true
+  officialName?: true
   number?: true
   idOld?: true
   mail?: true
@@ -300,6 +306,7 @@ export type CompanyGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type CompanyGroupByOutputType = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld: string | null
   mail: string | null
@@ -354,6 +361,7 @@ export type CompanyWhereInput = {
   NOT?: Prisma.CompanyWhereInput | Prisma.CompanyWhereInput[]
   id?: Prisma.StringFilter<"Company"> | string
   name?: Prisma.StringFilter<"Company"> | string
+  officialName?: Prisma.StringFilter<"Company"> | string
   number?: Prisma.StringFilter<"Company"> | string
   idOld?: Prisma.StringNullableFilter<"Company"> | string | null
   mail?: Prisma.StringNullableFilter<"Company"> | string | null
@@ -402,6 +410,7 @@ export type CompanyWhereInput = {
 export type CompanyOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  officialName?: Prisma.SortOrder
   number?: Prisma.SortOrder
   idOld?: Prisma.SortOrderInput | Prisma.SortOrder
   mail?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -454,6 +463,7 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CompanyWhereInput[]
   NOT?: Prisma.CompanyWhereInput | Prisma.CompanyWhereInput[]
   name?: Prisma.StringFilter<"Company"> | string
+  officialName?: Prisma.StringFilter<"Company"> | string
   number?: Prisma.StringFilter<"Company"> | string
   idOld?: Prisma.StringNullableFilter<"Company"> | string | null
   mail?: Prisma.StringNullableFilter<"Company"> | string | null
@@ -502,6 +512,7 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
 export type CompanyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  officialName?: Prisma.SortOrder
   number?: Prisma.SortOrder
   idOld?: Prisma.SortOrderInput | Prisma.SortOrder
   mail?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -541,6 +552,7 @@ export type CompanyScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CompanyScalarWhereWithAggregatesInput | Prisma.CompanyScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Company"> | string
   name?: Prisma.StringWithAggregatesFilter<"Company"> | string
+  officialName?: Prisma.StringWithAggregatesFilter<"Company"> | string
   number?: Prisma.StringWithAggregatesFilter<"Company"> | string
   idOld?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
   mail?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
@@ -574,6 +586,7 @@ export type CompanyScalarWhereWithAggregatesInput = {
 export type CompanyCreateInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -618,6 +631,7 @@ export type CompanyCreateInput = {
 export type CompanyUncheckedCreateInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -662,6 +676,7 @@ export type CompanyUncheckedCreateInput = {
 export type CompanyUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -706,6 +721,7 @@ export type CompanyUpdateInput = {
 export type CompanyUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -750,6 +766,7 @@ export type CompanyUncheckedUpdateInput = {
 export type CompanyCreateManyInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -783,6 +800,7 @@ export type CompanyCreateManyInput = {
 export type CompanyUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -812,6 +830,7 @@ export type CompanyUpdateManyMutationInput = {
 export type CompanyUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -866,6 +885,7 @@ export type CompanyOrderByRelevanceInput = {
 export type CompanyCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  officialName?: Prisma.SortOrder
   number?: Prisma.SortOrder
   idOld?: Prisma.SortOrder
   mail?: Prisma.SortOrder
@@ -899,6 +919,7 @@ export type CompanyCountOrderByAggregateInput = {
 export type CompanyMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  officialName?: Prisma.SortOrder
   number?: Prisma.SortOrder
   idOld?: Prisma.SortOrder
   mail?: Prisma.SortOrder
@@ -932,6 +953,7 @@ export type CompanyMaxOrderByAggregateInput = {
 export type CompanyMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  officialName?: Prisma.SortOrder
   number?: Prisma.SortOrder
   idOld?: Prisma.SortOrder
   mail?: Prisma.SortOrder
@@ -1302,6 +1324,7 @@ export type CompanyUncheckedUpdateManyWithoutTargetNestedInput = {
 export type CompanyCreateWithoutOther_CompanyInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -1345,6 +1368,7 @@ export type CompanyCreateWithoutOther_CompanyInput = {
 export type CompanyUncheckedCreateWithoutOther_CompanyInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -1393,6 +1417,7 @@ export type CompanyCreateOrConnectWithoutOther_CompanyInput = {
 export type CompanyCreateWithoutCompanyInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -1436,6 +1461,7 @@ export type CompanyCreateWithoutCompanyInput = {
 export type CompanyUncheckedCreateWithoutCompanyInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -1500,6 +1526,7 @@ export type CompanyUpdateToOneWithWhereWithoutOther_CompanyInput = {
 export type CompanyUpdateWithoutOther_CompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1543,6 +1570,7 @@ export type CompanyUpdateWithoutOther_CompanyInput = {
 export type CompanyUncheckedUpdateWithoutOther_CompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1605,6 +1633,7 @@ export type CompanyScalarWhereInput = {
   NOT?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
   id?: Prisma.StringFilter<"Company"> | string
   name?: Prisma.StringFilter<"Company"> | string
+  officialName?: Prisma.StringFilter<"Company"> | string
   number?: Prisma.StringFilter<"Company"> | string
   idOld?: Prisma.StringNullableFilter<"Company"> | string | null
   mail?: Prisma.StringNullableFilter<"Company"> | string | null
@@ -1638,6 +1667,7 @@ export type CompanyScalarWhereInput = {
 export type CompanyCreateWithoutCompanyAdressInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -1681,6 +1711,7 @@ export type CompanyCreateWithoutCompanyAdressInput = {
 export type CompanyUncheckedCreateWithoutCompanyAdressInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -1740,6 +1771,7 @@ export type CompanyUpdateToOneWithWhereWithoutCompanyAdressInput = {
 export type CompanyUpdateWithoutCompanyAdressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1783,6 +1815,7 @@ export type CompanyUpdateWithoutCompanyAdressInput = {
 export type CompanyUncheckedUpdateWithoutCompanyAdressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1826,6 +1859,7 @@ export type CompanyUncheckedUpdateWithoutCompanyAdressInput = {
 export type CompanyCreateWithoutCompanyContactInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -1869,6 +1903,7 @@ export type CompanyCreateWithoutCompanyContactInput = {
 export type CompanyUncheckedCreateWithoutCompanyContactInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -1928,6 +1963,7 @@ export type CompanyUpdateToOneWithWhereWithoutCompanyContactInput = {
 export type CompanyUpdateWithoutCompanyContactInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1971,6 +2007,7 @@ export type CompanyUpdateWithoutCompanyContactInput = {
 export type CompanyUncheckedUpdateWithoutCompanyContactInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2014,6 +2051,7 @@ export type CompanyUncheckedUpdateWithoutCompanyContactInput = {
 export type CompanyCreateWithoutDeliveryNoteSupplierInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2057,6 +2095,7 @@ export type CompanyCreateWithoutDeliveryNoteSupplierInput = {
 export type CompanyUncheckedCreateWithoutDeliveryNoteSupplierInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2116,6 +2155,7 @@ export type CompanyUpdateToOneWithWhereWithoutDeliveryNoteSupplierInput = {
 export type CompanyUpdateWithoutDeliveryNoteSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2159,6 +2199,7 @@ export type CompanyUpdateWithoutDeliveryNoteSupplierInput = {
 export type CompanyUncheckedUpdateWithoutDeliveryNoteSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2202,6 +2243,7 @@ export type CompanyUncheckedUpdateWithoutDeliveryNoteSupplierInput = {
 export type CompanyCreateWithoutEmployeeInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2245,6 +2287,7 @@ export type CompanyCreateWithoutEmployeeInput = {
 export type CompanyUncheckedCreateWithoutEmployeeInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2298,6 +2341,7 @@ export type CompanyCreateManyEmployeeInputEnvelope = {
 export type CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2341,6 +2385,7 @@ export type CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput = {
 export type CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2426,6 +2471,7 @@ export type CompanyUpdateManyWithWhereWithoutEmployee_Company_deletedByToEmploye
 export type CompanyCreateWithoutInvoiceInInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2469,6 +2515,7 @@ export type CompanyCreateWithoutInvoiceInInput = {
 export type CompanyUncheckedCreateWithoutInvoiceInInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2528,6 +2575,7 @@ export type CompanyUpdateToOneWithWhereWithoutInvoiceInInput = {
 export type CompanyUpdateWithoutInvoiceInInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2571,6 +2619,7 @@ export type CompanyUpdateWithoutInvoiceInInput = {
 export type CompanyUncheckedUpdateWithoutInvoiceInInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2614,6 +2663,7 @@ export type CompanyUncheckedUpdateWithoutInvoiceInInput = {
 export type CompanyCreateWithoutMaterial_Material_preferredSupplierCompanyIdToCompanyInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2657,6 +2707,7 @@ export type CompanyCreateWithoutMaterial_Material_preferredSupplierCompanyIdToCo
 export type CompanyUncheckedCreateWithoutMaterial_Material_preferredSupplierCompanyIdToCompanyInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2716,6 +2767,7 @@ export type CompanyUpdateToOneWithWhereWithoutMaterial_Material_preferredSupplie
 export type CompanyUpdateWithoutMaterial_Material_preferredSupplierCompanyIdToCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2759,6 +2811,7 @@ export type CompanyUpdateWithoutMaterial_Material_preferredSupplierCompanyIdToCo
 export type CompanyUncheckedUpdateWithoutMaterial_Material_preferredSupplierCompanyIdToCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2802,6 +2855,7 @@ export type CompanyUncheckedUpdateWithoutMaterial_Material_preferredSupplierComp
 export type CompanyCreateWithoutMaterialSupplierInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2845,6 +2899,7 @@ export type CompanyCreateWithoutMaterialSupplierInput = {
 export type CompanyUncheckedCreateWithoutMaterialSupplierInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -2904,6 +2959,7 @@ export type CompanyUpdateToOneWithWhereWithoutMaterialSupplierInput = {
 export type CompanyUpdateWithoutMaterialSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2947,6 +3003,7 @@ export type CompanyUpdateWithoutMaterialSupplierInput = {
 export type CompanyUncheckedUpdateWithoutMaterialSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2990,6 +3047,7 @@ export type CompanyUncheckedUpdateWithoutMaterialSupplierInput = {
 export type CompanyCreateWithoutMaterialPriceInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -3033,6 +3091,7 @@ export type CompanyCreateWithoutMaterialPriceInput = {
 export type CompanyUncheckedCreateWithoutMaterialPriceInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -3092,6 +3151,7 @@ export type CompanyUpdateToOneWithWhereWithoutMaterialPriceInput = {
 export type CompanyUpdateWithoutMaterialPriceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3135,6 +3195,7 @@ export type CompanyUpdateWithoutMaterialPriceInput = {
 export type CompanyUncheckedUpdateWithoutMaterialPriceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3178,6 +3239,7 @@ export type CompanyUncheckedUpdateWithoutMaterialPriceInput = {
 export type CompanyCreateWithoutMaterialSerialTrackInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -3221,6 +3283,7 @@ export type CompanyCreateWithoutMaterialSerialTrackInput = {
 export type CompanyUncheckedCreateWithoutMaterialSerialTrackInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -3280,6 +3343,7 @@ export type CompanyUpdateToOneWithWhereWithoutMaterialSerialTrackInput = {
 export type CompanyUpdateWithoutMaterialSerialTrackInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3323,6 +3387,7 @@ export type CompanyUpdateWithoutMaterialSerialTrackInput = {
 export type CompanyUncheckedUpdateWithoutMaterialSerialTrackInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3366,6 +3431,7 @@ export type CompanyUncheckedUpdateWithoutMaterialSerialTrackInput = {
 export type CompanyCreateWithoutProjectInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -3409,6 +3475,7 @@ export type CompanyCreateWithoutProjectInput = {
 export type CompanyUncheckedCreateWithoutProjectInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -3468,6 +3535,7 @@ export type CompanyUpdateToOneWithWhereWithoutProjectInput = {
 export type CompanyUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3511,6 +3579,7 @@ export type CompanyUpdateWithoutProjectInput = {
 export type CompanyUncheckedUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3554,6 +3623,7 @@ export type CompanyUncheckedUpdateWithoutProjectInput = {
 export type CompanyCreateWithoutPurchaseInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -3597,6 +3667,7 @@ export type CompanyCreateWithoutPurchaseInput = {
 export type CompanyUncheckedCreateWithoutPurchaseInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -3656,6 +3727,7 @@ export type CompanyUpdateToOneWithWhereWithoutPurchaseInput = {
 export type CompanyUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3699,6 +3771,7 @@ export type CompanyUpdateWithoutPurchaseInput = {
 export type CompanyUncheckedUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3742,6 +3815,7 @@ export type CompanyUncheckedUpdateWithoutPurchaseInput = {
 export type CompanyCreateWithoutTargetInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -3785,6 +3859,7 @@ export type CompanyCreateWithoutTargetInput = {
 export type CompanyUncheckedCreateWithoutTargetInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -3854,6 +3929,7 @@ export type CompanyUpdateManyWithWhereWithoutTargetInput = {
 export type CompanyCreateManyCompanyInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -3886,6 +3962,7 @@ export type CompanyCreateManyCompanyInput = {
 export type CompanyUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3929,6 +4006,7 @@ export type CompanyUpdateWithoutCompanyInput = {
 export type CompanyUncheckedUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3972,6 +4050,7 @@ export type CompanyUncheckedUpdateWithoutCompanyInput = {
 export type CompanyUncheckedUpdateManyWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4004,6 +4083,7 @@ export type CompanyUncheckedUpdateManyWithoutCompanyInput = {
 export type CompanyCreateManyEmployeeInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -4036,6 +4116,7 @@ export type CompanyCreateManyEmployeeInput = {
 export type CompanyCreateManyEmployee_Company_deletedByToEmployeeInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -4068,6 +4149,7 @@ export type CompanyCreateManyEmployee_Company_deletedByToEmployeeInput = {
 export type CompanyUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4111,6 +4193,7 @@ export type CompanyUpdateWithoutEmployeeInput = {
 export type CompanyUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4154,6 +4237,7 @@ export type CompanyUncheckedUpdateWithoutEmployeeInput = {
 export type CompanyUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4186,6 +4270,7 @@ export type CompanyUncheckedUpdateManyWithoutEmployeeInput = {
 export type CompanyUpdateWithoutEmployee_Company_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4229,6 +4314,7 @@ export type CompanyUpdateWithoutEmployee_Company_deletedByToEmployeeInput = {
 export type CompanyUncheckedUpdateWithoutEmployee_Company_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4272,6 +4358,7 @@ export type CompanyUncheckedUpdateWithoutEmployee_Company_deletedByToEmployeeInp
 export type CompanyUncheckedUpdateManyWithoutEmployee_Company_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4304,6 +4391,7 @@ export type CompanyUncheckedUpdateManyWithoutEmployee_Company_deletedByToEmploye
 export type CompanyCreateManyTargetInput = {
   id: string
   name: string
+  officialName: string
   number: string
   idOld?: string | null
   mail?: string | null
@@ -4336,6 +4424,7 @@ export type CompanyCreateManyTargetInput = {
 export type CompanyUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4379,6 +4468,7 @@ export type CompanyUpdateWithoutTargetInput = {
 export type CompanyUncheckedUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4422,6 +4512,7 @@ export type CompanyUncheckedUpdateWithoutTargetInput = {
 export type CompanyUncheckedUpdateManyWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4575,6 +4666,7 @@ export type CompanyCountOutputTypeCountPurchaseArgs<ExtArgs extends runtime.Type
 export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  officialName?: boolean
   number?: boolean
   idOld?: boolean
   mail?: boolean
@@ -4626,6 +4718,7 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type CompanySelectScalar = {
   id?: boolean
   name?: boolean
+  officialName?: boolean
   number?: boolean
   idOld?: boolean
   mail?: boolean
@@ -4656,7 +4749,7 @@ export type CompanySelectScalar = {
   deletedBy?: boolean
 }
 
-export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "number" | "idOld" | "mail" | "businessPhone" | "website" | "vatNumber" | "bankNumber" | "iban" | "bic" | "becraCustomerNumber" | "becraWebsiteLogin" | "supplier" | "preferredSupplier" | "companyActive" | "newsLetter" | "customer" | "potentialCustomer" | "headQuarters" | "potentialSubContractor" | "subContractor" | "notes" | "createdAt" | "createdBy" | "companyId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["company"]>
+export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "officialName" | "number" | "idOld" | "mail" | "businessPhone" | "website" | "vatNumber" | "bankNumber" | "iban" | "bic" | "becraCustomerNumber" | "becraWebsiteLogin" | "supplier" | "preferredSupplier" | "companyActive" | "newsLetter" | "customer" | "potentialCustomer" | "headQuarters" | "potentialSubContractor" | "subContractor" | "notes" | "createdAt" | "createdBy" | "companyId" | "targetId" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["company"]>
 export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Company?: boolean | Prisma.Company$CompanyArgs<ExtArgs>
@@ -4698,6 +4791,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
+    officialName: string
     number: string
     idOld: string | null
     mail: string | null
@@ -5112,6 +5206,7 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
 export interface CompanyFieldRefs {
   readonly id: Prisma.FieldRef<"Company", 'String'>
   readonly name: Prisma.FieldRef<"Company", 'String'>
+  readonly officialName: Prisma.FieldRef<"Company", 'String'>
   readonly number: Prisma.FieldRef<"Company", 'String'>
   readonly idOld: Prisma.FieldRef<"Company", 'String'>
   readonly mail: Prisma.FieldRef<"Company", 'String'>

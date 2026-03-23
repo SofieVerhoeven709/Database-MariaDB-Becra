@@ -27,6 +27,8 @@ interface CertificateFormDialogProps {
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
   certificateTypeOptions: SelectOption[]
+  /** Whether the current user can manage visibility (level >= 80) */
+  canManageVisibility: boolean
 }
 
 const emptyCertificate = (): MappedCertificate => ({
@@ -53,6 +55,7 @@ export function CertificateFormDialog({
   roleLevelOptions,
   defaultVisibleRoleNames,
   certificateTypeOptions,
+  canManageVisibility,
 }: CertificateFormDialogProps) {
   const [form, setForm] = useState<MappedCertificate>(emptyCertificate())
   const [saving, setSaving] = useState(false)
@@ -87,7 +90,7 @@ export function CertificateFormDialog({
         <Tabs defaultValue="details">
           <TabsList className="bg-secondary border border-border/60">
             <TabsTrigger value="details">Details</TabsTrigger>
-            {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+            {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
           </TabsList>
 
           <TabsContent value="details">
@@ -130,7 +133,7 @@ export function CertificateFormDialog({
             </div>
           </TabsContent>
 
-          {isAdmin && (
+          {canManageVisibility && (
             <TabsContent value="visibility">
               <div className="py-3">
                 <VisibilityForRoleTab

@@ -27,7 +27,13 @@ export default async function WorkOrderStructuresPage({params}: PageProps) {
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   const structures = structuresFromDAL.map(mapWorkOrderStructure)
-  const workOrderOptions = workOrdersFromDAL.map(w => ({id: w.id, name: w.workOrderNumber ?? w.id}))
+  const workOrderOptions = workOrdersFromDAL
+    .filter(w => !w.hoursMaterialClosed)
+    .map(w => ({
+      id: w.id,
+      name: w.workOrderNumber ?? w.id,
+      description: w.description ?? null,
+    }))
   const materialOptions = materialsFromDAL.map(m => ({id: m.id, name: m.name ?? '', beNumber: m.beNumber}))
 
   return (

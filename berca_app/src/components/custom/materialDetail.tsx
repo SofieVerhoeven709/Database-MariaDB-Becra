@@ -187,7 +187,103 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
     }
   }
 
-  const groupLabel = (g: MaterialGroup) => [g.groupA, g.groupB, g.groupC, g.groupD].filter(Boolean).join(' / ')
+  // Label functions for each level
+  const selectedGroupA = materialGroups.find(g => g.id === form.materialGroupIdA) ?? null
+  const selectedGroupB = materialGroups.find(g => g.id === form.materialGroupIdB) ?? null
+  const selectedGroupC = materialGroups.find(g => g.id === form.materialGroupIdC) ?? null
+  const selectedGroupD = materialGroups.find(g => g.id === form.materialGroupIdD) ?? null
+
+  const buildUniqueGroupOptions = (
+    predicate: (group: MaterialGroup) => boolean,
+    labelOf: (group: MaterialGroup) => string | null,
+  ) => {
+    const byLabel = new Map<string, {id: string; label: string}>()
+    for (const group of materialGroups) {
+      if (!predicate(group)) continue
+      const label = labelOf(group)
+      if (!label || byLabel.has(label)) continue
+      byLabel.set(label, {id: group.id, label})
+    }
+    return Array.from(byLabel.values())
+  }
+
+  const ensureSelectedOption = (
+    options: Array<{id: string; label: string}>,
+    selectedId: string | null | undefined,
+    selectedLabel: string | null | undefined,
+  ) => {
+    if (!selectedId || !selectedLabel || options.some(option => option.id === selectedId)) {
+      return options
+    }
+    return [{id: selectedId, label: selectedLabel}, ...options]
+  }
+
+  const groupAOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(() => true, group => group.groupA),
+    form.materialGroupIdA,
+    selectedGroupA?.groupA,
+  )
+
+  const groupBOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(
+      group => Boolean(group.groupB) && (!selectedGroupA || group.groupA === selectedGroupA.groupA),
+      group => group.groupB,
+    ),
+    form.materialGroupIdB,
+    selectedGroupB?.groupB,
+  )
+
+  const groupCOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(
+      group => {
+        if (!group.groupC) return false
+        if (!selectedGroupA) return true
+        if (!selectedGroupB?.groupB) return group.groupA === selectedGroupA.groupA
+        return group.groupA === selectedGroupA.groupA && group.groupB === selectedGroupB.groupB
+      },
+      group => group.groupC,
+    ),
+    form.materialGroupIdC,
+    selectedGroupC?.groupC,
+  )
+
+  const groupDOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(
+      group => {
+        if (!group.groupD) return false
+        if (!selectedGroupA) return true
+        if (!selectedGroupB?.groupB) return group.groupA === selectedGroupA.groupA
+        if (!selectedGroupC?.groupC) return group.groupA === selectedGroupA.groupA && group.groupB === selectedGroupB.groupB
+        return (
+          group.groupA === selectedGroupA.groupA &&
+          group.groupB === selectedGroupB.groupB &&
+          group.groupC === selectedGroupC.groupC
+        )
+      },
+      group => group.groupD,
+    ),
+    form.materialGroupIdD,
+    selectedGroupD?.groupD,
+  )
+
+  function handleGroupAChange(nextId: string) {
+    handleField('materialGroupIdA', nextId)
+    handleField('materialGroupIdB', null)
+    handleField('materialGroupIdC', null)
+    handleField('materialGroupIdD', null)
+  }
+
+  function handleGroupBChange(nextId: string | null) {
+    handleField('materialGroupIdB', nextId)
+    handleField('materialGroupIdC', null)
+    handleField('materialGroupIdD', null)
+  }
+
+  function handleGroupCChange(nextId: string | null) {
+    handleField('materialGroupIdC', nextId)
+    handleField('materialGroupIdD', null)
+  }
+
   const totalStock = material.inventoryItems.reduce((s, i) => s + i.quantityInStock, 0)
 
   return (
@@ -414,14 +510,14 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Material Group A</Label>
               {editing ? (
-                <Select value={form.materialGroupIdA} onValueChange={v => handleField('materialGroupIdA', v)}>
+                <Select value={form.materialGroupIdA} onValueChange={handleGroupAChange}>
                   <SelectTrigger className="bg-secondary border-border">
                     <SelectValue placeholder="Select group" />
                   </SelectTrigger>
                   <SelectContent>
-                    {materialGroups.map(g => (
+                    {groupAOptions.map(g => (
                       <SelectItem key={g.id} value={g.id}>
-                        {groupLabel(g)}
+                        {g.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -438,15 +534,15 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
               {editing ? (
                 <Select
                   value={form.materialGroupIdB ?? '__none__'}
-                  onValueChange={v => handleField('materialGroupIdB', v === '__none__' ? null : v)}>
+                  onValueChange={v => handleGroupBChange(v === '__none__' ? null : v)}>
                   <SelectTrigger className="bg-secondary border-border">
                     <SelectValue placeholder="Select group" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="__none__">None</SelectItem>
-                    {materialGroups.map(g => (
+                    {groupBOptions.map(g => (
                       <SelectItem key={g.id} value={g.id}>
-                        {groupLabel(g)}
+                        {g.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -463,15 +559,15 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
               {editing ? (
                 <Select
                   value={form.materialGroupIdC ?? '__none__'}
-                  onValueChange={v => handleField('materialGroupIdC', v === '__none__' ? null : v)}>
+                  onValueChange={v => handleGroupCChange(v === '__none__' ? null : v)}>
                   <SelectTrigger className="bg-secondary border-border">
                     <SelectValue placeholder="Select group" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="__none__">None</SelectItem>
-                    {materialGroups.map(g => (
+                    {groupCOptions.map(g => (
                       <SelectItem key={g.id} value={g.id}>
-                        {groupLabel(g)}
+                        {g.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -494,9 +590,9 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="__none__">None</SelectItem>
-                    {materialGroups.map(g => (
+                    {groupDOptions.map(g => (
                       <SelectItem key={g.id} value={g.id}>
-                        {groupLabel(g)}
+                        {g.label}
                       </SelectItem>
                     ))}
                   </SelectContent>

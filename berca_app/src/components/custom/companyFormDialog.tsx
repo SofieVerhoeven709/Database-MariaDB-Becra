@@ -219,6 +219,7 @@ export function CompanyFormDialog({
   useEffect(() => {
     const next = company ?? emptyCompany()
     setForm(next)
+    setOfficialNameManuallySet(false)
     setAddingAddr(false)
     setEditingAddrId(null)
     setShowDeletedAddrs(false)

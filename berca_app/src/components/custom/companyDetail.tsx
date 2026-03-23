@@ -196,7 +196,7 @@ export function CompanyDetail({
     busNumber: string
     zipCode: string
     place: string
-    typeAdress: string
+    typeAddress: string
     countryId: string | null
     countryName: string | null
   }
@@ -206,7 +206,7 @@ export function CompanyDetail({
     busNumber: '',
     zipCode: '',
     place: '',
-    typeAdress: '',
+    typeAddress: '',
     countryId: null,
     countryName: null,
   })
@@ -225,7 +225,7 @@ export function CompanyDetail({
       busNumber: newAddrForm.busNumber || null,
       zipCode: newAddrForm.zipCode || null,
       place: newAddrForm.place || null,
-      typeAdress: newAddrForm.typeAdress || null,
+      typeAddress: newAddrForm.typeAddress || null,
       countryId: newAddrForm.countryId,
     })
     setAddingAddr(false)
@@ -242,7 +242,7 @@ export function CompanyDetail({
       busNumber: editAddrForm.busNumber || null,
       zipCode: editAddrForm.zipCode || null,
       place: editAddrForm.place || null,
-      typeAdress: editAddrForm.typeAdress || null,
+      typeAddress: editAddrForm.typeAddress || null,
       countryId: editAddrForm.countryId,
     })
     setEditingAddrId(null)
@@ -266,7 +266,7 @@ export function CompanyDetail({
 
   function handleStartEditAddr(a: {
     id: string
-    typeAdress: string | null
+    typeAddress: string | null
     street: string | null
     houseNumber: string | null
     busNumber: string | null
@@ -277,7 +277,7 @@ export function CompanyDetail({
   }) {
     setEditingAddrId(a.id)
     setEditAddrForm({
-      typeAdress: a.typeAdress ?? '',
+      typeAddress: a.typeAddress ?? '',
       street: a.street ?? '',
       houseNumber: a.houseNumber ?? '',
       busNumber: a.busNumber ?? '',
@@ -1172,7 +1172,7 @@ export function CompanyDetail({
                 onClick={() => {
                   const hasActiveAddresses = company.addresses.some(a => !a.deleted)
                   setAddingAddr(true)
-                  setNewAddrForm({...emptyAddrForm(), typeAdress: hasActiveAddresses ? '' : 'Headquarters'})
+                  setNewAddrForm({...emptyAddrForm(), typeAddress: hasActiveAddresses ? '' : 'Headquarters'})
                 }}>
                 <Plus className="h-3.5 w-3.5" /> Add Address
               </Button>
@@ -1198,11 +1198,11 @@ export function CompanyDetail({
               <TableBody>
                 {addingAddr && (
                   <TableRow className="border-border/40 bg-secondary/30">
-                    {(['typeAdress', 'street', 'houseNumber', 'busNumber', 'zipCode', 'place'] as const).map(field => (
+                    {(['typeAddress', 'street', 'houseNumber', 'busNumber', 'zipCode', 'place'] as const).map(field => (
                       <TableCell key={field}>
                         <Input
                           value={newAddrForm[field]}
-                          placeholder={field === 'typeAdress' ? 'e.g. Main…' : undefined}
+                          placeholder={field === 'typeAddress' ? 'e.g. Main…' : undefined}
                           onChange={e => setNewAddrForm(f => ({...f, [field]: e.target.value}))}
                           className="h-7 text-xs bg-background border-border"
                         />
@@ -1251,7 +1251,7 @@ export function CompanyDetail({
                         className={`border-border/40 hover:bg-secondary/50 ${a.deleted ? 'opacity-40' : ''}`}>
                         {isEditingThis ? (
                           <>
-                            {(['typeAdress', 'street', 'houseNumber', 'busNumber', 'zipCode', 'place'] as const).map(
+                            {(['typeAddress', 'street', 'houseNumber', 'busNumber', 'zipCode', 'place'] as const).map(
                               field => (
                                 <TableCell key={field}>
                                   <Input
@@ -1295,9 +1295,9 @@ export function CompanyDetail({
                         ) : (
                           <>
                             <TableCell className={tdClass}>
-                              {a.typeAdress ? (
+                              {a.typeAddress ? (
                                 <Badge variant="outline" className="text-xs border-border">
-                                  {a.typeAdress}
+                                  {a.typeAddress}
                                 </Badge>
                               ) : (
                                 '-'

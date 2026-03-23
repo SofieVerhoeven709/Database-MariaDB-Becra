@@ -25,10 +25,10 @@ export const createCompanyAction = protectedServerFunction({
     const companyId = crypto.randomUUID()
     const now = new Date()
 
-    // If a first address is provided with no typeAdress, default it to Headquarters.
+    // If a first address is provided with no typeAddress, default it to Headquarters.
     const normalizedAddresses = addresses.map((a, i) => ({
       ...a,
-      typeAdress: i === 0 && !a.typeAdress ? 'Headquarters' : (a.typeAdress ?? null),
+      typeAddress: i === 0 && !a.typeAddress ? 'Headquarters' : (a.typeAddress ?? null),
     }))
 
     // Retry loop — regenerate number on unique constraint collision (P2002)
@@ -49,7 +49,7 @@ export const createCompanyAction = protectedServerFunction({
             },
           }),
           ...normalizedAddresses.map(a =>
-            prismaClient.companyAdress.create({
+            prismaClient.companyAddress.create({
               data: {
                 ...a,
                 id: crypto.randomUUID(),
@@ -145,16 +145,16 @@ export const createCompanyAddressAction = protectedServerFunction({
   schema: createCompanyAddressSchema,
   functionName: 'Create company address action',
   serverFn: async ({data, logger, profile}) => {
-    // If this is the first non-deleted address for the company, default typeAdress to Headquarters.
-    const existingCount = await prismaClient.companyAdress.count({
+    // If this is the first non-deleted address for the company, default typeAddress to Headquarters.
+    const existingCount = await prismaClient.companyAddress.count({
       where: {companyId: data.companyId, deleted: false},
     })
     const normalizedData = {
       ...data,
-      typeAdress: existingCount === 0 && !data.typeAdress ? 'Headquarters' : (data.typeAdress ?? null),
+      typeAddress: existingCount === 0 && !data.typeAddress ? 'Headquarters' : (data.typeAddress ?? null),
     }
 
-    const address = await prismaClient.companyAdress.create({
+    const address = await prismaClient.companyAddress.create({
       data: {...normalizedData, id: crypto.randomUUID(), createdBy: profile.id, createdAt: new Date()},
     })
     logger.info(`Company address created: ${address.id}`)
@@ -166,7 +166,7 @@ export const updateCompanyAddressAction = protectedServerFunction({
   schema: updateCompanyAddressSchema,
   functionName: 'Update company address action',
   serverFn: async ({data: {id, ...data}, logger}) => {
-    await prismaClient.companyAdress.update({where: {id}, data})
+    await prismaClient.companyAddress.update({where: {id}, data})
     logger.info(`Company address updated: ${id}`)
     revalidatePath('/companies')
   },
@@ -176,7 +176,7 @@ export const softDeleteCompanyAddressAction = protectedServerFunction({
   schema: companyAddressIdSchema,
   functionName: 'Soft delete company address action',
   serverFn: async ({data: {id}, profile, logger}) => {
-    await prismaClient.companyAdress.update({
+    await prismaClient.companyAddress.update({
       where: {id},
       data: {deleted: true, deletedAt: new Date(), deletedBy: profile.id},
     })
@@ -189,7 +189,7 @@ export const hardDeleteCompanyAddressAction = protectedServerFunction({
   schema: companyAddressIdSchema,
   functionName: 'Hard delete company address action',
   serverFn: async ({data: {id}, logger}) => {
-    await prismaClient.companyAdress.delete({where: {id}})
+    await prismaClient.companyAddress.delete({where: {id}})
     logger.info(`Company address hard deleted: ${id}`)
     revalidatePath('/companies')
   },
@@ -199,7 +199,7 @@ export const undeleteCompanyAddressAction = protectedServerFunction({
   schema: companyAddressIdSchema,
   functionName: 'Undelete company address action',
   serverFn: async ({data: {id}, logger}) => {
-    await prismaClient.companyAdress.update({where: {id}, data: {deleted: false}})
+    await prismaClient.companyAddress.update({where: {id}, data: {deleted: false}})
     logger.info(`Company address undeleted: ${id}`)
     revalidatePath('/companies')
   },

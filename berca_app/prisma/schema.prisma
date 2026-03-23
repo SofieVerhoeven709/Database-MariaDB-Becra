@@ -85,7 +85,7 @@ model Company {
   other_Company                                         Company[]              @relation("CompanyToCompany")
   Target                                                Target                 @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Company_ibfk_3")
   Employee_Company_deletedByToEmployee                  Employee?              @relation("Company_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_4")
-  CompanyAdress                                         CompanyAdress[]
+  CompanyAddress                                        CompanyAddress[]
   CompanyContact                                        CompanyContact[]
   DeliveryNoteSupplier                                  DeliveryNoteSupplier[]
   InvoiceIn                                             InvoiceIn[]
@@ -102,54 +102,30 @@ model Company {
   @@index([deletedBy], map: "deletedBy")
 }
 
-model CompanyAdress {
-  id                                         String    @id @db.Char(36)
-  street                                     String?   @db.VarChar(100)
-  houseNumber                                String?   @db.VarChar(100)
-  busNumber                                  String?   @db.VarChar(100)
-  zipCode                                    String?   @db.VarChar(100)
-  place                                      String?   @db.VarChar(100)
-  createdAt                                  DateTime  @db.DateTime(0)
-  typeAdress                                 String?   @db.VarChar(100)
-  createdBy                                  String    @db.Char(36)
-  companyId                                  String    @db.Char(36)
-  countryId                                  String?   @db.Char(36)
-  deleted                                    Boolean   @default(false)
-  deletedAt                                  DateTime? @db.DateTime(0)
-  deletedBy                                  String?   @db.Char(36)
-  Country                                    Country?  @relation(fields: [countryId], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_1")
-  Employee                                   Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_2")
-  Company                                    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "CompanyAdress_ibfk_3")
-  Employee_CompanyAdress_deletedByToEmployee Employee? @relation("CompanyAdress_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_4")
-  Contact                                    Contact[]
-
-  @@index([companyId], map: "companyId")
-  @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "deletedBy")
-  @@index([countryId], map: "countryId")
-}
-
 model CompanyContact {
-  id                                          String    @id @db.Char(36)
-  startedDate                                 DateTime  @db.DateTime(0)
-  endDate                                     DateTime? @db.DateTime(0)
-  roleWithCompany                             String?   @db.VarChar(100)
-  createdAt                                   DateTime  @db.DateTime(0)
-  contactId                                   String    @db.Char(36)
-  companyId                                   String    @db.Char(36)
-  createdBy                                   String    @db.Char(36)
-  deleted                                     Boolean   @default(false)
-  deletedAt                                   DateTime? @db.DateTime(0)
-  deletedBy                                   String?   @db.Char(36)
-  Employee                                    Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_1")
-  Contact                                     Contact   @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_2")
-  Company                                     Company   @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_3")
-  Employee_CompanyContact_deletedByToEmployee Employee? @relation("CompanyContact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_4")
+  id                                          String          @id @db.Char(36)
+  startedDate                                 DateTime        @db.DateTime(0)
+  endDate                                     DateTime?       @db.DateTime(0)
+  roleWithCompany                             String?         @db.VarChar(100)
+  createdAt                                   DateTime        @db.DateTime(0)
+  contactId                                   String          @db.Char(36)
+  companyId                                   String          @db.Char(36)
+  createdBy                                   String          @db.Char(36)
+  companyAddressId                            String?         @db.Char(36)
+  deleted                                     Boolean         @default(false)
+  deletedAt                                   DateTime?       @db.DateTime(0)
+  deletedBy                                   String?         @db.Char(36)
+  Employee                                    Employee        @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_1")
+  Contact                                     Contact         @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_2")
+  Company                                     Company         @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_3")
+  Employee_CompanyContact_deletedByToEmployee Employee?       @relation("CompanyContact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_4")
+  CompanyAddress                              CompanyAddress? @relation(fields: [companyAddressId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "CompanyContact_ibfk_5")
 
   @@index([companyId], map: "companyId")
   @@index([contactId], map: "contactId")
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
+  @@index([companyAddressId], map: "companyAddressId")
 }
 
 model Contact {
@@ -186,7 +162,6 @@ model Contact {
   titleId                              String?             @db.Char(36)
   businessCardId                       String?             @db.Char(36)
   targetId                             String              @db.Char(36)
-  companyAdressId                      String?             @db.Char(36)
   deleted                              Boolean             @default(false)
   deletedAt                            DateTime?           @db.DateTime(0)
   deletedBy                            String?             @db.Char(36)
@@ -198,7 +173,6 @@ model Contact {
   DocumentStructure                    DocumentStructure?  @relation(fields: [businessCardId], references: [id], onUpdate: Restrict, map: "Contact_ibfk_5")
   Target                               Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Contact_ibfk_6")
   Employee_Contact_deletedByToEmployee Employee?           @relation("Contact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Contact_ibfk_7")
-  CompanyAdress                        CompanyAdress?      @relation(fields: [companyAdressId], references: [id], onUpdate: Restrict, map: "Contact_ibfk_8")
   FollowUpStructure                    FollowUpStructure[]
   InvoiceOutContact                    InvoiceOutContact[]
   ProjectContact                       ProjectContact[]
@@ -211,7 +185,6 @@ model Contact {
   @@index([titleId], map: "titleId")
   @@index([deletedBy], map: "deletedBy")
   @@index([departmentExternId], map: "departmentExternId")
-  @@index([companyAdressId], map: "companyAdressId")
 }
 
 model DeliveryNoteSupplier {
@@ -379,8 +352,8 @@ model Employee {
   CertificateType_CertificateType_deletedByToEmployee                               CertificateType[]                @relation("CertificateType_deletedByToEmployee")
   Company                                                                           Company[]
   Company_Company_deletedByToEmployee                                               Company[]                        @relation("Company_deletedByToEmployee")
-  CompanyAdress                                                                     CompanyAdress[]
-  CompanyAdress_CompanyAdress_deletedByToEmployee                                   CompanyAdress[]                  @relation("CompanyAdress_deletedByToEmployee")
+  CompanyAddress_CompanyAddress_createdByToEmployee                                 CompanyAddress[]                 @relation("CompanyAddress_createdByToEmployee")
+  CompanyAddress_CompanyAddress_deletedByToEmployee                                 CompanyAddress[]                 @relation("CompanyAddress_deletedByToEmployee")
   CompanyContact                                                                    CompanyContact[]
   CompanyContact_CompanyContact_deletedByToEmployee                                 CompanyContact[]                 @relation("CompanyContact_deletedByToEmployee")
   Contact                                                                           Contact[]
@@ -2146,16 +2119,16 @@ model RoleLevelEmployee {
 }
 
 model Country {
-  id                                   String          @id @db.Char(36)
-  name                                 String          @db.VarChar(100)
-  createdAt                            DateTime        @db.DateTime(0)
-  deleted                              Boolean         @default(false)
-  deletedAt                            DateTime?       @db.DateTime(0)
-  createdBy                            String          @db.Char(36)
-  deletedBy                            String?         @db.Char(36)
-  CompanyAdress                        CompanyAdress[]
-  Employee_Country_deletedByToEmployee Employee?       @relation("Country_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Country_ibfk_1")
-  Employee_Country_createdByToEmployee Employee        @relation("Country_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "Country_ibfk_2")
+  id                                   String           @id @db.Char(36)
+  name                                 String           @db.VarChar(100)
+  createdAt                            DateTime         @db.DateTime(0)
+  deleted                              Boolean          @default(false)
+  deletedAt                            DateTime?        @db.DateTime(0)
+  createdBy                            String           @db.Char(36)
+  deletedBy                            String?          @db.Char(36)
+  CompanyAddress                       CompanyAddress[]
+  Employee_Country_deletedByToEmployee Employee?        @relation("Country_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Country_ibfk_1")
+  Employee_Country_createdByToEmployee Employee         @relation("Country_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "Country_ibfk_2")
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
@@ -2277,6 +2250,33 @@ model PriceListItem {
   Employee_PriceListItem_deletedByToEmployee Employee? @relation("PriceListItem_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PriceListItem_ibfk_4")
 
   @@index([priceListId], map: "priceListId")
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model CompanyAddress {
+  id                                          String           @id @db.Char(36)
+  street                                      String?          @db.VarChar(100)
+  houseNumber                                 String?          @db.VarChar(100)
+  busNumber                                   String?          @db.VarChar(100)
+  zipCode                                     String?          @db.VarChar(100)
+  place                                       String?          @db.VarChar(100)
+  createdAt                                   DateTime         @db.DateTime(0)
+  typeAddress                                 String?          @db.VarChar(100)
+  createdBy                                   String           @db.Char(36)
+  companyId                                   String           @db.Char(36)
+  countryId                                   String?          @db.Char(36)
+  deleted                                     Boolean          @default(false)
+  deletedAt                                   DateTime?        @db.DateTime(0)
+  deletedBy                                   String?          @db.Char(36)
+  Country                                     Country?         @relation(fields: [countryId], references: [id], onUpdate: Restrict, map: "CompanyAddress_ibfk_1")
+  Employee_CompanyAddress_createdByToEmployee Employee         @relation("CompanyAddress_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyAddress_ibfk_2")
+  Company                                     Company          @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "CompanyAddress_ibfk_3")
+  Employee_CompanyAddress_deletedByToEmployee Employee?        @relation("CompanyAddress_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "CompanyAddress_ibfk_4")
+  CompanyContact                              CompanyContact[]
+
+  @@index([companyId], map: "companyId")
+  @@index([countryId], map: "countryId")
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
 }

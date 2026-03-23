@@ -7,7 +7,7 @@ export interface MappedCompanyAddress {
   busNumber: string | null
   zipCode: string | null
   place: string | null
-  typeAdress: string | null
+  typeAddress: string | null
   countryId: string | null
   countryName: string | null
   createdAt: string

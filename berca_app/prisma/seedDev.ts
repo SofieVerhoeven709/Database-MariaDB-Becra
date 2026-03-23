@@ -387,14 +387,14 @@ export const seedDev = async (prisma: PrismaClient) => {
       },
     })
 
-    await prisma.companyAdress.create({
+    await prisma.companyAddress.create({
       data: {
         id: randomUUID(),
         street: 'Nijverheidsstraat',
         houseNumber: '14',
         zipCode: '2400',
         place: 'Mol',
-        typeAdress: 'headquarters',
+        typeAddress: 'headquarters',
         createdAt: now,
         createdBy: adminEmployee.id,
         companyId: becraCompany.id,

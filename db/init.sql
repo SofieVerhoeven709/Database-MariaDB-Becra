@@ -356,7 +356,7 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
-      IF NOT EXISTS CompanyAdress (
+      IF NOT EXISTS CompanyAddress (
             id CHAR(36) NOT NULL PRIMARY KEY,
             street VARCHAR(100),
             houseNumber VARCHAR(100),
@@ -364,7 +364,7 @@ CREATE TABLE
             zipCode VARCHAR(100),
             place VARCHAR(100),
             createdAt DATETIME NOT NULL,
-            typeAdress VARCHAR(100),
+            typeAddress VARCHAR(100),
             createdBy CHAR(36) NOT NULL,
             companyId CHAR(36) NOT NULL,
             countryId CHAR(36) NULL,
@@ -412,7 +412,6 @@ CREATE TABLE
             titleId CHAR(36) NULL,
             businessCardId CHAR(36) NULL,
             targetId CHAR(36) NOT NULL,
-            companyAdressId CHAR(36),
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (functionId) REFERENCES Function (id) ON DELETE SET NULL,
             FOREIGN KEY (departmentExternId) REFERENCES DepartmentExtern (id) ON DELETE SET NULL,
@@ -422,8 +421,7 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-            FOREIGN KEY (companyAdressId) REFERENCES CompanyAdress (id) ON DELETE SET NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -436,13 +434,15 @@ CREATE TABLE
             contactId CHAR(36) NOT NULL,
             companyId CHAR(36) NOT NULL,
             createdBy CHAR(36) NOT NULL,
+            companyAddressId CHAR(36),
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (contactId) REFERENCES Contact (id) ON DELETE RESTRICT,
             FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (companyAddressId) REFERENCES CompanyAddress (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
 CREATE TABLE

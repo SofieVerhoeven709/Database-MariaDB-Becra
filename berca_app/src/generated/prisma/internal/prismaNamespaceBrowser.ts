@@ -52,7 +52,6 @@ export const ModelName = {
   Certificate: 'Certificate',
   CertificateType: 'CertificateType',
   Company: 'Company',
-  CompanyAdress: 'CompanyAdress',
   CompanyContact: 'CompanyContact',
   Contact: 'Contact',
   DeliveryNoteSupplier: 'DeliveryNoteSupplier',
@@ -134,7 +133,8 @@ export const ModelName = {
   PaymentMethod: 'PaymentMethod',
   VatMargin: 'VatMargin',
   PriceList: 'PriceList',
-  PriceListItem: 'PriceListItem'
+  PriceListItem: 'PriceListItem',
+  CompanyAddress: 'CompanyAddress'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -219,26 +219,6 @@ export const CompanyScalarFieldEnum = {
 export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
 
 
-export const CompanyAdressScalarFieldEnum = {
-  id: 'id',
-  street: 'street',
-  houseNumber: 'houseNumber',
-  busNumber: 'busNumber',
-  zipCode: 'zipCode',
-  place: 'place',
-  createdAt: 'createdAt',
-  typeAdress: 'typeAdress',
-  createdBy: 'createdBy',
-  companyId: 'companyId',
-  countryId: 'countryId',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type CompanyAdressScalarFieldEnum = (typeof CompanyAdressScalarFieldEnum)[keyof typeof CompanyAdressScalarFieldEnum]
-
-
 export const CompanyContactScalarFieldEnum = {
   id: 'id',
   startedDate: 'startedDate',
@@ -248,6 +228,7 @@ export const CompanyContactScalarFieldEnum = {
   contactId: 'contactId',
   companyId: 'companyId',
   createdBy: 'createdBy',
+  companyAddressId: 'companyAddressId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -290,7 +271,6 @@ export const ContactScalarFieldEnum = {
   titleId: 'titleId',
   businessCardId: 'businessCardId',
   targetId: 'targetId',
-  companyAdressId: 'companyAdressId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -1714,6 +1694,26 @@ export const PriceListItemScalarFieldEnum = {
 export type PriceListItemScalarFieldEnum = (typeof PriceListItemScalarFieldEnum)[keyof typeof PriceListItemScalarFieldEnum]
 
 
+export const CompanyAddressScalarFieldEnum = {
+  id: 'id',
+  street: 'street',
+  houseNumber: 'houseNumber',
+  busNumber: 'busNumber',
+  zipCode: 'zipCode',
+  place: 'place',
+  createdAt: 'createdAt',
+  typeAddress: 'typeAddress',
+  createdBy: 'createdBy',
+  companyId: 'companyId',
+  countryId: 'countryId',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type CompanyAddressScalarFieldEnum = (typeof CompanyAddressScalarFieldEnum)[keyof typeof CompanyAddressScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1778,29 +1778,13 @@ export const CompanyOrderByRelevanceFieldEnum = {
 export type CompanyOrderByRelevanceFieldEnum = (typeof CompanyOrderByRelevanceFieldEnum)[keyof typeof CompanyOrderByRelevanceFieldEnum]
 
 
-export const CompanyAdressOrderByRelevanceFieldEnum = {
-  id: 'id',
-  street: 'street',
-  houseNumber: 'houseNumber',
-  busNumber: 'busNumber',
-  zipCode: 'zipCode',
-  place: 'place',
-  typeAdress: 'typeAdress',
-  createdBy: 'createdBy',
-  companyId: 'companyId',
-  countryId: 'countryId',
-  deletedBy: 'deletedBy'
-} as const
-
-export type CompanyAdressOrderByRelevanceFieldEnum = (typeof CompanyAdressOrderByRelevanceFieldEnum)[keyof typeof CompanyAdressOrderByRelevanceFieldEnum]
-
-
 export const CompanyContactOrderByRelevanceFieldEnum = {
   id: 'id',
   roleWithCompany: 'roleWithCompany',
   contactId: 'contactId',
   companyId: 'companyId',
   createdBy: 'createdBy',
+  companyAddressId: 'companyAddressId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -1826,7 +1810,6 @@ export const ContactOrderByRelevanceFieldEnum = {
   titleId: 'titleId',
   businessCardId: 'businessCardId',
   targetId: 'targetId',
-  companyAdressId: 'companyAdressId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -2907,4 +2890,21 @@ export const PriceListItemOrderByRelevanceFieldEnum = {
 } as const
 
 export type PriceListItemOrderByRelevanceFieldEnum = (typeof PriceListItemOrderByRelevanceFieldEnum)[keyof typeof PriceListItemOrderByRelevanceFieldEnum]
+
+
+export const CompanyAddressOrderByRelevanceFieldEnum = {
+  id: 'id',
+  street: 'street',
+  houseNumber: 'houseNumber',
+  busNumber: 'busNumber',
+  zipCode: 'zipCode',
+  place: 'place',
+  typeAddress: 'typeAddress',
+  createdBy: 'createdBy',
+  companyId: 'companyId',
+  countryId: 'countryId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type CompanyAddressOrderByRelevanceFieldEnum = (typeof CompanyAddressOrderByRelevanceFieldEnum)[keyof typeof CompanyAddressOrderByRelevanceFieldEnum]
 

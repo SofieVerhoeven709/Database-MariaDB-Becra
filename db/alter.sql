@@ -560,18 +560,44 @@ CREATE TABLE
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
--- 43a. InvoiceOut: add priceListId column
+-- 43a. Project: add priceListId column
 ALTER TABLE Project ADD COLUMN IF NOT EXISTS `priceListId` CHAR(36) NULL;
 
--- 43b. InvoiceOut: add FK fk_invoiceout_pricelist (skip if already exists)
+-- 43b. Project: add FK fk_project_pricelist (skip if already exists)
 ALTER TABLE Project DROP FOREIGN KEY IF EXISTS fk_project_pricelist;
 ALTER TABLE Project ADD CONSTRAINT fk_project_pricelist
     FOREIGN KEY (`priceListId`) REFERENCES PriceList (`id`) ON DELETE RESTRICT;
 
--- 44a. InvoiceOut: add priceListId column
-ALTER TABLE Contact ADD COLUMN IF NOT EXISTS `companyAdressId` CHAR(36) NULL;
+-- 44. CompanyAddress: rename table from CompanyAdress (safe, only if old exists and new does not)
+SET @old_exists = (
+    SELECT COUNT(*) 
+    FROM information_schema.tables 
+    WHERE table_schema = DATABASE() 
+      AND table_name = 'CompanyAdress'
+);
 
--- 44b. InvoiceOut: add FK fk_invoiceout_pricelist (skip if already exists)
-ALTER TABLE Contact DROP FOREIGN KEY IF EXISTS fk_contact_companyAdress;
-ALTER TABLE Contact ADD CONSTRAINT fk_contact_companyAdress
-    FOREIGN KEY (`companyAdressId`) REFERENCES CompanyAdress (`id`) ON DELETE SET NULL;
+SET @new_exists = (
+    SELECT COUNT(*) 
+    FROM information_schema.tables 
+    WHERE table_schema = DATABASE() 
+      AND table_name = 'CompanyAddress'
+);
+
+SET @sql = IF(@old_exists = 1 AND @new_exists = 0,
+    'RENAME TABLE CompanyAdress TO CompanyAddress;',
+    'SELECT "No rename needed";'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+ALTER TABLE CompanyAddress CHANGE COLUMN IF EXISTS `typeAdress` `typeAddress` VARCHAR(100);
+
+-- 45a. CompanyContact: add companyAdressId column
+ALTER TABLE CompanyContact ADD COLUMN IF NOT EXISTS `companyAddressId` CHAR(36) NULL;
+
+-- 45b. CompanyContact: add FK fk_companyContact_companyAddress (skip if already exists)
+ALTER TABLE CompanyContact DROP FOREIGN KEY IF EXISTS fk_companyContact_companyAddress;
+ALTER TABLE CompanyContact ADD CONSTRAINT fk_companyContact_companyAddress
+    FOREIGN KEY (`companyAddressId`) REFERENCES CompanyAdress (`id`) ON DELETE SET NULL;

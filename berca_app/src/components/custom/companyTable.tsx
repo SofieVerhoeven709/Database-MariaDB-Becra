@@ -221,6 +221,7 @@ export function CompanyTable({
   async function handleSave(c: MappedCompany, visibilityRows: VisibilityRow[]) {
     const core = {
       name: c.name,
+      officialName: c.officialName,
       number: c.number,
       idOld: c.idOld,
       mail: c.mail,

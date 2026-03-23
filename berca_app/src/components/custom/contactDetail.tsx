@@ -117,6 +117,7 @@ export function ContactDetail({
   async function handleSaveCompany(c: MappedCompany, visRows: VisibilityRow[]) {
     const created = await createCompanyAndReturnIdAction({
       name: c.name,
+      officialName: c.name,
       number: c.number,
       idOld: c.idOld,
       mail: c.mail,

@@ -48,6 +48,7 @@ export function mapCompany(c: CompanyWithRelations): MappedCompany {
   return {
     id: c.id,
     name: c.name,
+    officialName: c.officialName,
     number: c.number,
     idOld: c.idOld ?? null,
     mail: c.mail,
@@ -193,6 +194,7 @@ export function mapCompanyDetail(c: CompanyDetailPayload): CompanyDetailData {
   return {
     id: c.id,
     name: c.name,
+    officialName: c.officialName,
     number: c.number,
     idOld: c.idOld ?? null,
     mail: c.mail,

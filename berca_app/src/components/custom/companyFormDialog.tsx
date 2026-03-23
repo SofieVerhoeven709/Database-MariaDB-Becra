@@ -52,6 +52,7 @@ interface CompanyFormDialogProps {
 const emptyCompany = (): MappedCompany => ({
   id: '',
   name: '',
+  officialName: '',
   number: generateCompanyNumber(),
   idOld: null,
   mail: null,
@@ -210,6 +211,7 @@ export function CompanyFormDialog({
   const [editingAddrId, setEditingAddrId] = useState<string | null>(null)
   const [editingAddrForm, setEditingAddrForm] = useState<AddrForm>(emptyAddrForm(''))
   const [showDeletedAddrs, setShowDeletedAddrs] = useState(false)
+  const [officialNameManuallySet, setOfficialNameManuallySet] = useState(false)
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(company?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
@@ -232,7 +234,13 @@ export function CompanyFormDialog({
   }, [JSON.stringify(company?.addresses), JSON.stringify(company?.visibilityForRoles)])
 
   function set<K extends keyof MappedCompany>(key: K, value: MappedCompany[K]) {
-    setForm(prev => ({...prev, [key]: value}))
+    setForm(prev => {
+      const updated = {...prev, [key]: value}
+      if (key === 'name' && !officialNameManuallySet) {
+        updated.officialName = value as string
+      }
+      return updated
+    })
     if (key === 'number') setNumberError(null)
   }
 
@@ -243,7 +251,11 @@ export function CompanyFormDialog({
     }
     setSaving(true)
     try {
-      await onSave(form, visibilityRows)
+      const formToSave = {
+        ...form,
+        officialName: form.officialName?.trim() || form.name,
+      }
+      await onSave(formToSave, visibilityRows)
     } finally {
       setSaving(false)
     }
@@ -337,6 +349,17 @@ export function CompanyFormDialog({
                 <Input
                   value={form.name}
                   onChange={e => set('name', e.target.value)}
+                  className="bg-secondary border-border"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Official Name *</Label>
+                <Input
+                  value={form.officialName}
+                  onChange={e => {
+                    setOfficialNameManuallySet(true)
+                    set('officialName', e.target.value)
+                  }}
                   className="bg-secondary border-border"
                 />
               </div>

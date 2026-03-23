@@ -7808,9 +7808,12 @@ export type VatMarginScalarFieldEnum = (typeof VatMarginScalarFieldEnum)[keyof t
 export const InvoiceOutItemScalarFieldEnum = {
   id: 'id',
   invoiceOutId: 'invoiceOutId',
-  materialId: 'materialId',
+  timeRegistryId: 'timeRegistryId',
+  workOrderStructureId: 'workOrderStructureId',
+  trainingContactId: 'trainingContactId',
+  description: 'description',
   quantity: 'quantity',
-  price: 'price',
+  unitPrice: 'unitPrice',
   total: 'total',
   createdAt: 'createdAt',
   deleted: 'deleted',
@@ -7838,8 +7841,10 @@ export type PriceListScalarFieldEnum = (typeof PriceListScalarFieldEnum)[keyof t
 export const PriceListItemScalarFieldEnum = {
   id: 'id',
   priceListId: 'priceListId',
-  materialId: 'materialId',
   price: 'price',
+  hourTypeId: 'hourTypeId',
+  materialId: 'materialId',
+  trainingStandardId: 'trainingStandardId',
   createdAt: 'createdAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -9023,7 +9028,10 @@ export type VatMarginOrderByRelevanceFieldEnum = (typeof VatMarginOrderByRelevan
 export const InvoiceOutItemOrderByRelevanceFieldEnum = {
   id: 'id',
   invoiceOutId: 'invoiceOutId',
-  materialId: 'materialId',
+  timeRegistryId: 'timeRegistryId',
+  workOrderStructureId: 'workOrderStructureId',
+  trainingContactId: 'trainingContactId',
+  description: 'description',
   deletedBy: 'deletedBy',
   createdBy: 'createdBy'
 } as const
@@ -9044,7 +9052,9 @@ export type PriceListOrderByRelevanceFieldEnum = (typeof PriceListOrderByRelevan
 export const PriceListItemOrderByRelevanceFieldEnum = {
   id: 'id',
   priceListId: 'priceListId',
+  hourTypeId: 'hourTypeId',
   materialId: 'materialId',
+  trainingStandardId: 'trainingStandardId',
   deletedBy: 'deletedBy',
   createdBy: 'createdBy'
 } as const

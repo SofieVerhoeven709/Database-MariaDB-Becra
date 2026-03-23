@@ -208,6 +208,7 @@ export type HourTypeWhereInput = {
   deletedBy?: Prisma.StringNullableFilter<"HourType"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_HourType_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  PriceListItem?: Prisma.PriceListItemListRelationFilter
   TimeRegistry?: Prisma.TimeRegistryListRelationFilter
 }
 
@@ -222,6 +223,7 @@ export type HourTypeOrderByWithRelationInput = {
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_HourType_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  PriceListItem?: Prisma.PriceListItemOrderByRelationAggregateInput
   TimeRegistry?: Prisma.TimeRegistryOrderByRelationAggregateInput
   _relevance?: Prisma.HourTypeOrderByRelevanceInput
 }
@@ -240,6 +242,7 @@ export type HourTypeWhereUniqueInput = Prisma.AtLeast<{
   deletedBy?: Prisma.StringNullableFilter<"HourType"> | string | null
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_HourType_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  PriceListItem?: Prisma.PriceListItemListRelationFilter
   TimeRegistry?: Prisma.TimeRegistryListRelationFilter
 }, "id">
 
@@ -280,6 +283,7 @@ export type HourTypeCreateInput = {
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutHourTypeInput
   Employee_HourType_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutHourType_HourType_deletedByToEmployeeInput
+  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutHourTypeInput
   TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutHourTypeInput
 }
 
@@ -292,6 +296,7 @@ export type HourTypeUncheckedCreateInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutHourTypeInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutHourTypeInput
 }
 
@@ -304,6 +309,7 @@ export type HourTypeUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutHourTypeNestedInput
   Employee_HourType_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutHourType_HourType_deletedByToEmployeeNestedInput
+  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutHourTypeNestedInput
   TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutHourTypeNestedInput
 }
 
@@ -316,6 +322,7 @@ export type HourTypeUncheckedUpdateInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutHourTypeNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutHourTypeNestedInput
 }
 
@@ -402,6 +409,11 @@ export type HourTypeMinOrderByAggregateInput = {
 export type HourTypeScalarRelationFilter = {
   is?: Prisma.HourTypeWhereInput
   isNot?: Prisma.HourTypeWhereInput
+}
+
+export type HourTypeNullableScalarRelationFilter = {
+  is?: Prisma.HourTypeWhereInput | null
+  isNot?: Prisma.HourTypeWhereInput | null
 }
 
 export type HourTypeCreateNestedManyWithoutEmployeeInput = {
@@ -502,6 +514,22 @@ export type HourTypeUpdateOneRequiredWithoutTimeRegistryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.HourTypeUpdateToOneWithWhereWithoutTimeRegistryInput, Prisma.HourTypeUpdateWithoutTimeRegistryInput>, Prisma.HourTypeUncheckedUpdateWithoutTimeRegistryInput>
 }
 
+export type HourTypeCreateNestedOneWithoutPriceListItemInput = {
+  create?: Prisma.XOR<Prisma.HourTypeCreateWithoutPriceListItemInput, Prisma.HourTypeUncheckedCreateWithoutPriceListItemInput>
+  connectOrCreate?: Prisma.HourTypeCreateOrConnectWithoutPriceListItemInput
+  connect?: Prisma.HourTypeWhereUniqueInput
+}
+
+export type HourTypeUpdateOneWithoutPriceListItemNestedInput = {
+  create?: Prisma.XOR<Prisma.HourTypeCreateWithoutPriceListItemInput, Prisma.HourTypeUncheckedCreateWithoutPriceListItemInput>
+  connectOrCreate?: Prisma.HourTypeCreateOrConnectWithoutPriceListItemInput
+  upsert?: Prisma.HourTypeUpsertWithoutPriceListItemInput
+  disconnect?: Prisma.HourTypeWhereInput | boolean
+  delete?: Prisma.HourTypeWhereInput | boolean
+  connect?: Prisma.HourTypeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.HourTypeUpdateToOneWithWhereWithoutPriceListItemInput, Prisma.HourTypeUpdateWithoutPriceListItemInput>, Prisma.HourTypeUncheckedUpdateWithoutPriceListItemInput>
+}
+
 export type HourTypeCreateWithoutEmployeeInput = {
   id: string
   name: string
@@ -510,6 +538,7 @@ export type HourTypeCreateWithoutEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee_HourType_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutHourType_HourType_deletedByToEmployeeInput
+  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutHourTypeInput
   TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutHourTypeInput
 }
 
@@ -521,6 +550,7 @@ export type HourTypeUncheckedCreateWithoutEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutHourTypeInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutHourTypeInput
 }
 
@@ -542,6 +572,7 @@ export type HourTypeCreateWithoutEmployee_HourType_deletedByToEmployeeInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutHourTypeInput
+  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutHourTypeInput
   TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutHourTypeInput
 }
 
@@ -553,6 +584,7 @@ export type HourTypeUncheckedCreateWithoutEmployee_HourType_deletedByToEmployeeI
   createdBy: string
   deleted?: boolean
   deletedAt?: Date | string | null
+  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutHourTypeInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutHourTypeInput
 }
 
@@ -621,6 +653,7 @@ export type HourTypeCreateWithoutTimeRegistryInput = {
   deletedAt?: Date | string | null
   Employee: Prisma.EmployeeCreateNestedOneWithoutHourTypeInput
   Employee_HourType_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutHourType_HourType_deletedByToEmployeeInput
+  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutHourTypeInput
 }
 
 export type HourTypeUncheckedCreateWithoutTimeRegistryInput = {
@@ -632,6 +665,7 @@ export type HourTypeUncheckedCreateWithoutTimeRegistryInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutHourTypeInput
 }
 
 export type HourTypeCreateOrConnectWithoutTimeRegistryInput = {
@@ -659,6 +693,7 @@ export type HourTypeUpdateWithoutTimeRegistryInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutHourTypeNestedInput
   Employee_HourType_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutHourType_HourType_deletedByToEmployeeNestedInput
+  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutHourTypeNestedInput
 }
 
 export type HourTypeUncheckedUpdateWithoutTimeRegistryInput = {
@@ -670,6 +705,71 @@ export type HourTypeUncheckedUpdateWithoutTimeRegistryInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutHourTypeNestedInput
+}
+
+export type HourTypeCreateWithoutPriceListItemInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  info?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutHourTypeInput
+  Employee_HourType_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutHourType_HourType_deletedByToEmployeeInput
+  TimeRegistry?: Prisma.TimeRegistryCreateNestedManyWithoutHourTypeInput
+}
+
+export type HourTypeUncheckedCreateWithoutPriceListItemInput = {
+  id: string
+  name: string
+  createdAt: Date | string
+  info?: string | null
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  TimeRegistry?: Prisma.TimeRegistryUncheckedCreateNestedManyWithoutHourTypeInput
+}
+
+export type HourTypeCreateOrConnectWithoutPriceListItemInput = {
+  where: Prisma.HourTypeWhereUniqueInput
+  create: Prisma.XOR<Prisma.HourTypeCreateWithoutPriceListItemInput, Prisma.HourTypeUncheckedCreateWithoutPriceListItemInput>
+}
+
+export type HourTypeUpsertWithoutPriceListItemInput = {
+  update: Prisma.XOR<Prisma.HourTypeUpdateWithoutPriceListItemInput, Prisma.HourTypeUncheckedUpdateWithoutPriceListItemInput>
+  create: Prisma.XOR<Prisma.HourTypeCreateWithoutPriceListItemInput, Prisma.HourTypeUncheckedCreateWithoutPriceListItemInput>
+  where?: Prisma.HourTypeWhereInput
+}
+
+export type HourTypeUpdateToOneWithWhereWithoutPriceListItemInput = {
+  where?: Prisma.HourTypeWhereInput
+  data: Prisma.XOR<Prisma.HourTypeUpdateWithoutPriceListItemInput, Prisma.HourTypeUncheckedUpdateWithoutPriceListItemInput>
+}
+
+export type HourTypeUpdateWithoutPriceListItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutHourTypeNestedInput
+  Employee_HourType_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutHourType_HourType_deletedByToEmployeeNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutHourTypeNestedInput
+}
+
+export type HourTypeUncheckedUpdateWithoutPriceListItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  info?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutHourTypeNestedInput
 }
 
 export type HourTypeCreateManyEmployeeInput = {
@@ -700,6 +800,7 @@ export type HourTypeUpdateWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_HourType_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutHourType_HourType_deletedByToEmployeeNestedInput
+  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutHourTypeNestedInput
   TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutHourTypeNestedInput
 }
 
@@ -711,6 +812,7 @@ export type HourTypeUncheckedUpdateWithoutEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutHourTypeNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutHourTypeNestedInput
 }
 
@@ -732,6 +834,7 @@ export type HourTypeUpdateWithoutEmployee_HourType_deletedByToEmployeeInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee?: Prisma.EmployeeUpdateOneRequiredWithoutHourTypeNestedInput
+  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutHourTypeNestedInput
   TimeRegistry?: Prisma.TimeRegistryUpdateManyWithoutHourTypeNestedInput
 }
 
@@ -743,6 +846,7 @@ export type HourTypeUncheckedUpdateWithoutEmployee_HourType_deletedByToEmployeeI
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutHourTypeNestedInput
   TimeRegistry?: Prisma.TimeRegistryUncheckedUpdateManyWithoutHourTypeNestedInput
 }
 
@@ -762,10 +866,12 @@ export type HourTypeUncheckedUpdateManyWithoutEmployee_HourType_deletedByToEmplo
  */
 
 export type HourTypeCountOutputType = {
+  PriceListItem: number
   TimeRegistry: number
 }
 
 export type HourTypeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  PriceListItem?: boolean | HourTypeCountOutputTypeCountPriceListItemArgs
   TimeRegistry?: boolean | HourTypeCountOutputTypeCountTimeRegistryArgs
 }
 
@@ -777,6 +883,13 @@ export type HourTypeCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
    * Select specific fields to fetch from the HourTypeCountOutputType
    */
   select?: Prisma.HourTypeCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * HourTypeCountOutputType without action
+ */
+export type HourTypeCountOutputTypeCountPriceListItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PriceListItemWhereInput
 }
 
 /**
@@ -798,6 +911,7 @@ export type HourTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   deletedBy?: boolean
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_HourType_deletedByToEmployee?: boolean | Prisma.HourType$Employee_HourType_deletedByToEmployeeArgs<ExtArgs>
+  PriceListItem?: boolean | Prisma.HourType$PriceListItemArgs<ExtArgs>
   TimeRegistry?: boolean | Prisma.HourType$TimeRegistryArgs<ExtArgs>
   _count?: boolean | Prisma.HourTypeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hourType"]>
@@ -819,6 +933,7 @@ export type HourTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type HourTypeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_HourType_deletedByToEmployee?: boolean | Prisma.HourType$Employee_HourType_deletedByToEmployeeArgs<ExtArgs>
+  PriceListItem?: boolean | Prisma.HourType$PriceListItemArgs<ExtArgs>
   TimeRegistry?: boolean | Prisma.HourType$TimeRegistryArgs<ExtArgs>
   _count?: boolean | Prisma.HourTypeCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -828,6 +943,7 @@ export type $HourTypePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     Employee: Prisma.$EmployeePayload<ExtArgs>
     Employee_HourType_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    PriceListItem: Prisma.$PriceListItemPayload<ExtArgs>[]
     TimeRegistry: Prisma.$TimeRegistryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1181,6 +1297,7 @@ export interface Prisma__HourTypeClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_HourType_deletedByToEmployee<T extends Prisma.HourType$Employee_HourType_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HourType$Employee_HourType_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  PriceListItem<T extends Prisma.HourType$PriceListItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HourType$PriceListItemArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceListItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   TimeRegistry<T extends Prisma.HourType$TimeRegistryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HourType$TimeRegistryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeRegistryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1578,6 +1695,30 @@ export type HourType$Employee_HourType_deletedByToEmployeeArgs<ExtArgs extends r
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * HourType.PriceListItem
+ */
+export type HourType$PriceListItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PriceListItem
+   */
+  select?: Prisma.PriceListItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PriceListItem
+   */
+  omit?: Prisma.PriceListItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PriceListItemInclude<ExtArgs> | null
+  where?: Prisma.PriceListItemWhereInput
+  orderBy?: Prisma.PriceListItemOrderByWithRelationInput | Prisma.PriceListItemOrderByWithRelationInput[]
+  cursor?: Prisma.PriceListItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PriceListItemScalarFieldEnum | Prisma.PriceListItemScalarFieldEnum[]
 }
 
 /**

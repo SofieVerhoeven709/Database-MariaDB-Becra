@@ -28,22 +28,25 @@ export type AggregateInvoiceOutItem = {
 
 export type InvoiceOutItemAvgAggregateOutputType = {
   quantity: runtime.Decimal | null
-  price: runtime.Decimal | null
+  unitPrice: runtime.Decimal | null
   total: runtime.Decimal | null
 }
 
 export type InvoiceOutItemSumAggregateOutputType = {
   quantity: runtime.Decimal | null
-  price: runtime.Decimal | null
+  unitPrice: runtime.Decimal | null
   total: runtime.Decimal | null
 }
 
 export type InvoiceOutItemMinAggregateOutputType = {
   id: string | null
   invoiceOutId: string | null
-  materialId: string | null
+  timeRegistryId: string | null
+  workOrderStructureId: string | null
+  trainingContactId: string | null
+  description: string | null
   quantity: runtime.Decimal | null
-  price: runtime.Decimal | null
+  unitPrice: runtime.Decimal | null
   total: runtime.Decimal | null
   createdAt: Date | null
   deleted: boolean | null
@@ -55,9 +58,12 @@ export type InvoiceOutItemMinAggregateOutputType = {
 export type InvoiceOutItemMaxAggregateOutputType = {
   id: string | null
   invoiceOutId: string | null
-  materialId: string | null
+  timeRegistryId: string | null
+  workOrderStructureId: string | null
+  trainingContactId: string | null
+  description: string | null
   quantity: runtime.Decimal | null
-  price: runtime.Decimal | null
+  unitPrice: runtime.Decimal | null
   total: runtime.Decimal | null
   createdAt: Date | null
   deleted: boolean | null
@@ -69,9 +75,12 @@ export type InvoiceOutItemMaxAggregateOutputType = {
 export type InvoiceOutItemCountAggregateOutputType = {
   id: number
   invoiceOutId: number
-  materialId: number
+  timeRegistryId: number
+  workOrderStructureId: number
+  trainingContactId: number
+  description: number
   quantity: number
-  price: number
+  unitPrice: number
   total: number
   createdAt: number
   deleted: number
@@ -84,22 +93,25 @@ export type InvoiceOutItemCountAggregateOutputType = {
 
 export type InvoiceOutItemAvgAggregateInputType = {
   quantity?: true
-  price?: true
+  unitPrice?: true
   total?: true
 }
 
 export type InvoiceOutItemSumAggregateInputType = {
   quantity?: true
-  price?: true
+  unitPrice?: true
   total?: true
 }
 
 export type InvoiceOutItemMinAggregateInputType = {
   id?: true
   invoiceOutId?: true
-  materialId?: true
+  timeRegistryId?: true
+  workOrderStructureId?: true
+  trainingContactId?: true
+  description?: true
   quantity?: true
-  price?: true
+  unitPrice?: true
   total?: true
   createdAt?: true
   deleted?: true
@@ -111,9 +123,12 @@ export type InvoiceOutItemMinAggregateInputType = {
 export type InvoiceOutItemMaxAggregateInputType = {
   id?: true
   invoiceOutId?: true
-  materialId?: true
+  timeRegistryId?: true
+  workOrderStructureId?: true
+  trainingContactId?: true
+  description?: true
   quantity?: true
-  price?: true
+  unitPrice?: true
   total?: true
   createdAt?: true
   deleted?: true
@@ -125,9 +140,12 @@ export type InvoiceOutItemMaxAggregateInputType = {
 export type InvoiceOutItemCountAggregateInputType = {
   id?: true
   invoiceOutId?: true
-  materialId?: true
+  timeRegistryId?: true
+  workOrderStructureId?: true
+  trainingContactId?: true
+  description?: true
   quantity?: true
-  price?: true
+  unitPrice?: true
   total?: true
   createdAt?: true
   deleted?: true
@@ -226,9 +244,12 @@ export type InvoiceOutItemGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 export type InvoiceOutItemGroupByOutputType = {
   id: string
   invoiceOutId: string
-  materialId: string
+  timeRegistryId: string | null
+  workOrderStructureId: string | null
+  trainingContactId: string | null
+  description: string
   quantity: runtime.Decimal
-  price: runtime.Decimal
+  unitPrice: runtime.Decimal
   total: runtime.Decimal
   createdAt: Date
   deleted: boolean
@@ -263,36 +284,46 @@ export type InvoiceOutItemWhereInput = {
   NOT?: Prisma.InvoiceOutItemWhereInput | Prisma.InvoiceOutItemWhereInput[]
   id?: Prisma.StringFilter<"InvoiceOutItem"> | string
   invoiceOutId?: Prisma.StringFilter<"InvoiceOutItem"> | string
-  materialId?: Prisma.StringFilter<"InvoiceOutItem"> | string
+  timeRegistryId?: Prisma.StringNullableFilter<"InvoiceOutItem"> | string | null
+  workOrderStructureId?: Prisma.StringNullableFilter<"InvoiceOutItem"> | string | null
+  trainingContactId?: Prisma.StringNullableFilter<"InvoiceOutItem"> | string | null
+  description?: Prisma.StringFilter<"InvoiceOutItem"> | string
   quantity?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"InvoiceOutItem"> | Date | string
   deleted?: Prisma.BoolFilter<"InvoiceOutItem"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"InvoiceOutItem"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"InvoiceOutItem"> | string | null
   createdBy?: Prisma.StringFilter<"InvoiceOutItem"> | string
-  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   InvoiceOut?: Prisma.XOR<Prisma.InvoiceOutScalarRelationFilter, Prisma.InvoiceOutWhereInput>
-  Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
+  TimeRegistry?: Prisma.XOR<Prisma.TimeRegistryNullableScalarRelationFilter, Prisma.TimeRegistryWhereInput> | null
+  WorkOrderStructure?: Prisma.XOR<Prisma.WorkOrderStructureNullableScalarRelationFilter, Prisma.WorkOrderStructureWhereInput> | null
+  TrainingContact?: Prisma.XOR<Prisma.TrainingContactNullableScalarRelationFilter, Prisma.TrainingContactWhereInput> | null
+  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type InvoiceOutItemOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   invoiceOutId?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
+  timeRegistryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  workOrderStructureId?: Prisma.SortOrderInput | Prisma.SortOrder
+  trainingContactId?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
   total?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   InvoiceOut?: Prisma.InvoiceOutOrderByWithRelationInput
-  Material?: Prisma.MaterialOrderByWithRelationInput
+  TimeRegistry?: Prisma.TimeRegistryOrderByWithRelationInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureOrderByWithRelationInput
+  TrainingContact?: Prisma.TrainingContactOrderByWithRelationInput
+  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   _relevance?: Prisma.InvoiceOutItemOrderByRelevanceInput
 }
@@ -303,27 +334,35 @@ export type InvoiceOutItemWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.InvoiceOutItemWhereInput[]
   NOT?: Prisma.InvoiceOutItemWhereInput | Prisma.InvoiceOutItemWhereInput[]
   invoiceOutId?: Prisma.StringFilter<"InvoiceOutItem"> | string
-  materialId?: Prisma.StringFilter<"InvoiceOutItem"> | string
+  timeRegistryId?: Prisma.StringNullableFilter<"InvoiceOutItem"> | string | null
+  workOrderStructureId?: Prisma.StringNullableFilter<"InvoiceOutItem"> | string | null
+  trainingContactId?: Prisma.StringNullableFilter<"InvoiceOutItem"> | string | null
+  description?: Prisma.StringFilter<"InvoiceOutItem"> | string
   quantity?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"InvoiceOutItem"> | Date | string
   deleted?: Prisma.BoolFilter<"InvoiceOutItem"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"InvoiceOutItem"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"InvoiceOutItem"> | string | null
   createdBy?: Prisma.StringFilter<"InvoiceOutItem"> | string
-  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   InvoiceOut?: Prisma.XOR<Prisma.InvoiceOutScalarRelationFilter, Prisma.InvoiceOutWhereInput>
-  Material?: Prisma.XOR<Prisma.MaterialScalarRelationFilter, Prisma.MaterialWhereInput>
+  TimeRegistry?: Prisma.XOR<Prisma.TimeRegistryNullableScalarRelationFilter, Prisma.TimeRegistryWhereInput> | null
+  WorkOrderStructure?: Prisma.XOR<Prisma.WorkOrderStructureNullableScalarRelationFilter, Prisma.WorkOrderStructureWhereInput> | null
+  TrainingContact?: Prisma.XOR<Prisma.TrainingContactNullableScalarRelationFilter, Prisma.TrainingContactWhereInput> | null
+  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type InvoiceOutItemOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   invoiceOutId?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
+  timeRegistryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  workOrderStructureId?: Prisma.SortOrderInput | Prisma.SortOrder
+  trainingContactId?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
   total?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
@@ -343,9 +382,12 @@ export type InvoiceOutItemScalarWhereWithAggregatesInput = {
   NOT?: Prisma.InvoiceOutItemScalarWhereWithAggregatesInput | Prisma.InvoiceOutItemScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"InvoiceOutItem"> | string
   invoiceOutId?: Prisma.StringWithAggregatesFilter<"InvoiceOutItem"> | string
-  materialId?: Prisma.StringWithAggregatesFilter<"InvoiceOutItem"> | string
+  timeRegistryId?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOutItem"> | string | null
+  workOrderStructureId?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOutItem"> | string | null
+  trainingContactId?: Prisma.StringNullableWithAggregatesFilter<"InvoiceOutItem"> | string | null
+  description?: Prisma.StringWithAggregatesFilter<"InvoiceOutItem"> | string
   quantity?: Prisma.DecimalWithAggregatesFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalWithAggregatesFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalWithAggregatesFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalWithAggregatesFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"InvoiceOutItem"> | Date | string
   deleted?: Prisma.BoolWithAggregatesFilter<"InvoiceOutItem"> | boolean
@@ -356,24 +398,30 @@ export type InvoiceOutItemScalarWhereWithAggregatesInput = {
 
 export type InvoiceOutItemCreateInput = {
   id: string
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Employee_InvoiceOutItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeInput
   InvoiceOut: Prisma.InvoiceOutCreateNestedOneWithoutInvoiceOutItemInput
-  Material: Prisma.MaterialCreateNestedOneWithoutInvoiceOutItemInput
+  TimeRegistry?: Prisma.TimeRegistryCreateNestedOneWithoutInvoiceOutItemInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedOneWithoutInvoiceOutItemInput
+  TrainingContact?: Prisma.TrainingContactCreateNestedOneWithoutInvoiceOutItemInput
+  Employee_InvoiceOutItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeInput
   Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeInput
 }
 
 export type InvoiceOutItemUncheckedCreateInput = {
   id: string
   invoiceOutId: string
-  materialId: string
+  timeRegistryId?: string | null
+  workOrderStructureId?: string | null
+  trainingContactId?: string | null
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
@@ -384,24 +432,30 @@ export type InvoiceOutItemUncheckedCreateInput = {
 
 export type InvoiceOutItemUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateOneRequiredWithoutInvoiceOutItemNestedInput
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInvoiceOutItemNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUpdateOneWithoutInvoiceOutItemNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateOneWithoutInvoiceOutItemNestedInput
+  TrainingContact?: Prisma.TrainingContactUpdateOneWithoutInvoiceOutItemNestedInput
+  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeNestedInput
   Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeNestedInput
 }
 
 export type InvoiceOutItemUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -413,9 +467,12 @@ export type InvoiceOutItemUncheckedUpdateInput = {
 export type InvoiceOutItemCreateManyInput = {
   id: string
   invoiceOutId: string
-  materialId: string
+  timeRegistryId?: string | null
+  workOrderStructureId?: string | null
+  trainingContactId?: string | null
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
@@ -426,8 +483,9 @@ export type InvoiceOutItemCreateManyInput = {
 
 export type InvoiceOutItemUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -437,9 +495,12 @@ export type InvoiceOutItemUpdateManyMutationInput = {
 export type InvoiceOutItemUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -467,9 +528,12 @@ export type InvoiceOutItemOrderByRelevanceInput = {
 export type InvoiceOutItemCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   invoiceOutId?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
+  timeRegistryId?: Prisma.SortOrder
+  workOrderStructureId?: Prisma.SortOrder
+  trainingContactId?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
   total?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
@@ -480,16 +544,19 @@ export type InvoiceOutItemCountOrderByAggregateInput = {
 
 export type InvoiceOutItemAvgOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
   total?: Prisma.SortOrder
 }
 
 export type InvoiceOutItemMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   invoiceOutId?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
+  timeRegistryId?: Prisma.SortOrder
+  workOrderStructureId?: Prisma.SortOrder
+  trainingContactId?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
   total?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
@@ -501,9 +568,12 @@ export type InvoiceOutItemMaxOrderByAggregateInput = {
 export type InvoiceOutItemMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   invoiceOutId?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
+  timeRegistryId?: Prisma.SortOrder
+  workOrderStructureId?: Prisma.SortOrder
+  trainingContactId?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
   total?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
@@ -514,7 +584,7 @@ export type InvoiceOutItemMinOrderByAggregateInput = {
 
 export type InvoiceOutItemSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  unitPrice?: Prisma.SortOrder
   total?: Prisma.SortOrder
 }
 
@@ -644,45 +714,129 @@ export type InvoiceOutItemUncheckedUpdateManyWithoutInvoiceOutNestedInput = {
   deleteMany?: Prisma.InvoiceOutItemScalarWhereInput | Prisma.InvoiceOutItemScalarWhereInput[]
 }
 
-export type InvoiceOutItemCreateNestedManyWithoutMaterialInput = {
-  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutMaterialInput, Prisma.InvoiceOutItemUncheckedCreateWithoutMaterialInput> | Prisma.InvoiceOutItemCreateWithoutMaterialInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutMaterialInput | Prisma.InvoiceOutItemCreateOrConnectWithoutMaterialInput[]
-  createMany?: Prisma.InvoiceOutItemCreateManyMaterialInputEnvelope
+export type InvoiceOutItemCreateNestedManyWithoutTimeRegistryInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTimeRegistryInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTimeRegistryInput> | Prisma.InvoiceOutItemCreateWithoutTimeRegistryInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutTimeRegistryInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutTimeRegistryInput | Prisma.InvoiceOutItemCreateOrConnectWithoutTimeRegistryInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyTimeRegistryInputEnvelope
   connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
 }
 
-export type InvoiceOutItemUncheckedCreateNestedManyWithoutMaterialInput = {
-  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutMaterialInput, Prisma.InvoiceOutItemUncheckedCreateWithoutMaterialInput> | Prisma.InvoiceOutItemCreateWithoutMaterialInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutMaterialInput | Prisma.InvoiceOutItemCreateOrConnectWithoutMaterialInput[]
-  createMany?: Prisma.InvoiceOutItemCreateManyMaterialInputEnvelope
+export type InvoiceOutItemUncheckedCreateNestedManyWithoutTimeRegistryInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTimeRegistryInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTimeRegistryInput> | Prisma.InvoiceOutItemCreateWithoutTimeRegistryInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutTimeRegistryInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutTimeRegistryInput | Prisma.InvoiceOutItemCreateOrConnectWithoutTimeRegistryInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyTimeRegistryInputEnvelope
   connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
 }
 
-export type InvoiceOutItemUpdateManyWithoutMaterialNestedInput = {
-  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutMaterialInput, Prisma.InvoiceOutItemUncheckedCreateWithoutMaterialInput> | Prisma.InvoiceOutItemCreateWithoutMaterialInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutMaterialInput | Prisma.InvoiceOutItemCreateOrConnectWithoutMaterialInput[]
-  upsert?: Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutMaterialInput | Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutMaterialInput[]
-  createMany?: Prisma.InvoiceOutItemCreateManyMaterialInputEnvelope
+export type InvoiceOutItemUpdateManyWithoutTimeRegistryNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTimeRegistryInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTimeRegistryInput> | Prisma.InvoiceOutItemCreateWithoutTimeRegistryInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutTimeRegistryInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutTimeRegistryInput | Prisma.InvoiceOutItemCreateOrConnectWithoutTimeRegistryInput[]
+  upsert?: Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutTimeRegistryInput | Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutTimeRegistryInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyTimeRegistryInputEnvelope
   set?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
   disconnect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
   delete?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
   connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
-  update?: Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutMaterialInput | Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutMaterialInput[]
-  updateMany?: Prisma.InvoiceOutItemUpdateManyWithWhereWithoutMaterialInput | Prisma.InvoiceOutItemUpdateManyWithWhereWithoutMaterialInput[]
+  update?: Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutTimeRegistryInput | Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutTimeRegistryInput[]
+  updateMany?: Prisma.InvoiceOutItemUpdateManyWithWhereWithoutTimeRegistryInput | Prisma.InvoiceOutItemUpdateManyWithWhereWithoutTimeRegistryInput[]
   deleteMany?: Prisma.InvoiceOutItemScalarWhereInput | Prisma.InvoiceOutItemScalarWhereInput[]
 }
 
-export type InvoiceOutItemUncheckedUpdateManyWithoutMaterialNestedInput = {
-  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutMaterialInput, Prisma.InvoiceOutItemUncheckedCreateWithoutMaterialInput> | Prisma.InvoiceOutItemCreateWithoutMaterialInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutMaterialInput | Prisma.InvoiceOutItemCreateOrConnectWithoutMaterialInput[]
-  upsert?: Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutMaterialInput | Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutMaterialInput[]
-  createMany?: Prisma.InvoiceOutItemCreateManyMaterialInputEnvelope
+export type InvoiceOutItemUncheckedUpdateManyWithoutTimeRegistryNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTimeRegistryInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTimeRegistryInput> | Prisma.InvoiceOutItemCreateWithoutTimeRegistryInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutTimeRegistryInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutTimeRegistryInput | Prisma.InvoiceOutItemCreateOrConnectWithoutTimeRegistryInput[]
+  upsert?: Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutTimeRegistryInput | Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutTimeRegistryInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyTimeRegistryInputEnvelope
   set?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
   disconnect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
   delete?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
   connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
-  update?: Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutMaterialInput | Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutMaterialInput[]
-  updateMany?: Prisma.InvoiceOutItemUpdateManyWithWhereWithoutMaterialInput | Prisma.InvoiceOutItemUpdateManyWithWhereWithoutMaterialInput[]
+  update?: Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutTimeRegistryInput | Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutTimeRegistryInput[]
+  updateMany?: Prisma.InvoiceOutItemUpdateManyWithWhereWithoutTimeRegistryInput | Prisma.InvoiceOutItemUpdateManyWithWhereWithoutTimeRegistryInput[]
+  deleteMany?: Prisma.InvoiceOutItemScalarWhereInput | Prisma.InvoiceOutItemScalarWhereInput[]
+}
+
+export type InvoiceOutItemCreateNestedManyWithoutTrainingContactInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTrainingContactInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTrainingContactInput> | Prisma.InvoiceOutItemCreateWithoutTrainingContactInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutTrainingContactInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutTrainingContactInput | Prisma.InvoiceOutItemCreateOrConnectWithoutTrainingContactInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyTrainingContactInputEnvelope
+  connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+}
+
+export type InvoiceOutItemUncheckedCreateNestedManyWithoutTrainingContactInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTrainingContactInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTrainingContactInput> | Prisma.InvoiceOutItemCreateWithoutTrainingContactInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutTrainingContactInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutTrainingContactInput | Prisma.InvoiceOutItemCreateOrConnectWithoutTrainingContactInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyTrainingContactInputEnvelope
+  connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+}
+
+export type InvoiceOutItemUpdateManyWithoutTrainingContactNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTrainingContactInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTrainingContactInput> | Prisma.InvoiceOutItemCreateWithoutTrainingContactInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutTrainingContactInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutTrainingContactInput | Prisma.InvoiceOutItemCreateOrConnectWithoutTrainingContactInput[]
+  upsert?: Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutTrainingContactInput | Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutTrainingContactInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyTrainingContactInputEnvelope
+  set?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  disconnect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  delete?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  update?: Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutTrainingContactInput | Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutTrainingContactInput[]
+  updateMany?: Prisma.InvoiceOutItemUpdateManyWithWhereWithoutTrainingContactInput | Prisma.InvoiceOutItemUpdateManyWithWhereWithoutTrainingContactInput[]
+  deleteMany?: Prisma.InvoiceOutItemScalarWhereInput | Prisma.InvoiceOutItemScalarWhereInput[]
+}
+
+export type InvoiceOutItemUncheckedUpdateManyWithoutTrainingContactNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTrainingContactInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTrainingContactInput> | Prisma.InvoiceOutItemCreateWithoutTrainingContactInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutTrainingContactInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutTrainingContactInput | Prisma.InvoiceOutItemCreateOrConnectWithoutTrainingContactInput[]
+  upsert?: Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutTrainingContactInput | Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutTrainingContactInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyTrainingContactInputEnvelope
+  set?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  disconnect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  delete?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  update?: Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutTrainingContactInput | Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutTrainingContactInput[]
+  updateMany?: Prisma.InvoiceOutItemUpdateManyWithWhereWithoutTrainingContactInput | Prisma.InvoiceOutItemUpdateManyWithWhereWithoutTrainingContactInput[]
+  deleteMany?: Prisma.InvoiceOutItemScalarWhereInput | Prisma.InvoiceOutItemScalarWhereInput[]
+}
+
+export type InvoiceOutItemCreateNestedManyWithoutWorkOrderStructureInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutWorkOrderStructureInput, Prisma.InvoiceOutItemUncheckedCreateWithoutWorkOrderStructureInput> | Prisma.InvoiceOutItemCreateWithoutWorkOrderStructureInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutWorkOrderStructureInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutWorkOrderStructureInput | Prisma.InvoiceOutItemCreateOrConnectWithoutWorkOrderStructureInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyWorkOrderStructureInputEnvelope
+  connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+}
+
+export type InvoiceOutItemUncheckedCreateNestedManyWithoutWorkOrderStructureInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutWorkOrderStructureInput, Prisma.InvoiceOutItemUncheckedCreateWithoutWorkOrderStructureInput> | Prisma.InvoiceOutItemCreateWithoutWorkOrderStructureInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutWorkOrderStructureInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutWorkOrderStructureInput | Prisma.InvoiceOutItemCreateOrConnectWithoutWorkOrderStructureInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyWorkOrderStructureInputEnvelope
+  connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+}
+
+export type InvoiceOutItemUpdateManyWithoutWorkOrderStructureNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutWorkOrderStructureInput, Prisma.InvoiceOutItemUncheckedCreateWithoutWorkOrderStructureInput> | Prisma.InvoiceOutItemCreateWithoutWorkOrderStructureInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutWorkOrderStructureInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutWorkOrderStructureInput | Prisma.InvoiceOutItemCreateOrConnectWithoutWorkOrderStructureInput[]
+  upsert?: Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutWorkOrderStructureInput | Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutWorkOrderStructureInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyWorkOrderStructureInputEnvelope
+  set?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  disconnect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  delete?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  update?: Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutWorkOrderStructureInput | Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutWorkOrderStructureInput[]
+  updateMany?: Prisma.InvoiceOutItemUpdateManyWithWhereWithoutWorkOrderStructureInput | Prisma.InvoiceOutItemUpdateManyWithWhereWithoutWorkOrderStructureInput[]
+  deleteMany?: Prisma.InvoiceOutItemScalarWhereInput | Prisma.InvoiceOutItemScalarWhereInput[]
+}
+
+export type InvoiceOutItemUncheckedUpdateManyWithoutWorkOrderStructureNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutWorkOrderStructureInput, Prisma.InvoiceOutItemUncheckedCreateWithoutWorkOrderStructureInput> | Prisma.InvoiceOutItemCreateWithoutWorkOrderStructureInput[] | Prisma.InvoiceOutItemUncheckedCreateWithoutWorkOrderStructureInput[]
+  connectOrCreate?: Prisma.InvoiceOutItemCreateOrConnectWithoutWorkOrderStructureInput | Prisma.InvoiceOutItemCreateOrConnectWithoutWorkOrderStructureInput[]
+  upsert?: Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutWorkOrderStructureInput | Prisma.InvoiceOutItemUpsertWithWhereUniqueWithoutWorkOrderStructureInput[]
+  createMany?: Prisma.InvoiceOutItemCreateManyWorkOrderStructureInputEnvelope
+  set?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  disconnect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  delete?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  connect?: Prisma.InvoiceOutItemWhereUniqueInput | Prisma.InvoiceOutItemWhereUniqueInput[]
+  update?: Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutWorkOrderStructureInput | Prisma.InvoiceOutItemUpdateWithWhereUniqueWithoutWorkOrderStructureInput[]
+  updateMany?: Prisma.InvoiceOutItemUpdateManyWithWhereWithoutWorkOrderStructureInput | Prisma.InvoiceOutItemUpdateManyWithWhereWithoutWorkOrderStructureInput[]
   deleteMany?: Prisma.InvoiceOutItemScalarWhereInput | Prisma.InvoiceOutItemScalarWhereInput[]
 }
 
@@ -696,23 +850,29 @@ export type DecimalFieldUpdateOperationsInput = {
 
 export type InvoiceOutItemCreateWithoutEmployee_InvoiceOutItem_createdByToEmployeeInput = {
   id: string
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
   InvoiceOut: Prisma.InvoiceOutCreateNestedOneWithoutInvoiceOutItemInput
-  Material: Prisma.MaterialCreateNestedOneWithoutInvoiceOutItemInput
+  TimeRegistry?: Prisma.TimeRegistryCreateNestedOneWithoutInvoiceOutItemInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedOneWithoutInvoiceOutItemInput
+  TrainingContact?: Prisma.TrainingContactCreateNestedOneWithoutInvoiceOutItemInput
   Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeInput
 }
 
 export type InvoiceOutItemUncheckedCreateWithoutEmployee_InvoiceOutItem_createdByToEmployeeInput = {
   id: string
   invoiceOutId: string
-  materialId: string
+  timeRegistryId?: string | null
+  workOrderStructureId?: string | null
+  trainingContactId?: string | null
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
@@ -732,23 +892,29 @@ export type InvoiceOutItemCreateManyEmployee_InvoiceOutItem_createdByToEmployeeI
 
 export type InvoiceOutItemCreateWithoutEmployee_InvoiceOutItem_deletedByToEmployeeInput = {
   id: string
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Employee_InvoiceOutItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeInput
   InvoiceOut: Prisma.InvoiceOutCreateNestedOneWithoutInvoiceOutItemInput
-  Material: Prisma.MaterialCreateNestedOneWithoutInvoiceOutItemInput
+  TimeRegistry?: Prisma.TimeRegistryCreateNestedOneWithoutInvoiceOutItemInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedOneWithoutInvoiceOutItemInput
+  TrainingContact?: Prisma.TrainingContactCreateNestedOneWithoutInvoiceOutItemInput
+  Employee_InvoiceOutItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeInput
 }
 
 export type InvoiceOutItemUncheckedCreateWithoutEmployee_InvoiceOutItem_deletedByToEmployeeInput = {
   id: string
   invoiceOutId: string
-  materialId: string
+  timeRegistryId?: string | null
+  workOrderStructureId?: string | null
+  trainingContactId?: string | null
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
@@ -788,9 +954,12 @@ export type InvoiceOutItemScalarWhereInput = {
   NOT?: Prisma.InvoiceOutItemScalarWhereInput | Prisma.InvoiceOutItemScalarWhereInput[]
   id?: Prisma.StringFilter<"InvoiceOutItem"> | string
   invoiceOutId?: Prisma.StringFilter<"InvoiceOutItem"> | string
-  materialId?: Prisma.StringFilter<"InvoiceOutItem"> | string
+  timeRegistryId?: Prisma.StringNullableFilter<"InvoiceOutItem"> | string | null
+  workOrderStructureId?: Prisma.StringNullableFilter<"InvoiceOutItem"> | string | null
+  trainingContactId?: Prisma.StringNullableFilter<"InvoiceOutItem"> | string | null
+  description?: Prisma.StringFilter<"InvoiceOutItem"> | string
   quantity?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFilter<"InvoiceOutItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"InvoiceOutItem"> | Date | string
   deleted?: Prisma.BoolFilter<"InvoiceOutItem"> | boolean
@@ -817,22 +986,28 @@ export type InvoiceOutItemUpdateManyWithWhereWithoutEmployee_InvoiceOutItem_dele
 
 export type InvoiceOutItemCreateWithoutInvoiceOutInput = {
   id: string
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  TimeRegistry?: Prisma.TimeRegistryCreateNestedOneWithoutInvoiceOutItemInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedOneWithoutInvoiceOutItemInput
+  TrainingContact?: Prisma.TrainingContactCreateNestedOneWithoutInvoiceOutItemInput
   Employee_InvoiceOutItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeInput
-  Material: Prisma.MaterialCreateNestedOneWithoutInvoiceOutItemInput
   Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeInput
 }
 
 export type InvoiceOutItemUncheckedCreateWithoutInvoiceOutInput = {
   id: string
-  materialId: string
+  timeRegistryId?: string | null
+  workOrderStructureId?: string | null
+  trainingContactId?: string | null
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
@@ -867,24 +1042,30 @@ export type InvoiceOutItemUpdateManyWithWhereWithoutInvoiceOutInput = {
   data: Prisma.XOR<Prisma.InvoiceOutItemUpdateManyMutationInput, Prisma.InvoiceOutItemUncheckedUpdateManyWithoutInvoiceOutInput>
 }
 
-export type InvoiceOutItemCreateWithoutMaterialInput = {
+export type InvoiceOutItemCreateWithoutTimeRegistryInput = {
   id: string
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  Employee_InvoiceOutItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeInput
   InvoiceOut: Prisma.InvoiceOutCreateNestedOneWithoutInvoiceOutItemInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedOneWithoutInvoiceOutItemInput
+  TrainingContact?: Prisma.TrainingContactCreateNestedOneWithoutInvoiceOutItemInput
+  Employee_InvoiceOutItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeInput
   Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeInput
 }
 
-export type InvoiceOutItemUncheckedCreateWithoutMaterialInput = {
+export type InvoiceOutItemUncheckedCreateWithoutTimeRegistryInput = {
   id: string
   invoiceOutId: string
+  workOrderStructureId?: string | null
+  trainingContactId?: string | null
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
@@ -893,38 +1074,157 @@ export type InvoiceOutItemUncheckedCreateWithoutMaterialInput = {
   createdBy: string
 }
 
-export type InvoiceOutItemCreateOrConnectWithoutMaterialInput = {
+export type InvoiceOutItemCreateOrConnectWithoutTimeRegistryInput = {
   where: Prisma.InvoiceOutItemWhereUniqueInput
-  create: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutMaterialInput, Prisma.InvoiceOutItemUncheckedCreateWithoutMaterialInput>
+  create: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTimeRegistryInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTimeRegistryInput>
 }
 
-export type InvoiceOutItemCreateManyMaterialInputEnvelope = {
-  data: Prisma.InvoiceOutItemCreateManyMaterialInput | Prisma.InvoiceOutItemCreateManyMaterialInput[]
+export type InvoiceOutItemCreateManyTimeRegistryInputEnvelope = {
+  data: Prisma.InvoiceOutItemCreateManyTimeRegistryInput | Prisma.InvoiceOutItemCreateManyTimeRegistryInput[]
   skipDuplicates?: boolean
 }
 
-export type InvoiceOutItemUpsertWithWhereUniqueWithoutMaterialInput = {
+export type InvoiceOutItemUpsertWithWhereUniqueWithoutTimeRegistryInput = {
   where: Prisma.InvoiceOutItemWhereUniqueInput
-  update: Prisma.XOR<Prisma.InvoiceOutItemUpdateWithoutMaterialInput, Prisma.InvoiceOutItemUncheckedUpdateWithoutMaterialInput>
-  create: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutMaterialInput, Prisma.InvoiceOutItemUncheckedCreateWithoutMaterialInput>
+  update: Prisma.XOR<Prisma.InvoiceOutItemUpdateWithoutTimeRegistryInput, Prisma.InvoiceOutItemUncheckedUpdateWithoutTimeRegistryInput>
+  create: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTimeRegistryInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTimeRegistryInput>
 }
 
-export type InvoiceOutItemUpdateWithWhereUniqueWithoutMaterialInput = {
+export type InvoiceOutItemUpdateWithWhereUniqueWithoutTimeRegistryInput = {
   where: Prisma.InvoiceOutItemWhereUniqueInput
-  data: Prisma.XOR<Prisma.InvoiceOutItemUpdateWithoutMaterialInput, Prisma.InvoiceOutItemUncheckedUpdateWithoutMaterialInput>
+  data: Prisma.XOR<Prisma.InvoiceOutItemUpdateWithoutTimeRegistryInput, Prisma.InvoiceOutItemUncheckedUpdateWithoutTimeRegistryInput>
 }
 
-export type InvoiceOutItemUpdateManyWithWhereWithoutMaterialInput = {
+export type InvoiceOutItemUpdateManyWithWhereWithoutTimeRegistryInput = {
   where: Prisma.InvoiceOutItemScalarWhereInput
-  data: Prisma.XOR<Prisma.InvoiceOutItemUpdateManyMutationInput, Prisma.InvoiceOutItemUncheckedUpdateManyWithoutMaterialInput>
+  data: Prisma.XOR<Prisma.InvoiceOutItemUpdateManyMutationInput, Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTimeRegistryInput>
+}
+
+export type InvoiceOutItemCreateWithoutTrainingContactInput = {
+  id: string
+  description: string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  InvoiceOut: Prisma.InvoiceOutCreateNestedOneWithoutInvoiceOutItemInput
+  TimeRegistry?: Prisma.TimeRegistryCreateNestedOneWithoutInvoiceOutItemInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureCreateNestedOneWithoutInvoiceOutItemInput
+  Employee_InvoiceOutItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeInput
+  Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeInput
+}
+
+export type InvoiceOutItemUncheckedCreateWithoutTrainingContactInput = {
+  id: string
+  invoiceOutId: string
+  timeRegistryId?: string | null
+  workOrderStructureId?: string | null
+  description: string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  createdBy: string
+}
+
+export type InvoiceOutItemCreateOrConnectWithoutTrainingContactInput = {
+  where: Prisma.InvoiceOutItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTrainingContactInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTrainingContactInput>
+}
+
+export type InvoiceOutItemCreateManyTrainingContactInputEnvelope = {
+  data: Prisma.InvoiceOutItemCreateManyTrainingContactInput | Prisma.InvoiceOutItemCreateManyTrainingContactInput[]
+  skipDuplicates?: boolean
+}
+
+export type InvoiceOutItemUpsertWithWhereUniqueWithoutTrainingContactInput = {
+  where: Prisma.InvoiceOutItemWhereUniqueInput
+  update: Prisma.XOR<Prisma.InvoiceOutItemUpdateWithoutTrainingContactInput, Prisma.InvoiceOutItemUncheckedUpdateWithoutTrainingContactInput>
+  create: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutTrainingContactInput, Prisma.InvoiceOutItemUncheckedCreateWithoutTrainingContactInput>
+}
+
+export type InvoiceOutItemUpdateWithWhereUniqueWithoutTrainingContactInput = {
+  where: Prisma.InvoiceOutItemWhereUniqueInput
+  data: Prisma.XOR<Prisma.InvoiceOutItemUpdateWithoutTrainingContactInput, Prisma.InvoiceOutItemUncheckedUpdateWithoutTrainingContactInput>
+}
+
+export type InvoiceOutItemUpdateManyWithWhereWithoutTrainingContactInput = {
+  where: Prisma.InvoiceOutItemScalarWhereInput
+  data: Prisma.XOR<Prisma.InvoiceOutItemUpdateManyMutationInput, Prisma.InvoiceOutItemUncheckedUpdateManyWithoutTrainingContactInput>
+}
+
+export type InvoiceOutItemCreateWithoutWorkOrderStructureInput = {
+  id: string
+  description: string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  InvoiceOut: Prisma.InvoiceOutCreateNestedOneWithoutInvoiceOutItemInput
+  TimeRegistry?: Prisma.TimeRegistryCreateNestedOneWithoutInvoiceOutItemInput
+  TrainingContact?: Prisma.TrainingContactCreateNestedOneWithoutInvoiceOutItemInput
+  Employee_InvoiceOutItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeInput
+  Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeInput
+}
+
+export type InvoiceOutItemUncheckedCreateWithoutWorkOrderStructureInput = {
+  id: string
+  invoiceOutId: string
+  timeRegistryId?: string | null
+  trainingContactId?: string | null
+  description: string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  createdBy: string
+}
+
+export type InvoiceOutItemCreateOrConnectWithoutWorkOrderStructureInput = {
+  where: Prisma.InvoiceOutItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutWorkOrderStructureInput, Prisma.InvoiceOutItemUncheckedCreateWithoutWorkOrderStructureInput>
+}
+
+export type InvoiceOutItemCreateManyWorkOrderStructureInputEnvelope = {
+  data: Prisma.InvoiceOutItemCreateManyWorkOrderStructureInput | Prisma.InvoiceOutItemCreateManyWorkOrderStructureInput[]
+  skipDuplicates?: boolean
+}
+
+export type InvoiceOutItemUpsertWithWhereUniqueWithoutWorkOrderStructureInput = {
+  where: Prisma.InvoiceOutItemWhereUniqueInput
+  update: Prisma.XOR<Prisma.InvoiceOutItemUpdateWithoutWorkOrderStructureInput, Prisma.InvoiceOutItemUncheckedUpdateWithoutWorkOrderStructureInput>
+  create: Prisma.XOR<Prisma.InvoiceOutItemCreateWithoutWorkOrderStructureInput, Prisma.InvoiceOutItemUncheckedCreateWithoutWorkOrderStructureInput>
+}
+
+export type InvoiceOutItemUpdateWithWhereUniqueWithoutWorkOrderStructureInput = {
+  where: Prisma.InvoiceOutItemWhereUniqueInput
+  data: Prisma.XOR<Prisma.InvoiceOutItemUpdateWithoutWorkOrderStructureInput, Prisma.InvoiceOutItemUncheckedUpdateWithoutWorkOrderStructureInput>
+}
+
+export type InvoiceOutItemUpdateManyWithWhereWithoutWorkOrderStructureInput = {
+  where: Prisma.InvoiceOutItemScalarWhereInput
+  data: Prisma.XOR<Prisma.InvoiceOutItemUpdateManyMutationInput, Prisma.InvoiceOutItemUncheckedUpdateManyWithoutWorkOrderStructureInput>
 }
 
 export type InvoiceOutItemCreateManyEmployee_InvoiceOutItem_createdByToEmployeeInput = {
   id: string
   invoiceOutId: string
-  materialId: string
+  timeRegistryId?: string | null
+  workOrderStructureId?: string | null
+  trainingContactId?: string | null
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
@@ -935,9 +1235,12 @@ export type InvoiceOutItemCreateManyEmployee_InvoiceOutItem_createdByToEmployeeI
 export type InvoiceOutItemCreateManyEmployee_InvoiceOutItem_deletedByToEmployeeInput = {
   id: string
   invoiceOutId: string
-  materialId: string
+  timeRegistryId?: string | null
+  workOrderStructureId?: string | null
+  trainingContactId?: string | null
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
@@ -947,23 +1250,29 @@ export type InvoiceOutItemCreateManyEmployee_InvoiceOutItem_deletedByToEmployeeI
 
 export type InvoiceOutItemUpdateWithoutEmployee_InvoiceOutItem_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   InvoiceOut?: Prisma.InvoiceOutUpdateOneRequiredWithoutInvoiceOutItemNestedInput
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInvoiceOutItemNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUpdateOneWithoutInvoiceOutItemNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateOneWithoutInvoiceOutItemNestedInput
+  TrainingContact?: Prisma.TrainingContactUpdateOneWithoutInvoiceOutItemNestedInput
   Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeNestedInput
 }
 
 export type InvoiceOutItemUncheckedUpdateWithoutEmployee_InvoiceOutItem_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -974,9 +1283,12 @@ export type InvoiceOutItemUncheckedUpdateWithoutEmployee_InvoiceOutItem_createdB
 export type InvoiceOutItemUncheckedUpdateManyWithoutEmployee_InvoiceOutItem_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -986,23 +1298,29 @@ export type InvoiceOutItemUncheckedUpdateManyWithoutEmployee_InvoiceOutItem_crea
 
 export type InvoiceOutItemUpdateWithoutEmployee_InvoiceOutItem_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateOneRequiredWithoutInvoiceOutItemNestedInput
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInvoiceOutItemNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUpdateOneWithoutInvoiceOutItemNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateOneWithoutInvoiceOutItemNestedInput
+  TrainingContact?: Prisma.TrainingContactUpdateOneWithoutInvoiceOutItemNestedInput
+  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeNestedInput
 }
 
 export type InvoiceOutItemUncheckedUpdateWithoutEmployee_InvoiceOutItem_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1013,9 +1331,12 @@ export type InvoiceOutItemUncheckedUpdateWithoutEmployee_InvoiceOutItem_deletedB
 export type InvoiceOutItemUncheckedUpdateManyWithoutEmployee_InvoiceOutItem_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1025,9 +1346,12 @@ export type InvoiceOutItemUncheckedUpdateManyWithoutEmployee_InvoiceOutItem_dele
 
 export type InvoiceOutItemCreateManyInvoiceOutInput = {
   id: string
-  materialId: string
+  timeRegistryId?: string | null
+  workOrderStructureId?: string | null
+  trainingContactId?: string | null
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
@@ -1038,22 +1362,28 @@ export type InvoiceOutItemCreateManyInvoiceOutInput = {
 
 export type InvoiceOutItemUpdateWithoutInvoiceOutInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  TimeRegistry?: Prisma.TimeRegistryUpdateOneWithoutInvoiceOutItemNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateOneWithoutInvoiceOutItemNestedInput
+  TrainingContact?: Prisma.TrainingContactUpdateOneWithoutInvoiceOutItemNestedInput
   Employee_InvoiceOutItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeNestedInput
-  Material?: Prisma.MaterialUpdateOneRequiredWithoutInvoiceOutItemNestedInput
   Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeNestedInput
 }
 
 export type InvoiceOutItemUncheckedUpdateWithoutInvoiceOutInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1064,9 +1394,12 @@ export type InvoiceOutItemUncheckedUpdateWithoutInvoiceOutInput = {
 
 export type InvoiceOutItemUncheckedUpdateManyWithoutInvoiceOutInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  materialId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1075,11 +1408,14 @@ export type InvoiceOutItemUncheckedUpdateManyWithoutInvoiceOutInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type InvoiceOutItemCreateManyMaterialInput = {
+export type InvoiceOutItemCreateManyTimeRegistryInput = {
   id: string
   invoiceOutId: string
+  workOrderStructureId?: string | null
+  trainingContactId?: string | null
+  description: string
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
@@ -1088,24 +1424,30 @@ export type InvoiceOutItemCreateManyMaterialInput = {
   createdBy: string
 }
 
-export type InvoiceOutItemUpdateWithoutMaterialInput = {
+export type InvoiceOutItemUpdateWithoutTimeRegistryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeNestedInput
   InvoiceOut?: Prisma.InvoiceOutUpdateOneRequiredWithoutInvoiceOutItemNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateOneWithoutInvoiceOutItemNestedInput
+  TrainingContact?: Prisma.TrainingContactUpdateOneWithoutInvoiceOutItemNestedInput
+  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeNestedInput
   Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeNestedInput
 }
 
-export type InvoiceOutItemUncheckedUpdateWithoutMaterialInput = {
+export type InvoiceOutItemUncheckedUpdateWithoutTimeRegistryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1114,11 +1456,142 @@ export type InvoiceOutItemUncheckedUpdateWithoutMaterialInput = {
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type InvoiceOutItemUncheckedUpdateManyWithoutMaterialInput = {
+export type InvoiceOutItemUncheckedUpdateManyWithoutTimeRegistryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type InvoiceOutItemCreateManyTrainingContactInput = {
+  id: string
+  invoiceOutId: string
+  timeRegistryId?: string | null
+  workOrderStructureId?: string | null
+  description: string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  createdBy: string
+}
+
+export type InvoiceOutItemUpdateWithoutTrainingContactInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutUpdateOneRequiredWithoutInvoiceOutItemNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUpdateOneWithoutInvoiceOutItemNestedInput
+  WorkOrderStructure?: Prisma.WorkOrderStructureUpdateOneWithoutInvoiceOutItemNestedInput
+  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeNestedInput
+  Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeNestedInput
+}
+
+export type InvoiceOutItemUncheckedUpdateWithoutTrainingContactInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type InvoiceOutItemUncheckedUpdateManyWithoutTrainingContactInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderStructureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type InvoiceOutItemCreateManyWorkOrderStructureInput = {
+  id: string
+  invoiceOutId: string
+  timeRegistryId?: string | null
+  trainingContactId?: string | null
+  description: string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  createdBy: string
+}
+
+export type InvoiceOutItemUpdateWithoutWorkOrderStructureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutUpdateOneRequiredWithoutInvoiceOutItemNestedInput
+  TimeRegistry?: Prisma.TimeRegistryUpdateOneWithoutInvoiceOutItemNestedInput
+  TrainingContact?: Prisma.TrainingContactUpdateOneWithoutInvoiceOutItemNestedInput
+  Employee_InvoiceOutItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutInvoiceOutItem_InvoiceOutItem_createdByToEmployeeNestedInput
+  Employee_InvoiceOutItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutInvoiceOutItem_InvoiceOutItem_deletedByToEmployeeNestedInput
+}
+
+export type InvoiceOutItemUncheckedUpdateWithoutWorkOrderStructureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type InvoiceOutItemUncheckedUpdateManyWithoutWorkOrderStructureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceOutId?: Prisma.StringFieldUpdateOperationsInput | string
+  timeRegistryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1132,18 +1605,23 @@ export type InvoiceOutItemUncheckedUpdateManyWithoutMaterialInput = {
 export type InvoiceOutItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   invoiceOutId?: boolean
-  materialId?: boolean
+  timeRegistryId?: boolean
+  workOrderStructureId?: boolean
+  trainingContactId?: boolean
+  description?: boolean
   quantity?: boolean
-  price?: boolean
+  unitPrice?: boolean
   total?: boolean
   createdAt?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
   createdBy?: boolean
-  Employee_InvoiceOutItem_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   InvoiceOut?: boolean | Prisma.InvoiceOutDefaultArgs<ExtArgs>
-  Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
+  TimeRegistry?: boolean | Prisma.InvoiceOutItem$TimeRegistryArgs<ExtArgs>
+  WorkOrderStructure?: boolean | Prisma.InvoiceOutItem$WorkOrderStructureArgs<ExtArgs>
+  TrainingContact?: boolean | Prisma.InvoiceOutItem$TrainingContactArgs<ExtArgs>
+  Employee_InvoiceOutItem_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_InvoiceOutItem_deletedByToEmployee?: boolean | Prisma.InvoiceOutItem$Employee_InvoiceOutItem_deletedByToEmployeeArgs<ExtArgs>
 }, ExtArgs["result"]["invoiceOutItem"]>
 
@@ -1152,9 +1630,12 @@ export type InvoiceOutItemSelect<ExtArgs extends runtime.Types.Extensions.Intern
 export type InvoiceOutItemSelectScalar = {
   id?: boolean
   invoiceOutId?: boolean
-  materialId?: boolean
+  timeRegistryId?: boolean
+  workOrderStructureId?: boolean
+  trainingContactId?: boolean
+  description?: boolean
   quantity?: boolean
-  price?: boolean
+  unitPrice?: boolean
   total?: boolean
   createdAt?: boolean
   deleted?: boolean
@@ -1163,28 +1644,35 @@ export type InvoiceOutItemSelectScalar = {
   createdBy?: boolean
 }
 
-export type InvoiceOutItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceOutId" | "materialId" | "quantity" | "price" | "total" | "createdAt" | "deleted" | "deletedAt" | "deletedBy" | "createdBy", ExtArgs["result"]["invoiceOutItem"]>
+export type InvoiceOutItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceOutId" | "timeRegistryId" | "workOrderStructureId" | "trainingContactId" | "description" | "quantity" | "unitPrice" | "total" | "createdAt" | "deleted" | "deletedAt" | "deletedBy" | "createdBy", ExtArgs["result"]["invoiceOutItem"]>
 export type InvoiceOutItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Employee_InvoiceOutItem_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   InvoiceOut?: boolean | Prisma.InvoiceOutDefaultArgs<ExtArgs>
-  Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
+  TimeRegistry?: boolean | Prisma.InvoiceOutItem$TimeRegistryArgs<ExtArgs>
+  WorkOrderStructure?: boolean | Prisma.InvoiceOutItem$WorkOrderStructureArgs<ExtArgs>
+  TrainingContact?: boolean | Prisma.InvoiceOutItem$TrainingContactArgs<ExtArgs>
+  Employee_InvoiceOutItem_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_InvoiceOutItem_deletedByToEmployee?: boolean | Prisma.InvoiceOutItem$Employee_InvoiceOutItem_deletedByToEmployeeArgs<ExtArgs>
 }
 
 export type $InvoiceOutItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "InvoiceOutItem"
   objects: {
-    Employee_InvoiceOutItem_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     InvoiceOut: Prisma.$InvoiceOutPayload<ExtArgs>
-    Material: Prisma.$MaterialPayload<ExtArgs>
+    TimeRegistry: Prisma.$TimeRegistryPayload<ExtArgs> | null
+    WorkOrderStructure: Prisma.$WorkOrderStructurePayload<ExtArgs> | null
+    TrainingContact: Prisma.$TrainingContactPayload<ExtArgs> | null
+    Employee_InvoiceOutItem_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Employee_InvoiceOutItem_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     invoiceOutId: string
-    materialId: string
+    timeRegistryId: string | null
+    workOrderStructureId: string | null
+    trainingContactId: string | null
+    description: string
     quantity: runtime.Decimal
-    price: runtime.Decimal
+    unitPrice: runtime.Decimal
     total: runtime.Decimal
     createdAt: Date
     deleted: boolean
@@ -1531,9 +2019,11 @@ readonly fields: InvoiceOutItemFieldRefs;
  */
 export interface Prisma__InvoiceOutItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  Employee_InvoiceOutItem_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   InvoiceOut<T extends Prisma.InvoiceOutDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceOutDefaultArgs<ExtArgs>>): Prisma.Prisma__InvoiceOutClient<runtime.Types.Result.GetResult<Prisma.$InvoiceOutPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  Material<T extends Prisma.MaterialDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialClient<runtime.Types.Result.GetResult<Prisma.$MaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  TimeRegistry<T extends Prisma.InvoiceOutItem$TimeRegistryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceOutItem$TimeRegistryArgs<ExtArgs>>): Prisma.Prisma__TimeRegistryClient<runtime.Types.Result.GetResult<Prisma.$TimeRegistryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  WorkOrderStructure<T extends Prisma.InvoiceOutItem$WorkOrderStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceOutItem$WorkOrderStructureArgs<ExtArgs>>): Prisma.Prisma__WorkOrderStructureClient<runtime.Types.Result.GetResult<Prisma.$WorkOrderStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  TrainingContact<T extends Prisma.InvoiceOutItem$TrainingContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceOutItem$TrainingContactArgs<ExtArgs>>): Prisma.Prisma__TrainingContactClient<runtime.Types.Result.GetResult<Prisma.$TrainingContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Employee_InvoiceOutItem_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_InvoiceOutItem_deletedByToEmployee<T extends Prisma.InvoiceOutItem$Employee_InvoiceOutItem_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvoiceOutItem$Employee_InvoiceOutItem_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1566,9 +2056,12 @@ export interface Prisma__InvoiceOutItemClient<T, Null = never, ExtArgs extends r
 export interface InvoiceOutItemFieldRefs {
   readonly id: Prisma.FieldRef<"InvoiceOutItem", 'String'>
   readonly invoiceOutId: Prisma.FieldRef<"InvoiceOutItem", 'String'>
-  readonly materialId: Prisma.FieldRef<"InvoiceOutItem", 'String'>
+  readonly timeRegistryId: Prisma.FieldRef<"InvoiceOutItem", 'String'>
+  readonly workOrderStructureId: Prisma.FieldRef<"InvoiceOutItem", 'String'>
+  readonly trainingContactId: Prisma.FieldRef<"InvoiceOutItem", 'String'>
+  readonly description: Prisma.FieldRef<"InvoiceOutItem", 'String'>
   readonly quantity: Prisma.FieldRef<"InvoiceOutItem", 'Decimal'>
-  readonly price: Prisma.FieldRef<"InvoiceOutItem", 'Decimal'>
+  readonly unitPrice: Prisma.FieldRef<"InvoiceOutItem", 'Decimal'>
   readonly total: Prisma.FieldRef<"InvoiceOutItem", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"InvoiceOutItem", 'DateTime'>
   readonly deleted: Prisma.FieldRef<"InvoiceOutItem", 'Boolean'>
@@ -1915,6 +2408,63 @@ export type InvoiceOutItemDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many InvoiceOutItems to delete.
    */
   limit?: number
+}
+
+/**
+ * InvoiceOutItem.TimeRegistry
+ */
+export type InvoiceOutItem$TimeRegistryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TimeRegistry
+   */
+  select?: Prisma.TimeRegistrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TimeRegistry
+   */
+  omit?: Prisma.TimeRegistryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TimeRegistryInclude<ExtArgs> | null
+  where?: Prisma.TimeRegistryWhereInput
+}
+
+/**
+ * InvoiceOutItem.WorkOrderStructure
+ */
+export type InvoiceOutItem$WorkOrderStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkOrderStructure
+   */
+  select?: Prisma.WorkOrderStructureSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorkOrderStructure
+   */
+  omit?: Prisma.WorkOrderStructureOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkOrderStructureInclude<ExtArgs> | null
+  where?: Prisma.WorkOrderStructureWhereInput
+}
+
+/**
+ * InvoiceOutItem.TrainingContact
+ */
+export type InvoiceOutItem$TrainingContactArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TrainingContact
+   */
+  select?: Prisma.TrainingContactSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TrainingContact
+   */
+  omit?: Prisma.TrainingContactOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TrainingContactInclude<ExtArgs> | null
+  where?: Prisma.TrainingContactWhereInput
 }
 
 /**

@@ -539,22 +539,26 @@ CREATE TABLE IF NOT EXISTS PriceList (
 ) ENGINE = InnoDB;
 
 -- 42. Create PriceListItem table
-CREATE TABLE IF NOT EXISTS PriceListItem (
-      id CHAR(36) NOT NULL PRIMARY KEY,
-      priceListId CHAR(36) NOT NULL,
-      materialId CHAR(36) NOT NULL,
-      price DECIMAL(10,2) NOT NULL,
-      createdAt DATETIME NOT NULL,
-      deleted BOOLEAN NOT NULL DEFAULT 0,
-      deletedAt DATETIME,
-      deletedBy CHAR(36),
-      createdBy CHAR(36) NOT NULL,
-      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-      FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
-      FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
-      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-      UNIQUE (priceListId, materialId)
-) ENGINE = InnoDB;
+CREATE TABLE 
+      IF NOT EXISTS PriceListItem (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            priceListId CHAR(36) NOT NULL,
+            price DECIMAL(10,2) NOT NULL,
+            hourTypeId CHAR(36) NULL,
+            materialId CHAR(36) NULL,
+            trainingStandardId CHAR(36) NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            createdBy CHAR(36) NOT NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
+            FOREIGN KEY (hourTypeId) REFERENCES HourType (id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
+            FOREIGN KEY (trainingStandardId) REFERENCES TrainingStandard (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
 
 -- 43a. InvoiceOut: add priceListId column
 ALTER TABLE InvoiceOut ADD COLUMN IF NOT EXISTS `priceListId` CHAR(36) NULL;
@@ -565,20 +569,26 @@ ALTER TABLE InvoiceOut ADD CONSTRAINT fk_invoiceout_pricelist
     FOREIGN KEY (`priceListId`) REFERENCES PriceList (`id`) ON DELETE RESTRICT;
 
 -- 44. Create InvoiceOutItem table
-CREATE TABLE IF NOT EXISTS InvoiceOutItem (
-      id CHAR(36) NOT NULL PRIMARY KEY,
-      invoiceOutId CHAR(36) NOT NULL,
-      materialId CHAR(36) NOT NULL,
-      quantity DECIMAL(10,2) NOT NULL,
-      price DECIMAL(10,2) NOT NULL,
-      total DECIMAL(10,2) NOT NULL,
-      createdAt DATETIME NOT NULL,
-      deleted BOOLEAN NOT NULL DEFAULT 0,
-      deletedAt DATETIME,
-      deletedBy CHAR(36),
-      createdBy CHAR(36) NOT NULL,
-      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-      FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE CASCADE,
-      FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
-      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-) ENGINE = InnoDB;
+CREATE TABLE 
+      IF NOT EXISTS InvoiceOutItem (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            invoiceOutId CHAR(36) NOT NULL,
+            timeRegistryId CHAR(36) NULL,
+            workOrderStructureId CHAR(36) NULL,
+            trainingContactId CHAR(36) NULL,
+            description VARCHAR(255) NOT NULL,
+            quantity DECIMAL(10,2) NOT NULL,
+            unitPrice DECIMAL(10,2) NOT NULL,
+            total DECIMAL(10,2) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            createdBy CHAR(36) NOT NULL,
+            FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE CASCADE,
+            FOREIGN KEY (timeRegistryId) REFERENCES TimeRegistry (id) ON DELETE RESTRICT,
+            FOREIGN KEY (workOrderStructureId) REFERENCES WorkOrderStructure (id) ON DELETE RESTRICT,
+            FOREIGN KEY (trainingContactId) REFERENCES TrainingContact (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;

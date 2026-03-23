@@ -62,6 +62,7 @@ interface InvoiceOutDetailProps {
 }
 
 type EditForm = {
+  invoiceNumber: string
   poNumber: string
   humanId: string
   invoiceDate: string
@@ -92,12 +93,16 @@ export function InvoiceOutDetail({
   departmentId,
 }: InvoiceOutDetailProps) {
   const router = useRouter()
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canEdit = currentUserLevel >= 40
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
+  const canDelete = currentUserLevel >= 80
+  // Invoice number is editable only for level >= 80, matching company number behaviour
+  const canEditNumber = currentUserLevel >= 80
 
   const isDraft = invoice.invoiceStatusName === 'Draft'
 
   const buildForm = (): EditForm => ({
+    invoiceNumber: invoice.invoiceNumber,
     poNumber: invoice.poNumber ?? '',
     humanId: invoice.humanId ?? '',
     invoiceDate: toDateInput(invoice.invoiceDate),
@@ -115,7 +120,12 @@ export function InvoiceOutDetail({
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState<EditForm>(buildForm)
-  const s = <K extends keyof EditForm>(key: K, v: EditForm[K]) => setForm(f => ({...f, [key]: v}))
+  const [numberError, setNumberError] = useState<string | null>(null)
+
+  const s = <K extends keyof EditForm>(key: K, v: EditForm[K]) => {
+    setForm(f => ({...f, [key]: v}))
+    if (key === 'invoiceNumber') setNumberError(null)
+  }
 
   // Contact management
   const [addingContact, setAddingContact] = useState(false)
@@ -131,8 +141,6 @@ export function InvoiceOutDetail({
   const [savingWorkOrders, setSavingWorkOrders] = useState(false)
 
   const linkedWorkOrderIds = new Set(invoice.workOrders.map(wo => wo.id))
-
-  // Derive unique project IDs from linked work orders
   const linkedProjectIds = [...new Set(invoice.workOrders.map(wo => wo.projectId))]
 
   useEffect(() => {
@@ -141,7 +149,6 @@ export function InvoiceOutDetail({
     Promise.all(linkedProjectIds.map(pid => getActiveWorkOrdersForProjectAction(pid)))
       .then(results => {
         const all = results.flat()
-        // Filter out already-linked work orders
         setAvailableWorkOrders(all.filter(wo => !linkedWorkOrderIds.has(wo.id)))
       })
       .finally(() => setLoadingWorkOrders(false))
@@ -151,7 +158,6 @@ export function InvoiceOutDetail({
     setSelectedNewWorkOrderIds(prev => (prev.includes(id) ? prev.filter(w => w !== id) : [...prev, id]))
   }
 
-  // Unique projects from work orders
   const projectsOnInvoice = Array.from(
     new Map(
       invoice.workOrders.map(wo => [
@@ -168,11 +174,15 @@ export function InvoiceOutDetail({
   )
 
   async function handleSave() {
+    if (!form.invoiceNumber.trim()) {
+      setNumberError('Invoice number is required.')
+      return
+    }
     setSaving(true)
     try {
       await updateInvoiceOutAction({
         id: invoice.id,
-        invoiceNumber: invoice.invoiceNumber,
+        invoiceNumber: form.invoiceNumber.trim(),
         poNumber: form.poNumber || null,
         humanId: form.humanId || null,
         invoiceDate: new Date(form.invoiceDate),
@@ -195,6 +205,7 @@ export function InvoiceOutDetail({
 
   function handleCancel() {
     setForm(buildForm())
+    setNumberError(null)
     setEditing(false)
   }
 
@@ -215,7 +226,6 @@ export function InvoiceOutDetail({
     if (selectedNewWorkOrderIds.length === 0) return
     setSavingWorkOrders(true)
     try {
-      // Add WorkOrderInvoice rows and close hours/materials
       await addWorkOrdersToInvoiceAction(invoice.id, selectedNewWorkOrderIds)
       setSelectedNewWorkOrderIds([])
       setAddingWorkOrders(false)
@@ -274,9 +284,30 @@ export function InvoiceOutDetail({
       {/* Info card */}
       <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Invoice Number */}
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs text-muted-foreground">Invoice Number</Label>
-            <p className="text-sm text-muted-foreground">{invoice.invoiceNumber}</p>
+            <Label className="text-xs text-muted-foreground">
+              Invoice Number
+              {editing && !canEditNumber && <span className="ml-1.5 text-muted-foreground/60">(locked)</span>}
+            </Label>
+            {editing ? (
+              canEditNumber ? (
+                <div className="flex flex-col gap-1">
+                  <Input
+                    value={form.invoiceNumber}
+                    onChange={e => s('invoiceNumber', e.target.value)}
+                    className={`bg-secondary border-border ${numberError ? 'border-destructive' : ''}`}
+                  />
+                  {numberError && <p className="text-xs text-destructive">{numberError}</p>}
+                </div>
+              ) : (
+                <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                  {form.invoiceNumber}
+                </div>
+              )
+            ) : (
+              <p className="text-sm text-muted-foreground">{invoice.invoiceNumber}</p>
+            )}
           </div>
 
           <div className="flex flex-col gap-1.5">
@@ -506,7 +537,6 @@ export function InvoiceOutDetail({
           )}
         </div>
 
-        {/* Add work orders panel */}
         {addingWorkOrders && isDraft && (
           <div className="mb-4 p-3 rounded-lg border border-border bg-secondary/30 flex flex-col gap-3">
             <p className="text-xs font-medium text-foreground">Select additional work orders from linked projects</p>
@@ -558,7 +588,6 @@ export function InvoiceOutDetail({
           </div>
         )}
 
-        {/* Project summary cards */}
         {projectsOnInvoice.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-4">
             {projectsOnInvoice.map(p => (

@@ -23,12 +23,40 @@ export async function getActiveWorkOrdersForProjectAction(projectId: string) {
   })
 }
 
+// ─── Next number previews (called client-side from form dialogs) ───────────────
+// These replicate the same sequence logic used in create, without writing anything.
+// The returned value is pre-filled in the form. If the user edits it, their value
+// is used instead. If a collision occurs on save, the server retries as normal.
+
+export async function getNextInvoiceOutNumberAction(): Promise<string> {
+  const year = new Date().getFullYear()
+  const last = await prismaClient.invoiceOut.findFirst({
+    where: {invoiceNumber: {startsWith: String(year)}},
+    orderBy: {invoiceNumber: 'desc'},
+    select: {invoiceNumber: true},
+  })
+  const lastSeq = last ? parseInt(last.invoiceNumber.slice(4)) - 100 : 0
+  return generateInvoiceOutNumber(year, lastSeq + 1)
+}
+
+export async function getNextInvoiceInNumberAction(): Promise<string> {
+  const year = new Date().getFullYear()
+  const last = await prismaClient.invoiceIn.findFirst({
+    where: {invoiceNumber: {startsWith: String(year)}},
+    orderBy: {invoiceNumber: 'desc'},
+    select: {invoiceNumber: true},
+  })
+  const lastSeq = last ? parseInt(last.invoiceNumber.slice(4)) : 0
+  return generateInvoiceInNumber(year, lastSeq + 1)
+}
+
+// ─── InvoiceOut ────────────────────────────────────────────────────────────────
 export const createInvoiceOutAction = protectedServerFunction({
   schema: createInvoiceOutSchema.extend({
     workOrderIds: z.array(z.string()).default([]),
   }),
   functionName: 'Create invoice out action',
-  serverFn: async ({data: {workOrderIds, ...data}, logger, profile}) => {
+  serverFn: async ({data: {workOrderIds, invoiceNumber: suppliedNumber, ...data}, logger, profile}) => {
     logger.info(`Creating invoice out, createdBy: ${profile.id}`)
 
     const target = await createTargetForType('InvoiceOut', profile.id)
@@ -39,18 +67,29 @@ export const createInvoiceOutAction = protectedServerFunction({
     let attempts = 0
     let invoiceNumber = ''
 
+    // If the user supplied a number (pre-filled or manually edited), try it first.
+    // On a P2002 collision we fall through to auto-generation for subsequent attempts.
+    const numbersToTry: Array<() => Promise<string>> = []
+
+    if (suppliedNumber) {
+      numbersToTry.push(async () => suppliedNumber)
+    }
+
+    // Auto-generation fallback: always appended so we have candidates after the supplied one
+    numbersToTry.push(async () => {
+      const last = await prismaClient.invoiceOut.findFirst({
+        where: {invoiceNumber: {startsWith: String(year)}},
+        orderBy: {invoiceNumber: 'desc'},
+        select: {invoiceNumber: true},
+      })
+      const lastSeq = last ? parseInt(last.invoiceNumber.slice(4)) - 100 : 0
+      return generateInvoiceOutNumber(year, lastSeq + 1)
+    })
+
     while (attempts < 5) {
       try {
-        // 🔥 recompute sequence every attempt
-        const last = await prismaClient.invoiceOut.findFirst({
-          where: {invoiceNumber: {startsWith: String(year)}},
-          orderBy: {invoiceNumber: 'desc'},
-          select: {invoiceNumber: true},
-        })
-
-        const lastSeq = last ? parseInt(last.invoiceNumber.slice(4)) - 100 : 0
-
-        invoiceNumber = generateInvoiceOutNumber(year, lastSeq + 1)
+        const candidateFn = numbersToTry[Math.min(attempts, numbersToTry.length - 1)]
+        invoiceNumber = await candidateFn()
 
         await prismaClient.invoiceOut.create({
           data: {
@@ -69,12 +108,10 @@ export const createInvoiceOutAction = protectedServerFunction({
         break
       } catch (err: unknown) {
         const prismaErr = err as {code?: string}
-
         if (prismaErr.code === 'P2002') {
           attempts++
           continue
         }
-
         throw err
       }
     }
@@ -186,11 +223,11 @@ export async function removeInvoiceOutContactDirectAction(invoiceOutContactId: s
   revalidatePath('/invoicesOut')
 }
 
-// ─── InvoiceIn ─────────────────────────────────────────────────────────────────
+// ─── InvoiceIn ────────────────────────────────────────────────────────────────
 export const createInvoiceInAction = protectedServerFunction({
   schema: createInvoiceInSchema,
   functionName: 'Create invoice in action',
-  serverFn: async ({data, logger, profile}) => {
+  serverFn: async ({data: {invoiceNumber: suppliedNumber, ...data}, logger, profile}) => {
     logger.info(`Creating invoice in, createdBy: ${profile.id}`)
 
     const target = await createTargetForType('InvoiceIn', profile.id)
@@ -201,18 +238,29 @@ export const createInvoiceInAction = protectedServerFunction({
     let attempts = 0
     let invoiceNumber = ''
 
+    // If the user supplied a number (pre-filled or manually edited), try it first.
+    // On a P2002 collision we fall through to auto-generation for subsequent attempts.
+    const numbersToTry: Array<() => Promise<string>> = []
+
+    if (suppliedNumber) {
+      numbersToTry.push(async () => suppliedNumber)
+    }
+
+    // Auto-generation fallback: always appended so we have candidates after the supplied one
+    numbersToTry.push(async () => {
+      const last = await prismaClient.invoiceIn.findFirst({
+        where: {invoiceNumber: {startsWith: String(year)}},
+        orderBy: {invoiceNumber: 'desc'},
+        select: {invoiceNumber: true},
+      })
+      const lastSeq = last ? parseInt(last.invoiceNumber.slice(4)) : 0
+      return generateInvoiceInNumber(year, lastSeq + 1)
+    })
+
     while (attempts < 5) {
       try {
-        // 🔥 recompute sequence every attempt
-        const last = await prismaClient.invoiceIn.findFirst({
-          where: {invoiceNumber: {startsWith: String(year)}},
-          orderBy: {invoiceNumber: 'desc'},
-          select: {invoiceNumber: true},
-        })
-
-        const lastSeq = last ? parseInt(last.invoiceNumber.slice(4)) : 0
-
-        invoiceNumber = generateInvoiceInNumber(year, lastSeq + 1)
+        const candidateFn = numbersToTry[Math.min(attempts, numbersToTry.length - 1)]
+        invoiceNumber = await candidateFn()
 
         await prismaClient.invoiceIn.create({
           data: {
@@ -230,12 +278,10 @@ export const createInvoiceInAction = protectedServerFunction({
         break
       } catch (err: unknown) {
         const prismaErr = err as {code?: string}
-
         if (prismaErr.code === 'P2002') {
           attempts++
           continue
         }
-
         throw err
       }
     }

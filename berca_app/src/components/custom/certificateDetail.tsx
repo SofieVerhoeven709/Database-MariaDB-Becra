@@ -50,6 +50,8 @@ export function CertificateDetail({
 }: CertificateDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canEdit = currentUserLevel >= 40
+  const canManageVisibility = currentUserLevel >= 80
 
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -130,10 +132,12 @@ export function CertificateDetail({
               </Button>
             </>
           ) : (
-            <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-              <Pencil className="h-4 w-4" />
-              Edit
-            </Button>
+            canEdit && (
+              <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
+                <Pencil className="h-4 w-4" />
+                Edit
+              </Button>
+            )
           )}
         </div>
       </div>
@@ -206,7 +210,7 @@ export function CertificateDetail({
               {certificate.trainingStandards.length}
             </Badge>
           </TabsTrigger>
-          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="standards" className="mt-3">
@@ -279,7 +283,7 @@ export function CertificateDetail({
           </div>
         </TabsContent>
 
-        {isAdmin && (
+        {canManageVisibility && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab

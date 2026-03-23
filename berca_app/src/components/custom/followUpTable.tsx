@@ -135,8 +135,10 @@ export function FollowUpTable({
 }: FollowUpTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
-  const canEdit = currentUserLevel >= 20
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [search, setSearch] = useState('')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
@@ -316,7 +318,7 @@ export function FollowUpTable({
             </SelectContent>
           </Select>
         </div>
-        {canEdit && (
+        {canCreate && (
           <Button
             onClick={() => {
               setEditingFollowUp(null)
@@ -563,6 +565,7 @@ export function FollowUpTable({
         followUpTypeOptions={followUpTypeOptions}
         employeeOptions={employeeOptions}
         targetOptions={targetOptions}
+        canManageVisibility={canManageVisibility}
       />
     </div>
   )

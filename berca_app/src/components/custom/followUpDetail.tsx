@@ -85,7 +85,10 @@ export function FollowUpDetail({
 }: FollowUpDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canEdit = currentUserLevel >= 20
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -421,14 +424,14 @@ export function FollowUpDetail({
               {activeStructures.length}
             </Badge>
           </TabsTrigger>
-          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
         {/* ── Structures tab ───────────────────────────────────────────────── */}
         <TabsContent value="structures" className="mt-3">
           <div className="flex items-center justify-between mb-3">
             <p className="text-xs text-muted-foreground">Follow-up log entries linked to this follow-up.</p>
-            {canEdit && (
+            {canCreate && (
               <Button
                 size="sm"
                 variant="outline"
@@ -474,6 +477,7 @@ export function FollowUpDetail({
                       st={st}
                       department={departmentId}
                       canEdit={canEdit}
+                      canDelete={canDelete}
                       isAdmin={isAdmin}
                       onEdit={() => {
                         // Build a minimal MappedFollowUpStructure for the dialog
@@ -537,6 +541,7 @@ export function FollowUpDetail({
                     st={st}
                     department={departmentId}
                     canEdit={canEdit}
+                    canDelete={canDelete}
                     isAdmin={isAdmin}
                     onEdit={() => {}}
                     onSoftDelete={async () => {}}
@@ -556,7 +561,7 @@ export function FollowUpDetail({
         </TabsContent>
 
         {/* ── Visibility tab ───────────────────────────────────────────────── */}
-        {isAdmin && (
+        {canManageVisibility && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab
@@ -605,6 +610,7 @@ export function FollowUpDetail({
         urgencyTypeOptions={urgencyTypeOptions}
         employeeOptions={employeeOptions}
         contactOptions={contactOptions}
+        canManageVisibility={canManageVisibility}
       />
     </div>
   )
@@ -616,6 +622,7 @@ function StructureRow({
   st,
   department,
   canEdit,
+  canDelete,
   isAdmin,
   onEdit,
   onSoftDelete,
@@ -625,6 +632,7 @@ function StructureRow({
   st: MappedFollowUpStructureSummary
   department: string
   canEdit: boolean
+  canDelete: boolean
   isAdmin: boolean
   onEdit: () => void
   onSoftDelete: () => Promise<void>
@@ -671,7 +679,7 @@ function StructureRow({
               <Pencil className="h-3.5 w-3.5" />
             </Button>
           )}
-          {!st.deleted && canEdit && (
+          {!st.deleted && canDelete && (
             <Button
               variant="ghost"
               size="icon"
@@ -680,7 +688,7 @@ function StructureRow({
               <Trash2 className="h-3.5 w-3.5" />
             </Button>
           )}
-          {st.deleted && canEdit && (
+          {st.deleted && canDelete && (
             <Button
               variant="ghost"
               size="sm"

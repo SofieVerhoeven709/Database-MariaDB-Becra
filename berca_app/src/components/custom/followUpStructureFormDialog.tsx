@@ -33,7 +33,8 @@ interface FollowUpStructureFormDialogProps {
   urgencyTypeOptions: SelectOption[]
   employeeOptions: SelectOption[]
   contactOptions: SelectOption[]
-  followUpOptions?: SelectOption[] // optional — not needed when fixedFollowUpId is set
+  followUpOptions?: SelectOption[]
+  canManageVisibility: boolean
 }
 
 const emptyStructure = (fixedFollowUpId?: string): MappedFollowUpStructure => ({
@@ -87,6 +88,7 @@ export function FollowUpStructureFormDialog({
   employeeOptions,
   contactOptions,
   followUpOptions,
+  canManageVisibility,
 }: FollowUpStructureFormDialogProps) {
   const [form, setForm] = useState<MappedFollowUpStructure>(emptyStructure(fixedFollowUpId))
   const [saving, setSaving] = useState(false)
@@ -234,7 +236,7 @@ export function FollowUpStructureFormDialog({
             <TabsTrigger value="task">Task</TabsTrigger>
             <TabsTrigger value="assignment">Assignment</TabsTrigger>
             <TabsTrigger value="flags">Flags</TabsTrigger>
-            {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+            {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
           </TabsList>
 
           {/* ── Details ──────────────────────────────────────────────────── */}
@@ -291,7 +293,7 @@ export function FollowUpStructureFormDialog({
           </TabsContent>
 
           {/* ── Visibility ───────────────────────────────────────────────── */}
-          {isAdmin && (
+          {canManageVisibility && (
             <TabsContent value="visibility">
               <div className="py-3">
                 <VisibilityForRoleTab

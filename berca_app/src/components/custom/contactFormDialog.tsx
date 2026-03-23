@@ -228,6 +228,7 @@ export function ContactFormDialog({
   async function handleSaveCompany(c: MappedCompany, visRows: VisibilityRow[]) {
     const created = await createCompanyAndReturnIdAction({
       name: c.name,
+      officialName: c.officialName,
       number: c.number,
       idOld: c.idOld,
       mail: c.mail,

@@ -304,9 +304,10 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS Company (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            name VARCHAR(100) NOT NULL,
-            number VARCHAR(100) NOT NULL,
-            idOld VARCHAR(100),
+            name VARCHAR(255) NOT NULL,
+            officialName VARCHAR(255) NOT NULL,
+            number VARCHAR(255) NOT NULL,
+            idOld VARCHAR(255),
             mail VARCHAR(100),
             businessPhone VARCHAR(100),
             website VARCHAR(100),

@@ -21,6 +21,7 @@ export interface MappedCompanyAddress {
 export interface MappedCompany {
   id: string
   name: string
+  officialName: string
   number: string
   idOld: string | null
   mail: string | null
@@ -96,6 +97,7 @@ export interface MappedCompanyProject {
 export interface CompanyDetailData {
   id: string
   name: string
+  officialName: string
   number: string
   idOld: string | null
   mail: string | null

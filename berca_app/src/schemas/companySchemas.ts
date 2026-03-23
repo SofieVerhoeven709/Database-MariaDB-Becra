@@ -5,6 +5,7 @@ import {visibilityInputSchema} from '@/schemas/visibilityForRoleSchemas'
 export const companySchema = z.object({
   id: z.string(),
   name: z.string().min(1).max(100),
+  officialName: z.string().min(1).max(100),
   number: z.string().min(1).max(100),
   idOld: z.string().max(100).nullable().optional(),
   mail: z.string().max(100).nullable().optional(),

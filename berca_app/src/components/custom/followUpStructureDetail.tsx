@@ -70,7 +70,10 @@ export function FollowUpStructureDetail({
 }: FollowUpStructureDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canEdit = currentUserLevel >= 20
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -400,7 +403,7 @@ export function FollowUpStructureDetail({
       </div>
 
       {/* ── Visibility tab ──────────────────────────────────────────────────── */}
-      {isAdmin && (
+      {canManageVisibility && (
         <Tabs defaultValue="visibility">
           <TabsList className="bg-secondary border border-border/60">
             <TabsTrigger value="visibility">Visibility</TabsTrigger>

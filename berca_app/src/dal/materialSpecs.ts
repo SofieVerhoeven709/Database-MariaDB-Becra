@@ -12,13 +12,14 @@ export type MaterialGroupOption = {
   groupB: string | null
   groupC: string | null
   groupD: string | null
+  deleted: boolean
 }
 
-export function getMaterialGroups(): Promise<MaterialGroupOption[]> {
+export function getMaterialGroups(includeDeleted = false): Promise<MaterialGroupOption[]> {
   return prismaClient.$queryRaw<MaterialGroupOption[]>(PrismaClientLib.sql`
-    SELECT id, groupA, groupB, groupC, groupD
+    SELECT id, groupA, groupB, groupC, groupD, deleted
     FROM MaterialGroup
-    WHERE deleted = 0
+    ${includeDeleted ? PrismaClientLib.sql`` : PrismaClientLib.sql`WHERE deleted = 0`}
     ORDER BY groupA ASC, groupB ASC, groupC ASC, groupD ASC
   `)
 }
@@ -81,9 +82,9 @@ export function softDeleteMaterialGroup(id: string, deletedBy: string) {
 
 // ─── Unit ────────────────────────────────────────────────────────────────────
 
-export async function getUnits(): Promise<Unit[]> {
+export async function getUnits(includeDeleted = false): Promise<Unit[]> {
   return prismaClient.unit.findMany({
-    where: {deleted: false},
+    where: includeDeleted ? undefined : {deleted: false},
     orderBy: {unitName: 'asc'},
   })
 }
@@ -123,9 +124,9 @@ export async function getMaterialFamilies(): Promise<MaterialFamily[]> {
 
 // ─── MaterialPerformance ──────────────────────────────────────────────────────
 
-export async function getMaterialPerformances(): Promise<MaterialPerformance[]> {
+export async function getMaterialPerformances(includeDeleted = false): Promise<MaterialPerformance[]> {
   return prismaClient.materialPerformance.findMany({
-    where: {deleted: false},
+    where: includeDeleted ? undefined : {deleted: false},
     orderBy: {name: 'asc'},
   })
 }

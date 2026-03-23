@@ -383,7 +383,6 @@ DROP TABLE IF EXISTS InvoiceOut;
 DROP TABLE IF EXISTS InvoiceIn;
 
 SET FOREIGN_KEY_CHECKS = 1;
-
 -- 39b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
 CREATE TABLE IF NOT EXISTS VatMargin (
       id CHAR(36) NOT NULL PRIMARY KEY,

@@ -373,7 +373,7 @@ ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierOrderId`;
 ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
 
 -- 38. Company: add idOld column
-ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;officialName VARCHAR(100) NOT NULL,
+ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
 
 -- 39a. Drop old tables (disable FK checks to avoid constraint errors)
 SET FOREIGN_KEY_CHECKS = 0;

@@ -524,3 +524,61 @@ UPDATE Company SET officialName = name WHERE officialName IS NULL;
 
 -- Step 3: Now enforce NOT NULL since all rows are filled
 ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
+
+-- 41. Create PriceList table
+CREATE TABLE IF NOT EXISTS PriceList (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      createdAt DATETIME NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      deleted BOOLEAN NOT NULL DEFAULT 0,
+      deletedAt DATETIME,
+      deletedBy CHAR(36),
+      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+) ENGINE = InnoDB;
+
+-- 42. Create PriceListItem table
+CREATE TABLE IF NOT EXISTS PriceListItem (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      priceListId CHAR(36) NOT NULL,
+      materialId CHAR(36) NOT NULL,
+      price DECIMAL(10,2) NOT NULL,
+      createdAt DATETIME NOT NULL,
+      deleted BOOLEAN NOT NULL DEFAULT 0,
+      deletedAt DATETIME,
+      deletedBy CHAR(36),
+      createdBy CHAR(36) NOT NULL,
+      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+      FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
+      FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
+      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+      UNIQUE (priceListId, materialId)
+) ENGINE = InnoDB;
+
+-- 43a. InvoiceOut: add priceListId column
+ALTER TABLE InvoiceOut ADD COLUMN IF NOT EXISTS `priceListId` CHAR(36) NULL;
+
+-- 43b. InvoiceOut: add FK fk_invoiceout_pricelist (skip if already exists)
+ALTER TABLE InvoiceOut DROP FOREIGN KEY IF EXISTS fk_invoiceout_pricelist;
+ALTER TABLE InvoiceOut ADD CONSTRAINT fk_invoiceout_pricelist
+    FOREIGN KEY (`priceListId`) REFERENCES PriceList (`id`) ON DELETE RESTRICT;
+
+-- 44. Create InvoiceOutItem table
+CREATE TABLE IF NOT EXISTS InvoiceOutItem (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      invoiceOutId CHAR(36) NOT NULL,
+      materialId CHAR(36) NOT NULL,
+      quantity DECIMAL(10,2) NOT NULL,
+      price DECIMAL(10,2) NOT NULL,
+      total DECIMAL(10,2) NOT NULL,
+      createdAt DATETIME NOT NULL,
+      deleted BOOLEAN NOT NULL DEFAULT 0,
+      deletedAt DATETIME,
+      deletedBy CHAR(36),
+      createdBy CHAR(36) NOT NULL,
+      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+      FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE CASCADE,
+      FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
+      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+) ENGINE = InnoDB;

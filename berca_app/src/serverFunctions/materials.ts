@@ -2,7 +2,7 @@
 
 import {revalidatePath} from 'next/cache'
 import {randomUUID} from 'crypto'
-import {createMaterial, updateMaterial, softDeleteMaterial} from '@/dal/materials'
+import {createMaterial, updateMaterial, softDeleteMaterial, restoreMaterial} from '@/dal/materials'
 import {prismaClient} from '@/dal/prismaClient'
 import {protectedFormAction} from '@/lib/serverFunctions'
 import {createMaterialSchema, updateMaterialSchema, deleteMaterialSchema} from '@/schemas/materialSchemas'
@@ -160,3 +160,17 @@ export const deleteMaterialAction = protectedFormAction({
     revalidatePath(`${REVALIDATE_MATERIAL}/${data.id}`)
   },
 })
+
+export const restoreMaterialAction = protectedFormAction({
+  schema: deleteMaterialSchema,
+  functionName: 'Restore material',
+  globalErrorMessage: 'Could not restore the material, please try again.',
+  serverFn: async ({data, logger}) => {
+    await restoreMaterial(data.id)
+    logger.info(`Material restored: ${data.id}`)
+    revalidatePath(REVALIDATE_MATERIAL)
+    revalidatePath(REVALIDATE_INVENTORY)
+    revalidatePath(`${REVALIDATE_MATERIAL}/${data.id}`)
+  },
+})
+

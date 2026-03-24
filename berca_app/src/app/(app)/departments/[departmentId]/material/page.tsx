@@ -37,7 +37,7 @@ export default async function MaterialPage({params}: PageProps) {
 
   const [department, materials, groups, units, supplierCompanies, warehousePlaces] = await Promise.all([
     getDepartmentById(departmentId),
-    getMaterials(),
+    getMaterials({includeDeleted: true}),
     getMaterialGroups(),
     getUnits(),
     getSupplierCompanies(),
@@ -135,6 +135,7 @@ export default async function MaterialPage({params}: PageProps) {
   }))
 
   const mappedParentPartOptions = materials
+    .filter(m => !m.deleted)
     .filter(m => typeof m.beNumber === 'string' && m.beNumber.length > 0)
     .map(m => ({
       beNumber: m.beNumber,

@@ -61,6 +61,7 @@ type SortField =
 type SortDir = 'asc' | 'desc'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterPlace = 'all' | 'withPlace' | 'withoutPlace'
+type FilterDeleted = 'all' | 'notDeleted' | 'deleted'
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
@@ -110,15 +111,13 @@ export function MaterialTable({
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [filterRejected, setFilterRejected] = useState<FilterRejected>('all')
   const [filterPlace, setFilterPlace] = useState<FilterPlace>('all')
+  const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('notDeleted')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
 
-  const parentPartBeNumbersInUse = useMemo(
-    () => [...new Set(materials.flatMap(m => m.parentBeNumbers))],
-    [materials],
-  )
+  const parentPartBeNumbersInUse = useMemo(() => [...new Set(materials.flatMap(m => m.parentBeNumbers))], [materials])
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -138,6 +137,11 @@ export function MaterialTable({
     .filter(m => {
       if (filterPlace === 'withPlace') return Boolean(m.warehousePlaceLabel)
       if (filterPlace === 'withoutPlace') return !m.warehousePlaceLabel
+      return true
+    })
+    .filter(m => {
+      if (filterDeleted === 'notDeleted') return !m.deleted
+      if (filterDeleted === 'deleted') return m.deleted
       return true
     })
     .filter(m => {
@@ -308,6 +312,17 @@ export function MaterialTable({
             <SelectItem value="all">All places</SelectItem>
             <SelectItem value="withPlace">With place</SelectItem>
             <SelectItem value="withoutPlace">Without place</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
+          <SelectTrigger className="w-44 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All items</SelectItem>
+            <SelectItem value="notDeleted">Not deleted</SelectItem>
+            <SelectItem value="deleted">Deleted</SelectItem>
           </SelectContent>
         </Select>
 

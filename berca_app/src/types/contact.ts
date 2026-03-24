@@ -54,6 +54,17 @@ export interface MappedContactCompany {
   startedDate: string
   endDate: string | null
   roleWithCompany: string | null
+  companyAddressId: string | null
+  companyAddress: {
+    id: string
+    typeAddress: string | null
+    street: string | null
+    houseNumber: string | null
+    busNumber: string | null
+    zipCode: string | null
+    place: string | null
+    countryName: string | null
+  } | null
   createdAt: string
   createdByName: string
   deleted: boolean

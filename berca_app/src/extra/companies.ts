@@ -96,6 +96,12 @@ type CompanyDetailPayload = Prisma.CompanyGetPayload<{
     CompanyAddress: {include: {Country: {select: {id: true; name: true}}}}
     CompanyContact: {
       include: {
+        CompanyAddress: {
+          // add this
+          include: {
+            Country: {select: {name: true}}
+          }
+        }
         Contact: {
           select: {
             id: true
@@ -170,6 +176,19 @@ function mapContact(cc: CompanyDetailPayload['CompanyContact'][number]): MappedC
       homePhone: cc.Contact.homePhone,
       active: cc.Contact.active,
     },
+    companyAddressId: cc.companyAddressId,
+    companyAddress: cc.CompanyAddress
+      ? {
+          id: cc.CompanyAddress.id,
+          typeAddress: cc.CompanyAddress.typeAddress,
+          street: cc.CompanyAddress.street,
+          houseNumber: cc.CompanyAddress.houseNumber,
+          busNumber: cc.CompanyAddress.busNumber,
+          zipCode: cc.CompanyAddress.zipCode,
+          place: cc.CompanyAddress.place,
+          countryName: cc.CompanyAddress.Country?.name ?? null,
+        }
+      : null,
   }
 }
 

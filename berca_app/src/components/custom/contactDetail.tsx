@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {useRouter} from 'next/navigation'
 import {ArrowLeft, Pencil, X, Save, ExternalLink, Plus, Check, CalendarOff, Trash2} from 'lucide-react'
 import Link from 'next/link'
@@ -22,7 +22,11 @@ import {
   undeleteCompanyContactAction,
   hardDeleteCompanyContactAction,
 } from '@/serverFunctions/companyContact'
-import {createCompanyAndReturnIdAction} from '@/serverFunctions/companies'
+import {
+  CompanyAddressOption,
+  createCompanyAndReturnIdAction,
+  getCompanyAddressesAction,
+} from '@/serverFunctions/companies'
 import {CompanyFormDialog} from '@/components/custom/companyFormDialog'
 import type {MappedCompany} from '@/types/company'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
@@ -98,21 +102,61 @@ export function ContactDetail({
   const [showAllCompanies, setShowAllCompanies] = useState(false)
   const [showDeletedCompanies, setShowDeletedCompanies] = useState(false)
 
-  type CompanyForm = {companyId: string; roleWithCompany: string; startedDate: string; endDate: string}
+  type CompanyForm = {
+    companyId: string
+    roleWithCompany: string
+    startedDate: string
+    endDate: string
+    companyAddressId: string
+  }
   const emptyCompanyForm = (): CompanyForm => ({
     companyId: 'none',
     roleWithCompany: '',
     startedDate: new Date().toISOString().slice(0, 10),
     endDate: '',
+    companyAddressId: 'none',
   })
+
   const [addingCompany, setAddingCompany] = useState(false)
   const [companyForm, setCompanyForm] = useState<CompanyForm>(emptyCompanyForm)
   const [endPreviousActive, setEndPreviousActive] = useState(true)
+
+  // Addresses for the "add" row
+  const [addAddresses, setAddAddresses] = useState<CompanyAddressOption[]>([])
+
   const [editingCompanyId, setEditingCompanyId] = useState<string | null>(null)
   const [editCompanyForm, setEditCompanyForm] = useState<CompanyForm>(emptyCompanyForm)
 
+  // Addresses for the "edit" row
+  const [editAddresses, setEditAddresses] = useState<CompanyAddressOption[]>([])
+
   const [companies, setCompanies] = useState(companyOptions)
   const [companyDialogOpen, setCompanyDialogOpen] = useState(false)
+
+  // Fetch addresses when add-row company changes
+  useEffect(() => {
+    if (companyForm.companyId === 'none') {
+      setAddAddresses([])
+      setCompanyForm(f => ({...f, companyAddressId: 'none'}))
+      return
+    }
+    getCompanyAddressesAction(companyForm.companyId).then(addrs => {
+      setAddAddresses(addrs)
+      setCompanyForm(f => ({...f, companyAddressId: addrs.length === 1 ? addrs[0].id : 'none'}))
+    })
+  }, [companyForm.companyId])
+
+  // Fetch addresses when edit-row company changes
+  useEffect(() => {
+    if (!editingCompanyId) {
+      setEditAddresses([])
+      return
+    }
+    getCompanyAddressesAction(editCompanyForm.companyId).then(addrs => {
+      setEditAddresses(addrs)
+      // Don't override the existing address selection when opening edit
+    })
+  }, [editCompanyForm.companyId])
 
   async function handleSaveCompany(c: MappedCompany, visRows: VisibilityRow[]) {
     const created = await createCompanyAndReturnIdAction({
@@ -309,6 +353,30 @@ export function ContactDetail({
       )}
     </div>
   )
+
+  // Inline address select for table rows
+  const inlineAddressSelect = (addresses: CompanyAddressOption[], value: string, onChange: (v: string) => void) => {
+    if (addresses.length === 0) return <TableCell />
+    return (
+      <TableCell>
+        <Select value={value} onValueChange={onChange}>
+          <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+            <SelectValue placeholder="Location…" />
+          </SelectTrigger>
+          <SelectContent className="bg-card border-border">
+            <SelectItem value="none" className="text-xs">
+              No specific location
+            </SelectItem>
+            {addresses.map(a => (
+              <SelectItem key={a.id} value={a.id} className="text-xs">
+                {a.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </TableCell>
+    )
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -524,6 +592,7 @@ export function ContactDetail({
                 onClick={() => {
                   setAddingCompany(true)
                   setCompanyForm(emptyCompanyForm())
+                  setAddAddresses([])
                 }}>
                 <Plus className="h-3.5 w-3.5" /> Add Company
               </Button>
@@ -536,6 +605,7 @@ export function ContactDetail({
                   <TableHead className={thClass}>Company</TableHead>
                   <TableHead className={thClass}>Number</TableHead>
                   <TableHead className={thClass}>Role at Company</TableHead>
+                  <TableHead className={thClass}>Location</TableHead>
                   <TableHead className={thClass}>Started</TableHead>
                   <TableHead className={thClass}>End Date</TableHead>
                   <TableHead className={thClass}>End Active</TableHead>
@@ -591,6 +661,30 @@ export function ContactDetail({
                         className="h-7 text-xs bg-background border-border"
                       />
                     </TableCell>
+                    {/* Location cell — only rendered when there are addresses */}
+                    {addAddresses.length > 0 ? (
+                      <TableCell>
+                        <Select
+                          value={companyForm.companyAddressId}
+                          onValueChange={v => setCompanyForm(f => ({...f, companyAddressId: v}))}>
+                          <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+                            <SelectValue placeholder="Location…" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-card border-border">
+                            <SelectItem value="none" className="text-xs">
+                              No specific location
+                            </SelectItem>
+                            {addAddresses.map(a => (
+                              <SelectItem key={a.id} value={a.id} className="text-xs">
+                                {a.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                    ) : (
+                      <TableCell />
+                    )}
                     <TableCell>
                       <Input
                         type="date"
@@ -632,6 +726,8 @@ export function ContactDetail({
                               contactId: contact.id,
                               companyId: companyForm.companyId,
                               roleWithCompany: companyForm.roleWithCompany || null,
+                              companyAddressId:
+                                companyForm.companyAddressId !== 'none' ? companyForm.companyAddressId : null,
                               startedDate: new Date(companyForm.startedDate),
                               endDate: companyForm.endDate ? new Date(companyForm.endDate) : null,
                               endPreviousActive,
@@ -654,7 +750,7 @@ export function ContactDetail({
                 )}
                 {visibleCompanies.length === 0 && !addingCompany ? (
                   <TableRow>
-                    <TableCell colSpan={8} className="h-20 text-center text-muted-foreground">
+                    <TableCell colSpan={9} className="h-20 text-center text-muted-foreground">
                       No active company links.
                     </TableCell>
                   </TableRow>
@@ -692,6 +788,30 @@ export function ContactDetail({
                                 className="h-7 text-xs bg-background border-border"
                               />
                             </TableCell>
+                            {/* Location cell in edit row */}
+                            {editAddresses.length > 0 ? (
+                              <TableCell>
+                                <Select
+                                  value={editCompanyForm.companyAddressId}
+                                  onValueChange={v => setEditCompanyForm(f => ({...f, companyAddressId: v}))}>
+                                  <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+                                    <SelectValue placeholder="Location…" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-card border-border">
+                                    <SelectItem value="none" className="text-xs">
+                                      No specific location
+                                    </SelectItem>
+                                    {editAddresses.map(a => (
+                                      <SelectItem key={a.id} value={a.id} className="text-xs">
+                                        {a.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </TableCell>
+                            ) : (
+                              <TableCell />
+                            )}
                             <TableCell>
                               <Input
                                 type="date"
@@ -720,6 +840,10 @@ export function ContactDetail({
                                     await updateCompanyContactAction({
                                       id: cc.id,
                                       roleWithCompany: editCompanyForm.roleWithCompany || null,
+                                      companyAddressId:
+                                        editCompanyForm.companyAddressId !== 'none'
+                                          ? editCompanyForm.companyAddressId
+                                          : null,
                                       startedDate: new Date(editCompanyForm.startedDate),
                                       endDate: editCompanyForm.endDate ? new Date(editCompanyForm.endDate) : null,
                                     })
@@ -745,6 +869,18 @@ export function ContactDetail({
                             </TableCell>
                             <TableCell className={tdClass}>{cc.company.number}</TableCell>
                             <TableCell className={tdClass}>{cc.roleWithCompany ?? '-'}</TableCell>
+                            {/* Display saved location label */}
+                            <TableCell className={tdClass}>
+                              {cc.companyAddress
+                                ? [
+                                    cc.companyAddress.typeAddress,
+                                    [cc.companyAddress.street, cc.companyAddress.houseNumber].filter(Boolean).join(' '),
+                                    cc.companyAddress.place,
+                                  ]
+                                    .filter(Boolean)
+                                    .join(' · ')
+                                : '-'}
+                            </TableCell>
                             <TableCell className={tdClass}>{formatDate(cc.startedDate)}</TableCell>
                             <TableCell className={tdClass}>{formatDate(cc.endDate)}</TableCell>
                             <TableCell />
@@ -804,6 +940,11 @@ export function ContactDetail({
                                             roleWithCompany: cc.roleWithCompany ?? '',
                                             startedDate: cc.startedDate.slice(0, 10),
                                             endDate: cc.endDate ? cc.endDate.slice(0, 10) : '',
+                                            companyAddressId: cc.companyAddressId ?? 'none',
+                                          })
+                                          // Trigger address fetch for this company
+                                          getCompanyAddressesAction(cc.company.id).then(addrs => {
+                                            setEditAddresses(addrs)
                                           })
                                         }}>
                                         <Pencil className="h-3.5 w-3.5" />

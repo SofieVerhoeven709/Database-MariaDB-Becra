@@ -77,6 +77,17 @@ export interface MappedCompanyContact {
     homePhone: string | null
     active: boolean
   }
+  companyAddressId: string | null
+  companyAddress: {
+    id: string
+    typeAddress: string | null
+    street: string | null
+    houseNumber: string | null
+    busNumber: string | null
+    zipCode: string | null
+    place: string | null
+    countryName: string | null
+  } | null
 }
 
 export interface MappedCompanyProject {

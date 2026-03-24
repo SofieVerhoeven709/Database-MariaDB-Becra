@@ -53,6 +53,10 @@ export async function getContactDetail(id: string) {
         include: {
           Company: {select: {id: true, name: true, number: true, companyActive: true}},
           Employee: {select: {firstName: true, lastName: true}},
+          CompanyAddress: {
+            // ← add this
+            include: {Country: {select: {name: true}}},
+          },
         },
       },
 

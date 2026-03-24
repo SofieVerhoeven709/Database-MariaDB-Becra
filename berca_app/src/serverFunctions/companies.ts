@@ -13,6 +13,7 @@ import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
 import {upsertVisibilityRows} from '@/serverFunctions/visibilityForRoles'
 import {generateCompanyNumber} from '@/lib/utils'
+import {getCompanyAddresses} from '@/dal/companies'
 
 // ─── Company ──────────────────────────────────────────────────────────────────
 export const createCompanyAction = protectedServerFunction({
@@ -34,11 +35,13 @@ export const createCompanyAction = protectedServerFunction({
     // Retry loop — regenerate number on unique constraint collision (P2002)
     let companyNumber = data.number || generateCompanyNumber()
     let attempts = 0
+    const invoiceContactId = crypto.randomUUID()
+    const invoiceContactTarget = await createTargetForType('Contact', profile.id)
 
     while (attempts < 5) {
       try {
-        await prismaClient.$transaction([
-          prismaClient.company.create({
+        const createdAddresses = await prismaClient.$transaction(async tx => {
+          await tx.company.create({
             data: {
               ...data,
               number: companyNumber,
@@ -47,19 +50,64 @@ export const createCompanyAction = protectedServerFunction({
               createdAt: now,
               targetId: target.id,
             },
-          }),
-          ...normalizedAddresses.map(a =>
-            prismaClient.companyAddress.create({
-              data: {
-                ...a,
-                id: crypto.randomUUID(),
-                companyId,
-                createdBy: profile.id,
-                createdAt: now,
-              },
-            }),
-          ),
-        ])
+          })
+
+          const addrs = await Promise.all(
+            normalizedAddresses.map(a =>
+              tx.companyAddress.create({
+                data: {
+                  ...a,
+                  id: crypto.randomUUID(),
+                  companyId,
+                  createdBy: profile.id,
+                  createdAt: now,
+                },
+              }),
+            ),
+          )
+
+          // Create the invoice contact for this company
+          await tx.contact.create({
+            data: {
+              id: invoiceContactId,
+              firstName: data.name,
+              lastName: 'invoice',
+              active: true,
+              infoCorrect: false,
+              checkInfo: false,
+              newYearCard: false,
+              newsLetter: false,
+              mailing: false,
+              trainingAdvice: false,
+              contactForTrainingAndAdvice: false,
+              customerTrainingAndAdvice: false,
+              potentialCustomerTrainingAndAdvice: false,
+              potentialTeacherTrainingAndAdvice: false,
+              teacherTrainingAndAdvice: false,
+              participantTrainingAndAdvice: false,
+              createdBy: profile.id,
+              createdAt: now,
+              targetId: invoiceContactTarget.id,
+            },
+          })
+
+          // Link invoice contact to the company, auto-assign address if exactly one
+          await tx.companyContact.create({
+            data: {
+              id: crypto.randomUUID(),
+              contactId: invoiceContactId,
+              companyId,
+              roleWithCompany: 'invoice',
+              companyAddressId: addrs.length === 1 ? addrs[0].id : null,
+              startedDate: now,
+              createdBy: profile.id,
+              createdAt: now,
+            },
+          })
+
+          return addrs
+        })
+
         break
       } catch (err: unknown) {
         const prismaErr = err as {code?: string}
@@ -215,4 +263,36 @@ export async function createCompanyAndReturnIdAction(
     select: {id: true, name: true},
   })
   return record
+}
+
+export type CompanyAddressOption = {
+  id: string
+  label: string
+}
+
+export async function getCompanyAddressesAction(companyId: string): Promise<CompanyAddressOption[]> {
+  const addresses = await getCompanyAddresses(companyId)
+  return addresses.map(a => ({
+    id: a.id,
+    label: buildAddressLabel(a),
+  }))
+}
+
+function buildAddressLabel(a: {
+  typeAddress: string | null
+  street: string | null
+  houseNumber: string | null
+  busNumber: string | null
+  zipCode: string | null
+  place: string | null
+  Country: {name: string} | null
+}): string {
+  const parts: string[] = []
+  if (a.typeAddress) parts.push(`[${a.typeAddress}]`)
+  const street = [a.street, a.houseNumber, a.busNumber].filter(Boolean).join(' ')
+  if (street) parts.push(street)
+  const city = [a.zipCode, a.place].filter(Boolean).join(' ')
+  if (city) parts.push(city)
+  if (a.Country?.name) parts.push(a.Country.name)
+  return parts.join(' · ') || 'Address'
 }

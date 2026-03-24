@@ -64,6 +64,9 @@ export async function getCompanyDetail(id: string) {
             },
           },
           Employee: {select: {firstName: true, lastName: true}},
+          CompanyAddress: {
+            include: {Country: {select: {name: true}}},
+          },
         },
         orderBy: {startedDate: 'desc'},
       },
@@ -101,5 +104,23 @@ export async function getSupplierCompanies() {
       number: true,
     },
     orderBy: {name: 'asc'},
+  })
+}
+
+export async function getCompanyAddresses(companyId: string) {
+  return prismaClient.companyAddress.findMany({
+    where: {companyId, deleted: false},
+    select: {
+      id: true,
+      street: true,
+      houseNumber: true,
+      busNumber: true,
+      zipCode: true,
+      place: true,
+      typeAddress: true,
+      countryId: true,
+      Country: {select: {name: true}},
+    },
+    orderBy: {createdAt: 'asc'},
   })
 }

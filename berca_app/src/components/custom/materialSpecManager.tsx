@@ -161,11 +161,23 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
   }
 
   async function handleDelete(id: string) {
-    if (!confirm('Delete this material group?')) return
+    const target = groups.find(g => g.id === id)
+    if (!target) return
+
+    const confirmText = target.deleted
+      ? 'This group is already soft deleted. Permanently delete it?'
+      : 'Delete this material group?'
+
+    if (!confirm(confirmText)) return
+
     const fd = new FormData()
     fd.append('id', id)
     await deleteMaterialGroupAction({success: false}, fd)
-    setGroups(prev => prev.map(g => (g.id === id ? {...g, deleted: true} : g)))
+    setGroups(prev =>
+      target.deleted
+        ? prev.filter(g => g.id !== id)
+        : prev.map(g => (g.id === id ? {...g, deleted: true} : g)),
+    )
   }
 
   const filtered = groups

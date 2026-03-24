@@ -1,4 +1,5 @@
 import {getMaterials, getMaterialGroups, getUnits} from '@/dal/materials'
+import {getWarehousePlaces} from '@/dal/warehousePlace'
 import {MaterialTable} from '@/components/custom/materialTable'
 import {getDepartmentById} from '@/dal/department'
 import {getSupplierCompanies} from '@/dal/companies'
@@ -34,23 +35,36 @@ export default async function MaterialPage({params}: PageProps) {
 
   const {departmentId} = await params
 
-  const [department, materials, groups, units, supplierCompanies] = await Promise.all([
+  const [department, materials, groups, units, supplierCompanies, warehousePlaces] = await Promise.all([
     getDepartmentById(departmentId),
     getMaterials(),
     getMaterialGroups(),
     getUnits(),
     getSupplierCompanies(),
+    getWarehousePlaces(),
   ])
 
   if (!department) return <p>Department not found</p>
 
   const groupById = new Map(groups.map(g => [g.id, g]))
+  const warehousePlaceByBeNumber = new Map(
+    warehousePlaces
+      .filter(place => place.beNumber)
+      .map(place => [
+        place.beNumber as string,
+        {
+          id: place.id,
+          label: place.place ? `${place.abbreviation} (${place.place})` : place.abbreviation,
+        },
+      ]),
+  )
 
   const mappedMaterials: MappedMaterial[] = materials.map(m => {
     const preferredSupplierEntry =
       m.MaterialSupplier.find(s => s.companyId === m.preferredSupplierCompanyId) ??
       m.MaterialSupplier.find(s => s.isPreferred) ??
       null
+    const assignedWarehousePlace = warehousePlaceByBeNumber.get(m.beNumber) ?? null
 
     return {
       id: m.id,
@@ -86,6 +100,8 @@ export default async function MaterialPage({params}: PageProps) {
           return [group.groupA, group.groupB, group.groupC, group.groupD].filter(Boolean).join(' / ')
         })
         .join(' | '),
+      warehousePlaceId: assignedWarehousePlace?.id ?? null,
+      warehousePlaceLabel: assignedWarehousePlace?.label ?? null,
       unitId: m.unitId,
       unitName: m.Unit.unitName,
       unitAbbreviation: m.Unit.abbreviation,
@@ -125,6 +141,12 @@ export default async function MaterialPage({params}: PageProps) {
       shortDescription: m.shortDescription,
     }))
 
+  const mappedWarehousePlaces = warehousePlaces.map(place => ({
+    id: place.id,
+    label: place.place ? `${place.abbreviation} (${place.place})` : place.abbreviation,
+    beNumber: place.beNumber ?? null,
+  }))
+
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <div className="mb-6">
@@ -140,6 +162,7 @@ export default async function MaterialPage({params}: PageProps) {
         supplierCompanies={mappedSupplierCompanies}
         departmentId={departmentId}
         parentPartOptions={mappedParentPartOptions}
+        warehousePlaces={mappedWarehousePlaces}
       />
     </div>
   )

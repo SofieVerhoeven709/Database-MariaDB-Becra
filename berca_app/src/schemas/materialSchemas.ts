@@ -10,7 +10,7 @@ const booleanFromString = z.preprocess(
   z.boolean().nullable().optional(),
 )
 
-const beNumberSchema = z.string().trim().min(1).max(255).regex(/^\d+$/, 'BE number mag enkel cijfers bevatten')
+const beNumberSchema = z.string().trim().min(1).max(255).regex(/^\d+$/, 'BE number can only contain digits')
 
 const brandOrderNrSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),
@@ -27,7 +27,7 @@ const parentBeNumbersSchema = z.preprocess(val => {
   if (Array.isArray(val)) return val
   if (val == null || val === '') return []
   return [val]
-}, z.array(z.string().trim().regex(/^\d+$/, 'Parent BE number mag enkel cijfers bevatten')).default([]))
+}, z.array(z.string().trim().regex(/^\d+$/, 'Parent BE number can only contain digits')).default([]))
 
 const nullableUuidSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),
@@ -64,6 +64,7 @@ export const materialSchema = z.object({
   materialGroupIdB: nullableUuidSchema,
   materialGroupIdC: nullableUuidSchema,
   materialGroupIdD: nullableUuidSchema,
+  warehousePlaceId: nullableUuidSchema,
   unitId: z.string().uuid(),
 })
 

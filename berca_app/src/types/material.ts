@@ -25,6 +25,8 @@ export interface MappedMaterial {
   materialGroupLabelC: string
   materialGroupLabelD: string
   materialGroupLabel: string
+  warehousePlaceId: string | null
+  warehousePlaceLabel: string | null
   unitId: string
   unitName: string
   unitAbbreviation: string

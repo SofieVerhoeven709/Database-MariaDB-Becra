@@ -35,6 +35,12 @@ interface ParentPartOption {
   shortDescription: string
 }
 
+interface WarehousePlaceOption {
+  id: string
+  label: string
+  beNumber: string | null
+}
+
 interface MaterialFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -42,6 +48,7 @@ interface MaterialFormDialogProps {
   materialGroups: MaterialGroup[]
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
+  warehousePlaces: WarehousePlaceOption[]
   parentPartOptions?: ParentPartOption[]
   parentPartBeNumbersInUse?: string[]
   onSave: (material: Partial<MappedMaterial> & {id: string}) => void
@@ -167,6 +174,8 @@ const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string} = {
   materialGroupIdB: null,
   materialGroupIdC: null,
   materialGroupIdD: null,
+  warehousePlaceId: null,
+  warehousePlaceLabel: null,
   unitId: '',
 }
 
@@ -177,6 +186,7 @@ export function MaterialFormDialog({
   materialGroups,
   units,
   supplierCompanies,
+  warehousePlaces,
   parentPartOptions: _parentPartOptions,
   parentPartBeNumbersInUse = [],
   onSave,
@@ -246,6 +256,10 @@ export function MaterialFormDialog({
 
   const selectedSupplierCompanies = supplierCompanies.filter(company =>
     (form.supplierCompanyIds ?? []).includes(company.id),
+  )
+
+  const selectableWarehousePlaces = warehousePlaces.filter(
+    place => !place.beNumber || place.beNumber === form.beNumber,
   )
 
   const selectedGroupA = materialGroups.find(g => g.id === form.materialGroupIdA) ?? null
@@ -565,6 +579,26 @@ export function MaterialFormDialog({
                 placeholder="e.g. ABC-123"
               />
             </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs text-muted-foreground">Warehouse Place</Label>
+            <Select
+              value={form.warehousePlaceId ?? '__none__'}
+              onValueChange={v => update('warehousePlaceId', v === '__none__' ? null : v)}>
+              <SelectTrigger className={inputStyles}>
+                <SelectValue placeholder="No place assigned" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="__none__">No place assigned</SelectItem>
+                {selectableWarehousePlaces.map(place => (
+                  <SelectItem key={place.id} value={place.id}>
+                    {place.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-muted-foreground">Optional: assign a place now or later.</p>
           </div>
 
           {/* Preferred Supplier Short Description */}

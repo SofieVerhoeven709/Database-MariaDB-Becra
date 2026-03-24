@@ -6,11 +6,16 @@ const booleanFromString = z.preprocess(
   z.boolean(),
 )
 
+const nullableText = z.preprocess(val => (val === '' ? null : val), z.string().max(255).nullable().optional())
+
 // ─── MaterialGroup ───────────────────────────────────────────────────────────
 
 export const materialGroupSchema = z.object({
   id: z.string().uuid(),
   groupA: z.string().min(1).max(255),
+  groupB: nullableText,
+  groupC: nullableText,
+  groupD: nullableText,
 })
 
 export const deleteMaterialGroupSchema = z.object({

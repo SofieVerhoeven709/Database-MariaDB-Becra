@@ -9,16 +9,22 @@ import {MaterialSpecManager} from '@/components/custom/materialSpecManager'
 
 export default async function SpecPage() {
   const [groups, units, performances, specs, families] = await Promise.all([
-    getMaterialGroups(),
-    getUnits(),
-    getMaterialPerformances(),
+    getMaterialGroups(true),
+    getUnits(true),
+    getMaterialPerformances(true),
     getMaterialSpecs(),
     getMaterialFamilies(),
   ])
 
   const mappedGroups = groups.map(g => ({
     id: g.id,
-    name: g.groupA,
+    groupA: g.groupA,
+    groupB: g.groupB,
+    groupC: g.groupC,
+    groupD: g.groupD,
+    createdAt: null,
+    createdByName: null,
+    deleted: g.deleted,
   }))
 
   const mappedUnits = units.map(u => ({
@@ -28,7 +34,10 @@ export default async function SpecPage() {
     abbreviation: u.abbreviation,
     shortDescription: u.shortDescription ?? null,
     longDescription: u.longDescription ?? null,
+    createdAt: u.createdAt.toISOString(),
+    createdByName: `${u.Employee.firstName} ${u.Employee.lastName}`,
     valid: u.valid,
+    deleted: u.deleted,
   }))
 
   const mappedPerformances = performances.map(p => ({
@@ -38,6 +47,9 @@ export default async function SpecPage() {
     materialFamilyId: p.materialFamilyId ?? null,
     shortDescription: p.shortDescription ?? null,
     longDescription: p.longDescription ?? null,
+    createdAt: p.createdAt.toISOString(),
+    createdByName: p.Employee ? `${p.Employee.firstName} ${p.Employee.lastName}` : null,
+    deleted: p.deleted,
   }))
 
   const mappedSpecs = specs.map(s => ({

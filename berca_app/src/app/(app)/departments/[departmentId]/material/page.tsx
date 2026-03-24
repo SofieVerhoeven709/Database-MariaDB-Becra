@@ -44,9 +44,7 @@ export default async function MaterialPage({params}: PageProps) {
 
   if (!department) return <p>Department not found</p>
 
-  const groupLabelById = new Map(
-    groups.map(g => [g.id, [g.groupA, g.groupB, g.groupC, g.groupD].filter(Boolean).join(' / ')]),
-  )
+  const groupById = new Map(groups.map(g => [g.id, g]))
 
   const mappedMaterials: MappedMaterial[] = materials.map(m => {
     const preferredSupplierEntry =
@@ -76,19 +74,24 @@ export default async function MaterialPage({params}: PageProps) {
       materialGroupIdB: m.materialGroupIdB ?? null,
       materialGroupIdC: m.materialGroupIdC ?? null,
       materialGroupIdD: m.materialGroupIdD ?? null,
-      materialGroupLabelA: m.materialGroupIdA ? (groupLabelById.get(m.materialGroupIdA) ?? m.materialGroupIdA) : '',
-      materialGroupLabelB: m.materialGroupIdB ? (groupLabelById.get(m.materialGroupIdB) ?? m.materialGroupIdB) : '',
-      materialGroupLabelC: m.materialGroupIdC ? (groupLabelById.get(m.materialGroupIdC) ?? m.materialGroupIdC) : '',
-      materialGroupLabelD: m.materialGroupIdD ? (groupLabelById.get(m.materialGroupIdD) ?? m.materialGroupIdD) : '',
+      materialGroupLabelA: m.materialGroupIdA ? (groupById.get(m.materialGroupIdA)?.groupA ?? m.materialGroupIdA) : '',
+      materialGroupLabelB: m.materialGroupIdB ? (groupById.get(m.materialGroupIdB)?.groupB ?? m.materialGroupIdB) : '',
+      materialGroupLabelC: m.materialGroupIdC ? (groupById.get(m.materialGroupIdC)?.groupC ?? m.materialGroupIdC) : '',
+      materialGroupLabelD: m.materialGroupIdD ? (groupById.get(m.materialGroupIdD)?.groupD ?? m.materialGroupIdD) : '',
       materialGroupLabel: [m.materialGroupIdA, m.materialGroupIdB, m.materialGroupIdC, m.materialGroupIdD]
         .filter(Boolean)
-        .map(id => groupLabelById.get(id as string) ?? id)
+        .map(id => {
+          const group = groupById.get(id as string)
+          if (!group) return id as string
+          return [group.groupA, group.groupB, group.groupC, group.groupD].filter(Boolean).join(' / ')
+        })
         .join(' | '),
       unitId: m.unitId,
       unitName: m.Unit.unitName,
       unitAbbreviation: m.Unit.abbreviation,
       createdBy: m.createdBy,
       createdByName: `${m.Employee.firstName} ${m.Employee.lastName}`,
+      createdAt: null,
       deleted: m.deleted,
       deletedAt: m.deletedAt?.toISOString() ?? null,
       deletedBy: m.deletedBy ?? null,

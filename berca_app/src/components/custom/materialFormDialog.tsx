@@ -51,10 +51,6 @@ interface MaterialFormDialogProps {
 
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
 
-function groupLabel(group: MaterialGroup) {
-  return [group.groupA, group.groupB, group.groupC, group.groupD].filter(Boolean).join(' / ')
-}
-
 interface PreferredSupplierPickerProps {
   selectedCompanyId: string | null
   onSelect: (companyId: string | null) => void
@@ -252,6 +248,103 @@ export function MaterialFormDialog({
     (form.supplierCompanyIds ?? []).includes(company.id),
   )
 
+  const selectedGroupA = materialGroups.find(g => g.id === form.materialGroupIdA) ?? null
+  const selectedGroupB = materialGroups.find(g => g.id === form.materialGroupIdB) ?? null
+  const selectedGroupC = materialGroups.find(g => g.id === form.materialGroupIdC) ?? null
+
+  const buildUniqueGroupOptions = (
+    predicate: (group: MaterialGroup) => boolean,
+    labelOf: (group: MaterialGroup) => string | null,
+  ) => {
+    const byLabel = new Map<string, {id: string; label: string}>()
+    for (const group of materialGroups) {
+      if (!predicate(group)) continue
+      const label = labelOf(group)
+      if (!label || byLabel.has(label)) continue
+      byLabel.set(label, {id: group.id, label})
+    }
+    return Array.from(byLabel.values())
+  }
+
+  const ensureSelectedOption = (
+    options: Array<{id: string; label: string}>,
+    selectedId: string | null | undefined,
+    selectedLabel: string | null | undefined,
+  ) => {
+    if (!selectedId || !selectedLabel || options.some(option => option.id === selectedId)) {
+      return options
+    }
+    return [{id: selectedId, label: selectedLabel}, ...options]
+  }
+
+  const groupAOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(() => true, group => group.groupA),
+    form.materialGroupIdA,
+    selectedGroupA?.groupA,
+  )
+
+  const groupBOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(
+      group => Boolean(group.groupB) && (!selectedGroupA || group.groupA === selectedGroupA.groupA),
+      group => group.groupB,
+    ),
+    form.materialGroupIdB,
+    selectedGroupB?.groupB,
+  )
+
+  const groupCOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(
+      group => {
+        if (!group.groupC) return false
+        if (!selectedGroupA) return true
+        if (!selectedGroupB?.groupB) return group.groupA === selectedGroupA.groupA
+        return group.groupA === selectedGroupA.groupA && group.groupB === selectedGroupB.groupB
+      },
+      group => group.groupC,
+    ),
+    form.materialGroupIdC,
+    selectedGroupC?.groupC,
+  )
+
+  const selectedGroupD = materialGroups.find(g => g.id === form.materialGroupIdD) ?? null
+
+  const groupDOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(
+      group => {
+        if (!group.groupD) return false
+        if (!selectedGroupA) return true
+        if (!selectedGroupB?.groupB) return group.groupA === selectedGroupA.groupA
+        if (!selectedGroupC?.groupC) return group.groupA === selectedGroupA.groupA && group.groupB === selectedGroupB.groupB
+        return (
+          group.groupA === selectedGroupA.groupA &&
+          group.groupB === selectedGroupB.groupB &&
+          group.groupC === selectedGroupC.groupC
+        )
+      },
+      group => group.groupD,
+    ),
+    form.materialGroupIdD,
+    selectedGroupD?.groupD,
+  )
+
+  function handleGroupAChange(nextId: string) {
+    update('materialGroupIdA', nextId)
+    update('materialGroupIdB', null)
+    update('materialGroupIdC', null)
+    update('materialGroupIdD', null)
+  }
+
+  function handleGroupBChange(nextId: string | null) {
+    update('materialGroupIdB', nextId)
+    update('materialGroupIdC', null)
+    update('materialGroupIdD', null)
+  }
+
+  function handleGroupCChange(nextId: string | null) {
+    update('materialGroupIdC', nextId)
+    update('materialGroupIdD', null)
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-card border-border max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -370,14 +463,14 @@ export function MaterialFormDialog({
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label className="text-xs text-muted-foreground">Material Group A *</Label>
-              <Select value={form.materialGroupIdA ?? ''} onValueChange={v => update('materialGroupIdA', v)} required>
+              <Select value={form.materialGroupIdA ?? ''} onValueChange={handleGroupAChange} required>
                 <SelectTrigger className={inputStyles}>
                   <SelectValue placeholder="Select group..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {materialGroups.map(g => (
+                  {groupAOptions.map(g => (
                     <SelectItem key={g.id} value={g.id}>
-                      {groupLabel(g)}
+                      {g.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -406,15 +499,15 @@ export function MaterialFormDialog({
               <Label className="text-xs text-muted-foreground">Material Group B</Label>
               <Select
                 value={form.materialGroupIdB ?? '__none__'}
-                onValueChange={v => update('materialGroupIdB', v === '__none__' ? null : v)}>
+                onValueChange={v => handleGroupBChange(v === '__none__' ? null : v)}>
                 <SelectTrigger className={inputStyles}>
                   <SelectValue placeholder="Select group..." />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="__none__">None</SelectItem>
-                  {materialGroups.map(g => (
+                  {groupBOptions.map(g => (
                     <SelectItem key={g.id} value={g.id}>
-                      {groupLabel(g)}
+                      {g.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -424,15 +517,15 @@ export function MaterialFormDialog({
               <Label className="text-xs text-muted-foreground">Material Group C</Label>
               <Select
                 value={form.materialGroupIdC ?? '__none__'}
-                onValueChange={v => update('materialGroupIdC', v === '__none__' ? null : v)}>
+                onValueChange={v => handleGroupCChange(v === '__none__' ? null : v)}>
                 <SelectTrigger className={inputStyles}>
                   <SelectValue placeholder="Select group..." />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="__none__">None</SelectItem>
-                  {materialGroups.map(g => (
+                  {groupCOptions.map(g => (
                     <SelectItem key={g.id} value={g.id}>
-                      {groupLabel(g)}
+                      {g.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -452,9 +545,9 @@ export function MaterialFormDialog({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="__none__">None</SelectItem>
-                  {materialGroups.map(g => (
+                  {groupDOptions.map(g => (
                     <SelectItem key={g.id} value={g.id}>
-                      {groupLabel(g)}
+                      {g.label}
                     </SelectItem>
                   ))}
                 </SelectContent>

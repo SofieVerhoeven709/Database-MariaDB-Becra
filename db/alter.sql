@@ -601,3 +601,17 @@ ALTER TABLE CompanyContact ADD COLUMN IF NOT EXISTS `companyAddressId` CHAR(36) 
 ALTER TABLE CompanyContact DROP FOREIGN KEY IF EXISTS fk_companyContact_companyAddress;
 ALTER TABLE CompanyContact ADD CONSTRAINT fk_companyContact_companyAddress
     FOREIGN KEY (`companyAddressId`) REFERENCES CompanyAdress (`id`) ON DELETE SET NULL;
+
+-- 46a. houtype & material: add targetId column
+ALTER TABLE HourType ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NOT NULL;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NOT NULL;
+
+-- 46b. houtype: add FK fk_hourType_target (skip if already exists)
+ALTER TABLE HourType DROP FOREIGN KEY IF EXISTS fk_hourType_target;
+ALTER TABLE HourType ADD CONSTRAINT fk_hourType_target
+    FOREIGN KEY (`targetId`) REFERENCES CompanyAdress (`id`) ON DELETE RESTRICT;
+
+-- 46c. houtype: add FK fk_material_target (skip if already exists)
+ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_target;
+ALTER TABLE Material ADD CONSTRAINT fk_material_target
+    FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;

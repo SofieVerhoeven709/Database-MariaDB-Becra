@@ -42,6 +42,7 @@ export type PriceListItemMinAggregateOutputType = {
   price: runtime.Decimal | null
   createdAt: Date | null
   deleted: boolean | null
+  isCostMargin: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
   createdBy: string | null
@@ -55,6 +56,7 @@ export type PriceListItemMaxAggregateOutputType = {
   price: runtime.Decimal | null
   createdAt: Date | null
   deleted: boolean | null
+  isCostMargin: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
   createdBy: string | null
@@ -68,6 +70,7 @@ export type PriceListItemCountAggregateOutputType = {
   price: number
   createdAt: number
   deleted: number
+  isCostMargin: number
   deletedAt: number
   deletedBy: number
   createdBy: number
@@ -91,6 +94,7 @@ export type PriceListItemMinAggregateInputType = {
   price?: true
   createdAt?: true
   deleted?: true
+  isCostMargin?: true
   deletedAt?: true
   deletedBy?: true
   createdBy?: true
@@ -104,6 +108,7 @@ export type PriceListItemMaxAggregateInputType = {
   price?: true
   createdAt?: true
   deleted?: true
+  isCostMargin?: true
   deletedAt?: true
   deletedBy?: true
   createdBy?: true
@@ -117,6 +122,7 @@ export type PriceListItemCountAggregateInputType = {
   price?: true
   createdAt?: true
   deleted?: true
+  isCostMargin?: true
   deletedAt?: true
   deletedBy?: true
   createdBy?: true
@@ -217,6 +223,7 @@ export type PriceListItemGroupByOutputType = {
   price: runtime.Decimal
   createdAt: Date
   deleted: boolean
+  isCostMargin: boolean
   deletedAt: Date | null
   deletedBy: string | null
   createdBy: string
@@ -253,6 +260,7 @@ export type PriceListItemWhereInput = {
   price?: Prisma.DecimalFilter<"PriceListItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PriceListItem"> | Date | string
   deleted?: Prisma.BoolFilter<"PriceListItem"> | boolean
+  isCostMargin?: Prisma.BoolFilter<"PriceListItem"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"PriceListItem"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"PriceListItem"> | string | null
   createdBy?: Prisma.StringFilter<"PriceListItem"> | string
@@ -269,6 +277,7 @@ export type PriceListItemOrderByWithRelationInput = {
   price?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
+  isCostMargin?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -289,6 +298,7 @@ export type PriceListItemWhereUniqueInput = Prisma.AtLeast<{
   price?: Prisma.DecimalFilter<"PriceListItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PriceListItem"> | Date | string
   deleted?: Prisma.BoolFilter<"PriceListItem"> | boolean
+  isCostMargin?: Prisma.BoolFilter<"PriceListItem"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"PriceListItem"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"PriceListItem"> | string | null
   createdBy?: Prisma.StringFilter<"PriceListItem"> | string
@@ -305,6 +315,7 @@ export type PriceListItemOrderByWithAggregationInput = {
   price?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
+  isCostMargin?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -326,6 +337,7 @@ export type PriceListItemScalarWhereWithAggregatesInput = {
   price?: Prisma.DecimalWithAggregatesFilter<"PriceListItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PriceListItem"> | Date | string
   deleted?: Prisma.BoolWithAggregatesFilter<"PriceListItem"> | boolean
+  isCostMargin?: Prisma.BoolWithAggregatesFilter<"PriceListItem"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PriceListItem"> | Date | string | null
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"PriceListItem"> | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"PriceListItem"> | string
@@ -338,6 +350,7 @@ export type PriceListItemCreateInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   PriceList: Prisma.PriceListCreateNestedOneWithoutPriceListItemInput
   Employee_PriceListItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_createdByToEmployeeInput
@@ -352,6 +365,7 @@ export type PriceListItemUncheckedCreateInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
   createdBy: string
@@ -364,6 +378,7 @@ export type PriceListItemUpdateInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   PriceList?: Prisma.PriceListUpdateOneRequiredWithoutPriceListItemNestedInput
   Employee_PriceListItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceListItem_PriceListItem_createdByToEmployeeNestedInput
@@ -378,6 +393,7 @@ export type PriceListItemUncheckedUpdateInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -391,6 +407,7 @@ export type PriceListItemCreateManyInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
   createdBy: string
@@ -403,6 +420,7 @@ export type PriceListItemUpdateManyMutationInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -414,6 +432,7 @@ export type PriceListItemUncheckedUpdateManyInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -443,6 +462,7 @@ export type PriceListItemCountOrderByAggregateInput = {
   price?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
+  isCostMargin?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -460,6 +480,7 @@ export type PriceListItemMaxOrderByAggregateInput = {
   price?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
+  isCostMargin?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -473,6 +494,7 @@ export type PriceListItemMinOrderByAggregateInput = {
   price?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
+  isCostMargin?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -623,6 +645,7 @@ export type PriceListItemCreateWithoutEmployee_PriceListItem_createdByToEmployee
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   PriceList: Prisma.PriceListCreateNestedOneWithoutPriceListItemInput
   Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeInput
@@ -636,6 +659,7 @@ export type PriceListItemUncheckedCreateWithoutEmployee_PriceListItem_createdByT
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
 }
@@ -657,6 +681,7 @@ export type PriceListItemCreateWithoutEmployee_PriceListItem_deletedByToEmployee
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   PriceList: Prisma.PriceListCreateNestedOneWithoutPriceListItemInput
   Employee_PriceListItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_createdByToEmployeeInput
@@ -670,6 +695,7 @@ export type PriceListItemUncheckedCreateWithoutEmployee_PriceListItem_deletedByT
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   createdBy: string
 }
@@ -711,6 +737,7 @@ export type PriceListItemScalarWhereInput = {
   price?: Prisma.DecimalFilter<"PriceListItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"PriceListItem"> | Date | string
   deleted?: Prisma.BoolFilter<"PriceListItem"> | boolean
+  isCostMargin?: Prisma.BoolFilter<"PriceListItem"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"PriceListItem"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"PriceListItem"> | string | null
   createdBy?: Prisma.StringFilter<"PriceListItem"> | string
@@ -739,6 +766,7 @@ export type PriceListItemCreateWithoutPriceListInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   Employee_PriceListItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_createdByToEmployeeInput
   Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeInput
@@ -751,6 +779,7 @@ export type PriceListItemUncheckedCreateWithoutPriceListInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
   createdBy: string
@@ -790,6 +819,7 @@ export type PriceListItemCreateManyEmployee_PriceListItem_createdByToEmployeeInp
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
 }
@@ -802,6 +832,7 @@ export type PriceListItemCreateManyEmployee_PriceListItem_deletedByToEmployeeInp
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   createdBy: string
 }
@@ -813,6 +844,7 @@ export type PriceListItemUpdateWithoutEmployee_PriceListItem_createdByToEmployee
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   PriceList?: Prisma.PriceListUpdateOneRequiredWithoutPriceListItemNestedInput
   Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeNestedInput
@@ -826,6 +858,7 @@ export type PriceListItemUncheckedUpdateWithoutEmployee_PriceListItem_createdByT
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -838,6 +871,7 @@ export type PriceListItemUncheckedUpdateManyWithoutEmployee_PriceListItem_create
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -849,6 +883,7 @@ export type PriceListItemUpdateWithoutEmployee_PriceListItem_deletedByToEmployee
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   PriceList?: Prisma.PriceListUpdateOneRequiredWithoutPriceListItemNestedInput
   Employee_PriceListItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceListItem_PriceListItem_createdByToEmployeeNestedInput
@@ -862,6 +897,7 @@ export type PriceListItemUncheckedUpdateWithoutEmployee_PriceListItem_deletedByT
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -874,6 +910,7 @@ export type PriceListItemUncheckedUpdateManyWithoutEmployee_PriceListItem_delete
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -885,6 +922,7 @@ export type PriceListItemCreateManyPriceListInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt: Date | string
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
   createdBy: string
@@ -897,6 +935,7 @@ export type PriceListItemUpdateWithoutPriceListInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_PriceListItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceListItem_PriceListItem_createdByToEmployeeNestedInput
   Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeNestedInput
@@ -909,6 +948,7 @@ export type PriceListItemUncheckedUpdateWithoutPriceListInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -921,6 +961,7 @@ export type PriceListItemUncheckedUpdateManyWithoutPriceListInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -936,6 +977,7 @@ export type PriceListItemSelect<ExtArgs extends runtime.Types.Extensions.Interna
   price?: boolean
   createdAt?: boolean
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
   createdBy?: boolean
@@ -954,12 +996,13 @@ export type PriceListItemSelectScalar = {
   price?: boolean
   createdAt?: boolean
   deleted?: boolean
+  isCostMargin?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
   createdBy?: boolean
 }
 
-export type PriceListItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "priceListId" | "description" | "unit" | "price" | "createdAt" | "deleted" | "deletedAt" | "deletedBy" | "createdBy", ExtArgs["result"]["priceListItem"]>
+export type PriceListItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "priceListId" | "description" | "unit" | "price" | "createdAt" | "deleted" | "isCostMargin" | "deletedAt" | "deletedBy" | "createdBy", ExtArgs["result"]["priceListItem"]>
 export type PriceListItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   PriceList?: boolean | Prisma.PriceListDefaultArgs<ExtArgs>
   Employee_PriceListItem_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
@@ -981,6 +1024,7 @@ export type $PriceListItemPayload<ExtArgs extends runtime.Types.Extensions.Inter
     price: runtime.Decimal
     createdAt: Date
     deleted: boolean
+    isCostMargin: boolean
     deletedAt: Date | null
     deletedBy: string | null
     createdBy: string
@@ -1363,6 +1407,7 @@ export interface PriceListItemFieldRefs {
   readonly price: Prisma.FieldRef<"PriceListItem", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"PriceListItem", 'DateTime'>
   readonly deleted: Prisma.FieldRef<"PriceListItem", 'Boolean'>
+  readonly isCostMargin: Prisma.FieldRef<"PriceListItem", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"PriceListItem", 'DateTime'>
   readonly deletedBy: Prisma.FieldRef<"PriceListItem", 'String'>
   readonly createdBy: Prisma.FieldRef<"PriceListItem", 'String'>

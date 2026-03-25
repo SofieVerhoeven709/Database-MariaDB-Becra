@@ -137,6 +137,7 @@ const ALL_TARGET_TYPES = [
   'TrainingStandard',
   'Employee',
   'DepartmentExtern',
+  'PriceList',
 ]
 
 const URGENCY_TYPES = ['Low', 'Medium', 'High', 'Critical']

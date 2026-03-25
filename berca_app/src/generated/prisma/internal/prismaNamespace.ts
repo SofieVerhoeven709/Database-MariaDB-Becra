@@ -6766,6 +6766,7 @@ export const MaterialScalarFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -7742,6 +7743,7 @@ export const PriceListItemScalarFieldEnum = {
   price: 'price',
   createdAt: 'createdAt',
   deleted: 'deleted',
+  isCostMargin: 'isCostMargin',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
   createdBy: 'createdBy'
@@ -8193,6 +8195,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',

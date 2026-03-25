@@ -868,6 +868,7 @@ CREATE TABLE
             price DECIMAL(10,2) NOT NULL,
             createdAt DATETIME NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
+            isCostMargin BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
             createdBy CHAR(36) NOT NULL,

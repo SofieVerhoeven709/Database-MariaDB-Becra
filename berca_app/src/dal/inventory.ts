@@ -61,7 +61,7 @@ export async function updateInventory(
     place?: string
     shortDescription?: string
     longDescription?: string
-    serieNumber?: string
+    serialNumber?: string
     quantityInStock?: number
     minQuantityInStock?: number
     maxQuantityInStock?: number

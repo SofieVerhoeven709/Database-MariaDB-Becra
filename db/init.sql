@@ -879,6 +879,15 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
+      IF NOT EXISTS PriceListItemTarget (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            priceListItemId CHAR(36) NOT NULL,
+            targetId CHAR(36) NOT NULL,
+            FOREIGN KEY (priceListItemId) REFERENCES PriceListItem (id) ON DELETE RESTRICT,
+            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
       IF NOT EXISTS InvoiceOut (
             id CHAR(36) NOT NULL PRIMARY KEY,
             invoiceNumber VARCHAR(255) NOT NULL,

@@ -615,3 +615,12 @@ ALTER TABLE HourType ADD CONSTRAINT fk_hourType_target
 ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_target;
 ALTER TABLE Material ADD CONSTRAINT fk_material_target
     FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
+
+CREATE TABLE
+      IF NOT EXISTS PriceListItemTarget (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            priceListItemId CHAR(36) NOT NULL,
+            targetId CHAR(36) NOT NULL,
+            FOREIGN KEY (priceListItemId) REFERENCES PriceListItem (id) ON DELETE RESTRICT,
+            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+      ) ENGINE = InnoDB;

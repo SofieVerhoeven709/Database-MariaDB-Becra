@@ -40,7 +40,7 @@ export const createCompanyAction = protectedServerFunction({
 
     while (attempts < 5) {
       try {
-        const createdAddresses = await prismaClient.$transaction(async tx => {
+        await prismaClient.$transaction(async tx => {
           await tx.company.create({
             data: {
               ...data,

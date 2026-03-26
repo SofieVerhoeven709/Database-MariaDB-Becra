@@ -643,7 +643,7 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS WorkOrder (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            workOrderNumber VARCHAR(100),
+            workOrderNumber VARCHAR(255) NOT NULL,
             description TEXT,
             additionalInfo TEXT,
             startDate DATETIME NOT NULL,

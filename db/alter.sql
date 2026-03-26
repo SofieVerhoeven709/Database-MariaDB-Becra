@@ -624,3 +624,5 @@ CREATE TABLE
             FOREIGN KEY (priceListItemId) REFERENCES PriceListItem (id) ON DELETE RESTRICT,
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
       ) ENGINE = InnoDB;
+
+ALTER TABLE WorkOrder CHANGE COLUMN IF EXISTS `workOrderNumber` `workOrderNumber` VARCHAR(255) NOT NULL;

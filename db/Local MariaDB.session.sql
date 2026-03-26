@@ -554,8 +554,8 @@ CREATE TABLE
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-            targetId CHAR(36),
-            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE SET NULL
+            targetId CHAR(36) NOT NULL,
+            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -889,6 +889,7 @@ CREATE TABLE
             targetId CHAR(36) NOT NULL,
             FOREIGN KEY (priceListItemId) REFERENCES PriceListItem (id) ON DELETE RESTRICT,
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+            UNIQUE (priceListItemId)
       ) ENGINE = InnoDB;
 
 CREATE TABLE

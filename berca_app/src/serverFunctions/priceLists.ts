@@ -1,6 +1,7 @@
 'use server'
 import {revalidatePath} from 'next/cache'
 import {prismaClient} from '@/dal/prismaClient'
+import {searchLinkableTargets} from '@/dal/priceLists'
 import {
   createPriceListSchema,
   updatePriceListSchema,
@@ -9,11 +10,14 @@ import {
   createPriceListItemSchema,
   updatePriceListItemSchema,
   priceListItemIdSchema,
+  linkPriceListItemTargetSchema,
   assignProjectSchema,
   unassignProjectSchema,
 } from '@/schemas/priceListSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
+import type {LinkableTargetType, LinkableTargetResult} from '@/types/priceList'
+import {createCompanyAction} from '@/serverFunctions/companies'
 
 const COST_MARGIN_DESCRIPTION = 'Cost Margin'
 const COST_MARGIN_UNIT = '%'
@@ -39,7 +43,6 @@ export const createPriceListAction = protectedServerFunction({
       },
     })
 
-    // Always create the default cost margin item
     await prismaClient.priceListItem.create({
       data: {
         id: crypto.randomUUID(),
@@ -67,7 +70,10 @@ export const clonePriceListAction = protectedServerFunction({
     const source = await prismaClient.priceList.findUniqueOrThrow({
       where: {id: sourceId},
       include: {
-        PriceListItem: {where: {deleted: false}},
+        PriceListItem: {
+          where: {deleted: false},
+          include: {PriceListItemTarget: true},
+        },
       },
     })
 
@@ -86,11 +92,15 @@ export const clonePriceListAction = protectedServerFunction({
       },
     })
 
-    // Clone all items including cost margin as-is
     if (source.PriceListItem.length > 0) {
+      const itemIdMap = new Map<string, string>()
+      for (const item of source.PriceListItem) {
+        itemIdMap.set(item.id, crypto.randomUUID())
+      }
+
       await prismaClient.priceListItem.createMany({
         data: source.PriceListItem.map(item => ({
-          id: crypto.randomUUID(),
+          id: itemIdMap.get(item.id)!,
           priceListId: newId,
           description: item.description,
           unit: item.unit,
@@ -100,8 +110,17 @@ export const clonePriceListAction = protectedServerFunction({
           createdAt: now,
         })),
       })
+
+      const targetLinks = source.PriceListItem.filter(item => item.PriceListItemTarget !== null).map(item => ({
+        id: crypto.randomUUID(),
+        priceListItemId: itemIdMap.get(item.id)!,
+        targetId: item.PriceListItemTarget!.targetId,
+      }))
+
+      if (targetLinks.length > 0) {
+        await prismaClient.priceListItemTarget.createMany({data: targetLinks})
+      }
     } else {
-      // If source somehow has no cost margin item, create the default
       await prismaClient.priceListItem.create({
         data: {
           id: crypto.randomUUID(),
@@ -116,7 +135,7 @@ export const clonePriceListAction = protectedServerFunction({
       })
     }
 
-    logger.info(`Price list cloned: ${newId} from ${sourceId}`)
+    logger.info(`Price list cloned: ${newId} from ${sourceId} (${source.PriceListItem.length} items)`)
     revalidatePath('/priceLists')
   },
 })
@@ -125,10 +144,7 @@ export const updatePriceListAction = protectedServerFunction({
   schema: updatePriceListSchema,
   functionName: 'Update price list action',
   serverFn: async ({data: {id, ...data}, logger}) => {
-    await prismaClient.priceList.update({
-      where: {id},
-      data,
-    })
+    await prismaClient.priceList.update({where: {id}, data})
     logger.info(`Price list updated: ${id}`)
     revalidatePath('/priceLists')
   },
@@ -189,14 +205,23 @@ export const createPriceListItemAction = protectedServerFunction({
   },
 })
 
+export async function createPriceListItemAndReturnIdAction(
+  data: Parameters<typeof createPriceListItemAction>[0],
+): Promise<{id: string}> {
+  await createPriceListItemAction(data)
+  const record = await prismaClient.priceListItem.findFirstOrThrow({
+    where: {description: data.description},
+    orderBy: {createdAt: 'desc'},
+    select: {id: true},
+  })
+  return record
+}
+
 export const updatePriceListItemAction = protectedServerFunction({
   schema: updatePriceListItemSchema,
   functionName: 'Update price list item action',
   serverFn: async ({data: {id, ...data}, logger}) => {
-    await prismaClient.priceListItem.update({
-      where: {id},
-      data,
-    })
+    await prismaClient.priceListItem.update({where: {id}, data})
     logger.info(`Price list item updated: ${id}`)
     revalidatePath('/priceLists')
   },
@@ -237,6 +262,72 @@ export const restorePriceListItemAction = protectedServerFunction({
     revalidatePath('/priceLists')
   },
 })
+
+// ─── PriceListItemTarget ───────────────────────────────────────────────────────
+export const linkPriceListItemTargetAction = protectedServerFunction({
+  schema: linkPriceListItemTargetSchema,
+  functionName: 'Link price list item target action',
+  serverFn: async ({data: {priceListItemId, targetId}, logger}) => {
+    await prismaClient.priceListItemTarget.create({
+      data: {id: crypto.randomUUID(), priceListItemId, targetId},
+    })
+    logger.info(`Price list item ${priceListItemId} linked to target ${targetId}`)
+    revalidatePath('/priceLists')
+  },
+})
+
+export async function searchLinkableTargetsAction(
+  type: LinkableTargetType,
+  query: string,
+): Promise<LinkableTargetResult[]> {
+  const results = await searchLinkableTargets(type, query)
+
+  if (type === 'HourType') {
+    return (results as {id: string; name: string; info: string | null; targetId: string | null}[]).map(r => ({
+      targetId: r.targetId ?? r.id,
+      targetType: 'HourType' as const,
+      displayLabel: r.name,
+      subLabel: r.info ?? null,
+    }))
+  }
+
+  if (type === 'Material') {
+    return (
+      results as {
+        id: string
+        name: string | null
+        shortDescription: string
+        beNumber: string
+        targetId: string | null
+      }[]
+    ).map(r => ({
+      targetId: r.targetId ?? r.id,
+      targetType: 'Material' as const,
+      displayLabel: r.name ?? r.shortDescription,
+      subLabel: r.beNumber,
+    }))
+  }
+
+  if (type === 'Training') {
+    return (results as {id: string; trainingNumber: string | null; targetId: string}[]).map(r => ({
+      targetId: r.targetId,
+      targetType: 'Training' as const,
+      displayLabel: r.trainingNumber ?? r.id,
+      subLabel: null,
+    }))
+  }
+
+  if (type === 'TrainingStandard') {
+    return (results as {id: string; descriptionShort: string | null; targetId: string}[]).map(r => ({
+      targetId: r.targetId,
+      targetType: 'TrainingStandard' as const,
+      displayLabel: r.descriptionShort ?? r.id,
+      subLabel: null,
+    }))
+  }
+
+  return []
+}
 
 // ─── Project assignment ────────────────────────────────────────────────────────
 export const assignProjectToPriceListAction = protectedServerFunction({

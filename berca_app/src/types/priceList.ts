@@ -1,3 +1,14 @@
+// ─── PriceListItemTarget ───────────────────────────────────────────────────────
+export type LinkableTargetType = 'HourType' | 'Material' | 'Training' | 'TrainingStandard'
+
+export interface MappedPriceListItemTarget {
+  id: string
+  priceListItemId: string
+  targetId: string
+  targetType: LinkableTargetType
+  displayLabel: string // human readable name shown in the UI
+}
+
 // ─── PriceListItem ─────────────────────────────────────────────────────────────
 export interface MappedPriceListItem {
   id: string
@@ -12,6 +23,7 @@ export interface MappedPriceListItem {
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
+  linkedTarget: MappedPriceListItemTarget | null
 }
 
 // ─── PriceList ─────────────────────────────────────────────────────────────────
@@ -47,4 +59,12 @@ export interface UnassignedProjectOption {
   projectNumber: string
   projectName: string
   companyName: string
+}
+
+// ─── Linkable target search results ───────────────────────────────────────────
+export interface LinkableTargetResult {
+  targetId: string
+  targetType: LinkableTargetType
+  displayLabel: string
+  subLabel: string | null // e.g. beNumber for Material
 }

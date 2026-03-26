@@ -3,7 +3,7 @@ import {dateSchema, requiredDateSchema} from './schemaHelpers'
 
 export const workOrderSchema = z.object({
   id: z.string(),
-  workOrderNumber: z.string().max(100).nullable().optional(),
+  workOrderNumber: z.string(),
   description: z.string().nullable().optional(),
   additionalInfo: z.string().nullable().optional(),
   startDate: requiredDateSchema,

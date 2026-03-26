@@ -603,13 +603,13 @@ ALTER TABLE CompanyContact ADD CONSTRAINT fk_companyContact_companyAddress
     FOREIGN KEY (`companyAddressId`) REFERENCES CompanyAdress (`id`) ON DELETE SET NULL;
 
 -- 46a. houtype & material: add targetId column
-ALTER TABLE HourType ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NOT NULL;
-ALTER TABLE Material ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NOT NULL;
+ALTER TABLE HourType ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NULL;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NULL;
 
 -- 46b. houtype: add FK fk_hourType_target (skip if already exists)
 ALTER TABLE HourType DROP FOREIGN KEY IF EXISTS fk_hourType_target;
 ALTER TABLE HourType ADD CONSTRAINT fk_hourType_target
-    FOREIGN KEY (`targetId`) REFERENCES CompanyAdress (`id`) ON DELETE RESTRICT;
+    FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
 
 -- 46c. houtype: add FK fk_material_target (skip if already exists)
 ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_target;
@@ -623,6 +623,7 @@ CREATE TABLE
             targetId CHAR(36) NOT NULL,
             FOREIGN KEY (priceListItemId) REFERENCES PriceListItem (id) ON DELETE RESTRICT,
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+            UNIQUE (priceListItemId)
       ) ENGINE = InnoDB;
 
 ALTER TABLE WorkOrder CHANGE COLUMN IF EXISTS `workOrderNumber` `workOrderNumber` VARCHAR(255) NOT NULL;

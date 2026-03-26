@@ -1,5 +1,6 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
+import type {LinkableTargetType} from '@/types/priceList'
 
 // ─── Shared includes ───────────────────────────────────────────────────────────
 const priceListInclude = {
@@ -7,6 +8,9 @@ const priceListInclude = {
   PriceListItem: {
     include: {
       Employee_PriceListItem_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
+      PriceListItemTarget: {
+        select: {id: true, priceListItemId: true, targetId: true},
+      },
     },
     orderBy: [{isCostMargin: 'desc' as const}, {createdAt: 'asc' as const}] as {
       isCostMargin?: 'asc' | 'desc'
@@ -56,4 +60,116 @@ export async function getUnassignedOpenProjects() {
     },
     orderBy: {projectNumber: 'asc'},
   })
+}
+
+// ─── Enrich linked target labels for a set of targetIds ───────────────────────
+// Called from the detail page server component after the main query.
+// Returns a map of targetId -> {targetType, displayLabel} for all linked items.
+export async function enrichLinkedTargets(
+  targetIds: string[],
+): Promise<Map<string, {targetType: LinkableTargetType; displayLabel: string}>> {
+  if (targetIds.length === 0) return new Map()
+
+  const result = new Map<string, {targetType: LinkableTargetType; displayLabel: string}>()
+
+  const [hourTypes, materials, trainings, trainingStandards] = await Promise.all([
+    prismaClient.hourType.findMany({
+      where: {targetId: {in: targetIds}},
+      select: {name: true, targetId: true},
+    }),
+    prismaClient.material.findMany({
+      where: {targetId: {in: targetIds}},
+      select: {name: true, shortDescription: true, beNumber: true, targetId: true},
+    }),
+    prismaClient.training.findMany({
+      where: {targetId: {in: targetIds}},
+      select: {trainingNumber: true, targetId: true},
+    }),
+    prismaClient.trainingStandard.findMany({
+      where: {targetId: {in: targetIds}},
+      select: {descriptionShort: true, targetId: true},
+    }),
+  ])
+
+  for (const r of hourTypes) {
+    if (r.targetId) result.set(r.targetId, {targetType: 'HourType', displayLabel: r.name})
+  }
+  for (const r of materials) {
+    if (r.targetId) {
+      const label = r.name ?? r.shortDescription ?? r.beNumber
+      result.set(r.targetId, {targetType: 'Material', displayLabel: label})
+    }
+  }
+  for (const r of trainings) {
+    if (r.targetId) {
+      result.set(r.targetId, {targetType: 'Training', displayLabel: r.trainingNumber ?? r.targetId})
+    }
+  }
+  for (const r of trainingStandards) {
+    if (r.targetId) {
+      result.set(r.targetId, {
+        targetType: 'TrainingStandard',
+        displayLabel: r.descriptionShort ?? r.targetId,
+      })
+    }
+  }
+
+  return result
+}
+export async function searchLinkableTargets(type: LinkableTargetType, query: string) {
+  const q = query.trim()
+
+  if (type === 'HourType') {
+    return prismaClient.hourType.findMany({
+      where: {
+        deleted: false,
+        ...(q ? {name: {contains: q}} : {}),
+      },
+      select: {id: true, name: true, info: true, targetId: true},
+      orderBy: {name: 'asc'},
+      take: 20,
+    })
+  }
+
+  if (type === 'Material') {
+    return prismaClient.material.findMany({
+      where: {
+        deleted: false,
+        ...(q
+          ? {
+              OR: [{name: {contains: q}}, {shortDescription: {contains: q}}, {beNumber: {contains: q}}],
+            }
+          : {}),
+      },
+      select: {id: true, name: true, shortDescription: true, beNumber: true, targetId: true},
+      orderBy: {beNumber: 'asc'},
+      take: 20,
+    })
+  }
+
+  if (type === 'Training') {
+    return prismaClient.training.findMany({
+      where: {
+        deleted: false,
+        ...(q ? {trainingNumber: {contains: q}} : {}),
+      },
+      select: {id: true, trainingNumber: true, targetId: true},
+      orderBy: {trainingNumber: 'asc'},
+      take: 20,
+    })
+  }
+
+  if (type === 'TrainingStandard') {
+    return prismaClient.trainingStandard.findMany({
+      where: {
+        deleted: false,
+        ...(q ? {descriptionShort: {contains: q}} : {}),
+      },
+      select: {id: true, descriptionShort: true, targetId: true},
+      orderBy: {descriptionShort: 'asc'},
+      take: 20,
+    })
+  }
+
+  return []
 }

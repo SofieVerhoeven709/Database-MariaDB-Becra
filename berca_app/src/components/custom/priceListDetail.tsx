@@ -21,9 +21,13 @@ import {
   softDeletePriceListItemAction,
   hardDeletePriceListItemAction,
   restorePriceListItemAction,
+  linkPriceListItemTargetAction,
+  searchLinkableTargetsAction,
   assignProjectToPriceListAction,
   unassignProjectFromPriceListAction,
+  createPriceListItemAndReturnIdAction,
 } from '@/serverFunctions/priceLists'
+import type {LinkableTargetType, LinkableTargetResult} from '@/types/priceList'
 
 function formatDate(date: string | null) {
   if (!date) return '-'
@@ -46,9 +50,18 @@ interface ItemDialogProps {
   item: MappedPriceListItem | null // null = create
   isCostMargin?: boolean
   onSaved: () => void
+  onCreated?: (newItemId: string) => void
 }
 
-function ItemDialog({open, onOpenChange, priceListId, item, isCostMargin = false, onSaved}: ItemDialogProps) {
+function ItemDialog({
+  open,
+  onOpenChange,
+  priceListId,
+  item,
+  isCostMargin = false,
+  onSaved,
+  onCreated,
+}: ItemDialogProps) {
   const [description, setDescription] = useState('')
   const [unit, setUnit] = useState('')
   const [price, setPrice] = useState('')
@@ -92,17 +105,20 @@ function ItemDialog({open, onOpenChange, priceListId, item, isCostMargin = false
           unit: unit.trim(),
           price: parseFloat(price),
         })
+        onSaved()
+        onOpenChange(false)
       } else {
-        await createPriceListItemAction({
+        const newId = await createPriceListItemAndReturnIdAction({
           priceListId,
           description: description.trim(),
           unit: unit.trim(),
           price: parseFloat(price),
           isCostMargin,
         })
+        onOpenChange(false)
+        onSaved()
+        if (newId && onCreated) onCreated(newId.id)
       }
-      onSaved()
-      onOpenChange(false)
     } finally {
       setSaving(false)
     }
@@ -176,6 +192,151 @@ function ItemDialog({open, onOpenChange, priceListId, item, isCostMargin = false
   )
 }
 
+const TARGET_TYPE_LABELS: Record<LinkableTargetType, string> = {
+  HourType: 'Hour Type',
+  Material: 'Material',
+  Training: 'Training',
+  TrainingStandard: 'Training Standard',
+}
+
+interface LinkDialogProps {
+  open: boolean
+  onOpenChange: (v: boolean) => void
+  priceListItemId: string
+  onSaved: () => void
+}
+
+function LinkDialog({open, onOpenChange, priceListItemId, onSaved}: LinkDialogProps) {
+  const [selectedType, setSelectedType] = useState<LinkableTargetType | ''>('')
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState<LinkableTargetResult[]>([])
+  const [searching, setSearching] = useState(false)
+  const [selectedResult, setSelectedResult] = useState<LinkableTargetResult | null>(null)
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    if (!open) {
+      setSelectedType('')
+      setQuery('')
+      setResults([])
+      setSelectedResult(null)
+    }
+  }, [open])
+
+  useEffect(() => {
+    if (!selectedType) {
+      setResults([])
+      setSelectedResult(null)
+      return
+    }
+    setSelectedResult(null)
+    setSearching(true)
+    searchLinkableTargetsAction(selectedType, query)
+      .then(setResults)
+      .finally(() => setSearching(false))
+  }, [selectedType, query])
+
+  async function handleLink() {
+    if (!selectedResult) return
+    setSaving(true)
+    try {
+      await linkPriceListItemTargetAction({
+        priceListItemId,
+        targetId: selectedResult.targetId,
+      })
+      onSaved()
+      onOpenChange(false)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-md bg-card border-border">
+        <DialogHeader>
+          <DialogTitle className="text-foreground">Link to Target</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-4 py-2">
+          {/* Step 1: pick type */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Type *</Label>
+            <Select value={selectedType} onValueChange={v => setSelectedType(v as LinkableTargetType)}>
+              <SelectTrigger className="bg-secondary border-border">
+                <SelectValue placeholder="Select type…" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border">
+                {(Object.keys(TARGET_TYPE_LABELS) as LinkableTargetType[]).map(t => (
+                  <SelectItem key={t} value={t} className="text-xs">
+                    {TARGET_TYPE_LABELS[t]}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Step 2: search within type */}
+          {selectedType && (
+            <>
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Search</Label>
+                <Input
+                  value={query}
+                  onChange={e => setQuery(e.target.value)}
+                  placeholder={`Search ${TARGET_TYPE_LABELS[selectedType]}…`}
+                  className="bg-secondary border-border"
+                  autoFocus
+                />
+              </div>
+
+              <div className="flex flex-col gap-1 max-h-52 overflow-y-auto rounded-lg border border-border bg-secondary/30">
+                {searching ? (
+                  <p className="text-xs text-muted-foreground px-3 py-4 text-center">Searching…</p>
+                ) : results.length === 0 ? (
+                  <p className="text-xs text-muted-foreground px-3 py-4 text-center">No results found.</p>
+                ) : (
+                  results.map(r => (
+                    <button
+                      key={r.targetId}
+                      type="button"
+                      onClick={() => setSelectedResult(r)}
+                      className={`flex flex-col gap-0.5 px-3 py-2 text-left hover:bg-secondary/80 transition-colors border-b border-border/40 last:border-0 ${
+                        selectedResult?.targetId === r.targetId ? 'bg-accent/10' : ''
+                      }`}>
+                      <span className="text-sm text-foreground font-medium">{r.displayLabel}</span>
+                      {r.subLabel && <span className="text-xs text-muted-foreground">{r.subLabel}</span>}
+                    </button>
+                  ))
+                )}
+              </div>
+
+              {selectedResult && (
+                <p className="text-xs text-muted-foreground">
+                  Selected: <span className="text-foreground font-medium">{selectedResult.displayLabel}</span>
+                  {selectedResult.subLabel && (
+                    <span className="ml-1 text-muted-foreground">({selectedResult.subLabel})</span>
+                  )}
+                </p>
+              )}
+            </>
+          )}
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)} className="border-border">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleLink}
+            disabled={!selectedResult || saving}
+            className="bg-accent text-accent-foreground hover:bg-accent/80">
+            {saving ? 'Linking…' : 'Link'}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 // ─── Main component ────────────────────────────────────────────────────────────
 interface PriceListDetailProps {
   priceList: MappedPriceList
@@ -240,6 +401,15 @@ export function PriceListDetail({
   function openEditItem(item: MappedPriceListItem) {
     setEditingItem(item)
     setItemDialogOpen(true)
+  }
+
+  // Link dialog
+  const [linkDialogOpen, setLinkDialogOpen] = useState(false)
+  const [linkingItemId, setLinkingItemId] = useState<string | null>(null)
+
+  function openLinkDialog(item: MappedPriceListItem) {
+    setLinkingItemId(item.id)
+    setLinkDialogOpen(true)
   }
 
   async function handleDeleteItem(item: MappedPriceListItem) {
@@ -462,9 +632,10 @@ export function PriceListDetail({
                     <TableHead className={thClass}>Description</TableHead>
                     <TableHead className={thClass}>Unit</TableHead>
                     <TableHead className={thClass}>Price</TableHead>
+                    <TableHead className={thClass}>Linked To</TableHead>
                     <TableHead className={thClass}>Added By</TableHead>
                     <TableHead className={thClass}>Added At</TableHead>
-                    <TableHead className="w-24">
+                    <TableHead className="w-28">
                       <span className="sr-only">Actions</span>
                     </TableHead>
                   </TableRow>
@@ -478,6 +649,28 @@ export function PriceListDetail({
                       <TableCell className={tdClass}>{item.unit}</TableCell>
                       <TableCell className={`${tdClass} font-mono`}>
                         {formatPrice(item.price, item.isCostMargin)}
+                      </TableCell>
+                      <TableCell className={tdClass}>
+                        {item.linkedTarget ? (
+                          <div className="flex flex-col gap-0.5">
+                            <span className="text-foreground text-xs font-medium">
+                              {item.linkedTarget.displayLabel}
+                            </span>
+                            <span className="text-muted-foreground text-xs">
+                              {TARGET_TYPE_LABELS[item.linkedTarget.targetType]}
+                            </span>
+                          </div>
+                        ) : !item.deleted && canEdit ? (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 text-xs text-muted-foreground hover:text-accent hover:bg-accent/10 px-2 gap-1"
+                            onClick={() => openLinkDialog(item)}>
+                            <Plus className="h-3 w-3" /> Link
+                          </Button>
+                        ) : (
+                          <span className="text-muted-foreground/50 text-xs">—</span>
+                        )}
                       </TableCell>
                       <TableCell className={tdClass}>{item.createdByName}</TableCell>
                       <TableCell className={tdClass}>{formatDate(item.createdAt)}</TableCell>
@@ -662,7 +855,21 @@ export function PriceListDetail({
         priceListId={priceList.id}
         item={editingItem}
         onSaved={() => router.refresh()}
+        onCreated={newItemId => {
+          setLinkingItemId(newItemId)
+          setLinkDialogOpen(true)
+        }}
       />
+
+      {/* Link dialog */}
+      {linkingItemId && (
+        <LinkDialog
+          open={linkDialogOpen}
+          onOpenChange={setLinkDialogOpen}
+          priceListItemId={linkingItemId}
+          onSaved={() => router.refresh()}
+        />
+      )}
     </div>
   )
 }

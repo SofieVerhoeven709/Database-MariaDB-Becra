@@ -267,6 +267,7 @@ export type PriceListItemWhereInput = {
   PriceList?: Prisma.XOR<Prisma.PriceListScalarRelationFilter, Prisma.PriceListWhereInput>
   Employee_PriceListItem_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_PriceListItem_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  PriceListItemTarget?: Prisma.XOR<Prisma.PriceListItemTargetNullableScalarRelationFilter, Prisma.PriceListItemTargetWhereInput> | null
 }
 
 export type PriceListItemOrderByWithRelationInput = {
@@ -284,6 +285,7 @@ export type PriceListItemOrderByWithRelationInput = {
   PriceList?: Prisma.PriceListOrderByWithRelationInput
   Employee_PriceListItem_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  PriceListItemTarget?: Prisma.PriceListItemTargetOrderByWithRelationInput
   _relevance?: Prisma.PriceListItemOrderByRelevanceInput
 }
 
@@ -305,6 +307,7 @@ export type PriceListItemWhereUniqueInput = Prisma.AtLeast<{
   PriceList?: Prisma.XOR<Prisma.PriceListScalarRelationFilter, Prisma.PriceListWhereInput>
   Employee_PriceListItem_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_PriceListItem_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  PriceListItemTarget?: Prisma.XOR<Prisma.PriceListItemTargetNullableScalarRelationFilter, Prisma.PriceListItemTargetWhereInput> | null
 }, "id">
 
 export type PriceListItemOrderByWithAggregationInput = {
@@ -355,6 +358,7 @@ export type PriceListItemCreateInput = {
   PriceList: Prisma.PriceListCreateNestedOneWithoutPriceListItemInput
   Employee_PriceListItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_createdByToEmployeeInput
   Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeInput
+  PriceListItemTarget?: Prisma.PriceListItemTargetCreateNestedOneWithoutPriceListItemInput
 }
 
 export type PriceListItemUncheckedCreateInput = {
@@ -369,6 +373,7 @@ export type PriceListItemUncheckedCreateInput = {
   deletedAt?: Date | string | null
   deletedBy?: string | null
   createdBy: string
+  PriceListItemTarget?: Prisma.PriceListItemTargetUncheckedCreateNestedOneWithoutPriceListItemInput
 }
 
 export type PriceListItemUpdateInput = {
@@ -383,6 +388,7 @@ export type PriceListItemUpdateInput = {
   PriceList?: Prisma.PriceListUpdateOneRequiredWithoutPriceListItemNestedInput
   Employee_PriceListItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceListItem_PriceListItem_createdByToEmployeeNestedInput
   Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeNestedInput
+  PriceListItemTarget?: Prisma.PriceListItemTargetUpdateOneWithoutPriceListItemNestedInput
 }
 
 export type PriceListItemUncheckedUpdateInput = {
@@ -397,6 +403,7 @@ export type PriceListItemUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  PriceListItemTarget?: Prisma.PriceListItemTargetUncheckedUpdateOneWithoutPriceListItemNestedInput
 }
 
 export type PriceListItemCreateManyInput = {
@@ -502,6 +509,11 @@ export type PriceListItemMinOrderByAggregateInput = {
 
 export type PriceListItemSumOrderByAggregateInput = {
   price?: Prisma.SortOrder
+}
+
+export type PriceListItemScalarRelationFilter = {
+  is?: Prisma.PriceListItemWhereInput
+  isNot?: Prisma.PriceListItemWhereInput
 }
 
 export type PriceListItemCreateNestedManyWithoutEmployee_PriceListItem_createdByToEmployeeInput = {
@@ -638,6 +650,20 @@ export type DecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type PriceListItemCreateNestedOneWithoutPriceListItemTargetInput = {
+  create?: Prisma.XOR<Prisma.PriceListItemCreateWithoutPriceListItemTargetInput, Prisma.PriceListItemUncheckedCreateWithoutPriceListItemTargetInput>
+  connectOrCreate?: Prisma.PriceListItemCreateOrConnectWithoutPriceListItemTargetInput
+  connect?: Prisma.PriceListItemWhereUniqueInput
+}
+
+export type PriceListItemUpdateOneRequiredWithoutPriceListItemTargetNestedInput = {
+  create?: Prisma.XOR<Prisma.PriceListItemCreateWithoutPriceListItemTargetInput, Prisma.PriceListItemUncheckedCreateWithoutPriceListItemTargetInput>
+  connectOrCreate?: Prisma.PriceListItemCreateOrConnectWithoutPriceListItemTargetInput
+  upsert?: Prisma.PriceListItemUpsertWithoutPriceListItemTargetInput
+  connect?: Prisma.PriceListItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PriceListItemUpdateToOneWithWhereWithoutPriceListItemTargetInput, Prisma.PriceListItemUpdateWithoutPriceListItemTargetInput>, Prisma.PriceListItemUncheckedUpdateWithoutPriceListItemTargetInput>
+}
+
 export type PriceListItemCreateWithoutEmployee_PriceListItem_createdByToEmployeeInput = {
   id: string
   description: string
@@ -649,6 +675,7 @@ export type PriceListItemCreateWithoutEmployee_PriceListItem_createdByToEmployee
   deletedAt?: Date | string | null
   PriceList: Prisma.PriceListCreateNestedOneWithoutPriceListItemInput
   Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeInput
+  PriceListItemTarget?: Prisma.PriceListItemTargetCreateNestedOneWithoutPriceListItemInput
 }
 
 export type PriceListItemUncheckedCreateWithoutEmployee_PriceListItem_createdByToEmployeeInput = {
@@ -662,6 +689,7 @@ export type PriceListItemUncheckedCreateWithoutEmployee_PriceListItem_createdByT
   isCostMargin?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  PriceListItemTarget?: Prisma.PriceListItemTargetUncheckedCreateNestedOneWithoutPriceListItemInput
 }
 
 export type PriceListItemCreateOrConnectWithoutEmployee_PriceListItem_createdByToEmployeeInput = {
@@ -685,6 +713,7 @@ export type PriceListItemCreateWithoutEmployee_PriceListItem_deletedByToEmployee
   deletedAt?: Date | string | null
   PriceList: Prisma.PriceListCreateNestedOneWithoutPriceListItemInput
   Employee_PriceListItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_createdByToEmployeeInput
+  PriceListItemTarget?: Prisma.PriceListItemTargetCreateNestedOneWithoutPriceListItemInput
 }
 
 export type PriceListItemUncheckedCreateWithoutEmployee_PriceListItem_deletedByToEmployeeInput = {
@@ -698,6 +727,7 @@ export type PriceListItemUncheckedCreateWithoutEmployee_PriceListItem_deletedByT
   isCostMargin?: boolean
   deletedAt?: Date | string | null
   createdBy: string
+  PriceListItemTarget?: Prisma.PriceListItemTargetUncheckedCreateNestedOneWithoutPriceListItemInput
 }
 
 export type PriceListItemCreateOrConnectWithoutEmployee_PriceListItem_deletedByToEmployeeInput = {
@@ -770,6 +800,7 @@ export type PriceListItemCreateWithoutPriceListInput = {
   deletedAt?: Date | string | null
   Employee_PriceListItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_createdByToEmployeeInput
   Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeInput
+  PriceListItemTarget?: Prisma.PriceListItemTargetCreateNestedOneWithoutPriceListItemInput
 }
 
 export type PriceListItemUncheckedCreateWithoutPriceListInput = {
@@ -783,6 +814,7 @@ export type PriceListItemUncheckedCreateWithoutPriceListInput = {
   deletedAt?: Date | string | null
   deletedBy?: string | null
   createdBy: string
+  PriceListItemTarget?: Prisma.PriceListItemTargetUncheckedCreateNestedOneWithoutPriceListItemInput
 }
 
 export type PriceListItemCreateOrConnectWithoutPriceListInput = {
@@ -809,6 +841,78 @@ export type PriceListItemUpdateWithWhereUniqueWithoutPriceListInput = {
 export type PriceListItemUpdateManyWithWhereWithoutPriceListInput = {
   where: Prisma.PriceListItemScalarWhereInput
   data: Prisma.XOR<Prisma.PriceListItemUpdateManyMutationInput, Prisma.PriceListItemUncheckedUpdateManyWithoutPriceListInput>
+}
+
+export type PriceListItemCreateWithoutPriceListItemTargetInput = {
+  id: string
+  description: string
+  unit: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt: Date | string
+  deleted?: boolean
+  isCostMargin?: boolean
+  deletedAt?: Date | string | null
+  PriceList: Prisma.PriceListCreateNestedOneWithoutPriceListItemInput
+  Employee_PriceListItem_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_createdByToEmployeeInput
+  Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeInput
+}
+
+export type PriceListItemUncheckedCreateWithoutPriceListItemTargetInput = {
+  id: string
+  priceListId: string
+  description: string
+  unit: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt: Date | string
+  deleted?: boolean
+  isCostMargin?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  createdBy: string
+}
+
+export type PriceListItemCreateOrConnectWithoutPriceListItemTargetInput = {
+  where: Prisma.PriceListItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.PriceListItemCreateWithoutPriceListItemTargetInput, Prisma.PriceListItemUncheckedCreateWithoutPriceListItemTargetInput>
+}
+
+export type PriceListItemUpsertWithoutPriceListItemTargetInput = {
+  update: Prisma.XOR<Prisma.PriceListItemUpdateWithoutPriceListItemTargetInput, Prisma.PriceListItemUncheckedUpdateWithoutPriceListItemTargetInput>
+  create: Prisma.XOR<Prisma.PriceListItemCreateWithoutPriceListItemTargetInput, Prisma.PriceListItemUncheckedCreateWithoutPriceListItemTargetInput>
+  where?: Prisma.PriceListItemWhereInput
+}
+
+export type PriceListItemUpdateToOneWithWhereWithoutPriceListItemTargetInput = {
+  where?: Prisma.PriceListItemWhereInput
+  data: Prisma.XOR<Prisma.PriceListItemUpdateWithoutPriceListItemTargetInput, Prisma.PriceListItemUncheckedUpdateWithoutPriceListItemTargetInput>
+}
+
+export type PriceListItemUpdateWithoutPriceListItemTargetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  PriceList?: Prisma.PriceListUpdateOneRequiredWithoutPriceListItemNestedInput
+  Employee_PriceListItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceListItem_PriceListItem_createdByToEmployeeNestedInput
+  Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeNestedInput
+}
+
+export type PriceListItemUncheckedUpdateWithoutPriceListItemTargetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  priceListId?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PriceListItemCreateManyEmployee_PriceListItem_createdByToEmployeeInput = {
@@ -848,6 +952,7 @@ export type PriceListItemUpdateWithoutEmployee_PriceListItem_createdByToEmployee
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   PriceList?: Prisma.PriceListUpdateOneRequiredWithoutPriceListItemNestedInput
   Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeNestedInput
+  PriceListItemTarget?: Prisma.PriceListItemTargetUpdateOneWithoutPriceListItemNestedInput
 }
 
 export type PriceListItemUncheckedUpdateWithoutEmployee_PriceListItem_createdByToEmployeeInput = {
@@ -861,6 +966,7 @@ export type PriceListItemUncheckedUpdateWithoutEmployee_PriceListItem_createdByT
   isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  PriceListItemTarget?: Prisma.PriceListItemTargetUncheckedUpdateOneWithoutPriceListItemNestedInput
 }
 
 export type PriceListItemUncheckedUpdateManyWithoutEmployee_PriceListItem_createdByToEmployeeInput = {
@@ -887,6 +993,7 @@ export type PriceListItemUpdateWithoutEmployee_PriceListItem_deletedByToEmployee
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   PriceList?: Prisma.PriceListUpdateOneRequiredWithoutPriceListItemNestedInput
   Employee_PriceListItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceListItem_PriceListItem_createdByToEmployeeNestedInput
+  PriceListItemTarget?: Prisma.PriceListItemTargetUpdateOneWithoutPriceListItemNestedInput
 }
 
 export type PriceListItemUncheckedUpdateWithoutEmployee_PriceListItem_deletedByToEmployeeInput = {
@@ -900,6 +1007,7 @@ export type PriceListItemUncheckedUpdateWithoutEmployee_PriceListItem_deletedByT
   isCostMargin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  PriceListItemTarget?: Prisma.PriceListItemTargetUncheckedUpdateOneWithoutPriceListItemNestedInput
 }
 
 export type PriceListItemUncheckedUpdateManyWithoutEmployee_PriceListItem_deletedByToEmployeeInput = {
@@ -939,6 +1047,7 @@ export type PriceListItemUpdateWithoutPriceListInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_PriceListItem_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceListItem_PriceListItem_createdByToEmployeeNestedInput
   Employee_PriceListItem_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceListItem_PriceListItem_deletedByToEmployeeNestedInput
+  PriceListItemTarget?: Prisma.PriceListItemTargetUpdateOneWithoutPriceListItemNestedInput
 }
 
 export type PriceListItemUncheckedUpdateWithoutPriceListInput = {
@@ -952,6 +1061,7 @@ export type PriceListItemUncheckedUpdateWithoutPriceListInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  PriceListItemTarget?: Prisma.PriceListItemTargetUncheckedUpdateOneWithoutPriceListItemNestedInput
 }
 
 export type PriceListItemUncheckedUpdateManyWithoutPriceListInput = {
@@ -984,6 +1094,7 @@ export type PriceListItemSelect<ExtArgs extends runtime.Types.Extensions.Interna
   PriceList?: boolean | Prisma.PriceListDefaultArgs<ExtArgs>
   Employee_PriceListItem_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_PriceListItem_deletedByToEmployee?: boolean | Prisma.PriceListItem$Employee_PriceListItem_deletedByToEmployeeArgs<ExtArgs>
+  PriceListItemTarget?: boolean | Prisma.PriceListItem$PriceListItemTargetArgs<ExtArgs>
 }, ExtArgs["result"]["priceListItem"]>
 
 
@@ -1007,6 +1118,7 @@ export type PriceListItemInclude<ExtArgs extends runtime.Types.Extensions.Intern
   PriceList?: boolean | Prisma.PriceListDefaultArgs<ExtArgs>
   Employee_PriceListItem_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_PriceListItem_deletedByToEmployee?: boolean | Prisma.PriceListItem$Employee_PriceListItem_deletedByToEmployeeArgs<ExtArgs>
+  PriceListItemTarget?: boolean | Prisma.PriceListItem$PriceListItemTargetArgs<ExtArgs>
 }
 
 export type $PriceListItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1015,6 +1127,7 @@ export type $PriceListItemPayload<ExtArgs extends runtime.Types.Extensions.Inter
     PriceList: Prisma.$PriceListPayload<ExtArgs>
     Employee_PriceListItem_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Employee_PriceListItem_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    PriceListItemTarget: Prisma.$PriceListItemTargetPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1371,6 +1484,7 @@ export interface Prisma__PriceListItemClient<T, Null = never, ExtArgs extends ru
   PriceList<T extends Prisma.PriceListDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PriceListDefaultArgs<ExtArgs>>): Prisma.Prisma__PriceListClient<runtime.Types.Result.GetResult<Prisma.$PriceListPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_PriceListItem_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_PriceListItem_deletedByToEmployee<T extends Prisma.PriceListItem$Employee_PriceListItem_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PriceListItem$Employee_PriceListItem_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  PriceListItemTarget<T extends Prisma.PriceListItem$PriceListItemTargetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PriceListItem$PriceListItemTargetArgs<ExtArgs>>): Prisma.Prisma__PriceListItemTargetClient<runtime.Types.Result.GetResult<Prisma.$PriceListItemTargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1770,6 +1884,25 @@ export type PriceListItem$Employee_PriceListItem_deletedByToEmployeeArgs<ExtArgs
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * PriceListItem.PriceListItemTarget
+ */
+export type PriceListItem$PriceListItemTargetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PriceListItemTarget
+   */
+  select?: Prisma.PriceListItemTargetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PriceListItemTarget
+   */
+  omit?: Prisma.PriceListItemTargetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PriceListItemTargetInclude<ExtArgs> | null
+  where?: Prisma.PriceListItemTargetWhereInput
 }
 
 /**

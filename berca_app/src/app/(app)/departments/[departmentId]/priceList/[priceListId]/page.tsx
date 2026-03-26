@@ -1,5 +1,5 @@
 import {notFound} from 'next/navigation'
-import {getPriceListById, getUnassignedOpenProjects} from '@/dal/priceLists'
+import {getPriceListById, getUnassignedOpenProjects, enrichLinkedTargets} from '@/dal/priceLists'
 import {mapPriceList} from '@/extra/priceLists'
 import {PriceListDetail} from '@/components/custom/priceListDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
@@ -23,7 +23,14 @@ export default async function PriceListDetailPage({params}: PageProps) {
   if (!department) return <p>Department not found</p>
   if (!priceListRaw) notFound()
 
-  const priceList = mapPriceList(priceListRaw)
+  // Collect all linked targetIds across items so we can resolve display labels in one batch
+  const linkedTargetIds = priceListRaw.PriceListItem.map(i => i.PriceListItemTarget?.targetId).filter(
+    (id): id is string => !!id,
+  )
+
+  const resolvedTargets = await enrichLinkedTargets(linkedTargetIds)
+
+  const priceList = mapPriceList(priceListRaw, resolvedTargets)
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   const unassignedProjects = unassignedProjectsRaw.map(p => ({

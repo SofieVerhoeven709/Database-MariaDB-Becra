@@ -474,3 +474,8 @@ export type PriceListItem = Prisma.PriceListItemModel
  * 
  */
 export type CompanyAddress = Prisma.CompanyAddressModel
+/**
+ * Model PriceListItemTarget
+ * 
+ */
+export type PriceListItemTarget = Prisma.PriceListItemTargetModel

@@ -7,6 +7,7 @@ CREATE TABLE
             targetId CHAR(36) NOT NULL,
             FOREIGN KEY (priceListItemId) REFERENCES PriceListItem (id) ON DELETE RESTRICT,
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+            UNIQUE (priceListItemId)
       ) ENGINE = InnoDB;
 
 CREATE TABLE

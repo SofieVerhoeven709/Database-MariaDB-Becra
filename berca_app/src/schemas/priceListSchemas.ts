@@ -67,3 +67,9 @@ export const assignProjectSchema = z.object({
 export const unassignProjectSchema = z.object({
   projectId: z.string(),
 })
+
+// ─── PriceListItemTarget ───────────────────────────────────────────────────────
+export const linkPriceListItemTargetSchema = z.object({
+  priceListItemId: z.string(),
+  targetId: z.string(),
+})

@@ -1,4 +1,16 @@
-import type {MappedPriceList, MappedPriceListItem, MappedPriceListProject} from '@/types/priceList'
+import type {
+  MappedPriceList,
+  MappedPriceListItem,
+  MappedPriceListItemTarget,
+  MappedPriceListProject,
+  LinkableTargetType,
+} from '@/types/priceList'
+
+type PriceListItemTargetRaw = {
+  id: string
+  priceListItemId: string
+  targetId: string
+}
 
 type PriceListItemRaw = {
   id: string
@@ -13,6 +25,7 @@ type PriceListItemRaw = {
   deletedAt: Date | null
   deletedBy: string | null
   Employee_PriceListItem_createdByToEmployee: {id: string; firstName: string; lastName: string}
+  PriceListItemTarget: PriceListItemTargetRaw | null
 }
 
 type PriceListRaw = {
@@ -36,7 +49,23 @@ type PriceListRaw = {
   }[]
 }
 
-function mapItem(r: PriceListItemRaw): MappedPriceListItem {
+function mapItem(
+  r: PriceListItemRaw,
+  resolvedTargets: Map<string, {targetType: LinkableTargetType; displayLabel: string}>,
+): MappedPriceListItem {
+  let linkedTarget: MappedPriceListItemTarget | null = null
+
+  if (r.PriceListItemTarget) {
+    const resolved = resolvedTargets.get(r.PriceListItemTarget.targetId)
+    linkedTarget = {
+      id: r.PriceListItemTarget.id,
+      priceListItemId: r.PriceListItemTarget.priceListItemId,
+      targetId: r.PriceListItemTarget.targetId,
+      targetType: resolved?.targetType ?? 'HourType',
+      displayLabel: resolved?.displayLabel ?? r.PriceListItemTarget.targetId,
+    }
+  }
+
   return {
     id: r.id,
     priceListId: r.priceListId,
@@ -50,11 +79,15 @@ function mapItem(r: PriceListItemRaw): MappedPriceListItem {
     deleted: r.deleted,
     deletedAt: r.deletedAt?.toISOString() ?? null,
     deletedBy: r.deletedBy,
+    linkedTarget,
   }
 }
 
-export function mapPriceList(r: PriceListRaw): MappedPriceList {
-  const items = r.PriceListItem.map(mapItem)
+export function mapPriceList(
+  r: PriceListRaw,
+  resolvedTargets: Map<string, {targetType: LinkableTargetType; displayLabel: string}> = new Map(),
+): MappedPriceList {
+  const items = r.PriceListItem.map(item => mapItem(item, resolvedTargets))
   const projects: MappedPriceListProject[] = r.Project.map(p => ({
     id: p.id,
     projectNumber: p.projectNumber,

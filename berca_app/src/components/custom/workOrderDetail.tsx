@@ -82,7 +82,7 @@ export function WorkOrderDetail({
     try {
       await updateWorkOrderAction({
         id: workOrder.id,
-        workOrderNumber: form.workOrderNumber || null,
+        workOrderNumber: form.workOrderNumber,
         description: form.description || null,
         additionalInfo: form.additionalInfo || null,
         startDate: new Date(form.startDate),

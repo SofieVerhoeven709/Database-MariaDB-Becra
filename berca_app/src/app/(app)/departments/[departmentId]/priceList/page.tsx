@@ -21,7 +21,7 @@ export default async function PriceListsPage({params}: PageProps) {
   if (!department) return <p>Department not found</p>
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const priceLists = priceListsRaw.map(mapPriceList)
+  const priceLists = priceListsRaw.map(r => mapPriceList(r))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

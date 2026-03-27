@@ -33,7 +33,8 @@ const beNumberSchema = z.preprocess(
 export const materialSerialTrackedSchema = z.object({
   id: z.string().uuid(),
 
-  beNumber: beNumberSchema,
+  materialId: nullableUuidSchema, // New: link to Material
+  beNumber: beNumberSchema.optional(), // Now optional, for display only
   brandName: nullableString255Schema,
   management: nullableString255Schema,
   brandOrderNumber: nullableString255Schema,

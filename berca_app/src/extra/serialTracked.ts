@@ -13,6 +13,7 @@ type SerialTrackedFromDAL = Prisma.MaterialSerialTrackGetPayload<{
     Material: {
       select: {
         beNumber: true
+        materialGroupIdA: true // Include materialGroupIdA in the selection
       }
     }
   }
@@ -30,7 +31,7 @@ export function mapMaterialSerialTracked(item: SerialTrackedFromDAL): MappedMate
     shortDescription: item.shortDescription,
     longDescription: item.longDescription,
     transactionType: item.transactionType,
-    materialGroupId: null, // Not present in MaterialSerialTrack, set to null
+    materialGroupId: item.Material?.materialGroupIdA ?? null, // Use group from related Material
     fromLocation: item.fromLocation,
     toLocation: item.toLocation,
     preferredSupplier: item.preferredSupplier,

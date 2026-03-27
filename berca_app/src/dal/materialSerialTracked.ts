@@ -11,24 +11,32 @@ export type SerialTrackedWithRelations = Prisma.MaterialSerialTrackGetPayload<{
         lastName: true
       }
     }
+    Material: {
+      select: {
+        beNumber: true
+        materialGroupIdA: true // Add materialGroupIdA to the include
+      }
+    }
   }
 }>
 
 export async function getSerialTracked(options?: {includeDeleted?: boolean}): Promise<SerialTrackedWithRelations[]> {
   const includeDeleted = options?.includeDeleted ?? false
 
-  return prismaClient.materialSerialTrack.findMany({
+  const results = await prismaClient.materialSerialTrack.findMany({
     where: includeDeleted ? undefined : {deleted: false},
     include: {
       Employee: {
         select: {id: true, firstName: true, lastName: true},
       },
       Material: {
-        select: {beNumber: true},
+        select: {beNumber: true, materialGroupIdA: true}, // Add materialGroupIdA to the select
       },
     },
     orderBy: {shortDescription: 'asc'},
   })
+  console.log('[DAL:getSerialTracked] count:', results.length, 'sample:', results.slice(0, 2))
+  return results
 }
 
 export async function getSerialTrackedById(id: string): Promise<SerialTrackedWithRelations | null> {
@@ -39,7 +47,7 @@ export async function getSerialTrackedById(id: string): Promise<SerialTrackedWit
         select: {id: true, firstName: true, lastName: true},
       },
       Material: {
-        select: {beNumber: true},
+        select: {beNumber: true, materialGroupIdA: true}, // Add materialGroupIdA to the select
       },
     },
   })
@@ -47,28 +55,48 @@ export async function getSerialTrackedById(id: string): Promise<SerialTrackedWit
 
 export async function createSerialTracked(data: {
   id: string
-  beNumber?: string | null
+  materialId?: string | null
+  companyId?: string | null
+  projectId?: string | null
+  createdBy?: string | null
+  deletedBy?: string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
-  companyId?: string | null
   orderNumber?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   transactionType?: string | null
-  materialGroupId?: string | null
+  materialGroupId?: string | null // still accepted for compatibility, but will be removed before Prisma call
   fromLocation?: string | null
   toLocation?: string | null
   preferredSupplier?: string | null
   rejected?: boolean | null
   additionalInfo?: string | null
-  projectId?: string | null
   becraCode?: string | null
-  createdBy?: string | null
 }) {
-  return prismaClient.materialSerialTrack.create({
-    data,
+  console.log('[DAL:createSerialTracked] input:', data)
+  const {
+    materialId,
+    companyId,
+    projectId,
+    createdBy,
+    deletedBy,
+    materialGroupId, // destructure and discard
+    ...rest
+  } = data
+  const prismaData: any = { ...rest }
+  if (materialId) prismaData.Material = { connect: { id: materialId } }
+  if (companyId) prismaData.Company = { connect: { id: companyId } }
+  if (projectId) prismaData.Project = { connect: { id: projectId } }
+  if (createdBy) prismaData.Employee = { connect: { id: createdBy } }
+  if (deletedBy) prismaData.Employee_MaterialSerialTrack_deletedByToEmployee = { connect: { id: deletedBy } }
+  // materialGroupId is NOT included in prismaData
+  const created = await prismaClient.materialSerialTrack.create({
+    data: prismaData,
   })
+  console.log('[DAL:createSerialTracked] created:', created)
+  return created
 }
 
 export async function updateSerialTracked(

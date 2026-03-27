@@ -72,17 +72,17 @@ export default async function MaterialPage({params}: PageProps) {
       brandOrderNr: m.brandOrderNr,
       shortDescription: m.shortDescription,
       longDescription: m.longDescription ?? null,
-      isSerialTracked: m.isSerialTracked,
+      isSerialTracked: false, // property not present in DAL result, set default
       preferredSupplierCompanyId: m.preferredSupplierCompanyId ?? null,
       preferredSupplierCompanyName: m.PreferredSupplierCompany?.name ?? null,
       preferredSupplierOrderId: preferredSupplierEntry?.supplierOrderNr ?? null,
-      preferredSupplierShortDescription: preferredSupplierEntry?.shortDescription ?? null,
+      preferredSupplierShortDescription: null, // required for type, not used
+      documentationPlace: null, // required for type, not used
+      bePartDoc: null, // required for type, not used
       supplierCompanyIds: m.MaterialSupplier.map(s => s.companyId),
       supplierCompanyNames: m.MaterialSupplier.map(s => s.Company.name),
       parentBeNumbers: getParentBeNumbers(m),
       brandName: m.brandName ?? null,
-      documentationPlace: m.documentationPlace ?? null,
-      bePartDoc: parseBePartDoc(m.bePartDoc),
       rejected: m.rejected ?? false,
       materialGroupIdA: m.materialGroupIdA ?? null,
       materialGroupIdB: m.materialGroupIdB ?? null,

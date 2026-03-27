@@ -399,7 +399,6 @@ export function MaterialFormDialog({
               placeholder="Leave empty = generate automatically"
             />
           </div>
-
           <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">
             <div className="flex flex-col">
               <Label className="text-xs text-muted-foreground">Is parent part</Label>
@@ -466,7 +465,6 @@ export function MaterialFormDialog({
               placeholder="Detailed description..."
             />
           </div>
-
           {/* Brand Name + Brand Order No. */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
@@ -493,7 +491,6 @@ export function MaterialFormDialog({
               />
             </div>
           </div>
-
           {/* Row 3: MaterialGroup A + Unit */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
@@ -527,7 +524,6 @@ export function MaterialFormDialog({
               </Select>
             </div>
           </div>
-
           {/* Row 4: Optional Material Group B/C */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
@@ -567,7 +563,6 @@ export function MaterialFormDialog({
               </Select>
             </div>
           </div>
-
           {/* Row 5: Optional Material Group D + Preferred Supplier Order ID */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
@@ -601,7 +596,6 @@ export function MaterialFormDialog({
               />
             </div>
           </div>
-
           <div className="flex flex-col gap-2">
             <Label className="text-xs text-muted-foreground">Warehouse Place</Label>
             <Select
@@ -621,9 +615,8 @@ export function MaterialFormDialog({
             </Select>
             <p className="text-xs text-muted-foreground">Optional: assign a place now or later.</p>
           </div>
-
           {/* Preferred Supplier Short Description */}
-          <div className="flex flex-col gap-2">
+          {/* <div className="flex flex-col gap-2">
             <Label htmlFor="preferredSupplierShortDescription" className="text-xs text-muted-foreground">
               Preferred Supplier Short Description
             </Label>
@@ -637,7 +630,7 @@ export function MaterialFormDialog({
               placeholder="Short description or notes about the preferred supplier"
             />
           </div>
-
+          */}
           {/* Preferred Supplier Company - Searchable */}
           <div className="flex flex-col gap-2">
             <Label className="text-xs text-muted-foreground">Preferred Supplier Company</Label>
@@ -653,8 +646,7 @@ export function MaterialFormDialog({
               <p className="text-xs text-muted-foreground">Preferred supplier is selected from your supplier list.</p>
             ) : null}
           </div>
-
-          {/* Row 6: Documentation Place */}
+          {/* Row 6: Documentation Place
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2" />
             <div className="flex flex-col gap-2">
@@ -670,7 +662,7 @@ export function MaterialFormDialog({
               />
             </div>
           </div>
-
+*/}
           <div className="flex flex-col gap-2">
             <Label className="text-xs text-muted-foreground">Suppliers</Label>
             <div className="rounded-md border border-border bg-secondary/40 p-3 max-h-44 overflow-y-auto space-y-2">
@@ -695,7 +687,6 @@ export function MaterialFormDialog({
               Select one or more suppliers. Preferred supplier must be selected from this list.
             </p>
           </div>
-
           {/* Parent Parts Button */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
@@ -745,10 +736,11 @@ export function MaterialFormDialog({
               </>
             )}
           </div>
-
           {/* Row 5: BE Part Doc + Rejected */}
+
           <div className="grid grid-cols-2 gap-4 items-end">
             <div className="flex flex-col gap-2">
+              {/*
               <Label htmlFor="bePartDoc" className="text-xs text-muted-foreground">
                 BE Part Doc
               </Label>
@@ -760,6 +752,7 @@ export function MaterialFormDialog({
                 onChange={e => update('bePartDoc', e.target.value ? Number(e.target.value) : null)}
                 placeholder="Doc reference"
               />
+              */}
             </div>
             <div className="flex flex-col gap-2">
               <Label className="text-xs text-muted-foreground">Rejected</Label>
@@ -769,13 +762,11 @@ export function MaterialFormDialog({
               </div>
             </div>
           </div>
-
           {saveError && (
             <div className="rounded-md bg-destructive/10 border border-destructive/30 px-3 py-2 text-sm text-destructive">
               {saveError}
             </div>
           )}
-
           <DialogFooter className="pt-2">
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>
               Cancel

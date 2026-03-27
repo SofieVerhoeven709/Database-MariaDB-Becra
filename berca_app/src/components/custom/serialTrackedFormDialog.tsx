@@ -57,6 +57,7 @@ interface MaterialSerialTrackedFormDialogProps {
 
 type FormState = {
   id?: string
+  materialId: string // New: selected materialId
   beNumber: string
   brandName: string
   management: string
@@ -77,6 +78,7 @@ type FormState = {
 }
 
 const emptyForm: FormState = {
+  materialId: '',
   beNumber: '',
   brandName: '',
   management: '',
@@ -101,6 +103,7 @@ function toFormState(item: MaterialSerialTrackedFormValue | null): FormState {
 
   return {
     id: item.id,
+    materialId: item.id, // Set materialId from item.id
     beNumber: item.beNumber ?? '',
     brandName: item.brandName ?? '',
     management: item.management ?? '',
@@ -157,11 +160,11 @@ export function MaterialSerialTrackedFormDialog({
   }
 
   async function handleBeNumberSelect(beNumber: string) {
-    setField('beNumber', beNumber)
     const material = materialOptions.find(m => m.beNumber === beNumber)
     if (material) {
       setForm(prev => ({
         ...prev,
+        materialId: material.id, // Set materialId
         beNumber: material.beNumber,
         brandName: material.brandName ?? '',
         management: material.management ?? '',
@@ -170,6 +173,8 @@ export function MaterialSerialTrackedFormDialog({
         longDescription: material.longDescription ?? '',
         materialGroupId: material.materialGroupId ?? '',
       }))
+    } else {
+      setForm(prev => ({...prev, beNumber, materialId: ''}))
     }
   }
 
@@ -182,6 +187,7 @@ export function MaterialSerialTrackedFormDialog({
         if (isEditing && form.id) {
           await updateMaterialSerialTrackedAction({
             id: form.id,
+            materialId: form.materialId || null,
             beNumber: form.beNumber,
             brandName: form.brandName,
             management: form.management,
@@ -202,6 +208,7 @@ export function MaterialSerialTrackedFormDialog({
           })
         } else {
           await createMaterialSerialTrackedAction({
+            materialId: form.materialId || null,
             beNumber: form.beNumber,
             brandName: form.brandName,
             management: form.management,

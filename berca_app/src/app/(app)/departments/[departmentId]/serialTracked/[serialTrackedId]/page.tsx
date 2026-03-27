@@ -6,7 +6,7 @@ import {notFound} from 'next/navigation'
 
 import {getCompanies} from '@/dal/companies'
 import {getProjects} from '@/dal/projects'
-import {getMaterialGroups} from '@/dal/materials'
+import {getMaterials, getMaterialGroups} from '@/dal/materials'
 
 import {MaterialSerialTrackedDetail} from '@/components/custom/serialTrackedDetail'
 
@@ -17,13 +17,14 @@ interface PageProps {
 export default async function SerialTrackedDetailPage({params}: PageProps) {
   const {departmentId, serialTrackedId} = await params
 
-  const [department, item, profile, companiesFromDAL, projectsFromDAL, materialGroupsFromDAL] = await Promise.all([
+  const [department, item, profile, companiesFromDAL, projectsFromDAL, materialGroupsFromDAL, materialsFromDAL] = await Promise.all([
     getDepartmentById(departmentId),
     getSerialTrackedById(serialTrackedId).catch(() => null),
     getSessionProfileFromCookieOrThrow(),
     getCompanies(),
     getProjects(),
     getMaterialGroups(),
+    getMaterials(),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -46,6 +47,17 @@ export default async function SerialTrackedDetailPage({params}: PageProps) {
     name: [mg.groupA, mg.groupB, mg.groupC, mg.groupD].filter(Boolean).join(' / '),
   }))
 
+  // Map materials for dialog
+  const materialOptions = materialsFromDAL.map(m => ({
+    id: m.id,
+    beNumber: m.beNumber,
+    brandName: m.brandName,
+    brandOrderNr: m.brandOrderNr,
+    shortDescription: m.shortDescription,
+    longDescription: m.longDescription,
+    materialGroupId: m.materialGroupIdA, // or combine as needed
+  }))
+
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">
       <div className="mx-auto max-w-6xl">
@@ -54,6 +66,7 @@ export default async function SerialTrackedDetailPage({params}: PageProps) {
           companies={companyOptions}
           projects={projectOptions}
           materialGroups={materialGroupOptions}
+          materialOptions={materialOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
         />

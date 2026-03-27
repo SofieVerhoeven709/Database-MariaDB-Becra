@@ -1,23 +1,37 @@
 'use client'
 
 import {Badge} from '@/components/ui/badge'
+import {Pencil} from 'lucide-react'
+import {useState} from 'react'
+import {MaterialSerialTrackedFormDialog} from '@/components/custom/serialTrackedFormDialog'
 
 interface Props {
   item: any
   companies: {id: string; name: string}[]
   projects: {id: string; name: string}[]
   materialGroups: {id: string; name: string}[]
+  materialOptions: any[] // Add this line
   currentUserRole: string
   currentUserLevel: number
 }
 
-export function MaterialSerialTrackedDetail({item}: Props) {
+export function MaterialSerialTrackedDetail({item, companies, projects, materialGroups, materialOptions, currentUserRole, currentUserLevel}: Props) {
+  const [dialogOpen, setDialogOpen] = useState(false)
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-xl font-semibold">Serial Tracked Item</h1>
-        <p className="text-muted-foreground text-sm">BE Number: {item.beNumber ?? '-'}</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-xl font-semibold">Serial Tracked Item</h1>
+          <p className="text-muted-foreground text-sm">BE Number: {item.beNumber ?? '-'}</p>
+        </div>
+        <button
+          className="ml-4 rounded p-2 hover:bg-accent/20"
+          title="Edit"
+          onClick={() => setDialogOpen(true)}
+        >
+          <Pencil className="h-5 w-5 text-accent" />
+        </button>
       </div>
 
       {/* Info grid */}
@@ -49,6 +63,17 @@ export function MaterialSerialTrackedDetail({item}: Props) {
         <Field label="Long Description" value={item.longDescription} multiline />
         <Field label="Additional Info" value={item.additionalInfo} multiline />
       </div>
+
+      <MaterialSerialTrackedFormDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        materialSerialTracked={item}
+        companyOptions={companies}
+        projectOptions={projects}
+        materialGroupOptions={materialGroups}
+        materialOptions={materialOptions} // Pass the prop
+        departmentId={item.departmentId}
+      />
     </div>
   )
 }

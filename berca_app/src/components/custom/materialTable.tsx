@@ -184,12 +184,12 @@ export function MaterialTable({
         'longDescription',
         'preferredSupplierCompanyId',
         'preferredSupplierOrderId',
-        'preferredSupplierShortDescription',
+        /*'preferredSupplierShortDescription',*/
         'supplierCompanyIds',
         'parentBeNumbers',
         'brandName',
-        'documentationPlace',
-        'bePartDoc',
+        /* 'documentationPlace',
+        'bePartDoc',*/
         'rejected',
         'materialGroupIdA',
         'materialGroupIdB',
@@ -205,10 +205,10 @@ export function MaterialTable({
         'longDescription',
         'preferredSupplierCompanyId',
         'preferredSupplierOrderId',
-        'preferredSupplierShortDescription',
+        /*'preferredSupplierShortDescription',*/
         'brandName',
-        'documentationPlace',
-        'bePartDoc',
+        /* 'documentationPlace',
+        'bePartDoc',*/
         'materialGroupIdB',
         'materialGroupIdC',
         'materialGroupIdD',

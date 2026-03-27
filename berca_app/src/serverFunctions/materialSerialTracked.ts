@@ -18,14 +18,18 @@ export const createMaterialSerialTrackedAction = protectedServerFunction({
   schema: createMaterialSerialTrackedSchema,
   functionName: 'Create serial tracked item',
   serverFn: async ({data, profile, logger}) => {
+    // Remove beNumber from data, use materialId for relation
+    const {beNumber, ...rest} = data
     const item = await createSerialTracked({
-      ...data,
+      ...rest,
       id: data.id || randomUUID(),
       createdBy: profile.id,
     })
-
+    console.log('[ServerAction:createMaterialSerialTrackedAction] payload:', { ...rest, id: data.id || randomUUID(), createdBy: profile.id })
+    console.log('[ServerAction:createMaterialSerialTrackedAction] created item:', item)
     logger.info(`Serial tracked item created: ${item.id}`)
     revalidatePath(REVALIDATE)
+    console.log('[ServerAction:createMaterialSerialTrackedAction] revalidatePath called:', REVALIDATE)
   },
 })
 

@@ -133,6 +133,7 @@ export function SerialTrackedTable({
     }: SerialTrackedTableProps) {
       // DEBUG: Log incoming data and filtered data
       console.log('SerialTrackedTable initialSerialTracked:', initialSerialTracked);
+      console.log('[SerialTrackedTable] initialSerialTracked:', initialSerialTracked)
 
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100

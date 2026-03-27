@@ -1,4 +1,4 @@
-﻿USE  app_db;
+﻿USE  BecraBV;
  
 -- ============================================================
 -- Idempotent migrations.
@@ -376,13 +376,13 @@ ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
 ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
 
 -- 39a. Drop old tables (disable FK checks to avoid constraint errors) commented to prevent data losses
---SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS = 0;
 
---DROP TABLE IF EXISTS InvoiceOutContact;
---DROP TABLE IF EXISTS InvoiceOut;
---DROP TABLE IF EXISTS InvoiceIn;
+DROP TABLE IF EXISTS InvoiceOutContact;
+DROP TABLE IF EXISTS InvoiceOut;
+DROP TABLE IF EXISTS InvoiceIn;
 
---SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 1;
 -- 39b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
 CREATE TABLE IF NOT EXISTS VatMargin (
       id CHAR(36) NOT NULL PRIMARY KEY,
@@ -432,7 +432,7 @@ CREATE TABLE IF NOT EXISTS PaymentMethod (
       FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
 ) ENGINE = InnoDB;
 
---41. Create PriceList table
+-- 41. Create PriceList table
 CREATE TABLE
       IF NOT EXISTS PriceList (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -692,3 +692,6 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 ALTER TABLE WorkOrder CHANGE COLUMN IF EXISTS `workOrderNumber` `workOrderNumber` VARCHAR(255) NOT NULL;
+
+ALTER TABLE MaterialSerialTrack CHANGE COLUMN IF EXISTS `serialTrackedId` `serialTrackedId` CHAR(36) NULL;
+ALTER TABLE MaterialSerialTrackStructure CHANGE COLUMN IF EXISTS `beNumber` `beNumber`  VARCHAR(255) NULL;

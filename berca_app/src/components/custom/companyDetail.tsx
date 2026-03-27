@@ -196,7 +196,7 @@ export function CompanyDetail({
     busNumber: string
     zipCode: string
     place: string
-    typeAdress: string
+    typeAddress: string
     countryId: string | null
     countryName: string | null
   }
@@ -206,7 +206,7 @@ export function CompanyDetail({
     busNumber: '',
     zipCode: '',
     place: '',
-    typeAdress: '',
+    typeAddress: '',
     countryId: null,
     countryName: null,
   })
@@ -225,7 +225,7 @@ export function CompanyDetail({
       busNumber: newAddrForm.busNumber || null,
       zipCode: newAddrForm.zipCode || null,
       place: newAddrForm.place || null,
-      typeAdress: newAddrForm.typeAdress || null,
+      typeAddress: newAddrForm.typeAddress || null,
       countryId: newAddrForm.countryId,
     })
     setAddingAddr(false)
@@ -242,7 +242,7 @@ export function CompanyDetail({
       busNumber: editAddrForm.busNumber || null,
       zipCode: editAddrForm.zipCode || null,
       place: editAddrForm.place || null,
-      typeAdress: editAddrForm.typeAdress || null,
+      typeAddress: editAddrForm.typeAddress || null,
       countryId: editAddrForm.countryId,
     })
     setEditingAddrId(null)
@@ -266,7 +266,7 @@ export function CompanyDetail({
 
   function handleStartEditAddr(a: {
     id: string
-    typeAdress: string | null
+    typeAddress: string | null
     street: string | null
     houseNumber: string | null
     busNumber: string | null
@@ -277,7 +277,7 @@ export function CompanyDetail({
   }) {
     setEditingAddrId(a.id)
     setEditAddrForm({
-      typeAdress: a.typeAdress ?? '',
+      typeAddress: a.typeAddress ?? '',
       street: a.street ?? '',
       houseNumber: a.houseNumber ?? '',
       busNumber: a.busNumber ?? '',
@@ -289,12 +289,19 @@ export function CompanyDetail({
   }
 
   // ─── Contact link state ────────────────────────────────────────────────────
-  type ContactLinkForm = {contactId: string; roleWithCompany: string; startedDate: string; endDate: string}
+  type ContactLinkForm = {
+    contactId: string
+    roleWithCompany: string
+    startedDate: string
+    endDate: string
+    companyAddressId: string
+  }
   const emptyContactLinkForm = (): ContactLinkForm => ({
     contactId: 'none',
     roleWithCompany: '',
     startedDate: new Date().toISOString().slice(0, 10),
     endDate: '',
+    companyAddressId: 'none',
   })
 
   const [contacts, setContacts] = useState(contactOptions)
@@ -312,6 +319,7 @@ export function CompanyDetail({
       contactId: contactLinkForm.contactId,
       companyId: company.id,
       roleWithCompany: contactLinkForm.roleWithCompany || null,
+      companyAddressId: contactLinkForm.companyAddressId !== 'none' ? contactLinkForm.companyAddressId : null,
       startedDate: new Date(contactLinkForm.startedDate),
       endDate: contactLinkForm.endDate ? new Date(contactLinkForm.endDate) : null,
       endPreviousActive,
@@ -324,6 +332,7 @@ export function CompanyDetail({
     await updateCompanyContactAction({
       id,
       roleWithCompany: editContactLinkForm.roleWithCompany || null,
+      companyAddressId: editContactLinkForm.companyAddressId !== 'none' ? editContactLinkForm.companyAddressId : null,
       startedDate: new Date(editContactLinkForm.startedDate),
       endDate: editContactLinkForm.endDate ? new Date(editContactLinkForm.endDate) : null,
     })
@@ -357,6 +366,7 @@ export function CompanyDetail({
     roleWithCompany: string | null
     startedDate: string
     endDate: string | null
+    companyAddressId: string | null
   }) {
     setEditingContactLinkId(cc.id)
     setEditContactLinkForm({
@@ -364,6 +374,7 @@ export function CompanyDetail({
       roleWithCompany: cc.roleWithCompany ?? '',
       startedDate: cc.startedDate.slice(0, 10),
       endDate: cc.endDate ? cc.endDate.slice(0, 10) : '',
+      companyAddressId: cc.companyAddressId ?? 'none',
     })
   }
 
@@ -418,6 +429,7 @@ export function CompanyDetail({
   const activeProjects = company.projects.filter(p => p.isOpen && !p.isClosed)
   const closedProjects = company.projects.filter(p => p.isClosed || !p.isOpen)
   const visibleAddresses = company.addresses.filter(a => showDeletedAddrs || !a.deleted)
+  const activeAddresses = company.addresses.filter(a => !a.deleted)
 
   return (
     <div className="flex flex-col gap-6">
@@ -733,6 +745,7 @@ export function CompanyDetail({
                 <TableRow className="hover:bg-transparent border-border/60">
                   <TableHead className={thClass}>Name</TableHead>
                   <TableHead className={thClass}>Role at Company</TableHead>
+                  <TableHead className={thClass}>Location</TableHead> {/* ← add */}
                   <TableHead className={thClass}>Email</TableHead>
                   <TableHead className={thClass}>Phone</TableHead>
                   <TableHead className={thClass}>Mobile</TableHead>
@@ -792,6 +805,31 @@ export function CompanyDetail({
                         className="h-7 text-xs bg-background border-border"
                       />
                     </TableCell>
+                    {activeAddresses.length > 0 ? (
+                      <TableCell>
+                        <Select
+                          value={contactLinkForm.companyAddressId}
+                          onValueChange={v => setContactLinkForm(f => ({...f, companyAddressId: v}))}>
+                          <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+                            <SelectValue placeholder="Location…" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-card border-border">
+                            <SelectItem value="none" className="text-xs">
+                              No specific location
+                            </SelectItem>
+                            {activeAddresses.map(a => (
+                              <SelectItem key={a.id} value={a.id} className="text-xs">
+                                {[a.typeAddress, [a.street, a.houseNumber].filter(Boolean).join(' '), a.place]
+                                  .filter(Boolean)
+                                  .join(' · ')}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                    ) : (
+                      <TableCell />
+                    )}
                     <TableCell />
                     <TableCell />
                     <TableCell />
@@ -845,7 +883,7 @@ export function CompanyDetail({
                 )}
                 {visibleContacts.length === 0 && !addingContact ? (
                   <TableRow>
-                    <TableCell colSpan={9} className="h-20 text-center text-muted-foreground">
+                    <TableCell colSpan={10} className="h-20 text-center text-muted-foreground">
                       No active contact links.
                     </TableCell>
                   </TableRow>
@@ -883,6 +921,31 @@ export function CompanyDetail({
                                 className="h-7 text-xs bg-background border-border"
                               />
                             </TableCell>
+                            {activeAddresses.length > 0 ? (
+                              <TableCell>
+                                <Select
+                                  value={editContactLinkForm.companyAddressId}
+                                  onValueChange={v => setEditContactLinkForm(f => ({...f, companyAddressId: v}))}>
+                                  <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+                                    <SelectValue placeholder="Location…" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-card border-border">
+                                    <SelectItem value="none" className="text-xs">
+                                      No specific location
+                                    </SelectItem>
+                                    {activeAddresses.map(a => (
+                                      <SelectItem key={a.id} value={a.id} className="text-xs">
+                                        {[a.typeAddress, [a.street, a.houseNumber].filter(Boolean).join(' '), a.place]
+                                          .filter(Boolean)
+                                          .join(' · ')}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </TableCell>
+                            ) : (
+                              <TableCell />
+                            )}
                             <TableCell />
                             <TableCell />
                             <TableCell />
@@ -928,6 +991,17 @@ export function CompanyDetail({
                               {cc.contact.firstName} {cc.contact.lastName}
                             </TableCell>
                             <TableCell className={tdClass}>{cc.roleWithCompany ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>
+                              {cc.companyAddress
+                                ? [
+                                    cc.companyAddress.typeAddress,
+                                    [cc.companyAddress.street, cc.companyAddress.houseNumber].filter(Boolean).join(' '),
+                                    cc.companyAddress.place,
+                                  ]
+                                    .filter(Boolean)
+                                    .join(' · ')
+                                : '-'}
+                            </TableCell>
                             <TableCell className={tdClass}>{cc.contact.mail1 ?? '-'}</TableCell>
                             <TableCell className={tdClass}>{cc.contact.generalPhone ?? '-'}</TableCell>
                             <TableCell className={tdClass}>{cc.contact.mobilePhone ?? '-'}</TableCell>
@@ -1172,7 +1246,7 @@ export function CompanyDetail({
                 onClick={() => {
                   const hasActiveAddresses = company.addresses.some(a => !a.deleted)
                   setAddingAddr(true)
-                  setNewAddrForm({...emptyAddrForm(), typeAdress: hasActiveAddresses ? '' : 'Headquarters'})
+                  setNewAddrForm({...emptyAddrForm(), typeAddress: hasActiveAddresses ? '' : 'Headquarters'})
                 }}>
                 <Plus className="h-3.5 w-3.5" /> Add Address
               </Button>
@@ -1198,11 +1272,11 @@ export function CompanyDetail({
               <TableBody>
                 {addingAddr && (
                   <TableRow className="border-border/40 bg-secondary/30">
-                    {(['typeAdress', 'street', 'houseNumber', 'busNumber', 'zipCode', 'place'] as const).map(field => (
+                    {(['typeAddress', 'street', 'houseNumber', 'busNumber', 'zipCode', 'place'] as const).map(field => (
                       <TableCell key={field}>
                         <Input
                           value={newAddrForm[field]}
-                          placeholder={field === 'typeAdress' ? 'e.g. Main…' : undefined}
+                          placeholder={field === 'typeAddress' ? 'e.g. Main…' : undefined}
                           onChange={e => setNewAddrForm(f => ({...f, [field]: e.target.value}))}
                           className="h-7 text-xs bg-background border-border"
                         />
@@ -1251,7 +1325,7 @@ export function CompanyDetail({
                         className={`border-border/40 hover:bg-secondary/50 ${a.deleted ? 'opacity-40' : ''}`}>
                         {isEditingThis ? (
                           <>
-                            {(['typeAdress', 'street', 'houseNumber', 'busNumber', 'zipCode', 'place'] as const).map(
+                            {(['typeAddress', 'street', 'houseNumber', 'busNumber', 'zipCode', 'place'] as const).map(
                               field => (
                                 <TableCell key={field}>
                                   <Input
@@ -1295,9 +1369,9 @@ export function CompanyDetail({
                         ) : (
                           <>
                             <TableCell className={tdClass}>
-                              {a.typeAdress ? (
+                              {a.typeAddress ? (
                                 <Badge variant="outline" className="text-xs border-border">
-                                  {a.typeAdress}
+                                  {a.typeAddress}
                                 </Badge>
                               ) : (
                                 '-'

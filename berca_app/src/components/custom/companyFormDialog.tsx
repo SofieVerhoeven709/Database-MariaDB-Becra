@@ -95,7 +95,7 @@ type AddrForm = {
   busNumber: string | null
   zipCode: string | null
   place: string | null
-  typeAdress: string | null
+  typeAddress: string | null
   countryId: string | null
   countryName: string | null
   companyId: string
@@ -108,7 +108,7 @@ const emptyAddrForm = (companyId: string): AddrForm => ({
   busNumber: null,
   zipCode: null,
   place: null,
-  typeAdress: null,
+  typeAddress: null,
   countryId: null,
   countryName: null,
   companyId,
@@ -129,8 +129,8 @@ function AddrFields({
       <div className="flex flex-col gap-1">
         <Label className="text-xs text-muted-foreground">Type</Label>
         <Input
-          value={value.typeAdress ?? ''}
-          onChange={e => s('typeAdress', e.target.value)}
+          value={value.typeAddress ?? ''}
+          onChange={e => s('typeAddress', e.target.value)}
           placeholder="e.g. Main, Billing…"
           className="h-8 text-xs bg-secondary border-border"
         />
@@ -542,7 +542,7 @@ export function CompanyFormDialog({
                     className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7"
                     onClick={() => {
                       const hasActiveAddresses = form.addresses.some(a => !a.deleted)
-                      setNewAddr({...emptyAddrForm(form.id), typeAdress: hasActiveAddresses ? null : 'Headquarters'})
+                      setNewAddr({...emptyAddrForm(form.id), typeAddress: hasActiveAddresses ? null : 'Headquarters'})
                       setEditingAddrId(null)
                       setAddingAddr(true)
                     }}>
@@ -617,9 +617,9 @@ export function CompanyFormDialog({
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex flex-col gap-0.5">
                             <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-                              {a.typeAdress && (
+                              {a.typeAddress && (
                                 <Badge variant="outline" className="text-xs border-border">
-                                  {a.typeAdress}
+                                  {a.typeAddress}
                                 </Badge>
                               )}
                               {a.deleted && (
@@ -672,7 +672,7 @@ export function CompanyFormDialog({
                                       busNumber: a.busNumber,
                                       zipCode: a.zipCode,
                                       place: a.place,
-                                      typeAdress: a.typeAdress,
+                                      typeAddress: a.typeAddress,
                                       countryId: a.countryId,
                                       countryName: a.countryName,
                                       companyId: a.companyId,

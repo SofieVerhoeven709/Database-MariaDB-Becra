@@ -81,7 +81,7 @@ export function WorkOrderFormDialog({open, onOpenChange, workOrder, projectOptio
     setSaving(true)
     try {
       const payload = {
-        workOrderNumber: form.workOrderNumber || null,
+        workOrderNumber: form.workOrderNumber,
         description: form.description || null,
         additionalInfo: form.additionalInfo || null,
         startDate: new Date(form.startDate),

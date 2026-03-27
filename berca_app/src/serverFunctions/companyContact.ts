@@ -16,7 +16,6 @@ export const addCompanyContactAction = protectedServerFunction({
     const now = new Date()
     const {endPreviousActive, ...rest} = data
 
-    // Auto-end any currently active links for this contact
     if (endPreviousActive) {
       const activeLinks = await prismaClient.companyContact.findMany({
         where: {
@@ -40,6 +39,7 @@ export const addCompanyContactAction = protectedServerFunction({
         contactId: rest.contactId,
         companyId: rest.companyId,
         roleWithCompany: rest.roleWithCompany ?? null,
+        companyAddressId: rest.companyAddressId ?? null, // ← added
         startedDate: rest.startedDate,
         endDate: rest.endDate ?? null,
         createdBy: profile.id,
@@ -58,6 +58,7 @@ export const updateCompanyContactAction = protectedServerFunction({
       where: {id: data.id},
       data: {
         roleWithCompany: data.roleWithCompany ?? null,
+        companyAddressId: data.companyAddressId ?? null, // ← added
         startedDate: data.startedDate,
         endDate: data.endDate ?? null,
       },

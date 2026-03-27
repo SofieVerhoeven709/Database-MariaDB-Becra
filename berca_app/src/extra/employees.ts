@@ -443,8 +443,8 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
     PurchaseDetail_PurchaseDetail_deletedByToEmployee: {
       select: {id: true; beNumber: true; status: true; deletedAt: true; Purchase: {select: {orderNumber: true}}}
     }
-    PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {select: {id: true; description: true; date: true}}
-    QuoteBecra_QuoteBecra_deletedByToEmployee: {select: {id: true; description: true; date: true}}
+    PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
+    QuoteBecra_QuoteBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
     Role_Role_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
     RoleLevel_RoleLevel_deletedByToEmployee: {
       select: {id: true; deletedAt: true; Role: {select: {name: true}}; SubRole: {select: {name: true}}}

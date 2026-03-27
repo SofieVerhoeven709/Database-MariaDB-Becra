@@ -393,7 +393,6 @@ export const ModelName = {
   Certificate: 'Certificate',
   CertificateType: 'CertificateType',
   Company: 'Company',
-  CompanyAdress: 'CompanyAdress',
   CompanyContact: 'CompanyContact',
   Contact: 'Contact',
   DeliveryNoteSupplier: 'DeliveryNoteSupplier',
@@ -473,7 +472,11 @@ export const ModelName = {
   InvoiceSentType: 'InvoiceSentType',
   InvoiceStatus: 'InvoiceStatus',
   PaymentMethod: 'PaymentMethod',
-  VatMargin: 'VatMargin'
+  VatMargin: 'VatMargin',
+  PriceList: 'PriceList',
+  PriceListItem: 'PriceListItem',
+  CompanyAddress: 'CompanyAddress',
+  PriceListItemTarget: 'PriceListItemTarget'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -489,7 +492,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyAdress" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentGroup" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentGroup" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -688,72 +691,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CompanyCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CompanyCountAggregateOutputType> | number
-        }
-      }
-    }
-    CompanyAdress: {
-      payload: Prisma.$CompanyAdressPayload<ExtArgs>
-      fields: Prisma.CompanyAdressFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.CompanyAdressFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAdressPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.CompanyAdressFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAdressPayload>
-        }
-        findFirst: {
-          args: Prisma.CompanyAdressFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAdressPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.CompanyAdressFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAdressPayload>
-        }
-        findMany: {
-          args: Prisma.CompanyAdressFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAdressPayload>[]
-        }
-        create: {
-          args: Prisma.CompanyAdressCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAdressPayload>
-        }
-        createMany: {
-          args: Prisma.CompanyAdressCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        delete: {
-          args: Prisma.CompanyAdressDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAdressPayload>
-        }
-        update: {
-          args: Prisma.CompanyAdressUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAdressPayload>
-        }
-        deleteMany: {
-          args: Prisma.CompanyAdressDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.CompanyAdressUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        upsert: {
-          args: Prisma.CompanyAdressUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAdressPayload>
-        }
-        aggregate: {
-          args: Prisma.CompanyAdressAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateCompanyAdress>
-        }
-        groupBy: {
-          args: Prisma.CompanyAdressGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CompanyAdressGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.CompanyAdressCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CompanyAdressCountAggregateOutputType> | number
         }
       }
     }
@@ -6037,6 +5974,270 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PriceList: {
+      payload: Prisma.$PriceListPayload<ExtArgs>
+      fields: Prisma.PriceListFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PriceListFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PriceListFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListPayload>
+        }
+        findFirst: {
+          args: Prisma.PriceListFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PriceListFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListPayload>
+        }
+        findMany: {
+          args: Prisma.PriceListFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListPayload>[]
+        }
+        create: {
+          args: Prisma.PriceListCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListPayload>
+        }
+        createMany: {
+          args: Prisma.PriceListCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.PriceListDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListPayload>
+        }
+        update: {
+          args: Prisma.PriceListUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListPayload>
+        }
+        deleteMany: {
+          args: Prisma.PriceListDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PriceListUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.PriceListUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListPayload>
+        }
+        aggregate: {
+          args: Prisma.PriceListAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePriceList>
+        }
+        groupBy: {
+          args: Prisma.PriceListGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PriceListGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PriceListCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PriceListCountAggregateOutputType> | number
+        }
+      }
+    }
+    PriceListItem: {
+      payload: Prisma.$PriceListItemPayload<ExtArgs>
+      fields: Prisma.PriceListItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PriceListItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PriceListItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemPayload>
+        }
+        findFirst: {
+          args: Prisma.PriceListItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PriceListItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemPayload>
+        }
+        findMany: {
+          args: Prisma.PriceListItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemPayload>[]
+        }
+        create: {
+          args: Prisma.PriceListItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemPayload>
+        }
+        createMany: {
+          args: Prisma.PriceListItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.PriceListItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemPayload>
+        }
+        update: {
+          args: Prisma.PriceListItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.PriceListItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PriceListItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.PriceListItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemPayload>
+        }
+        aggregate: {
+          args: Prisma.PriceListItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePriceListItem>
+        }
+        groupBy: {
+          args: Prisma.PriceListItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PriceListItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PriceListItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PriceListItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    CompanyAddress: {
+      payload: Prisma.$CompanyAddressPayload<ExtArgs>
+      fields: Prisma.CompanyAddressFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CompanyAddressFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAddressPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CompanyAddressFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAddressPayload>
+        }
+        findFirst: {
+          args: Prisma.CompanyAddressFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAddressPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CompanyAddressFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAddressPayload>
+        }
+        findMany: {
+          args: Prisma.CompanyAddressFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAddressPayload>[]
+        }
+        create: {
+          args: Prisma.CompanyAddressCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAddressPayload>
+        }
+        createMany: {
+          args: Prisma.CompanyAddressCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.CompanyAddressDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAddressPayload>
+        }
+        update: {
+          args: Prisma.CompanyAddressUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAddressPayload>
+        }
+        deleteMany: {
+          args: Prisma.CompanyAddressDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CompanyAddressUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.CompanyAddressUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyAddressPayload>
+        }
+        aggregate: {
+          args: Prisma.CompanyAddressAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCompanyAddress>
+        }
+        groupBy: {
+          args: Prisma.CompanyAddressGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompanyAddressGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CompanyAddressCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompanyAddressCountAggregateOutputType> | number
+        }
+      }
+    }
+    PriceListItemTarget: {
+      payload: Prisma.$PriceListItemTargetPayload<ExtArgs>
+      fields: Prisma.PriceListItemTargetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PriceListItemTargetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemTargetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PriceListItemTargetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemTargetPayload>
+        }
+        findFirst: {
+          args: Prisma.PriceListItemTargetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemTargetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PriceListItemTargetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemTargetPayload>
+        }
+        findMany: {
+          args: Prisma.PriceListItemTargetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemTargetPayload>[]
+        }
+        create: {
+          args: Prisma.PriceListItemTargetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemTargetPayload>
+        }
+        createMany: {
+          args: Prisma.PriceListItemTargetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.PriceListItemTargetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemTargetPayload>
+        }
+        update: {
+          args: Prisma.PriceListItemTargetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemTargetPayload>
+        }
+        deleteMany: {
+          args: Prisma.PriceListItemTargetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PriceListItemTargetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.PriceListItemTargetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceListItemTargetPayload>
+        }
+        aggregate: {
+          args: Prisma.PriceListItemTargetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePriceListItemTarget>
+        }
+        groupBy: {
+          args: Prisma.PriceListItemTargetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PriceListItemTargetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PriceListItemTargetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PriceListItemTargetCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -6142,26 +6343,6 @@ export const CompanyScalarFieldEnum = {
 export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
 
 
-export const CompanyAdressScalarFieldEnum = {
-  id: 'id',
-  street: 'street',
-  houseNumber: 'houseNumber',
-  busNumber: 'busNumber',
-  zipCode: 'zipCode',
-  place: 'place',
-  createdAt: 'createdAt',
-  typeAdress: 'typeAdress',
-  createdBy: 'createdBy',
-  companyId: 'companyId',
-  countryId: 'countryId',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type CompanyAdressScalarFieldEnum = (typeof CompanyAdressScalarFieldEnum)[keyof typeof CompanyAdressScalarFieldEnum]
-
-
 export const CompanyContactScalarFieldEnum = {
   id: 'id',
   startedDate: 'startedDate',
@@ -6171,6 +6352,7 @@ export const CompanyContactScalarFieldEnum = {
   contactId: 'contactId',
   companyId: 'companyId',
   createdBy: 'createdBy',
+  companyAddressId: 'companyAddressId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -6462,7 +6644,8 @@ export const HourTypeScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type HourTypeScalarFieldEnum = (typeof HourTypeScalarFieldEnum)[keyof typeof HourTypeScalarFieldEnum]
@@ -6624,7 +6807,8 @@ export const InvoiceOutScalarFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  vatMarginId: 'vatMarginId'
+  vatMarginId: 'vatMarginId',
+  priceListId: 'priceListId'
 } as const
 
 export type InvoiceOutScalarFieldEnum = (typeof InvoiceOutScalarFieldEnum)[keyof typeof InvoiceOutScalarFieldEnum]
@@ -6650,6 +6834,7 @@ export const MaterialScalarFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -6664,7 +6849,7 @@ export const MaterialScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  isSerialTracked: 'isSerialTracked'
+  targetId: 'targetId'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -7018,6 +7203,7 @@ export const ProjectScalarFieldEnum = {
   projectTypeId: 'projectTypeId',
   parentProjectId: 'parentProjectId',
   targetId: 'targetId',
+  priceListId: 'priceListId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -7601,6 +7787,67 @@ export const VatMarginScalarFieldEnum = {
 export type VatMarginScalarFieldEnum = (typeof VatMarginScalarFieldEnum)[keyof typeof VatMarginScalarFieldEnum]
 
 
+export const PriceListScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  repeatUse: 'repeatUse',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
+} as const
+
+export type PriceListScalarFieldEnum = (typeof PriceListScalarFieldEnum)[keyof typeof PriceListScalarFieldEnum]
+
+
+export const PriceListItemScalarFieldEnum = {
+  id: 'id',
+  priceListId: 'priceListId',
+  description: 'description',
+  unit: 'unit',
+  price: 'price',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  isCostMargin: 'isCostMargin',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy',
+  createdBy: 'createdBy'
+} as const
+
+export type PriceListItemScalarFieldEnum = (typeof PriceListItemScalarFieldEnum)[keyof typeof PriceListItemScalarFieldEnum]
+
+
+export const CompanyAddressScalarFieldEnum = {
+  id: 'id',
+  street: 'street',
+  houseNumber: 'houseNumber',
+  busNumber: 'busNumber',
+  zipCode: 'zipCode',
+  place: 'place',
+  createdAt: 'createdAt',
+  typeAddress: 'typeAddress',
+  createdBy: 'createdBy',
+  companyId: 'companyId',
+  countryId: 'countryId',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type CompanyAddressScalarFieldEnum = (typeof CompanyAddressScalarFieldEnum)[keyof typeof CompanyAddressScalarFieldEnum]
+
+
+export const PriceListItemTargetScalarFieldEnum = {
+  id: 'id',
+  priceListItemId: 'priceListItemId',
+  targetId: 'targetId'
+} as const
+
+export type PriceListItemTargetScalarFieldEnum = (typeof PriceListItemTargetScalarFieldEnum)[keyof typeof PriceListItemTargetScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -7665,29 +7912,13 @@ export const CompanyOrderByRelevanceFieldEnum = {
 export type CompanyOrderByRelevanceFieldEnum = (typeof CompanyOrderByRelevanceFieldEnum)[keyof typeof CompanyOrderByRelevanceFieldEnum]
 
 
-export const CompanyAdressOrderByRelevanceFieldEnum = {
-  id: 'id',
-  street: 'street',
-  houseNumber: 'houseNumber',
-  busNumber: 'busNumber',
-  zipCode: 'zipCode',
-  place: 'place',
-  typeAdress: 'typeAdress',
-  createdBy: 'createdBy',
-  companyId: 'companyId',
-  countryId: 'countryId',
-  deletedBy: 'deletedBy'
-} as const
-
-export type CompanyAdressOrderByRelevanceFieldEnum = (typeof CompanyAdressOrderByRelevanceFieldEnum)[keyof typeof CompanyAdressOrderByRelevanceFieldEnum]
-
-
 export const CompanyContactOrderByRelevanceFieldEnum = {
   id: 'id',
   roleWithCompany: 'roleWithCompany',
   contactId: 'contactId',
   companyId: 'companyId',
   createdBy: 'createdBy',
+  companyAddressId: 'companyAddressId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -7899,7 +8130,8 @@ export const HourTypeOrderByRelevanceFieldEnum = {
   name: 'name',
   info: 'info',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type HourTypeOrderByRelevanceFieldEnum = (typeof HourTypeOrderByRelevanceFieldEnum)[keyof typeof HourTypeOrderByRelevanceFieldEnum]
@@ -8016,7 +8248,8 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  vatMarginId: 'vatMarginId'
+  vatMarginId: 'vatMarginId',
+  priceListId: 'priceListId'
 } as const
 
 export type InvoiceOutOrderByRelevanceFieldEnum = (typeof InvoiceOutOrderByRelevanceFieldEnum)[keyof typeof InvoiceOutOrderByRelevanceFieldEnum]
@@ -8039,6 +8272,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -8049,7 +8283,8 @@ export const MaterialOrderByRelevanceFieldEnum = {
   preferredSupplierCompanyId: 'preferredSupplierCompanyId',
   unitId: 'unitId',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
@@ -8323,6 +8558,7 @@ export const ProjectOrderByRelevanceFieldEnum = {
   projectTypeId: 'projectTypeId',
   parentProjectId: 'parentProjectId',
   targetId: 'targetId',
+  priceListId: 'priceListId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -8767,6 +9003,55 @@ export const VatMarginOrderByRelevanceFieldEnum = {
 export type VatMarginOrderByRelevanceFieldEnum = (typeof VatMarginOrderByRelevanceFieldEnum)[keyof typeof VatMarginOrderByRelevanceFieldEnum]
 
 
+export const PriceListOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
+} as const
+
+export type PriceListOrderByRelevanceFieldEnum = (typeof PriceListOrderByRelevanceFieldEnum)[keyof typeof PriceListOrderByRelevanceFieldEnum]
+
+
+export const PriceListItemOrderByRelevanceFieldEnum = {
+  id: 'id',
+  priceListId: 'priceListId',
+  description: 'description',
+  unit: 'unit',
+  deletedBy: 'deletedBy',
+  createdBy: 'createdBy'
+} as const
+
+export type PriceListItemOrderByRelevanceFieldEnum = (typeof PriceListItemOrderByRelevanceFieldEnum)[keyof typeof PriceListItemOrderByRelevanceFieldEnum]
+
+
+export const CompanyAddressOrderByRelevanceFieldEnum = {
+  id: 'id',
+  street: 'street',
+  houseNumber: 'houseNumber',
+  busNumber: 'busNumber',
+  zipCode: 'zipCode',
+  place: 'place',
+  typeAddress: 'typeAddress',
+  createdBy: 'createdBy',
+  companyId: 'companyId',
+  countryId: 'countryId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type CompanyAddressOrderByRelevanceFieldEnum = (typeof CompanyAddressOrderByRelevanceFieldEnum)[keyof typeof CompanyAddressOrderByRelevanceFieldEnum]
+
+
+export const PriceListItemTargetOrderByRelevanceFieldEnum = {
+  id: 'id',
+  priceListItemId: 'priceListItemId',
+  targetId: 'targetId'
+} as const
+
+export type PriceListItemTargetOrderByRelevanceFieldEnum = (typeof PriceListItemTargetOrderByRelevanceFieldEnum)[keyof typeof PriceListItemTargetOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -8904,7 +9189,6 @@ export type GlobalOmitConfig = {
   certificate?: Prisma.CertificateOmit
   certificateType?: Prisma.CertificateTypeOmit
   company?: Prisma.CompanyOmit
-  companyAdress?: Prisma.CompanyAdressOmit
   companyContact?: Prisma.CompanyContactOmit
   contact?: Prisma.ContactOmit
   deliveryNoteSupplier?: Prisma.DeliveryNoteSupplierOmit
@@ -8985,6 +9269,10 @@ export type GlobalOmitConfig = {
   invoiceStatus?: Prisma.InvoiceStatusOmit
   paymentMethod?: Prisma.PaymentMethodOmit
   vatMargin?: Prisma.VatMarginOmit
+  priceList?: Prisma.PriceListOmit
+  priceListItem?: Prisma.PriceListItemOmit
+  companyAddress?: Prisma.CompanyAddressOmit
+  priceListItemTarget?: Prisma.PriceListItemTargetOmit
 }
 
 /* Types for Logging */

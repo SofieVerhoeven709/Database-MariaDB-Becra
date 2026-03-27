@@ -52,7 +52,6 @@ export const ModelName = {
   Certificate: 'Certificate',
   CertificateType: 'CertificateType',
   Company: 'Company',
-  CompanyAdress: 'CompanyAdress',
   CompanyContact: 'CompanyContact',
   Contact: 'Contact',
   DeliveryNoteSupplier: 'DeliveryNoteSupplier',
@@ -132,7 +131,11 @@ export const ModelName = {
   InvoiceSentType: 'InvoiceSentType',
   InvoiceStatus: 'InvoiceStatus',
   PaymentMethod: 'PaymentMethod',
-  VatMargin: 'VatMargin'
+  VatMargin: 'VatMargin',
+  PriceList: 'PriceList',
+  PriceListItem: 'PriceListItem',
+  CompanyAddress: 'CompanyAddress',
+  PriceListItemTarget: 'PriceListItemTarget'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -217,26 +220,6 @@ export const CompanyScalarFieldEnum = {
 export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
 
 
-export const CompanyAdressScalarFieldEnum = {
-  id: 'id',
-  street: 'street',
-  houseNumber: 'houseNumber',
-  busNumber: 'busNumber',
-  zipCode: 'zipCode',
-  place: 'place',
-  createdAt: 'createdAt',
-  typeAdress: 'typeAdress',
-  createdBy: 'createdBy',
-  companyId: 'companyId',
-  countryId: 'countryId',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type CompanyAdressScalarFieldEnum = (typeof CompanyAdressScalarFieldEnum)[keyof typeof CompanyAdressScalarFieldEnum]
-
-
 export const CompanyContactScalarFieldEnum = {
   id: 'id',
   startedDate: 'startedDate',
@@ -246,6 +229,7 @@ export const CompanyContactScalarFieldEnum = {
   contactId: 'contactId',
   companyId: 'companyId',
   createdBy: 'createdBy',
+  companyAddressId: 'companyAddressId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -537,7 +521,8 @@ export const HourTypeScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type HourTypeScalarFieldEnum = (typeof HourTypeScalarFieldEnum)[keyof typeof HourTypeScalarFieldEnum]
@@ -699,7 +684,8 @@ export const InvoiceOutScalarFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  vatMarginId: 'vatMarginId'
+  vatMarginId: 'vatMarginId',
+  priceListId: 'priceListId'
 } as const
 
 export type InvoiceOutScalarFieldEnum = (typeof InvoiceOutScalarFieldEnum)[keyof typeof InvoiceOutScalarFieldEnum]
@@ -725,6 +711,7 @@ export const MaterialScalarFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -739,7 +726,7 @@ export const MaterialScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  isSerialTracked: 'isSerialTracked'
+  targetId: 'targetId'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -1093,6 +1080,7 @@ export const ProjectScalarFieldEnum = {
   projectTypeId: 'projectTypeId',
   parentProjectId: 'parentProjectId',
   targetId: 'targetId',
+  priceListId: 'priceListId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -1676,6 +1664,67 @@ export const VatMarginScalarFieldEnum = {
 export type VatMarginScalarFieldEnum = (typeof VatMarginScalarFieldEnum)[keyof typeof VatMarginScalarFieldEnum]
 
 
+export const PriceListScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  repeatUse: 'repeatUse',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
+} as const
+
+export type PriceListScalarFieldEnum = (typeof PriceListScalarFieldEnum)[keyof typeof PriceListScalarFieldEnum]
+
+
+export const PriceListItemScalarFieldEnum = {
+  id: 'id',
+  priceListId: 'priceListId',
+  description: 'description',
+  unit: 'unit',
+  price: 'price',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  isCostMargin: 'isCostMargin',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy',
+  createdBy: 'createdBy'
+} as const
+
+export type PriceListItemScalarFieldEnum = (typeof PriceListItemScalarFieldEnum)[keyof typeof PriceListItemScalarFieldEnum]
+
+
+export const CompanyAddressScalarFieldEnum = {
+  id: 'id',
+  street: 'street',
+  houseNumber: 'houseNumber',
+  busNumber: 'busNumber',
+  zipCode: 'zipCode',
+  place: 'place',
+  createdAt: 'createdAt',
+  typeAddress: 'typeAddress',
+  createdBy: 'createdBy',
+  companyId: 'companyId',
+  countryId: 'countryId',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type CompanyAddressScalarFieldEnum = (typeof CompanyAddressScalarFieldEnum)[keyof typeof CompanyAddressScalarFieldEnum]
+
+
+export const PriceListItemTargetScalarFieldEnum = {
+  id: 'id',
+  priceListItemId: 'priceListItemId',
+  targetId: 'targetId'
+} as const
+
+export type PriceListItemTargetScalarFieldEnum = (typeof PriceListItemTargetScalarFieldEnum)[keyof typeof PriceListItemTargetScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1740,29 +1789,13 @@ export const CompanyOrderByRelevanceFieldEnum = {
 export type CompanyOrderByRelevanceFieldEnum = (typeof CompanyOrderByRelevanceFieldEnum)[keyof typeof CompanyOrderByRelevanceFieldEnum]
 
 
-export const CompanyAdressOrderByRelevanceFieldEnum = {
-  id: 'id',
-  street: 'street',
-  houseNumber: 'houseNumber',
-  busNumber: 'busNumber',
-  zipCode: 'zipCode',
-  place: 'place',
-  typeAdress: 'typeAdress',
-  createdBy: 'createdBy',
-  companyId: 'companyId',
-  countryId: 'countryId',
-  deletedBy: 'deletedBy'
-} as const
-
-export type CompanyAdressOrderByRelevanceFieldEnum = (typeof CompanyAdressOrderByRelevanceFieldEnum)[keyof typeof CompanyAdressOrderByRelevanceFieldEnum]
-
-
 export const CompanyContactOrderByRelevanceFieldEnum = {
   id: 'id',
   roleWithCompany: 'roleWithCompany',
   contactId: 'contactId',
   companyId: 'companyId',
   createdBy: 'createdBy',
+  companyAddressId: 'companyAddressId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -1974,7 +2007,8 @@ export const HourTypeOrderByRelevanceFieldEnum = {
   name: 'name',
   info: 'info',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type HourTypeOrderByRelevanceFieldEnum = (typeof HourTypeOrderByRelevanceFieldEnum)[keyof typeof HourTypeOrderByRelevanceFieldEnum]
@@ -2091,7 +2125,8 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  vatMarginId: 'vatMarginId'
+  vatMarginId: 'vatMarginId',
+  priceListId: 'priceListId'
 } as const
 
 export type InvoiceOutOrderByRelevanceFieldEnum = (typeof InvoiceOutOrderByRelevanceFieldEnum)[keyof typeof InvoiceOutOrderByRelevanceFieldEnum]
@@ -2114,6 +2149,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -2124,7 +2160,8 @@ export const MaterialOrderByRelevanceFieldEnum = {
   preferredSupplierCompanyId: 'preferredSupplierCompanyId',
   unitId: 'unitId',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
 } as const
 
 export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
@@ -2398,6 +2435,7 @@ export const ProjectOrderByRelevanceFieldEnum = {
   projectTypeId: 'projectTypeId',
   parentProjectId: 'parentProjectId',
   targetId: 'targetId',
+  priceListId: 'priceListId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -2840,4 +2878,53 @@ export const VatMarginOrderByRelevanceFieldEnum = {
 } as const
 
 export type VatMarginOrderByRelevanceFieldEnum = (typeof VatMarginOrderByRelevanceFieldEnum)[keyof typeof VatMarginOrderByRelevanceFieldEnum]
+
+
+export const PriceListOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy',
+  targetId: 'targetId'
+} as const
+
+export type PriceListOrderByRelevanceFieldEnum = (typeof PriceListOrderByRelevanceFieldEnum)[keyof typeof PriceListOrderByRelevanceFieldEnum]
+
+
+export const PriceListItemOrderByRelevanceFieldEnum = {
+  id: 'id',
+  priceListId: 'priceListId',
+  description: 'description',
+  unit: 'unit',
+  deletedBy: 'deletedBy',
+  createdBy: 'createdBy'
+} as const
+
+export type PriceListItemOrderByRelevanceFieldEnum = (typeof PriceListItemOrderByRelevanceFieldEnum)[keyof typeof PriceListItemOrderByRelevanceFieldEnum]
+
+
+export const CompanyAddressOrderByRelevanceFieldEnum = {
+  id: 'id',
+  street: 'street',
+  houseNumber: 'houseNumber',
+  busNumber: 'busNumber',
+  zipCode: 'zipCode',
+  place: 'place',
+  typeAddress: 'typeAddress',
+  createdBy: 'createdBy',
+  companyId: 'companyId',
+  countryId: 'countryId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type CompanyAddressOrderByRelevanceFieldEnum = (typeof CompanyAddressOrderByRelevanceFieldEnum)[keyof typeof CompanyAddressOrderByRelevanceFieldEnum]
+
+
+export const PriceListItemTargetOrderByRelevanceFieldEnum = {
+  id: 'id',
+  priceListItemId: 'priceListItemId',
+  targetId: 'targetId'
+} as const
+
+export type PriceListItemTargetOrderByRelevanceFieldEnum = (typeof PriceListItemTargetOrderByRelevanceFieldEnum)[keyof typeof PriceListItemTargetOrderByRelevanceFieldEnum]
 

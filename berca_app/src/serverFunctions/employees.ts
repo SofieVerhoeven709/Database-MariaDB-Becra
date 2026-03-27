@@ -24,7 +24,7 @@ export const signInAction = publicFormAction({
 
     // Als we meteen een unauthorized terug geven nadat een gebruiker niet gevonden is in de database, kan een aanvaller
     // hieruit afleiden dat het e-mailadres niet bestaat.
-    // Vervolgens kan de aanvaller overgaan naar andere email adressen, en moet deze geen tijd meer spenderen aan het adres
+    // Vervolgens kan de aanvaller overgaan naar andere email addressen, en moet deze geen tijd meer spenderen aan het adres
     // dat niet bestaat.
     // Als oplossing voegen we een alternatief wachtwoord toe dat gebruikt wordt als de gebruiker niet gevonden is in de
     // database.

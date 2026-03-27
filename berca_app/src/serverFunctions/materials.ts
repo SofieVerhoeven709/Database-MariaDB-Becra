@@ -6,6 +6,7 @@ import {createMaterial, updateMaterial, softDeleteMaterial} from '@/dal/material
 import {prismaClient} from '@/dal/prismaClient'
 import {protectedFormAction} from '@/lib/serverFunctions'
 import {createMaterialSchema, updateMaterialSchema, deleteMaterialSchema} from '@/schemas/materialSchemas'
+import {createTargetForType} from '@/dal/targets'
 
 const REVALIDATE_MATERIAL = '/departments/engineering/material'
 const REVALIDATE_INVENTORY = '/departments/warehouse/inventory'
@@ -35,6 +36,7 @@ export const createMaterialAction = protectedFormAction({
   functionName: 'Create material',
   globalErrorMessage: 'Could not create the material, please try again.',
   serverFn: async ({data, profile, logger}) => {
+    const target = await createTargetForType('Company', profile.id)
     const {brandOrderNr, ...restData} = data
     let beNumber = data.beNumber?.trim()
     const preferredSupplierCompanyId = data.preferredSupplierCompanyId ?? null
@@ -64,6 +66,7 @@ export const createMaterialAction = protectedFormAction({
       materialGroupIdC: data.materialGroupIdC ?? null,
       materialGroupIdD: data.materialGroupIdD ?? null,
       createdBy: profile.id,
+      targetId: target.id,
     })
 
     logger.info(`Material created: ${material.id}`)

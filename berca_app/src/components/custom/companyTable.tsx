@@ -257,7 +257,7 @@ export function CompanyTable({
           busNumber: a.busNumber,
           zipCode: a.zipCode,
           place: a.place,
-          typeAdress: a.typeAdress,
+          typeAddress: a.typeAddress,
           countryId: a.countryId,
         })),
         visibilityForRoles: visibilityRows,

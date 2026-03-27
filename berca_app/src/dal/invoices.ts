@@ -40,6 +40,84 @@ const invoiceOutInclude = {
               projectName: true,
               companyId: true,
               Company: {select: {id: true, name: true}},
+              // Fetch pricelist with items + their target links
+              PriceList: {
+                select: {
+                  id: true,
+                  PriceListItem: {
+                    where: {deleted: false},
+                    select: {
+                      id: true,
+                      description: true,
+                      unit: true,
+                      price: true,
+                      isCostMargin: true,
+                      PriceListItemTarget: {
+                        select: {targetId: true},
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          // Time registries with employees
+          TimeRegistry: {
+            where: {deleted: false},
+            select: {
+              id: true,
+              startTime: true,
+              endTime: true,
+              startBreak: true,
+              endBreak: true,
+              hourTypeId: true,
+              HourType: {select: {id: true, name: true, targetId: true}},
+              TimeRegistryEmployee: {
+                select: {id: true, employeeId: true},
+              },
+            },
+          },
+          // Material structure lines
+          WorkOrderStructure: {
+            where: {deleted: false},
+            select: {
+              id: true,
+              quantity: true,
+              shortDescription: true,
+              materialId: true,
+              Material: {
+                select: {
+                  id: true,
+                  name: true,
+                  shortDescription: true,
+                  beNumber: true,
+                  targetId: true,
+                  Unit: {select: {abbreviation: true}},
+                },
+              },
+            },
+          },
+          // Training  lines
+          Training: {
+            where: {deleted: false},
+            select: {
+              id: true,
+              trainingNumber: true,
+              targetId: true,
+              TrainingStandard: {
+                select: {
+                  id: true,
+                  descriptionShort: true,
+                  description: true,
+                  location: true,
+                  targetId: true,
+                  Certificate: {
+                    select: {
+                      descriptionShort: true,
+                    },
+                  },
+                },
+              },
             },
           },
         },
@@ -88,7 +166,7 @@ export async function getInvoiceInById(id: string) {
   })
 }
 
-// ─── Company contacts for invoice (contacts linked to the project's company) ──
+// ─── Company contacts for invoice ──────────────────────────────────────────────
 export async function getCompanyContactsForInvoice(companyIds: string[]) {
   if (companyIds.length === 0) return []
   return prismaClient.companyContact.findMany({

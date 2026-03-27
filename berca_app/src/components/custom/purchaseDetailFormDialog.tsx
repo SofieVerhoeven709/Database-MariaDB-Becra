@@ -68,9 +68,12 @@ export function PurchaseDetailFormDialog({
       const next = {...prev, [key]: value}
       // Auto-calculate totalCost when unitPrice or quantity changes
       if (key === 'unitPrice' || key === 'quantity') {
-        const up = key === 'unitPrice' ? (value as number | null) : prev.unitPrice
+        const up = key === 'unitPrice' ? (value as string | null) : prev.unitPrice
         const qty = key === 'quantity' ? (value as number | null) : prev.quantity
-        next.totalCost = up != null && qty != null ? up * qty : prev.totalCost
+        const upNum = up != null ? parseFloat(up) : null
+        if (upNum != null && !isNaN(upNum) && qty != null) {
+          next.totalCost = (upNum * qty).toFixed(2)
+        }
       }
       return next
     })
@@ -136,9 +139,10 @@ export function PurchaseDetailFormDialog({
                 id="unitPrice"
                 type="number"
                 min={0}
+                step="any"
                 value={form.unitPrice ?? ''}
-                onChange={e => set('unitPrice', e.target.value ? parseInt(e.target.value, 10) : null)}
-                placeholder="0"
+                onChange={e => set('unitPrice', e.target.value || null)}
+                placeholder="0.00"
                 className="bg-secondary border-border"
               />
             </div>
@@ -160,9 +164,10 @@ export function PurchaseDetailFormDialog({
                 id="totalCost"
                 type="number"
                 min={0}
+                step="any"
                 value={form.totalCost ?? ''}
-                onChange={e => set('totalCost', e.target.value ? parseInt(e.target.value, 10) : null)}
-                placeholder="0"
+                onChange={e => set('totalCost', e.target.value || null)}
+                placeholder="0.00"
                 className="bg-secondary border-border"
               />
             </div>

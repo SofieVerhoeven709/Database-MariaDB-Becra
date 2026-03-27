@@ -2,10 +2,13 @@ import {EmergencyContact, Employee, Prisma} from '@/generated/prisma/client'
 import type {EmployeeDetailData, MappedEmployee, UnifiedRecord} from '@/types/employee'
 
 type EmployeeWithRelations = Employee & {
-  RoleLevel_Employee_roleLevelIdToRoleLevel: {
-    Role: {name: string}
-    SubRole: {name: string}
-  } | null
+  RoleLevelEmployee: {
+    roleLevelId: string
+    RoleLevel: {
+      Role: {name: string}
+      SubRole: {name: string; level: number}
+    }
+  }[]
   Title_Employee_titleIdToTitle: {name: string} | null
   EmergencyContact: EmergencyContact[]
   Employee: {id: string} | null
@@ -13,6 +16,14 @@ type EmployeeWithRelations = Employee & {
 }
 
 export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
+  const highestRoleLevel = prismaEmp.RoleLevelEmployee.reduce<EmployeeWithRelations['RoleLevelEmployee'][0] | null>(
+    (highest, current) => {
+      if (!highest) return current
+      return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
+    },
+    null,
+  )?.RoleLevel
+
   return {
     id: prismaEmp.id,
     firstName: prismaEmp.firstName,
@@ -40,10 +51,10 @@ export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
     deleted: prismaEmp.deleted,
     deletedAt: prismaEmp.deletedAt?.toISOString() ?? null,
     deletedBy: prismaEmp.Employee_Employee_deletedByToEmployee?.id ?? null,
-    roleLevelId: prismaEmp.roleLevelId,
     titleId: prismaEmp.titleId,
-    roleName: prismaEmp.RoleLevel_Employee_roleLevelIdToRoleLevel
-      ? `${prismaEmp.RoleLevel_Employee_roleLevelIdToRoleLevel.Role.name.replace(' Role', '')} / ${prismaEmp.RoleLevel_Employee_roleLevelIdToRoleLevel.SubRole.name}`
+    roleLevelIds: prismaEmp.RoleLevelEmployee.map(rle => rle.roleLevelId),
+    roleName: highestRoleLevel
+      ? `${highestRoleLevel.Role.name.replace(' Role', '')} / ${highestRoleLevel.SubRole.name}`
       : '-',
     titleName: prismaEmp.Title_Employee_titleIdToTitle?.name ?? '-',
     emergencyContacts: prismaEmp.EmergencyContact ?? [],
@@ -52,7 +63,11 @@ export function mapEmployee(prismaEmp: EmployeeWithRelations): MappedEmployee {
 
 type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
   include: {
-    RoleLevel_Employee_roleLevelIdToRoleLevel: {include: {Role: true; SubRole: true}}
+    RoleLevelEmployee: {
+      include: {
+        RoleLevel: {include: {Role: true; SubRole: true}}
+      }
+    }
     Title_Employee_titleIdToTitle: true
     EmergencyContact: true
     Employee: {select: {id: true; firstName: true; lastName: true}}
@@ -152,9 +167,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         invoiceNumber: true
         invoiceDate: true
         createdAt: true
-        completed: true
-        amountWithoutVat: true
-        InvoiceType: {select: {name: true}}
+        InvoiceStatus: {select: {name: true}}
       }
     }
     InvoiceOut: {
@@ -163,9 +176,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
         invoiceNumber: true
         invoiceDate: true
         createdAt: true
-        completed: true
-        amountWithoutVat: true
-        InvoiceType: {select: {name: true}}
+        InvoiceStatus: {select: {name: true}}
       }
     }
     Purchase: {
@@ -209,10 +220,10 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {id: true; workOrderNumber: true; deletedAt: true; Project: {select: {projectName: true}}}
     }
     InvoiceIn_InvoiceIn_deletedByToEmployee: {
-      select: {id: true; invoiceNumber: true; invoiceDate: true; deletedAt: true; amountWithoutVat: true}
+      select: {id: true; invoiceNumber: true; invoiceDate: true; deletedAt: true}
     }
     InvoiceOut_InvoiceOut_deletedByToEmployee: {
-      select: {id: true; invoiceNumber: true; invoiceDate: true; deletedAt: true; amountWithoutVat: true}
+      select: {id: true; invoiceNumber: true; invoiceDate: true; deletedAt: true}
     }
     DocumentStructure_DocumentStructure_createdByToEmployee: {
       select: {id: true; documentNumber: true; descriptionShort: true; createdAt: true; valid: true}
@@ -286,7 +297,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
     // Other created
     Certificate: {select: {id: true; descriptionShort: true; createdAt: true; CertificateType: {select: {name: true}}}}
     CertificateType: {select: {id: true; name: true; createdAt: true}}
-    CompanyAdress: {
+    CompanyAddress_CompanyAddress_createdByToEmployee: {
       select: {id: true; street: true; houseNumber: true; place: true; createdAt: true; Company: {select: {name: true}}}
     }
     CompanyContact: {
@@ -338,7 +349,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
     ProjectType: {select: {id: true; name: true; createdAt: true}}
     PurchaseDetail: {select: {id: true; beNumber: true; status: true; Purchase: {select: {orderNumber: true}}}}
     PurchaseOrderBecra: {select: {id: true; description: true; date: true}}
-    QouteBecra: {select: {id: true; description: true; date: true}}
+    QuoteBecra_QuoteBecra_createdByToEmployee: {select: {id: true; description: true; date: true}}
     Role_Role_createdByToEmployee: {select: {id: true; name: true; createdAt: true}}
     RoleLevel_RoleLevel_createdByToEmployee: {
       select: {id: true; createdAt: true; Role: {select: {name: true}}; SubRole: {select: {name: true}}}
@@ -368,7 +379,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {id: true; descriptionShort: true; deletedAt: true; CertificateType: {select: {name: true}}}
     }
     CertificateType_CertificateType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
-    CompanyAdress_CompanyAdress_deletedByToEmployee: {
+    CompanyAddress_CompanyAddress_deletedByToEmployee: {
       select: {id: true; street: true; houseNumber: true; place: true; deletedAt: true; Company: {select: {name: true}}}
     }
     CompanyContact_CompanyContact_deletedByToEmployee: {
@@ -433,7 +444,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {id: true; beNumber: true; status: true; deletedAt: true; Purchase: {select: {orderNumber: true}}}
     }
     PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
-    QouteBecra_QouteBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
+    QuoteBecra_QuoteBecra_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
     Role_Role_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
     RoleLevel_RoleLevel_deletedByToEmployee: {
       select: {id: true; deletedAt: true; Role: {select: {name: true}}; SubRole: {select: {name: true}}}
@@ -469,7 +480,7 @@ type CreatedEmployee = {
   lastName: string
   createdAt: Date
   active: boolean
-  RoleLevel_Employee_roleLevelIdToRoleLevel: {Role: {name: string}; SubRole: {name: string}} | null
+  RoleLevelEmployee: {RoleLevel: {Role: {name: string}; SubRole: {name: string; level: number}}}[]
 }
 
 type DeletedEmployee = {
@@ -477,7 +488,7 @@ type DeletedEmployee = {
   firstName: string
   lastName: string
   deletedAt: Date | null
-  RoleLevel_Employee_roleLevelIdToRoleLevel: {Role: {name: string}; SubRole: {name: string}} | null
+  RoleLevelEmployee: {RoleLevel: {Role: {name: string}; SubRole: {name: string; level: number}}}[]
 }
 
 export function mapEmployeeDetail(
@@ -485,7 +496,19 @@ export function mapEmployeeDetail(
   createdEmployees: CreatedEmployee[],
   deletedEmployees: DeletedEmployee[],
 ): EmployeeDetailData {
-  const roleLevel = e.RoleLevel_Employee_roleLevelIdToRoleLevel
+  const highestRoleLevel = e.RoleLevelEmployee.reduce<(typeof e.RoleLevelEmployee)[0] | null>((highest, current) => {
+    if (!highest) return current
+    return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
+  }, null)?.RoleLevel
+
+  const getEmployeeRoleName = (emp: CreatedEmployee | DeletedEmployee) => {
+    const highest = emp.RoleLevelEmployee.reduce<(typeof emp.RoleLevelEmployee)[0] | null>((h, c) => {
+      if (!h) return c
+      return c.RoleLevel.SubRole.level > h.RoleLevel.SubRole.level ? c : h
+    }, null)?.RoleLevel
+    return highest ? `${highest.Role.name.replace(' Role', '')} / ${highest.SubRole.name}` : null
+  }
+
   const ownedFollowUpIds = new Set(e.FollowUp_FollowUp_ownedByToEmployee.map(f => f.id))
 
   // ── Created records: flat unified rows ──────────────────────────────────────
@@ -538,8 +561,8 @@ export function mapEmployeeDetail(
     ...e.InvoiceIn.map(i => ({
       id: i.id,
       type: 'Invoice In' as const,
-      label: i.invoiceNumber ?? '(no number)',
-      detail: `${i.InvoiceType.name} · €${i.amountWithoutVat.toFixed(2)}`,
+      label: i.invoiceNumber,
+      detail: i.InvoiceStatus.name,
       date: i.invoiceDate.toISOString(),
       deletedAt: null,
       href: null,
@@ -547,8 +570,8 @@ export function mapEmployeeDetail(
     ...e.InvoiceOut.map(i => ({
       id: i.id,
       type: 'Invoice Out' as const,
-      label: i.invoiceNumber ?? '(no number)',
-      detail: `${i.InvoiceType.name} · €${i.amountWithoutVat.toFixed(2)}`,
+      label: i.invoiceNumber,
+      detail: i.InvoiceStatus.name,
       date: i.invoiceDate.toISOString(),
       deletedAt: null,
       href: null,
@@ -647,9 +670,7 @@ export function mapEmployeeDetail(
       id: emp.id,
       type: 'Employee' as const,
       label: `${emp.firstName} ${emp.lastName}`,
-      detail: emp.RoleLevel_Employee_roleLevelIdToRoleLevel
-        ? `${emp.RoleLevel_Employee_roleLevelIdToRoleLevel.Role.name.replace(' Role', '')} / ${emp.RoleLevel_Employee_roleLevelIdToRoleLevel.SubRole.name}`
-        : null,
+      detail: getEmployeeRoleName(emp),
       date: emp.createdAt.toISOString(),
       deletedAt: null,
       href: `/employees/${emp.id}`,
@@ -706,8 +727,8 @@ export function mapEmployeeDetail(
     ...e.InvoiceIn_InvoiceIn_deletedByToEmployee.map(i => ({
       id: i.id,
       type: 'Invoice In' as const,
-      label: i.invoiceNumber ?? '(no number)',
-      detail: `€${i.amountWithoutVat.toFixed(2)}`,
+      label: i.invoiceNumber,
+      detail: null,
       date: i.invoiceDate.toISOString(),
       deletedAt: i.deletedAt?.toISOString() ?? null,
       href: null,
@@ -715,8 +736,8 @@ export function mapEmployeeDetail(
     ...e.InvoiceOut_InvoiceOut_deletedByToEmployee.map(i => ({
       id: i.id,
       type: 'Invoice Out' as const,
-      label: i.invoiceNumber ?? '(no number)',
-      detail: `€${i.amountWithoutVat.toFixed(2)}`,
+      label: i.invoiceNumber,
+      detail: null,
       date: i.invoiceDate.toISOString(),
       deletedAt: i.deletedAt?.toISOString() ?? null,
       href: null,
@@ -815,9 +836,7 @@ export function mapEmployeeDetail(
       id: emp.id,
       type: 'Employee' as const,
       label: `${emp.firstName} ${emp.lastName}`,
-      detail: emp.RoleLevel_Employee_roleLevelIdToRoleLevel
-        ? `${emp.RoleLevel_Employee_roleLevelIdToRoleLevel.Role.name.replace(' Role', '')} / ${emp.RoleLevel_Employee_roleLevelIdToRoleLevel.SubRole.name}`
-        : null,
+      detail: getEmployeeRoleName(emp),
       date: null,
       deletedAt: emp.deletedAt?.toISOString() ?? null,
       href: null,
@@ -853,8 +872,10 @@ export function mapEmployeeDetail(
     deletedByName: e.Employee_Employee_deletedByToEmployee
       ? `${e.Employee_Employee_deletedByToEmployee.firstName} ${e.Employee_Employee_deletedByToEmployee.lastName}`
       : null,
-    roleName: roleLevel ? `${roleLevel.Role.name.replace(' Role', '')} / ${roleLevel.SubRole.name}` : '-',
-    roleLevelId: e.roleLevelId,
+    roleLevelIds: e.RoleLevelEmployee.map(rle => rle.roleLevelId),
+    roleName: highestRoleLevel
+      ? `${highestRoleLevel.Role.name.replace(' Role', '')} / ${highestRoleLevel.SubRole.name}`
+      : '-',
     titleName: e.Title_Employee_titleIdToTitle?.name ?? '-',
     titleId: e.titleId,
     emergencyContacts: e.EmergencyContact,
@@ -967,7 +988,7 @@ export function mapEmployeeDetail(
         deletedAt: null,
         href: null,
       })),
-      ...e.CompanyAdress.map(r => ({
+      ...e.CompanyAddress_CompanyAddress_createdByToEmployee.map(r => ({
         id: r.id,
         type: 'Company Address' as const,
         label: [r.street, r.houseNumber].filter(Boolean).join(' ') || '(no address)',
@@ -1174,7 +1195,7 @@ export function mapEmployeeDetail(
         deletedAt: null,
         href: null,
       })),
-      ...e.QouteBecra.map(r => ({
+      ...e.QuoteBecra_QuoteBecra_createdByToEmployee.map(r => ({
         id: r.id,
         type: 'Quote Becra' as const,
         label: r.description ?? '(no desc)',
@@ -1325,7 +1346,7 @@ export function mapEmployeeDetail(
         deletedAt: r.deletedAt?.toISOString() ?? null,
         href: null,
       })),
-      ...e.CompanyAdress_CompanyAdress_deletedByToEmployee.map(r => ({
+      ...e.CompanyAddress_CompanyAddress_deletedByToEmployee.map(r => ({
         id: r.id,
         type: 'Company Address' as const,
         label: [r.street, r.houseNumber].filter(Boolean).join(' ') || '(no address)',
@@ -1541,7 +1562,7 @@ export function mapEmployeeDetail(
         deletedAt: r.deletedAt?.toISOString() ?? null,
         href: null,
       })),
-      ...e.QouteBecra_QouteBecra_deletedByToEmployee.map(r => ({
+      ...e.QuoteBecra_QuoteBecra_deletedByToEmployee.map(r => ({
         id: r.id,
         type: 'Quote Becra' as const,
         label: r.description ?? '(no desc)',

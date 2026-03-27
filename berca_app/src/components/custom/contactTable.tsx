@@ -21,6 +21,7 @@ import {
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 type SortField =
   | 'lastName'
@@ -37,7 +38,7 @@ type SortField =
   | 'mobilePhone'
   | 'homePhone'
   | 'birthDate'
-  | 'trough'
+  | 'through'
   | 'active'
   | 'infoCorrect'
   | 'checkInfo'
@@ -54,7 +55,6 @@ type SortField =
   | 'createdAt'
   | 'createdBy'
   | 'deleted'
-
 type SortDir = 'asc' | 'desc'
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 
@@ -116,11 +116,12 @@ interface ContactTableProps {
   currentUserLevel: number
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
-  department: string
+  departmentId: string
   functionOptions: SelectOption[]
   departmentExternOptions: SelectOption[]
   titleOptions: SelectOption[]
   companyOptions: SelectOption[]
+  countryOptions: CountryOption[]
 }
 
 export function ContactTable({
@@ -129,15 +130,23 @@ export function ContactTable({
   currentUserLevel,
   roleLevelOptions,
   defaultVisibleRoleNames,
-  department,
+  departmentId,
   functionOptions,
   departmentExternOptions,
   titleOptions,
   companyOptions,
+  countryOptions,
 }: ContactTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
+  // Level thresholds:
+  //   >= 40  can edit contact fields
+  //   >= 60  can create new contacts
+  //   >= 80  can delete + manage visibility
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [search, setSearch] = useState('')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
@@ -168,7 +177,7 @@ export function ContactTable({
         (c.generalPhone?.toLowerCase().includes(q) ?? false) ||
         (c.mobilePhone?.toLowerCase().includes(q) ?? false) ||
         (c.functionName?.toLowerCase().includes(q) ?? false) ||
-        (c.trough?.toLowerCase().includes(q) ?? false)
+        (c.through?.toLowerCase().includes(q) ?? false)
       )
     })
     .sort((a, b) => {
@@ -204,8 +213,8 @@ export function ContactTable({
           return s(a.homePhone, b.homePhone)
         case 'birthDate':
           return s(a.birthDate, b.birthDate)
-        case 'trough':
-          return s(a.trough, b.trough)
+        case 'through':
+          return s(a.through, b.through)
         case 'active':
           return n(a.active, b.active)
         case 'infoCorrect':
@@ -260,7 +269,7 @@ export function ContactTable({
       mobilePhone: c.mobilePhone,
       info: c.info,
       birthDate: c.birthDate ? new Date(c.birthDate) : null,
-      trough: c.trough,
+      through: c.through,
       description: c.description,
       infoCorrect: c.infoCorrect,
       checkInfo: c.checkInfo,
@@ -280,7 +289,6 @@ export function ContactTable({
       titleId: c.titleId,
       businessCardId: c.businessCardId,
     }
-
     if (editingContact) {
       await updateContactAction({id: c.id, ...core, visibilityForRoles: visibilityRows})
     } else {
@@ -299,25 +307,20 @@ export function ContactTable({
     await softDeleteContactAction({id: c.id})
     router.refresh()
   }
-
   async function handleHardDelete(c: MappedContact) {
     await hardDeleteContactAction({id: c.id})
     router.refresh()
   }
-
   async function handleUndelete(c: MappedContact) {
     await undeleteContactAction({id: c.id})
     router.refresh()
   }
 
   const showDeletedCols = filterDeleted !== 'not-deleted'
-  // base col count: 27 data cols + 1 actions = 28
-  const baseColCount = 30
-  const colCount = showDeletedCols ? baseColCount + 3 : baseColCount
+  const colCount = showDeletedCols ? 33 : 30
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Toolbar */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center flex-1">
           <div className="relative max-w-sm flex-1">
@@ -340,18 +343,18 @@ export function ContactTable({
             </SelectContent>
           </Select>
         </div>
-        <Button
-          onClick={() => {
-            setEditingContact(null)
-            setDialogOpen(true)
-          }}
-          className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-          <Plus className="h-4 w-4" />
-          New Contact
-        </Button>
+        {canCreate && (
+          <Button
+            onClick={() => {
+              setEditingContact(null)
+              setDialogOpen(true)
+            }}
+            className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+            <Plus className="h-4 w-4" /> New Contact
+          </Button>
+        )}
       </div>
 
-      {/* Table */}
       <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
         <Table>
           <TableHeader>
@@ -388,7 +391,7 @@ export function ContactTable({
               <Th field="mobilePhone" label="Mobile" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="homePhone" label="Home Phone" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="birthDate" label="Birth Date" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
-              <Th field="trough" label="Source" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="through" label="Source" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="active" label="Active" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="infoCorrect" label="Info OK" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="checkInfo" label="Check Info" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
@@ -466,7 +469,7 @@ export function ContactTable({
                   className={`border-border/40 hover:bg-secondary/50 ${c.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/${department}/contact/${c.id}` as Route}
+                      href={`/departments/${departmentId}/contact/${c.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {c.lastName}
                     </Link>
@@ -484,7 +487,7 @@ export function ContactTable({
                   <TableCell className={tdClass}>{c.mobilePhone ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{c.homePhone ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{formatDate(c.birthDate)}</TableCell>
-                  <TableCell className={tdClass}>{c.trough ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{c.through ?? '-'}</TableCell>
                   <TableCell>
                     <YesNoBadge value={c.active} />
                   </TableCell>
@@ -543,7 +546,7 @@ export function ContactTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${department}/contact/${c.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/contact/${c.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"
@@ -554,34 +557,32 @@ export function ContactTable({
                           </span>
                         </Button>
                       </Link>
-                      {!c.deleted && (
-                        <>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                            onClick={() => {
-                              setEditingContact(c)
-                              setDialogOpen(true)
-                            }}>
-                            <Pencil className="h-3.5 w-3.5" />
-                            <span className="sr-only">
-                              Edit {c.firstName} {c.lastName}
-                            </span>
-                          </Button>
-                          {canDelete && (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                              onClick={() => handleSoftDelete(c)}>
-                              <Trash2 className="h-3.5 w-3.5" />
-                              <span className="sr-only">
-                                Delete {c.firstName} {c.lastName}
-                              </span>
-                            </Button>
-                          )}
-                        </>
+                      {!c.deleted && canEdit && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          onClick={() => {
+                            setEditingContact(c)
+                            setDialogOpen(true)
+                          }}>
+                          <Pencil className="h-3.5 w-3.5" />
+                          <span className="sr-only">
+                            Edit {c.firstName} {c.lastName}
+                          </span>
+                        </Button>
+                      )}
+                      {!c.deleted && canDelete && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                          onClick={() => handleSoftDelete(c)}>
+                          <Trash2 className="h-3.5 w-3.5" />
+                          <span className="sr-only">
+                            Delete {c.firstName} {c.lastName}
+                          </span>
+                        </Button>
                       )}
                       {c.deleted && (
                         <>
@@ -633,6 +634,8 @@ export function ContactTable({
         departmentExternOptions={departmentExternOptions}
         titleOptions={titleOptions}
         companyOptions={companyOptions}
+        countryOptions={countryOptions}
+        canManageVisibility={canManageVisibility}
       />
     </div>
   )

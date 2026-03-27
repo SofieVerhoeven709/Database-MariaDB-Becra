@@ -21,6 +21,7 @@ import {
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 type SortField =
   | 'name'
@@ -36,7 +37,7 @@ type SortField =
   | 'customer'
   | 'potentialCustomer'
   | 'supplier'
-  | 'prefferedSupplier'
+  | 'preferredSupplier'
   | 'subContractor'
   | 'potentialSubContractor'
   | 'headQuarters'
@@ -80,7 +81,8 @@ interface CompanyTableProps {
   currentUserLevel: number
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
-  department: string
+  departmentId: string
+  countryOptions: CountryOption[]
 }
 
 const thClass = 'cursor-pointer select-none whitespace-nowrap text-xs'
@@ -112,11 +114,19 @@ export function CompanyTable({
   currentUserLevel,
   roleLevelOptions,
   defaultVisibleRoleNames,
-  department,
+  departmentId,
+  countryOptions,
 }: CompanyTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
+  // Level thresholds:
+  //   ≥ 40  can edit company fields
+  //   ≥ 60  can create new companies
+  //   ≥ 80  can edit number + delete + manage visibility
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canEditNumber = currentUserLevel >= 80
+  const canDelete = currentUserLevel >= 80
 
   const companies = initialCompanies
   const [search, setSearch] = useState('')
@@ -143,6 +153,7 @@ export function CompanyTable({
       return (
         c.name.toLowerCase().includes(q) ||
         c.number.toLowerCase().includes(q) ||
+        (c.idOld?.toLowerCase().includes(q) ?? false) ||
         (c.mail?.toLowerCase().includes(q) ?? false) ||
         (c.vatNumber?.toLowerCase().includes(q) ?? false) ||
         (c.website?.toLowerCase().includes(q) ?? false) ||
@@ -182,8 +193,8 @@ export function CompanyTable({
           return n(a.potentialCustomer, b.potentialCustomer)
         case 'supplier':
           return n(a.supplier, b.supplier)
-        case 'prefferedSupplier':
-          return n(a.prefferedSupplier, b.prefferedSupplier)
+        case 'preferredSupplier':
+          return n(a.preferredSupplier, b.preferredSupplier)
         case 'subContractor':
           return n(a.subContractor, b.subContractor)
         case 'potentialSubContractor':
@@ -208,10 +219,11 @@ export function CompanyTable({
     })
 
   async function handleSave(c: MappedCompany, visibilityRows: VisibilityRow[]) {
-    // Core editable fields — present in both schemas
     const core = {
       name: c.name,
+      officialName: c.officialName,
       number: c.number,
+      idOld: c.idOld,
       mail: c.mail,
       businessPhone: c.businessPhone,
       website: c.website,
@@ -222,7 +234,7 @@ export function CompanyTable({
       becraCustomerNumber: c.becraCustomerNumber,
       becraWebsiteLogin: c.becraWebsiteLogin,
       supplier: c.supplier,
-      prefferedSupplier: c.prefferedSupplier,
+      preferredSupplier: c.preferredSupplier,
       companyActive: c.companyActive,
       newsLetter: c.newsLetter,
       customer: c.customer,
@@ -245,7 +257,8 @@ export function CompanyTable({
           busNumber: a.busNumber,
           zipCode: a.zipCode,
           place: a.place,
-          typeAdress: a.typeAdress,
+          typeAddress: a.typeAddress,
+          countryId: a.countryId,
         })),
         visibilityForRoles: visibilityRows,
       })
@@ -296,15 +309,17 @@ export function CompanyTable({
             </SelectContent>
           </Select>
         </div>
-        <Button
-          onClick={() => {
-            setEditingCompany(null)
-            setDialogOpen(true)
-          }}
-          className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-          <Plus className="h-4 w-4" />
-          New Company
-        </Button>
+        {canCreate && (
+          <Button
+            onClick={() => {
+              setEditingCompany(null)
+              setDialogOpen(true)
+            }}
+            className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+            <Plus className="h-4 w-4" />
+            New Company
+          </Button>
+        )}
       </div>
 
       {/* Table */}
@@ -339,7 +354,7 @@ export function CompanyTable({
               />
               <Th field="supplier" label="Supplier" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th
-                field="prefferedSupplier"
+                field="preferredSupplier"
                 label="Pref. Supplier"
                 sortField={sortField}
                 sortDir={sortDir}
@@ -384,7 +399,7 @@ export function CompanyTable({
                   className={`border-border/40 hover:bg-secondary/50 ${c.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/${department}/company/${c.id}` as Route}
+                      href={`/departments/${departmentId}/company/${c.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {c.name}
                     </Link>
@@ -423,7 +438,7 @@ export function CompanyTable({
                     <YesNoBadge value={c.supplier} />
                   </TableCell>
                   <TableCell>
-                    <YesNoBadge value={c.prefferedSupplier} />
+                    <YesNoBadge value={c.preferredSupplier} />
                   </TableCell>
                   <TableCell>
                     <YesNoBadge value={c.subContractor} />
@@ -457,7 +472,7 @@ export function CompanyTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${department}/company/${c.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/company/${c.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"
@@ -466,30 +481,28 @@ export function CompanyTable({
                           <span className="sr-only">View {c.name}</span>
                         </Button>
                       </Link>
-                      {!c.deleted && (
-                        <>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                            onClick={() => {
-                              setEditingCompany(c)
-                              setDialogOpen(true)
-                            }}>
-                            <Pencil className="h-3.5 w-3.5" />
-                            <span className="sr-only">Edit {c.name}</span>
-                          </Button>
-                          {canDelete && (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                              onClick={() => handleSoftDelete(c)}>
-                              <Trash2 className="h-3.5 w-3.5" />
-                              <span className="sr-only">Delete {c.name}</span>
-                            </Button>
-                          )}
-                        </>
+                      {!c.deleted && canEdit && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          onClick={() => {
+                            setEditingCompany(c)
+                            setDialogOpen(true)
+                          }}>
+                          <Pencil className="h-3.5 w-3.5" />
+                          <span className="sr-only">Edit {c.name}</span>
+                        </Button>
+                      )}
+                      {!c.deleted && canDelete && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                          onClick={() => handleSoftDelete(c)}>
+                          <Trash2 className="h-3.5 w-3.5" />
+                          <span className="sr-only">Delete {c.name}</span>
+                        </Button>
                       )}
                       {c.deleted && (
                         <>
@@ -535,8 +548,11 @@ export function CompanyTable({
         onSave={handleSave}
         isAdmin={isAdmin}
         canDelete={canDelete}
+        canEditNumber={canEditNumber}
+        canManageVisibility={canEditNumber}
         roleLevelOptions={roleLevelOptions}
         defaultVisibleRoleNames={defaultVisibleRoleNames}
+        countryOptions={countryOptions}
       />
     </div>
   )

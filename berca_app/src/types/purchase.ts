@@ -12,7 +12,7 @@ export interface MappedPurchase {
   updatedAt: string | null
   createdBy: string
   createdByName: string
-  preferedSupplier: string | null
+  preferredSupplier: string | null
   description: string | null
   deleted: boolean
   deletedAt: string | null
@@ -26,9 +26,9 @@ export interface MappedPurchaseDetail {
   projectNumber: string | null
   projectName: string | null
   beNumber: string | null
-  unitPrice: number | null
+  unitPrice: string | null
   quantity: number | null
-  totalCost: number | null
+  totalCost: string | null
   status: string | null
   additionalInfo: string | null
   updatedAt: string | null

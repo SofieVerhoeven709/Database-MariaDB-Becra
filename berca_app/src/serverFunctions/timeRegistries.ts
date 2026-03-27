@@ -81,6 +81,9 @@ export const hardDeleteTimeRegistryAction = protectedServerFunction({
       where: {id},
       select: {workOrderId: true},
     })
+    await prismaClient.timeRegistryEmployee.deleteMany({
+      where: {timeRegistryId: id},
+    })
     await prismaClient.timeRegistry.delete({where: {id}})
     logger.info(`Time registry hard deleted: ${id}`)
     revalidateTimeRegistryPaths(tr.workOrderId)

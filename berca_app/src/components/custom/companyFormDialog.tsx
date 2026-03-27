@@ -24,6 +24,8 @@ import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/cus
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {useRouter} from 'next/navigation'
 import {generateCompanyNumber} from '@/lib/utils'
+import {CountrySelect} from '@/components/custom/countrySelect'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 interface Option {
   id: string
@@ -38,14 +40,21 @@ interface CompanyFormDialogProps {
   onSave: (company: MappedCompany, visibilityRows: VisibilityRow[]) => Promise<void>
   isAdmin: boolean
   canDelete: boolean
+  /** Whether the current user can edit the company number (level >= 80) */
+  canEditNumber: boolean
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
+  countryOptions: CountryOption[]
+  /** Whether the current user can manage visibility (level >= 80) */
+  canManageVisibility: boolean
 }
 
 const emptyCompany = (): MappedCompany => ({
   id: '',
   name: '',
+  officialName: '',
   number: generateCompanyNumber(),
+  idOld: null,
   mail: null,
   businessPhone: null,
   website: null,
@@ -56,7 +65,7 @@ const emptyCompany = (): MappedCompany => ({
   becraCustomerNumber: null,
   becraWebsiteLogin: null,
   supplier: false,
-  prefferedSupplier: false,
+  preferredSupplier: false,
   companyActive: true,
   newsLetter: false,
   customer: false,
@@ -86,7 +95,9 @@ type AddrForm = {
   busNumber: string | null
   zipCode: string | null
   place: string | null
-  typeAdress: string | null
+  typeAddress: string | null
+  countryId: string | null
+  countryName: string | null
   companyId: string
 }
 
@@ -97,19 +108,29 @@ const emptyAddrForm = (companyId: string): AddrForm => ({
   busNumber: null,
   zipCode: null,
   place: null,
-  typeAdress: null,
+  typeAddress: null,
+  countryId: null,
+  countryName: null,
   companyId,
 })
 
-function AddrFields({value, onChange}: {value: AddrForm; onChange: (v: AddrForm) => void}) {
+function AddrFields({
+  value,
+  onChange,
+  countryOptions,
+}: {
+  value: AddrForm
+  onChange: (v: AddrForm) => void
+  countryOptions: CountryOption[]
+}) {
   const s = (k: keyof AddrForm, v: string) => onChange({...value, [k]: v || null})
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
       <div className="flex flex-col gap-1">
         <Label className="text-xs text-muted-foreground">Type</Label>
         <Input
-          value={value.typeAdress ?? ''}
-          onChange={e => s('typeAdress', e.target.value)}
+          value={value.typeAddress ?? ''}
+          onChange={e => s('typeAddress', e.target.value)}
           placeholder="e.g. Main, Billing…"
           className="h-8 text-xs bg-secondary border-border"
         />
@@ -154,6 +175,15 @@ function AddrFields({value, onChange}: {value: AddrForm; onChange: (v: AddrForm)
           className="h-8 text-xs bg-secondary border-border"
         />
       </div>
+      <div className="flex flex-col gap-1 col-span-2 sm:col-span-3">
+        <Label className="text-xs text-muted-foreground">Country</Label>
+        <CountrySelect
+          value={value.countryId}
+          currentName={value.countryName}
+          onChange={(id, name) => onChange({...value, countryId: id, countryName: name})}
+          countries={countryOptions}
+        />
+      </div>
     </div>
   )
 }
@@ -166,32 +196,37 @@ export function CompanyFormDialog({
   onSave,
   isAdmin,
   canDelete,
+  canEditNumber,
+  canManageVisibility,
   roleLevelOptions,
   defaultVisibleRoleNames,
+  countryOptions,
 }: CompanyFormDialogProps) {
   const router = useRouter()
   const [form, setForm] = useState<MappedCompany>(emptyCompany())
   const [saving, setSaving] = useState(false)
+  const [numberError, setNumberError] = useState<string | null>(null)
   const [addingAddr, setAddingAddr] = useState(false)
   const [newAddr, setNewAddr] = useState<AddrForm>(emptyAddrForm(''))
   const [editingAddrId, setEditingAddrId] = useState<string | null>(null)
   const [editingAddrForm, setEditingAddrForm] = useState<AddrForm>(emptyAddrForm(''))
   const [showDeletedAddrs, setShowDeletedAddrs] = useState(false)
+  const [officialNameManuallySet, setOfficialNameManuallySet] = useState(false)
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(company?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
 
-  // Reset everything when the dialog opens or switches to a different company
   useEffect(() => {
     const next = company ?? emptyCompany()
     setForm(next)
+    setOfficialNameManuallySet(false)
     setAddingAddr(false)
     setEditingAddrId(null)
     setShowDeletedAddrs(false)
+    setNumberError(null)
     setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
   }, [company?.id, open])
 
-  // Sync addresses from refreshed company prop without resetting the rest of the form
   useEffect(() => {
     if (!open || !company) return
     setForm(prev => ({...prev, addresses: company.addresses, visibilityForRoles: company.visibilityForRoles}))
@@ -200,19 +235,33 @@ export function CompanyFormDialog({
   }, [JSON.stringify(company?.addresses), JSON.stringify(company?.visibilityForRoles)])
 
   function set<K extends keyof MappedCompany>(key: K, value: MappedCompany[K]) {
-    setForm(prev => ({...prev, [key]: value}))
+    setForm(prev => {
+      const updated = {...prev, [key]: value}
+      if (key === 'name' && !officialNameManuallySet) {
+        updated.officialName = value as string
+      }
+      return updated
+    })
+    if (key === 'number') setNumberError(null)
   }
 
   async function handleSubmit() {
+    if (!form.number.trim()) {
+      setNumberError('Company number is required.')
+      return
+    }
     setSaving(true)
     try {
-      await onSave(form, visibilityRows)
+      const formToSave = {
+        ...form,
+        officialName: form.officialName?.trim() || form.name,
+      }
+      await onSave(formToSave, visibilityRows)
     } finally {
       setSaving(false)
     }
   }
 
-  // ── Address handlers ──────────────────────────────────────────────────────
   async function handleAddAddr() {
     if (!form.id) {
       const addr: MappedCompanyAddress = {
@@ -227,7 +276,7 @@ export function CompanyFormDialog({
       }
       setForm(f => ({...f, addresses: [...f.addresses, addr]}))
     } else {
-      await createCompanyAddressAction({...newAddr, companyId: form.id})
+      await createCompanyAddressAction({...newAddr, companyId: form.id, countryId: newAddr.countryId})
       router.refresh()
     }
     setNewAddr(emptyAddrForm(form.id))
@@ -239,7 +288,7 @@ export function CompanyFormDialog({
     if (editingAddrId.startsWith('temp-')) {
       setForm(f => ({...f, addresses: f.addresses.map(a => (a.id === editingAddrId ? {...a, ...editingAddrForm} : a))}))
     } else {
-      await updateCompanyAddressAction({...editingAddrForm, id: editingAddrId})
+      await updateCompanyAddressAction({...editingAddrForm, id: editingAddrId, countryId: editingAddrForm.countryId})
       router.refresh()
     }
     setEditingAddrId(null)
@@ -272,6 +321,7 @@ export function CompanyFormDialog({
   const parentOptions = companies.filter(c => c.id !== form.id)
   const visibleAddrs = form.addresses.filter(a => (showDeletedAddrs ? true : !a.deleted))
   const activeAddrCount = form.addresses.filter(a => !a.deleted).length
+  const numberEditable = !isEdit || canEditNumber
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -289,10 +339,10 @@ export function CompanyFormDialog({
                 {activeAddrCount}
               </Badge>
             </TabsTrigger>
-            <TabsTrigger value="visibility">Visibility</TabsTrigger>
+            {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
           </TabsList>
 
-          {/* ── Details ───────────────────────────────────────────────────── */}
+          {/* ── Details ── */}
           <TabsContent value="details">
             <div className="grid grid-cols-1 gap-5 py-3 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
@@ -303,38 +353,58 @@ export function CompanyFormDialog({
                   className="bg-secondary border-border"
                 />
               </div>
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Official Name *</Label>
+                <Input
+                  value={form.officialName}
+                  onChange={e => {
+                    setOfficialNameManuallySet(true)
+                    set('officialName', e.target.value)
+                  }}
+                  className="bg-secondary border-border"
+                />
+              </div>
 
-              {/* Number — auto-generated + regeneratable on create, read-only on edit */}
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">
-                  Number
-                  {isEdit ? (
-                    <span className="ml-1.5 text-muted-foreground/60">(locked)</span>
-                  ) : (
-                    <span className="ml-1.5 text-muted-foreground/60">(auto-generated)</span>
-                  )}
+                  Number *{!numberEditable && <span className="ml-1.5 text-muted-foreground/60">(locked)</span>}
                 </Label>
-                {isEdit ? (
+                {numberEditable ? (
+                  <div className="flex flex-col gap-1">
+                    <div className="flex gap-2">
+                      <Input
+                        value={form.number}
+                        onChange={e => set('number', e.target.value)}
+                        className={`bg-secondary border-border flex-1 ${numberError ? 'border-destructive' : ''}`}
+                      />
+                      {!isEdit && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="h-10 px-3 border-border text-xs shrink-0"
+                          onClick={() => set('number', generateCompanyNumber())}>
+                          Regenerate
+                        </Button>
+                      )}
+                    </div>
+                    {numberError && <p className="text-xs text-destructive">{numberError}</p>}
+                  </div>
+                ) : (
                   <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
                     {form.number}
                   </div>
-                ) : (
-                  <div className="flex gap-2">
-                    <Input
-                      value={form.number}
-                      readOnly
-                      className="bg-secondary/40 border-border text-muted-foreground flex-1 cursor-default"
-                    />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className="h-10 px-3 border-border text-xs shrink-0"
-                      onClick={() => set('number', generateCompanyNumber())}>
-                      Regenerate
-                    </Button>
-                  </div>
                 )}
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Old ID</Label>
+                <Input
+                  value={form.idOld ?? ''}
+                  onChange={e => set('idOld', e.target.value || null)}
+                  className="bg-secondary border-border"
+                  placeholder="Legacy identifier…"
+                />
               </div>
 
               <div className="flex flex-col gap-1.5">
@@ -444,7 +514,7 @@ export function CompanyFormDialog({
                     {key: 'customer', label: 'Customer'},
                     {key: 'potentialCustomer', label: 'Potential Customer'},
                     {key: 'supplier', label: 'Supplier'},
-                    {key: 'prefferedSupplier', label: 'Preferred Supplier'},
+                    {key: 'preferredSupplier', label: 'Preferred Supplier'},
                     {key: 'subContractor', label: 'Sub-Contractor'},
                     {key: 'potentialSubContractor', label: 'Potential Sub-Con'},
                     {key: 'headQuarters', label: 'Head Quarters'},
@@ -462,7 +532,7 @@ export function CompanyFormDialog({
             </div>
           </TabsContent>
 
-          {/* ── Addresses ─────────────────────────────────────────────────── */}
+          {/* ── Addresses ── */}
           <TabsContent value="addresses">
             <div className="flex flex-col gap-4 py-3">
               <div className="flex items-center gap-2">
@@ -471,12 +541,12 @@ export function CompanyFormDialog({
                     size="sm"
                     className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7"
                     onClick={() => {
-                      setNewAddr(emptyAddrForm(form.id))
+                      const hasActiveAddresses = form.addresses.some(a => !a.deleted)
+                      setNewAddr({...emptyAddrForm(form.id), typeAddress: hasActiveAddresses ? null : 'Headquarters'})
                       setEditingAddrId(null)
                       setAddingAddr(true)
                     }}>
-                    <Plus className="h-3 w-3" />
-                    Add Address
+                    <Plus className="h-3 w-3" /> Add Address
                   </Button>
                 )}
                 {canDelete && form.addresses.some(a => a.deleted) && (
@@ -493,7 +563,7 @@ export function CompanyFormDialog({
               {addingAddr && (
                 <div className="rounded-lg border border-border bg-secondary/40 p-4 flex flex-col gap-3">
                   <p className="text-xs font-medium text-foreground">New Address</p>
-                  <AddrFields value={newAddr} onChange={setNewAddr} />
+                  <AddrFields value={newAddr} onChange={setNewAddr} countryOptions={countryOptions} />
                   <div className="flex gap-2">
                     <Button
                       size="sm"
@@ -522,7 +592,11 @@ export function CompanyFormDialog({
                       className={`rounded-lg border border-border bg-secondary/40 p-4 flex flex-col gap-3 ${a.deleted ? 'opacity-50' : ''}`}>
                       {editingAddrId === a.id ? (
                         <>
-                          <AddrFields value={editingAddrForm} onChange={setEditingAddrForm} />
+                          <AddrFields
+                            value={editingAddrForm}
+                            onChange={setEditingAddrForm}
+                            countryOptions={countryOptions}
+                          />
                           <div className="flex gap-2">
                             <Button
                               size="sm"
@@ -543,9 +617,9 @@ export function CompanyFormDialog({
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex flex-col gap-0.5">
                             <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-                              {a.typeAdress && (
+                              {a.typeAddress && (
                                 <Badge variant="outline" className="text-xs border-border">
-                                  {a.typeAdress}
+                                  {a.typeAddress}
                                 </Badge>
                               )}
                               {a.deleted && (
@@ -558,7 +632,7 @@ export function CompanyFormDialog({
                               {[a.street, a.houseNumber, a.busNumber].filter(Boolean).join(' ') || '-'}
                             </p>
                             <p className="text-sm text-muted-foreground">
-                              {[a.zipCode, a.place].filter(Boolean).join(' ') || '-'}
+                              {[a.zipCode, a.place, a.countryName].filter(Boolean).join(' · ') || '-'}
                             </p>
                           </div>
                           <div className="flex items-center gap-1 shrink-0">
@@ -598,7 +672,9 @@ export function CompanyFormDialog({
                                       busNumber: a.busNumber,
                                       zipCode: a.zipCode,
                                       place: a.place,
-                                      typeAdress: a.typeAdress,
+                                      typeAddress: a.typeAddress,
+                                      countryId: a.countryId,
+                                      countryName: a.countryName,
                                       companyId: a.companyId,
                                     })
                                   }}>
@@ -625,16 +701,18 @@ export function CompanyFormDialog({
             </div>
           </TabsContent>
 
-          {/* ── Visibility ────────────────────────────────────────────────── */}
-          <TabsContent value="visibility">
-            <div className="py-3">
-              <VisibilityForRoleTab
-                roleLevelOptions={roleLevelOptions}
-                value={visibilityRows}
-                onChange={setVisibilityRows}
-              />
-            </div>
-          </TabsContent>
+          {/* ── Visibility (level >= 80 only) ── */}
+          {canManageVisibility && (
+            <TabsContent value="visibility">
+              <div className="py-3">
+                <VisibilityForRoleTab
+                  roleLevelOptions={roleLevelOptions}
+                  value={visibilityRows}
+                  onChange={setVisibilityRows}
+                />
+              </div>
+            </TabsContent>
+          )}
         </Tabs>
 
         <DialogFooter className="pt-2">
@@ -643,7 +721,7 @@ export function CompanyFormDialog({
           </Button>
           <Button
             onClick={handleSubmit}
-            disabled={saving || !form.name || !form.number}
+            disabled={saving || !form.name}
             className="bg-accent text-accent-foreground hover:bg-accent/80">
             {saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Create Company'}
           </Button>

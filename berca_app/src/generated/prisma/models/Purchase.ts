@@ -36,7 +36,7 @@ export type PurchaseMinAggregateOutputType = {
   status: string | null
   shortDescription: string | null
   description: string | null
-  preferedSupplier: string | null
+  preferredSupplier: string | null
   additionalInfo: string | null
   updatedAt: Date | null
   createdBy: string | null
@@ -57,7 +57,7 @@ export type PurchaseMaxAggregateOutputType = {
   status: string | null
   shortDescription: string | null
   description: string | null
-  preferedSupplier: string | null
+  preferredSupplier: string | null
   additionalInfo: string | null
   updatedAt: Date | null
   createdBy: string | null
@@ -78,7 +78,7 @@ export type PurchaseCountAggregateOutputType = {
   status: number
   shortDescription: number
   description: number
-  preferedSupplier: number
+  preferredSupplier: number
   additionalInfo: number
   updatedAt: number
   createdBy: number
@@ -101,7 +101,7 @@ export type PurchaseMinAggregateInputType = {
   status?: true
   shortDescription?: true
   description?: true
-  preferedSupplier?: true
+  preferredSupplier?: true
   additionalInfo?: true
   updatedAt?: true
   createdBy?: true
@@ -122,7 +122,7 @@ export type PurchaseMaxAggregateInputType = {
   status?: true
   shortDescription?: true
   description?: true
-  preferedSupplier?: true
+  preferredSupplier?: true
   additionalInfo?: true
   updatedAt?: true
   createdBy?: true
@@ -143,7 +143,7 @@ export type PurchaseCountAggregateInputType = {
   status?: true
   shortDescription?: true
   description?: true
-  preferedSupplier?: true
+  preferredSupplier?: true
   additionalInfo?: true
   updatedAt?: true
   createdBy?: true
@@ -237,7 +237,7 @@ export type PurchaseGroupByOutputType = {
   status: string | null
   shortDescription: string | null
   description: string | null
-  preferedSupplier: string | null
+  preferredSupplier: string | null
   additionalInfo: string | null
   updatedAt: Date | null
   createdBy: string
@@ -279,7 +279,7 @@ export type PurchaseWhereInput = {
   status?: Prisma.StringNullableFilter<"Purchase"> | string | null
   shortDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableFilter<"Purchase"> | string | null
-  preferedSupplier?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  preferredSupplier?: Prisma.StringNullableFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Purchase"> | string
@@ -306,7 +306,7 @@ export type PurchaseOrderByWithRelationInput = {
   status?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  preferedSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -337,7 +337,7 @@ export type PurchaseWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.StringNullableFilter<"Purchase"> | string | null
   shortDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableFilter<"Purchase"> | string | null
-  preferedSupplier?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  preferredSupplier?: Prisma.StringNullableFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Purchase"> | string
@@ -364,7 +364,7 @@ export type PurchaseOrderByWithAggregationInput = {
   status?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  preferedSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -391,7 +391,7 @@ export type PurchaseScalarWhereWithAggregatesInput = {
   status?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   shortDescription?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
-  preferedSupplier?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
+  preferredSupplier?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Purchase"> | Date | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"Purchase"> | string
@@ -409,7 +409,7 @@ export type PurchaseCreateInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   deleted?: boolean
@@ -434,7 +434,7 @@ export type PurchaseUncheckedCreateInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   createdBy: string
@@ -453,7 +453,7 @@ export type PurchaseUpdateInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -478,7 +478,7 @@ export type PurchaseUncheckedUpdateInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -500,7 +500,7 @@ export type PurchaseCreateManyInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   createdBy: string
@@ -518,7 +518,7 @@ export type PurchaseUpdateManyMutationInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -537,7 +537,7 @@ export type PurchaseUncheckedUpdateManyInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -574,7 +574,7 @@ export type PurchaseCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  preferedSupplier?: Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -595,7 +595,7 @@ export type PurchaseMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  preferedSupplier?: Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -616,7 +616,7 @@ export type PurchaseMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  preferedSupplier?: Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -865,7 +865,7 @@ export type PurchaseCreateWithoutCompanyInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   deleted?: boolean
@@ -888,7 +888,7 @@ export type PurchaseUncheckedCreateWithoutCompanyInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   createdBy: string
@@ -939,7 +939,7 @@ export type PurchaseScalarWhereInput = {
   status?: Prisma.StringNullableFilter<"Purchase"> | string | null
   shortDescription?: Prisma.StringNullableFilter<"Purchase"> | string | null
   description?: Prisma.StringNullableFilter<"Purchase"> | string | null
-  preferedSupplier?: Prisma.StringNullableFilter<"Purchase"> | string | null
+  preferredSupplier?: Prisma.StringNullableFilter<"Purchase"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"Purchase"> | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
   createdBy?: Prisma.StringFilter<"Purchase"> | string
@@ -957,7 +957,7 @@ export type PurchaseCreateWithoutEmployeeInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   deleted?: boolean
@@ -981,7 +981,7 @@ export type PurchaseUncheckedCreateWithoutEmployeeInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   deleted?: boolean
@@ -1009,7 +1009,7 @@ export type PurchaseCreateWithoutEmployee_Purchase_deletedByToEmployeeInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   deleted?: boolean
@@ -1033,7 +1033,7 @@ export type PurchaseUncheckedCreateWithoutEmployee_Purchase_deletedByToEmployeeI
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   createdBy: string
@@ -1093,7 +1093,7 @@ export type PurchaseCreateWithoutMaterialGroupInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   deleted?: boolean
@@ -1116,7 +1116,7 @@ export type PurchaseUncheckedCreateWithoutMaterialGroupInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   createdBy: string
@@ -1161,7 +1161,7 @@ export type PurchaseCreateWithoutProjectInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   deleted?: boolean
@@ -1184,7 +1184,7 @@ export type PurchaseUncheckedCreateWithoutProjectInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   createdBy: string
@@ -1229,7 +1229,7 @@ export type PurchaseCreateWithoutPurchaseDetailInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   deleted?: boolean
@@ -1253,7 +1253,7 @@ export type PurchaseUncheckedCreateWithoutPurchaseDetailInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   createdBy: string
@@ -1287,7 +1287,7 @@ export type PurchaseUpdateWithoutPurchaseDetailInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1311,7 +1311,7 @@ export type PurchaseUncheckedUpdateWithoutPurchaseDetailInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1331,7 +1331,7 @@ export type PurchaseCreateManyCompanyInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   createdBy: string
@@ -1349,7 +1349,7 @@ export type PurchaseUpdateWithoutCompanyInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1372,7 +1372,7 @@ export type PurchaseUncheckedUpdateWithoutCompanyInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1393,7 +1393,7 @@ export type PurchaseUncheckedUpdateManyWithoutCompanyInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1414,7 +1414,7 @@ export type PurchaseCreateManyEmployeeInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   deleted?: boolean
@@ -1434,7 +1434,7 @@ export type PurchaseCreateManyEmployee_Purchase_deletedByToEmployeeInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   createdBy: string
@@ -1451,7 +1451,7 @@ export type PurchaseUpdateWithoutEmployeeInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1475,7 +1475,7 @@ export type PurchaseUncheckedUpdateWithoutEmployeeInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1496,7 +1496,7 @@ export type PurchaseUncheckedUpdateManyWithoutEmployeeInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1513,7 +1513,7 @@ export type PurchaseUpdateWithoutEmployee_Purchase_deletedByToEmployeeInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1537,7 +1537,7 @@ export type PurchaseUncheckedUpdateWithoutEmployee_Purchase_deletedByToEmployeeI
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1558,7 +1558,7 @@ export type PurchaseUncheckedUpdateManyWithoutEmployee_Purchase_deletedByToEmplo
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1577,7 +1577,7 @@ export type PurchaseCreateManyMaterialGroupInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   createdBy: string
@@ -1595,7 +1595,7 @@ export type PurchaseUpdateWithoutMaterialGroupInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1618,7 +1618,7 @@ export type PurchaseUncheckedUpdateWithoutMaterialGroupInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1639,7 +1639,7 @@ export type PurchaseUncheckedUpdateManyWithoutMaterialGroupInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1659,7 +1659,7 @@ export type PurchaseCreateManyProjectInput = {
   status?: string | null
   shortDescription?: string | null
   description?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   additionalInfo?: string | null
   updatedAt?: Date | string | null
   createdBy: string
@@ -1677,7 +1677,7 @@ export type PurchaseUpdateWithoutProjectInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1700,7 +1700,7 @@ export type PurchaseUncheckedUpdateWithoutProjectInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1721,7 +1721,7 @@ export type PurchaseUncheckedUpdateManyWithoutProjectInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1773,7 +1773,7 @@ export type PurchaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   status?: boolean
   shortDescription?: boolean
   description?: boolean
-  preferedSupplier?: boolean
+  preferredSupplier?: boolean
   additionalInfo?: boolean
   updatedAt?: boolean
   createdBy?: boolean
@@ -1803,7 +1803,7 @@ export type PurchaseSelectScalar = {
   status?: boolean
   shortDescription?: boolean
   description?: boolean
-  preferedSupplier?: boolean
+  preferredSupplier?: boolean
   additionalInfo?: boolean
   updatedAt?: boolean
   createdBy?: boolean
@@ -1812,7 +1812,7 @@ export type PurchaseSelectScalar = {
   deletedBy?: boolean
 }
 
-export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "purchaseDate" | "materialGroupId" | "orderNumber" | "companyId" | "brandName" | "brandOrderNumber" | "status" | "shortDescription" | "description" | "preferedSupplier" | "additionalInfo" | "updatedAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["purchase"]>
+export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "purchaseDate" | "materialGroupId" | "orderNumber" | "companyId" | "brandName" | "brandOrderNumber" | "status" | "shortDescription" | "description" | "preferredSupplier" | "additionalInfo" | "updatedAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["purchase"]>
 export type PurchaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Project?: boolean | Prisma.Purchase$ProjectArgs<ExtArgs>
   MaterialGroup?: boolean | Prisma.Purchase$MaterialGroupArgs<ExtArgs>
@@ -1845,7 +1845,7 @@ export type $PurchasePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     status: string | null
     shortDescription: string | null
     description: string | null
-    preferedSupplier: string | null
+    preferredSupplier: string | null
     additionalInfo: string | null
     updatedAt: Date | null
     createdBy: string
@@ -2238,7 +2238,7 @@ export interface PurchaseFieldRefs {
   readonly status: Prisma.FieldRef<"Purchase", 'String'>
   readonly shortDescription: Prisma.FieldRef<"Purchase", 'String'>
   readonly description: Prisma.FieldRef<"Purchase", 'String'>
-  readonly preferedSupplier: Prisma.FieldRef<"Purchase", 'String'>
+  readonly preferredSupplier: Prisma.FieldRef<"Purchase", 'String'>
   readonly additionalInfo: Prisma.FieldRef<"Purchase", 'String'>
   readonly updatedAt: Prisma.FieldRef<"Purchase", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Purchase", 'String'>

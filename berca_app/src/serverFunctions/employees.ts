@@ -17,31 +17,6 @@ import {protectedFormAction, protectedServerFunction, publicFormAction} from '@/
 import {registerSchema, signInSchema, updateEmployeeSchema, upsertEmployeeSchema} from '@/schemas/employeeSchemas'
 import {prismaClient} from '@/dal/prismaClient'
 
-export const registerAction = publicFormAction({
-  schema: registerSchema,
-  serverFn: async ({data: {passwordConfirmation: _, ...data}, logger}) => {
-    const employee = await createEmployee(data)
-    logger.info(`New employee created: ${employee.id}`)
-
-    const role = await prismaClient.roleLevel.findUnique({
-      where: {id: employee.roleLevelId!},
-      include: {
-        Role: true, // RoleLevel → Role
-        SubRole: true, // RoleLevel → SubRole
-      },
-    })
-    if (!role) throw new Error('Employee has no role assigned.')
-
-    const session = await startSession(employee.id, role.SubRole)
-    logger.info(`New session started: ${session.id}, ends at ${session.activeUntil.toISOString()}`)
-
-    await setSessionCookie(session)
-    redirect('/')
-  },
-  functionName: 'Register action',
-  globalErrorMessage: "We couldn't create an account for you, please try again or log in with an existing account.",
-})
-
 export const signInAction = publicFormAction({
   schema: signInSchema,
   serverFn: async ({data, logger}) => {
@@ -49,7 +24,7 @@ export const signInAction = publicFormAction({
 
     // Als we meteen een unauthorized terug geven nadat een gebruiker niet gevonden is in de database, kan een aanvaller
     // hieruit afleiden dat het e-mailadres niet bestaat.
-    // Vervolgens kan de aanvaller overgaan naar andere email adressen, en moet deze geen tijd meer spenderen aan het adres
+    // Vervolgens kan de aanvaller overgaan naar andere email addressen, en moet deze geen tijd meer spenderen aan het adres
     // dat niet bestaat.
     // Als oplossing voegen we een alternatief wachtwoord toe dat gebruikt wordt als de gebruiker niet gevonden is in de
     // database.
@@ -70,16 +45,16 @@ export const signInAction = publicFormAction({
 
     logger.info(`Successful authentication request for ${employee!.id}`)
 
-    const role = await prismaClient.roleLevel.findUnique({
-      where: {id: employee!.roleLevelId!},
-      include: {
-        Role: true, // RoleLevel → Role
-        SubRole: true, // RoleLevel → SubRole
-      },
-    })
-    if (!role) throw new Error('Employee has no role assigned.')
+    type EmployeeRoleLevelItem = NonNullable<typeof employee>['RoleLevelEmployee'][0]
 
-    const session = await startSession(employee!.id, role.SubRole)
+    const highestRoleLevel = employee!.RoleLevelEmployee.reduce<EmployeeRoleLevelItem | null>((highest, current) => {
+      if (!highest) return current
+      return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
+    }, null)?.RoleLevel
+
+    if (!highestRoleLevel) throw new Error('Employee has no role assigned.')
+
+    const session = await startSession(employee!.id, highestRoleLevel.SubRole)
     logger.info(`New session started: ${session.id}, ends at ${session.activeUntil.toISOString()}`)
 
     await setSessionCookie(session)
@@ -137,7 +112,7 @@ export const signOutServerFunction = protectedServerFunction({
 export const createEmployeeAction = protectedServerFunction({
   schema: upsertEmployeeSchema,
   functionName: 'Create employee action',
-  serverFn: async ({data: {emergencyContacts, password_hash, ...data}, logger, profile}) => {
+  serverFn: async ({data: {emergencyContacts, password_hash, roleLevelIds, ...data}, logger, profile}) => {
     if (!password_hash) throw new Error('Password is required when creating an employee.')
 
     logger.info(`Creating employee, createdBy: ${profile.id}`)
@@ -150,6 +125,14 @@ export const createEmployeeAction = protectedServerFunction({
         createdBy: profile.id,
         createdAt: new Date(),
         passwordCreatedAt: new Date(),
+        RoleLevelEmployee: roleLevelIds?.length
+          ? {
+              create: roleLevelIds.map((roleLevelId: string) => ({
+                id: crypto.randomUUID(),
+                roleLevelId,
+              })),
+            }
+          : undefined,
         EmergencyContact: emergencyContacts?.length
           ? {
               create: emergencyContacts.map(c => ({
@@ -165,19 +148,30 @@ export const createEmployeeAction = protectedServerFunction({
     })
 
     logger.info(`Employee created: ${employee.id}`)
-    revalidatePath('/employees')
+    revalidatePath('/departments/hr/records')
   },
 })
 
 export const updateEmployeeAdminAction = protectedServerFunction({
   schema: upsertEmployeeSchema,
   functionName: 'Update employee admin action',
-  serverFn: async ({data: {emergencyContacts, password_hash, id, ...data}, logger}) => {
+  serverFn: async ({data: {emergencyContacts, password_hash, id, roleLevelIds, ...data}, logger}) => {
     await prismaClient.employee.update({
       where: {id},
       data: {
         ...data,
         ...(password_hash ? {password_hash: hashPassword(password_hash), passwordCreatedAt: new Date()} : {}),
+        RoleLevelEmployee: {
+          deleteMany: {employeeId: id},
+          ...(roleLevelIds?.length
+            ? {
+                create: roleLevelIds.map((roleLevelId: string) => ({
+                  id: crypto.randomUUID(),
+                  roleLevelId,
+                })),
+              }
+            : {}),
+        },
         EmergencyContact: {
           deleteMany: {employeeId: id},
           ...(emergencyContacts?.length

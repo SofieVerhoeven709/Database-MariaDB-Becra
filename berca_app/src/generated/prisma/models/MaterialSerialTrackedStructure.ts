@@ -65,7 +65,7 @@ export type MaterialSerialTrackedStructureMinAggregateOutputType = {
   beParentPart: string | null
   serialCode: string | null
   tag: string | null
-  preferedSupplier: string | null
+  preferredSupplier: string | null
   brandName: string | null
   brandOrderNr: string | null
   unit: string | null
@@ -104,7 +104,7 @@ export type MaterialSerialTrackedStructureMaxAggregateOutputType = {
   beParentPart: string | null
   serialCode: string | null
   tag: string | null
-  preferedSupplier: string | null
+  preferredSupplier: string | null
   brandName: string | null
   brandOrderNr: string | null
   unit: string | null
@@ -143,7 +143,7 @@ export type MaterialSerialTrackedStructureCountAggregateOutputType = {
   beParentPart: number
   serialCode: number
   tag: number
-  preferedSupplier: number
+  preferredSupplier: number
   brandName: number
   brandOrderNr: number
   unit: number
@@ -202,7 +202,7 @@ export type MaterialSerialTrackedStructureMinAggregateInputType = {
   beParentPart?: true
   serialCode?: true
   tag?: true
-  preferedSupplier?: true
+  preferredSupplier?: true
   brandName?: true
   brandOrderNr?: true
   unit?: true
@@ -241,7 +241,7 @@ export type MaterialSerialTrackedStructureMaxAggregateInputType = {
   beParentPart?: true
   serialCode?: true
   tag?: true
-  preferedSupplier?: true
+  preferredSupplier?: true
   brandName?: true
   brandOrderNr?: true
   unit?: true
@@ -280,7 +280,7 @@ export type MaterialSerialTrackedStructureCountAggregateInputType = {
   beParentPart?: true
   serialCode?: true
   tag?: true
-  preferedSupplier?: true
+  preferredSupplier?: true
   brandName?: true
   brandOrderNr?: true
   unit?: true
@@ -406,7 +406,7 @@ export type MaterialSerialTrackedStructureGroupByOutputType = {
   beParentPart: string | null
   serialCode: string | null
   tag: string | null
-  preferedSupplier: string | null
+  preferredSupplier: string | null
   brandName: string | null
   brandOrderNr: string | null
   unit: string | null
@@ -468,7 +468,7 @@ export type MaterialSerialTrackedStructureWhereInput = {
   beParentPart?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   serialCode?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
-  preferedSupplier?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
+  preferredSupplier?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   brandName?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   brandOrderNr?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   unit?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
@@ -515,7 +515,7 @@ export type MaterialSerialTrackedStructureOrderByWithRelationInput = {
   beParentPart?: Prisma.SortOrderInput | Prisma.SortOrder
   serialCode?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
-  preferedSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
   brandName?: Prisma.SortOrderInput | Prisma.SortOrder
   brandOrderNr?: Prisma.SortOrderInput | Prisma.SortOrder
   unit?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -566,7 +566,7 @@ export type MaterialSerialTrackedStructureWhereUniqueInput = Prisma.AtLeast<{
   beParentPart?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   serialCode?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
-  preferedSupplier?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
+  preferredSupplier?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   brandName?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   brandOrderNr?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   unit?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
@@ -613,7 +613,7 @@ export type MaterialSerialTrackedStructureOrderByWithAggregationInput = {
   beParentPart?: Prisma.SortOrderInput | Prisma.SortOrder
   serialCode?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
-  preferedSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrderInput | Prisma.SortOrder
   brandName?: Prisma.SortOrderInput | Prisma.SortOrder
   brandOrderNr?: Prisma.SortOrderInput | Prisma.SortOrder
   unit?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -660,7 +660,7 @@ export type MaterialSerialTrackedStructureScalarWhereWithAggregatesInput = {
   beParentPart?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   serialCode?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   tag?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
-  preferedSupplier?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
+  preferredSupplier?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   brandName?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   brandOrderNr?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   unit?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
@@ -693,7 +693,7 @@ export type MaterialSerialTrackedStructureCreateInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -738,7 +738,7 @@ export type MaterialSerialTrackedStructureUncheckedCreateInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -771,7 +771,7 @@ export type MaterialSerialTrackedStructureUpdateInput = {
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -816,7 +816,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateInput = {
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -855,7 +855,7 @@ export type MaterialSerialTrackedStructureCreateManyInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -888,7 +888,7 @@ export type MaterialSerialTrackedStructureUpdateManyMutationInput = {
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -925,7 +925,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyInput = {
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -980,7 +980,7 @@ export type MaterialSerialTrackedStructureCountOrderByAggregateInput = {
   beParentPart?: Prisma.SortOrder
   serialCode?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  preferedSupplier?: Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   brandOrderNr?: Prisma.SortOrder
   unit?: Prisma.SortOrder
@@ -1028,7 +1028,7 @@ export type MaterialSerialTrackedStructureMaxOrderByAggregateInput = {
   beParentPart?: Prisma.SortOrder
   serialCode?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  preferedSupplier?: Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   brandOrderNr?: Prisma.SortOrder
   unit?: Prisma.SortOrder
@@ -1067,7 +1067,7 @@ export type MaterialSerialTrackedStructureMinOrderByAggregateInput = {
   beParentPart?: Prisma.SortOrder
   serialCode?: Prisma.SortOrder
   tag?: Prisma.SortOrder
-  preferedSupplier?: Prisma.SortOrder
+  preferredSupplier?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   brandOrderNr?: Prisma.SortOrder
   unit?: Prisma.SortOrder
@@ -1445,7 +1445,7 @@ export type MaterialSerialTrackedStructureCreateWithoutCertificateInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -1488,7 +1488,7 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutCertificateInput
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -1556,7 +1556,7 @@ export type MaterialSerialTrackedStructureScalarWhereInput = {
   beParentPart?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   serialCode?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   tag?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
-  preferedSupplier?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
+  preferredSupplier?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   brandName?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   brandOrderNr?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   unit?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
@@ -1589,7 +1589,7 @@ export type MaterialSerialTrackedStructureCreateWithoutDocumentStructure_Materia
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -1632,7 +1632,7 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructur
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -1675,7 +1675,7 @@ export type MaterialSerialTrackedStructureCreateWithoutDocumentStructure_Materia
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -1718,7 +1718,7 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructur
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -1793,7 +1793,7 @@ export type MaterialSerialTrackedStructureCreateWithoutEmployeeInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -1837,7 +1837,7 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutEmployeeInput = 
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -1879,7 +1879,7 @@ export type MaterialSerialTrackedStructureCreateWithoutEmployee_MaterialSerialTr
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -1923,7 +1923,7 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutEmployee_Materia
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -1997,7 +1997,7 @@ export type MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -2040,7 +2040,7 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInp
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -2099,7 +2099,7 @@ export type MaterialSerialTrackedStructureCreateWithoutMaterialSerialTrackInput 
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -2142,7 +2142,7 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialSerialTr
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -2201,7 +2201,7 @@ export type MaterialSerialTrackedStructureCreateWithoutMaterialSpecInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -2244,7 +2244,7 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialSpecInpu
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -2308,7 +2308,7 @@ export type MaterialSerialTrackedStructureCreateManyCertificateInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -2341,7 +2341,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutCertificateInput = {
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2384,7 +2384,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutCertificateInput
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2422,7 +2422,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutCertificateI
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2460,7 +2460,7 @@ export type MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSe
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -2498,7 +2498,7 @@ export type MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSe
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -2531,7 +2531,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutDocumentStructure_Materia
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2574,7 +2574,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutDocumentStructur
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2612,7 +2612,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStru
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2645,7 +2645,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutDocumentStructure_Materia
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2688,7 +2688,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutDocumentStructur
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2726,7 +2726,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStru
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2765,7 +2765,7 @@ export type MaterialSerialTrackedStructureCreateManyEmployeeInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -2803,7 +2803,7 @@ export type MaterialSerialTrackedStructureCreateManyEmployee_MaterialSerialTrack
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -2835,7 +2835,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutEmployeeInput = {
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2879,7 +2879,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutEmployeeInput = 
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2917,7 +2917,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployeeInpu
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2949,7 +2949,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutEmployee_MaterialSerialTr
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2993,7 +2993,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutEmployee_Materia
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3031,7 +3031,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployee_Mat
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3068,7 +3068,7 @@ export type MaterialSerialTrackedStructureCreateManyMaterialGroupInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -3101,7 +3101,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutMaterialGroupInput = {
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3144,7 +3144,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutMaterialGroupInp
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3182,7 +3182,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGrou
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3220,7 +3220,7 @@ export type MaterialSerialTrackedStructureCreateManyMaterialSerialTrackInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -3253,7 +3253,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutMaterialSerialTrackInput 
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3296,7 +3296,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutMaterialSerialTr
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3334,7 +3334,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSeri
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3372,7 +3372,7 @@ export type MaterialSerialTrackedStructureCreateManyMaterialSpecInput = {
   beParentPart?: string | null
   serialCode?: string | null
   tag?: string | null
-  preferedSupplier?: string | null
+  preferredSupplier?: string | null
   brandName?: string | null
   brandOrderNr?: string | null
   unit?: string | null
@@ -3405,7 +3405,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutMaterialSpecInput = {
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3448,7 +3448,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutMaterialSpecInpu
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3486,7 +3486,7 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSpec
   beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferedSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3527,7 +3527,7 @@ export type MaterialSerialTrackedStructureSelect<ExtArgs extends runtime.Types.E
   beParentPart?: boolean
   serialCode?: boolean
   tag?: boolean
-  preferedSupplier?: boolean
+  preferredSupplier?: boolean
   brandName?: boolean
   brandOrderNr?: boolean
   unit?: boolean
@@ -3576,7 +3576,7 @@ export type MaterialSerialTrackedStructureSelectScalar = {
   beParentPart?: boolean
   serialCode?: boolean
   tag?: boolean
-  preferedSupplier?: boolean
+  preferredSupplier?: boolean
   brandName?: boolean
   brandOrderNr?: boolean
   unit?: boolean
@@ -3594,7 +3594,7 @@ export type MaterialSerialTrackedStructureSelectScalar = {
   deletedBy?: boolean
 }
 
-export type MaterialSerialTrackedStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "serialTrackedId" | "certificateId" | "materialSpecId" | "referenceDocId" | "materialGroupId" | "documentId" | "shortDescription" | "longDescription" | "management" | "date" | "expiredDate" | "documentationPlace" | "docRevision" | "valid" | "additionalInfo" | "beNumber" | "beParentPart" | "serialCode" | "tag" | "preferedSupplier" | "brandName" | "brandOrderNr" | "unit" | "unitQuantity" | "unitPieces" | "unitWeightKg" | "quantityRequired" | "quantityReserved" | "quantityIssued" | "rejected" | "updatedAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["materialSerialTrackedStructure"]>
+export type MaterialSerialTrackedStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "serialTrackedId" | "certificateId" | "materialSpecId" | "referenceDocId" | "materialGroupId" | "documentId" | "shortDescription" | "longDescription" | "management" | "date" | "expiredDate" | "documentationPlace" | "docRevision" | "valid" | "additionalInfo" | "beNumber" | "beParentPart" | "serialCode" | "tag" | "preferredSupplier" | "brandName" | "brandOrderNr" | "unit" | "unitQuantity" | "unitPieces" | "unitWeightKg" | "quantityRequired" | "quantityReserved" | "quantityIssued" | "rejected" | "updatedAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["materialSerialTrackedStructure"]>
 export type MaterialSerialTrackedStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   MaterialSerialTrack?: boolean | Prisma.MaterialSerialTrackDefaultArgs<ExtArgs>
   Certificate?: boolean | Prisma.MaterialSerialTrackedStructure$CertificateArgs<ExtArgs>
@@ -3639,7 +3639,7 @@ export type $MaterialSerialTrackedStructurePayload<ExtArgs extends runtime.Types
     beParentPart: string | null
     serialCode: string | null
     tag: string | null
-    preferedSupplier: string | null
+    preferredSupplier: string | null
     brandName: string | null
     brandOrderNr: string | null
     unit: string | null
@@ -4052,7 +4052,7 @@ export interface MaterialSerialTrackedStructureFieldRefs {
   readonly beParentPart: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly serialCode: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly tag: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
-  readonly preferedSupplier: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
+  readonly preferredSupplier: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly brandName: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly brandOrderNr: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly unit: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>

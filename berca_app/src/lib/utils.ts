@@ -1,5 +1,6 @@
 import {clsx, type ClassValue} from 'clsx'
 import {twMerge} from 'tailwind-merge'
+import {Profile} from '@/models/employees'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -60,4 +61,77 @@ export function generateCompanyNumber() {
     .padStart(2, '0') // two random digits
 
   return `CO${year}${month}${day}${random}`
+}
+
+export function generateTrainingNumber() {
+  const now = new Date()
+
+  const year = now.getFullYear().toString() // 2026
+  const month = String(now.getMonth() + 1).padStart(2, '0') // 02
+  const day = String(now.getDate()).padStart(2, '0') // 24
+
+  const random = Math.floor(Math.random() * 100)
+    .toString()
+    .padStart(2, '0') // two random digits
+
+  return `O${year}${month}${day}${random}`
+}
+
+export function generateAttendeeNumber(trainingNumber: string, sequence: number): string {
+  // Strip the leading 'O' from the training number
+  const stripped = trainingNumber.startsWith('O') ? trainingNumber.slice(1) : trainingNumber
+  const seq = String(sequence).padStart(3, '0')
+  return `OPF06${stripped}${seq}`
+}
+
+export function generateInvoiceInNumber(year: number, sequence: number): string {
+  return `${year}${String(sequence).padStart(4, '0')}`
+}
+
+export function generateInvoiceOutNumber(year: number, sequence: number): string {
+  return `${year}${String(sequence + 100).padStart(4, '0')}`
+}
+
+// Used for admin/global pages
+export function getGlobalRoleInfo(profile: Profile) {
+  const entries = profile.RoleLevelEmployee ?? []
+
+  const isAdmin = entries.some(rle => rle.RoleLevel.Role.name === 'Administrator')
+  const maxLevel = Math.max(0, ...entries.map(rle => rle.RoleLevel.SubRole.level))
+  const topRole = entries.find(rle => rle.RoleLevel.SubRole.level === maxLevel)
+
+  return {
+    currentUserRole: isAdmin ? 'Administrator' : (topRole?.RoleLevel.Role.name ?? ''),
+    currentUserLevel: maxLevel,
+  }
+}
+
+// Used for department-specific pages
+export function getDepartmentRoleInfo(profile: Profile, departmentName: string) {
+  const entries = profile.RoleLevelEmployee ?? []
+
+  // Check for admin first — admins bypass department filtering
+  const isAdmin = entries.some(rle => rle.RoleLevel.Role.name === 'Administrator')
+  if (isAdmin) {
+    return {currentUserRole: 'Administrator', currentUserLevel: 100}
+  }
+
+  // Find role specific to this department
+  const deptEntry = entries.find(rle => rle.RoleLevel.Role.name === `${departmentName} Role`)
+
+  if (deptEntry) {
+    return {
+      currentUserRole: deptEntry.RoleLevel.Role.name,
+      currentUserLevel: deptEntry.RoleLevel.SubRole.level,
+    }
+  }
+
+  // Fallback — user has no department-specific role, use their highest global level
+  const maxLevel = Math.max(0, ...entries.map(rle => rle.RoleLevel.SubRole.level))
+  const topRole = entries.find(rle => rle.RoleLevel.SubRole.level === maxLevel)
+
+  return {
+    currentUserRole: topRole?.RoleLevel.Role.name ?? '',
+    currentUserLevel: maxLevel,
+  }
 }

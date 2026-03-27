@@ -43,18 +43,18 @@ import type {MappedContact} from '@/types/contact'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {ContactFormDialog} from '@/components/custom/contactFormDialog'
+import {WorkOrderFormDialog} from '@/components/custom/workOrderFormDialog'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 interface Option {
   id: string
   name: string
 }
-
 interface EmployeeOption {
   id: string
   firstName: string
   lastName: string
 }
-
 interface AvailablePurchase {
   id: string
   orderNumber: string | null
@@ -77,6 +77,8 @@ interface ProjectDetailProps {
   functionOptions: Option[]
   departmentExternOptions: Option[]
   titleOptions: Option[]
+  departmentId: string
+  countryOptions: CountryOption[]
 }
 
 function formatDate(date: Date | null) {
@@ -92,22 +94,13 @@ function toInputDate(date: Date | null) {
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 const thClass = 'whitespace-nowrap text-xs'
 
-// ─── Permission thresholds ────────────────────────────────────────────────────
-const PERM = {
-  contacts: 20,
-  purchases: 60,
-  materials: 80,
-  workOrders: 80,
-  delete: 80,
-} as const
-
+const PERM = {contacts: 20, purchases: 60, materials: 80, workOrders: 80, delete: 80} as const
 const PURCHASE_STATUS_OPTIONS = ['Pending', 'Ordered', 'Delivered', 'Cancelled', 'On Hold']
 
-// ─── Empty form states ────────────────────────────────────────────────────────
 const emptyContact = () => ({contactId: '', description: ''})
 const emptyPurchase = () => ({orderNumber: '', shortDescription: '', status: '', companyId: ''})
 const emptyMaterial = () => ({becraCode: '', shortDescription: '', brandName: '', transactionType: ''})
-const emptyContactEdit = () => ({id: '', description: '', extraInfo: '', idValid: true})
+const emptyContactEdit = () => ({id: '', description: '', extraInfo: '', isValid: true})
 const emptyPurchaseEdit = () => ({id: '', orderNumber: '', shortDescription: '', status: '', companyId: ''})
 
 export function ProjectDetail({
@@ -125,6 +118,8 @@ export function ProjectDetail({
   functionOptions,
   departmentExternOptions,
   titleOptions,
+  departmentId,
+  countryOptions,
 }: ProjectDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
@@ -134,8 +129,8 @@ export function ProjectDetail({
   const [showDeletedPurchases, setShowDeletedPurchases] = useState(false)
   const [showDeletedMaterials, setShowDeletedMaterials] = useState(false)
   const [showDeletedSubProjects, setShowDeletedSubProjects] = useState(false)
+  const [workOrderDialogOpen, setWorkOrderDialogOpen] = useState(false)
 
-  // ─── Project edit form ────────────────────────────────────────────────────
   const [form, setForm] = useState({
     projectNumber: project.projectNumber,
     projectName: project.projectName,
@@ -153,48 +148,31 @@ export function ProjectDetail({
     isClosed: project.isClosed,
   })
 
-  // ─── Inline row visibility ────────────────────────────────────────────────
   const [showInlineContact, setShowInlineContact] = useState(false)
   const [showInlinePurchase, setShowInlinePurchase] = useState(false)
   const [showInlineMaterial, setShowInlineMaterial] = useState(false)
-
-  // ─── Inline row form states ───────────────────────────────────────────────
   const [inlineContact, setInlineContact] = useState(emptyContact())
   const [inlinePurchase, setInlinePurchase] = useState(emptyPurchase())
   const [inlineMaterial, setInlineMaterial] = useState(emptyMaterial())
-
-  // ─── Dialog visibility ────────────────────────────────────────────────────
   const [dialogContact, setDialogContact] = useState(false)
   const [dialogPurchase, setDialogPurchase] = useState(false)
   const [dialogLinkPurchase, setDialogLinkPurchase] = useState(false)
   const [dialogMaterial, setDialogMaterial] = useState(false)
   const [nestedContactDialog, setNestedContactDialog] = useState(false)
-
-  // ─── Edit dialog visibility ───────────────────────────────────────────────
   const [editContactDialog, setEditContactDialog] = useState(false)
   const [editPurchaseDialog, setEditPurchaseDialog] = useState(false)
-
-  // ─── Edit form states ─────────────────────────────────────────────────────
   const [editContactForm, setEditContactForm] = useState(emptyContactEdit())
   const [editPurchaseForm, setEditPurchaseForm] = useState(emptyPurchaseEdit())
-
-  // ─── Delete confirm state ─────────────────────────────────────────────────
   const [deleteTarget, setDeleteTarget] = useState<{
     type: 'contact' | 'purchase' | 'workorder'
     id: string
     label: string
     action: 'soft' | 'hard' | 'undelete'
   } | null>(null)
-
-  // ─── Dialog form states ───────────────────────────────────────────────────
   const [dialogContactForm, setDialogContactForm] = useState(emptyContact())
   const [dialogPurchaseForm, setDialogPurchaseForm] = useState(emptyPurchase())
   const [dialogMaterialForm, setDialogMaterialForm] = useState(emptyMaterial())
-
-  // ─── Local contacts list ──────────────────────────────────────────────────
   const [localContacts, setLocalContacts] = useState(contacts)
-
-  // ─── Saving states ────────────────────────────────────────────────────────
   const [linkPurchaseId, setLinkPurchaseId] = useState('')
   const [savingNewPurchase, setSavingNewPurchase] = useState(false)
   const [savingLinkPurchase, setSavingLinkPurchase] = useState(false)
@@ -202,15 +180,22 @@ export function ProjectDetail({
   const [savingEdit, setSavingEdit] = useState(false)
   const [savingDelete, setSavingDelete] = useState(false)
 
-  // ─── Visibility state ─────────────────────────────────────────────────────
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(initialVisibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
   )
 
   const can = (level: number) => currentUserLevel >= level
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canDelete = isAdmin || currentUserLevel >= PERM.delete
-  const canManageWorkOrders = isAdmin || currentUserLevel >= PERM.workOrders
+  // Level thresholds:
+  //   >= 40  can edit project fields
+  //   >= 60  can add contacts / purchases (via PERM.contacts / PERM.purchases)
+  //   >= 80  can delete + manage work orders + manage visibility
+  const canEdit = currentUserLevel >= 40
+  const canDelete = currentUserLevel >= 80
+  const canManageWorkOrders = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
+
+  const workOrderProjectOptions = [{id: project.id, name: `${project.projectNumber} — ${project.projectName}`}]
 
   function handleCancel() {
     setForm({
@@ -267,13 +252,12 @@ export function ProjectDetail({
     }
   }
 
-  // ─── Inline submit handlers ───────────────────────────────────────────────
   async function handleInlineContactSave() {
     if (!inlineContact.contactId) return
     await createProjectContactAction({
       projectId: project.id,
       contactId: inlineContact.contactId,
-      idValid: true,
+      isValid: true,
       description: inlineContact.description || null,
     })
     setInlineContact(emptyContact())
@@ -295,13 +279,10 @@ export function ProjectDetail({
   }
 
   async function handleInlineMaterialSave() {
-    // TODO: await createMaterialSerialTrackAction({...inlineMaterial, projectId: project.id})
     setInlineMaterial(emptyMaterial())
     setShowInlineMaterial(false)
     router.refresh()
   }
-
-  // ─── Dialog submit handlers ───────────────────────────────────────────────
 
   async function handleDialogContactSave() {
     if (!dialogContactForm.contactId) return
@@ -309,9 +290,9 @@ export function ProjectDetail({
     try {
       await createProjectContactAction({
         projectId: project.id,
-        contactId: inlineContact.contactId,
-        idValid: true,
-        description: inlineContact.description || null,
+        contactId: dialogContactForm.contactId,
+        isValid: true,
+        description: dialogContactForm.description || null,
       })
       setDialogContactForm(emptyContact())
       setDialogContact(false)
@@ -338,7 +319,7 @@ export function ProjectDetail({
       mobilePhone: contact.mobilePhone,
       info: contact.info,
       birthDate: contact.birthDate ? new Date(contact.birthDate) : null,
-      trough: contact.trough,
+      through: contact.through,
       description: contact.description,
       infoCorrect: contact.infoCorrect,
       checkInfo: contact.checkInfo,
@@ -361,7 +342,6 @@ export function ProjectDetail({
       initialCompanyId: initialCompanyId ?? null,
       initialRoleWithCompany: initialRoleWithCompany ?? null,
     })
-
     const newOption = {id: created.id, name: `${created.firstName} ${created.lastName}`}
     setLocalContacts(prev => [...prev, newOption])
     setDialogContactForm(f => ({...f, contactId: created.id}))
@@ -391,10 +371,7 @@ export function ProjectDetail({
     if (!linkPurchaseId) return
     setSavingLinkPurchase(true)
     try {
-      await updatePurchaseAction({
-        id: linkPurchaseId,
-        projectId: project.id,
-      })
+      await updatePurchaseAction({id: linkPurchaseId, projectId: project.id})
       setLinkPurchaseId('')
       setDialogLinkPurchase(false)
       router.refresh()
@@ -404,20 +381,17 @@ export function ProjectDetail({
   }
 
   async function handleDialogMaterialSave() {
-    // TODO: await createMaterialSerialTrackAction({...dialogMaterialForm, projectId: project.id})
     setDialogMaterialForm(emptyMaterial())
     setDialogMaterial(false)
     router.refresh()
   }
 
-  // ─── Edit handlers ────────────────────────────────────────────────────────
-
-  function openEditContact(pc: {id: string; description: string | null; extraInfo: string | null; idValid: boolean}) {
+  function openEditContact(pc: {id: string; description: string | null; extraInfo: string | null; isValid: boolean}) {
     setEditContactForm({
       id: pc.id,
       description: pc.description ?? '',
       extraInfo: pc.extraInfo ?? '',
-      idValid: pc.idValid,
+      isValid: pc.isValid,
     })
     setEditContactDialog(true)
   }
@@ -430,7 +404,7 @@ export function ProjectDetail({
         projectId: project.id,
         description: editContactForm.description || null,
         extraInfo: editContactForm.extraInfo || null,
-        idValid: editContactForm.idValid,
+        isValid: editContactForm.isValid,
       })
       setEditContactDialog(false)
       router.refresh()
@@ -473,8 +447,6 @@ export function ProjectDetail({
     }
   }
 
-  // ─── Delete handler ───────────────────────────────────────────────────────
-
   async function handleConfirmDelete() {
     if (!deleteTarget) return
     setSavingDelete(true)
@@ -500,7 +472,6 @@ export function ProjectDetail({
     }
   }
 
-  // ─── Reusable tab action bar ──────────────────────────────────────────────
   function TabActions({
     canAdd,
     onInline,
@@ -530,7 +501,6 @@ export function ProjectDetail({
     )
   }
 
-  // ─── Reusable row action buttons ──────────────────────────────────────────
   function RowActions({
     onEdit,
     onSoftDelete,
@@ -598,7 +568,7 @@ export function ProjectDetail({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link href={'/departments/project/project' as Route}>
+          <Link href={`/departments/${departmentId}/project` as Route}>
             <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
               <ArrowLeft className="h-4 w-4" />
             </Button>
@@ -628,10 +598,12 @@ export function ProjectDetail({
               </Button>
             </>
           ) : (
-            <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-              <Pencil className="h-4 w-4" />
-              Edit
-            </Button>
+            canEdit && (
+              <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
+                <Pencil className="h-4 w-4" />
+                Edit
+              </Button>
+            )
           )}
         </div>
       </div>
@@ -647,7 +619,6 @@ export function ProjectDetail({
               <p className="text-sm text-foreground font-medium">{project.projectNumber}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project Name</Label>
             {editing ? (
@@ -660,7 +631,6 @@ export function ProjectDetail({
               <p className="text-sm text-foreground font-medium">{project.projectName}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Company</Label>
             {editing ? (
@@ -680,7 +650,6 @@ export function ProjectDetail({
               <p className="text-sm text-muted-foreground">{project.Company.name}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Project Type</Label>
             {editing ? (
@@ -702,46 +671,61 @@ export function ProjectDetail({
               </Badge>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Parent Project</Label>
             <p className="text-sm text-muted-foreground">{project.Project?.projectNumber ?? '-'}</p>
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Start Date</Label>
             {editing ? (
               <Input
                 type="date"
                 value={form.startDate}
-                onChange={e => setForm(f => ({...f, startDate: e.target.value}))}
+                onChange={e => {
+                  const newStart = e.target.value
+                  setForm(f => {
+                    const next = {...f, startDate: newStart}
+                    if (newStart) {
+                      if (f.endDate && f.endDate < newStart) next.endDate = ''
+                      if (f.engineeringStartDate && f.engineeringStartDate < newStart) next.engineeringStartDate = ''
+                    }
+                    return next
+                  })
+                }}
                 className="bg-secondary border-border"
               />
             ) : (
               <p className="text-sm text-muted-foreground">{formatDate(project.startDate)}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">End Date</Label>
             {editing ? (
               <Input
                 type="date"
                 value={form.endDate}
-                onChange={e => setForm(f => ({...f, endDate: e.target.value}))}
+                min={form.startDate || undefined}
+                onChange={e => {
+                  const newEnd = e.target.value
+                  setForm(f => {
+                    const next = {...f, endDate: newEnd}
+                    if (newEnd && f.closingDate && f.closingDate < newEnd) next.closingDate = ''
+                    return next
+                  })
+                }}
                 className="bg-secondary border-border"
               />
             ) : (
               <p className="text-sm text-muted-foreground">{formatDate(project.endDate)}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Engineering Start</Label>
             {editing ? (
               <Input
                 type="date"
                 value={form.engineeringStartDate}
+                min={form.startDate || undefined}
                 onChange={e => setForm(f => ({...f, engineeringStartDate: e.target.value}))}
                 className="bg-secondary border-border"
               />
@@ -749,13 +733,13 @@ export function ProjectDetail({
               <p className="text-sm text-muted-foreground">{formatDate(project.engineeringStartDate)}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Closing Date</Label>
             {editing ? (
               <Input
                 type="date"
                 value={form.closingDate}
+                min={form.endDate || undefined}
                 onChange={e => setForm(f => ({...f, closingDate: e.target.value}))}
                 className="bg-secondary border-border"
               />
@@ -763,19 +747,16 @@ export function ProjectDetail({
               <p className="text-sm text-muted-foreground">{formatDate(project.closingDate)}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created By</Label>
             <p className="text-sm text-muted-foreground">
               {project.Employee.firstName} {project.Employee.lastName}
             </p>
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created At</Label>
             <p className="text-sm text-muted-foreground">{formatDate(project.createdAt)}</p>
           </div>
-
           <div className="sm:col-span-2 lg:col-span-3 grid grid-cols-2 sm:grid-cols-4 gap-4">
             {(
               [
@@ -801,7 +782,6 @@ export function ProjectDetail({
               </div>
             ))}
           </div>
-
           <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-3">
             <Label className="text-xs text-muted-foreground">Description</Label>
             {editing ? (
@@ -815,7 +795,6 @@ export function ProjectDetail({
               <p className="text-sm text-muted-foreground whitespace-pre-wrap">{project.description ?? '-'}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-3">
             <Label className="text-xs text-muted-foreground">Extra Info</Label>
             {editing ? (
@@ -865,10 +844,10 @@ export function ProjectDetail({
               {project.other_Project.length}
             </Badge>
           </TabsTrigger>
-          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
-        {/* ── Contacts ──────────────────────────────────────────────────────── */}
+        {/* ── Contacts ── */}
         <TabsContent value="contacts" className="mt-3">
           <TabActions
             canAdd={can(PERM.contacts)}
@@ -978,7 +957,7 @@ export function ProjectDetail({
                         <span className="max-w-[200px] truncate inline-block">{pc.description ?? '-'}</span>
                       </TableCell>
                       <TableCell>
-                        {pc.idValid ? (
+                        {pc.isValid ? (
                           <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
                         ) : (
                           <Badge variant="secondary" className="text-muted-foreground font-medium">
@@ -1000,7 +979,7 @@ export function ProjectDetail({
                                 id: pc.id,
                                 description: pc.description,
                                 extraInfo: pc.extraInfo,
-                                idValid: pc.idValid,
+                                isValid: pc.isValid,
                               })
                             }
                             onSoftDelete={() =>
@@ -1038,16 +1017,17 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Work Orders ───────────────────────────────────────────────────── */}
+        {/* ── Work Orders ── */}
         <TabsContent value="workorders" className="mt-3">
           {canManageWorkOrders && (
             <div className="flex items-center gap-2 mb-3">
-              <Link href={`/departments/project/project/${project.id}/workOrder/new` as Route}>
-                <Button size="sm" className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7">
-                  <Plus className="h-3 w-3" />
-                  New Work Order
-                </Button>
-              </Link>
+              <Button
+                size="sm"
+                className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7"
+                onClick={() => setWorkOrderDialogOpen(true)}>
+                <Plus className="h-3 w-3" />
+                New Work Order
+              </Button>
             </div>
           )}
           {canDelete && (
@@ -1132,7 +1112,7 @@ export function ProjectDetail({
                         {wo.Employee.firstName} {wo.Employee.lastName}
                       </TableCell>
                       <TableCell>
-                        <Link href={`/departments/project/project/${project.id}/workOrder/${wo.id}` as Route}>
+                        <Link href={`/departments/${departmentId}/workOrder/${wo.id}` as Route}>
                           <Button
                             variant="ghost"
                             size="icon"
@@ -1180,7 +1160,7 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Purchases ─────────────────────────────────────────────────────── */}
+        {/* ── Purchases ── */}
         <TabsContent value="purchases" className="mt-3">
           {can(PERM.purchases) && (
             <div className="flex items-center gap-2 mb-3">
@@ -1411,7 +1391,7 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Material Tracks ───────────────────────────────────────────────── */}
+        {/* ── Material Tracks ── */}
         <TabsContent value="materials" className="mt-3">
           <TabActions
             canAdd={can(PERM.materials)}
@@ -1530,7 +1510,7 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Sub-projects ──────────────────────────────────────────────────── */}
+        {/* ── Sub-projects ── */}
         <TabsContent value="subprojects" className="mt-3">
           {canDelete && (
             <div className="flex justify-end mb-2">
@@ -1602,7 +1582,7 @@ export function ProjectDetail({
                           )}
                         </TableCell>
                         <TableCell>
-                          <Link href={`/departments/project/project/${sp.id}` as Route}>
+                          <Link href={`/departments/${departmentId}/project/${sp.id}` as Route}>
                             <Button
                               variant="ghost"
                               size="icon"
@@ -1619,8 +1599,8 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Visibility ────────────────────────────────────────────────────── */}
-        {isAdmin && (
+        {/* ── Visibility ── */}
+        {canManageVisibility && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab
@@ -1661,7 +1641,7 @@ export function ProjectDetail({
         )}
       </Tabs>
 
-      {/* ── Contact Dialog ───────────────────────────────────────────────────── */}
+      {/* ── Contact Dialog ── */}
       <Dialog open={dialogContact} onOpenChange={setDialogContact}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>
@@ -1725,7 +1705,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Nested Contact Creator ───────────────────────────────────────────── */}
+      {/* ── Nested Contact Creator ── */}
       <ContactFormDialog
         open={nestedContactDialog}
         onOpenChange={setNestedContactDialog}
@@ -1738,9 +1718,18 @@ export function ProjectDetail({
         departmentExternOptions={departmentExternOptions}
         titleOptions={titleOptions}
         companyOptions={companies}
+        countryOptions={countryOptions}
+        canManageVisibility={canManageVisibility}
       />
 
-      {/* ── Edit Contact Dialog ──────────────────────────────────────────────── */}
+      <WorkOrderFormDialog
+        open={workOrderDialogOpen}
+        onOpenChange={setWorkOrderDialogOpen}
+        workOrder={null}
+        projectOptions={workOrderProjectOptions}
+      />
+
+      {/* ── Edit Contact Dialog ── */}
       <Dialog open={editContactDialog} onOpenChange={setEditContactDialog}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>
@@ -1768,8 +1757,8 @@ export function ProjectDetail({
             <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
               <Label className="text-xs text-muted-foreground">ID Valid</Label>
               <Switch
-                checked={editContactForm.idValid}
-                onCheckedChange={v => setEditContactForm(f => ({...f, idValid: v}))}
+                checked={editContactForm.isValid}
+                onCheckedChange={v => setEditContactForm(f => ({...f, isValid: v}))}
               />
             </div>
           </div>
@@ -1787,7 +1776,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Edit Purchase Dialog ─────────────────────────────────────────────── */}
+      {/* ── Edit Purchase Dialog ── */}
       <Dialog open={editPurchaseDialog} onOpenChange={setEditPurchaseDialog}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>
@@ -1859,7 +1848,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Delete Confirm Dialog ────────────────────────────────────────────── */}
+      {/* ── Delete Confirm Dialog ── */}
       <Dialog open={!!deleteTarget} onOpenChange={open => !open && setDeleteTarget(null)}>
         <DialogContent className="bg-card border-border max-w-sm">
           <DialogHeader>
@@ -1904,7 +1893,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Create Purchase Dialog ───────────────────────────────────────────── */}
+      {/* ── Create Purchase Dialog ── */}
       <Dialog open={dialogPurchase} onOpenChange={setDialogPurchase}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>
@@ -1981,7 +1970,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Link Existing Purchase Dialog ────────────────────────────────────── */}
+      {/* ── Link Existing Purchase Dialog ── */}
       <Dialog open={dialogLinkPurchase} onOpenChange={setDialogLinkPurchase}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>
@@ -2027,7 +2016,7 @@ export function ProjectDetail({
         </DialogContent>
       </Dialog>
 
-      {/* ── Material Dialog ──────────────────────────────────────────────────── */}
+      {/* ── Material Dialog ── */}
       <Dialog open={dialogMaterial} onOpenChange={setDialogMaterial}>
         <DialogContent className="bg-card border-border max-w-md">
           <DialogHeader>

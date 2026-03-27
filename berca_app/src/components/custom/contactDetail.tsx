@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {useRouter} from 'next/navigation'
 import {ArrowLeft, Pencil, X, Save, ExternalLink, Plus, Check, CalendarOff, Trash2} from 'lucide-react'
 import Link from 'next/link'
@@ -22,7 +22,11 @@ import {
   undeleteCompanyContactAction,
   hardDeleteCompanyContactAction,
 } from '@/serverFunctions/companyContact'
-import {createCompanyAndReturnIdAction} from '@/serverFunctions/companies'
+import {
+  CompanyAddressOption,
+  createCompanyAndReturnIdAction,
+  getCompanyAddressesAction,
+} from '@/serverFunctions/companies'
 import {CompanyFormDialog} from '@/components/custom/companyFormDialog'
 import type {MappedCompany} from '@/types/company'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
@@ -30,6 +34,7 @@ import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import type {Route} from 'next'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import type {ContactDetailData} from '@/types/contact'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 interface SelectOption {
   id: string
@@ -46,9 +51,10 @@ interface ContactDetailProps {
   departmentExternOptions: SelectOption[]
   titleOptions: SelectOption[]
   companyOptions: SelectOption[]
+  departmentId: string
+  countryOptions: CountryOption[]
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 function formatDate(date: string | null) {
   if (!date) return '-'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
@@ -72,7 +78,6 @@ function isActiveCompanyLink(endDate: string | null) {
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 const thClass = 'whitespace-nowrap text-xs'
 
-// ─── Component ────────────────────────────────────────────────────────────────
 export function ContactDetail({
   contact,
   currentUserRole,
@@ -83,38 +88,82 @@ export function ContactDetail({
   departmentExternOptions,
   titleOptions,
   companyOptions,
+  departmentId,
+  countryOptions,
 }: ContactDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canEdit = currentUserLevel >= 20
+  const canEdit = currentUserLevel >= 40
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [showAllCompanies, setShowAllCompanies] = useState(false)
   const [showDeletedCompanies, setShowDeletedCompanies] = useState(false)
 
-  // ─── Company link state ────────────────────────────────────────────────────
-  type CompanyForm = {companyId: string; roleWithCompany: string; startedDate: string; endDate: string}
+  type CompanyForm = {
+    companyId: string
+    roleWithCompany: string
+    startedDate: string
+    endDate: string
+    companyAddressId: string
+  }
   const emptyCompanyForm = (): CompanyForm => ({
     companyId: 'none',
     roleWithCompany: '',
     startedDate: new Date().toISOString().slice(0, 10),
     endDate: '',
+    companyAddressId: 'none',
   })
+
   const [addingCompany, setAddingCompany] = useState(false)
   const [companyForm, setCompanyForm] = useState<CompanyForm>(emptyCompanyForm)
   const [endPreviousActive, setEndPreviousActive] = useState(true)
+
+  // Addresses for the "add" row
+  const [addAddresses, setAddAddresses] = useState<CompanyAddressOption[]>([])
+
   const [editingCompanyId, setEditingCompanyId] = useState<string | null>(null)
   const [editCompanyForm, setEditCompanyForm] = useState<CompanyForm>(emptyCompanyForm)
 
-  // ─── Create company dialog ─────────────────────────────────────────────────
+  // Addresses for the "edit" row
+  const [editAddresses, setEditAddresses] = useState<CompanyAddressOption[]>([])
+
   const [companies, setCompanies] = useState(companyOptions)
   const [companyDialogOpen, setCompanyDialogOpen] = useState(false)
+
+  // Fetch addresses when add-row company changes
+  useEffect(() => {
+    if (companyForm.companyId === 'none') {
+      setAddAddresses([])
+      setCompanyForm(f => ({...f, companyAddressId: 'none'}))
+      return
+    }
+    getCompanyAddressesAction(companyForm.companyId).then(addrs => {
+      setAddAddresses(addrs)
+      setCompanyForm(f => ({...f, companyAddressId: addrs.length === 1 ? addrs[0].id : 'none'}))
+    })
+  }, [companyForm.companyId])
+
+  // Fetch addresses when edit-row company changes
+  useEffect(() => {
+    if (!editingCompanyId) {
+      setEditAddresses([])
+      return
+    }
+    getCompanyAddressesAction(editCompanyForm.companyId).then(addrs => {
+      setEditAddresses(addrs)
+      // Don't override the existing address selection when opening edit
+    })
+  }, [editCompanyForm.companyId])
 
   async function handleSaveCompany(c: MappedCompany, visRows: VisibilityRow[]) {
     const created = await createCompanyAndReturnIdAction({
       name: c.name,
+      officialName: c.name,
       number: c.number,
+      idOld: c.idOld,
       mail: c.mail,
       businessPhone: c.businessPhone,
       website: c.website,
@@ -125,7 +174,7 @@ export function ContactDetail({
       becraCustomerNumber: c.becraCustomerNumber,
       becraWebsiteLogin: c.becraWebsiteLogin,
       supplier: c.supplier,
-      prefferedSupplier: c.prefferedSupplier,
+      preferredSupplier: c.preferredSupplier,
       companyActive: c.companyActive,
       newsLetter: c.newsLetter,
       customer: c.customer,
@@ -141,17 +190,16 @@ export function ContactDetail({
         busNumber: a.busNumber,
         zipCode: a.zipCode,
         place: a.place,
-        typeAdress: a.typeAdress,
+        typeAddress: a.typeAddress,
+        countryId: a.countryId,
       })),
       visibilityForRoles: visRows,
     })
-
     setCompanies(prev => [...prev, {id: created.id, name: created.name}])
     setCompanyForm(f => ({...f, companyId: created.id}))
     setCompanyDialogOpen(false)
   }
 
-  // ─── Edit form ─────────────────────────────────────────────────────────────
   const buildForm = () => ({
     firstName: contact.firstName,
     lastName: contact.lastName,
@@ -163,7 +211,7 @@ export function ContactDetail({
     mobilePhone: contact.mobilePhone ?? '',
     info: contact.info ?? '',
     birthDate: contact.birthDate ? contact.birthDate.slice(0, 10) : '',
-    trough: contact.trough ?? '',
+    through: contact.through ?? '',
     description: contact.description ?? '',
     infoCorrect: contact.infoCorrect,
     checkInfo: contact.checkInfo,
@@ -187,7 +235,6 @@ export function ContactDetail({
   const s = <K extends keyof ReturnType<typeof buildForm>>(key: K, v: ReturnType<typeof buildForm>[K]) =>
     setForm(f => ({...f, [key]: v}))
 
-  // ─── Visibility ────────────────────────────────────────────────────────────
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(contact.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
   )
@@ -213,7 +260,7 @@ export function ContactDetail({
         mobilePhone: form.mobilePhone || null,
         info: form.info || null,
         birthDate: form.birthDate ? new Date(form.birthDate) : null,
-        trough: form.trough || null,
+        through: form.through || null,
         description: form.description || null,
         infoCorrect: form.infoCorrect,
         checkInfo: form.checkInfo,
@@ -241,7 +288,6 @@ export function ContactDetail({
     }
   }
 
-  // ─── Derived ───────────────────────────────────────────────────────────────
   const hasDeletedCompanies = contact.companies.some(cc => cc.deleted)
   const nonDeletedCompanies = contact.companies.filter(cc => !cc.deleted)
   const activeCompanies = nonDeletedCompanies.filter(cc => isActiveCompanyLink(cc.endDate))
@@ -253,7 +299,6 @@ export function ContactDetail({
   const activeProjects = contact.projects.filter(p => p.project.isOpen && !p.project.isClosed)
   const closedProjects = contact.projects.filter(p => p.project.isClosed || !p.project.isOpen)
 
-  // ─── Reusable field renderers ──────────────────────────────────────────────
   const textRow = (label: string, val: string | null, formKey?: keyof typeof form, opts?: {type?: string}) => (
     <div className="flex flex-col gap-1.5">
       <Label className="text-xs text-muted-foreground">{label}</Label>
@@ -309,9 +354,32 @@ export function ContactDetail({
     </div>
   )
 
+  // Inline address select for table rows
+  const inlineAddressSelect = (addresses: CompanyAddressOption[], value: string, onChange: (v: string) => void) => {
+    if (addresses.length === 0) return <TableCell />
+    return (
+      <TableCell>
+        <Select value={value} onValueChange={onChange}>
+          <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+            <SelectValue placeholder="Location…" />
+          </SelectTrigger>
+          <SelectContent className="bg-card border-border">
+            <SelectItem value="none" className="text-xs">
+              No specific location
+            </SelectItem>
+            {addresses.map(a => (
+              <SelectItem key={a.id} value={a.id} className="text-xs">
+                {a.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </TableCell>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-6">
-      {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Button
@@ -346,23 +414,22 @@ export function ContactDetail({
               </Button>
             </>
           ) : (
-            <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-              <Pencil className="h-4 w-4" />
-              Edit
-            </Button>
+            canEdit && (
+              <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
+                <Pencil className="h-4 w-4" />
+                Edit
+              </Button>
+            )
           )}
         </div>
       </div>
 
-      {/* ── Info card ──────────────────────────────────────────────────────── */}
       <div className="rounded-xl border border-border/60 bg-card p-6 flex flex-col gap-6">
-        {/* Identity */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Identity</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {textRow('First Name', contact.firstName, 'firstName')}
             {textRow('Last Name', contact.lastName, 'lastName')}
-            {/* Birth date */}
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Birth Date</Label>
               {editing ? (
@@ -376,11 +443,10 @@ export function ContactDetail({
                 <p className="text-sm text-muted-foreground">{formatDate(contact.birthDate)}</p>
               )}
             </div>
-            {textRow('Trough / Source', contact.trough, 'trough')}
+            {textRow('Through / Source', contact.through, 'through')}
             {selectRow('Title', contact.titleName, 'titleId', titleOptions)}
             {selectRow('Function', contact.functionName, 'functionId', functionOptions)}
             {selectRow('Ext. Department', contact.departmentExternName, 'departmentExternId', departmentExternOptions)}
-            {/* Created By / At */}
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Created By</Label>
               <p className="text-sm text-muted-foreground">{contact.createdByName}</p>
@@ -391,8 +457,6 @@ export function ContactDetail({
             </div>
           </div>
         </div>
-
-        {/* Contact info */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Contact Info</p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -404,8 +468,6 @@ export function ContactDetail({
             {textRow('Home Phone', contact.homePhone, 'homePhone', {type: 'tel'})}
           </div>
         </div>
-
-        {/* Description / Info */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Description</Label>
@@ -434,8 +496,6 @@ export function ContactDetail({
             )}
           </div>
         </div>
-
-        {/* Flags — General */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">General Flags</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -447,8 +507,6 @@ export function ContactDetail({
             {toggleRow('Mailing', contact.mailing, 'mailing')}
           </div>
         </div>
-
-        {/* Flags — Training */}
         <div>
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">
             Training &amp; Advice Flags
@@ -473,7 +531,6 @@ export function ContactDetail({
         </div>
       </div>
 
-      {/* ── Tabs ───────────────────────────────────────────────────────────── */}
       <Tabs defaultValue="companies">
         <TabsList className="bg-secondary border border-border/60 flex-wrap h-auto gap-1">
           <TabsTrigger value="companies">
@@ -500,10 +557,9 @@ export function ContactDetail({
               {contact.followUps.length}
             </Badge>
           </TabsTrigger>
-          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
-        {/* ── Companies ────────────────────────────────────────────────────── */}
         <TabsContent value="companies" className="mt-3">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
@@ -536,12 +592,12 @@ export function ContactDetail({
                 onClick={() => {
                   setAddingCompany(true)
                   setCompanyForm(emptyCompanyForm())
+                  setAddAddresses([])
                 }}>
                 <Plus className="h-3.5 w-3.5" /> Add Company
               </Button>
             )}
           </div>
-
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
@@ -549,6 +605,7 @@ export function ContactDetail({
                   <TableHead className={thClass}>Company</TableHead>
                   <TableHead className={thClass}>Number</TableHead>
                   <TableHead className={thClass}>Role at Company</TableHead>
+                  <TableHead className={thClass}>Location</TableHead>
                   <TableHead className={thClass}>Started</TableHead>
                   <TableHead className={thClass}>End Date</TableHead>
                   <TableHead className={thClass}>End Active</TableHead>
@@ -559,7 +616,6 @@ export function ContactDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/* Add row */}
                 {addingCompany && (
                   <TableRow className="border-border/40 bg-secondary/30">
                     <TableCell colSpan={2}>
@@ -605,6 +661,30 @@ export function ContactDetail({
                         className="h-7 text-xs bg-background border-border"
                       />
                     </TableCell>
+                    {/* Location cell — only rendered when there are addresses */}
+                    {addAddresses.length > 0 ? (
+                      <TableCell>
+                        <Select
+                          value={companyForm.companyAddressId}
+                          onValueChange={v => setCompanyForm(f => ({...f, companyAddressId: v}))}>
+                          <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+                            <SelectValue placeholder="Location…" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-card border-border">
+                            <SelectItem value="none" className="text-xs">
+                              No specific location
+                            </SelectItem>
+                            {addAddresses.map(a => (
+                              <SelectItem key={a.id} value={a.id} className="text-xs">
+                                {a.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                    ) : (
+                      <TableCell />
+                    )}
                     <TableCell>
                       <Input
                         type="date"
@@ -646,6 +726,8 @@ export function ContactDetail({
                               contactId: contact.id,
                               companyId: companyForm.companyId,
                               roleWithCompany: companyForm.roleWithCompany || null,
+                              companyAddressId:
+                                companyForm.companyAddressId !== 'none' ? companyForm.companyAddressId : null,
                               startedDate: new Date(companyForm.startedDate),
                               endDate: companyForm.endDate ? new Date(companyForm.endDate) : null,
                               endPreviousActive,
@@ -666,11 +748,9 @@ export function ContactDetail({
                     </TableCell>
                   </TableRow>
                 )}
-
-                {/* Existing rows */}
                 {visibleCompanies.length === 0 && !addingCompany ? (
                   <TableRow>
-                    <TableCell colSpan={8} className="h-20 text-center text-muted-foreground">
+                    <TableCell colSpan={9} className="h-20 text-center text-muted-foreground">
                       No active company links.
                     </TableCell>
                   </TableRow>
@@ -708,6 +788,30 @@ export function ContactDetail({
                                 className="h-7 text-xs bg-background border-border"
                               />
                             </TableCell>
+                            {/* Location cell in edit row */}
+                            {editAddresses.length > 0 ? (
+                              <TableCell>
+                                <Select
+                                  value={editCompanyForm.companyAddressId}
+                                  onValueChange={v => setEditCompanyForm(f => ({...f, companyAddressId: v}))}>
+                                  <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+                                    <SelectValue placeholder="Location…" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-card border-border">
+                                    <SelectItem value="none" className="text-xs">
+                                      No specific location
+                                    </SelectItem>
+                                    {editAddresses.map(a => (
+                                      <SelectItem key={a.id} value={a.id} className="text-xs">
+                                        {a.label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </TableCell>
+                            ) : (
+                              <TableCell />
+                            )}
                             <TableCell>
                               <Input
                                 type="date"
@@ -736,6 +840,10 @@ export function ContactDetail({
                                     await updateCompanyContactAction({
                                       id: cc.id,
                                       roleWithCompany: editCompanyForm.roleWithCompany || null,
+                                      companyAddressId:
+                                        editCompanyForm.companyAddressId !== 'none'
+                                          ? editCompanyForm.companyAddressId
+                                          : null,
                                       startedDate: new Date(editCompanyForm.startedDate),
                                       endDate: editCompanyForm.endDate ? new Date(editCompanyForm.endDate) : null,
                                     })
@@ -761,6 +869,18 @@ export function ContactDetail({
                             </TableCell>
                             <TableCell className={tdClass}>{cc.company.number}</TableCell>
                             <TableCell className={tdClass}>{cc.roleWithCompany ?? '-'}</TableCell>
+                            {/* Display saved location label */}
+                            <TableCell className={tdClass}>
+                              {cc.companyAddress
+                                ? [
+                                    cc.companyAddress.typeAddress,
+                                    [cc.companyAddress.street, cc.companyAddress.houseNumber].filter(Boolean).join(' '),
+                                    cc.companyAddress.place,
+                                  ]
+                                    .filter(Boolean)
+                                    .join(' · ')
+                                : '-'}
+                            </TableCell>
                             <TableCell className={tdClass}>{formatDate(cc.startedDate)}</TableCell>
                             <TableCell className={tdClass}>{formatDate(cc.endDate)}</TableCell>
                             <TableCell />
@@ -798,7 +918,6 @@ export function ContactDetail({
                                         variant="ghost"
                                         size="icon"
                                         className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                                        title="Permanently delete"
                                         onClick={async () => {
                                           await hardDeleteCompanyContactAction({id: cc.id})
                                           router.refresh()
@@ -821,6 +940,11 @@ export function ContactDetail({
                                             roleWithCompany: cc.roleWithCompany ?? '',
                                             startedDate: cc.startedDate.slice(0, 10),
                                             endDate: cc.endDate ? cc.endDate.slice(0, 10) : '',
+                                            companyAddressId: cc.companyAddressId ?? 'none',
+                                          })
+                                          // Trigger address fetch for this company
+                                          getCompanyAddressesAction(cc.company.id).then(addrs => {
+                                            setEditAddresses(addrs)
                                           })
                                         }}>
                                         <Pencil className="h-3.5 w-3.5" />
@@ -839,7 +963,7 @@ export function ContactDetail({
                                         <CalendarOff className="h-3.5 w-3.5" />
                                       </Button>
                                     )}
-                                    <Link href={`/companies/${cc.company.id}` as Route}>
+                                    <Link href={`/departments/${departmentId}/company/${cc.company.id}` as Route}>
                                       <Button
                                         variant="ghost"
                                         size="icon"
@@ -847,12 +971,11 @@ export function ContactDetail({
                                         <ExternalLink className="h-3.5 w-3.5" />
                                       </Button>
                                     </Link>
-                                    {canEdit && (
+                                    {canDelete && (
                                       <Button
                                         variant="ghost"
                                         size="icon"
                                         className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                                        title="Delete"
                                         onClick={async () => {
                                           await softDeleteCompanyContactAction({id: cc.id})
                                           router.refresh()
@@ -875,10 +998,8 @@ export function ContactDetail({
           </div>
         </TabsContent>
 
-        {/* ── Projects ─────────────────────────────────────────────────────── */}
         <TabsContent value="projects" className="mt-3">
           <div className="flex flex-col gap-6">
-            {/* Active */}
             <div>
               <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
                 Active ({activeProjects.length})
@@ -935,8 +1056,6 @@ export function ContactDetail({
                 </Table>
               </div>
             </div>
-
-            {/* Closed */}
             {closedProjects.length > 0 && (
               <div>
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
@@ -990,7 +1109,6 @@ export function ContactDetail({
           </div>
         </TabsContent>
 
-        {/* ── Trainings ────────────────────────────────────────────────────── */}
         <TabsContent value="trainings" className="mt-3">
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
@@ -1040,7 +1158,6 @@ export function ContactDetail({
           </div>
         </TabsContent>
 
-        {/* ── Follow-ups ───────────────────────────────────────────────────── */}
         <TabsContent value="followups" className="mt-3">
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
@@ -1090,8 +1207,7 @@ export function ContactDetail({
           </div>
         </TabsContent>
 
-        {/* ── Visibility ───────────────────────────────────────────────────── */}
-        {isAdmin && (
+        {canManageVisibility && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab
@@ -1126,7 +1242,6 @@ export function ContactDetail({
         )}
       </Tabs>
 
-      {/* ── Create company dialog ───────────────────────────────────────────── */}
       <CompanyFormDialog
         open={companyDialogOpen}
         onOpenChange={setCompanyDialogOpen}
@@ -1135,8 +1250,11 @@ export function ContactDetail({
         onSave={handleSaveCompany}
         isAdmin={isAdmin}
         canDelete={false}
+        canEditNumber={false}
+        canManageVisibility={false}
         roleLevelOptions={roleLevelOptions}
         defaultVisibleRoleNames={defaultVisibleRoleNames}
+        countryOptions={countryOptions}
       />
     </div>
   )

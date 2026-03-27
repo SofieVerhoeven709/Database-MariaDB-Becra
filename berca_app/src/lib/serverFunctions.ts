@@ -165,14 +165,23 @@ async function handleServerFunction<Schema extends ZodType, ReturnType, Auth ext
     const profile = authenticated ? await getSessionProfileFromCookieOrThrow() : undefined
 
     logger.warn(`Checking authorization for ${functionName}.`)
-    if (
-      authenticated &&
-      options.requiredRolesLevel &&
-      !options.requiredRolesLevel.includes(profile!.RoleLevel_Employee_roleLevelIdToRoleLevel!)
-    ) {
-      logger.warn(`Unauthorized user ${profile!.id} tried executing ${functionName ?? 'a server function'}.`)
-      return {
-        success: false,
+    if (authenticated && options.requiredRolesLevel && profile) {
+      type RoleLevelEmployeeItem = NonNullable<typeof profile>['RoleLevelEmployee'][0]
+
+      const highestRoleLevel = profile.RoleLevelEmployee.reduce<RoleLevelEmployeeItem | null>((highest, current) => {
+        if (!highest) return current
+        return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
+      }, null)?.RoleLevel
+
+      const hasRequiredRole = highestRoleLevel
+        ? options.requiredRolesLevel.some(required => required.id === highestRoleLevel.id)
+        : false
+
+      if (!hasRequiredRole) {
+        logger.warn(`Unauthorized user ${profile.id} tried executing ${functionName ?? 'a server function'}.`)
+        return {
+          success: false,
+        }
       }
     }
 

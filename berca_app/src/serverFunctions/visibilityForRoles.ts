@@ -38,6 +38,23 @@ export const bulkUpsertVisibilityForRoleAction = protectedServerFunction({
   schema: bulkUpsertVisibilitySchema,
   functionName: 'Bulk upsert visibility for role action',
   serverFn: async ({data: {targetId, rows, revalidate}, logger}) => {
+    // Fetch always-visible role levels (Administrator + Management)
+    const alwaysVisibleRoleLevels = await prismaClient.roleLevel.findMany({
+      where: {
+        Role: {name: {in: ['Administrator Role', 'Management Role']}},
+        deleted: false,
+      },
+      select: {id: true},
+    })
+
+    const alwaysVisibleIds = new Set(alwaysVisibleRoleLevels.map(r => r.id))
+
+    // Merge rows: filter out always-visible from user rows, then add them forced to true
+    const mergedRows = [
+      ...rows.filter(r => !alwaysVisibleIds.has(r.roleLevelId)),
+      ...[...alwaysVisibleIds].map(id => ({roleLevelId: id, visible: true})),
+    ]
+
     // Fetch all existing rows for this target in one query
     const existing = await prismaClient.visibilityForRole.findMany({
       where: {targetId},
@@ -47,15 +64,13 @@ export const bulkUpsertVisibilityForRoleAction = protectedServerFunction({
     const toUpdate: {id: string; visible: boolean}[] = []
     const toCreate: {roleLevelId: string}[] = []
 
-    for (const row of rows) {
+    for (const row of mergedRows) {
       const found = existing.find(e => e.roleLevelId === row.roleLevelId)
       if (found) {
-        // Only update if value actually changed
         if (found.visible !== row.visible) {
           toUpdate.push({id: found.id, visible: row.visible})
         }
       } else if (row.visible) {
-        // Only create if visible=true; absence means hidden
         toCreate.push({roleLevelId: row.roleLevelId})
       }
     }
@@ -89,8 +104,27 @@ export const bulkUpsertVisibilityForRoleAction = protectedServerFunction({
 
 // ─── Visibility helper (not exported — internal use only) ─────────────────────
 export async function upsertVisibilityRows(targetId: string, rows: {roleLevelId: string; visible: boolean}[]) {
+  // Fetch Management and Administrator role levels to force visible=true
+  const alwaysVisibleRoleLevels = await prismaClient.roleLevel.findMany({
+    where: {
+      Role: {
+        name: {in: ['Administrator Role', 'Management Role']},
+      },
+      deleted: false,
+    },
+    select: {id: true},
+  })
+
+  const alwaysVisibleIds = new Set(alwaysVisibleRoleLevels.map(r => r.id))
+
+  // Merge: force visible=true for always-visible roles, keep rows as-is for others
+  const mergedRows = [
+    ...rows.filter(r => !alwaysVisibleIds.has(r.roleLevelId)),
+    ...[...alwaysVisibleIds].map(id => ({roleLevelId: id, visible: true})),
+  ]
+
   await Promise.all(
-    rows.map(async ({roleLevelId, visible}) => {
+    mergedRows.map(async ({roleLevelId, visible}) => {
       const existing = await prismaClient.visibilityForRole.findFirst({
         where: {targetId, roleLevelId},
         select: {id: true},
@@ -101,7 +135,6 @@ export async function upsertVisibilityRows(targetId: string, rows: {roleLevelId:
           data: {visible},
         })
       } else if (visible) {
-        // Only create a row when visible=true; absence means hidden
         await prismaClient.visibilityForRole.create({
           data: {id: crypto.randomUUID(), targetId, roleLevelId, visible: true},
         })

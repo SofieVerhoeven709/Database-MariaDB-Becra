@@ -30,6 +30,14 @@ export async function getContacts() {
   })
 }
 
+export async function getContactOptions() {
+  return prismaClient.contact.findMany({
+    where: {deleted: false},
+    select: {id: true, firstName: true, lastName: true},
+    orderBy: [{lastName: 'asc'}, {firstName: 'asc'}],
+  })
+}
+
 export async function getContactDetail(id: string) {
   return prismaClient.contact.findUniqueOrThrow({
     where: {id},
@@ -43,8 +51,46 @@ export async function getContactDetail(id: string) {
       CompanyContact: {
         orderBy: {startedDate: 'desc'},
         include: {
-          Company: {select: {id: true, name: true, number: true, companyActive: true}},
+          Company: {
+            select: {
+              id: true,
+              name: true,
+              officialName: true,
+              number: true,
+              idOld: true,
+              mail: true,
+              businessPhone: true,
+              website: true,
+              vatNumber: true,
+              bankNumber: true,
+              iban: true,
+              bic: true,
+              becraCustomerNumber: true,
+              becraWebsiteLogin: true,
+              supplier: true,
+              preferredSupplier: true,
+              companyActive: true,
+              newsLetter: true,
+              customer: true,
+              potentialCustomer: true,
+              headQuarters: true,
+              potentialSubContractor: true,
+              subContractor: true,
+              notes: true,
+              createdAt: true,
+              createdBy: true,
+              companyId: true,
+              targetId: true,
+              deleted: true,
+              deletedAt: true,
+              deletedBy: true,
+            },
+          },
           Employee: {select: {firstName: true, lastName: true}},
+          CompanyAddress: {
+            // ← add this
+            include: {Country: {select: {name: true}}},
+          },
         },
       },
 

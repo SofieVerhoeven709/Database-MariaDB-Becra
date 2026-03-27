@@ -49,46 +49,52 @@ model CertificateType {
 }
 
 model Company {
-  id                                   String                 @id @db.Char(36)
-  name                                 String                 @db.VarChar(100)
-  number                               String                 @db.VarChar(100)
-  mail                                 String?                @db.VarChar(100)
-  businessPhone                        String?                @db.VarChar(100)
-  website                              String?                @db.VarChar(100)
-  vatNumber                            String?                @db.VarChar(100)
-  bankNumber                           String?                @db.VarChar(100)
-  iban                                 String?                @db.VarChar(100)
-  bic                                  String?                @db.VarChar(100)
-  becraCustomerNumber                  String?                @db.VarChar(100)
-  becraWebsiteLogin                    String?                @db.VarChar(100)
-  supplier                             Boolean                @default(false)
-  prefferedSupplier                    Boolean                @default(false)
-  companyActive                        Boolean                @default(true)
-  newsLetter                           Boolean                @default(false)
-  customer                             Boolean                @default(false)
-  potentialCustomer                    Boolean                @default(false)
-  headQuarters                         Boolean                @default(false)
-  potentialSubContractor               Boolean                @default(false)
-  subContractor                        Boolean                @default(false)
-  notes                                String?                @db.Text
-  createdAt                            DateTime               @db.DateTime(0)
-  createdBy                            String                 @db.Char(36)
-  companyId                            String?                @db.Char(36)
-  targetId                             String                 @db.Char(36)
-  deleted                              Boolean                @default(false)
-  deletedAt                            DateTime?              @db.DateTime(0)
-  deletedBy                            String?                @db.Char(36)
-  Employee                             Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_1")
-  Company                              Company?               @relation("CompanyToCompany", fields: [companyId], references: [id], onUpdate: Restrict, map: "Company_ibfk_2")
-  other_Company                        Company[]              @relation("CompanyToCompany")
-  Target                               Target                 @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Company_ibfk_3")
-  Employee_Company_deletedByToEmployee Employee?              @relation("Company_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_4")
-  CompanyAdress                        CompanyAdress[]
-  CompanyContact                       CompanyContact[]
-  DeliveryNoteSupplier                 DeliveryNoteSupplier[]
-  MaterialSerialTrack                  MaterialSerialTrack[]
-  Project                              Project[]
-  Purchase                             Purchase[]
+  id                                                    String                 @id @db.Char(36)
+  name                                                  String                 @db.VarChar(255)
+  officialName                                          String                 @db.VarChar(255)
+  number                                                String                 @db.VarChar(255)
+  idOld                                                 String?                @db.VarChar(255)
+  mail                                                  String?                @db.VarChar(255)
+  businessPhone                                         String?                @db.VarChar(255)
+  website                                               String?                @db.VarChar(255)
+  vatNumber                                             String?                @db.VarChar(100)
+  bankNumber                                            String?                @db.VarChar(100)
+  iban                                                  String?                @db.VarChar(100)
+  bic                                                   String?                @db.VarChar(100)
+  becraCustomerNumber                                   String?                @db.VarChar(100)
+  becraWebsiteLogin                                     String?                @db.VarChar(100)
+  supplier                                              Boolean                @default(false)
+  preferredSupplier                                     Boolean                @default(false)
+  companyActive                                         Boolean                @default(true)
+  newsLetter                                            Boolean                @default(false)
+  customer                                              Boolean                @default(false)
+  potentialCustomer                                     Boolean                @default(false)
+  headQuarters                                          Boolean                @default(false)
+  potentialSubContractor                                Boolean                @default(false)
+  subContractor                                         Boolean                @default(false)
+  notes                                                 String?                @db.Text
+  createdAt                                             DateTime               @db.DateTime(0)
+  createdBy                                             String                 @db.Char(36)
+  companyId                                             String?                @db.Char(36)
+  targetId                                              String                 @db.Char(36)
+  deleted                                               Boolean                @default(false)
+  deletedAt                                             DateTime?              @db.DateTime(0)
+  deletedBy                                             String?                @db.Char(36)
+  Employee                                              Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_1")
+  Company                                               Company?               @relation("CompanyToCompany", fields: [companyId], references: [id], onUpdate: Restrict, map: "Company_ibfk_2")
+  other_Company                                         Company[]              @relation("CompanyToCompany")
+  Target                                                Target                 @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Company_ibfk_3")
+  Employee_Company_deletedByToEmployee                  Employee?              @relation("Company_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Company_ibfk_4")
+  CompanyAddress                                        CompanyAddress[]
+  CompanyContact                                        CompanyContact[]
+  DeliveryNoteSupplier                                  DeliveryNoteSupplier[]
+  InvoiceIn                                             InvoiceIn[]
+  Material_Material_preferredSupplierCompanyIdToCompany Material[]             @relation("Material_preferredSupplierCompanyIdToCompany")
+  MaterialPrice                                         MaterialPrice[]
+  MaterialSerialTrack                                   MaterialSerialTrack[]
+  MaterialSupplier                                      MaterialSupplier[]
+  Project                                               Project[]
+  Purchase                                              Purchase[]
 
   @@index([companyId], map: "companyId")
   @@index([createdBy], map: "createdBy")
@@ -96,50 +102,30 @@ model Company {
   @@index([deletedBy], map: "deletedBy")
 }
 
-model CompanyAdress {
-  id                                         String    @id @db.Char(36)
-  street                                     String?   @db.VarChar(100)
-  houseNumber                                String?   @db.VarChar(100)
-  busNumber                                  String?   @db.VarChar(100)
-  zipCode                                    String?   @db.VarChar(100)
-  place                                      String?   @db.VarChar(100)
-  createdAt                                  DateTime  @db.DateTime(0)
-  typeAdress                                 String?   @db.VarChar(100)
-  createdBy                                  String    @db.Char(36)
-  companyId                                  String    @db.Char(36)
-  deleted                                    Boolean   @default(false)
-  deletedAt                                  DateTime? @db.DateTime(0)
-  deletedBy                                  String?   @db.Char(36)
-  Employee                                   Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_1")
-  Company                                    Company   @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "CompanyAdress_ibfk_2")
-  Employee_CompanyAdress_deletedByToEmployee Employee? @relation("CompanyAdress_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "CompanyAdress_ibfk_3")
-
-  @@index([companyId], map: "companyId")
-  @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "deletedBy")
-}
-
 model CompanyContact {
-  id                                          String    @id @db.Char(36)
-  startedDate                                 DateTime  @db.DateTime(0)
-  endDate                                     DateTime? @db.DateTime(0)
-  roleWithCompany                             String?   @db.VarChar(100)
-  createdAt                                   DateTime  @db.DateTime(0)
-  contactId                                   String    @db.Char(36)
-  companyId                                   String    @db.Char(36)
-  createdBy                                   String    @db.Char(36)
-  deleted                                     Boolean   @default(false)
-  deletedAt                                   DateTime? @db.DateTime(0)
-  deletedBy                                   String?   @db.Char(36)
-  Employee                                    Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_1")
-  Contact                                     Contact   @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_2")
-  Company                                     Company   @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_3")
-  Employee_CompanyContact_deletedByToEmployee Employee? @relation("CompanyContact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_4")
+  id                                          String          @id @db.Char(36)
+  startedDate                                 DateTime        @db.DateTime(0)
+  endDate                                     DateTime?       @db.DateTime(0)
+  roleWithCompany                             String?         @db.VarChar(100)
+  createdAt                                   DateTime        @db.DateTime(0)
+  contactId                                   String          @db.Char(36)
+  companyId                                   String          @db.Char(36)
+  createdBy                                   String          @db.Char(36)
+  companyAddressId                            String?         @db.Char(36)
+  deleted                                     Boolean         @default(false)
+  deletedAt                                   DateTime?       @db.DateTime(0)
+  deletedBy                                   String?         @db.Char(36)
+  Employee                                    Employee        @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_1")
+  Contact                                     Contact         @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_2")
+  Company                                     Company         @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_3")
+  Employee_CompanyContact_deletedByToEmployee Employee?       @relation("CompanyContact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "CompanyContact_ibfk_4")
+  CompanyAddress                              CompanyAddress? @relation(fields: [companyAddressId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "CompanyContact_ibfk_5")
 
   @@index([companyId], map: "companyId")
   @@index([contactId], map: "contactId")
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
+  @@index([companyAddressId], map: "companyAddressId")
 }
 
 model Contact {
@@ -154,7 +140,7 @@ model Contact {
   mobilePhone                          String?             @db.VarChar(100)
   info                                 String?             @db.Text
   birthDate                            DateTime?           @db.DateTime(0)
-  trough                               String?             @db.VarChar(100)
+  through                              String?             @db.VarChar(100)
   description                          String?             @db.Text
   createdAt                            DateTime            @db.DateTime(0)
   infoCorrect                          Boolean             @default(false)
@@ -188,6 +174,7 @@ model Contact {
   Target                               Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Contact_ibfk_6")
   Employee_Contact_deletedByToEmployee Employee?           @relation("Contact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Contact_ibfk_7")
   FollowUpStructure                    FollowUpStructure[]
+  InvoiceOutContact                    InvoiceOutContact[]
   ProjectContact                       ProjectContact[]
   TrainingContact                      TrainingContact[]
 
@@ -354,7 +341,6 @@ model Employee {
   active                                                                            Boolean                          @default(true)
   passwordCreatedAt                                                                 DateTime                         @db.DateTime(0)
   createdBy                                                                         String?                          @db.Char(36)
-  roleLevelId                                                                       String?                          @db.Char(36)
   titleId                                                                           String?                          @db.Char(36)
   pictureId                                                                         String?                          @db.Char(36)
   deleted                                                                           Boolean                          @default(false)
@@ -366,12 +352,14 @@ model Employee {
   CertificateType_CertificateType_deletedByToEmployee                               CertificateType[]                @relation("CertificateType_deletedByToEmployee")
   Company                                                                           Company[]
   Company_Company_deletedByToEmployee                                               Company[]                        @relation("Company_deletedByToEmployee")
-  CompanyAdress                                                                     CompanyAdress[]
-  CompanyAdress_CompanyAdress_deletedByToEmployee                                   CompanyAdress[]                  @relation("CompanyAdress_deletedByToEmployee")
+  CompanyAddress_CompanyAddress_createdByToEmployee                                 CompanyAddress[]                 @relation("CompanyAddress_createdByToEmployee")
+  CompanyAddress_CompanyAddress_deletedByToEmployee                                 CompanyAddress[]                 @relation("CompanyAddress_deletedByToEmployee")
   CompanyContact                                                                    CompanyContact[]
   CompanyContact_CompanyContact_deletedByToEmployee                                 CompanyContact[]                 @relation("CompanyContact_deletedByToEmployee")
   Contact                                                                           Contact[]
   Contact_Contact_deletedByToEmployee                                               Contact[]                        @relation("Contact_deletedByToEmployee")
+  Country_Country_deletedByToEmployee                                               Country[]                        @relation("Country_deletedByToEmployee")
+  Country_Country_createdByToEmployee                                               Country[]                        @relation("Country_createdByToEmployee")
   DeliveryNoteSupplier                                                              DeliveryNoteSupplier[]
   DeliveryNoteSupplier_DeliveryNoteSupplier_deletedByToEmployee                     DeliveryNoteSupplier[]           @relation("DeliveryNoteSupplier_deletedByToEmployee")
   Department_Department_deletedByToEmployee                                         Department[]                     @relation("Department_deletedByToEmployee")
@@ -387,7 +375,6 @@ model Employee {
   EmergencyContact                                                                  EmergencyContact[]
   Employee                                                                          Employee?                        @relation("EmployeeToEmployee", fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_1")
   other_Employee                                                                    Employee[]                       @relation("EmployeeToEmployee")
-  RoleLevel_Employee_roleLevelIdToRoleLevel                                         RoleLevel?                       @relation("Employee_roleLevelIdToRoleLevel", fields: [roleLevelId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_2")
   Title_Employee_titleIdToTitle                                                     Title?                           @relation("Employee_titleIdToTitle", fields: [titleId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_5")
   DocumentStructure_Employee_pictureIdToDocumentStructure                           DocumentStructure?               @relation("Employee_pictureIdToDocumentStructure", fields: [pictureId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Employee_ibfk_6")
   Employee_Employee_deletedByToEmployee                                             Employee?                        @relation("Employee_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Employee_ibfk_7")
@@ -418,9 +405,15 @@ model Employee {
   InventoryStructure_InventoryStructure_deletedByToEmployee                         InventoryStructure[]             @relation("InventoryStructure_deletedByToEmployee")
   InvoiceIn                                                                         InvoiceIn[]
   InvoiceIn_InvoiceIn_deletedByToEmployee                                           InvoiceIn[]                      @relation("InvoiceIn_deletedByToEmployee")
+  InvoiceIn_InvoiceIn_modifiedByToEmployee                                          InvoiceIn[]                      @relation("InvoiceIn_modifiedByToEmployee")
   InvoiceInTarget                                                                   InvoiceInTarget[]
   InvoiceOut                                                                        InvoiceOut[]
   InvoiceOut_InvoiceOut_deletedByToEmployee                                         InvoiceOut[]                     @relation("InvoiceOut_deletedByToEmployee")
+  InvoiceOut_InvoiceOut_modifiedByToEmployee                                        InvoiceOut[]                     @relation("InvoiceOut_modifiedByToEmployee")
+  InvoiceSentType_InvoiceSentType_createdByToEmployee                               InvoiceSentType[]                @relation("InvoiceSentType_createdByToEmployee")
+  InvoiceSentType_InvoiceSentType_deletedByToEmployee                               InvoiceSentType[]                @relation("InvoiceSentType_deletedByToEmployee")
+  InvoiceStatus_InvoiceStatus_createdByToEmployee                                   InvoiceStatus[]                  @relation("InvoiceStatus_createdByToEmployee")
+  InvoiceStatus_InvoiceStatus_deletedByToEmployee                                   InvoiceStatus[]                  @relation("InvoiceStatus_deletedByToEmployee")
   InvoiceType                                                                       InvoiceType[]
   InvoiceType_InvoiceType_deletedByToEmployee                                       InvoiceType[]                    @relation("InvoiceType_deletedByToEmployee")
   Material                                                                          Material[]
@@ -452,14 +445,20 @@ model Employee {
   MaterialStructure_MaterialStructure_deletedByToEmployee                           MaterialStructure[]              @relation("MaterialStructure_deletedByToEmployee")
   Part                                                                              Part[]
   Part_Part_deletedByToEmployee                                                     Part[]                           @relation("Part_deletedByToEmployee")
+  PaymentMethod_PaymentMethod_createdByToEmployee                                   PaymentMethod[]                  @relation("PaymentMethod_createdByToEmployee")
+  PaymentMethod_PaymentMethod_deletedByToEmployee                                   PaymentMethod[]                  @relation("PaymentMethod_deletedByToEmployee")
   Phantom                                                                           Phantom[]
   Phantom_Phantom_deletedByToEmployee                                               Phantom[]                        @relation("Phantom_deletedByToEmployee")
+  PriceList_PriceList_createdByToEmployee                                           PriceList[]                      @relation("PriceList_createdByToEmployee")
+  PriceList_PriceList_deletedByToEmployee                                           PriceList[]                      @relation("PriceList_deletedByToEmployee")
+  PriceListItem_PriceListItem_createdByToEmployee                                   PriceListItem[]                  @relation("PriceListItem_createdByToEmployee")
+  PriceListItem_PriceListItem_deletedByToEmployee                                   PriceListItem[]                  @relation("PriceListItem_deletedByToEmployee")
   Product                                                                           Product[]
   Product_Product_deletedByToEmployee                                               Product[]                        @relation("Product_deletedByToEmployee")
   Project                                                                           Project[]
   Project_Project_deletedByToEmployee                                               Project[]                        @relation("Project_deletedByToEmployee")
   ProjectContact_ProjectContact_createdByToEmployee                                 ProjectContact[]                 @relation("ProjectContact_createdByToEmployee")
-  ProjectContact_ProjectContact_moddifiedByToEmployee                               ProjectContact[]                 @relation("ProjectContact_moddifiedByToEmployee")
+  ProjectContact_ProjectContact_modifiedByToEmployee                                ProjectContact[]                 @relation("ProjectContact_modifiedByToEmployee")
   ProjectContact_ProjectContact_deletedByToEmployee                                 ProjectContact[]                 @relation("ProjectContact_deletedByToEmployee")
   ProjectType                                                                       ProjectType[]
   ProjectType_ProjectType_deletedByToEmployee                                       ProjectType[]                    @relation("ProjectType_deletedByToEmployee")
@@ -469,14 +468,15 @@ model Employee {
   PurchaseDetail_PurchaseDetail_deletedByToEmployee                                 PurchaseDetail[]                 @relation("PurchaseDetail_deletedByToEmployee")
   PurchaseOrderBecra                                                                PurchaseOrderBecra[]
   PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee                         PurchaseOrderBecra[]             @relation("PurchaseOrderBecra_deletedByToEmployee")
-  QouteBecra                                                                        QouteBecra[]
-  QouteBecra_QouteBecra_deletedByToEmployee                                         QouteBecra[]                     @relation("QouteBecra_deletedByToEmployee")
+  QuoteBecra_QuoteBecra_createdByToEmployee                                         QuoteBecra[]                     @relation("QuoteBecra_createdByToEmployee")
+  QuoteBecra_QuoteBecra_deletedByToEmployee                                         QuoteBecra[]                     @relation("QuoteBecra_deletedByToEmployee")
   QuoteSupplier                                                                     QuoteSupplier[]
   QuoteSupplier_QuoteSupplier_deletedByToEmployee                                   QuoteSupplier[]                  @relation("QuoteSupplier_deletedByToEmployee")
   Role_Role_createdByToEmployee                                                     Role[]                           @relation("Role_createdByToEmployee")
   Role_Role_deletedByToEmployee                                                     Role[]                           @relation("Role_deletedByToEmployee")
   RoleLevel_RoleLevel_createdByToEmployee                                           RoleLevel[]                      @relation("RoleLevel_createdByToEmployee")
   RoleLevel_RoleLevel_deletedByToEmployee                                           RoleLevel[]                      @relation("RoleLevel_deletedByToEmployee")
+  RoleLevelEmployee                                                                 RoleLevelEmployee[]
   Session                                                                           Session[]
   Status                                                                            Status[]
   Status_Status_deletedByToEmployee                                                 Status[]                         @relation("Status_deletedByToEmployee")
@@ -506,6 +506,8 @@ model Employee {
   Unit_Unit_deletedByToEmployee                                                     Unit[]                           @relation("Unit_deletedByToEmployee")
   UrgencyType                                                                       UrgencyType[]
   UrgencyType_UrgencyType_deletedByToEmployee                                       UrgencyType[]                    @relation("UrgencyType_deletedByToEmployee")
+  VatMargin_VatMargin_createdByToEmployee                                           VatMargin[]                      @relation("VatMargin_createdByToEmployee")
+  VatMargin_VatMargin_deletedByToEmployee                                           VatMargin[]                      @relation("VatMargin_deletedByToEmployee")
   WarehousePlace                                                                    WarehousePlace[]
   WarehousePlace_WarehousePlace_deletedByToEmployee                                 WarehousePlace[]                 @relation("WarehousePlace_deletedByToEmployee")
   WorkOrder                                                                         WorkOrder[]
@@ -515,10 +517,9 @@ model Employee {
   WorkOrderStructure_WorkOrderStructure_deletedByToEmployee                         WorkOrderStructure[]             @relation("WorkOrderStructure_deletedByToEmployee")
 
   @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
   @@index([pictureId], map: "pictureId")
   @@index([titleId], map: "titleId")
-  @@index([deletedBy], map: "deletedBy")
-  @@index([roleLevelId], map: "roleLevelId")
 }
 
 model FollowUp {
@@ -540,7 +541,7 @@ model FollowUp {
   statusId                               String              @db.Char(36)
   executedBy                             String              @db.Char(36)
   urgencyTypeId                          String              @db.Char(36)
-  documentId                             String              @db.Char(36)
+  documentId                             String?             @db.Char(36)
   targetId                               String              @db.Char(36)
   followUpTypeId                         String              @db.Char(36)
   deleted                                Boolean             @default(false)
@@ -550,7 +551,7 @@ model FollowUp {
   Employee_FollowUp_ownedByToEmployee    Employee            @relation("FollowUp_ownedByToEmployee", fields: [ownedBy], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_2")
   Status                                 Status              @relation(fields: [statusId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_3")
   Employee_FollowUp_executedByToEmployee Employee            @relation("FollowUp_executedByToEmployee", fields: [executedBy], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_4")
-  DocumentStructure                      DocumentStructure   @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_5")
+  DocumentStructure                      DocumentStructure?  @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_5")
   Employee_FollowUp_createdByToEmployee  Employee            @relation("FollowUp_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_6")
   FollowUpType                           FollowUpType        @relation(fields: [followUpTypeId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_7")
   Target                                 Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "FollowUp_ibfk_8")
@@ -559,7 +560,6 @@ model FollowUp {
   FollowUpTarget                         FollowUpTarget[]
 
   @@index([createdBy], map: "createdBy")
-  @@index([documentId], map: "documentId")
   @@index([executedBy], map: "executedBy")
   @@index([followUpTypeId], map: "followUpTypeId")
   @@index([ownedBy], map: "ownedBy")
@@ -567,50 +567,50 @@ model FollowUp {
   @@index([targetId], map: "targetId")
   @@index([urgencyTypeId], map: "urgencyTypeId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([documentId], map: "documentId")
 }
 
 model FollowUpStructure {
-  id                                              String            @id @db.Char(36)
-  activityDescription                             String?           @db.Text
-  additionalInfo                                  String?           @db.Text
-  actionAgenda                                    DateTime?         @db.DateTime(0)
-  closedAgenda                                    DateTime?         @db.DateTime(0)
-  recurringItem                                   String?           @db.VarChar(100)
-  item                                            String?           @db.VarChar(100)
-  contactDate                                     DateTime          @db.DateTime(0)
-  taskDescription                                 String?           @db.Text
-  taskStartDate                                   DateTime?         @db.DateTime(0)
-  taskCompleteDate                                DateTime?         @db.DateTime(0)
-  createdAt                                       DateTime          @db.DateTime(0)
-  recurringActive                                 Boolean           @default(false)
-  createdBy                                       String            @db.Char(36)
-  ownedBy                                         String            @db.Char(36)
-  statusId                                        String            @db.Char(36)
-  executedBy                                      String            @db.Char(36)
-  urgencyTypeId                                   String            @db.Char(36)
-  followUpId                                      String            @db.Char(36)
-  documentId                                      String            @db.Char(36)
-  contactId                                       String            @db.Char(36)
-  taskFor                                         String            @db.Char(36)
-  targetId                                        String            @db.Char(36)
-  deleted                                         Boolean           @default(false)
-  deletedAt                                       DateTime?         @db.DateTime(0)
-  deletedBy                                       String?           @db.Char(36)
-  UrgencyType                                     UrgencyType       @relation(fields: [urgencyTypeId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_1")
-  Target                                          Target            @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_10")
-  Employee_FollowUpStructure_deletedByToEmployee  Employee?         @relation("FollowUpStructure_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_11")
-  Employee_FollowUpStructure_ownedByToEmployee    Employee          @relation("FollowUpStructure_ownedByToEmployee", fields: [ownedBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_2")
-  Status                                          Status            @relation(fields: [statusId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_3")
-  Employee_FollowUpStructure_executedByToEmployee Employee          @relation("FollowUpStructure_executedByToEmployee", fields: [executedBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_4")
-  FollowUp                                        FollowUp          @relation(fields: [followUpId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_5")
-  DocumentStructure                               DocumentStructure @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_6")
-  Contact                                         Contact           @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_7")
-  Employee_FollowUpStructure_taskForToEmployee    Employee          @relation("FollowUpStructure_taskForToEmployee", fields: [taskFor], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_8")
-  Employee_FollowUpStructure_createdByToEmployee  Employee          @relation("FollowUpStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_9")
+  id                                              String             @id @db.Char(36)
+  activityDescription                             String?            @db.Text
+  additionalInfo                                  String?            @db.Text
+  actionAgenda                                    DateTime?          @db.DateTime(0)
+  closedAgenda                                    DateTime?          @db.DateTime(0)
+  recurringItem                                   String?            @db.VarChar(100)
+  item                                            String?            @db.VarChar(100)
+  contactDate                                     DateTime           @db.DateTime(0)
+  taskDescription                                 String?            @db.Text
+  taskStartDate                                   DateTime?          @db.DateTime(0)
+  taskCompleteDate                                DateTime?          @db.DateTime(0)
+  createdAt                                       DateTime           @db.DateTime(0)
+  recurringActive                                 Boolean            @default(false)
+  createdBy                                       String             @db.Char(36)
+  ownedBy                                         String             @db.Char(36)
+  statusId                                        String             @db.Char(36)
+  executedBy                                      String             @db.Char(36)
+  urgencyTypeId                                   String             @db.Char(36)
+  followUpId                                      String             @db.Char(36)
+  documentId                                      String?            @db.Char(36)
+  contactId                                       String             @db.Char(36)
+  taskFor                                         String             @db.Char(36)
+  targetId                                        String             @db.Char(36)
+  deleted                                         Boolean            @default(false)
+  deletedAt                                       DateTime?          @db.DateTime(0)
+  deletedBy                                       String?            @db.Char(36)
+  UrgencyType                                     UrgencyType        @relation(fields: [urgencyTypeId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_1")
+  Target                                          Target             @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_10")
+  Employee_FollowUpStructure_deletedByToEmployee  Employee?          @relation("FollowUpStructure_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_11")
+  Employee_FollowUpStructure_ownedByToEmployee    Employee           @relation("FollowUpStructure_ownedByToEmployee", fields: [ownedBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_2")
+  Status                                          Status             @relation(fields: [statusId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_3")
+  Employee_FollowUpStructure_executedByToEmployee Employee           @relation("FollowUpStructure_executedByToEmployee", fields: [executedBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_4")
+  FollowUp                                        FollowUp           @relation(fields: [followUpId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_5")
+  DocumentStructure                               DocumentStructure? @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_6")
+  Contact                                         Contact            @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_7")
+  Employee_FollowUpStructure_taskForToEmployee    Employee           @relation("FollowUpStructure_taskForToEmployee", fields: [taskFor], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_8")
+  Employee_FollowUpStructure_createdByToEmployee  Employee           @relation("FollowUpStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "FollowUpStructure_ibfk_9")
 
   @@index([contactId], map: "contactId")
   @@index([createdBy], map: "createdBy")
-  @@index([documentId], map: "documentId")
   @@index([executedBy], map: "executedBy")
   @@index([followUpId], map: "followUpId")
   @@index([ownedBy], map: "ownedBy")
@@ -619,6 +619,7 @@ model FollowUpStructure {
   @@index([taskFor], map: "taskFor")
   @@index([urgencyTypeId], map: "urgencyTypeId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([documentId], map: "documentId")
 }
 
 model FollowUpTarget {
@@ -678,12 +679,15 @@ model HourType {
   deleted                               Boolean        @default(false)
   deletedAt                             DateTime?      @db.DateTime(0)
   deletedBy                             String?        @db.Char(36)
+  targetId                              String?        @db.Char(36)
   Employee                              Employee       @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "HourType_ibfk_1")
   Employee_HourType_deletedByToEmployee Employee?      @relation("HourType_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "HourType_ibfk_2")
+  Target                                Target?        @relation(fields: [targetId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "HourType_ibfk_3")
   TimeRegistry                          TimeRegistry[]
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
+  @@index([targetId], map: "targetId")
 }
 
 model Inventory {
@@ -693,7 +697,7 @@ model Inventory {
   place                                   String               @db.VarChar(255)
   shortDescription                        String               @db.VarChar(255)
   longDescription                         String               @db.Text
-  serieNumber                             String               @db.VarChar(255)
+  serialNumber                            String               @db.VarChar(255)
   quantityInStock                         Int
   minQuantityInStock                      Int
   maxQuantityInStock                      Int
@@ -801,46 +805,50 @@ model InventoryStructure {
 }
 
 model InvoiceIn {
-  id                                     String            @id @db.Char(36)
-  invoiceNumber                          String?           @unique(map: "invoiceNumber") @db.VarChar(100)
-  invoiceDate                            DateTime          @db.DateTime(0)
-  expireDate                             DateTime          @db.DateTime(0)
-  payDate                                DateTime?         @db.DateTime(0)
-  invoiceReference                       String?           @db.VarChar(100)
-  invoiceOutAttachement                  String?           @db.VarChar(100)
-  deliveryNote                           String?           @db.Text
-  purchaseOrder                          String?           @db.Text
-  transactionNumber                      String?           @db.VarChar(100)
-  info                                   String?           @db.Text
-  deliveryInvoiceCode                    String?           @db.VarChar(100)
-  vatMargin                              Float             @db.Float
-  amountWithoutVat                       Float             @db.Float
-  deliveryBonDate                        DateTime?         @db.DateTime(0)
-  deliveryBon                            String?           @db.VarChar(100)
-  remark                                 String?           @db.Text
-  createdAt                              DateTime          @db.DateTime(0)
-  completed                              Boolean           @default(false)
-  masterCard                             Boolean           @default(false)
-  cash                                   Boolean           @default(false)
-  bankContact                            Boolean           @default(false)
-  expectedInvoice                        Boolean           @default(false)
-  private                                Boolean           @default(false)
-  createdBy                              String            @db.Char(36)
-  invoiceTypeId                          String            @db.Char(36)
-  targetId                               String            @db.Char(36)
-  deleted                                Boolean           @default(false)
-  deletedAt                              DateTime?         @db.DateTime(0)
-  deletedBy                              String?           @db.Char(36)
-  InvoiceType                            InvoiceType       @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_1")
-  Employee                               Employee          @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_2")
-  Target                                 Target            @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_3")
-  Employee_InvoiceIn_deletedByToEmployee Employee?         @relation("InvoiceIn_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_4")
-  InvoiceInTarget                        InvoiceInTarget[]
+  id                                      String            @id @db.Char(36)
+  invoiceNumber                           String            @unique(map: "invoiceNumber") @db.VarChar(255)
+  poNumber                                String?           @db.VarChar(255)
+  humanId                                 String?           @db.VarChar(255)
+  invoiceDate                             DateTime          @db.DateTime(0)
+  createdAt                               DateTime          @db.DateTime(0)
+  dueDate                                 DateTime          @db.DateTime(0)
+  deletedAt                               DateTime?         @db.DateTime(0)
+  modifiedAt                              DateTime?         @db.DateTime(0)
+  reminderSent                            Boolean           @default(false)
+  outstanding                             Boolean           @default(false)
+  deleted                                 Boolean           @default(false)
+  deletedBy                               String?           @db.Char(36)
+  createdBy                               String            @db.Char(36)
+  modifiedBy                              String?           @db.Char(36)
+  invoiceTypeId                           String            @db.Char(36)
+  targetId                                String            @db.Char(36)
+  paymentMethodId                         String            @db.Char(36)
+  invoiceSentTypeId                       String            @db.Char(36)
+  invoiceStatusId                         String            @db.Char(36)
+  vatMarginId                             String            @db.Char(36)
+  companyId                               String            @db.Char(36)
+  InvoiceType                             InvoiceType       @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_1")
+  Company                                 Company           @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_10")
+  Employee                                Employee          @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_2")
+  Target                                  Target            @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_3")
+  Employee_InvoiceIn_deletedByToEmployee  Employee?         @relation("InvoiceIn_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_4")
+  Employee_InvoiceIn_modifiedByToEmployee Employee?         @relation("InvoiceIn_modifiedByToEmployee", fields: [modifiedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceIn_ibfk_5")
+  PaymentMethod                           PaymentMethod     @relation(fields: [paymentMethodId], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_6")
+  InvoiceSentType                         InvoiceSentType   @relation(fields: [invoiceSentTypeId], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_7")
+  InvoiceStatus                           InvoiceStatus     @relation(fields: [invoiceStatusId], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_8")
+  VatMargin                               VatMargin         @relation(fields: [vatMarginId], references: [id], onUpdate: Restrict, map: "InvoiceIn_ibfk_9")
+  InvoiceInTarget                         InvoiceInTarget[]
 
   @@index([createdBy], map: "createdBy")
   @@index([invoiceTypeId], map: "invoiceTypeId")
   @@index([targetId], map: "targetId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([companyId], map: "companyId")
+  @@index([invoiceSentTypeId], map: "invoiceSentTypeId")
+  @@index([invoiceStatusId], map: "invoiceStatusId")
+  @@index([modifiedBy], map: "modifiedBy")
+  @@index([paymentMethodId], map: "paymentMethodId")
+  @@index([vatMarginId], map: "vatMarginId")
 }
 
 model InvoiceInTarget {
@@ -860,42 +868,50 @@ model InvoiceInTarget {
 }
 
 model InvoiceOut {
-  id                                      String             @id @db.Char(36)
-  invoiceNumber                           String?            @unique(map: "invoiceNumber") @db.VarChar(100)
-  invoiceDate                             DateTime           @db.DateTime(0)
-  expireDate                              DateTime           @db.DateTime(0)
-  payDate                                 DateTime?          @db.DateTime(0)
-  invoiceReference                        String?            @db.VarChar(100)
-  invoiceInAttachement                    String?            @db.VarChar(100)
-  deliveryNote                            String?            @db.Text
-  purchaseOrder                           String?            @db.Text
-  transactionNumber                       String?            @db.VarChar(100)
-  deliveryInvoiceInfo                     String?            @db.Text
-  additionalInfo                          String?            @db.Text
-  info                                    String?            @db.Text
-  deliveryInvoiceCode                     String?            @db.VarChar(100)
-  vatMargin                               Float              @db.Float
-  amountWithoutVat                        Float              @db.Float
-  sentDate                                DateTime?          @db.DateTime(0)
-  createdAt                               DateTime           @db.DateTime(0)
-  materialCost                            Boolean            @default(false)
-  completed                               Boolean            @default(false)
-  createdBy                               String             @db.Char(36)
-  invoiceTypeId                           String             @db.Char(36)
-  targetId                                String             @db.Char(36)
-  deleted                                 Boolean            @default(false)
-  deletedAt                               DateTime?          @db.DateTime(0)
-  deletedBy                               String?            @db.Char(36)
-  InvoiceType                             InvoiceType        @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_1")
-  Employee                                Employee           @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_2")
-  Target                                  Target             @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_3")
-  Employee_InvoiceOut_deletedByToEmployee Employee?          @relation("InvoiceOut_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_4")
-  WorkOrderInvoice                        WorkOrderInvoice[]
+  id                                       String              @id @db.Char(36)
+  invoiceNumber                            String              @unique(map: "invoiceNumber") @db.VarChar(255)
+  poNumber                                 String?             @db.VarChar(255)
+  humanId                                  String?             @db.VarChar(255)
+  invoiceDate                              DateTime            @db.DateTime(0)
+  createdAt                                DateTime            @db.DateTime(0)
+  dueDate                                  DateTime            @db.DateTime(0)
+  sentDate                                 DateTime?           @db.DateTime(0)
+  deletedAt                                DateTime?           @db.DateTime(0)
+  modifiedAt                               DateTime?           @db.DateTime(0)
+  reminderSent                             Boolean             @default(false)
+  outstanding                              Boolean             @default(true)
+  deleted                                  Boolean             @default(false)
+  deletedBy                                String?             @db.Char(36)
+  createdBy                                String              @db.Char(36)
+  modifiedBy                               String?             @db.Char(36)
+  invoiceTypeId                            String              @db.Char(36)
+  targetId                                 String              @db.Char(36)
+  paymentMethodId                          String              @db.Char(36)
+  invoiceSentTypeId                        String              @db.Char(36)
+  invoiceStatusId                          String              @db.Char(36)
+  vatMarginId                              String              @db.Char(36)
+  priceListId                              String?             @db.Char(36)
+  InvoiceType                              InvoiceType         @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_1")
+  Employee                                 Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_2")
+  Target                                   Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_3")
+  Employee_InvoiceOut_deletedByToEmployee  Employee?           @relation("InvoiceOut_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_4")
+  Employee_InvoiceOut_modifiedByToEmployee Employee?           @relation("InvoiceOut_modifiedByToEmployee", fields: [modifiedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOut_ibfk_5")
+  PaymentMethod                            PaymentMethod       @relation(fields: [paymentMethodId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_6")
+  InvoiceSentType                          InvoiceSentType     @relation(fields: [invoiceSentTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_7")
+  InvoiceStatus                            InvoiceStatus       @relation(fields: [invoiceStatusId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_8")
+  VatMargin                                VatMargin           @relation(fields: [vatMarginId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_9")
+  InvoiceOutContact                        InvoiceOutContact[]
+  WorkOrderInvoice                         WorkOrderInvoice[]
 
   @@index([createdBy], map: "createdBy")
   @@index([invoiceTypeId], map: "invoiceTypeId")
   @@index([targetId], map: "targetId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([invoiceSentTypeId], map: "invoiceSentTypeId")
+  @@index([invoiceStatusId], map: "invoiceStatusId")
+  @@index([modifiedBy], map: "modifiedBy")
+  @@index([paymentMethodId], map: "paymentMethodId")
+  @@index([vatMarginId], map: "vatMarginId")
 }
 
 model InvoiceType {
@@ -919,37 +935,67 @@ model Material {
   id                                                       String               @id @db.Char(36)
   beNumber                                                 String               @unique(map: "uq_material_beNumber") @db.VarChar(255)
   name                                                     String?              @db.VarChar(255)
-  brandOrderNr                                             Int
+  brandOrderNr                                             String?              @db.VarChar(255)
   shortDescription                                         String               @db.VarChar(255)
   longDescription                                          String?              @db.Text
   preferredSupplier                                        String?              @db.VarChar(255)
   brandName                                                String?              @db.VarChar(255)
   documentationPlace                                       String?              @db.VarChar(255)
-  bePartDoc                                                Int?
+  bePartDoc                                                String?              @db.VarChar(255)
   rejected                                                 Boolean?             @default(false)
-  materialGroupId                                          String               @db.Char(36)
+  materialGroupIdA                                         String?              @db.Char(36)
+  materialGroupIdB                                         String?              @db.Char(36)
+  materialGroupIdC                                         String?              @db.Char(36)
+  materialGroupIdD                                         String?              @db.Char(36)
+  preferredSupplierCompanyId                               String?              @db.Char(36)
   unitId                                                   String               @db.Char(36)
   createdBy                                                String               @db.Char(36)
   deleted                                                  Boolean              @default(false)
   deletedAt                                                DateTime?            @db.DateTime(0)
   deletedBy                                                String?              @db.Char(36)
+  targetId                                                 String?              @db.Char(36)
   Inventory_Inventory_materialIdToMaterial                 Inventory[]          @relation("Inventory_materialIdToMaterial")
   Inventory_Inventory_beNumberToMaterial                   Inventory?           @relation("Inventory_beNumberToMaterial")
-  MaterialGroup                                            MaterialGroup        @relation(fields: [materialGroupId], references: [id], onUpdate: Restrict, map: "Material_ibfk_1")
+  MaterialGroup_Material_materialGroupIdAToMaterialGroup   MaterialGroup?       @relation("Material_materialGroupIdAToMaterialGroup", fields: [materialGroupIdA], references: [id], onUpdate: Restrict, map: "fk_material_group_a")
+  MaterialGroup_Material_materialGroupIdBToMaterialGroup   MaterialGroup?       @relation("Material_materialGroupIdBToMaterialGroup", fields: [materialGroupIdB], references: [id], onUpdate: Restrict, map: "fk_material_group_b")
+  MaterialGroup_Material_materialGroupIdCToMaterialGroup   MaterialGroup?       @relation("Material_materialGroupIdCToMaterialGroup", fields: [materialGroupIdC], references: [id], onUpdate: Restrict, map: "fk_material_group_c")
+  MaterialGroup_Material_materialGroupIdDToMaterialGroup   MaterialGroup?       @relation("Material_materialGroupIdDToMaterialGroup", fields: [materialGroupIdD], references: [id], onUpdate: Restrict, map: "fk_material_group_d")
   Unit                                                     Unit                 @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "Material_ibfk_2")
   Employee                                                 Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")
-  Employee_Material_deletedByToEmployee                    Employee?            @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_4")
+  Employee_Material_deletedByToEmployee                    Employee?            @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_6")
+  PreferredSupplierCompany                                 Company?             @relation("Material_preferredSupplierCompanyIdToCompany", fields: [preferredSupplierCompanyId], references: [id], onUpdate: Restrict, map: "Material_ibfk_5")
+  Target                                                   Target?              @relation(fields: [targetId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_material_target")
   MaterialMovement                                         MaterialMovement[]
   MaterialOther                                            MaterialOther[]
   MaterialStructure_MaterialStructure_materialIdToMaterial MaterialStructure[]  @relation("MaterialStructure_materialIdToMaterial")
   MaterialStructure_MaterialStructure_beNumberToMaterial   MaterialStructure[]  @relation("MaterialStructure_beNumberToMaterial")
+  MaterialSupplier                                         MaterialSupplier[]
   Product                                                  Product[]
   WorkOrderStructure                                       WorkOrderStructure[]
 
   @@index([createdBy], map: "createdBy")
-  @@index([materialGroupId], map: "materialGroupId")
   @@index([unitId], map: "unitId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([preferredSupplierCompanyId], map: "fk_material_preferredSupplierCompanyId")
+  @@index([materialGroupIdA], map: "materialGroupIdA")
+  @@index([materialGroupIdB], map: "materialGroupIdB")
+  @@index([materialGroupIdC], map: "materialGroupIdC")
+  @@index([materialGroupIdD], map: "materialGroupIdD")
+  @@index([targetId], map: "fk_material_target")
+}
+
+model MaterialSupplier {
+  id               String   @id @db.Char(36)
+  materialId       String   @db.Char(36)
+  companyId        String   @db.Char(36)
+  supplierOrderNr  String?  @db.VarChar(255)
+  shortDescription String?  @db.VarChar(255)
+  isPreferred      Boolean  @default(false)
+  Material         Material @relation(fields: [materialId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "MaterialSupplier_ibfk_1")
+  Company          Company  @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "MaterialSupplier_ibfk_2")
+
+  @@unique([materialId, companyId], map: "uq_materialSupplier_material_company")
+  @@index([companyId], map: "companyId")
 }
 
 model MaterialAssembly {
@@ -1024,19 +1070,22 @@ model MaterialFamily {
 }
 
 model MaterialGroup {
-  id                             String                           @id @db.Char(36)
-  groupA                         String                           @db.VarChar(255)
-  groupB                         String?                          @db.VarChar(255)
-  groupC                         String?                          @db.VarChar(255)
-  groupD                         String?                          @db.VarChar(255)
-  deleted                        Boolean                          @default(false)
-  deletedAt                      DateTime?                        @db.DateTime(0)
-  deletedBy                      String?                          @db.Char(36)
-  Material                       Material[]
-  Employee                       Employee?                        @relation(fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialGroup_ibfk_1")
-  MaterialSerialTrack            MaterialSerialTrack[]
-  MaterialSerialTrackedStructure MaterialSerialTrackedStructure[]
-  Purchase                       Purchase[]
+  id                                                String                           @id @db.Char(36)
+  groupA                                            String                           @db.VarChar(255)
+  groupB                                            String?                          @db.VarChar(255)
+  groupC                                            String?                          @db.VarChar(255)
+  groupD                                            String?                          @db.VarChar(255)
+  deleted                                           Boolean                          @default(false)
+  deletedAt                                         DateTime?                        @db.DateTime(0)
+  deletedBy                                         String?                          @db.Char(36)
+  Material_Material_materialGroupIdAToMaterialGroup Material[]                       @relation("Material_materialGroupIdAToMaterialGroup")
+  Material_Material_materialGroupIdBToMaterialGroup Material[]                       @relation("Material_materialGroupIdBToMaterialGroup")
+  Material_Material_materialGroupIdCToMaterialGroup Material[]                       @relation("Material_materialGroupIdCToMaterialGroup")
+  Material_Material_materialGroupIdDToMaterialGroup Material[]                       @relation("Material_materialGroupIdDToMaterialGroup")
+  Employee                                          Employee?                        @relation(fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialGroup_ibfk_1")
+  MaterialSerialTrack                               MaterialSerialTrack[]
+  MaterialSerialTrackedStructure                    MaterialSerialTrackedStructure[]
+  Purchase                                          Purchase[]
 
   @@index([deletedBy], map: "deletedBy")
 }
@@ -1118,7 +1167,7 @@ model MaterialPrice {
   beNumber                                   String?   @db.VarChar(255)
   orderNr                                    String?   @db.VarChar(255)
   quoteBecra                                 String?   @db.Char(36)
-  supllierOrderNr                            String?   @db.VarChar(255)
+  supplierOrderNr                            String?   @db.VarChar(255)
   brandOrderNr                               String?   @db.VarChar(255)
   shortDescription                           String?   @db.VarChar(255)
   longDescription                            String?   @db.Text
@@ -1126,17 +1175,20 @@ model MaterialPrice {
   updatedAt                                  DateTime? @db.DateTime(0)
   rejected                                   Boolean?
   additionalInfo                             String?   @db.VarChar(255)
-  unitPrice                                  Int?
+  unitPrice                                  Decimal?  @db.Decimal(10, 2)
   quantityPrice                              Int?
   createdBy                                  String    @db.Char(36)
   deleted                                    Boolean   @default(false)
   deletedAt                                  DateTime? @db.DateTime(0)
   deletedBy                                  String?   @db.Char(36)
+  companyId                                  String    @db.Char(36)
   Employee                                   Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_1")
   Employee_MaterialPrice_deletedByToEmployee Employee? @relation("MaterialPrice_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_2")
+  Company                                    Company   @relation(fields: [companyId], references: [id], onUpdate: Restrict, map: "MaterialPrice_ibfk_3")
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
+  @@index([companyId], map: "companyId")
 }
 
 model MaterialSerialTrack {
@@ -1154,7 +1206,7 @@ model MaterialSerialTrack {
   fromLocation                                     String?                          @db.VarChar(255)
   toLocation                                       String?                          @db.VarChar(255)
   updatedAt                                        DateTime?                        @db.DateTime(0)
-  preferedSupplier                                 String?                          @db.VarChar(255)
+  preferredSupplier                                String?                          @db.VarChar(255)
   rejected                                         Boolean?                         @default(false)
   additionalInfo                                   String?                          @db.VarChar(255)
   projectId                                        String?                          @db.Char(36)
@@ -1200,7 +1252,7 @@ model MaterialSerialTrackedStructure {
   beParentPart                                                                       String?             @db.VarChar(255)
   serialCode                                                                         String?             @db.VarChar(255)
   tag                                                                                String?             @db.VarChar(255)
-  preferedSupplier                                                                   String?             @db.VarChar(255)
+  preferredSupplier                                                                  String?             @db.VarChar(255)
   brandName                                                                          String?             @db.VarChar(255)
   brandOrderNr                                                                       String?             @db.VarChar(255)
   unit                                                                               String?             @db.VarChar(255)
@@ -1254,10 +1306,10 @@ model MaterialSpec {
   Employee                                  Employee?                        @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "MaterialSpec_ibfk_4")
   Employee_MaterialSpec_deletedByToEmployee Employee?                        @relation("MaterialSpec_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "MaterialSpec_ibfk_5")
 
-  @@index([createdBy], map: "createdBy")
-  @@index([materialDimensionId], map: "materialDimensionId")
   @@index([materialFamilyId], map: "materialFamilyId")
+  @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
+  @@index([materialDimensionId], map: "materialDimensionId")
 }
 
 model MaterialStructure {
@@ -1371,6 +1423,7 @@ model Project {
   projectTypeId                        String                @db.Char(36)
   parentProjectId                      String?               @db.Char(36)
   targetId                             String                @db.Char(36)
+  priceListId                          String?               @db.Char(36)
   deleted                              Boolean               @default(false)
   deletedAt                            DateTime?             @db.DateTime(0)
   deletedBy                            String?               @db.Char(36)
@@ -1382,6 +1435,7 @@ model Project {
   other_Project                        Project[]             @relation("ProjectToProject")
   Target                               Target                @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Project_ibfk_5")
   Employee_Project_deletedByToEmployee Employee?             @relation("Project_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Project_ibfk_6")
+  PriceList                            PriceList?            @relation(fields: [priceListId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_project_pricelist")
   ProjectContact                       ProjectContact[]
   Purchase                             Purchase[]
   PurchaseDetail                       PurchaseDetail[]
@@ -1394,33 +1448,34 @@ model Project {
   @@index([projectTypeId], map: "projectTypeId")
   @@index([targetId], map: "targetId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([priceListId], map: "fk_project_pricelist")
 }
 
 model ProjectContact {
-  id                                            String    @id @db.Char(36)
-  description                                   String?   @db.Text
-  extraInfo                                     String?   @db.Text
-  createdAt                                     DateTime  @db.DateTime(0)
-  moddifiedAt                                   DateTime? @db.DateTime(0)
-  idValid                                       Boolean   @default(true)
-  createdBy                                     String    @db.Char(36)
-  moddifiedBy                                   String    @db.Char(36)
-  projectId                                     String    @db.Char(36)
-  contactId                                     String    @db.Char(36)
-  deleted                                       Boolean   @default(false)
-  deletedAt                                     DateTime? @db.DateTime(0)
-  deletedBy                                     String?   @db.Char(36)
-  Employee_ProjectContact_createdByToEmployee   Employee  @relation("ProjectContact_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_1")
-  Project                                       Project   @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_2")
-  Employee_ProjectContact_moddifiedByToEmployee Employee  @relation("ProjectContact_moddifiedByToEmployee", fields: [moddifiedBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_3")
-  Contact                                       Contact   @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_4")
-  Employee_ProjectContact_deletedByToEmployee   Employee? @relation("ProjectContact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_5")
+  id                                           String    @id @db.Char(36)
+  description                                  String?   @db.Text
+  extraInfo                                    String?   @db.Text
+  createdAt                                    DateTime  @db.DateTime(0)
+  modifiedAt                                   DateTime? @db.DateTime(0)
+  isValid                                      Boolean   @default(true)
+  createdBy                                    String    @db.Char(36)
+  modifiedBy                                   String    @db.Char(36)
+  projectId                                    String    @db.Char(36)
+  contactId                                    String    @db.Char(36)
+  deleted                                      Boolean   @default(false)
+  deletedAt                                    DateTime? @db.DateTime(0)
+  deletedBy                                    String?   @db.Char(36)
+  Employee_ProjectContact_createdByToEmployee  Employee  @relation("ProjectContact_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_1")
+  Project                                      Project   @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_2")
+  Employee_ProjectContact_modifiedByToEmployee Employee  @relation("ProjectContact_modifiedByToEmployee", fields: [modifiedBy], references: [id], onUpdate: Restrict, map: "fk_projectcontact_modifiedBy")
+  Contact                                      Contact   @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_4")
+  Employee_ProjectContact_deletedByToEmployee  Employee? @relation("ProjectContact_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ProjectContact_ibfk_5")
 
   @@index([contactId], map: "contactId")
   @@index([createdBy], map: "createdBy")
-  @@index([moddifiedBy], map: "moddifiedBy")
   @@index([projectId], map: "projectId")
   @@index([deletedBy], map: "deletedBy")
+  @@index([modifiedBy], map: "modifiedBy")
 }
 
 model ProjectType {
@@ -1451,7 +1506,7 @@ model Purchase {
   status                                String?          @db.VarChar(255)
   shortDescription                      String?          @db.VarChar(255)
   description                           String?          @db.VarChar(255)
-  preferedSupplier                      String?          @db.VarChar(255)
+  preferredSupplier                     String?          @db.VarChar(255)
   additionalInfo                        String?          @db.VarChar(255)
   updatedAt                             DateTime?        @db.DateTime(0)
   createdBy                             String           @db.Char(36)
@@ -1477,9 +1532,9 @@ model PurchaseDetail {
   projectId                                   String?   @db.Char(36)
   purchaseId                                  String?   @db.Char(36)
   beNumber                                    String?   @db.VarChar(255)
-  unitPrice                                   Int?
+  unitPrice                                   Decimal?  @db.Decimal(10, 2)
   quantity                                    Int?
-  totalCost                                   Int?
+  totalCost                                   Decimal?  @db.Decimal(10, 2)
   status                                      String?   @db.VarChar(255)
   additionalInfo                              String?   @db.VarChar(255)
   updatedAt                                   DateTime? @db.DateTime(0)
@@ -1508,22 +1563,6 @@ model PurchaseOrderBecra {
   deletedBy                                       String?   @db.Char(36)
   Employee                                        Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseOrderBecra_ibfk_1")
   Employee_PurchaseOrderBecra_deletedByToEmployee Employee? @relation("PurchaseOrderBecra_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PurchaseOrderBecra_ibfk_2")
-
-  @@index([createdBy], map: "createdBy")
-  @@index([deletedBy], map: "deletedBy")
-}
-
-model QouteBecra {
-  id                                      String    @id @db.Char(36)
-  description                             String?   @db.Text
-  validDate                               Boolean
-  date                                    DateTime? @db.DateTime(0)
-  createdBy                               String    @db.Char(36)
-  deleted                                 Boolean   @default(false)
-  deletedAt                               DateTime? @db.DateTime(0)
-  deletedBy                               String?   @db.Char(36)
-  Employee                                Employee  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "QouteBecra_ibfk_1")
-  Employee_QouteBecra_deletedByToEmployee Employee? @relation("QouteBecra_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "QouteBecra_ibfk_2")
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
@@ -1623,13 +1662,13 @@ model SupplierDeliveryNoteFollowUp {
 }
 
 model Target {
-  id                                  String               @id @db.Char(36)
-  createdAt                           DateTime             @db.DateTime(0)
-  createdBy                           String               @db.Char(36)
-  targetTypeId                        String               @db.Char(36)
-  deleted                             Boolean              @default(false)
-  deletedAt                           DateTime?            @db.DateTime(0)
-  deletedBy                           String?              @db.Char(36)
+  id                                  String                @id @db.Char(36)
+  createdAt                           DateTime              @db.DateTime(0)
+  createdBy                           String                @db.Char(36)
+  targetTypeId                        String                @db.Char(36)
+  deleted                             Boolean               @default(false)
+  deletedAt                           DateTime?             @db.DateTime(0)
+  deletedBy                           String?               @db.Char(36)
   Certificate                         Certificate[]
   Company                             Company[]
   Contact                             Contact[]
@@ -1639,13 +1678,17 @@ model Target {
   FollowUp                            FollowUp[]
   FollowUpStructure                   FollowUpStructure[]
   FollowUpTarget                      FollowUpTarget[]
+  HourType                            HourType[]
   InvoiceIn                           InvoiceIn[]
   InvoiceInTarget                     InvoiceInTarget[]
   InvoiceOut                          InvoiceOut[]
+  Material                            Material[]
+  PriceList                           PriceList[]
+  PriceListItemTarget                 PriceListItemTarget[]
   Project                             Project[]
-  Employee                            Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_1")
-  TargetType                          TargetType           @relation(fields: [targetTypeId], references: [id], onUpdate: Restrict, map: "Target_ibfk_2")
-  Employee_Target_deletedByToEmployee Employee?            @relation("Target_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_3")
+  Employee                            Employee              @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_1")
+  TargetType                          TargetType            @relation(fields: [targetTypeId], references: [id], onUpdate: Restrict, map: "Target_ibfk_2")
+  Employee_Target_deletedByToEmployee Employee?             @relation("Target_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_3")
   Training                            Training[]
   TrainingStandard                    TrainingStandard[]
   VisibilityForRole                   VisibilityForRole[]
@@ -1703,6 +1746,7 @@ model TimeRegistry {
   createdAt                                 DateTime               @db.DateTime(0)
   invoiceTime                               Boolean                @default(false)
   onSite                                    Boolean                @default(false)
+  stayOver                                  Boolean                @default(false)
   createdBy                                 String                 @db.Char(36)
   workOrderId                               String                 @db.Char(36)
   hourTypeId                                String                 @db.Char(36)
@@ -1778,7 +1822,7 @@ model Training {
 
 model TrainingContact {
   id                                           String    @id @db.Char(36)
-  clientNumber                                 String?   @db.VarChar(100)
+  attendeeNumber                               String?   @db.VarChar(100)
   certSentDate                                 DateTime? @db.DateTime(0)
   createdAt                                    DateTime  @db.DateTime(0)
   succeeded                                    Boolean   @default(false)
@@ -1912,7 +1956,7 @@ model WarehousePlace {
   deletedAt                                   DateTime?            @db.DateTime(0)
   deletedBy                                   String?              @db.Char(36)
   Employee                                    Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_1")
-  MaterialSerialTrack                         MaterialSerialTrack? @relation(fields: [serialTrackedId], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_2")
+  MaterialSerialTrack                         MaterialSerialTrack? @relation(fields: [serialTrackedId], references: [id], onUpdate: Restrict, map: "fk_warehouseplace_serialtrack")
   Employee_WarehousePlace_deletedByToEmployee Employee?            @relation("WarehousePlace_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "WarehousePlace_ibfk_3")
 
   @@index([createdBy], map: "createdBy")
@@ -1922,7 +1966,7 @@ model WarehousePlace {
 
 model WorkOrder {
   id                                     String               @id @db.Char(36)
-  workOrderNumber                        String?              @unique(map: "workOrderNumber") @db.VarChar(100)
+  workOrderNumber                        String               @unique(map: "workOrderNumber") @db.VarChar(255)
   description                            String?              @db.Text
   additionalInfo                         String?              @db.Text
   startDate                              DateTime             @db.DateTime(0)
@@ -1959,7 +2003,7 @@ model WorkOrderInvoice {
   deleted      Boolean    @default(false)
   deletedAt    DateTime?  @db.DateTime(0)
   deletedBy    String?    @db.Char(36)
-  InvoiceOut   InvoiceOut @relation(fields: [invoiceOutId], references: [id], onUpdate: Restrict, map: "WorkOrderInvoice_ibfk_1")
+  InvoiceOut   InvoiceOut @relation(fields: [invoiceOutId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "WorkOrderInvoice_ibfk_1")
   WorkOrder    WorkOrder  @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "WorkOrderInvoice_ibfk_2")
   Employee     Employee?  @relation(fields: [deletedBy], references: [id], onUpdate: Restrict, map: "WorkOrderInvoice_ibfk_3")
 
@@ -1999,20 +2043,20 @@ model WorkOrderStructure {
 }
 
 model RoleLevel {
-  id                                       String              @id @db.Char(36)
-  roleId                                   String              @db.Char(36)
-  subRoleId                                String              @db.Char(36)
-  createdAt                                DateTime            @db.DateTime(0)
-  deleted                                  Boolean             @default(false)
-  deletedAt                                DateTime?           @db.DateTime(0)
-  createdBy                                String              @db.Char(36)
-  deletedBy                                String?             @db.Char(36)
-  Employee_Employee_roleLevelIdToRoleLevel Employee[]          @relation("Employee_roleLevelIdToRoleLevel")
-  Role                                     Role                @relation(fields: [roleId], references: [id], onUpdate: Restrict, map: "RoleLevel_ibfk_1")
-  SubRole                                  SubRole             @relation(fields: [subRoleId], references: [id], onUpdate: Restrict, map: "RoleLevel_ibfk_2")
-  Employee_RoleLevel_createdByToEmployee   Employee            @relation("RoleLevel_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_roleLevel_createdBy")
-  Employee_RoleLevel_deletedByToEmployee   Employee?           @relation("RoleLevel_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_roleLevel_deletedBy")
-  VisibilityForRole                        VisibilityForRole[]
+  id                                     String              @id @db.Char(36)
+  roleId                                 String              @db.Char(36)
+  subRoleId                              String              @db.Char(36)
+  createdAt                              DateTime            @db.DateTime(0)
+  deleted                                Boolean             @default(false)
+  deletedAt                              DateTime?           @db.DateTime(0)
+  createdBy                              String              @db.Char(36)
+  deletedBy                              String?             @db.Char(36)
+  Role                                   Role                @relation(fields: [roleId], references: [id], onUpdate: Restrict, map: "RoleLevel_ibfk_1")
+  SubRole                                SubRole             @relation(fields: [subRoleId], references: [id], onUpdate: Restrict, map: "RoleLevel_ibfk_2")
+  Employee_RoleLevel_createdByToEmployee Employee            @relation("RoleLevel_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_roleLevel_createdBy")
+  Employee_RoleLevel_deletedByToEmployee Employee?           @relation("RoleLevel_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_roleLevel_deletedBy")
+  RoleLevelEmployee                      RoleLevelEmployee[]
+  VisibilityForRole                      VisibilityForRole[]
 
   @@index([createdBy], map: "fk_roleLevel_createdBy")
   @@index([deletedBy], map: "fk_roleLevel_deletedBy")
@@ -2054,4 +2098,206 @@ model DepartmentExtern {
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
   @@index([targetId], map: "fk_departmentextern_target")
+}
+
+model QuoteBecra {
+  id                                      String    @id @db.Char(36)
+  description                             String?   @db.Text
+  validDate                               Boolean
+  date                                    DateTime? @db.DateTime(0)
+  createdBy                               String    @db.Char(36)
+  deleted                                 Boolean   @default(false)
+  deletedAt                               DateTime? @db.DateTime(0)
+  deletedBy                               String?   @db.Char(36)
+  Employee_QuoteBecra_createdByToEmployee Employee  @relation("QuoteBecra_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "QuoteBecra_ibfk_1")
+  Employee_QuoteBecra_deletedByToEmployee Employee? @relation("QuoteBecra_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "QuoteBecra_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model RoleLevelEmployee {
+  id          String    @id @db.Char(36)
+  employeeId  String    @db.Char(36)
+  roleLevelId String    @db.Char(36)
+  Employee    Employee  @relation(fields: [employeeId], references: [id], onUpdate: Restrict, map: "RoleLevelEmployee_ibfk_1")
+  RoleLevel   RoleLevel @relation(fields: [roleLevelId], references: [id], onUpdate: Restrict, map: "RoleLevelEmployee_ibfk_2")
+
+  @@index([employeeId], map: "employeeId")
+  @@index([roleLevelId], map: "roleLevelId")
+}
+
+model Country {
+  id                                   String           @id @db.Char(36)
+  name                                 String           @db.VarChar(100)
+  createdAt                            DateTime         @db.DateTime(0)
+  deleted                              Boolean          @default(false)
+  deletedAt                            DateTime?        @db.DateTime(0)
+  createdBy                            String           @db.Char(36)
+  deletedBy                            String?          @db.Char(36)
+  CompanyAddress                       CompanyAddress[]
+  Employee_Country_deletedByToEmployee Employee?        @relation("Country_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "Country_ibfk_1")
+  Employee_Country_createdByToEmployee Employee         @relation("Country_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "Country_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model InvoiceOutContact {
+  id           String     @id @db.Char(36)
+  contactId    String     @db.Char(36)
+  invoiceOutId String     @db.Char(36)
+  Contact      Contact    @relation(fields: [contactId], references: [id], onUpdate: Restrict, map: "InvoiceOutContact_ibfk_1")
+  InvoiceOut   InvoiceOut @relation(fields: [invoiceOutId], references: [id], onUpdate: Restrict, map: "InvoiceOutContact_ibfk_2")
+
+  @@index([contactId], map: "contactId")
+  @@index([invoiceOutId], map: "invoiceOutId")
+}
+
+model InvoiceSentType {
+  id                                           String       @id @db.Char(36)
+  name                                         String       @db.VarChar(100)
+  createdAt                                    DateTime     @db.DateTime(0)
+  createdBy                                    String       @db.Char(36)
+  deleted                                      Boolean      @default(false)
+  deletedAt                                    DateTime?    @db.DateTime(0)
+  deletedBy                                    String?      @db.Char(36)
+  InvoiceIn                                    InvoiceIn[]
+  InvoiceOut                                   InvoiceOut[]
+  Employee_InvoiceSentType_createdByToEmployee Employee     @relation("InvoiceSentType_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceSentType_ibfk_1")
+  Employee_InvoiceSentType_deletedByToEmployee Employee?    @relation("InvoiceSentType_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InvoiceSentType_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model InvoiceStatus {
+  id                                         String       @id @db.Char(36)
+  name                                       String       @db.VarChar(100)
+  createdAt                                  DateTime     @db.DateTime(0)
+  createdBy                                  String       @db.Char(36)
+  deleted                                    Boolean      @default(false)
+  deletedAt                                  DateTime?    @db.DateTime(0)
+  deletedBy                                  String?      @db.Char(36)
+  InvoiceIn                                  InvoiceIn[]
+  InvoiceOut                                 InvoiceOut[]
+  Employee_InvoiceStatus_createdByToEmployee Employee     @relation("InvoiceStatus_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceStatus_ibfk_1")
+  Employee_InvoiceStatus_deletedByToEmployee Employee?    @relation("InvoiceStatus_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InvoiceStatus_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model PaymentMethod {
+  id                                         String       @id @db.Char(36)
+  name                                       String       @db.VarChar(100)
+  createdAt                                  DateTime     @db.DateTime(0)
+  createdBy                                  String       @db.Char(36)
+  deleted                                    Boolean      @default(false)
+  deletedAt                                  DateTime?    @db.DateTime(0)
+  deletedBy                                  String?      @db.Char(36)
+  InvoiceIn                                  InvoiceIn[]
+  InvoiceOut                                 InvoiceOut[]
+  Employee_PaymentMethod_createdByToEmployee Employee     @relation("PaymentMethod_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PaymentMethod_ibfk_1")
+  Employee_PaymentMethod_deletedByToEmployee Employee?    @relation("PaymentMethod_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PaymentMethod_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model VatMargin {
+  id                                     String       @id @db.Char(36)
+  vat                                    Float        @db.Float
+  createdAt                              DateTime     @db.DateTime(0)
+  createdBy                              String       @db.Char(36)
+  deleted                                Boolean      @default(false)
+  deletedAt                              DateTime?    @db.DateTime(0)
+  deletedBy                              String?      @db.Char(36)
+  InvoiceIn                              InvoiceIn[]
+  InvoiceOut                             InvoiceOut[]
+  Employee_VatMargin_createdByToEmployee Employee     @relation("VatMargin_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "VatMargin_ibfk_1")
+  Employee_VatMargin_deletedByToEmployee Employee?    @relation("VatMargin_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "VatMargin_ibfk_2")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model PriceList {
+  id                                     String          @id @db.Char(36)
+  name                                   String          @db.VarChar(255)
+  repeatUse                              Boolean         @default(false)
+  createdAt                              DateTime        @db.DateTime(0)
+  createdBy                              String          @db.Char(36)
+  deleted                                Boolean         @default(false)
+  deletedAt                              DateTime?       @db.DateTime(0)
+  deletedBy                              String?         @db.Char(36)
+  targetId                               String          @db.Char(36)
+  Employee_PriceList_createdByToEmployee Employee        @relation("PriceList_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_1")
+  Employee_PriceList_deletedByToEmployee Employee?       @relation("PriceList_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_2")
+  Target                                 Target          @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_3")
+  PriceListItem                          PriceListItem[]
+  Project                                Project[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([targetId], map: "targetId")
+}
+
+model PriceListItem {
+  id                                         String               @id @db.Char(36)
+  priceListId                                String               @db.Char(36)
+  description                                String               @db.VarChar(255)
+  unit                                       String               @db.VarChar(100)
+  price                                      Decimal              @db.Decimal(10, 2)
+  createdAt                                  DateTime             @db.DateTime(0)
+  deleted                                    Boolean              @default(false)
+  isCostMargin                               Boolean              @default(false)
+  deletedAt                                  DateTime?            @db.DateTime(0)
+  deletedBy                                  String?              @db.Char(36)
+  createdBy                                  String               @db.Char(36)
+  PriceList                                  PriceList            @relation(fields: [priceListId], references: [id], onUpdate: Restrict, map: "PriceListItem_ibfk_2")
+  Employee_PriceListItem_createdByToEmployee Employee             @relation("PriceListItem_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PriceListItem_ibfk_1")
+  Employee_PriceListItem_deletedByToEmployee Employee?            @relation("PriceListItem_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PriceListItem_ibfk_4")
+  PriceListItemTarget                        PriceListItemTarget?
+
+  @@index([priceListId], map: "priceListId")
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model CompanyAddress {
+  id                                          String           @id @db.Char(36)
+  street                                      String?          @db.VarChar(100)
+  houseNumber                                 String?          @db.VarChar(100)
+  busNumber                                   String?          @db.VarChar(100)
+  zipCode                                     String?          @db.VarChar(100)
+  place                                       String?          @db.VarChar(100)
+  createdAt                                   DateTime         @db.DateTime(0)
+  typeAddress                                 String?          @db.VarChar(100)
+  createdBy                                   String           @db.Char(36)
+  companyId                                   String           @db.Char(36)
+  countryId                                   String?          @db.Char(36)
+  deleted                                     Boolean          @default(false)
+  deletedAt                                   DateTime?        @db.DateTime(0)
+  deletedBy                                   String?          @db.Char(36)
+  Country                                     Country?         @relation(fields: [countryId], references: [id], onUpdate: Restrict, map: "CompanyAddress_ibfk_1")
+  Employee_CompanyAddress_createdByToEmployee Employee         @relation("CompanyAddress_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "CompanyAddress_ibfk_2")
+  Company                                     Company          @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "CompanyAddress_ibfk_3")
+  Employee_CompanyAddress_deletedByToEmployee Employee?        @relation("CompanyAddress_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "CompanyAddress_ibfk_4")
+  CompanyContact                              CompanyContact[]
+
+  @@index([companyId], map: "companyId")
+  @@index([countryId], map: "countryId")
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model PriceListItemTarget {
+  id              String        @id @db.Char(36)
+  priceListItemId String        @unique(map: "priceListItemId") @db.Char(36)
+  targetId        String        @db.Char(36)
+  PriceListItem   PriceListItem @relation(fields: [priceListItemId], references: [id], onUpdate: Restrict, map: "PriceListItemTarget_ibfk_1")
+  Target          Target        @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "PriceListItemTarget_ibfk_2")
+
+  @@index([targetId], map: "targetId")
 }

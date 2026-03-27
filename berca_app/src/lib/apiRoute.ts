@@ -96,11 +96,14 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
         profile = await prismaClient.employee.findUnique({
           where: {id: tokenBody.id},
           include: {
-            RoleLevel_Employee_roleLevelIdToRoleLevel: {
-              // This is the Employee → RoleLevel relation
+            RoleLevelEmployee: {
               include: {
-                Role: true, // RoleLevel → Role
-                SubRole: true, // RoleLevel → SubRole
+                RoleLevel: {
+                  include: {
+                    Role: true,
+                    SubRole: true,
+                  },
+                },
               },
             },
           },
@@ -111,13 +114,20 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
       profile = await getSessionProfileFromCookie()
     }
 
+    type RoleLevelEmployeeItem = NonNullable<typeof profile>['RoleLevelEmployee'][0]
+
+    const highestRoleLevel = profile?.RoleLevelEmployee.reduce<RoleLevelEmployeeItem | null>((highest, current) => {
+      if (!highest) return current
+      return current.RoleLevel.SubRole.level > highest.RoleLevel.SubRole.level ? current : highest
+    }, null)?.RoleLevel
+
     if (
       (!profile && authenticated) ||
       (profile &&
         options.requiredRolesLevel &&
-        !options.requiredRolesLevel.includes(profile.RoleLevel_Employee_roleLevelIdToRoleLevel!))
+        !options.requiredRolesLevel.some(required => required.id === highestRoleLevel?.id))
     ) {
-      logger.warn(`Unauthorized user ${profile!.id} tried executing API Route.`)
+      logger.warn(`Unauthorized user ${profile?.id} tried executing API Route.`)
       return unauthorized()
     }
 
@@ -130,6 +140,7 @@ function apiRoute<Params = unknown, Schema extends ZodType = EmptySchema, Auth e
     } else {
       unvalidatedData = await getFormData(request)
     }
+
     const {data, errors} = validateSchema(schema, unvalidatedData)
 
     if (errors || !data) {

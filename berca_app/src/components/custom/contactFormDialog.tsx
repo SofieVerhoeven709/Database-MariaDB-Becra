@@ -14,9 +14,14 @@ import type {RoleLevelOption} from '@/types/roleLevel'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {CompanyFormDialog} from '@/components/custom/companyFormDialog'
-import {createCompanyAndReturnIdAction} from '@/serverFunctions/companies'
+import {
+  CompanyAddressOption,
+  createCompanyAndReturnIdAction,
+  getCompanyAddressesAction,
+} from '@/serverFunctions/companies'
 import {addCompanyContactAction} from '@/serverFunctions/companyContact'
 import type {MappedCompany} from '@/types/company'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
 interface SelectOption {
   id: string
@@ -32,6 +37,7 @@ interface ContactFormDialogProps {
     visibilityRows: VisibilityRow[],
     initialCompanyId?: string,
     initialRoleWithCompany?: string,
+    initialCompanyAddressId?: string,
   ) => Promise<void>
   isAdmin: boolean
   roleLevelOptions: RoleLevelOption[]
@@ -40,6 +46,8 @@ interface ContactFormDialogProps {
   departmentExternOptions: SelectOption[]
   titleOptions: SelectOption[]
   companyOptions: SelectOption[]
+  countryOptions: CountryOption[]
+  canManageVisibility: boolean
 }
 
 const emptyContact = (): MappedContact => ({
@@ -54,7 +62,7 @@ const emptyContact = (): MappedContact => ({
   mobilePhone: null,
   info: null,
   birthDate: null,
-  trough: null,
+  through: null,
   description: null,
   infoCorrect: false,
   checkInfo: false,
@@ -101,6 +109,8 @@ export function ContactFormDialog({
   departmentExternOptions,
   titleOptions,
   companyOptions,
+  countryOptions,
+  canManageVisibility,
 }: ContactFormDialogProps) {
   const [form, setForm] = useState<MappedContact>(emptyContact())
   const [saving, setSaving] = useState(false)
@@ -111,13 +121,17 @@ export function ContactFormDialog({
     buildInitialVisibilityRows(contact?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
 
-  // Create flow
+  // New contact: initial company assignment
   const [initialCompanyId, setInitialCompanyId] = useState<string>('none')
   const [initialRoleWithCompany, setInitialRoleWithCompany] = useState<string>('')
+  const [initialAddresses, setInitialAddresses] = useState<CompanyAddressOption[]>([])
+  const [initialCompanyAddressId, setInitialCompanyAddressId] = useState<string>('none')
 
-  // Edit flow — company change
+  // Edit contact: change company
   const [newCompanyId, setNewCompanyId] = useState<string>('none')
   const [newRoleWithCompany, setNewRoleWithCompany] = useState<string>('')
+  const [newAddresses, setNewAddresses] = useState<CompanyAddressOption[]>([])
+  const [newCompanyAddressId, setNewCompanyAddressId] = useState<string>('none')
   const [endPreviousActive, setEndPreviousActive] = useState<boolean>(true)
 
   useEffect(() => {
@@ -126,36 +140,78 @@ export function ContactFormDialog({
     setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
     setInitialCompanyId('none')
     setInitialRoleWithCompany('')
+    setInitialAddresses([])
+    setInitialCompanyAddressId('none')
     setNewCompanyId('none')
     setNewRoleWithCompany('')
+    setNewAddresses([])
+    setNewCompanyAddressId('none')
     setEndPreviousActive(true)
   }, [contact?.id, open])
+
+  // Fetch addresses when initial company changes (new contact flow)
+  useEffect(() => {
+    if (initialCompanyId === 'none') {
+      setInitialAddresses([])
+      setInitialCompanyAddressId('none')
+      return
+    }
+    getCompanyAddressesAction(initialCompanyId).then(addrs => {
+      setInitialAddresses(addrs)
+      // Auto-select if exactly one address
+      setInitialCompanyAddressId(addrs.length === 1 ? addrs[0].id : 'none')
+    })
+  }, [initialCompanyId])
+
+  // Fetch addresses when new company changes (edit contact flow)
+  useEffect(() => {
+    if (newCompanyId === 'none') {
+      setNewAddresses([])
+      setNewCompanyAddressId('none')
+      return
+    }
+    getCompanyAddressesAction(newCompanyId).then(addrs => {
+      setNewAddresses(addrs)
+      setNewCompanyAddressId(addrs.length === 1 ? addrs[0].id : 'none')
+    })
+  }, [newCompanyId])
 
   function set<K extends keyof MappedContact>(key: K, value: MappedContact[K]) {
     setForm(prev => ({...prev, [key]: value}))
   }
 
-  function str(v: string): string | null {
-    return v.trim() || null
-  }
+  const isEdit = !!contact
 
   async function handleSubmit() {
     setSaving(true)
     try {
-      // Save the contact itself (active is preserved on edit since it's part of form state)
+      const trimmedForm: MappedContact = {
+        ...form,
+        firstName: form.firstName.trim(),
+        lastName: form.lastName.trim(),
+        through: form.through?.trim() || null,
+        description: form.description?.trim() || null,
+        info: form.info?.trim() || null,
+        mail1: form.mail1?.trim() || null,
+        mail2: form.mail2?.trim() || null,
+        mail3: form.mail3?.trim() || null,
+        generalPhone: form.generalPhone?.trim() || null,
+        mobilePhone: form.mobilePhone?.trim() || null,
+        homePhone: form.homePhone?.trim() || null,
+      }
       await onSave(
-        form,
+        trimmedForm,
         visibilityRows,
         initialCompanyId !== 'none' ? initialCompanyId : undefined,
-        initialRoleWithCompany || undefined,
+        initialRoleWithCompany?.trim() || undefined,
+        initialCompanyAddressId !== 'none' ? initialCompanyAddressId : undefined,
       )
-
-      // On edit: if a new company was chosen, link it (ends the previous active link automatically)
       if (isEdit && newCompanyId !== 'none') {
         await addCompanyContactAction({
           contactId: form.id,
           companyId: newCompanyId,
           roleWithCompany: newRoleWithCompany || null,
+          companyAddressId: newCompanyAddressId !== 'none' ? newCompanyAddressId : null,
           startedDate: new Date(),
           endPreviousActive,
         })
@@ -164,8 +220,6 @@ export function ContactFormDialog({
       setSaving(false)
     }
   }
-
-  const isEdit = !!contact
 
   const textField = (
     key: keyof MappedContact,
@@ -180,7 +234,7 @@ export function ContactFormDialog({
       <Input
         type={opts?.type ?? 'text'}
         value={(form[key] as string | null) ?? ''}
-        onChange={e => set(key, str(e.target.value) as MappedContact[typeof key])}
+        onChange={e => set(key, (e.target.value || null) as MappedContact[typeof key])}
         placeholder={opts?.placeholder}
         className="bg-secondary border-border"
       />
@@ -215,10 +269,34 @@ export function ContactFormDialog({
     </div>
   )
 
+  const addressSelect = (addresses: CompanyAddressOption[], value: string, onChange: (v: string) => void) => {
+    if (addresses.length === 0) return null
+    return (
+      <div className="flex flex-col gap-1.5">
+        <Label className="text-xs text-muted-foreground">Location</Label>
+        <Select value={value} onValueChange={onChange}>
+          <SelectTrigger className="bg-secondary border-border">
+            <SelectValue placeholder="Select location…" />
+          </SelectTrigger>
+          <SelectContent className="bg-card border-border">
+            <SelectItem value="none">No specific location</SelectItem>
+            {addresses.map(a => (
+              <SelectItem key={a.id} value={a.id}>
+                {a.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    )
+  }
+
   async function handleSaveCompany(c: MappedCompany, visRows: VisibilityRow[]) {
     const created = await createCompanyAndReturnIdAction({
       name: c.name,
+      officialName: c.officialName,
       number: c.number,
+      idOld: c.idOld,
       mail: c.mail,
       businessPhone: c.businessPhone,
       website: c.website,
@@ -229,7 +307,7 @@ export function ContactFormDialog({
       becraCustomerNumber: c.becraCustomerNumber,
       becraWebsiteLogin: c.becraWebsiteLogin,
       supplier: c.supplier,
-      prefferedSupplier: c.prefferedSupplier,
+      preferredSupplier: c.preferredSupplier,
       companyActive: c.companyActive,
       newsLetter: c.newsLetter,
       customer: c.customer,
@@ -245,20 +323,17 @@ export function ContactFormDialog({
         busNumber: a.busNumber,
         zipCode: a.zipCode,
         place: a.place,
-        typeAdress: a.typeAdress,
+        typeAddress: a.typeAddress,
+        countryId: a.countryId,
       })),
       visibilityForRoles: visRows,
     })
-
     setCompanies(prev => [...prev, {id: created.id, name: created.name}])
-
-    // Auto-select in whichever flow is active
     if (isEdit) {
       setNewCompanyId(created.id)
     } else {
       setInitialCompanyId(created.id)
     }
-
     setCompanyDialogOpen(false)
   }
 
@@ -275,14 +350,13 @@ export function ContactFormDialog({
               <TabsTrigger value="identity">Identity</TabsTrigger>
               <TabsTrigger value="contact">Contact Info</TabsTrigger>
               <TabsTrigger value="flags">Flags</TabsTrigger>
-              {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+              {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
             </TabsList>
 
             <TabsContent value="identity">
               <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
                 {textField('firstName', 'First Name', {required: true})}
                 {textField('lastName', 'Last Name', {required: true})}
-
                 <div className="flex flex-col gap-1.5">
                   <Label className="text-xs text-muted-foreground">Birth Date</Label>
                   <Input
@@ -292,14 +366,11 @@ export function ContactFormDialog({
                     className="bg-secondary border-border"
                   />
                 </div>
-
-                {textField('trough', 'Trough / Source')}
-
+                {textField('through', 'Through / Source')}
                 {selectField('titleId', 'Title', titleOptions)}
                 {selectField('functionId', 'Function', functionOptions)}
                 {selectField('departmentExternId', 'External Department', departmentExternOptions)}
 
-                {/* ── Create flow: assign company ── */}
                 {!isEdit && (
                   <>
                     <div className="flex flex-col gap-1.5">
@@ -336,22 +407,23 @@ export function ContactFormDialog({
                         </Button>
                       </div>
                     </div>
-
                     {initialCompanyId !== 'none' && (
-                      <div className="flex flex-col gap-1.5">
-                        <Label className="text-xs text-muted-foreground">Role at Company</Label>
-                        <Input
-                          value={initialRoleWithCompany}
-                          onChange={e => setInitialRoleWithCompany(e.target.value)}
-                          placeholder="e.g. CEO, Purchasing Manager…"
-                          className="bg-secondary border-border"
-                        />
-                      </div>
+                      <>
+                        <div className="flex flex-col gap-1.5">
+                          <Label className="text-xs text-muted-foreground">Role at Company</Label>
+                          <Input
+                            value={initialRoleWithCompany}
+                            onChange={e => setInitialRoleWithCompany(e.target.value)}
+                            placeholder="e.g. CEO, Purchasing Manager…"
+                            className="bg-secondary border-border"
+                          />
+                        </div>
+                        {addressSelect(initialAddresses, initialCompanyAddressId, setInitialCompanyAddressId)}
+                      </>
                     )}
                   </>
                 )}
 
-                {/* ── Edit flow: change company ── */}
                 {isEdit && (
                   <>
                     <div className="flex flex-col gap-1.5 sm:col-span-2">
@@ -363,7 +435,6 @@ export function ContactFormDialog({
                         )}
                       </div>
                     </div>
-
                     <div className="flex flex-col gap-1.5">
                       <Label className="text-xs text-muted-foreground">Change Company</Label>
                       <div className="flex gap-2">
@@ -404,17 +475,19 @@ export function ContactFormDialog({
                         </div>
                       )}
                     </div>
-
                     {newCompanyId !== 'none' && (
-                      <div className="flex flex-col gap-1.5">
-                        <Label className="text-xs text-muted-foreground">Role at New Company</Label>
-                        <Input
-                          value={newRoleWithCompany}
-                          onChange={e => setNewRoleWithCompany(e.target.value)}
-                          placeholder="e.g. CEO, Purchasing Manager…"
-                          className="bg-secondary border-border"
-                        />
-                      </div>
+                      <>
+                        <div className="flex flex-col gap-1.5">
+                          <Label className="text-xs text-muted-foreground">Role at New Company</Label>
+                          <Input
+                            value={newRoleWithCompany}
+                            onChange={e => setNewRoleWithCompany(e.target.value)}
+                            placeholder="e.g. CEO, Purchasing Manager…"
+                            className="bg-secondary border-border"
+                          />
+                        </div>
+                        {addressSelect(newAddresses, newCompanyAddressId, setNewCompanyAddressId)}
+                      </>
                     )}
                   </>
                 )}
@@ -423,17 +496,16 @@ export function ContactFormDialog({
                   <Label className="text-xs text-muted-foreground">Description</Label>
                   <Textarea
                     value={form.description ?? ''}
-                    onChange={e => set('description', str(e.target.value))}
+                    onChange={e => set('description', e.target.value || null)}
                     rows={2}
                     className="bg-secondary border-border resize-none"
                   />
                 </div>
-
                 <div className="flex flex-col gap-1.5 sm:col-span-2">
                   <Label className="text-xs text-muted-foreground">Info</Label>
                   <Textarea
                     value={form.info ?? ''}
-                    onChange={e => set('info', str(e.target.value))}
+                    onChange={e => set('info', e.target.value || null)}
                     rows={3}
                     className="bg-secondary border-border resize-none"
                   />
@@ -476,7 +548,7 @@ export function ContactFormDialog({
               </div>
             </TabsContent>
 
-            {isAdmin && (
+            {canManageVisibility && (
               <TabsContent value="visibility">
                 <div className="py-3">
                   <VisibilityForRoleTab
@@ -511,8 +583,11 @@ export function ContactFormDialog({
         onSave={handleSaveCompany}
         isAdmin={isAdmin}
         canDelete={false}
+        canEditNumber={false}
+        canManageVisibility={false}
         roleLevelOptions={roleLevelOptions}
         defaultVisibleRoleNames={defaultVisibleRoleNames}
+        countryOptions={countryOptions}
       />
     </>
   )

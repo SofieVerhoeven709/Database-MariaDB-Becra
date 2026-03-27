@@ -1,7 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="03db061c-7d4d-46fd-860f-2adf62d92749" name="Changes" comment="" />
+    <list default="true" id="03db061c-7d4d-46fd-860f-2adf62d92749" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/prisma/seedDev.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/prisma/seedDev.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/prisma/seedProd.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/prisma/seedProd.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/app/(app)/departments/[departmentId]/material/[materialId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/app/(app)/departments/[departmentId]/material/[materialId]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/app/(app)/departments/[departmentId]/material/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/app/(app)/departments/[departmentId]/material/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/app/(app)/departments/[departmentId]/orders/[orderId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/app/(app)/departments/[departmentId]/orders/[orderId]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/components/custom/dashboardNavbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/components/custom/dashboardNavbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/components/custom/materialDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/components/custom/materialDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/components/custom/materialFormDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/components/custom/materialFormDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/components/custom/materialTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/components/custom/materialTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/components/ui/table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/components/ui/table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/dal/companies.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/dal/companies.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/dal/materialSpecs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/dal/materialSpecs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/dal/materials.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/dal/materials.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/extra/materialPrices.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/extra/materialPrices.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/browser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/browser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/class.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/prismaNamespace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/prismaNamespace.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/prismaNamespaceBrowser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/internal/prismaNamespaceBrowser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Company.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Company.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Employee.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Employee.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Material.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Material.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/MaterialGroup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/MaterialGroup.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/MaterialSerialTrack.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/MaterialSerialTrack.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/MaterialSerialTrackedStructure.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/MaterialSerialTrackedStructure.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Purchase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/Purchase.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/TimeRegistry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/generated/prisma/models/TimeRegistry.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/schemas/materialSchemas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/schemas/materialSchemas.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/serverFunctions/materialSpecs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/serverFunctions/materialSpecs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/serverFunctions/materials.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/serverFunctions/materials.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/berca_app/src/types/material.ts" beforeDir="false" afterPath="$PROJECT_DIR$/berca_app/src/types/material.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/alter.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/alter.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/db-start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/db/db-start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/init.sql" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,8 +54,23 @@
       <entry key="_C:/Users/sofie/Database-MariaDB-Becra" value="3A6faEBE5rc6SHCuXx9TpJTRlQP" />
     </persistenceIdMap>
   </component>
+  <component name="CopilotUserSelectedChatMode">
+    <option name="chatModeId" value="Agent" />
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Dev" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -28,14 +85,33 @@
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;No-Hardcoding&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\sofie\\Database-MariaDB-Becra\\berca_app\\node_modules\\prettier&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.externalDependencies&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\sofie\\Database-MariaDB-Becra\\berca_app\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mariadb&quot;
+    ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sofie\Database-MariaDB-Becra\berca_app\src\generated\prisma" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -52,6 +128,10 @@
       <updated>1771918004689</updated>
       <workItem from="1771918007826" duration="108000" />
       <workItem from="1771918184833" duration="3000" />
+      <workItem from="1773643661078" duration="15443000" />
+      <workItem from="1773666898548" duration="7136000" />
+      <workItem from="1773729801415" duration="1120000" />
+      <workItem from="1773731100047" duration="49000" />
     </task>
     <servers />
   </component>

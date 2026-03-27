@@ -55,7 +55,7 @@ export const createContactAction = protectedServerFunction({
           projectId: initialProjectId,
           description: null,
           createdBy: profile.id,
-          moddifiedBy: profile.id,
+          modifiedBy: profile.id,
           createdAt: now,
         },
       })

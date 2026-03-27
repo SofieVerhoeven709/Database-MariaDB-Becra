@@ -11,7 +11,7 @@ import {protectedServerFunction} from '@/lib/serverFunctions'
 export const createProjectContactAction = protectedServerFunction({
   schema: createProjectContactSchema,
   functionName: 'Create project contact action',
-  serverFn: async ({data: {projectId, contactId, description, extraInfo, idValid}, profile, logger}) => {
+  serverFn: async ({data: {projectId, contactId, description, extraInfo, isValid}, profile, logger}) => {
     logger.info(`Linking contact ${contactId} to project ${projectId}`)
     const now = new Date()
     await prismaClient.projectContact.create({
@@ -21,9 +21,9 @@ export const createProjectContactAction = protectedServerFunction({
         contactId,
         description: description ?? null,
         extraInfo: extraInfo ?? null,
-        idValid: idValid ?? true,
+        isValid: isValid ?? true,
         createdBy: profile.id,
-        moddifiedBy: profile.id,
+        modifiedBy: profile.id,
         createdAt: now,
       },
     })
@@ -35,15 +35,15 @@ export const createProjectContactAction = protectedServerFunction({
 export const updateProjectContactAction = protectedServerFunction({
   schema: updateProjectContactSchema,
   functionName: 'Update project contact action',
-  serverFn: async ({data: {id, projectId, description, extraInfo, idValid}, profile, logger}) => {
+  serverFn: async ({data: {id, projectId, description, extraInfo, isValid}, profile, logger}) => {
     await prismaClient.projectContact.update({
       where: {id},
       data: {
         description: description ?? null,
         extraInfo: extraInfo ?? null,
-        idValid,
-        moddifiedBy: profile.id,
-        moddifiedAt: new Date(),
+        isValid,
+        modifiedBy: profile.id,
+        modifiedAt: new Date(),
       },
     })
     logger.info(`ProjectContact updated: ${id}`)

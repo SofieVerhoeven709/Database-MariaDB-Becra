@@ -48,7 +48,7 @@ export function mapContact(c: ContactWithRelations): MappedContact {
     mobilePhone: c.mobilePhone,
     info: c.info,
     birthDate: c.birthDate?.toISOString() ?? null,
-    trough: c.trough,
+    through: c.through,
     description: c.description,
     infoCorrect: c.infoCorrect,
     checkInfo: c.checkInfo,
@@ -94,8 +94,14 @@ type ContactDetailPayload = Prisma.ContactGetPayload<{
     Title: {select: {id: true; name: true}}
     CompanyContact: {
       include: {
-        Company: {select: {id: true; name: true; number: true; companyActive: true}}
+        Company: true
         Employee: {select: {firstName: true; lastName: true}}
+        CompanyAddress: {
+          // add this
+          include: {
+            Country: {select: {name: true}}
+          }
+        }
       }
     }
     ProjectContact: {
@@ -153,6 +159,19 @@ function mapCompanyContact(cc: ContactDetailPayload['CompanyContact'][number]): 
     startedDate: cc.startedDate.toISOString(),
     endDate: cc.endDate?.toISOString() ?? null,
     roleWithCompany: cc.roleWithCompany,
+    companyAddressId: cc.companyAddressId,
+    companyAddress: cc.CompanyAddress
+      ? {
+          id: cc.CompanyAddress.id,
+          typeAddress: cc.CompanyAddress.typeAddress,
+          street: cc.CompanyAddress.street,
+          houseNumber: cc.CompanyAddress.houseNumber,
+          busNumber: cc.CompanyAddress.busNumber,
+          zipCode: cc.CompanyAddress.zipCode,
+          place: cc.CompanyAddress.place,
+          countryName: cc.CompanyAddress.Country?.name ?? null,
+        }
+      : null,
     createdAt: cc.createdAt.toISOString(),
     createdByName: `${cc.Employee.firstName} ${cc.Employee.lastName}`,
     deleted: cc.deleted,
@@ -231,7 +250,7 @@ export function mapContactDetail(c: ContactDetailPayload): ContactDetailData {
     mobilePhone: c.mobilePhone,
     info: c.info,
     birthDate: c.birthDate?.toISOString() ?? null,
-    trough: c.trough,
+    through: c.through,
     description: c.description,
     infoCorrect: c.infoCorrect,
     checkInfo: c.checkInfo,

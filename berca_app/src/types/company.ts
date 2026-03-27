@@ -7,7 +7,9 @@ export interface MappedCompanyAddress {
   busNumber: string | null
   zipCode: string | null
   place: string | null
-  typeAdress: string | null
+  typeAddress: string | null
+  countryId: string | null
+  countryName: string | null
   createdAt: string
   createdBy: string
   companyId: string
@@ -19,7 +21,9 @@ export interface MappedCompanyAddress {
 export interface MappedCompany {
   id: string
   name: string
+  officialName: string
   number: string
+  idOld: string | null
   mail: string | null
   businessPhone: string | null
   website: string | null
@@ -30,7 +34,7 @@ export interface MappedCompany {
   becraCustomerNumber: string | null
   becraWebsiteLogin: string | null
   supplier: boolean
-  prefferedSupplier: boolean
+  preferredSupplier: boolean
   companyActive: boolean
   newsLetter: boolean
   customer: boolean
@@ -73,6 +77,17 @@ export interface MappedCompanyContact {
     homePhone: string | null
     active: boolean
   }
+  companyAddressId: string | null
+  companyAddress: {
+    id: string
+    typeAddress: string | null
+    street: string | null
+    houseNumber: string | null
+    busNumber: string | null
+    zipCode: string | null
+    place: string | null
+    countryName: string | null
+  } | null
 }
 
 export interface MappedCompanyProject {
@@ -93,7 +108,9 @@ export interface MappedCompanyProject {
 export interface CompanyDetailData {
   id: string
   name: string
+  officialName: string
   number: string
+  idOld: string | null
   mail: string | null
   businessPhone: string | null
   website: string | null
@@ -105,7 +122,7 @@ export interface CompanyDetailData {
   becraWebsiteLogin: string | null
   notes: string | null
   supplier: boolean
-  prefferedSupplier: boolean
+  preferredSupplier: boolean
   companyActive: boolean
   newsLetter: boolean
   customer: boolean

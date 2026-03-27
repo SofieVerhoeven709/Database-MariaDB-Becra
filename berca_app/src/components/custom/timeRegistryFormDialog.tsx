@@ -26,6 +26,7 @@ export interface HourTypeOption {
 export interface WorkOrderOption {
   id: string
   workOrderNumber: string | null
+  description: string | null
 }
 
 export type TimeRegistryFormData = {
@@ -42,6 +43,7 @@ export type TimeRegistryFormData = {
   hourTypeId: string
   workOrderId: string
   employeeIds: string[]
+  stayOver: boolean
 }
 
 const emptyForm = (defaultWorkOrderId = '', currentUserId = ''): TimeRegistryFormData => ({
@@ -58,6 +60,7 @@ const emptyForm = (defaultWorkOrderId = '', currentUserId = ''): TimeRegistryFor
   hourTypeId: '',
   workOrderId: defaultWorkOrderId,
   employeeIds: currentUserId ? [currentUserId] : [],
+  stayOver: false,
 })
 
 function toInputDate(iso: string | null | undefined) {
@@ -176,6 +179,7 @@ export function TimeRegistryFormDialog({
         hourTypeId: timeRegistry.hourTypeId,
         workOrderId: timeRegistry.workOrderId,
         employeeIds,
+        stayOver: timeRegistry.stayOver ?? false,
       })
     } else {
       setForm(emptyForm(fixedWorkOrderId, currentUserId))
@@ -223,7 +227,12 @@ export function TimeRegistryFormDialog({
                 <SelectContent className="bg-card border-border">
                   {workOrders.map(wo => (
                     <SelectItem key={wo.id} value={wo.id}>
-                      {wo.workOrderNumber ?? wo.id}
+                      <div className="flex flex-col">
+                        <span className="font-medium">{wo.workOrderNumber ?? wo.id}</span>
+                        {wo.description && (
+                          <span className="text-xs text-muted-foreground truncate max-w-[300px]">{wo.description}</span>
+                        )}
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -321,7 +330,7 @@ export function TimeRegistryFormDialog({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
               <Label className="text-xs text-muted-foreground">On Site</Label>
               <Switch checked={form.onSite} onCheckedChange={v => patch('onSite', v)} />
@@ -329,6 +338,10 @@ export function TimeRegistryFormDialog({
             <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
               <Label className="text-xs text-muted-foreground">Invoice Time</Label>
               <Switch checked={form.invoiceTime} onCheckedChange={v => patch('invoiceTime', v)} />
+            </div>
+            <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2 ">
+              <Label className="text-xs text-muted-foreground">Stay Over</Label>
+              <Switch checked={form.stayOver} onCheckedChange={v => patch('stayOver', v)} />
             </div>
           </div>
 

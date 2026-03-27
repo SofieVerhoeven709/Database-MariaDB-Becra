@@ -60,11 +60,6 @@ export type CertificateType = Prisma.CertificateTypeModel
  */
 export type Company = Prisma.CompanyModel
 /**
- * Model CompanyAdress
- * 
- */
-export type CompanyAdress = Prisma.CompanyAdressModel
-/**
  * Model CompanyContact
  * 
  */
@@ -185,6 +180,11 @@ export type InvoiceType = Prisma.InvoiceTypeModel
  */
 export type Material = Prisma.MaterialModel
 /**
+ * Model MaterialSupplier
+ * 
+ */
+export type MaterialSupplier = Prisma.MaterialSupplierModel
+/**
  * Model MaterialAssembly
  * 
  */
@@ -294,11 +294,6 @@ export type PurchaseDetail = Prisma.PurchaseDetailModel
  * 
  */
 export type PurchaseOrderBecra = Prisma.PurchaseOrderBecraModel
-/**
- * Model QouteBecra
- * 
- */
-export type QouteBecra = Prisma.QouteBecraModel
 /**
  * Model QuoteSupplier
  * 
@@ -424,3 +419,63 @@ export type SubRole = Prisma.SubRoleModel
  * 
  */
 export type DepartmentExtern = Prisma.DepartmentExternModel
+/**
+ * Model QuoteBecra
+ * 
+ */
+export type QuoteBecra = Prisma.QuoteBecraModel
+/**
+ * Model RoleLevelEmployee
+ * 
+ */
+export type RoleLevelEmployee = Prisma.RoleLevelEmployeeModel
+/**
+ * Model Country
+ * 
+ */
+export type Country = Prisma.CountryModel
+/**
+ * Model InvoiceOutContact
+ * 
+ */
+export type InvoiceOutContact = Prisma.InvoiceOutContactModel
+/**
+ * Model InvoiceSentType
+ * 
+ */
+export type InvoiceSentType = Prisma.InvoiceSentTypeModel
+/**
+ * Model InvoiceStatus
+ * 
+ */
+export type InvoiceStatus = Prisma.InvoiceStatusModel
+/**
+ * Model PaymentMethod
+ * 
+ */
+export type PaymentMethod = Prisma.PaymentMethodModel
+/**
+ * Model VatMargin
+ * 
+ */
+export type VatMargin = Prisma.VatMarginModel
+/**
+ * Model PriceList
+ * 
+ */
+export type PriceList = Prisma.PriceListModel
+/**
+ * Model PriceListItem
+ * 
+ */
+export type PriceListItem = Prisma.PriceListItemModel
+/**
+ * Model CompanyAddress
+ * 
+ */
+export type CompanyAddress = Prisma.CompanyAddressModel
+/**
+ * Model PriceListItemTarget
+ * 
+ */
+export type PriceListItemTarget = Prisma.PriceListItemTargetModel

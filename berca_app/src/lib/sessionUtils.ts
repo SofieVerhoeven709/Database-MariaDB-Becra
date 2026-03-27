@@ -27,11 +27,15 @@ export async function getSessionFromCookie(stateful = true): Promise<SessionWith
   const employee = await prismaClient.employee.findUnique({
     where: {id: tokenBody.sub},
     include: {
-      RoleLevel_Employee_roleLevelIdToRoleLevel: {
+      RoleLevelEmployee: {
         // This is the Employee → RoleLevel relation
         include: {
-          Role: true, // RoleLevel → Role
-          SubRole: true, // RoleLevel → SubRole
+          RoleLevel: {
+            include: {
+              Role: true, // RoleLevel → Role
+              SubRole: true, // RoleLevel → SubRole
+            },
+          },
         },
       },
     },
@@ -56,11 +60,11 @@ export async function getSessionProfileFromCookie(stateful = true): Promise<Prof
 export async function getSessionProfileFromCookieOrThrow(stateful = true): Promise<Profile> {
   const session = await getSessionFromCookie(stateful)
 
-  if (!session) {
+  if (!session?.Employee) {
     throw new Error("Couldn't retrieve the user's profile in getSessionProfileFromCookieOrThrow.")
   }
 
-  return session?.Employee ?? null
+  return session?.Employee
 }
 
 export async function extendSessionAndSetCookie(id: string, subRole: SubRole): Promise<void> {

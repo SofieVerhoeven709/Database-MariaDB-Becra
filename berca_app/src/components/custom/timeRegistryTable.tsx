@@ -162,6 +162,7 @@ export function TimeRegistryTable({
       endBreak: combineDateAndTime(f.workDate, f.endBreak),
       invoiceTime: f.invoiceTime,
       onSite: f.onSite,
+      stayOver: f.stayOver,
       hourTypeId: f.hourTypeId,
       workOrderId: f.workOrderId,
       employeeIds: f.employeeIds,
@@ -220,7 +221,12 @@ export function TimeRegistryTable({
               <SelectItem value="all">All Work Orders</SelectItem>
               {workOrders.map(wo => (
                 <SelectItem key={wo.id} value={wo.id}>
-                  {wo.workOrderNumber ?? wo.id}
+                  <div className="flex flex-col">
+                    <span className="font-medium">{wo.workOrderNumber ?? wo.id}</span>
+                    {wo.description && (
+                      <span className="text-xs text-muted-foreground truncate max-w-[220px]">{wo.description}</span>
+                    )}
+                  </div>
                 </SelectItem>
               ))}
             </SelectContent>

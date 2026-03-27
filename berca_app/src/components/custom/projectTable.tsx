@@ -72,6 +72,7 @@ interface ProjectTableProps {
   employees: Option[]
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
+  departmentId: string
 }
 
 export function ProjectTable({
@@ -83,8 +84,18 @@ export function ProjectTable({
   employees,
   roleLevelOptions,
   defaultVisibleRoleNames,
+  departmentId,
 }: ProjectTableProps) {
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  // Level thresholds:
+  //   >= 40  can edit project fields
+  //   >= 60  can create new projects
+  //   >= 80  can delete + manage visibility
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
+
   const projects = initialProjects
 
   const [search, setSearch] = useState('')
@@ -176,11 +187,6 @@ export function ProjectTable({
     }
   }
 
-  function handleCreate() {
-    setEditingProject(null)
-    setDialogOpen(true)
-  }
-
   function handleEdit(p: MappedProject) {
     setEditingProject(p)
     setDialogOpen(true)
@@ -219,6 +225,7 @@ export function ProjectTable({
     await hardDeleteProjectAction({id: p.id})
     router.refresh()
   }
+
   async function handleRestore(p: MappedProject) {
     await undeleteProjectAction({id: p.id})
     router.refresh()
@@ -263,10 +270,17 @@ export function ProjectTable({
             </SelectContent>
           </Select>
         </div>
-        <Button onClick={handleCreate} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-          <Plus className="h-4 w-4" />
-          New Project
-        </Button>
+        {canCreate && (
+          <Button
+            onClick={() => {
+              setEditingProject(null)
+              setDialogOpen(true)
+            }}
+            className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+            <Plus className="h-4 w-4" />
+            New Project
+          </Button>
+        )}
       </div>
 
       {/* Table */}
@@ -348,7 +362,7 @@ export function ProjectTable({
                   className={`border-border/40 hover:bg-secondary/50 ${p.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/project/project/${p.id}` as Route}
+                      href={`/departments/${departmentId}/project/${p.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {p.projectNumber}
                     </Link>
@@ -427,7 +441,7 @@ export function ProjectTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/project/project/${p.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/project/${p.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"
@@ -436,37 +450,37 @@ export function ProjectTable({
                           <span className="sr-only">View {p.projectNumber}</span>
                         </Button>
                       </Link>
-
-                      {!p.deleted && (
-                        <>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                            onClick={() => handleEdit(p)}>
-                            <Pencil className="h-3.5 w-3.5" />
-                            <span className="sr-only">Edit {p.projectNumber}</span>
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                            onClick={() => handleSoftDelete(p)}>
-                            <Trash2 className="h-3.5 w-3.5" />
-                            <span className="sr-only">Delete {p.projectNumber}</span>
-                          </Button>
-                        </>
+                      {!p.deleted && canEdit && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          onClick={() => handleEdit(p)}>
+                          <Pencil className="h-3.5 w-3.5" />
+                          <span className="sr-only">Edit {p.projectNumber}</span>
+                        </Button>
                       )}
-
+                      {!p.deleted && canDelete && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                          onClick={() => handleSoftDelete(p)}>
+                          <Trash2 className="h-3.5 w-3.5" />
+                          <span className="sr-only">Delete {p.projectNumber}</span>
+                        </Button>
+                      )}
                       {p.deleted && (
                         <>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-7 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary px-2"
-                            onClick={() => handleRestore(p)}>
-                            Restore
-                          </Button>
+                          {canDelete && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary px-2"
+                              onClick={() => handleRestore(p)}>
+                              Restore
+                            </Button>
+                          )}
                           {isAdmin && (
                             <Button
                               variant="ghost"
@@ -502,6 +516,7 @@ export function ProjectTable({
         onSave={handleSave}
         roleLevelOptions={roleLevelOptions}
         defaultVisibleRoleNames={defaultVisibleRoleNames}
+        canManageVisibility={canManageVisibility}
       />
     </div>
   )

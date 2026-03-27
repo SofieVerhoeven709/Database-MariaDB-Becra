@@ -336,8 +336,11 @@ export function EmployeeDetail({
   titleOptions,
 }: EmployeeDetailProps) {
   const router = useRouter()
-  const isAdmin = currentUserLevel >= 80
-  const canEdit = currentUserLevel >= 20
+  const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -361,7 +364,7 @@ export function EmployeeDetail({
     checkInfo: employee.checkInfo,
     newYearCard: employee.newYearCard,
     active: employee.active,
-    roleLevelId: employee.roleLevelId ?? 'none',
+    roleLevelIds: employee.roleLevelIds ?? [],
     titleId: employee.titleId ?? 'none',
   })
 
@@ -397,7 +400,7 @@ export function EmployeeDetail({
         checkInfo: form.checkInfo,
         newYearCard: form.newYearCard,
         active: form.active,
-        roleLevelId: form.roleLevelId === 'none' ? null : form.roleLevelId,
+        roleLevelIds: form.roleLevelIds,
         titleId: form.titleId === 'none' ? null : form.titleId,
         // required by upsertEmployeeSchema but not editable here
         createdAt: new Date(employee.createdAt),
@@ -567,7 +570,10 @@ export function EmployeeDetail({
                 <p className="text-sm text-muted-foreground">{formatDate(employee.endDate)}</p>
               )}
             </div>
-            {selectRow('Role', employee.roleName, 'roleLevelId', roleOptions)}
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Roles</Label>
+              <p className="text-sm text-muted-foreground">{employee.roleName || '-'}</p>
+            </div>
             {selectRow('Title', employee.titleName, 'titleId', titleOptions)}
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Created By</Label>
@@ -648,6 +654,12 @@ export function EmployeeDetail({
       {/* ── Tabs ───────────────────────────────────────────────────────────── */}
       <Tabs defaultValue="assigned">
         <TabsList className="bg-secondary border border-border/60 flex-wrap h-auto gap-1">
+          <TabsTrigger value="roles">
+            Roles
+            <Badge variant="secondary" className="ml-2 text-xs">
+              {form.roleLevelIds.length}
+            </Badge>
+          </TabsTrigger>
           <TabsTrigger value="assigned">
             Assigned
             <Badge variant="secondary" className="ml-2 text-xs">
@@ -660,7 +672,7 @@ export function EmployeeDetail({
               {employee.createdMainRecords.length + employee.createdOtherRecords.length}
             </Badge>
           </TabsTrigger>
-          {isAdmin && (
+          {canDelete && (
             <TabsTrigger value="deleted">
               Deleted
               <Badge variant="secondary" className="ml-2 text-xs">
@@ -669,6 +681,34 @@ export function EmployeeDetail({
             </TabsTrigger>
           )}
         </TabsList>
+
+        <TabsContent value="roles" className="mt-3">
+          <div className="rounded-xl border border-border/60 bg-card p-4">
+            <div className="flex flex-col gap-1 max-h-96 overflow-y-auto">
+              {roleOptions.map(r => (
+                <label
+                  key={r.id}
+                  className={`flex items-center gap-2 px-2 py-1.5 rounded hover:bg-muted ${editing ? 'cursor-pointer' : 'cursor-default'}`}>
+                  <input
+                    type="checkbox"
+                    checked={form.roleLevelIds.includes(r.id)}
+                    onChange={e => {
+                      if (!editing) return
+                      const next = e.target.checked
+                        ? [...form.roleLevelIds, r.id]
+                        : form.roleLevelIds.filter(id => id !== r.id)
+                      s('roleLevelIds', next)
+                    }}
+                    disabled={!editing}
+                    className="accent-accent"
+                  />
+                  <span className="text-sm">{r.name}</span>
+                </label>
+              ))}
+            </div>
+            {!editing && <p className="text-xs text-muted-foreground mt-3">Click Edit to change role assignments.</p>}
+          </div>
+        </TabsContent>
 
         {/* ══ SECTION 1 — ASSIGNED ════════════════════════════════════════════ */}
         <TabsContent value="assigned" className="mt-3">
@@ -861,8 +901,8 @@ export function EmployeeDetail({
           </Tabs>
         </TabsContent>
 
-        {/* ══ SECTION 3 — DELETED (admin only) ═══════════════════════════════ */}
-        {isAdmin && (
+        {/* ══ SECTION 3 — DELETED (Manager and up) ═══════════════════════════════ */}
+        {canDelete && (
           <TabsContent value="deleted" className="mt-3">
             <Tabs defaultValue="deleted-main">
               <TabsList className="bg-secondary border border-border/60 mb-3">

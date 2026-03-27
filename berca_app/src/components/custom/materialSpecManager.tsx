@@ -11,6 +11,7 @@ import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Dia
 import {Label} from '@/components/ui/label'
 import {Switch} from '@/components/ui/switch'
 import {Textarea} from '@/components/ui/textarea'
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {
   createMaterialGroupAction,
   updateMaterialGroupAction,
@@ -27,7 +28,13 @@ import {
 
 export interface MappedMaterialGroup {
   id: string
-  name: string
+  groupA: string
+  groupB: string | null
+  groupC: string | null
+  groupD: string | null
+  createdAt: string | null
+  createdByName: string | null
+  deleted: boolean
 }
 
 export interface MappedUnit {
@@ -37,7 +44,10 @@ export interface MappedUnit {
   abbreviation: string
   shortDescription: string | null
   longDescription: string | null
+  createdAt: string | null
+  createdByName: string | null
   valid: boolean
+  deleted: boolean
 }
 
 export interface MappedPerformance {
@@ -47,6 +57,9 @@ export interface MappedPerformance {
   materialFamilyId: string | null
   shortDescription: string | null
   longDescription: string | null
+  createdAt: string | null
+  createdByName: string | null
+  deleted: boolean
 }
 
 export interface MappedSpec {
@@ -80,13 +93,36 @@ function SortIndicator({active, dir}: {active: boolean; dir: 'asc' | 'desc'}) {
   )
 }
 
+function formatDateTime(value: string | null) {
+  if (!value) return '-'
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return '-'
+  return date.toLocaleString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
 // ─── Material Group Tab ───────────────────────────────────────────────────────
 
-const EMPTY_GROUP: MappedMaterialGroup = {id: '', name: ''}
+const EMPTY_GROUP: MappedMaterialGroup = {
+  id: '',
+  groupA: '',
+  groupB: null,
+  groupC: null,
+  groupD: null,
+  createdAt: null,
+  createdByName: null,
+  deleted: false,
+}
 
 function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]}) {
   const [groups, setGroups] = useState(initialGroups)
   const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'deleted'>('all')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<MappedMaterialGroup | null>(null)
@@ -109,7 +145,10 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
     setSaving(true)
     const fd = new FormData()
     fd.append('id', form.id)
-    fd.append('groupA', form.name)
+    fd.append('groupA', form.groupA)
+    fd.append('groupB', form.groupB ?? '')
+    fd.append('groupC', form.groupC ?? '')
+    fd.append('groupD', form.groupD ?? '')
     if (editing) {
       await updateMaterialGroupAction({success: false}, fd)
       setGroups(prev => prev.map(g => (g.id === form.id ? {...form} : g)))
@@ -122,17 +161,42 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
   }
 
   async function handleDelete(id: string) {
-    if (!confirm('Delete this material group?')) return
+    const target = groups.find(g => g.id === id)
+    if (!target) return
+
+    const confirmText = target.deleted
+      ? 'This group is already soft deleted. Permanently delete it?'
+      : 'Delete this material group?'
+
+    if (!confirm(confirmText)) return
+
     const fd = new FormData()
     fd.append('id', id)
     await deleteMaterialGroupAction({success: false}, fd)
-    setGroups(prev => prev.filter(g => g.id !== id))
+    setGroups(prev =>
+      target.deleted
+        ? prev.filter(g => g.id !== id)
+        : prev.map(g => (g.id === id ? {...g, deleted: true} : g)),
+    )
   }
 
   const filtered = groups
-    .filter(g => !search || g.name.toLowerCase().includes(search.toLowerCase()))
+    .filter(g => {
+      if (statusFilter === 'active') return !g.deleted
+      if (statusFilter === 'deleted') return g.deleted
+      return true
+    })
+    .filter(g => {
+      if (!search) return true
+      const q = search.toLowerCase()
+      return [g.groupA, g.groupB, g.groupC, g.groupD].some(value => (value ?? '').toLowerCase().includes(q))
+    })
     .sort((a, b) => {
-      const cmp = a.name.localeCompare(b.name)
+      const cmp =
+        a.groupA.localeCompare(b.groupA) ||
+        (a.groupB ?? '').localeCompare(b.groupB ?? '') ||
+        (a.groupC ?? '').localeCompare(b.groupC ?? '') ||
+        (a.groupD ?? '').localeCompare(b.groupD ?? '')
       return sortDir === 'asc' ? cmp : -cmp
     })
 
@@ -143,11 +207,21 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             className="pl-9 bg-secondary border-border"
-            placeholder="Search groups..."
+            placeholder="Search groups (A-D)..."
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
         </div>
+        <Select value={statusFilter} onValueChange={value => setStatusFilter(value as 'all' | 'active' | 'deleted')}>
+          <SelectTrigger className="w-40 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All statuses</SelectItem>
+            <SelectItem value="active">Not deleted</SelectItem>
+            <SelectItem value="deleted">Deleted</SelectItem>
+          </SelectContent>
+        </Select>
         <Button onClick={openNew} className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
           New group
@@ -161,9 +235,14 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
               <TableHead
                 className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
                 onClick={() => setSortDir(d => (d === 'asc' ? 'desc' : 'asc'))}>
-                Name
+                Group A
                 <SortIndicator active={true} dir={sortDir} />
               </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group B</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group C</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Group D</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -172,14 +251,40 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={2} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={7} className="text-center text-muted-foreground py-10">
                   No material groups found
                 </TableCell>
               </TableRow>
             ) : (
               filtered.map(g => (
                 <TableRow key={g.id} className="hover:bg-secondary/50 transition-colors">
-                  <TableCell className="font-medium text-sm">{g.name}</TableCell>
+                  <TableCell className="font-medium text-sm">{g.groupA}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{g.groupB ?? '—'}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{g.groupC ?? '—'}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{g.groupD ?? '—'}</TableCell>
+                  <TableCell className="text-sm">
+                    <div className="flex flex-col leading-tight">
+                      <span>{g.createdByName ?? '-'}</span>
+                      <span className="text-xs text-muted-foreground">{formatDateTime(g.createdAt)}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    {g.deleted ? (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-red-500/15 text-red-700 dark:text-red-400 flex items-center gap-1 w-fit">
+                        <X className="h-3 w-3" />
+                        Deleted
+                      </Badge>
+                    ) : (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-green-500/15 text-green-700 dark:text-green-400 flex items-center gap-1 w-fit">
+                        <Check className="h-3 w-3" />
+                        Not deleted
+                      </Badge>
+                    )}
+                  </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
                       <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => openEdit(g)}>
@@ -206,23 +311,59 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
       </p>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="bg-card border-border max-w-sm">
+        <DialogContent className="bg-card border-border max-w-xl">
           <DialogHeader>
             <DialogTitle>{editing ? 'Edit Material Group' : 'New Material Group'}</DialogTitle>
-            <DialogDescription>Give the group a name, e.g. "Engineering" or "Warehouse".</DialogDescription>
+            <DialogDescription>Define the material group hierarchy from A through D.</DialogDescription>
           </DialogHeader>
-          <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="group-name" className="text-xs text-muted-foreground">
-                Name *
+              <Label htmlFor="group-a" className="text-xs text-muted-foreground">
+                Group A *
               </Label>
               <Input
-                id="group-name"
+                id="group-a"
                 className={inputStyles}
-                value={form.name}
-                onChange={e => setForm(prev => ({...prev, name: e.target.value}))}
+                value={form.groupA}
+                onChange={e => setForm(prev => ({...prev, groupA: e.target.value}))}
                 placeholder="e.g. Engineering"
                 required
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="group-b" className="text-xs text-muted-foreground">
+                Group B
+              </Label>
+              <Input
+                id="group-b"
+                className={inputStyles}
+                value={form.groupB ?? ''}
+                onChange={e => setForm(prev => ({...prev, groupB: e.target.value || null}))}
+                placeholder="Optional"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="group-c" className="text-xs text-muted-foreground">
+                Group C
+              </Label>
+              <Input
+                id="group-c"
+                className={inputStyles}
+                value={form.groupC ?? ''}
+                onChange={e => setForm(prev => ({...prev, groupC: e.target.value || null}))}
+                placeholder="Optional"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="group-d" className="text-xs text-muted-foreground">
+                Group D
+              </Label>
+              <Input
+                id="group-d"
+                className={inputStyles}
+                value={form.groupD ?? ''}
+                onChange={e => setForm(prev => ({...prev, groupD: e.target.value || null}))}
+                placeholder="Optional"
               />
             </div>
           </div>
@@ -230,7 +371,7 @@ function MaterialGroupTab({initialGroups}: {initialGroups: MappedMaterialGroup[]
             <Button variant="outline" onClick={() => setDialogOpen(false)} disabled={saving}>
               Cancel
             </Button>
-            <Button onClick={handleSave} disabled={!form.name || saving}>
+            <Button onClick={handleSave} disabled={!form.groupA || saving}>
               {saving ? 'Saving…' : editing ? 'Save changes' : 'Create group'}
             </Button>
           </DialogFooter>
@@ -251,12 +392,17 @@ const EMPTY_UNIT: MappedUnit = {
   abbreviation: '',
   shortDescription: null,
   longDescription: null,
+  createdAt: null,
+  createdByName: null,
   valid: true,
+  deleted: false,
 }
 
 function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
   const [units, setUnits] = useState(initialUnits)
   const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'deleted'>('all')
+  const [validFilter, setValidFilter] = useState<'all' | 'valid' | 'invalid'>('all')
   const [sortField, setSortField] = useState<UnitSortField>('unitName')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -311,10 +457,20 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
     const fd = new FormData()
     fd.append('id', id)
     await deleteUnitAction({success: false}, fd)
-    setUnits(prev => prev.filter(u => u.id !== id))
+    setUnits(prev => prev.map(u => (u.id === id ? {...u, deleted: true} : u)))
   }
 
   const filtered = units
+    .filter(u => {
+      if (statusFilter === 'active') return !u.deleted
+      if (statusFilter === 'deleted') return u.deleted
+      return true
+    })
+    .filter(u => {
+      if (validFilter === 'valid') return u.valid
+      if (validFilter === 'invalid') return !u.valid
+      return true
+    })
     .filter(u => {
       if (!search) return true
       const q = search.toLowerCase()
@@ -346,6 +502,26 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
             onChange={e => setSearch(e.target.value)}
           />
         </div>
+        <Select value={statusFilter} onValueChange={value => setStatusFilter(value as 'all' | 'active' | 'deleted')}>
+          <SelectTrigger className="w-40 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All statuses</SelectItem>
+            <SelectItem value="active">Not deleted</SelectItem>
+            <SelectItem value="deleted">Deleted</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select value={validFilter} onValueChange={value => setValidFilter(value as 'all' | 'valid' | 'invalid')}>
+          <SelectTrigger className="w-36 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All validities</SelectItem>
+            <SelectItem value="valid">Valid</SelectItem>
+            <SelectItem value="invalid">Invalid</SelectItem>
+          </SelectContent>
+        </Select>
         <Button onClick={openNew} className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
           New unit
@@ -368,6 +544,8 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Description
               </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -376,7 +554,7 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={8} className="text-center text-muted-foreground py-10">
                   No units found
                 </TableCell>
               </TableRow>
@@ -407,6 +585,29 @@ function UnitTab({initialUnits}: {initialUnits: MappedUnit[]}) {
                     className="text-sm text-muted-foreground max-w-[200px] truncate"
                     title={u.shortDescription ?? undefined}>
                     {u.shortDescription ?? '—'}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    <div className="flex flex-col leading-tight">
+                      <span>{u.createdByName ?? '-'}</span>
+                      <span className="text-xs text-muted-foreground">{formatDateTime(u.createdAt)}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    {u.deleted ? (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-red-500/15 text-red-700 dark:text-red-400 flex items-center gap-1 w-fit">
+                        <X className="h-3 w-3" />
+                        Deleted
+                      </Badge>
+                    ) : (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-green-500/15 text-green-700 dark:text-green-400 flex items-center gap-1 w-fit">
+                        <Check className="h-3 w-3" />
+                        Not deleted
+                      </Badge>
+                    )}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
@@ -544,6 +745,9 @@ const EMPTY_PERFORMANCE: MappedPerformance = {
   materialFamilyId: null,
   shortDescription: null,
   longDescription: null,
+  createdAt: null,
+  createdByName: null,
+  deleted: false,
 }
 
 function PerformanceTab({
@@ -557,6 +761,7 @@ function PerformanceTab({
 }) {
   const [performances, setPerformances] = useState(initialPerformances)
   const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'deleted'>('all')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<MappedPerformance | null>(null)
@@ -601,10 +806,15 @@ function PerformanceTab({
     const fd = new FormData()
     fd.append('id', id)
     await deletePerformanceAction({success: false}, fd)
-    setPerformances(prev => prev.filter(p => p.id !== id))
+    setPerformances(prev => prev.map(p => (p.id === id ? {...p, deleted: true} : p)))
   }
 
   const filtered = performances
+    .filter(p => {
+      if (statusFilter === 'active') return !p.deleted
+      if (statusFilter === 'deleted') return p.deleted
+      return true
+    })
     .filter(p => {
       if (!search) return true
       const q = search.toLowerCase()
@@ -637,6 +847,16 @@ function PerformanceTab({
             onChange={e => setSearch(e.target.value)}
           />
         </div>
+        <Select value={statusFilter} onValueChange={value => setStatusFilter(value as 'all' | 'active' | 'deleted')}>
+          <SelectTrigger className="w-40 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All statuses</SelectItem>
+            <SelectItem value="active">Not deleted</SelectItem>
+            <SelectItem value="deleted">Deleted</SelectItem>
+          </SelectContent>
+        </Select>
         <Button onClick={openNew} className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
           New spec
@@ -662,6 +882,8 @@ function PerformanceTab({
               <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Short Description
               </TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Created</TableHead>
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Deleted</TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -670,7 +892,7 @@ function PerformanceTab({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={7} className="text-center text-muted-foreground py-10">
                   No performance specs found
                 </TableCell>
               </TableRow>
@@ -684,6 +906,29 @@ function PerformanceTab({
                     className="text-sm text-muted-foreground max-w-[220px] truncate"
                     title={p.shortDescription ?? undefined}>
                     {p.shortDescription ?? '—'}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    <div className="flex flex-col leading-tight">
+                      <span>{p.createdByName ?? '-'}</span>
+                      <span className="text-xs text-muted-foreground">{formatDateTime(p.createdAt)}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    {p.deleted ? (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-red-500/15 text-red-700 dark:text-red-400 flex items-center gap-1 w-fit">
+                        <X className="h-3 w-3" />
+                        Deleted
+                      </Badge>
+                    ) : (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs bg-green-500/15 text-green-700 dark:text-green-400 flex items-center gap-1 w-fit">
+                        <Check className="h-3 w-3" />
+                        Not deleted
+                      </Badge>
+                    )}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">

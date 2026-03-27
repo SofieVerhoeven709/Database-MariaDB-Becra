@@ -1,4 +1,8 @@
 FROM mariadb:11
 
 COPY init.sql /docker-entrypoint-initdb.d/01_init.sql
-COPY alter.sql /docker-entrypoint-initdb.d/02_alter.sql
+COPY alter.sql /alter.sql
+COPY db-start.sh /db-start.sh
+RUN chmod +x /db-start.sh
+
+CMD ["/db-start.sh"]

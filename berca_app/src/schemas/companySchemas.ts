@@ -5,7 +5,9 @@ import {visibilityInputSchema} from '@/schemas/visibilityForRoleSchemas'
 export const companySchema = z.object({
   id: z.string(),
   name: z.string().min(1).max(100),
+  officialName: z.string().min(1).max(100),
   number: z.string().min(1).max(100),
+  idOld: z.string().max(100).nullable().optional(),
   mail: z.string().max(100).nullable().optional(),
   businessPhone: z.string().max(100).nullable().optional(),
   website: z.string().max(100).nullable().optional(),
@@ -16,7 +18,7 @@ export const companySchema = z.object({
   becraCustomerNumber: z.string().max(100).nullable().optional(),
   becraWebsiteLogin: z.string().max(100).nullable().optional(),
   supplier: z.boolean().default(false),
-  prefferedSupplier: z.boolean().default(false),
+  preferredSupplier: z.boolean().default(false),
   companyActive: z.boolean().default(true),
   newsLetter: z.boolean().default(false),
   customer: z.boolean().default(false),
@@ -39,7 +41,8 @@ const addressInputSchema = z.object({
   busNumber: z.string().max(100).nullable().optional(),
   zipCode: z.string().max(100).nullable().optional(),
   place: z.string().max(100).nullable().optional(),
-  typeAdress: z.string().max(100).nullable().optional(),
+  typeAddress: z.string().max(100).nullable().optional(),
+  countryId: z.string().nullable().optional(),
 })
 
 export const createCompanySchema = companySchema
@@ -78,7 +81,8 @@ export const companyAddressSchema = z.object({
   busNumber: z.string().max(100).nullable().optional(),
   zipCode: z.string().max(100).nullable().optional(),
   place: z.string().max(100).nullable().optional(),
-  typeAdress: z.string().max(100).nullable().optional(),
+  typeAddress: z.string().max(100).nullable().optional(),
+  countryId: z.string().nullable().optional(),
   createdAt: requiredDateSchema,
   createdBy: z.string(),
   companyId: z.string(),

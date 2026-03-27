@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Pencil, X, Save, ExternalLink} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, ExternalLink, Plus, Check, CalendarOff, Trash2} from 'lucide-react'
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
@@ -14,24 +14,50 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {updateCompanyAction} from '@/serverFunctions/companies'
+import {
+  createCompanyAddressAction,
+  updateCompanyAddressAction,
+  softDeleteCompanyAddressAction,
+  hardDeleteCompanyAddressAction,
+  undeleteCompanyAddressAction,
+} from '@/serverFunctions/companies'
+import {
+  addCompanyContactAction,
+  updateCompanyContactAction,
+  endCompanyContactAction,
+  softDeleteCompanyContactAction,
+  undeleteCompanyContactAction,
+  hardDeleteCompanyContactAction,
+} from '@/serverFunctions/companyContact'
+import {createContactAndReturnIdAction} from '@/serverFunctions/contacts'
+import {ContactFormDialog} from '@/components/custom/contactFormDialog'
+import type {MappedContact} from '@/types/contact'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import type {Route} from 'next'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import type {CompanyDetailData} from '@/types/company'
+import {CountrySelect} from '@/components/custom/countrySelect'
+import type {CountryOption} from '@/components/custom/countrySelect'
 
-interface Option {
+interface SelectOption {
   id: string
   name: string
 }
 
 interface CompanyDetailProps {
   company: CompanyDetailData
-  companies: Option[]
+  companies: SelectOption[]
   currentUserRole: string
   currentUserLevel: number
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
+  departmentId: string
+  contactOptions: SelectOption[]
+  functionOptions: SelectOption[]
+  departmentExternOptions: SelectOption[]
+  titleOptions: SelectOption[]
+  countryOptions: CountryOption[]
 }
 
 function formatDate(date: string | null) {
@@ -64,9 +90,19 @@ export function CompanyDetail({
   currentUserLevel,
   roleLevelOptions,
   defaultVisibleRoleNames,
+  departmentId,
+  contactOptions,
+  functionOptions,
+  departmentExternOptions,
+  titleOptions,
+  countryOptions,
 }: CompanyDetailProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canEdit = currentUserLevel >= 40
+  const canEditNumber = currentUserLevel >= 80
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
 
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -76,6 +112,8 @@ export function CompanyDetail({
   const buildForm = () => ({
     name: company.name,
     number: company.number,
+    officialName: company.officialName,
+    idOld: company.idOld ?? '',
     mail: company.mail ?? '',
     businessPhone: company.businessPhone ?? '',
     website: company.website ?? '',
@@ -88,7 +126,7 @@ export function CompanyDetail({
     notes: company.notes ?? '',
     companyId: company.companyId ?? 'none',
     supplier: company.supplier,
-    prefferedSupplier: company.prefferedSupplier,
+    preferredSupplier: company.preferredSupplier,
     companyActive: company.companyActive,
     newsLetter: company.newsLetter,
     customer: company.customer,
@@ -102,25 +140,26 @@ export function CompanyDetail({
   const s = <K extends keyof ReturnType<typeof buildForm>>(key: K, v: ReturnType<typeof buildForm>[K]) =>
     setForm(f => ({...f, [key]: v}))
 
-  // ─── Visibility state (controlled, flushed on save) ────────────────────────
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(company.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames),
   )
 
   function handleCancel() {
     setForm(buildForm())
-    // Reset visibility back to what the server has
     setVisibilityRows(buildInitialVisibilityRows(company.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
     setEditing(false)
   }
 
   async function handleSave() {
+    if (!form.number.trim()) return
     setSaving(true)
     try {
       await updateCompanyAction({
         id: company.id,
         name: form.name,
+        officialName: form.officialName,
         number: form.number,
+        idOld: form.idOld || null,
         mail: form.mail || null,
         businessPhone: form.businessPhone || null,
         website: form.website || null,
@@ -133,7 +172,7 @@ export function CompanyDetail({
         notes: form.notes || null,
         companyId: form.companyId === 'none' ? null : form.companyId,
         supplier: form.supplier,
-        prefferedSupplier: form.prefferedSupplier,
+        preferredSupplier: form.preferredSupplier,
         companyActive: form.companyActive,
         newsLetter: form.newsLetter,
         customer: form.customer,
@@ -141,7 +180,6 @@ export function CompanyDetail({
         headQuarters: form.headQuarters,
         potentialSubContractor: form.potentialSubContractor,
         subContractor: form.subContractor,
-        // Visibility flushed here, not on every toggle
         visibilityForRoles: visibilityRows,
       })
       setEditing(false)
@@ -151,10 +189,247 @@ export function CompanyDetail({
     }
   }
 
-  const activeContacts = company.contacts.filter(c => isActiveContact(c.endDate))
-  const visibleContacts = showAllContacts ? company.contacts : activeContacts
+  // ─── Address state ─────────────────────────────────────────────────────────
+  type AddrForm = {
+    street: string
+    houseNumber: string
+    busNumber: string
+    zipCode: string
+    place: string
+    typeAddress: string
+    countryId: string | null
+    countryName: string | null
+  }
+  const emptyAddrForm = (): AddrForm => ({
+    street: '',
+    houseNumber: '',
+    busNumber: '',
+    zipCode: '',
+    place: '',
+    typeAddress: '',
+    countryId: null,
+    countryName: null,
+  })
+
+  const [addingAddr, setAddingAddr] = useState(false)
+  const [newAddrForm, setNewAddrForm] = useState<AddrForm>(emptyAddrForm)
+  const [editingAddrId, setEditingAddrId] = useState<string | null>(null)
+  const [editAddrForm, setEditAddrForm] = useState<AddrForm>(emptyAddrForm)
+  const [showDeletedAddrs, setShowDeletedAddrs] = useState(false)
+
+  async function handleAddAddr() {
+    await createCompanyAddressAction({
+      companyId: company.id,
+      street: newAddrForm.street || null,
+      houseNumber: newAddrForm.houseNumber || null,
+      busNumber: newAddrForm.busNumber || null,
+      zipCode: newAddrForm.zipCode || null,
+      place: newAddrForm.place || null,
+      typeAddress: newAddrForm.typeAddress || null,
+      countryId: newAddrForm.countryId,
+    })
+    setAddingAddr(false)
+    setNewAddrForm(emptyAddrForm())
+    router.refresh()
+  }
+
+  async function handleSaveEditAddr(id: string) {
+    await updateCompanyAddressAction({
+      id,
+      companyId: company.id,
+      street: editAddrForm.street || null,
+      houseNumber: editAddrForm.houseNumber || null,
+      busNumber: editAddrForm.busNumber || null,
+      zipCode: editAddrForm.zipCode || null,
+      place: editAddrForm.place || null,
+      typeAddress: editAddrForm.typeAddress || null,
+      countryId: editAddrForm.countryId,
+    })
+    setEditingAddrId(null)
+    router.refresh()
+  }
+
+  async function handleSoftDeleteAddr(id: string) {
+    await softDeleteCompanyAddressAction({id})
+    router.refresh()
+  }
+
+  async function handleHardDeleteAddr(id: string) {
+    await hardDeleteCompanyAddressAction({id})
+    router.refresh()
+  }
+
+  async function handleUndeleteAddr(id: string) {
+    await undeleteCompanyAddressAction({id})
+    router.refresh()
+  }
+
+  function handleStartEditAddr(a: {
+    id: string
+    typeAddress: string | null
+    street: string | null
+    houseNumber: string | null
+    busNumber: string | null
+    zipCode: string | null
+    place: string | null
+    countryId: string | null
+    countryName: string | null
+  }) {
+    setEditingAddrId(a.id)
+    setEditAddrForm({
+      typeAddress: a.typeAddress ?? '',
+      street: a.street ?? '',
+      houseNumber: a.houseNumber ?? '',
+      busNumber: a.busNumber ?? '',
+      zipCode: a.zipCode ?? '',
+      place: a.place ?? '',
+      countryId: a.countryId,
+      countryName: a.countryName,
+    })
+  }
+
+  // ─── Contact link state ────────────────────────────────────────────────────
+  type ContactLinkForm = {
+    contactId: string
+    roleWithCompany: string
+    startedDate: string
+    endDate: string
+    companyAddressId: string
+  }
+  const emptyContactLinkForm = (): ContactLinkForm => ({
+    contactId: 'none',
+    roleWithCompany: '',
+    startedDate: new Date().toISOString().slice(0, 10),
+    endDate: '',
+    companyAddressId: 'none',
+  })
+
+  const [contacts, setContacts] = useState(contactOptions)
+  const [addingContact, setAddingContact] = useState(false)
+  const [contactLinkForm, setContactLinkForm] = useState<ContactLinkForm>(emptyContactLinkForm)
+  const [endPreviousActive, setEndPreviousActive] = useState(true)
+  const [editingContactLinkId, setEditingContactLinkId] = useState<string | null>(null)
+  const [editContactLinkForm, setEditContactLinkForm] = useState<ContactLinkForm>(emptyContactLinkForm)
+  const [showDeletedContacts, setShowDeletedContacts] = useState(false)
+  const [contactDialogOpen, setContactDialogOpen] = useState(false)
+
+  async function handleAddContactLink() {
+    if (contactLinkForm.contactId === 'none') return
+    await addCompanyContactAction({
+      contactId: contactLinkForm.contactId,
+      companyId: company.id,
+      roleWithCompany: contactLinkForm.roleWithCompany || null,
+      companyAddressId: contactLinkForm.companyAddressId !== 'none' ? contactLinkForm.companyAddressId : null,
+      startedDate: new Date(contactLinkForm.startedDate),
+      endDate: contactLinkForm.endDate ? new Date(contactLinkForm.endDate) : null,
+      endPreviousActive,
+    })
+    setAddingContact(false)
+    router.refresh()
+  }
+
+  async function handleSaveEditContactLink(id: string) {
+    await updateCompanyContactAction({
+      id,
+      roleWithCompany: editContactLinkForm.roleWithCompany || null,
+      companyAddressId: editContactLinkForm.companyAddressId !== 'none' ? editContactLinkForm.companyAddressId : null,
+      startedDate: new Date(editContactLinkForm.startedDate),
+      endDate: editContactLinkForm.endDate ? new Date(editContactLinkForm.endDate) : null,
+    })
+    setEditingContactLinkId(null)
+    router.refresh()
+  }
+
+  async function handleEndContactLink(id: string) {
+    await endCompanyContactAction({id})
+    router.refresh()
+  }
+
+  async function handleSoftDeleteContactLink(id: string) {
+    await softDeleteCompanyContactAction({id})
+    router.refresh()
+  }
+
+  async function handleUndeleteContactLink(id: string) {
+    await undeleteCompanyContactAction({id})
+    router.refresh()
+  }
+
+  async function handleHardDeleteContactLink(id: string) {
+    await hardDeleteCompanyContactAction({id})
+    router.refresh()
+  }
+
+  function handleStartEditContactLink(cc: {
+    id: string
+    contact: {id: string}
+    roleWithCompany: string | null
+    startedDate: string
+    endDate: string | null
+    companyAddressId: string | null
+  }) {
+    setEditingContactLinkId(cc.id)
+    setEditContactLinkForm({
+      contactId: cc.contact.id,
+      roleWithCompany: cc.roleWithCompany ?? '',
+      startedDate: cc.startedDate.slice(0, 10),
+      endDate: cc.endDate ? cc.endDate.slice(0, 10) : '',
+      companyAddressId: cc.companyAddressId ?? 'none',
+    })
+  }
+
+  async function handleSaveNewContact(c: MappedContact, visRows: VisibilityRow[]) {
+    const created = await createContactAndReturnIdAction({
+      firstName: c.firstName,
+      lastName: c.lastName,
+      mail1: c.mail1,
+      mail2: c.mail2,
+      mail3: c.mail3,
+      generalPhone: c.generalPhone,
+      homePhone: c.homePhone,
+      mobilePhone: c.mobilePhone,
+      info: c.info,
+      birthDate: c.birthDate ? new Date(c.birthDate) : null,
+      through: c.through,
+      description: c.description,
+      infoCorrect: c.infoCorrect,
+      checkInfo: c.checkInfo,
+      newYearCard: c.newYearCard,
+      active: c.active,
+      newsLetter: c.newsLetter,
+      mailing: c.mailing,
+      trainingAdvice: c.trainingAdvice,
+      contactForTrainingAndAdvice: c.contactForTrainingAndAdvice,
+      customerTrainingAndAdvice: c.customerTrainingAndAdvice,
+      potentialCustomerTrainingAndAdvice: c.potentialCustomerTrainingAndAdvice,
+      potentialTeacherTrainingAndAdvice: c.potentialTeacherTrainingAndAdvice,
+      teacherTrainingAndAdvice: c.teacherTrainingAndAdvice,
+      participantTrainingAndAdvice: c.participantTrainingAndAdvice,
+      functionId: c.functionId,
+      departmentExternId: c.departmentExternId,
+      titleId: c.titleId,
+      businessCardId: c.businessCardId,
+      visibilityForRoles: visRows,
+      initialCompanyId: company.id,
+      initialRoleWithCompany: contactLinkForm.roleWithCompany || null,
+    })
+    setContacts(prev => [...prev, {id: created.id, name: `${c.firstName} ${c.lastName}`}])
+    setContactDialogOpen(false)
+    setAddingContact(false)
+    router.refresh()
+  }
+
+  // ─── Derived ───────────────────────────────────────────────────────────────
+  const linkedContactIds = new Set(company.contacts.filter(cc => !cc.deleted).map(cc => cc.contact.id))
+  const activeContactCount = company.contacts.filter(cc => !cc.deleted && isActiveContact(cc.endDate)).length
+  const hasDeletedContacts = company.contacts.some(cc => cc.deleted)
+  const nonDeletedContacts = company.contacts.filter(cc => !cc.deleted)
+  const activeContacts = nonDeletedContacts.filter(cc => isActiveContact(cc.endDate))
+  const visibleContacts = showDeletedContacts ? company.contacts : showAllContacts ? nonDeletedContacts : activeContacts
   const activeProjects = company.projects.filter(p => p.isOpen && !p.isClosed)
   const closedProjects = company.projects.filter(p => p.isClosed || !p.isOpen)
+  const visibleAddresses = company.addresses.filter(a => showDeletedAddrs || !a.deleted)
+  const activeAddresses = company.addresses.filter(a => !a.deleted)
 
   return (
     <div className="flex flex-col gap-6">
@@ -192,10 +467,12 @@ export function CompanyDetail({
               </Button>
             </>
           ) : (
-            <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-              <Pencil className="h-4 w-4" />
-              Edit
-            </Button>
+            canEdit && (
+              <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
+                <Pencil className="h-4 w-4" />
+                Edit
+              </Button>
+            )
           )}
         </div>
       </div>
@@ -203,10 +480,72 @@ export function CompanyDetail({
       {/* ── Info card ──────────────────────────────────────────────────────── */}
       <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {/* ── Number ── */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">
+              Number *{!canEditNumber && editing && <span className="ml-1.5 text-muted-foreground/60">(locked)</span>}
+            </Label>
+            {editing ? (
+              canEditNumber ? (
+                <Input
+                  value={form.number}
+                  onChange={e => s('number', e.target.value)}
+                  className="bg-secondary border-border"
+                />
+              ) : (
+                <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                  {form.number}
+                </div>
+              )
+            ) : (
+              <p className="text-sm text-muted-foreground">{company.number}</p>
+            )}
+          </div>
+
+          {/* ── Name ── */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Name</Label>
+            {editing ? (
+              <Input
+                value={form.name}
+                onChange={e => s('name', e.target.value)}
+                className="bg-secondary border-border"
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground">{company.name}</p>
+            )}
+          </div>
+          {/* ── Official Name ── */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Official Name</Label>
+            {editing ? (
+              <Input
+                value={form.officialName}
+                onChange={e => s('officialName', e.target.value)}
+                className="bg-secondary border-border"
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground">{company.officialName}</p>
+            )}
+          </div>
+
+          {/* ── Old ID ── */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Old ID</Label>
+            {editing ? (
+              <Input
+                value={form.idOld}
+                onChange={e => s('idOld', e.target.value)}
+                placeholder="Legacy identifier…"
+                className="bg-secondary border-border"
+              />
+            ) : (
+              <p className="text-sm text-muted-foreground">{company.idOld ?? '-'}</p>
+            )}
+          </div>
+
           {(
             [
-              {key: 'name', label: 'Name'},
-              {key: 'number', label: 'Number'},
               {key: 'mail', label: 'Email'},
               {key: 'businessPhone', label: 'Business Phone'},
               {key: 'website', label: 'Website'},
@@ -225,7 +564,6 @@ export function CompanyDetail({
                   value={form[key]}
                   onChange={e => s(key, e.target.value)}
                   className="bg-secondary border-border"
-                  disabled={key === 'number'}
                 />
               ) : (
                 <p className="text-sm">
@@ -266,7 +604,9 @@ export function CompanyDetail({
             ) : (
               <p className="text-sm text-muted-foreground">
                 {company.parentCompanyName ? (
-                  <Link href={`/companies/${company.companyId}` as Route} className="hover:text-accent hover:underline">
+                  <Link
+                    href={`/departments/${departmentId}/company/${company.companyId}` as Route}
+                    className="hover:text-accent hover:underline">
                     {company.parentCompanyName}
                   </Link>
                 ) : (
@@ -292,7 +632,7 @@ export function CompanyDetail({
                 {key: 'customer', label: 'Customer'},
                 {key: 'potentialCustomer', label: 'Pot. Customer'},
                 {key: 'supplier', label: 'Supplier'},
-                {key: 'prefferedSupplier', label: 'Pref. Supplier'},
+                {key: 'preferredSupplier', label: 'Pref. Supplier'},
                 {key: 'subContractor', label: 'Sub-Contractor'},
                 {key: 'potentialSubContractor', label: 'Pot. Sub-Con'},
                 {key: 'headQuarters', label: 'Head Quarters'},
@@ -334,7 +674,7 @@ export function CompanyDetail({
           <TabsTrigger value="contacts">
             Contacts
             <Badge variant="secondary" className="ml-2 text-xs">
-              {activeContacts.length}
+              {activeContactCount}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="projects">
@@ -346,7 +686,7 @@ export function CompanyDetail({
           <TabsTrigger value="addresses">
             Addresses
             <Badge variant="secondary" className="ml-2 text-xs">
-              {company.addresses.length}
+              {company.addresses.filter(a => !a.deleted).length}
             </Badge>
           </TabsTrigger>
           {company.subsidiaries.length > 0 && (
@@ -357,83 +697,398 @@ export function CompanyDetail({
               </Badge>
             </TabsTrigger>
           )}
-          {isAdmin && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
+          {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
         </TabsList>
 
         {/* ── Contacts ─────────────────────────────────────────────────────── */}
         <TabsContent value="contacts" className="mt-3">
-          {company.contacts.length > activeContacts.length && (
-            <div className="flex items-center gap-2 mb-3">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              {nonDeletedContacts.length > activeContacts.length && !showDeletedContacts && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs h-7 border-border"
+                  onClick={() => setShowAllContacts(v => !v)}>
+                  {showAllContacts
+                    ? `Active only (${activeContacts.length})`
+                    : `Show all incl. ended (${nonDeletedContacts.length})`}
+                </Button>
+              )}
+              {hasDeletedContacts && (
+                <Button
+                  size="sm"
+                  variant={showDeletedContacts ? 'secondary' : 'outline'}
+                  className="text-xs h-7 border-border"
+                  onClick={() => setShowDeletedContacts(v => !v)}>
+                  {showDeletedContacts ? 'Hide deleted' : 'Show deleted'}
+                </Button>
+              )}
+            </div>
+            {canEdit && (
               <Button
                 size="sm"
                 variant="outline"
-                className="text-xs h-7 border-border"
-                onClick={() => setShowAllContacts(v => !v)}>
-                {showAllContacts
-                  ? `Active only (${activeContacts.length})`
-                  : `Show all incl. ended (${company.contacts.length})`}
+                className="text-xs h-7 border-border gap-1"
+                onClick={() => {
+                  setAddingContact(true)
+                  setContactLinkForm(emptyContactLinkForm())
+                }}>
+                <Plus className="h-3.5 w-3.5" /> Add Contact
               </Button>
-            </div>
-          )}
+            )}
+          </div>
+
           <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent border-border/60">
                   <TableHead className={thClass}>Name</TableHead>
                   <TableHead className={thClass}>Role at Company</TableHead>
+                  <TableHead className={thClass}>Location</TableHead> {/* ← add */}
                   <TableHead className={thClass}>Email</TableHead>
                   <TableHead className={thClass}>Phone</TableHead>
                   <TableHead className={thClass}>Mobile</TableHead>
                   <TableHead className={thClass}>Started</TableHead>
                   <TableHead className={thClass}>End Date</TableHead>
                   <TableHead className={thClass}>Status</TableHead>
-                  <TableHead className="w-10">
-                    <span className="sr-only">Open</span>
+                  <TableHead className="w-28">
+                    <span className="sr-only">Actions</span>
                   </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {visibleContacts.length === 0 ? (
+                {addingContact && (
+                  <TableRow className="border-border/40 bg-secondary/30">
+                    <TableCell>
+                      <div className="flex gap-1">
+                        <Select
+                          value={contactLinkForm.contactId}
+                          onValueChange={v => {
+                            if (v === '__create__') {
+                              setContactDialogOpen(true)
+                            } else {
+                              setContactLinkForm(f => ({...f, contactId: v}))
+                            }
+                          }}>
+                          <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+                            <SelectValue placeholder="Select contact…" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-card border-border">
+                            {contacts
+                              .filter(o => !linkedContactIds.has(o.id))
+                              .map(o => (
+                                <SelectItem key={o.id} value={o.id} className="text-xs">
+                                  {o.name}
+                                </SelectItem>
+                              ))}
+                            <SelectItem value="__create__" className="text-xs">
+                              + Create New Contact
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          className="h-7 w-7 border-border shrink-0"
+                          onClick={() => setContactDialogOpen(true)}>
+                          <Plus className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        value={contactLinkForm.roleWithCompany}
+                        placeholder="Role…"
+                        onChange={e => setContactLinkForm(f => ({...f, roleWithCompany: e.target.value}))}
+                        className="h-7 text-xs bg-background border-border"
+                      />
+                    </TableCell>
+                    {activeAddresses.length > 0 ? (
+                      <TableCell>
+                        <Select
+                          value={contactLinkForm.companyAddressId}
+                          onValueChange={v => setContactLinkForm(f => ({...f, companyAddressId: v}))}>
+                          <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+                            <SelectValue placeholder="Location…" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-card border-border">
+                            <SelectItem value="none" className="text-xs">
+                              No specific location
+                            </SelectItem>
+                            {activeAddresses.map(a => (
+                              <SelectItem key={a.id} value={a.id} className="text-xs">
+                                {[a.typeAddress, [a.street, a.houseNumber].filter(Boolean).join(' '), a.place]
+                                  .filter(Boolean)
+                                  .join(' · ')}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
+                    ) : (
+                      <TableCell />
+                    )}
+                    <TableCell />
+                    <TableCell />
+                    <TableCell />
+                    <TableCell>
+                      <Input
+                        type="date"
+                        value={contactLinkForm.startedDate}
+                        onChange={e => setContactLinkForm(f => ({...f, startedDate: e.target.value}))}
+                        className="h-7 text-xs bg-background border-border"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        type="date"
+                        value={contactLinkForm.endDate}
+                        onChange={e => setContactLinkForm(f => ({...f, endDate: e.target.value}))}
+                        className="h-7 text-xs bg-background border-border"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <label className="flex items-center gap-1.5 cursor-pointer text-xs text-muted-foreground whitespace-nowrap">
+                        <input
+                          type="checkbox"
+                          checked={endPreviousActive}
+                          onChange={e => setEndPreviousActive(e.target.checked)}
+                          className="h-3.5 w-3.5 accent-accent"
+                        />
+                        End active
+                      </label>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-1">
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7 text-accent hover:bg-accent/10"
+                          disabled={contactLinkForm.contactId === 'none'}
+                          onClick={handleAddContactLink}>
+                          <Check className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7 text-muted-foreground hover:bg-secondary"
+                          onClick={() => setAddingContact(false)}>
+                          <X className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+                {visibleContacts.length === 0 && !addingContact ? (
                   <TableRow>
-                    <TableCell colSpan={9} className="h-24 text-center text-muted-foreground">
-                      No active contacts at this company.
+                    <TableCell colSpan={10} className="h-20 text-center text-muted-foreground">
+                      No active contact links.
                     </TableCell>
                   </TableRow>
                 ) : (
                   visibleContacts.map(cc => {
                     const active = isActiveContact(cc.endDate)
+                    const isEditingThis = editingContactLinkId === cc.id
                     return (
                       <TableRow
                         key={cc.id}
-                        className={`border-border/40 hover:bg-secondary/50 ${!active ? 'opacity-50' : ''}`}>
-                        <TableCell className={`${tdClass} text-foreground font-medium`}>
-                          {cc.contact.firstName} {cc.contact.lastName}
-                        </TableCell>
-                        <TableCell className={tdClass}>{cc.roleWithCompany ?? '-'}</TableCell>
-                        <TableCell className={tdClass}>{cc.contact.mail1 ?? '-'}</TableCell>
-                        <TableCell className={tdClass}>{cc.contact.generalPhone ?? '-'}</TableCell>
-                        <TableCell className={tdClass}>{cc.contact.mobilePhone ?? '-'}</TableCell>
-                        <TableCell className={tdClass}>{formatDate(cc.startedDate)}</TableCell>
-                        <TableCell className={tdClass}>{formatDate(cc.endDate)}</TableCell>
-                        <TableCell>
-                          {active ? (
-                            <Badge className="bg-accent/15 text-accent border-0 font-medium">Active</Badge>
-                          ) : (
-                            <Badge variant="secondary" className="text-muted-foreground font-medium">
-                              Ended
-                            </Badge>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <Link href={`/contacts/${cc.contact.id}` as Route}>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
-                              <ExternalLink className="h-3.5 w-3.5" />
-                            </Button>
-                          </Link>
-                        </TableCell>
+                        className={`border-border/40 hover:bg-secondary/50 ${cc.deleted ? 'opacity-40' : !active ? 'opacity-60' : ''}`}>
+                        {isEditingThis ? (
+                          <>
+                            <TableCell>
+                              <Select
+                                value={editContactLinkForm.contactId}
+                                onValueChange={v => setEditContactLinkForm(f => ({...f, contactId: v}))}>
+                                <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-card border-border">
+                                  {contactOptions.map(o => (
+                                    <SelectItem key={o.id} value={o.id} className="text-xs">
+                                      {o.name}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </TableCell>
+                            <TableCell>
+                              <Input
+                                value={editContactLinkForm.roleWithCompany}
+                                placeholder="Role…"
+                                onChange={e => setEditContactLinkForm(f => ({...f, roleWithCompany: e.target.value}))}
+                                className="h-7 text-xs bg-background border-border"
+                              />
+                            </TableCell>
+                            {activeAddresses.length > 0 ? (
+                              <TableCell>
+                                <Select
+                                  value={editContactLinkForm.companyAddressId}
+                                  onValueChange={v => setEditContactLinkForm(f => ({...f, companyAddressId: v}))}>
+                                  <SelectTrigger className="h-7 text-xs bg-background border-border min-w-[160px]">
+                                    <SelectValue placeholder="Location…" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-card border-border">
+                                    <SelectItem value="none" className="text-xs">
+                                      No specific location
+                                    </SelectItem>
+                                    {activeAddresses.map(a => (
+                                      <SelectItem key={a.id} value={a.id} className="text-xs">
+                                        {[a.typeAddress, [a.street, a.houseNumber].filter(Boolean).join(' '), a.place]
+                                          .filter(Boolean)
+                                          .join(' · ')}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </TableCell>
+                            ) : (
+                              <TableCell />
+                            )}
+                            <TableCell />
+                            <TableCell />
+                            <TableCell />
+                            <TableCell>
+                              <Input
+                                type="date"
+                                value={editContactLinkForm.startedDate}
+                                onChange={e => setEditContactLinkForm(f => ({...f, startedDate: e.target.value}))}
+                                className="h-7 text-xs bg-background border-border"
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Input
+                                type="date"
+                                value={editContactLinkForm.endDate}
+                                onChange={e => setEditContactLinkForm(f => ({...f, endDate: e.target.value}))}
+                                className="h-7 text-xs bg-background border-border"
+                              />
+                            </TableCell>
+                            <TableCell />
+                            <TableCell>
+                              <div className="flex items-center gap-1">
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  className="h-7 w-7 text-accent hover:bg-accent/10"
+                                  onClick={() => handleSaveEditContactLink(cc.id)}>
+                                  <Check className="h-3.5 w-3.5" />
+                                </Button>
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  className="h-7 w-7 text-muted-foreground hover:bg-secondary"
+                                  onClick={() => setEditingContactLinkId(null)}>
+                                  <X className="h-3.5 w-3.5" />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </>
+                        ) : (
+                          <>
+                            <TableCell className={`${tdClass} text-foreground font-medium`}>
+                              {cc.contact.firstName} {cc.contact.lastName}
+                            </TableCell>
+                            <TableCell className={tdClass}>{cc.roleWithCompany ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>
+                              {cc.companyAddress
+                                ? [
+                                    cc.companyAddress.typeAddress,
+                                    [cc.companyAddress.street, cc.companyAddress.houseNumber].filter(Boolean).join(' '),
+                                    cc.companyAddress.place,
+                                  ]
+                                    .filter(Boolean)
+                                    .join(' · ')
+                                : '-'}
+                            </TableCell>
+                            <TableCell className={tdClass}>{cc.contact.mail1 ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>{cc.contact.generalPhone ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>{cc.contact.mobilePhone ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>{formatDate(cc.startedDate)}</TableCell>
+                            <TableCell className={tdClass}>{formatDate(cc.endDate)}</TableCell>
+                            <TableCell>
+                              {cc.deleted ? (
+                                <Badge variant="destructive" className="font-medium text-xs">
+                                  Deleted
+                                </Badge>
+                              ) : active ? (
+                                <Badge className="bg-accent/15 text-accent border-0 font-medium">Active</Badge>
+                              ) : (
+                                <Badge variant="secondary" className="text-muted-foreground font-medium">
+                                  Ended
+                                </Badge>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-1">
+                                {cc.deleted ? (
+                                  <>
+                                    {canEdit && (
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-7 text-xs px-2 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                        onClick={() => handleUndeleteContactLink(cc.id)}>
+                                        Restore
+                                      </Button>
+                                    )}
+                                    {isAdmin && (
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                        title="Permanently delete"
+                                        onClick={() => handleHardDeleteContactLink(cc.id)}>
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                      </Button>
+                                    )}
+                                  </>
+                                ) : (
+                                  <>
+                                    {canEdit && (
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                        onClick={() => handleStartEditContactLink(cc)}>
+                                        <Pencil className="h-3.5 w-3.5" />
+                                      </Button>
+                                    )}
+                                    {canEdit && active && (
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-muted-foreground hover:text-amber-500 hover:bg-amber-500/10"
+                                        title="End today"
+                                        onClick={() => handleEndContactLink(cc.id)}>
+                                        <CalendarOff className="h-3.5 w-3.5" />
+                                      </Button>
+                                    )}
+                                    <Link href={`/departments/${departmentId}/contact/${cc.contact.id}` as Route}>
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                                        <ExternalLink className="h-3.5 w-3.5" />
+                                      </Button>
+                                    </Link>
+                                    {canDelete && (
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                        title="Delete"
+                                        onClick={() => handleSoftDeleteContactLink(cc.id)}>
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                      </Button>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                            </TableCell>
+                          </>
+                        )}
                       </TableRow>
                     )
                   })
@@ -510,7 +1165,6 @@ export function CompanyDetail({
                 </Table>
               </div>
             </div>
-
             {closedProjects.length > 0 && (
               <div>
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
@@ -572,27 +1226,230 @@ export function CompanyDetail({
 
         {/* ── Addresses ────────────────────────────────────────────────────── */}
         <TabsContent value="addresses" className="mt-3">
-          {company.addresses.length === 0 ? (
-            <p className="text-sm text-muted-foreground text-center py-8">No addresses recorded.</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {company.addresses.map(a => (
-                <div key={a.id} className="rounded-lg border border-border bg-card p-4 flex flex-col gap-1">
-                  {a.typeAdress && (
-                    <Badge variant="outline" className="w-fit text-xs border-border mb-1">
-                      {a.typeAdress}
-                    </Badge>
-                  )}
-                  <p className="text-sm text-foreground">
-                    {[a.street, a.houseNumber, a.busNumber].filter(Boolean).join(' ') || '-'}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {[a.zipCode, a.place].filter(Boolean).join(' ') || '-'}
-                  </p>
-                </div>
-              ))}
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              {company.addresses.some(a => a.deleted) && (
+                <Button
+                  size="sm"
+                  variant={showDeletedAddrs ? 'secondary' : 'outline'}
+                  className="text-xs h-7 border-border"
+                  onClick={() => setShowDeletedAddrs(v => !v)}>
+                  {showDeletedAddrs ? 'Hide deleted' : 'Show deleted'}
+                </Button>
+              )}
             </div>
-          )}
+            {canEdit && (
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-xs h-7 border-border gap-1"
+                onClick={() => {
+                  const hasActiveAddresses = company.addresses.some(a => !a.deleted)
+                  setAddingAddr(true)
+                  setNewAddrForm({...emptyAddrForm(), typeAddress: hasActiveAddresses ? '' : 'Headquarters'})
+                }}>
+                <Plus className="h-3.5 w-3.5" /> Add Address
+              </Button>
+            )}
+          </div>
+          <div className="rounded-xl border border-border/60 bg-card overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent border-border/60">
+                  <TableHead className={thClass}>Type</TableHead>
+                  <TableHead className={thClass}>Street</TableHead>
+                  <TableHead className={thClass}>House #</TableHead>
+                  <TableHead className={thClass}>Bus #</TableHead>
+                  <TableHead className={thClass}>Zip Code</TableHead>
+                  <TableHead className={thClass}>Place</TableHead>
+                  <TableHead className={thClass}>Country</TableHead>
+                  <TableHead className={thClass}>Status</TableHead>
+                  <TableHead className="w-24">
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {addingAddr && (
+                  <TableRow className="border-border/40 bg-secondary/30">
+                    {(['typeAddress', 'street', 'houseNumber', 'busNumber', 'zipCode', 'place'] as const).map(field => (
+                      <TableCell key={field}>
+                        <Input
+                          value={newAddrForm[field]}
+                          placeholder={field === 'typeAddress' ? 'e.g. Main…' : undefined}
+                          onChange={e => setNewAddrForm(f => ({...f, [field]: e.target.value}))}
+                          className="h-7 text-xs bg-background border-border"
+                        />
+                      </TableCell>
+                    ))}
+                    <TableCell className="min-w-[160px]">
+                      <CountrySelect
+                        value={newAddrForm.countryId}
+                        onChange={(id, name) => setNewAddrForm(f => ({...f, countryId: id, countryName: name}))}
+                        countries={countryOptions}
+                      />
+                    </TableCell>
+                    <TableCell />
+                    <TableCell>
+                      <div className="flex items-center gap-1">
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7 text-accent hover:bg-accent/10"
+                          onClick={handleAddAddr}>
+                          <Check className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7 text-muted-foreground hover:bg-secondary"
+                          onClick={() => setAddingAddr(false)}>
+                          <X className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+                {visibleAddresses.length === 0 && !addingAddr ? (
+                  <TableRow>
+                    <TableCell colSpan={9} className="h-20 text-center text-muted-foreground">
+                      No addresses recorded.
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  visibleAddresses.map(a => {
+                    const isEditingThis = editingAddrId === a.id
+                    return (
+                      <TableRow
+                        key={a.id}
+                        className={`border-border/40 hover:bg-secondary/50 ${a.deleted ? 'opacity-40' : ''}`}>
+                        {isEditingThis ? (
+                          <>
+                            {(['typeAddress', 'street', 'houseNumber', 'busNumber', 'zipCode', 'place'] as const).map(
+                              field => (
+                                <TableCell key={field}>
+                                  <Input
+                                    value={editAddrForm[field]}
+                                    onChange={e => setEditAddrForm(f => ({...f, [field]: e.target.value}))}
+                                    className="h-7 text-xs bg-background border-border"
+                                  />
+                                </TableCell>
+                              ),
+                            )}
+                            <TableCell className="min-w-[160px]">
+                              <CountrySelect
+                                value={editAddrForm.countryId}
+                                currentName={editAddrForm.countryName}
+                                onChange={(id, name) =>
+                                  setEditAddrForm(f => ({...f, countryId: id, countryName: name}))
+                                }
+                                countries={countryOptions}
+                              />
+                            </TableCell>
+                            <TableCell />
+                            <TableCell>
+                              <div className="flex items-center gap-1">
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  className="h-7 w-7 text-accent hover:bg-accent/10"
+                                  onClick={() => handleSaveEditAddr(a.id)}>
+                                  <Check className="h-3.5 w-3.5" />
+                                </Button>
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  className="h-7 w-7 text-muted-foreground hover:bg-secondary"
+                                  onClick={() => setEditingAddrId(null)}>
+                                  <X className="h-3.5 w-3.5" />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </>
+                        ) : (
+                          <>
+                            <TableCell className={tdClass}>
+                              {a.typeAddress ? (
+                                <Badge variant="outline" className="text-xs border-border">
+                                  {a.typeAddress}
+                                </Badge>
+                              ) : (
+                                '-'
+                              )}
+                            </TableCell>
+                            <TableCell className={tdClass}>{a.street ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>{a.houseNumber ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>{a.busNumber ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>{a.zipCode ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>{a.place ?? '-'}</TableCell>
+                            <TableCell className={tdClass}>{a.countryName ?? '-'}</TableCell>
+                            <TableCell>
+                              {a.deleted ? (
+                                <Badge variant="destructive" className="font-medium text-xs">
+                                  Deleted
+                                </Badge>
+                              ) : (
+                                <Badge className="bg-accent/15 text-accent border-0 font-medium text-xs">Active</Badge>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-1">
+                                {a.deleted ? (
+                                  <>
+                                    {canEdit && (
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-7 text-xs px-2 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                        onClick={() => handleUndeleteAddr(a.id)}>
+                                        Restore
+                                      </Button>
+                                    )}
+                                    {isAdmin && (
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-destructive hover:bg-destructive/10"
+                                        title="Permanently delete"
+                                        onClick={() => handleHardDeleteAddr(a.id)}>
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                      </Button>
+                                    )}
+                                  </>
+                                ) : (
+                                  <>
+                                    {canEdit && (
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                                        onClick={() => handleStartEditAddr(a)}>
+                                        <Pencil className="h-3.5 w-3.5" />
+                                      </Button>
+                                    )}
+                                    {canDelete && (
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                        title="Delete"
+                                        onClick={() => handleSoftDeleteAddr(a.id)}>
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                      </Button>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                            </TableCell>
+                          </>
+                        )}
+                      </TableRow>
+                    )
+                  })
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </TabsContent>
 
         {/* ── Subsidiaries ─────────────────────────────────────────────────── */}
@@ -619,7 +1476,7 @@ export function CompanyDetail({
                         <YesNoBadge value={sub.companyActive} />
                       </TableCell>
                       <TableCell>
-                        <Link href={`/companies/${sub.id}` as Route}>
+                        <Link href={`/departments/${departmentId}/company/${sub.id}` as Route}>
                           <Button
                             variant="ghost"
                             size="icon"
@@ -637,7 +1494,7 @@ export function CompanyDetail({
         )}
 
         {/* ── Visibility ───────────────────────────────────────────────────── */}
-        {isAdmin && (
+        {canManageVisibility && (
           <TabsContent value="visibility" className="mt-3">
             {editing ? (
               <VisibilityForRoleTab
@@ -646,7 +1503,6 @@ export function CompanyDetail({
                 onChange={setVisibilityRows}
               />
             ) : (
-              // Read-only summary when not editing
               <div className="flex flex-col gap-3">
                 <p className="text-xs text-muted-foreground">Click Edit to change visibility settings.</p>
                 <div className="flex flex-wrap gap-3">
@@ -672,6 +1528,23 @@ export function CompanyDetail({
           </TabsContent>
         )}
       </Tabs>
+
+      {/* ── Create contact dialog ───────────────────────────────────────────── */}
+      <ContactFormDialog
+        open={contactDialogOpen}
+        onOpenChange={setContactDialogOpen}
+        contact={null}
+        onSave={handleSaveNewContact}
+        isAdmin={isAdmin}
+        roleLevelOptions={roleLevelOptions}
+        defaultVisibleRoleNames={defaultVisibleRoleNames}
+        functionOptions={functionOptions}
+        departmentExternOptions={departmentExternOptions}
+        titleOptions={titleOptions}
+        companyOptions={companies}
+        countryOptions={countryOptions}
+        canManageVisibility={canManageVisibility}
+      />
     </div>
   )
 }

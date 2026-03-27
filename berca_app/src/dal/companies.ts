@@ -5,7 +5,9 @@ const companyInclude = {
   Company: true,
   Employee: {select: {id: true, firstName: true, lastName: true}},
   Employee_Company_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
-  CompanyAdress: true,
+  CompanyAddress: {
+    include: {Country: {select: {id: true, name: true}}},
+  },
   Target: {
     include: {
       VisibilityForRole: {
@@ -40,8 +42,8 @@ export async function getCompanyDetail(id: string) {
         where: {deleted: false},
         select: {id: true, name: true, number: true, companyActive: true},
       },
-      CompanyAdress: {
-        where: {deleted: false},
+      CompanyAddress: {
+        include: {Country: {select: {id: true, name: true}}},
         orderBy: {createdAt: 'asc'},
       },
       CompanyContact: {
@@ -62,6 +64,9 @@ export async function getCompanyDetail(id: string) {
             },
           },
           Employee: {select: {firstName: true, lastName: true}},
+          CompanyAddress: {
+            include: {Country: {select: {name: true}}},
+          },
         },
         orderBy: {startedDate: 'desc'},
       },
@@ -83,5 +88,39 @@ export async function getCompanyDetail(id: string) {
         },
       },
     },
+  })
+}
+
+export async function getSupplierCompanies() {
+  return prismaClient.company.findMany({
+    where: {
+      deleted: false,
+      companyActive: true,
+      supplier: true,
+    },
+    select: {
+      id: true,
+      name: true,
+      number: true,
+    },
+    orderBy: {name: 'asc'},
+  })
+}
+
+export async function getCompanyAddresses(companyId: string) {
+  return prismaClient.companyAddress.findMany({
+    where: {companyId, deleted: false},
+    select: {
+      id: true,
+      street: true,
+      houseNumber: true,
+      busNumber: true,
+      zipCode: true,
+      place: true,
+      typeAddress: true,
+      countryId: true,
+      Country: {select: {name: true}},
+    },
+    orderBy: {createdAt: 'asc'},
   })
 }

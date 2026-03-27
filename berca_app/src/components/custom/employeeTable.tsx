@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
 import {EmployeeFormDialog} from '@/components/custom/employeeFormDialog'
 import {Input} from '@/components/ui/input'
@@ -17,6 +17,7 @@ import {
   softDeleteEmployeeAction,
   updateEmployeeAdminAction,
 } from '@/serverFunctions/employees'
+import {useRouter} from 'next/navigation'
 
 type SortField =
   | 'name'
@@ -80,6 +81,7 @@ interface EmployeeTableProps {
   titleOptions: EmployeeOption[]
   currentUserRole: string
   currentUserLevel: number
+  departmentId: string
 }
 
 export function EmployeeTable({
@@ -88,8 +90,13 @@ export function EmployeeTable({
   titleOptions,
   currentUserRole,
   currentUserLevel,
+  departmentId,
 }: EmployeeTableProps) {
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
+  const canEdit = currentUserLevel >= 40
+  const canCreate = currentUserLevel >= 60
+  const canDelete = currentUserLevel >= 80
+  const canManageVisibility = currentUserLevel >= 80
   const [employees, setEmployees] = useState(initialEmployees)
   const [search, setSearch] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -98,6 +105,11 @@ export function EmployeeTable({
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
+  const router = useRouter()
+
+  useEffect(() => {
+    setEmployees(initialEmployees)
+  }, [initialEmployees])
 
   const getEmployeeName = (id: string | null) => {
     if (!id) return '-'
@@ -223,6 +235,7 @@ export function EmployeeTable({
     } else {
       await createEmployeeAction(payload)
       setEmployees(prev => [...prev, emp])
+      router.refresh()
     }
 
     setDialogOpen(false)
@@ -281,10 +294,12 @@ export function EmployeeTable({
             </SelectContent>
           </Select>
         </div>
-        <Button onClick={handleCreate} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-          <Plus className="h-4 w-4" />
-          New Employee
-        </Button>
+        {canCreate && (
+          <Button onClick={handleCreate} className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
+            <Plus className="h-4 w-4" />
+            New Employee
+          </Button>
+        )}
       </div>
 
       {/* Table with horizontal scroll */}
@@ -304,65 +319,17 @@ export function EmployeeTable({
               <TableHead className={thClass} onClick={() => toggleSort('username')}>
                 Username <SortIcon field="username" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('role')}>
-                Role Level <SortIcon field="role" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('mail')}>
                 Email <SortIcon field="mail" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('phoneNumber')}>
-                Phone <SortIcon field="phoneNumber" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('birthDate')}>
-                Birth Date <SortIcon field="birthDate" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('startDate')}>
-                Start Date <SortIcon field="startDate" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('endDate')}>
-                End Date <SortIcon field="endDate" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('street')}>
-                Street <SortIcon field="street" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('houseNumber')}>
-                House Nr <SortIcon field="houseNumber" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('busNumber')}>
-                Bus Nr <SortIcon field="busNumber" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('zipCode')}>
-                Zip Code <SortIcon field="zipCode" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('place')}>
-                Place <SortIcon field="place" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('info')}>
-                Info <SortIcon field="info" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('permanentEmployee')}>
                 Permanent <SortIcon field="permanentEmployee" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('checkInfo')}>
-                Check Info <SortIcon field="checkInfo" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('newYearCard')}>
-                New Year Card <SortIcon field="newYearCard" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('active')}>
                 Active <SortIcon field="active" sortField={sortField} sortDir={sortDir} />
               </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('pictureId')}>
-                Picture <SortIcon field="pictureId" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('createdAt')}>
-                Created At <SortIcon field="createdAt" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
               <TableHead className={thClass} onClick={() => toggleSort('createdBy')}>
                 Created By <SortIcon field="createdBy" sortField={sortField} sortDir={sortDir} />
-              </TableHead>
-              <TableHead className={thClass} onClick={() => toggleSort('passwordCreatedAt')}>
-                Password Created <SortIcon field="passwordCreatedAt" sortField={sortField} sortDir={sortDir} />
               </TableHead>
               {filterDeleted !== 'not-deleted' && (
                 <>
@@ -394,26 +361,7 @@ export function EmployeeTable({
                   <TableCell className={`${tdClass} text-foreground font-medium`}>{emp.firstName}</TableCell>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>{emp.lastName}</TableCell>
                   <TableCell className={tdClass}>{emp.username}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant="outline"
-                      className="border-border text-muted-foreground font-normal whitespace-nowrap">
-                      {emp.roleName}
-                    </Badge>
-                  </TableCell>
                   <TableCell className={tdClass}>{emp.mail ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{emp.phoneNumber ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(emp.birthDate)}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(emp.startDate)}</TableCell>
-                  <TableCell className={tdClass}>{formatDate(emp.endDate)}</TableCell>
-                  <TableCell className={tdClass}>{emp.street ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{emp.houseNumber ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{emp.busNumber ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{emp.zipCode ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>{emp.place ?? '-'}</TableCell>
-                  <TableCell className={tdClass}>
-                    <span className="max-w-[200px] truncate inline-block">{emp.info ?? '-'}</span>
-                  </TableCell>
                   <TableCell>
                     {emp.permanentEmployee ? (
                       <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
@@ -423,8 +371,6 @@ export function EmployeeTable({
                       </Badge>
                     )}
                   </TableCell>
-                  <TableCell className={tdClass}>{boolLabel(emp.checkInfo)}</TableCell>
-                  <TableCell className={tdClass}>{boolLabel(emp.newYearCard)}</TableCell>
                   <TableCell>
                     {emp.active ? (
                       <Badge className="bg-accent/15 text-accent border-0 font-medium">Active</Badge>
@@ -456,7 +402,7 @@ export function EmployeeTable({
                   {/* Actions */}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/hr/records/${emp.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/records/${emp.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"
@@ -467,17 +413,19 @@ export function EmployeeTable({
                           </span>
                         </Button>
                       </Link>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                        onClick={() => handleEdit(emp)}>
-                        <Pencil className="h-3.5 w-3.5" />
-                        <span className="sr-only">
-                          Edit {emp.firstName} {emp.lastName}
-                        </span>
-                      </Button>
-                      {!emp.deleted && (
+                      {canEdit && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          onClick={() => handleEdit(emp)}>
+                          <Pencil className="h-3.5 w-3.5" />
+                          <span className="sr-only">
+                            Edit {emp.firstName} {emp.lastName}
+                          </span>
+                        </Button>
+                      )}
+                      {!emp.deleted && canDelete && (
                         <Button
                           variant="ghost"
                           size="icon"

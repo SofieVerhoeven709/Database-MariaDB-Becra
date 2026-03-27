@@ -33,8 +33,9 @@ export const createMaterialGroupAction = protectedFormAction({
   functionName: 'Create material group',
   globalErrorMessage: 'Could not create the material group, please try again.',
   serverFn: async ({data, logger}) => {
-    const group = await createMaterialGroup({...data, id: data.id || randomUUID()})
-    logger.info(`MaterialGroup created: ${group.id}`)
+    const groupId = data.id || randomUUID()
+    await createMaterialGroup({...data, id: groupId})
+    logger.info(`MaterialGroup created: ${groupId}`)
     revalidatePath(REVALIDATE)
     revalidatePath(REVALIDATE_MATERIAL)
   },
@@ -46,8 +47,8 @@ export const updateMaterialGroupAction = protectedFormAction({
   globalErrorMessage: 'Could not update the material group, please try again.',
   serverFn: async ({data, logger}) => {
     const {id, ...rest} = data
-    const group = await updateMaterialGroup(id, rest)
-    logger.info(`MaterialGroup updated: ${group.id}`)
+    await updateMaterialGroup(id, rest)
+    logger.info(`MaterialGroup updated: ${id}`)
     revalidatePath(REVALIDATE)
     revalidatePath(REVALIDATE_MATERIAL)
   },

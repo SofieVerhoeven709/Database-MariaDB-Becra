@@ -14,6 +14,7 @@ export const createTimeRegistrySchema = z.object({
   endBreak: dateSchema.optional(),
   invoiceTime: z.boolean().default(false),
   onSite: z.boolean().default(false),
+  stayOver: z.boolean().default(false),
   workOrderId: z.string(),
   hourTypeId: z.string(),
   employeeIds: z.array(z.string()).default([]),

@@ -14,7 +14,7 @@ export const contactSchema = z.object({
   mobilePhone: z.string().max(100).nullable().optional(),
   info: z.string().nullable().optional(),
   birthDate: dateSchema.optional(),
-  trough: z.string().max(100).nullable().optional(),
+  through: z.string().max(100).nullable().optional(),
   description: z.string().nullable().optional(),
   infoCorrect: z.boolean().default(false),
   checkInfo: z.boolean().default(false),

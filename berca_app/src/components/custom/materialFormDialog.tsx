@@ -24,12 +24,26 @@ interface Unit {
   abbreviation: string
 }
 
+interface SupplierCompanyOption {
+  id: string
+  name: string
+  number: string
+}
+
+interface ParentPartOption {
+  beNumber: string
+  shortDescription: string
+}
+
 interface MaterialFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   material: MappedMaterial | null
   materialGroups: MaterialGroup[]
   units: Unit[]
+  supplierCompanies: SupplierCompanyOption[]
+  parentPartOptions?: ParentPartOption[]
+  parentPartBeNumbersInUse?: string[]
   onSave: (material: Partial<MappedMaterial> & {id: string}) => void
   saving?: boolean
   saveError?: string | null
@@ -37,23 +51,122 @@ interface MaterialFormDialogProps {
 
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
 
-function groupLabel(group: MaterialGroup) {
-  return [group.groupA, group.groupB, group.groupC, group.groupD].filter(Boolean).join(' / ')
+interface PreferredSupplierPickerProps {
+  selectedCompanyId: string | null
+  onSelect: (companyId: string | null) => void
+  availableCompanies: SupplierCompanyOption[]
+  inputStyles: string
+}
+
+function PreferredSupplierPicker({
+  selectedCompanyId,
+  onSelect,
+  availableCompanies,
+  inputStyles,
+}: PreferredSupplierPickerProps) {
+  const [search, setSearch] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
+
+  const filtered = availableCompanies.filter(
+    c => c.name.toLowerCase().includes(search.toLowerCase()) || c.number.toLowerCase().includes(search.toLowerCase()),
+  )
+
+  const selectedCompany = availableCompanies.find(c => c.id === selectedCompanyId)
+
+  // Show search text if user is typing, otherwise show selected company
+  const displayValue = isFocused
+    ? search
+    : search || (selectedCompany ? `${selectedCompany.name} (${selectedCompany.number})` : '')
+
+  const handleClear = () => {
+    onSelect(null)
+    setSearch('')
+    setIsOpen(false)
+  }
+
+  const handleSelect = (companyId: string) => {
+    onSelect(companyId)
+    setSearch('')
+    setIsOpen(false)
+    setIsFocused(false)
+  }
+
+  return (
+    <div className="relative">
+      <Input
+        className={inputStyles}
+        placeholder="Type to search suppliers..."
+        value={displayValue}
+        onChange={e => {
+          setSearch(e.target.value)
+          setIsOpen(true)
+        }}
+        onFocus={() => {
+          setIsFocused(true)
+          setIsOpen(true)
+        }}
+        onBlur={() => {
+          setIsFocused(false)
+          // Close dropdown after a brief delay to allow click handlers to fire
+          setTimeout(() => setIsOpen(false), 150)
+        }}
+      />
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 mt-1 bg-secondary border border-border rounded-md max-h-48 overflow-y-auto z-50">
+          {selectedCompanyId && (
+            <div
+              className="px-2 py-1.5 text-sm text-muted-foreground hover:bg-secondary/80 cursor-pointer border-b border-border"
+              onClick={() => handleClear()}>
+              Clear Selection
+            </div>
+          )}
+          {filtered.map(company => (
+            <div
+              key={company.id}
+              className={`px-2 py-1.5 text-sm cursor-pointer hover:bg-secondary/80 ${
+                selectedCompanyId === company.id ? 'bg-secondary/80 font-semibold' : ''
+              }`}
+              onClick={() => handleSelect(company.id)}>
+              {company.name} ({company.number})
+            </div>
+          ))}
+          {filtered.length === 0 && search && (
+            <div className="px-2 py-1.5 text-xs text-muted-foreground">No suppliers match your search</div>
+          )}
+          {availableCompanies.length === 0 && !search && (
+            <div className="px-2 py-1.5 text-xs text-muted-foreground">
+              No suppliers available. Add suppliers first.
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
 }
 
 const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string} = {
   id: '',
   beNumber: '',
   name: null,
-  brandOrderNr: 0,
+  brandOrderNr: '',
   shortDescription: '',
   longDescription: null,
-  preferredSupplier: null,
+  preferredSupplierCompanyId: null,
+  preferredSupplierCompanyName: null,
+  preferredSupplierOrderId: null,
+  preferredSupplierShortDescription: null,
+  supplierCompanyIds: [],
+  supplierCompanyNames: [],
+  parentBeNumbers: [],
   brandName: null,
   documentationPlace: null,
   bePartDoc: null,
   rejected: false,
-  materialGroupId: '',
+  materialGroupIdA: '',
+  materialGroupIdB: null,
+  materialGroupIdC: null,
+  materialGroupIdD: null,
   unitId: '',
 }
 
@@ -63,6 +176,9 @@ export function MaterialFormDialog({
   material,
   materialGroups,
   units,
+  supplierCompanies,
+  parentPartOptions: _parentPartOptions,
+  parentPartBeNumbersInUse = [],
   onSave,
   saving = false,
   saveError = null,
@@ -73,18 +189,160 @@ export function MaterialFormDialog({
     material ? {...material} : {...EMPTY_MATERIAL, id: crypto.randomUUID()}
 
   const [form, setForm] = useState<Partial<MappedMaterial> & {id: string}>(makeForm)
+  const [isParentPartEnabled, setIsParentPartEnabled] = useState(parentPartBeNumbersInUse.includes(form.beNumber ?? ''))
+  const [hasParentParts, setHasParentParts] = useState((form.parentBeNumbers ?? []).length > 0)
+  const [parentPartSearch, setParentPartSearch] = useState('')
 
   // Sync form state when the dialogue opens or switches between materials.
   // The lint rule warns against sync setState in effects, but this is intentional:
   // we only update when `open` transitions to true or the edited material changes.
 
   useEffect(() => {
-    if (open) setForm(makeForm())
+    if (open) {
+      const nextForm = makeForm()
+      setForm(nextForm)
+      setIsParentPartEnabled(parentPartBeNumbersInUse.includes(nextForm.beNumber ?? ''))
+      setHasParentParts((nextForm.parentBeNumbers ?? []).length > 0)
+      setParentPartSearch('')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, material?.id])
 
   function update<K extends keyof MappedMaterial>(field: K, value: MappedMaterial[K]) {
     setForm(prev => ({...prev, [field]: value}))
+  }
+
+  function toggleSupplier(companyId: string) {
+    const current = form.supplierCompanyIds ?? []
+    const next = current.includes(companyId) ? current.filter(id => id !== companyId) : [...current, companyId]
+    update('supplierCompanyIds', next)
+
+    if (form.preferredSupplierCompanyId && !next.includes(form.preferredSupplierCompanyId)) {
+      update('preferredSupplierCompanyId', null)
+    }
+  }
+
+  function toggleParentBeNumber(beNumber: string) {
+    const current = form.parentBeNumbers ?? []
+    const next = current.includes(beNumber) ? current.filter(item => item !== beNumber) : [...current, beNumber]
+    update('parentBeNumbers', next)
+  }
+
+  function setParentPartsEnabled(enabled: boolean) {
+    setHasParentParts(enabled)
+    if (!enabled) {
+      update('parentBeNumbers', [])
+      setParentPartSearch('')
+    }
+  }
+
+  const filteredParentPartOptions = (_parentPartOptions ?? [])
+    .filter(option => option.beNumber !== form.beNumber)
+    .filter(option => {
+      if (!parentPartSearch) return true
+      const q = parentPartSearch.toLowerCase()
+      return option.beNumber.toLowerCase().includes(q) || option.shortDescription.toLowerCase().includes(q)
+    })
+
+  const selectedSupplierCompanies = supplierCompanies.filter(company =>
+    (form.supplierCompanyIds ?? []).includes(company.id),
+  )
+
+  const selectedGroupA = materialGroups.find(g => g.id === form.materialGroupIdA) ?? null
+  const selectedGroupB = materialGroups.find(g => g.id === form.materialGroupIdB) ?? null
+  const selectedGroupC = materialGroups.find(g => g.id === form.materialGroupIdC) ?? null
+
+  const buildUniqueGroupOptions = (
+    predicate: (group: MaterialGroup) => boolean,
+    labelOf: (group: MaterialGroup) => string | null,
+  ) => {
+    const byLabel = new Map<string, {id: string; label: string}>()
+    for (const group of materialGroups) {
+      if (!predicate(group)) continue
+      const label = labelOf(group)
+      if (!label || byLabel.has(label)) continue
+      byLabel.set(label, {id: group.id, label})
+    }
+    return Array.from(byLabel.values())
+  }
+
+  const ensureSelectedOption = (
+    options: Array<{id: string; label: string}>,
+    selectedId: string | null | undefined,
+    selectedLabel: string | null | undefined,
+  ) => {
+    if (!selectedId || !selectedLabel || options.some(option => option.id === selectedId)) {
+      return options
+    }
+    return [{id: selectedId, label: selectedLabel}, ...options]
+  }
+
+  const groupAOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(() => true, group => group.groupA),
+    form.materialGroupIdA,
+    selectedGroupA?.groupA,
+  )
+
+  const groupBOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(
+      group => Boolean(group.groupB) && (!selectedGroupA || group.groupA === selectedGroupA.groupA),
+      group => group.groupB,
+    ),
+    form.materialGroupIdB,
+    selectedGroupB?.groupB,
+  )
+
+  const groupCOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(
+      group => {
+        if (!group.groupC) return false
+        if (!selectedGroupA) return true
+        if (!selectedGroupB?.groupB) return group.groupA === selectedGroupA.groupA
+        return group.groupA === selectedGroupA.groupA && group.groupB === selectedGroupB.groupB
+      },
+      group => group.groupC,
+    ),
+    form.materialGroupIdC,
+    selectedGroupC?.groupC,
+  )
+
+  const selectedGroupD = materialGroups.find(g => g.id === form.materialGroupIdD) ?? null
+
+  const groupDOptions = ensureSelectedOption(
+    buildUniqueGroupOptions(
+      group => {
+        if (!group.groupD) return false
+        if (!selectedGroupA) return true
+        if (!selectedGroupB?.groupB) return group.groupA === selectedGroupA.groupA
+        if (!selectedGroupC?.groupC) return group.groupA === selectedGroupA.groupA && group.groupB === selectedGroupB.groupB
+        return (
+          group.groupA === selectedGroupA.groupA &&
+          group.groupB === selectedGroupB.groupB &&
+          group.groupC === selectedGroupC.groupC
+        )
+      },
+      group => group.groupD,
+    ),
+    form.materialGroupIdD,
+    selectedGroupD?.groupD,
+  )
+
+  function handleGroupAChange(nextId: string) {
+    update('materialGroupIdA', nextId)
+    update('materialGroupIdB', null)
+    update('materialGroupIdC', null)
+    update('materialGroupIdD', null)
+  }
+
+  function handleGroupBChange(nextId: string | null) {
+    update('materialGroupIdB', nextId)
+    update('materialGroupIdC', null)
+    update('materialGroupIdD', null)
+  }
+
+  function handleGroupCChange(nextId: string | null) {
+    update('materialGroupIdC', nextId)
+    update('materialGroupIdD', null)
   }
 
   return (
@@ -105,62 +363,29 @@ export function MaterialFormDialog({
             onSave(form)
           }}
           className="flex flex-col gap-5">
-          {/* Row 1: BE Number + Brand Order Nr */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="beNumber" className="text-xs text-muted-foreground">
-                BE Number *
-              </Label>
-              <Input
-                id="beNumber"
-                className={inputStyles}
-                value={form.beNumber ?? ''}
-                onChange={e => update('beNumber', e.target.value)}
-                placeholder="1000000"
-                required
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="brandOrderNr" className="text-xs text-muted-foreground">
-                Brand Order Nr *
-              </Label>
-              <Input
-                id="brandOrderNr"
-                type="number"
-                className={inputStyles}
-                value={form.brandOrderNr ?? 0}
-                onChange={e => update('brandOrderNr', Number(e.target.value))}
-                required
-              />
-            </div>
+          {/* Be Number */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="beNumber" className="text-xs text-muted-foreground">
+              BE Number
+            </Label>
+            <p className="text-xs text-muted-foreground">Leave empty for automatic generation</p>
+            <Input
+              id="beNumber"
+              className={inputStyles}
+              value={form.beNumber ?? ''}
+              onChange={e => update('beNumber', e.target.value)}
+              placeholder="Leave empty = generate automatically"
+            />
           </div>
 
-          {/* Row 2: Material Name + Brand Name */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="name" className="text-xs text-muted-foreground">
-                Name
-              </Label>
-              <Input
-                id="name"
-                className={inputStyles}
-                value={form.name ?? ''}
-                onChange={e => update('name', e.target.value || null)}
-                placeholder="Material name"
-              />
+          <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">
+            <div className="flex flex-col">
+              <Label className="text-xs text-muted-foreground">Is parent part</Label>
+              <p className="text-xs text-muted-foreground">
+                Toggle to mark this material as a parent part.
+              </p>
             </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="brandName" className="text-xs text-muted-foreground">
-                Brand Name
-              </Label>
-              <Input
-                id="brandName"
-                className={inputStyles}
-                value={form.brandName ?? ''}
-                onChange={e => update('brandName', e.target.value || null)}
-                placeholder="Brand name"
-              />
-            </div>
+            <Switch checked={isParentPartEnabled} onCheckedChange={setIsParentPartEnabled} aria-label="Is parent part" />
           </div>
 
           {/* Short Description */}
@@ -193,18 +418,59 @@ export function MaterialFormDialog({
             />
           </div>
 
-          {/* Row 3: MaterialGroup + Unit */}
+          {/* Brand Name + Brand Order No. */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label className="text-xs text-muted-foreground">Material Group *</Label>
-              <Select value={form.materialGroupId ?? ''} onValueChange={v => update('materialGroupId', v)} required>
+              <Label htmlFor="brandName" className="text-xs text-muted-foreground">
+                Brand Name
+              </Label>
+              <Input
+                id="brandName"
+                className={inputStyles}
+                value={form.brandName ?? ''}
+                onChange={e => update('brandName', e.target.value || null)}
+                placeholder="Brand name"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="brandOrderNr" className="text-xs text-muted-foreground">
+                Brand Order No.
+              </Label>
+              <Input
+                id="brandOrderNr"
+                className={inputStyles}
+                value={form.brandOrderNr ?? ''}
+                onChange={e => update('brandOrderNr', e.target.value || null)}
+              />
+            </div>
+          </div>
+
+          {/* Brand Short Description */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="name" className="text-xs text-muted-foreground">
+              Brand Short Description
+            </Label>
+            <Input
+              id="name"
+              className={inputStyles}
+              value={form.name ?? ''}
+              onChange={e => update('name', e.target.value || null)}
+              placeholder="Brand short description"
+            />
+          </div>
+
+          {/* Row 3: MaterialGroup A + Unit */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <Label className="text-xs text-muted-foreground">Material Group A *</Label>
+              <Select value={form.materialGroupIdA ?? ''} onValueChange={handleGroupAChange} required>
                 <SelectTrigger className={inputStyles}>
                   <SelectValue placeholder="Select group..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {materialGroups.map(g => (
+                  {groupAOptions.map(g => (
                     <SelectItem key={g.id} value={g.id}>
-                      {groupLabel(g)}
+                      {g.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -227,20 +493,115 @@ export function MaterialFormDialog({
             </div>
           </div>
 
-          {/* Row 4: Preferred Supplier + Documentation Place */}
+          {/* Row 4: Optional Material Group B/C */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="preferredSupplier" className="text-xs text-muted-foreground">
-                Preferred Supplier
+              <Label className="text-xs text-muted-foreground">Material Group B</Label>
+              <Select
+                value={form.materialGroupIdB ?? '__none__'}
+                onValueChange={v => handleGroupBChange(v === '__none__' ? null : v)}>
+                <SelectTrigger className={inputStyles}>
+                  <SelectValue placeholder="Select group..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__none__">None</SelectItem>
+                  {groupBOptions.map(g => (
+                    <SelectItem key={g.id} value={g.id}>
+                      {g.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label className="text-xs text-muted-foreground">Material Group C</Label>
+              <Select
+                value={form.materialGroupIdC ?? '__none__'}
+                onValueChange={v => handleGroupCChange(v === '__none__' ? null : v)}>
+                <SelectTrigger className={inputStyles}>
+                  <SelectValue placeholder="Select group..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__none__">None</SelectItem>
+                  {groupCOptions.map(g => (
+                    <SelectItem key={g.id} value={g.id}>
+                      {g.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Row 5: Optional Material Group D + Preferred Supplier Order ID */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <Label className="text-xs text-muted-foreground">Material Group D</Label>
+              <Select
+                value={form.materialGroupIdD ?? '__none__'}
+                onValueChange={v => update('materialGroupIdD', v === '__none__' ? null : v)}>
+                <SelectTrigger className={inputStyles}>
+                  <SelectValue placeholder="Select group..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__none__">None</SelectItem>
+                  {groupDOptions.map(g => (
+                    <SelectItem key={g.id} value={g.id}>
+                      {g.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="preferredSupplierOrderId" className="text-xs text-muted-foreground">
+                Preferred Supplier Order ID
               </Label>
               <Input
-                id="preferredSupplier"
+                id="preferredSupplierOrderId"
                 className={inputStyles}
-                value={form.preferredSupplier ?? ''}
-                onChange={e => update('preferredSupplier', e.target.value || null)}
-                placeholder="Supplier name"
+                value={typeof form.preferredSupplierOrderId === 'string' ? form.preferredSupplierOrderId : ''}
+                onChange={e => update('preferredSupplierOrderId', e.target.value || null)}
+                placeholder="e.g. ABC-123"
               />
             </div>
+          </div>
+
+          {/* Preferred Supplier Short Description */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="preferredSupplierShortDescription" className="text-xs text-muted-foreground">
+              Preferred Supplier Short Description
+            </Label>
+            <Input
+              id="preferredSupplierShortDescription"
+              className={inputStyles}
+              value={
+                typeof form.preferredSupplierShortDescription === 'string' ? form.preferredSupplierShortDescription : ''
+              }
+              onChange={e => update('preferredSupplierShortDescription', e.target.value || null)}
+              placeholder="Short description or notes about the preferred supplier"
+            />
+          </div>
+
+          {/* Preferred Supplier Company - Searchable */}
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs text-muted-foreground">Preferred Supplier Company</Label>
+            <PreferredSupplierPicker
+              selectedCompanyId={form.preferredSupplierCompanyId ?? null}
+              onSelect={companyId => update('preferredSupplierCompanyId', companyId)}
+              availableCompanies={selectedSupplierCompanies}
+              inputStyles={inputStyles}
+            />
+            {selectedSupplierCompanies.length === 0 ? (
+              <p className="text-xs text-muted-foreground">Select at least one supplier first.</p>
+            ) : form.preferredSupplierCompanyId ? (
+              <p className="text-xs text-muted-foreground">Preferred supplier is selected from your supplier list.</p>
+            ) : null}
+          </div>
+
+          {/* Row 6: Documentation Place */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2" />
             <div className="flex flex-col gap-2">
               <Label htmlFor="documentationPlace" className="text-xs text-muted-foreground">
                 Documentation Place
@@ -253,6 +614,79 @@ export function MaterialFormDialog({
                 placeholder="e.g. SharePoint / Cabinet A"
               />
             </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs text-muted-foreground">Suppliers</Label>
+            <div className="rounded-md border border-border bg-secondary/40 p-3 max-h-44 overflow-y-auto space-y-2">
+              {supplierCompanies.map(company => {
+                const checked = (form.supplierCompanyIds ?? []).includes(company.id)
+                return (
+                  <label key={company.id} className="flex items-center justify-between gap-3 text-sm cursor-pointer">
+                    <span className="truncate">
+                      {company.name} <span className="text-muted-foreground">({company.number})</span>
+                    </span>
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => toggleSupplier(company.id)}
+                      className="h-4 w-4"
+                    />
+                  </label>
+                )
+              })}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Select one or more suppliers. Preferred supplier must be selected from this list.
+            </p>
+          </div>
+
+          {/* Parent Parts Button */}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <Label className="text-xs text-muted-foreground">Uses parent parts</Label>
+              <Button
+                type="button"
+                size="sm"
+                variant={hasParentParts ? 'default' : 'outline'}
+                onClick={() => setParentPartsEnabled(!hasParentParts)}>
+                {hasParentParts ? 'Has parent parts' : 'No parent parts'}
+              </Button>
+            </div>
+
+            {hasParentParts && (
+              <>
+                <Input
+                  className={inputStyles}
+                  placeholder="Search by BE number or short description"
+                  value={parentPartSearch}
+                  onChange={e => setParentPartSearch(e.target.value)}
+                />
+                <div className="rounded-md border border-border bg-secondary/40 p-3 max-h-44 overflow-y-auto space-y-2">
+                  {filteredParentPartOptions.map(option => {
+                    const checked = (form.parentBeNumbers ?? []).includes(option.beNumber)
+                    return (
+                      <label key={option.beNumber} className="flex items-center justify-between gap-3 text-sm cursor-pointer">
+                        <span className="truncate">
+                          <span className="font-mono">{option.beNumber}</span>{' '}
+                          <span className="text-muted-foreground">- {option.shortDescription}</span>
+                        </span>
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => toggleParentBeNumber(option.beNumber)}
+                          className="h-4 w-4"
+                        />
+                      </label>
+                    )
+                  })}
+                  {filteredParentPartOptions.length === 0 && (
+                    <p className="text-xs text-muted-foreground">No parent parts found.</p>
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground">A material can have multiple parent parts.</p>
+              </>
+            )}
           </div>
 
           {/* Row 5: BE Part Doc + Rejected */}

@@ -10,7 +10,7 @@ export const inventorySchema = z.object({
   place: z.string().min(1).max(255),
   shortDescription: z.string().min(1).max(255),
   longDescription: z.string().min(1),
-  serieNumber: z.string().min(1).max(255),
+  serialNumber: z.string().min(1).max(255),
   quantityInStock: z.coerce.number().int(),
   minQuantityInStock: z.coerce.number().int(),
   maxQuantityInStock: z.coerce.number().int(),

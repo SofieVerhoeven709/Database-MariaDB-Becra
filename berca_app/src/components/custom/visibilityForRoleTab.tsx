@@ -14,21 +14,25 @@ export interface VisibilityRow {
 // defaultVisibleRoleNameFragments: substrings to match against roleName.
 // e.g. ['Project'] will match 'Project Role', 'Project Manager', etc.
 // Pass exact full names if you need precise control.
+const ALWAYS_VISIBLE_ROLES = ['Administrator', 'Management']
+
 export function buildInitialVisibilityRows(
   savedRows: MappedVisibilityForRole[],
   roleLevelOptions: RoleLevelOption[],
   defaultVisibleRoleNameFragments: string[],
 ): VisibilityRow[] {
-  return roleLevelOptions.map(rl => {
-    const saved = savedRows.find(v => v.roleLevelId === rl.id)
-    const isDefault = defaultVisibleRoleNameFragments.some(fragment =>
-      rl.roleName.toLowerCase().includes(fragment.toLowerCase()),
-    )
-    return {
-      roleLevelId: rl.id,
-      visible: saved !== undefined ? saved.visible : isDefault,
-    }
-  })
+  return roleLevelOptions
+    .filter(rl => !ALWAYS_VISIBLE_ROLES.some(r => rl.roleName.toLowerCase().includes(r.toLowerCase())))
+    .map(rl => {
+      const saved = savedRows.find(v => v.roleLevelId === rl.id)
+      const isDefault = defaultVisibleRoleNameFragments.some(fragment =>
+        rl.roleName.toLowerCase().includes(fragment.toLowerCase()),
+      )
+      return {
+        roleLevelId: rl.id,
+        visible: saved !== undefined ? saved.visible : isDefault,
+      }
+    })
 }
 
 // ─── Props ────────────────────────────────────────────────────────────────────
@@ -50,6 +54,10 @@ export function VisibilityForRoleTab({roleLevelOptions, value, onChange}: Visibi
   function handleToggle(roleLevelId: string, newVisible: boolean) {
     onChange(value.map(r => (r.roleLevelId === roleLevelId ? {...r, visible: newVisible} : r)))
   }
+
+  const filteredOptions = roleLevelOptions.filter(
+    rl => !['administrator', 'management'].some(r => rl.roleName.toLowerCase().includes(r)),
+  )
 
   return (
     <div className="flex flex-col gap-3">
@@ -75,7 +83,7 @@ export function VisibilityForRoleTab({roleLevelOptions, value, onChange}: Visibi
         </div>
       </div>
       <div className="flex flex-wrap gap-3">
-        {roleLevelOptions.map(rl => (
+        {filteredOptions.map(rl => (
           <div
             key={rl.id}
             className="flex flex-col items-start gap-2 rounded-lg border border-border bg-secondary px-4 py-2.5 w-60">

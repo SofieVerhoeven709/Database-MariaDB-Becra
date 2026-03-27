@@ -2,11 +2,8 @@
 
 import {useEffect, useState} from 'react'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter} from '@/components/ui/dialog'
-
 import {Textarea} from '@/components/ui/textarea'
-
 import {Switch} from '@/components/ui/switch'
-
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -25,7 +22,7 @@ interface EmployeeFormDialogProps {
 }
 
 export const EMPTY_EMPLOYEE: MappedEmployee = {
-  id: crypto.randomUUID(),
+  id: '',
   firstName: '',
   lastName: '',
   mail: null,
@@ -51,7 +48,7 @@ export const EMPTY_EMPLOYEE: MappedEmployee = {
   deleted: false,
   deletedAt: null,
   deletedBy: null,
-  roleLevelId: null,
+  roleLevelIds: [],
   titleId: null,
   roleName: '-',
   titleName: '-',
@@ -97,9 +94,10 @@ export function EmployeeFormDialog({
           endDate: employee.endDate ? employee.endDate.split('T')[0] : null,
           birthDate: employee.birthDate ? employee.birthDate.split('T')[0] : null,
           deletedAt: employee.deletedAt ? employee.deletedAt.split('T')[0] : null,
+          roleLevelIds: employee.roleLevelIds ?? [],
         })
       } else {
-        setForm({...EMPTY_EMPLOYEE, id: `e-${Date.now()}`})
+        setForm({...EMPTY_EMPLOYEE})
       }
       setPassword('')
       setPasswordTouched(false)
@@ -127,7 +125,7 @@ export function EmployeeFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-card border-border max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-card border-border max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-foreground">{isEditing ? 'Edit Employee' : 'New Employee'}</DialogTitle>
           <DialogDescription>
@@ -152,6 +150,9 @@ export function EmployeeFormDialog({
             <TabsList className="w-full bg-secondary">
               <TabsTrigger value="general" className="flex-1 data-[state=active]:bg-card">
                 General
+              </TabsTrigger>
+              <TabsTrigger value="roles" className="flex-1 data-[state=active]:bg-card">
+                Roles
               </TabsTrigger>
               <TabsTrigger value="contact" className="flex-1 data-[state=active]:bg-card">
                 Contact
@@ -188,27 +189,6 @@ export function EmployeeFormDialog({
                       {titles.map(t => (
                         <SelectItem key={t.id} value={t.id}>
                           {t.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="roleLevelId">Role</Label>
-                  <Select
-                    value={form.roleLevelId ?? ''}
-                    onValueChange={v => {
-                      const role = roles.find(r => r.id === v)
-                      update('roleLevelId', v || null)
-                      update('roleName', role?.name ?? '-')
-                    }}>
-                    <SelectTrigger className={inputStyles}>
-                      <SelectValue placeholder="Select role" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border">
-                      {roles.map(r => (
-                        <SelectItem key={r.id} value={r.id}>
-                          {r.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -344,6 +324,28 @@ export function EmployeeFormDialog({
                   className={`${inputStyles} min-h-20`}
                   placeholder="Notes about this employee..."
                 />
+              </div>
+            </TabsContent>
+
+            {/* ---- Roles tab ---- */}
+            <TabsContent value="roles" className="flex flex-col gap-4 mt-4">
+              <div className="flex flex-col gap-1.5 rounded-md border border-border bg-secondary p-2">
+                {roles.map(r => (
+                  <label key={r.id} className="flex items-center gap-2 cursor-pointer px-2 py-1 rounded hover:bg-muted">
+                    <input
+                      type="checkbox"
+                      checked={form.roleLevelIds.includes(r.id)}
+                      onChange={e => {
+                        const next = e.target.checked
+                          ? [...form.roleLevelIds, r.id]
+                          : form.roleLevelIds.filter(id => id !== r.id)
+                        update('roleLevelIds', next)
+                      }}
+                      className="accent-accent"
+                    />
+                    <span className="text-sm">{r.name}</span>
+                  </label>
+                ))}
               </div>
             </TabsContent>
 

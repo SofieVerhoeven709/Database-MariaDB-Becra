@@ -80,11 +80,6 @@ export type DeliveryNoteSupplier = Prisma.DeliveryNoteSupplierModel
  */
 export type Department = Prisma.DepartmentModel
 /**
- * Model DocumentGroup
- * 
- */
-export type DocumentGroup = Prisma.DocumentGroupModel
-/**
  * Model DocumentPlace
  * 
  */
@@ -479,3 +474,23 @@ export type CompanyAddress = Prisma.CompanyAddressModel
  * 
  */
 export type PriceListItemTarget = Prisma.PriceListItemTargetModel
+/**
+ * Model DocumentGroupA
+ * 
+ */
+export type DocumentGroupA = Prisma.DocumentGroupAModel
+/**
+ * Model DocumentGroupB
+ * 
+ */
+export type DocumentGroupB = Prisma.DocumentGroupBModel
+/**
+ * Model DocumentGroupC
+ * 
+ */
+export type DocumentGroupC = Prisma.DocumentGroupCModel
+/**
+ * Model DocumentGroupD
+ * 
+ */
+export type DocumentGroupD = Prisma.DocumentGroupDModel

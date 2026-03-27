@@ -2003,7 +2003,7 @@ model WorkOrderInvoice {
   deleted      Boolean    @default(false)
   deletedAt    DateTime?  @db.DateTime(0)
   deletedBy    String?    @db.Char(36)
-  InvoiceOut   InvoiceOut @relation(fields: [invoiceOutId], references: [id], onUpdate: Restrict, map: "WorkOrderInvoice_ibfk_1")
+  InvoiceOut   InvoiceOut @relation(fields: [invoiceOutId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "WorkOrderInvoice_ibfk_1")
   WorkOrder    WorkOrder  @relation(fields: [workOrderId], references: [id], onUpdate: Restrict, map: "WorkOrderInvoice_ibfk_2")
   Employee     Employee?  @relation(fields: [deletedBy], references: [id], onUpdate: Restrict, map: "WorkOrderInvoice_ibfk_3")
 

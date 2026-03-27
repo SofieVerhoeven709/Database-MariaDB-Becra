@@ -4,13 +4,15 @@ import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Dia
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Label} from '@/components/ui/label'
-import type {MappedMaterialPlace} from '@/types/materialPlace'
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
+import type {MappedMaterialPlace, MaterialPlaceEmployeeOption} from '@/types/materialPlace'
 
 interface MaterialPlaceFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   item: MappedMaterialPlace | null
   onSave: (item: Partial<MappedMaterialPlace> & {id: string}) => Promise<void>
+  employees: MaterialPlaceEmployeeOption[]
 }
 
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
@@ -21,6 +23,8 @@ const EMPTY: Partial<MappedMaterialPlace> & {id: string} = {
   beNumber: '',
   serialTrackedId: '',
   place: '',
+  storageEmployeeId: null,
+  storageEmployeeName: null,
   shelf: '',
   column: '',
   layer: '',
@@ -29,7 +33,7 @@ const EMPTY: Partial<MappedMaterialPlace> & {id: string} = {
   quantityInStock: 0,
 }
 
-export function MaterialPlaceFormDialog({open, onOpenChange, item, onSave}: MaterialPlaceFormDialogProps) {
+export function MaterialPlaceFormDialog({open, onOpenChange, item, employees, onSave}: MaterialPlaceFormDialogProps) {
   const isEditing = item !== null
   const makeForm = (): Partial<MappedMaterialPlace> & {id: string} =>
     item ? {...item} : {...EMPTY, id: crypto.randomUUID()}
@@ -114,6 +118,27 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, onSave}: Mate
               />
             </div>
             <div className="flex flex-col gap-2">
+              <Label className="text-xs text-muted-foreground">Storage Employee</Label>
+              <Select
+                value={form.storageEmployeeId ?? 'none'}
+                onValueChange={value => update('storageEmployeeId', value === 'none' ? null : value)}>
+                <SelectTrigger className={inputStyles}>
+                  <SelectValue placeholder="No linked employee" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">No linked employee</SelectItem>
+                  {employees.map(employee => (
+                    <SelectItem key={employee.id} value={employee.id}>
+                      {employee.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
               <Label htmlFor="mp-shelf" className="text-xs text-muted-foreground">
                 Shelf
               </Label>
@@ -125,9 +150,6 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, onSave}: Mate
                 placeholder="e.g. Shelf 1"
               />
             </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="mp-column" className="text-xs text-muted-foreground">
                 Column
@@ -140,6 +162,9 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, onSave}: Mate
                 placeholder="e.g. Column B"
               />
             </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="mp-layer" className="text-xs text-muted-foreground">
                 Layer
@@ -152,19 +177,18 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, onSave}: Mate
                 placeholder="e.g. Layer 2"
               />
             </div>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="mp-layerPlace" className="text-xs text-muted-foreground">
-              Layer Place
-            </Label>
-            <Input
-              id="mp-layerPlace"
-              className={inputStyles}
-              value={form.layerPlace ?? ''}
-              onChange={e => update('layerPlace', e.target.value)}
-              placeholder="e.g. Position 3"
-            />
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="mp-layerPlace" className="text-xs text-muted-foreground">
+                Layer Place
+              </Label>
+              <Input
+                id="mp-layerPlace"
+                className={inputStyles}
+                value={form.layerPlace ?? ''}
+                onChange={e => update('layerPlace', e.target.value)}
+                placeholder="e.g. Position 3"
+              />
+            </div>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -211,4 +235,3 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, onSave}: Mate
     </Dialog>
   )
 }
-

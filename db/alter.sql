@@ -1,4 +1,4 @@
-﻿USE BecraBV;
+﻿USE  BecraBV;
  
 -- ============================================================
 -- Idempotent migrations.
@@ -376,13 +376,13 @@ ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
 ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
 
 -- 39a. Drop old tables (disable FK checks to avoid constraint errors) commented to prevent data losses
---SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS = 0;
 
---DROP TABLE IF EXISTS InvoiceOutContact;
---DROP TABLE IF EXISTS InvoiceOut;
---DROP TABLE IF EXISTS InvoiceIn;
+DROP TABLE IF EXISTS InvoiceOutContact;
+DROP TABLE IF EXISTS InvoiceOut;
+DROP TABLE IF EXISTS InvoiceIn;
 
---SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 1;
 -- 39b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
 CREATE TABLE IF NOT EXISTS VatMargin (
       id CHAR(36) NOT NULL PRIMARY KEY,
@@ -432,7 +432,7 @@ CREATE TABLE IF NOT EXISTS PaymentMethod (
       FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
 ) ENGINE = InnoDB;
 
---41. Create PriceList table
+-- 41. Create PriceList table
 CREATE TABLE
       IF NOT EXISTS PriceList (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -563,6 +563,68 @@ UPDATE Company SET officialName = name WHERE officialName IS NULL;
 -- Step 3: Now enforce NOT NULL since all rows are filled
 ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
+
+ALTER TABLE MaterialSerialTrack
+DROP COLUMN beNumber;
+
+-- Add the materialId column (nullable)
+ALTER TABLE MaterialSerialTrack
+ADD COLUMN materialId CHAR(36) NULL;
+
+-- Add an index for performance (optional but recommended)
+-- CREATE INDEX idx_materialId ON MaterialSerialTrack(materialId);
+
+-- Add the foreign key constraint
+ALTER TABLE MaterialSerialTrack
+ADD CONSTRAINT fk_material_serialtrack_materialId
+FOREIGN KEY (materialId) REFERENCES Material(id)
+ON DELETE SET NULL
+ON UPDATE RESTRICT;
+
+-- Add a serial tracked boolean to the materials
+ALTER TABLE Material
+ADD COLUMN isSerialTracked BOOLEAN NOT NULL DEFAULT 0;
+
+-- Removing materialgroupid from materialSerialTrack
+
+-- Remove materialGroupId from MaterialSerialTrack safely
+SET @fk_name = (
+  SELECT CONSTRAINT_NAME
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MaterialSerialTrack'
+    AND COLUMN_NAME = 'materialGroupId'
+    AND REFERENCED_TABLE_NAME IS NOT NULL
+  LIMIT 1
+);
+SET @sql = IF(@fk_name IS NOT NULL,
+  CONCAT('ALTER TABLE MaterialSerialTrack DROP FOREIGN KEY `', @fk_name, '`'),
+  'SELECT ''No FK to drop on MaterialSerialTrack.materialGroupId'''
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+ALTER TABLE MaterialSerialTrack DROP COLUMN IF EXISTS materialGroupId;
+
+-- Remove materialGroupId from MaterialSerialTrackedStructure safely
+SET @fk_name2 = (
+  SELECT CONSTRAINT_NAME
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MaterialSerialTrackedStructure'
+    AND COLUMN_NAME = 'materialGroupId'
+    AND REFERENCED_TABLE_NAME IS NOT NULL
+  LIMIT 1
+);
+SET @sql2 = IF(@fk_name2 IS NOT NULL,
+  CONCAT('ALTER TABLE MaterialSerialTrackedStructure DROP FOREIGN KEY `', @fk_name2, '`'),
+  'SELECT ''No FK to drop on MaterialSerialTrackedStructure.materialGroupId'''
+);
+PREPARE stmt2 FROM @sql2;
+EXECUTE stmt2;
+DEALLOCATE PREPARE stmt2;
+ALTER TABLE MaterialSerialTrackedStructure DROP COLUMN IF EXISTS materialGroupId;
+
 -- 43a. Project: add priceListId column
 ALTER TABLE Project ADD COLUMN IF NOT EXISTS `priceListId` CHAR(36) NULL;
 
@@ -630,3 +692,6 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 ALTER TABLE WorkOrder CHANGE COLUMN IF EXISTS `workOrderNumber` `workOrderNumber` VARCHAR(255) NOT NULL;
+
+ALTER TABLE MaterialSerialTrack CHANGE COLUMN IF EXISTS `serialTrackedId` `serialTrackedId` CHAR(36) NULL;
+ALTER TABLE MaterialSerialTrackStructure CHANGE COLUMN IF EXISTS `beNumber` `beNumber`  VARCHAR(255) NULL;

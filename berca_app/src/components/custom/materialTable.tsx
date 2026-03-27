@@ -37,6 +37,12 @@ interface ParentPartOption {
   shortDescription: string
 }
 
+interface WarehousePlaceOption {
+  id: string
+  label: string
+  beNumber: string | null
+}
+
 type SortField =
   | 'beNumber'
   | 'name'
@@ -47,12 +53,15 @@ type SortField =
   | 'materialGroupLabelC'
   | 'materialGroupLabelD'
   | 'unitName'
+  | 'warehousePlaceLabel'
   | 'parentBeNumbers'
   | 'createdByName'
   | 'createdAt'
   | 'rejected'
 type SortDir = 'asc' | 'desc'
 type FilterRejected = 'all' | 'active' | 'rejected'
+type FilterPlace = 'all' | 'withPlace' | 'withoutPlace'
+type FilterDeleted = 'all' | 'notDeleted' | 'deleted'
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
@@ -82,6 +91,7 @@ interface MaterialTableProps {
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
   parentPartOptions: ParentPartOption[]
+  warehousePlaces: WarehousePlaceOption[]
   departmentId?: string
 }
 
@@ -91,6 +101,7 @@ export function MaterialTable({
   units,
   supplierCompanies,
   parentPartOptions,
+  warehousePlaces,
   departmentId,
 }: MaterialTableProps) {
   const router = useRouter() as unknown as {refresh: () => void; push: (href: string) => void}
@@ -99,15 +110,14 @@ export function MaterialTable({
   const [sortField, setSortField] = useState<SortField>('beNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [filterRejected, setFilterRejected] = useState<FilterRejected>('all')
+  const [filterPlace, setFilterPlace] = useState<FilterPlace>('all')
+  const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('notDeleted')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
 
-  const parentPartBeNumbersInUse = useMemo(
-    () => [...new Set(materials.flatMap(m => m.parentBeNumbers))],
-    [materials],
-  )
+  const parentPartBeNumbersInUse = useMemo(() => [...new Set(materials.flatMap(m => m.parentBeNumbers))], [materials])
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -125,6 +135,16 @@ export function MaterialTable({
       return true
     })
     .filter(m => {
+      if (filterPlace === 'withPlace') return Boolean(m.warehousePlaceLabel)
+      if (filterPlace === 'withoutPlace') return !m.warehousePlaceLabel
+      return true
+    })
+    .filter(m => {
+      if (filterDeleted === 'notDeleted') return !m.deleted
+      if (filterDeleted === 'deleted') return m.deleted
+      return true
+    })
+    .filter(m => {
       if (!search) return true
       const q = search.toLowerCase()
       return (
@@ -138,6 +158,7 @@ export function MaterialTable({
         m.materialGroupLabelC.toLowerCase().includes(q) ||
         m.materialGroupLabelD.toLowerCase().includes(q) ||
         m.unitName.toLowerCase().includes(q) ||
+        (m.warehousePlaceLabel ?? '').toLowerCase().includes(q) ||
         m.parentBeNumbers.some(parent => parent.toLowerCase().includes(q)) ||
         (m.preferredSupplierCompanyName ?? '').toLowerCase().includes(q) ||
         m.supplierCompanyNames.some(name => name.toLowerCase().includes(q))
@@ -163,17 +184,18 @@ export function MaterialTable({
         'longDescription',
         'preferredSupplierCompanyId',
         'preferredSupplierOrderId',
-        'preferredSupplierShortDescription',
+        /*'preferredSupplierShortDescription',*/
         'supplierCompanyIds',
         'parentBeNumbers',
         'brandName',
-        'documentationPlace',
-        'bePartDoc',
+        /* 'documentationPlace',
+        'bePartDoc',*/
         'rejected',
         'materialGroupIdA',
         'materialGroupIdB',
         'materialGroupIdC',
         'materialGroupIdD',
+        'warehousePlaceId',
         'unitId',
       ])
 
@@ -183,13 +205,14 @@ export function MaterialTable({
         'longDescription',
         'preferredSupplierCompanyId',
         'preferredSupplierOrderId',
-        'preferredSupplierShortDescription',
+        /*'preferredSupplierShortDescription',*/
         'brandName',
-        'documentationPlace',
-        'bePartDoc',
+        /* 'documentationPlace',
+        'bePartDoc',*/
         'materialGroupIdB',
         'materialGroupIdC',
         'materialGroupIdD',
+        'warehousePlaceId',
       ])
 
       const fd = new FormData()
@@ -250,6 +273,7 @@ export function MaterialTable({
     {key: 'materialGroupLabelC', label: 'Group C'},
     {key: 'materialGroupLabelD', label: 'Group D'},
     {key: 'unitName', label: 'Unit'},
+    {key: 'warehousePlaceLabel', label: 'Warehouse Place'},
     {key: 'parentBeNumbers', label: 'Parent Parts'},
     {key: 'createdByName', label: 'Created'},
     {key: 'rejected', label: 'Status'},
@@ -277,6 +301,28 @@ export function MaterialTable({
             <SelectItem value="all">All statuses</SelectItem>
             <SelectItem value="active">Active</SelectItem>
             <SelectItem value="rejected">Rejected</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select value={filterPlace} onValueChange={v => setFilterPlace(v as FilterPlace)}>
+          <SelectTrigger className="w-44 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All places</SelectItem>
+            <SelectItem value="withPlace">With place</SelectItem>
+            <SelectItem value="withoutPlace">Without place</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
+          <SelectTrigger className="w-44 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All items</SelectItem>
+            <SelectItem value="notDeleted">Not deleted</SelectItem>
+            <SelectItem value="deleted">Deleted</SelectItem>
           </SelectContent>
         </Select>
 
@@ -340,6 +386,9 @@ export function MaterialTable({
                   <TableCell className="text-sm">
                     {m.unitName}
                     <span className="text-muted-foreground text-xs ml-1">({m.unitAbbreviation})</span>
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {m.warehousePlaceLabel ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
                   <TableCell className="text-sm max-w-[220px]">
                     {m.parentBeNumbers.length > 0 ? (
@@ -421,6 +470,7 @@ export function MaterialTable({
         units={units}
         supplierCompanies={supplierCompanies}
         parentPartOptions={parentPartOptions}
+        warehousePlaces={warehousePlaces}
         parentPartBeNumbersInUse={parentPartBeNumbersInUse}
         onSave={handleSave}
         saving={saving}

@@ -36,11 +36,11 @@ export interface MappedDocument {
   // Group hierarchy
   documentGroupAId: string
   documentGroupAName: string | null
-  documentGroupBId: string
+  documentGroupBId: string | null
   documentGroupBName: string | null
-  documentGroupCId: string
+  documentGroupCId: string | null
   documentGroupCName: string | null
-  documentGroupDId: string
+  documentGroupDId: string | null
   documentGroupDName: string | null
   // Place
   documentPlaceId: string

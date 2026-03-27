@@ -170,6 +170,7 @@ export function DocumentTable({
   const canCreate = currentUserLevel >= 60
   const canDelete = currentUserLevel >= 80
   const canManageVisibility = currentUserLevel >= 80
+  const canEditNumber = currentUserLevel >= 80
 
   // ─── Document table state ──────────────────────────────────────────────────
   const [search, setSearch] = useState('')
@@ -759,6 +760,7 @@ export function DocumentTable({
         placeOptions={placeOptions}
         documentOptions={documentOptions}
         canManageVisibility={canManageVisibility}
+        canEditNumber={canEditNumber}
       />
     </Tabs>
   )

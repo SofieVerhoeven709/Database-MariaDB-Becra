@@ -13,6 +13,7 @@ import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/cus
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import type {MappedDocument, DocumentGroupOption, DocumentPlaceOption} from '@/types/document'
 import type {RoleLevelOption} from '@/types/roleLevel'
+import {generateCompanyNumber, generatedocumentNumber} from '@/lib/utils'
 
 interface SelectOption {
   id: string
@@ -36,12 +37,13 @@ interface DocumentFormDialogProps {
   placeOptions: DocumentPlaceOption[]
   documentOptions: SelectOption[] // for referenceDocId
   canManageVisibility: boolean
+  canEditNumber: boolean
 }
 
 function emptyDocument(): MappedDocument {
   return {
     id: '',
-    documentNumber: '',
+    documentNumber: generatedocumentNumber(),
     description: null,
     descriptionShort: '',
     createdAt: new Date().toISOString(),
@@ -57,11 +59,11 @@ function emptyDocument(): MappedDocument {
     roleName: null,
     documentGroupAId: '',
     documentGroupAName: null,
-    documentGroupBId: '',
+    documentGroupBId: null,
     documentGroupBName: null,
-    documentGroupCId: '',
+    documentGroupCId: null,
     documentGroupCName: null,
-    documentGroupDId: '',
+    documentGroupDId: null,
     documentGroupDName: null,
     documentPlaceId: '',
     documentPlaceLabel: '',
@@ -97,9 +99,11 @@ export function DocumentFormDialog({
   placeOptions,
   documentOptions,
   canManageVisibility,
+  canEditNumber,
 }: DocumentFormDialogProps) {
   const [form, setForm] = useState<MappedDocument>(emptyDocument())
   const [saving, setSaving] = useState(false)
+  const [numberError, setNumberError] = useState<string | null>(null)
   const [visibilityRows, setVisibilityRows] = useState<VisibilityRow[]>(() =>
     buildInitialVisibilityRows(document?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
@@ -109,6 +113,7 @@ export function DocumentFormDialog({
   useEffect(() => {
     const next = document ?? emptyDocument()
     setForm(next)
+    setNumberError(null)
     setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
   }, [document?.id, open])
 
@@ -117,6 +122,10 @@ export function DocumentFormDialog({
   }
 
   async function handleSubmit() {
+    if (!form.documentNumber.trim()) {
+      setNumberError('Company number is required.')
+      return
+    }
     setSaving(true)
     try {
       await onSave(
@@ -139,9 +148,6 @@ export function DocumentFormDialog({
     form.documentNumber.trim() !== '' &&
     form.descriptionShort.trim() !== '' &&
     form.documentGroupAId !== '' &&
-    form.documentGroupBId !== '' &&
-    form.documentGroupCId !== '' &&
-    form.documentGroupDId !== '' &&
     form.documentPlaceId !== '' &&
     form.revisedById !== '' &&
     form.managedById !== ''
@@ -250,6 +256,7 @@ export function DocumentFormDialog({
       <Switch checked={form[key] as boolean} onCheckedChange={v => set(key, v as MappedDocument[typeof key])} />
     </div>
   )
+  const numberEditable = !isEdit || canEditNumber
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -272,12 +279,35 @@ export function DocumentFormDialog({
             <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
               <div className="sm:col-span-2">
                 <div className="flex flex-col gap-1.5">
-                  <Label className="text-xs text-muted-foreground">Document Number *</Label>
-                  <Input
-                    value={form.documentNumber}
-                    onChange={e => set('documentNumber', e.target.value)}
-                    className="bg-secondary border-border"
-                  />
+                  <Label className="text-xs text-muted-foreground">
+                    Number *{!numberEditable && <span className="ml-1.5 text-muted-foreground/60">(locked)</span>}
+                  </Label>
+                  {numberEditable ? (
+                    <div className="flex flex-col gap-1">
+                      <div className="flex gap-2">
+                        <Input
+                          value={form.documentNumber}
+                          onChange={e => set('documentNumber', e.target.value)}
+                          className={`bg-secondary border-border flex-1 ${numberError ? 'border-destructive' : ''}`}
+                        />
+                        {!isEdit && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            className="h-10 px-3 border-border text-xs shrink-0"
+                            onClick={() => set('documentNumber', generatedocumentNumber())}>
+                            Regenerate
+                          </Button>
+                        )}
+                      </div>
+                      {numberError && <p className="text-xs text-destructive">{numberError}</p>}
+                    </div>
+                  ) : (
+                    <div className="flex h-10 items-center rounded-md border border-border bg-secondary/40 px-3 text-sm text-muted-foreground cursor-not-allowed select-none">
+                      {form.documentNumber}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="sm:col-span-2">

@@ -1290,11 +1290,11 @@ CREATE TABLE
 
 ALTER TABLE DocumentStructure ADD documentGroupAId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_documentGroupA FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD documentGroupBId CHAR(36) NOT NULL,
+ALTER TABLE DocumentStructure ADD documentGroupBId CHAR(36) NULL,
 ADD CONSTRAINT fk_documentStructure_documentGroupB FOREIGN KEY (documentGroupBId) REFERENCES DocumentGroupB (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD documentGroupCId CHAR(36) NOT NULL,
+ALTER TABLE DocumentStructure ADD documentGroupCId CHAR(36) NULL,
 ADD CONSTRAINT fk_documentStructure_documentGroupC FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD documentGroupDId CHAR(36) NOT NULL,
+ALTER TABLE DocumentStructure ADD documentGroupDId CHAR(36) NULL,
 ADD CONSTRAINT fk_documentStructure_documentGroupD FOREIGN KEY (documentGroupDId) REFERENCES DocumentGroupD (id) ON DELETE RESTRICT;
 ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;

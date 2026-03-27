@@ -359,9 +359,9 @@ export type DocumentGroupCUncheckedUpdateManyInput = {
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type DocumentGroupCScalarRelationFilter = {
-  is?: Prisma.DocumentGroupCWhereInput
-  isNot?: Prisma.DocumentGroupCWhereInput
+export type DocumentGroupCNullableScalarRelationFilter = {
+  is?: Prisma.DocumentGroupCWhereInput | null
+  isNot?: Prisma.DocumentGroupCWhereInput | null
 }
 
 export type DocumentGroupCListRelationFilter = {
@@ -413,16 +413,23 @@ export type DocumentGroupCMinOrderByAggregateInput = {
   deletedBy?: Prisma.SortOrder
 }
 
+export type DocumentGroupCScalarRelationFilter = {
+  is?: Prisma.DocumentGroupCWhereInput
+  isNot?: Prisma.DocumentGroupCWhereInput
+}
+
 export type DocumentGroupCCreateNestedOneWithoutDocumentStructureInput = {
   create?: Prisma.XOR<Prisma.DocumentGroupCCreateWithoutDocumentStructureInput, Prisma.DocumentGroupCUncheckedCreateWithoutDocumentStructureInput>
   connectOrCreate?: Prisma.DocumentGroupCCreateOrConnectWithoutDocumentStructureInput
   connect?: Prisma.DocumentGroupCWhereUniqueInput
 }
 
-export type DocumentGroupCUpdateOneRequiredWithoutDocumentStructureNestedInput = {
+export type DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput = {
   create?: Prisma.XOR<Prisma.DocumentGroupCCreateWithoutDocumentStructureInput, Prisma.DocumentGroupCUncheckedCreateWithoutDocumentStructureInput>
   connectOrCreate?: Prisma.DocumentGroupCCreateOrConnectWithoutDocumentStructureInput
   upsert?: Prisma.DocumentGroupCUpsertWithoutDocumentStructureInput
+  disconnect?: Prisma.DocumentGroupCWhereInput | boolean
+  delete?: Prisma.DocumentGroupCWhereInput | boolean
   connect?: Prisma.DocumentGroupCWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentGroupCUpdateToOneWithWhereWithoutDocumentStructureInput, Prisma.DocumentGroupCUpdateWithoutDocumentStructureInput>, Prisma.DocumentGroupCUncheckedUpdateWithoutDocumentStructureInput>
 }

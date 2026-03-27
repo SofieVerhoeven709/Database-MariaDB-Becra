@@ -185,9 +185,9 @@ export const documentStructureSchema = z.object({
   deletedAt: dateSchema.optional(),
   deletedBy: z.string().nullable().optional(),
   documentGroupAId: z.string(),
-  documentGroupBId: z.string(),
-  documentGroupCId: z.string(),
-  documentGroupDId: z.string(),
+  documentGroupBId: z.string().nullable().optional(),
+  documentGroupCId: z.string().nullable().optional(),
+  documentGroupDId: z.string().nullable().optional(),
   documentPlaceId: z.string(),
 })
 

@@ -319,11 +319,11 @@ CREATE TABLE
       ) ENGINE = InnoDB;
  
 -- 36a. CompanyAdress: add countryId column
-ALTER TABLE CompanyAdress ADD COLUMN IF NOT EXISTS `countryId` CHAR(36) NULL;
+ALTER TABLE CompanyAddress ADD COLUMN IF NOT EXISTS `countryId` CHAR(36) NULL;
  
 -- 36b. CompanyAdress: add FK fk_companyadress_country (skip if already exists)
-ALTER TABLE CompanyAdress DROP FOREIGN KEY IF EXISTS fk_companyadress_country;
-ALTER TABLE CompanyAdress ADD CONSTRAINT fk_companyadress_country
+ALTER TABLE CompanyAddress DROP FOREIGN KEY IF EXISTS fk_companyaddress_country;
+ALTER TABLE CompanyAddress ADD CONSTRAINT fk_companyaddress_country
     FOREIGN KEY (`countryId`) REFERENCES Country (`id`) ON DELETE SET NULL;
 
 -- 37a. MaterialSupplier: add supplierOrderNr column

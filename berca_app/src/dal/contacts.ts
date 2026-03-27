@@ -51,7 +51,22 @@ export async function getContactDetail(id: string) {
       CompanyContact: {
         orderBy: {startedDate: 'desc'},
         include: {
-          Company: {select: {id: true, name: true, number: true, companyActive: true}},
+          Company: {
+            select: {
+              id: true,
+              name: true,
+              number: true,
+              companyActive: true,
+              createdAt: true,
+              deleted: true,
+              deletedAt: true,
+              createdBy: true,
+              deletedBy: true,
+              targetId: true,
+              newsLetter: true,
+              companyId: true,
+            },
+          },
           Employee: {select: {firstName: true, lastName: true}},
           CompanyAddress: {
             // ← add this

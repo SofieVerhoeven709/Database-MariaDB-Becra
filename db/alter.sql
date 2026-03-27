@@ -600,7 +600,7 @@ ALTER TABLE CompanyContact ADD COLUMN IF NOT EXISTS `companyAddressId` CHAR(36) 
 -- 45b. CompanyContact: add FK fk_companyContact_companyAddress (skip if already exists)
 ALTER TABLE CompanyContact DROP FOREIGN KEY IF EXISTS fk_companyContact_companyAddress;
 ALTER TABLE CompanyContact ADD CONSTRAINT fk_companyContact_companyAddress
-    FOREIGN KEY (`companyAddressId`) REFERENCES CompanyAdress (`id`) ON DELETE SET NULL;
+    FOREIGN KEY (`companyAddressId`) REFERENCES CompanyAddress (`id`) ON DELETE SET NULL;
 
 -- 46a. houtype & material: add targetId column
 ALTER TABLE HourType ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NULL;

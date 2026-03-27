@@ -12,9 +12,8 @@ interface PageProps {
 function getParentBeNumbers(material: unknown): string[] {
   if (!material || typeof material !== 'object') return []
 
-  const links =
-    (material as {MaterialStructure_MaterialStructure_materialIdToMaterial?: unknown})
-      .MaterialStructure_MaterialStructure_materialIdToMaterial
+  const links = (material as {MaterialStructure_MaterialStructure_materialIdToMaterial?: unknown})
+    .MaterialStructure_MaterialStructure_materialIdToMaterial
   if (!Array.isArray(links)) return []
 
   return links
@@ -69,10 +68,11 @@ export default async function MaterialPage({params}: PageProps) {
     return {
       id: m.id,
       beNumber: m.beNumber,
-      name: m.name ?? null,
+      name: m.name ?? '',
       brandOrderNr: m.brandOrderNr,
       shortDescription: m.shortDescription,
       longDescription: m.longDescription ?? null,
+      isSerialTracked: m.isSerialTracked,
       preferredSupplierCompanyId: m.preferredSupplierCompanyId ?? null,
       preferredSupplierCompanyName: m.PreferredSupplierCompany?.name ?? null,
       preferredSupplierOrderId: preferredSupplierEntry?.supplierOrderNr ?? null,

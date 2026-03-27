@@ -1,7 +1,7 @@
 export interface MappedMaterial {
   id: string
   beNumber: string
-  name: string | null
+  name: string
   brandOrderNr: string | null
   shortDescription: string
   longDescription: string | null
@@ -36,4 +36,5 @@ export interface MappedMaterial {
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
+  isSerialTracked: boolean
 }

@@ -7,7 +7,8 @@ import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Textarea} from '@/components/ui/textarea'
 import {Button} from '@/components/ui/button'
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
+import {Switch} from '@/components/ui/switch'
+import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from '@/components/ui/select'
 import {
   createMaterialSerialTrackedAction,
   updateMaterialSerialTrackedAction,
@@ -32,7 +33,6 @@ type MaterialSerialTrackedFormValue = {
   additionalInfo: string | null
   projectId: string | null
   becraCode: string | null
-  createdBy: string | null
 }
 
 interface MaterialSerialTrackedFormDialogProps {
@@ -42,6 +42,17 @@ interface MaterialSerialTrackedFormDialogProps {
   companyOptions: {id: string; name: string}[]
   projectOptions: {id: string; name: string}[]
   materialGroupOptions: {id: string; name: string}[]
+  materialOptions: {
+    id: string
+    beNumber: string
+    brandName: string | null
+    management: string | null
+    brandOrderNr: string | null
+    shortDescription: string
+    longDescription: string | null
+    materialGroupId: string
+  }[]
+  departmentId: string
 }
 
 type FormState = {
@@ -59,7 +70,7 @@ type FormState = {
   fromLocation: string
   toLocation: string
   preferredSupplier: string
-  rejected: string
+  rejected: boolean | null
   additionalInfo: string
   projectId: string
   becraCode: string
@@ -79,7 +90,7 @@ const emptyForm: FormState = {
   fromLocation: '',
   toLocation: '',
   preferredSupplier: '',
-  rejected: '',
+  rejected: null,
   additionalInfo: '',
   projectId: '',
   becraCode: '',
@@ -103,7 +114,7 @@ function toFormState(item: MaterialSerialTrackedFormValue | null): FormState {
     fromLocation: item.fromLocation ?? '',
     toLocation: item.toLocation ?? '',
     preferredSupplier: item.preferredSupplier ?? '',
-    rejected: item.rejected === true ? 'true' : item.rejected === false ? 'false' : '',
+    rejected: typeof item.rejected === 'boolean' ? item.rejected : null,
     additionalInfo: item.additionalInfo ?? '',
     projectId: item.projectId ?? '',
     becraCode: item.becraCode ?? '',
@@ -124,10 +135,13 @@ export function MaterialSerialTrackedFormDialog({
   companyOptions,
   projectOptions,
   materialGroupOptions,
+  materialOptions,
+  departmentId,
 }: MaterialSerialTrackedFormDialogProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [form, setForm] = useState<FormState>(emptyForm)
+  const [error, setError] = useState<string | null>(null)
   const isEditing = !!materialSerialTracked
 
   useEffect(() => {
@@ -142,55 +156,75 @@ export function MaterialSerialTrackedFormDialog({
     setForm(prev => ({...prev, [key]: value}))
   }
 
+  async function handleBeNumberSelect(beNumber: string) {
+    setField('beNumber', beNumber)
+    const material = materialOptions.find(m => m.beNumber === beNumber)
+    if (material) {
+      setForm(prev => ({
+        ...prev,
+        beNumber: material.beNumber,
+        brandName: material.brandName ?? '',
+        management: material.management ?? '',
+        brandOrderNumber: material.brandOrderNr ?? '',
+        shortDescription: material.shortDescription ?? '',
+        longDescription: material.longDescription ?? '',
+        materialGroupId: material.materialGroupId ?? '',
+      }))
+    }
+  }
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-
+    setError(null)
     startTransition(async () => {
-      if (isEditing && form.id) {
-        await updateMaterialSerialTrackedAction({
-          id: form.id,
-          beNumber: form.beNumber,
-          brandName: form.brandName,
-          management: form.management,
-          brandOrderNumber: form.brandOrderNumber,
-          companyId: form.companyId,
-          orderNumber: form.orderNumber,
-          shortDescription: form.shortDescription,
-          longDescription: form.longDescription,
-          transactionType: form.transactionType,
-          materialGroupId: form.materialGroupId,
-          fromLocation: form.fromLocation,
-          toLocation: form.toLocation,
-          preferredSupplier: form.preferredSupplier,
-          rejected: parseBooleanString(form.rejected),
-          additionalInfo: form.additionalInfo,
-          projectId: form.projectId,
-          becraCode: form.becraCode,
-        })
-      } else {
-        await createMaterialSerialTrackedAction({
-          beNumber: form.beNumber,
-          brandName: form.brandName,
-          management: form.management,
-          brandOrderNumber: form.brandOrderNumber,
-          companyId: form.companyId,
-          orderNumber: form.orderNumber,
-          shortDescription: form.shortDescription,
-          longDescription: form.longDescription,
-          transactionType: form.transactionType,
-          materialGroupId: form.materialGroupId,
-          fromLocation: form.fromLocation,
-          toLocation: form.toLocation,
-          preferredSupplier: form.preferredSupplier,
-          rejected: parseBooleanString(form.rejected),
-          additionalInfo: form.additionalInfo,
-          projectId: form.projectId,
-          becraCode: form.becraCode,
-        })
+      try {
+        const materialGroupId = form.materialGroupId || null
+        if (isEditing && form.id) {
+          await updateMaterialSerialTrackedAction({
+            id: form.id,
+            beNumber: form.beNumber,
+            brandName: form.brandName,
+            management: form.management,
+            brandOrderNumber: form.brandOrderNumber,
+            companyId: form.companyId,
+            orderNumber: form.orderNumber,
+            shortDescription: form.shortDescription,
+            longDescription: form.longDescription,
+            transactionType: form.transactionType,
+            materialGroupId,
+            fromLocation: form.fromLocation,
+            toLocation: form.toLocation,
+            preferredSupplier: form.preferredSupplier,
+            rejected: form.rejected,
+            additionalInfo: form.additionalInfo,
+            projectId: form.projectId,
+            becraCode: form.becraCode,
+          })
+        } else {
+          await createMaterialSerialTrackedAction({
+            beNumber: form.beNumber,
+            brandName: form.brandName,
+            management: form.management,
+            brandOrderNumber: form.brandOrderNumber,
+            companyId: form.companyId,
+            orderNumber: form.orderNumber,
+            shortDescription: form.shortDescription,
+            longDescription: form.longDescription,
+            transactionType: form.transactionType,
+            materialGroupId,
+            fromLocation: form.fromLocation,
+            toLocation: form.toLocation,
+            preferredSupplier: form.preferredSupplier,
+            rejected: form.rejected,
+            additionalInfo: form.additionalInfo,
+            projectId: form.projectId,
+            becraCode: form.becraCode,
+          })
+        }
+        onOpenChange(false)
+      } catch (err: any) {
+        setError(err?.message || 'Failed to save. Please check your input and try again.')
       }
-
-      onOpenChange(false)
-      router.refresh()
     })
   }
 
@@ -203,17 +237,22 @@ export function MaterialSerialTrackedFormDialog({
             {isEditing ? 'Update the serial tracked item details.' : 'Create a new serial tracked item.'}
           </DialogDescription>
         </DialogHeader>
-
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="beNumber">BE Number</Label>
-              <Input
-                id="beNumber"
-                value={form.beNumber}
-                onChange={e => setField('beNumber', e.target.value)}
-                placeholder="e.g. 123456"
-              />
+              <Select value={form.beNumber} onValueChange={handleBeNumberSelect}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select BE Number" />
+                </SelectTrigger>
+                <SelectContent>
+                  {materialOptions.map(option => (
+                    <SelectItem key={option.id} value={option.beNumber}>
+                      {option.beNumber}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">
@@ -289,32 +328,22 @@ export function MaterialSerialTrackedFormDialog({
               <Label>Material Group</Label>
               <Select
                 value={form.materialGroupId || '__none__'}
-                onValueChange={value => setField('materialGroupId', value === '__none__' ? '' : value)}>
+                onValueChange={() => {}} // No-op, disables user changes
+                disabled>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select material group" />
+                  <SelectValue
+                    placeholder="Select material group"
+                    // Show the group name if available, otherwise fallback
+                  >
+                    {(() => {
+                      const group = materialGroupOptions.find(option => option.id === form.materialGroupId)
+                      return group ? group.name : 'No group'
+                    })()}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="__none__">No material group</SelectItem>
+                  <SelectItem value="__none__">No group</SelectItem>
                   {materialGroupOptions.map(option => (
-                    <SelectItem key={option.id} value={option.id}>
-                      {option.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Project</Label>
-              <Select
-                value={form.projectId || '__none__'}
-                onValueChange={value => setField('projectId', value === '__none__' ? '' : value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select project" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="__none__">No project</SelectItem>
-                  {projectOptions.map(option => (
                     <SelectItem key={option.id} value={option.id}>
                       {option.name}
                     </SelectItem>
@@ -373,20 +402,14 @@ export function MaterialSerialTrackedFormDialog({
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 flex items-center gap-4 pt-6">
               <Label>Rejected</Label>
-              <Select
-                value={form.rejected || '__none__'}
-                onValueChange={value => setField('rejected', value === '__none__' ? '' : value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select rejected status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="__none__">No value</SelectItem>
-                  <SelectItem value="true">Yes</SelectItem>
-                  <SelectItem value="false">No</SelectItem>
-                </SelectContent>
-              </Select>
+              <Switch
+                checked={!!form.rejected}
+                onCheckedChange={checked => setField('rejected', checked)}
+                id="rejected-switch"
+              />
+              <span className="text-xs text-muted-foreground">{form.rejected ? 'Yes' : 'No'}</span>
             </div>
           </div>
 
@@ -411,6 +434,10 @@ export function MaterialSerialTrackedFormDialog({
               rows={3}
             />
           </div>
+
+          {error && (
+            <div className="text-red-500 text-sm mt-2">{error}</div>
+          )}
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isPending}>

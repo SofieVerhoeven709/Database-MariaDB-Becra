@@ -1,7 +1,4 @@
-DROP DATABASE IF exists app_db;
-
-CREATE DATABASE IF NOT EXISTS app_db;
-
+CREATE DATABASE app_db;
 USE app_db;
 
 CREATE TABLE
@@ -177,10 +174,9 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             beNumber VARCHAR(255) NOT NULL,
             name VARCHAR(255),
-            brandOrderNr VARCHAR(255),
+            brandOrderNr VARCHAR(255) NULL,
             shortDescription VARCHAR(255) NOT NULL,
             longDescription TEXT,
-            preferredSupplier VARCHAR(255),
             brandName VARCHAR(255),
             documentationPlace VARCHAR(255),
             bePartDoc VARCHAR(255) NULL,
@@ -311,9 +307,9 @@ CREATE TABLE
             officialName VARCHAR(255) NOT NULL,
             number VARCHAR(255) NOT NULL,
             idOld VARCHAR(255),
-            mail VARCHAR(255),
-            businessPhone VARCHAR(255),
-            website VARCHAR(255),
+            mail VARCHAR(100),
+            businessPhone VARCHAR(100),
+            website VARCHAR(100),
             vatNumber VARCHAR(100),
             bankNumber VARCHAR(100),
             iban VARCHAR(100),
@@ -451,8 +447,8 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             materialId CHAR(36) NOT NULL,
             companyId CHAR(36) NOT NULL,
-            supplierOrderNr VARCHAR(255) NULL,
-            shortDescription VARCHAR(255) NULL,
+            supplierOrderNr VARCHAR(255),
+            shortDescription VARCHAR(255),
             isPreferred BOOLEAN NOT NULL DEFAULT 0,
             CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
             FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
@@ -851,7 +847,7 @@ CREATE TABLE
             deletedAt DATETIME,
             modifiedAt DATETIME,
             reminderSent BOOLEAN NOT NULL DEFAULT 0,
-            outstanding BOOLEAN NOT NULL DEFAULT 1,
+            outstanding BOOLEAN NOT NULL DEFAULT 0,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedBy CHAR(36),
             createdBy CHAR(36) NOT NULL,
@@ -1250,8 +1246,8 @@ CREATE TABLE
             updatedAt DATETIME,
             rejected BOOLEAN,
             additionalInfo VARCHAR(255),
-            unitPrice Decimal(10,2),
-            quantityPrice INT,
+            unitPrice Decimal(10,3),
+            quantityPrice DECIMAL(10,3),
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -1678,6 +1674,3 @@ CREATE TABLE
             FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
-
--- Select below then right click and run selected query
-SHOW TABLE STATUS

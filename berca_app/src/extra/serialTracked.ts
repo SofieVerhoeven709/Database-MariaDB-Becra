@@ -10,13 +10,18 @@ type SerialTrackedFromDAL = Prisma.MaterialSerialTrackGetPayload<{
         lastName: true
       }
     }
+    Material: {
+      select: {
+        beNumber: true
+      }
+    }
   }
 }>
 
 export function mapMaterialSerialTracked(item: SerialTrackedFromDAL): MappedMaterialSerialTracked {
   return {
     id: item.id,
-    beNumber: item.beNumber,
+    beNumber: item.Material?.beNumber ?? null,
     brandName: item.brandName,
     management: item.management,
     brandOrderNumber: item.brandOrderNumber,
@@ -25,7 +30,7 @@ export function mapMaterialSerialTracked(item: SerialTrackedFromDAL): MappedMate
     shortDescription: item.shortDescription,
     longDescription: item.longDescription,
     transactionType: item.transactionType,
-    materialGroupId: item.materialGroupId,
+    materialGroupId: null, // Not present in MaterialSerialTrack, set to null
     fromLocation: item.fromLocation,
     toLocation: item.toLocation,
     preferredSupplier: item.preferredSupplier,

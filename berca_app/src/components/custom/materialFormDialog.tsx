@@ -152,10 +152,10 @@ function PreferredSupplierPicker({
   )
 }
 
-const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string} = {
+const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string; isSerialTracked: boolean} = {
   id: '',
   beNumber: '',
-  name: null,
+  name: '',
   brandOrderNr: '',
   shortDescription: '',
   longDescription: null,
@@ -177,6 +177,7 @@ const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string} = {
   warehousePlaceId: null,
   warehousePlaceLabel: null,
   unitId: '',
+  isSerialTracked: false,
 }
 
 export function MaterialFormDialog({
@@ -202,6 +203,7 @@ export function MaterialFormDialog({
   const [isParentPartEnabled, setIsParentPartEnabled] = useState(parentPartBeNumbersInUse.includes(form.beNumber ?? ''))
   const [hasParentParts, setHasParentParts] = useState((form.parentBeNumbers ?? []).length > 0)
   const [parentPartSearch, setParentPartSearch] = useState('')
+  const [isSerialTracked, setIsSerialTracked] = useState(form.isSerialTracked ?? false)
 
   // Sync form state when the dialogue opens or switches between materials.
   // The lint rule warns against sync setState in effects, but this is intentional:
@@ -214,12 +216,16 @@ export function MaterialFormDialog({
       setIsParentPartEnabled(parentPartBeNumbersInUse.includes(nextForm.beNumber ?? ''))
       setHasParentParts((nextForm.parentBeNumbers ?? []).length > 0)
       setParentPartSearch('')
+      setIsSerialTracked(nextForm.isSerialTracked ?? false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, material?.id])
 
   function update<K extends keyof MappedMaterial>(field: K, value: MappedMaterial[K]) {
     setForm(prev => ({...prev, [field]: value}))
+    if (field === 'isSerialTracked') {
+      setIsSerialTracked(!!value)
+    }
   }
 
   function toggleSupplier(companyId: string) {
@@ -258,9 +264,7 @@ export function MaterialFormDialog({
     (form.supplierCompanyIds ?? []).includes(company.id),
   )
 
-  const selectableWarehousePlaces = warehousePlaces.filter(
-    place => !place.beNumber || place.beNumber === form.beNumber,
-  )
+  const selectableWarehousePlaces = warehousePlaces.filter(place => !place.beNumber || place.beNumber === form.beNumber)
 
   const selectedGroupA = materialGroups.find(g => g.id === form.materialGroupIdA) ?? null
   const selectedGroupB = materialGroups.find(g => g.id === form.materialGroupIdB) ?? null
@@ -292,7 +296,10 @@ export function MaterialFormDialog({
   }
 
   const groupAOptions = ensureSelectedOption(
-    buildUniqueGroupOptions(() => true, group => group.groupA),
+    buildUniqueGroupOptions(
+      () => true,
+      group => group.groupA,
+    ),
     form.materialGroupIdA,
     selectedGroupA?.groupA,
   )
@@ -328,7 +335,8 @@ export function MaterialFormDialog({
         if (!group.groupD) return false
         if (!selectedGroupA) return true
         if (!selectedGroupB?.groupB) return group.groupA === selectedGroupA.groupA
-        if (!selectedGroupC?.groupC) return group.groupA === selectedGroupA.groupA && group.groupB === selectedGroupB.groupB
+        if (!selectedGroupC?.groupC)
+          return group.groupA === selectedGroupA.groupA && group.groupB === selectedGroupB.groupB
         return (
           group.groupA === selectedGroupA.groupA &&
           group.groupB === selectedGroupB.groupB &&
@@ -395,17 +403,46 @@ export function MaterialFormDialog({
           <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">
             <div className="flex flex-col">
               <Label className="text-xs text-muted-foreground">Is parent part</Label>
-              <p className="text-xs text-muted-foreground">
-                Toggle to mark this material as a parent part.
-              </p>
+              <p className="text-xs text-muted-foreground">Toggle to mark this material as a parent part.</p>
             </div>
-            <Switch checked={isParentPartEnabled} onCheckedChange={setIsParentPartEnabled} aria-label="Is parent part" />
+            <Switch
+              checked={isParentPartEnabled}
+              onCheckedChange={setIsParentPartEnabled}
+              aria-label="Is parent part"
+            />
           </div>
-
+          <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">
+            <div className="flex flex-col">
+              <Label className="text-xs text-muted-foreground">Serial Tracked</Label>
+              <p className="text-xs text-muted-foreground">Toggle to mark this material as serial tracked.</p>
+            </div>
+            <Switch
+              checked={isSerialTracked}
+              onCheckedChange={v => {
+                setIsSerialTracked(v)
+                update('isSerialTracked', v)
+              }}
+              aria-label="Serial Tracked"
+            />
+          </div>
+          {/* Material Name */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="MaterialName" className="text-xs text-muted-foreground">
+              Material Name *
+            </Label>
+            <Input
+              id="MaterialName"
+              className={inputStyles}
+              value={form.name ?? ''}
+              onChange={e => update('name', e.target.value)}
+              placeholder="Material Name"
+              required
+            />
+          </div>
           {/* Short Description */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="shortDescription" className="text-xs text-muted-foreground">
-              Short Description *
+              Short Description
             </Label>
             <Input
               id="shortDescription"
@@ -413,10 +450,8 @@ export function MaterialFormDialog({
               value={form.shortDescription ?? ''}
               onChange={e => update('shortDescription', e.target.value)}
               placeholder="Short description"
-              required
             />
           </div>
-
           {/* Long Description */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="longDescription" className="text-xs text-muted-foreground">
@@ -457,20 +492,6 @@ export function MaterialFormDialog({
                 onChange={e => update('brandOrderNr', e.target.value || null)}
               />
             </div>
-          </div>
-
-          {/* Brand Short Description */}
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="name" className="text-xs text-muted-foreground">
-              Brand Short Description
-            </Label>
-            <Input
-              id="name"
-              className={inputStyles}
-              value={form.name ?? ''}
-              onChange={e => update('name', e.target.value || null)}
-              placeholder="Brand short description"
-            />
           </div>
 
           {/* Row 3: MaterialGroup A + Unit */}
@@ -700,7 +721,9 @@ export function MaterialFormDialog({
                   {filteredParentPartOptions.map(option => {
                     const checked = (form.parentBeNumbers ?? []).includes(option.beNumber)
                     return (
-                      <label key={option.beNumber} className="flex items-center justify-between gap-3 text-sm cursor-pointer">
+                      <label
+                        key={option.beNumber}
+                        className="flex items-center justify-between gap-3 text-sm cursor-pointer">
                         <span className="truncate">
                           <span className="font-mono">{option.beNumber}</span>{' '}
                           <span className="text-muted-foreground">- {option.shortDescription}</span>

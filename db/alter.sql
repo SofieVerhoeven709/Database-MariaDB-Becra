@@ -1,4 +1,4 @@
-﻿USE BecraBV;
+﻿USE  app_db;
  
 -- ============================================================
 -- Idempotent migrations.
@@ -523,3 +523,65 @@ UPDATE Company SET officialName = name WHERE officialName IS NULL;
 
 -- Step 3: Now enforce NOT NULL since all rows are filled
 ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
+
+
+ALTER TABLE MaterialSerialTrack
+DROP COLUMN beNumber;
+
+-- Add the materialId column (nullable)
+ALTER TABLE MaterialSerialTrack
+ADD COLUMN materialId CHAR(36) NULL;
+
+-- Add an index for performance (optional but recommended)
+-- CREATE INDEX idx_materialId ON MaterialSerialTrack(materialId);
+
+-- Add the foreign key constraint
+ALTER TABLE MaterialSerialTrack
+ADD CONSTRAINT fk_material_serialtrack_materialId
+FOREIGN KEY (materialId) REFERENCES Material(id)
+ON DELETE SET NULL
+ON UPDATE RESTRICT;
+
+-- Add a serial tracked boolean to the materials
+ALTER TABLE Material
+ADD COLUMN isSerialTracked BOOLEAN NOT NULL DEFAULT 0;
+
+-- Removing materialgroupid from materialSerialTrack
+
+-- Remove materialGroupId from MaterialSerialTrack safely
+SET @fk_name = (
+  SELECT CONSTRAINT_NAME
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MaterialSerialTrack'
+    AND COLUMN_NAME = 'materialGroupId'
+    AND REFERENCED_TABLE_NAME IS NOT NULL
+  LIMIT 1
+);
+SET @sql = IF(@fk_name IS NOT NULL,
+  CONCAT('ALTER TABLE MaterialSerialTrack DROP FOREIGN KEY `', @fk_name, '`'),
+  'SELECT ''No FK to drop on MaterialSerialTrack.materialGroupId'''
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+ALTER TABLE MaterialSerialTrack DROP COLUMN IF EXISTS materialGroupId;
+
+-- Remove materialGroupId from MaterialSerialTrackedStructure safely
+SET @fk_name2 = (
+  SELECT CONSTRAINT_NAME
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MaterialSerialTrackedStructure'
+    AND COLUMN_NAME = 'materialGroupId'
+    AND REFERENCED_TABLE_NAME IS NOT NULL
+  LIMIT 1
+);
+SET @sql2 = IF(@fk_name2 IS NOT NULL,
+  CONCAT('ALTER TABLE MaterialSerialTrackedStructure DROP FOREIGN KEY `', @fk_name2, '`'),
+  'SELECT ''No FK to drop on MaterialSerialTrackedStructure.materialGroupId'''
+);
+PREPARE stmt2 FROM @sql2;
+EXECUTE stmt2;
+DEALLOCATE PREPARE stmt2;
+ALTER TABLE MaterialSerialTrackedStructure DROP COLUMN IF EXISTS materialGroupId;

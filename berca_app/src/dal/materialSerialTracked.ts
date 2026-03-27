@@ -23,6 +23,9 @@ export async function getSerialTracked(options?: {includeDeleted?: boolean}): Pr
       Employee: {
         select: {id: true, firstName: true, lastName: true},
       },
+      Material: {
+        select: {beNumber: true},
+      },
     },
     orderBy: {shortDescription: 'asc'},
   })
@@ -34,6 +37,9 @@ export async function getSerialTrackedById(id: string): Promise<SerialTrackedWit
     include: {
       Employee: {
         select: {id: true, firstName: true, lastName: true},
+      },
+      Material: {
+        select: {beNumber: true},
       },
     },
   })

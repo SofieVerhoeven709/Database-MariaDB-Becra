@@ -6663,7 +6663,8 @@ export const MaterialScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  isSerialTracked: 'isSerialTracked'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -6838,7 +6839,6 @@ export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)
 
 export const MaterialSerialTrackScalarFieldEnum = {
   id: 'id',
-  beNumber: 'beNumber',
   brandName: 'brandName',
   management: 'management',
   brandOrderNumber: 'brandOrderNumber',
@@ -6847,7 +6847,6 @@ export const MaterialSerialTrackScalarFieldEnum = {
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   transactionType: 'transactionType',
-  materialGroupId: 'materialGroupId',
   fromLocation: 'fromLocation',
   toLocation: 'toLocation',
   updatedAt: 'updatedAt',
@@ -6859,7 +6858,8 @@ export const MaterialSerialTrackScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  materialId: 'materialId'
 } as const
 
 export type MaterialSerialTrackScalarFieldEnum = (typeof MaterialSerialTrackScalarFieldEnum)[keyof typeof MaterialSerialTrackScalarFieldEnum]
@@ -6871,7 +6871,6 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
-  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -8194,7 +8193,6 @@ export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderB
 
 export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   id: 'id',
-  beNumber: 'beNumber',
   brandName: 'brandName',
   management: 'management',
   brandOrderNumber: 'brandOrderNumber',
@@ -8203,7 +8201,6 @@ export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   transactionType: 'transactionType',
-  materialGroupId: 'materialGroupId',
   fromLocation: 'fromLocation',
   toLocation: 'toLocation',
   preferredSupplier: 'preferredSupplier',
@@ -8211,7 +8208,8 @@ export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   projectId: 'projectId',
   becraCode: 'becraCode',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  materialId: 'materialId'
 } as const
 
 export type MaterialSerialTrackOrderByRelevanceFieldEnum = (typeof MaterialSerialTrackOrderByRelevanceFieldEnum)[keyof typeof MaterialSerialTrackOrderByRelevanceFieldEnum]
@@ -8223,7 +8221,6 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
-  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',

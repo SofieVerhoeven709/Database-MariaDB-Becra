@@ -11,7 +11,7 @@ import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
 import {deleteMaterialSerialTrackedAction} from '@/serverFunctions/materialSerialTracked'
-// replace with your real dialog once you create it
+// replace with your real dialogue once you create it
 import {MaterialSerialTrackedFormDialog} from '@/components/custom/serialTrackedFormDialog'
 
 type SortField =
@@ -109,17 +109,31 @@ interface SerialTrackedTableProps {
   projectOptions: {id: string; name: string}[]
   materialGroupOptions: {id: string; name: string}[]
   departmentId: string
+  materialOptions: {
+    id: string
+    beNumber: string
+    brandName: string | null
+    management: string | null
+    brandOrderNr: string | null
+    shortDescription: string
+    longDescription: string | null
+    materialGroupId: string
+  }[]
 }
 
 export function SerialTrackedTable({
-  initialSerialTracked,
-  currentUserRole,
-  currentUserLevel,
-  companyOptions,
-  projectOptions,
-  materialGroupOptions,
-  departmentId,
-}: SerialTrackedTableProps) {
+    initialSerialTracked,
+    currentUserRole,
+    currentUserLevel,
+    companyOptions,
+    projectOptions,
+    materialGroupOptions,
+    departmentId,
+    materialOptions,
+    }: SerialTrackedTableProps) {
+      // DEBUG: Log incoming data and filtered data
+      console.log('SerialTrackedTable initialSerialTracked:', initialSerialTracked);
+
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
@@ -205,6 +219,9 @@ export function SerialTrackedTable({
       }
     })
 
+  // DEBUG: Log filtered data
+  console.log('SerialTrackedTable filtered:', filtered);
+
   async function handleSoftDelete(item: MappedMaterialSerialTracked) {
     await deleteMaterialSerialTrackedAction({id: item.id})
     router.refresh()
@@ -238,7 +255,7 @@ export function SerialTrackedTable({
           </div>
 
           <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
-            <SelectTrigger className="w-[150px] border-border bg-secondary">
+            <SelectTrigger className="w-37.5 border-border bg-secondary">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="border-border bg-card">
@@ -333,7 +350,7 @@ export function SerialTrackedTable({
                   </TableCell>
 
                   <TableCell className={tdClass}>
-                    <span className="inline-block max-w-[180px] truncate">{item.shortDescription ?? '-'}</span>
+                    <span className="inline-block max-w-45 truncate">{item.shortDescription ?? '-'}</span>
                   </TableCell>
 
                   <TableCell className={tdClass}>{item.brandName ?? '-'}</TableCell>
@@ -451,10 +468,12 @@ export function SerialTrackedTable({
       <MaterialSerialTrackedFormDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}
-        materialSerialTracked={editingItem}
+        materialSerialTracked={editingItem as any}
         companyOptions={companyOptions}
         projectOptions={projectOptions}
         materialGroupOptions={materialGroupOptions}
+        materialOptions={materialOptions}
+        departmentId={departmentId}
       />
     </div>
   )

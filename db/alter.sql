@@ -376,193 +376,182 @@ ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
 ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
 
 -- 39a. Drop old tables (disable FK checks to avoid constraint errors)
--- Create migration guard table if it doesn't exist
-CREATE TABLE IF NOT EXISTS MigrationRun (
-    name VARCHAR(100) PRIMARY KEY,
-    runAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+SET FOREIGN_KEY_CHECKS = 0;
 
--- Check if this migration has already run
-SET @alreadyRun := (SELECT COUNT(*) FROM MigrationRun WHERE name = 'InvoiceTablesMigration');
+DROP TABLE IF EXISTS InvoiceOutContact;
+DROP TABLE IF EXISTS InvoiceOut;
+DROP TABLE IF EXISTS InvoiceIn;
 
--- Only execute if not run before
-IF @alreadyRun = 0 THEN
+SET FOREIGN_KEY_CHECKS = 1;
+-- 39b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
+CREATE TABLE IF NOT EXISTS VatMargin (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      vat FLOAT NOT NULL,
+      createdAt DATETIME NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+      deleted BOOLEAN NOT NULL DEFAULT 0,
+      deletedAt DATETIME,
+      deletedBy CHAR(36),
+      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+) ENGINE = InnoDB;
 
-    -- Disable FK checks temporarily
-    SET FOREIGN_KEY_CHECKS = 0;
+CREATE TABLE IF NOT EXISTS InvoiceStatus (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      createdAt DATETIME NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+      deleted BOOLEAN NOT NULL DEFAULT 0,
+      deletedAt DATETIME,
+      deletedBy CHAR(36),
+      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+) ENGINE = InnoDB;
 
-    -- Drop tables (safe even if they don't exist)
-    DROP TABLE IF EXISTS InvoiceOutContact;
-    DROP TABLE IF EXISTS InvoiceOut;
-    DROP TABLE IF EXISTS InvoiceIn;
+CREATE TABLE IF NOT EXISTS InvoiceSentType (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      createdAt DATETIME NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+      deleted BOOLEAN NOT NULL DEFAULT 0,
+      deletedAt DATETIME,
+      deletedBy CHAR(36),
+      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+) ENGINE = InnoDB;
 
-    SET FOREIGN_KEY_CHECKS = 1;
+CREATE TABLE IF NOT EXISTS PaymentMethod (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      createdAt DATETIME NOT NULL,
+      createdBy CHAR(36) NOT NULL,
+      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+      deleted BOOLEAN NOT NULL DEFAULT 0,
+      deletedAt DATETIME,
+      deletedBy CHAR(36),
+      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+) ENGINE = InnoDB;
 
-    -- 39b. Create supporting tables
-    CREATE TABLE IF NOT EXISTS VatMargin (
-          id CHAR(36) NOT NULL PRIMARY KEY,
-          vat FLOAT NOT NULL,
-          createdAt DATETIME NOT NULL,
-          createdBy CHAR(36) NOT NULL,
-          FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-          deleted BOOLEAN NOT NULL DEFAULT 0,
-          deletedAt DATETIME,
-          deletedBy CHAR(36),
-          FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-    ) ENGINE = InnoDB;
+--41. Create PriceList table
+CREATE TABLE
+      IF NOT EXISTS PriceList (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            repeatUse BOOLEAN NOT NULL DEFAULT 0,
+            createdAt DATETIME NOT NULL,
+            createdBy CHAR(36) NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            targetId CHAR(36) NOT NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
 
-    CREATE TABLE IF NOT EXISTS InvoiceStatus (
-          id CHAR(36) NOT NULL PRIMARY KEY,
-          name VARCHAR(100) NOT NULL,
-          createdAt DATETIME NOT NULL,
-          createdBy CHAR(36) NOT NULL,
-          FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-          deleted BOOLEAN NOT NULL DEFAULT 0,
-          deletedAt DATETIME,
-          deletedBy CHAR(36),
-          FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-    ) ENGINE = InnoDB;
+-- 42. Create PriceListItem table
+CREATE TABLE 
+      IF NOT EXISTS PriceListItem (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            priceListId CHAR(36) NOT NULL,
+            description VARCHAR(255) NOT NULL,
+            unit VARCHAR(100) NOT NULL,
+            price DECIMAL(10,2) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            isCostMargin BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            createdBy CHAR(36) NOT NULL,
+            FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
 
-    CREATE TABLE IF NOT EXISTS InvoiceSentType (
-          id CHAR(36) NOT NULL PRIMARY KEY,
-          name VARCHAR(100) NOT NULL,
-          createdAt DATETIME NOT NULL,
-          createdBy CHAR(36) NOT NULL,
-          FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-          deleted BOOLEAN NOT NULL DEFAULT 0,
-          deletedAt DATETIME,
-          deletedBy CHAR(36),
-          FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-    ) ENGINE = InnoDB;
 
-    CREATE TABLE IF NOT EXISTS PaymentMethod (
-          id CHAR(36) NOT NULL PRIMARY KEY,
-          name VARCHAR(100) NOT NULL,
-          createdAt DATETIME NOT NULL,
-          createdBy CHAR(36) NOT NULL,
-          FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-          deleted BOOLEAN NOT NULL DEFAULT 0,
-          deletedAt DATETIME,
-          deletedBy CHAR(36),
-          FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-    ) ENGINE = InnoDB;
+-- 39c. Create new InvoiceOut
+CREATE TABLE
+      IF NOT EXISTS InvoiceOut (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            invoiceNumber VARCHAR(255) NOT NULL,
+            poNumber VARCHAR(255),
+            humanId VARCHAR(255),
+            invoiceDate DATETIME NOT NULL,
+            createdAt DATETIME NOT NULL,
+            dueDate DATETIME NOT NULL,
+            sentDate DATETIME,
+            deletedAt DATETIME,
+            modifiedAt DATETIME,
+            reminderSent BOOLEAN NOT NULL DEFAULT 0,
+            outstanding BOOLEAN NOT NULL DEFAULT 1,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedBy CHAR(36),
+            createdBy CHAR(36) NOT NULL,
+            modifiedBy CHAR(36),
+            invoiceTypeId CHAR(36) NOT NULL,
+            targetId CHAR(36) NOT NULL,
+            paymentMethodId CHAR(36) NOT NULL,
+            invoiceSentTypeId CHAR(36) NOT NULL,
+            invoiceStatusId CHAR(36) NOT NULL,
+            vatMarginId CHAR(36) NOT NULL,
+            priceListId CHAR(36),
+            FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (modifiedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (paymentMethodId) REFERENCES PaymentMethod (id) ON DELETE RESTRICT,
+            FOREIGN KEY (invoiceSentTypeId) REFERENCES InvoiceSentType (id) ON DELETE RESTRICT,
+            FOREIGN KEY (invoiceStatusId) REFERENCES InvoiceStatus (id) ON DELETE RESTRICT,
+            FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
+            UNIQUE (invoiceNumber)
+      ) ENGINE = InnoDB;
 
-    CREATE TABLE IF NOT EXISTS PriceList (
-          id CHAR(36) NOT NULL PRIMARY KEY,
-          name VARCHAR(255) NOT NULL,
-          repeatUse BOOLEAN NOT NULL DEFAULT 0,
-          createdAt DATETIME NOT NULL,
-          createdBy CHAR(36) NOT NULL,
-          deleted BOOLEAN NOT NULL DEFAULT 0,
-          deletedAt DATETIME,
-          deletedBy CHAR(36),
-          targetId CHAR(36) NOT NULL,
-          FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-          FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-          FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT
-    ) ENGINE = InnoDB;
+-- 39d. Create new InvoiceIn
+CREATE TABLE IF NOT EXISTS InvoiceIn (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      invoiceNumber VARCHAR(255) NOT NULL,
+      poNumber VARCHAR(255),
+      humanId VARCHAR(255),
+      invoiceDate DATETIME NOT NULL,
+      createdAt DATETIME NOT NULL,
+      dueDate DATETIME NOT NULL,
+      deletedAt DATETIME,
+      modifiedAt DATETIME,
+      reminderSent BOOLEAN NOT NULL DEFAULT 0,
+      outstanding BOOLEAN NOT NULL DEFAULT 0,
+      deleted BOOLEAN NOT NULL DEFAULT 0,
+      deletedBy CHAR(36),
+      createdBy CHAR(36) NOT NULL,
+      modifiedBy CHAR(36),
+      invoiceTypeId CHAR(36) NOT NULL,
+      targetId CHAR(36) NOT NULL,
+      paymentMethodId CHAR(36) NOT NULL,
+      invoiceSentTypeId CHAR(36) NOT NULL,
+      invoiceStatusId CHAR(36) NOT NULL,
+      vatMarginId CHAR(36) NOT NULL,
+      companyId CHAR(36) NOT NULL,
+      FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
+      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+      FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+      FOREIGN KEY (modifiedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+      FOREIGN KEY (paymentMethodId) REFERENCES PaymentMethod (id) ON DELETE RESTRICT,
+      FOREIGN KEY (invoiceSentTypeId) REFERENCES InvoiceSentType (id) ON DELETE RESTRICT,
+      FOREIGN KEY (invoiceStatusId) REFERENCES InvoiceStatus (id) ON DELETE RESTRICT,
+      FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
+      FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT,
+      UNIQUE (invoiceNumber)
+) ENGINE = InnoDB;
 
-    CREATE TABLE IF NOT EXISTS PriceListItem (
-          id CHAR(36) NOT NULL PRIMARY KEY,
-          priceListId CHAR(36) NOT NULL,
-          description VARCHAR(255) NOT NULL,
-          unit VARCHAR(100) NOT NULL,
-          price DECIMAL(10,2) NOT NULL,
-          createdAt DATETIME NOT NULL,
-          deleted BOOLEAN NOT NULL DEFAULT 0,
-          isCostMargin BOOLEAN NOT NULL DEFAULT 0,
-          deletedAt DATETIME,
-          deletedBy CHAR(36),
-          createdBy CHAR(36) NOT NULL,
-          FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
-          FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-          FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-    ) ENGINE = InnoDB;
-
-    CREATE TABLE IF NOT EXISTS InvoiceOut (
-          id CHAR(36) NOT NULL PRIMARY KEY,
-          invoiceNumber VARCHAR(255) NOT NULL,
-          poNumber VARCHAR(255),
-          humanId VARCHAR(255),
-          invoiceDate DATETIME NOT NULL,
-          createdAt DATETIME NOT NULL,
-          dueDate DATETIME NOT NULL,
-          sentDate DATETIME,
-          deletedAt DATETIME,
-          modifiedAt DATETIME,
-          reminderSent BOOLEAN NOT NULL DEFAULT 0,
-          outstanding BOOLEAN NOT NULL DEFAULT 1,
-          deleted BOOLEAN NOT NULL DEFAULT 0,
-          deletedBy CHAR(36),
-          createdBy CHAR(36) NOT NULL,
-          modifiedBy CHAR(36),
-          invoiceTypeId CHAR(36) NOT NULL,
-          targetId CHAR(36) NOT NULL,
-          paymentMethodId CHAR(36) NOT NULL,
-          invoiceSentTypeId CHAR(36) NOT NULL,
-          invoiceStatusId CHAR(36) NOT NULL,
-          vatMarginId CHAR(36) NOT NULL,
-          priceListId CHAR(36),
-          FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
-          FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-          FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
-          FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-          FOREIGN KEY (modifiedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-          FOREIGN KEY (paymentMethodId) REFERENCES PaymentMethod (id) ON DELETE RESTRICT,
-          FOREIGN KEY (invoiceSentTypeId) REFERENCES InvoiceSentType (id) ON DELETE RESTRICT,
-          FOREIGN KEY (invoiceStatusId) REFERENCES InvoiceStatus (id) ON DELETE RESTRICT,
-          FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
-          UNIQUE (invoiceNumber)
-    ) ENGINE = InnoDB;
-
-    CREATE TABLE IF NOT EXISTS InvoiceIn (
-          id CHAR(36) NOT NULL PRIMARY KEY,
-          invoiceNumber VARCHAR(255) NOT NULL,
-          poNumber VARCHAR(255),
-          humanId VARCHAR(255),
-          invoiceDate DATETIME NOT NULL,
-          createdAt DATETIME NOT NULL,
-          dueDate DATETIME NOT NULL,
-          deletedAt DATETIME,
-          modifiedAt DATETIME,
-          reminderSent BOOLEAN NOT NULL DEFAULT 0,
-          outstanding BOOLEAN NOT NULL DEFAULT 0,
-          deleted BOOLEAN NOT NULL DEFAULT 0,
-          deletedBy CHAR(36),
-          createdBy CHAR(36) NOT NULL,
-          modifiedBy CHAR(36),
-          invoiceTypeId CHAR(36) NOT NULL,
-          targetId CHAR(36) NOT NULL,
-          paymentMethodId CHAR(36) NOT NULL,
-          invoiceSentTypeId CHAR(36) NOT NULL,
-          invoiceStatusId CHAR(36) NOT NULL,
-          vatMarginId CHAR(36) NOT NULL,
-          companyId CHAR(36) NOT NULL,
-          FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
-          FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-          FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
-          FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-          FOREIGN KEY (modifiedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-          FOREIGN KEY (paymentMethodId) REFERENCES PaymentMethod (id) ON DELETE RESTRICT,
-          FOREIGN KEY (invoiceSentTypeId) REFERENCES InvoiceSentType (id) ON DELETE RESTRICT,
-          FOREIGN KEY (invoiceStatusId) REFERENCES InvoiceStatus (id) ON DELETE RESTRICT,
-          FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
-          FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT,
-          UNIQUE (invoiceNumber)
-    ) ENGINE = InnoDB;
-
-    CREATE TABLE IF NOT EXISTS InvoiceOutContact (
-          id CHAR(36) NOT NULL PRIMARY KEY,
-          contactId CHAR(36) NOT NULL,
-          invoiceOutId CHAR(36) NOT NULL,
-          FOREIGN KEY (contactId) REFERENCES Contact (id) ON DELETE RESTRICT,
-          FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE CASCADE
-    ) ENGINE = InnoDB;
-
-    -- Mark migration as run
-    INSERT INTO MigrationRun(name) VALUES('InvoiceTablesMigration');
-
-END IF;
+-- 39e. Recreate InvoiceOutContact
+CREATE TABLE IF NOT EXISTS InvoiceOutContact (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      contactId CHAR(36) NOT NULL,
+      invoiceOutId CHAR(36) NOT NULL,
+      FOREIGN KEY (contactId) REFERENCES Contact (id) ON DELETE RESTRICT,
+      FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE CASCADE
+) ENGINE = InnoDB;
 
 -- 40. Company: add officialName column
 -- Step 1: Add column as nullable (won't break existing rows)

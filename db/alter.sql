@@ -319,11 +319,11 @@ CREATE TABLE
       ) ENGINE = InnoDB;
  
 -- 36a. CompanyAdress: add countryId column
-ALTER TABLE CompanyAdress ADD COLUMN IF NOT EXISTS `countryId` CHAR(36) NULL;
+ALTER TABLE CompanyAddress ADD COLUMN IF NOT EXISTS `countryId` CHAR(36) NULL;
  
 -- 36b. CompanyAdress: add FK fk_companyadress_country (skip if already exists)
-ALTER TABLE CompanyAdress DROP FOREIGN KEY IF EXISTS fk_companyadress_country;
-ALTER TABLE CompanyAdress ADD CONSTRAINT fk_companyadress_country
+ALTER TABLE CompanyAddress DROP FOREIGN KEY IF EXISTS fk_companyaddress_country;
+ALTER TABLE CompanyAddress ADD CONSTRAINT fk_companyaddress_country
     FOREIGN KEY (`countryId`) REFERENCES Country (`id`) ON DELETE SET NULL;
 
 -- 37a. MaterialSupplier: add supplierOrderNr column
@@ -375,14 +375,14 @@ ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
 -- 38. Company: add idOld column
 ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
 
--- 39a. Drop old tables (disable FK checks to avoid constraint errors)
-SET FOREIGN_KEY_CHECKS = 0;
+-- 39a. Drop old tables (disable FK checks to avoid constraint errors) commented to prevent data losses
+--SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS InvoiceOutContact;
-DROP TABLE IF EXISTS InvoiceOut;
-DROP TABLE IF EXISTS InvoiceIn;
+--DROP TABLE IF EXISTS InvoiceOutContact;
+--DROP TABLE IF EXISTS InvoiceOut;
+--DROP TABLE IF EXISTS InvoiceIn;
 
-SET FOREIGN_KEY_CHECKS = 1;
+--SET FOREIGN_KEY_CHECKS = 1;
 -- 39b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
 CREATE TABLE IF NOT EXISTS VatMargin (
       id CHAR(36) NOT NULL PRIMARY KEY,
@@ -432,41 +432,80 @@ CREATE TABLE IF NOT EXISTS PaymentMethod (
       FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
 ) ENGINE = InnoDB;
 
+--41. Create PriceList table
+CREATE TABLE
+      IF NOT EXISTS PriceList (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            repeatUse BOOLEAN NOT NULL DEFAULT 0,
+            createdAt DATETIME NOT NULL,
+            createdBy CHAR(36) NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            targetId CHAR(36) NOT NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+-- 42. Create PriceListItem table
+CREATE TABLE 
+      IF NOT EXISTS PriceListItem (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            priceListId CHAR(36) NOT NULL,
+            description VARCHAR(255) NOT NULL,
+            unit VARCHAR(100) NOT NULL,
+            price DECIMAL(10,2) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            isCostMargin BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            createdBy CHAR(36) NOT NULL,
+            FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+
 -- 39c. Create new InvoiceOut
-CREATE TABLE IF NOT EXISTS InvoiceOut (
-      id CHAR(36) NOT NULL PRIMARY KEY,
-      invoiceNumber VARCHAR(255) NOT NULL,
-      poNumber VARCHAR(255),
-      humanId VARCHAR(255),
-      invoiceDate DATETIME NOT NULL,
-      createdAt DATETIME NOT NULL,
-      dueDate DATETIME NOT NULL,
-      sentDate DATETIME,
-      deletedAt DATETIME,
-      modifiedAt DATETIME,
-      reminderSent BOOLEAN NOT NULL DEFAULT 0,
-      outstanding BOOLEAN NOT NULL DEFAULT 0,
-      deleted BOOLEAN NOT NULL DEFAULT 0,
-      deletedBy CHAR(36),
-      createdBy CHAR(36) NOT NULL,
-      modifiedBy CHAR(36),
-      invoiceTypeId CHAR(36) NOT NULL,
-      targetId CHAR(36) NOT NULL,
-      paymentMethodId CHAR(36) NOT NULL,
-      invoiceSentTypeId CHAR(36) NOT NULL,
-      invoiceStatusId CHAR(36) NOT NULL,
-      vatMarginId CHAR(36) NOT NULL,
-      FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
-      FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-      FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
-      FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-      FOREIGN KEY (modifiedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-      FOREIGN KEY (paymentMethodId) REFERENCES PaymentMethod (id) ON DELETE RESTRICT,
-      FOREIGN KEY (invoiceSentTypeId) REFERENCES InvoiceSentType (id) ON DELETE RESTRICT,
-      FOREIGN KEY (invoiceStatusId) REFERENCES InvoiceStatus (id) ON DELETE RESTRICT,
-      FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
-      UNIQUE (invoiceNumber)
-) ENGINE = InnoDB;
+CREATE TABLE
+      IF NOT EXISTS InvoiceOut (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            invoiceNumber VARCHAR(255) NOT NULL,
+            poNumber VARCHAR(255),
+            humanId VARCHAR(255),
+            invoiceDate DATETIME NOT NULL,
+            createdAt DATETIME NOT NULL,
+            dueDate DATETIME NOT NULL,
+            sentDate DATETIME,
+            deletedAt DATETIME,
+            modifiedAt DATETIME,
+            reminderSent BOOLEAN NOT NULL DEFAULT 0,
+            outstanding BOOLEAN NOT NULL DEFAULT 1,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedBy CHAR(36),
+            createdBy CHAR(36) NOT NULL,
+            modifiedBy CHAR(36),
+            invoiceTypeId CHAR(36) NOT NULL,
+            targetId CHAR(36) NOT NULL,
+            paymentMethodId CHAR(36) NOT NULL,
+            invoiceSentTypeId CHAR(36) NOT NULL,
+            invoiceStatusId CHAR(36) NOT NULL,
+            vatMarginId CHAR(36) NOT NULL,
+            priceListId CHAR(36),
+            FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (modifiedBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (paymentMethodId) REFERENCES PaymentMethod (id) ON DELETE RESTRICT,
+            FOREIGN KEY (invoiceSentTypeId) REFERENCES InvoiceSentType (id) ON DELETE RESTRICT,
+            FOREIGN KEY (invoiceStatusId) REFERENCES InvoiceStatus (id) ON DELETE RESTRICT,
+            FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
+            UNIQUE (invoiceNumber)
+      ) ENGINE = InnoDB;
 
 -- 39d. Create new InvoiceIn
 CREATE TABLE IF NOT EXISTS InvoiceIn (
@@ -511,7 +550,7 @@ CREATE TABLE IF NOT EXISTS InvoiceOutContact (
       contactId CHAR(36) NOT NULL,
       invoiceOutId CHAR(36) NOT NULL,
       FOREIGN KEY (contactId) REFERENCES Contact (id) ON DELETE RESTRICT,
-      FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE RESTRICT
+      FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 -- 40. Company: add officialName column
@@ -585,3 +624,71 @@ PREPARE stmt2 FROM @sql2;
 EXECUTE stmt2;
 DEALLOCATE PREPARE stmt2;
 ALTER TABLE MaterialSerialTrackedStructure DROP COLUMN IF EXISTS materialGroupId;
+
+-- 43a. Project: add priceListId column
+ALTER TABLE Project ADD COLUMN IF NOT EXISTS `priceListId` CHAR(36) NULL;
+
+-- 43b. Project: add FK fk_project_pricelist (skip if already exists)
+ALTER TABLE Project DROP FOREIGN KEY IF EXISTS fk_project_pricelist;
+ALTER TABLE Project ADD CONSTRAINT fk_project_pricelist
+    FOREIGN KEY (`priceListId`) REFERENCES PriceList (`id`) ON DELETE RESTRICT;
+
+-- 44. CompanyAddress: rename table from CompanyAdress (safe, only if old exists and new does not)
+SET @old_exists = (
+    SELECT COUNT(*) 
+    FROM information_schema.tables 
+    WHERE table_schema = DATABASE() 
+      AND table_name = 'CompanyAdress'
+);
+
+SET @new_exists = (
+    SELECT COUNT(*) 
+    FROM information_schema.tables 
+    WHERE table_schema = DATABASE() 
+      AND table_name = 'CompanyAddress'
+);
+
+SET @sql = IF(@old_exists = 1 AND @new_exists = 0,
+    'RENAME TABLE CompanyAdress TO CompanyAddress;',
+    'SELECT "No rename needed";'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+ALTER TABLE CompanyAddress CHANGE COLUMN IF EXISTS `typeAdress` `typeAddress` VARCHAR(100);
+
+-- 45a. CompanyContact: add companyAdressId column
+ALTER TABLE CompanyContact ADD COLUMN IF NOT EXISTS `companyAddressId` CHAR(36) NULL;
+
+-- 45b. CompanyContact: add FK fk_companyContact_companyAddress (skip if already exists)
+ALTER TABLE CompanyContact DROP FOREIGN KEY IF EXISTS fk_companyContact_companyAddress;
+ALTER TABLE CompanyContact ADD CONSTRAINT fk_companyContact_companyAddress
+    FOREIGN KEY (`companyAddressId`) REFERENCES CompanyAddress (`id`) ON DELETE SET NULL;
+
+-- 46a. houtype & material: add targetId column
+ALTER TABLE HourType ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NULL;
+ALTER TABLE Material ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NULL;
+
+-- 46b. houtype: add FK fk_hourType_target (skip if already exists)
+ALTER TABLE HourType DROP FOREIGN KEY IF EXISTS fk_hourType_target;
+ALTER TABLE HourType ADD CONSTRAINT fk_hourType_target
+    FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
+
+-- 46c. houtype: add FK fk_material_target (skip if already exists)
+ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_target;
+ALTER TABLE Material ADD CONSTRAINT fk_material_target
+    FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
+
+CREATE TABLE
+      IF NOT EXISTS PriceListItemTarget (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            priceListItemId CHAR(36) NOT NULL,
+            targetId CHAR(36) NOT NULL,
+            FOREIGN KEY (priceListItemId) REFERENCES PriceListItem (id) ON DELETE RESTRICT,
+            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+            UNIQUE (priceListItemId)
+      ) ENGINE = InnoDB;
+
+ALTER TABLE WorkOrder CHANGE COLUMN IF EXISTS `workOrderNumber` `workOrderNumber` VARCHAR(255) NOT NULL;

@@ -15,8 +15,6 @@ import {
   updateInvoiceOutAction,
   getActiveWorkOrdersForProjectAction,
 } from '@/serverFunctions/invoices'
-// TODO: create this server action — should return generateInvoiceOutNumber(currentYear, nextSequence)
-// e.g. export async function getNextInvoiceOutNumberAction(): Promise<string>
 import {getNextInvoiceOutNumberAction} from '@/serverFunctions/invoices'
 
 export interface ProjectOption {

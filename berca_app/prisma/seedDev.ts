@@ -137,6 +137,9 @@ const ALL_TARGET_TYPES = [
   'TrainingStandard',
   'Employee',
   'DepartmentExtern',
+  'PriceList',
+  'HourType',
+  'Material',
 ]
 
 const URGENCY_TYPES = ['Low', 'Medium', 'High', 'Critical']
@@ -264,6 +267,8 @@ export const seedDev = async (prisma: PrismaClient) => {
 
   const departmentTargetType = await prisma.targetType.findFirst({where: {name: 'Department'}})
   const companyTargetType = await prisma.targetType.findFirst({where: {name: 'Company'}})
+  const hourTypeTargetType = await prisma.targetType.findFirst({where: {name: 'HourType'}})
+  const materialTargetType = await prisma.targetType.findFirst({where: {name: 'Material'}})
 
   // 8. Upsert UrgencyTypes
   for (const name of URGENCY_TYPES) {
@@ -387,14 +392,14 @@ export const seedDev = async (prisma: PrismaClient) => {
       },
     })
 
-    await prisma.companyAdress.create({
+    await prisma.companyAddress.create({
       data: {
         id: randomUUID(),
         street: 'Nijverheidsstraat',
         houseNumber: '14',
         zipCode: '2400',
         place: 'Mol',
-        typeAdress: 'headquarters',
+        typeAddress: 'headquarters',
         createdAt: now,
         createdBy: adminEmployee.id,
         companyId: becraCompany.id,
@@ -433,18 +438,30 @@ export const seedDev = async (prisma: PrismaClient) => {
 
   for (const ht of DEFAULT_HOUR_TYPES) {
     const existing = await prisma.hourType.findFirst({where: {name: ht.name}})
-    if (!existing) {
-      await prisma.hourType.create({
-        data: {
-          id: randomUUID(),
-          name: ht.name,
-          info: ht.info,
-          createdAt: now,
-          createdBy: adminEmployee.id,
-          deleted: false,
-        },
-      })
-    }
+    if (existing) continue
+
+    // Create target first (same pattern as Department)
+    const hourTypeTarget = await prisma.target.create({
+      data: {
+        id: randomUUID(),
+        createdAt: now,
+        createdBy: adminEmployee.id,
+        targetTypeId: hourTypeTargetType!.id,
+      },
+    })
+
+    // Create hourType with targetId
+    await prisma.hourType.create({
+      data: {
+        id: randomUUID(),
+        name: ht.name,
+        info: ht.info,
+        createdAt: now,
+        createdBy: adminEmployee.id,
+        deleted: false,
+        targetId: hourTypeTarget.id,
+      },
+    })
   }
 
   console.log('Default hour types seeded')
@@ -522,5 +539,68 @@ export const seedDev = async (prisma: PrismaClient) => {
   }
 
   console.log('Invoice types seeded')
+
+  const hourTypesWithoutTarget = await prisma.hourType.findMany({
+    where: {targetId: null},
+  })
+
+  for (const ht of hourTypesWithoutTarget) {
+    const target = await prisma.target.create({
+      data: {
+        id: randomUUID(),
+        createdAt: now,
+        createdBy: adminEmployee.id,
+        targetTypeId: hourTypeTargetType!.id,
+      },
+    })
+
+    await prisma.hourType.update({
+      where: {id: ht.id},
+      data: {targetId: target.id},
+    })
+
+    await prisma.visibilityForRole.create({
+      data: {
+        id: randomUUID(),
+        visible: true,
+        roleLevelId: adminRoleLevel.id,
+        targetId: target.id,
+      },
+    })
+  }
+
+  console.log(`Backfilled ${hourTypesWithoutTarget.length} hourTypes`)
+
+  const materialsWithoutTarget = await prisma.material.findMany({
+    where: {targetId: null},
+  })
+
+  for (const mat of materialsWithoutTarget) {
+    const target = await prisma.target.create({
+      data: {
+        id: randomUUID(),
+        createdAt: now,
+        createdBy: adminEmployee.id,
+        targetTypeId: materialTargetType!.id,
+      },
+    })
+
+    await prisma.material.update({
+      where: {id: mat.id},
+      data: {targetId: target.id},
+    })
+
+    await prisma.visibilityForRole.create({
+      data: {
+        id: randomUUID(),
+        visible: true,
+        roleLevelId: adminRoleLevel.id,
+        targetId: target.id,
+      },
+    })
+  }
+
+  console.log(`Backfilled ${materialsWithoutTarget.length} materials`)
+
   console.log('Seed complete')
 }

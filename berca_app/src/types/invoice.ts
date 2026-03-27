@@ -9,6 +9,26 @@ export interface VatMarginOption {
   vat: number
 }
 
+// ─── Billing lines ─────────────────────────────────────────────────────────────
+export type BillingLineType = 'hours' | 'material' | 'training'
+
+export interface MappedBillingLine {
+  workOrderId: string
+  type: BillingLineType
+  // What the line represents
+  sourceId: string // hourTypeId, materialId, trainingId
+  sourceLabel: string // name shown in the table
+  // Quantity
+  quantity: number // hours worked, material quantity, or 1 for training
+  unit: string // 'h', material unit, or 'session'
+  // Pricing — null if no matching pricelist item
+  priceListItemId: string | null
+  unitPriceBase: number | null // before cost margin
+  unitPriceFinal: number | null // after cost margin baked in
+  lineTotalFinal: number | null // unitPriceFinal * quantity
+  unmatched: boolean // true when no pricelist item found
+}
+
 // ─── InvoiceOut ────────────────────────────────────────────────────────────────
 export interface MappedInvoiceOutWorkOrder {
   id: string
@@ -22,6 +42,7 @@ export interface MappedInvoiceOutWorkOrder {
   projectName: string
   companyId: string
   companyName: string
+  billingLines: MappedBillingLine[]
 }
 
 export interface MappedInvoiceOut {
@@ -57,6 +78,10 @@ export interface MappedInvoiceOut {
   vatMarginVat: number
   contacts: MappedInvoiceOutContact[]
   workOrders: MappedInvoiceOutWorkOrder[]
+  // Totals — computed from billing lines
+  subtotalExVat: number
+  vatAmount: number
+  totalInclVat: number
 }
 
 export interface MappedInvoiceOutContact {

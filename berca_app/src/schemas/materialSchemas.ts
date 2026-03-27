@@ -23,11 +23,14 @@ const supplierCompanyIdsSchema = z.preprocess(val => {
   return [val]
 }, z.array(z.string().uuid()).default([]))
 
-const parentBeNumbersSchema = z.preprocess(val => {
-  if (Array.isArray(val)) return val
-  if (val == null || val === '') return []
-  return [val]
-}, z.array(z.string().trim().regex(/^\d+$/, 'Parent BE number can only contain digits')).default([]))
+const parentBeNumbersSchema = z.preprocess(
+  val => {
+    if (Array.isArray(val)) return val
+    if (val == null || val === '') return []
+    return [val]
+  },
+  z.array(z.string().trim().regex(/^\d+$/, 'Parent BE number mag enkel cijfers bevatten')).default([]),
+)
 
 const nullableUuidSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),

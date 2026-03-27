@@ -119,6 +119,7 @@ export function FollowUpStructureFormDialog({
         ...form,
         activityDescription: form.activityDescription?.trim() || null,
         additionalInfo: form.additionalInfo?.trim() || null,
+        item: form.item?.trim() || null,
       }
       await onSave(trimmedForm, visibilityRows)
     } finally {
@@ -143,7 +144,7 @@ export function FollowUpStructureFormDialog({
       <Label className="text-xs text-muted-foreground">{label}</Label>
       <Input
         value={(form[key] as string | null) ?? ''}
-        onChange={e => set(key, str(e.target.value) as MappedFollowUpStructure[typeof key])}
+        onChange={e => set(key, e.target.value as MappedFollowUpStructure[typeof key])}
         placeholder={opts?.placeholder}
         className="bg-secondary border-border"
       />

@@ -125,6 +125,7 @@ export async function createMaterial(data: {
   materialGroupIdD?: string | null
   unitId: string
   createdBy: string
+  targetId: string
 }) {
   const {
     supplierCompanyIds = [],
@@ -136,7 +137,9 @@ export async function createMaterial(data: {
     ...materialData
   } = data
 
-  const uniqueParentBeNumbers = Array.from(new Set(parentBeNumbers)).filter(parentBeNumber => parentBeNumber !== data.beNumber)
+  const uniqueParentBeNumbers = Array.from(new Set(parentBeNumbers)).filter(
+    parentBeNumber => parentBeNumber !== data.beNumber,
+  )
 
   return prismaClient.material.create({
     data: {

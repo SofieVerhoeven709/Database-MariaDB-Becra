@@ -215,7 +215,7 @@ export type WorkOrderGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type WorkOrderGroupByOutputType = {
   id: string
-  workOrderNumber: string | null
+  workOrderNumber: string
   description: string | null
   additionalInfo: string | null
   startDate: Date
@@ -255,7 +255,7 @@ export type WorkOrderWhereInput = {
   OR?: Prisma.WorkOrderWhereInput[]
   NOT?: Prisma.WorkOrderWhereInput | Prisma.WorkOrderWhereInput[]
   id?: Prisma.StringFilter<"WorkOrder"> | string
-  workOrderNumber?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
+  workOrderNumber?: Prisma.StringFilter<"WorkOrder"> | string
   description?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   startDate?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
@@ -282,7 +282,7 @@ export type WorkOrderWhereInput = {
 
 export type WorkOrderOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  workOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  workOrderNumber?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrder
@@ -340,7 +340,7 @@ export type WorkOrderWhereUniqueInput = Prisma.AtLeast<{
 
 export type WorkOrderOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  workOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  workOrderNumber?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrder
@@ -365,7 +365,7 @@ export type WorkOrderScalarWhereWithAggregatesInput = {
   OR?: Prisma.WorkOrderScalarWhereWithAggregatesInput[]
   NOT?: Prisma.WorkOrderScalarWhereWithAggregatesInput | Prisma.WorkOrderScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"WorkOrder"> | string
-  workOrderNumber?: Prisma.StringNullableWithAggregatesFilter<"WorkOrder"> | string | null
+  workOrderNumber?: Prisma.StringWithAggregatesFilter<"WorkOrder"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"WorkOrder"> | string | null
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"WorkOrder"> | string | null
   startDate?: Prisma.DateTimeWithAggregatesFilter<"WorkOrder"> | Date | string
@@ -384,7 +384,7 @@ export type WorkOrderScalarWhereWithAggregatesInput = {
 
 export type WorkOrderCreateInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -407,7 +407,7 @@ export type WorkOrderCreateInput = {
 
 export type WorkOrderUncheckedCreateInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -430,7 +430,7 @@ export type WorkOrderUncheckedCreateInput = {
 
 export type WorkOrderUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -453,7 +453,7 @@ export type WorkOrderUpdateInput = {
 
 export type WorkOrderUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -476,7 +476,7 @@ export type WorkOrderUncheckedUpdateInput = {
 
 export type WorkOrderCreateManyInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -495,7 +495,7 @@ export type WorkOrderCreateManyInput = {
 
 export type WorkOrderUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -510,7 +510,7 @@ export type WorkOrderUpdateManyMutationInput = {
 
 export type WorkOrderUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -831,7 +831,7 @@ export type WorkOrderUpdateOneRequiredWithoutWorkOrderStructureNestedInput = {
 
 export type WorkOrderCreateWithoutEmployeeInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -853,7 +853,7 @@ export type WorkOrderCreateWithoutEmployeeInput = {
 
 export type WorkOrderUncheckedCreateWithoutEmployeeInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -885,7 +885,7 @@ export type WorkOrderCreateManyEmployeeInputEnvelope = {
 
 export type WorkOrderCreateWithoutEmployee_WorkOrder_deletedByToEmployeeInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -907,7 +907,7 @@ export type WorkOrderCreateWithoutEmployee_WorkOrder_deletedByToEmployeeInput = 
 
 export type WorkOrderUncheckedCreateWithoutEmployee_WorkOrder_deletedByToEmployeeInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -958,7 +958,7 @@ export type WorkOrderScalarWhereInput = {
   OR?: Prisma.WorkOrderScalarWhereInput[]
   NOT?: Prisma.WorkOrderScalarWhereInput | Prisma.WorkOrderScalarWhereInput[]
   id?: Prisma.StringFilter<"WorkOrder"> | string
-  workOrderNumber?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
+  workOrderNumber?: Prisma.StringFilter<"WorkOrder"> | string
   description?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   additionalInfo?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   startDate?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
@@ -993,7 +993,7 @@ export type WorkOrderUpdateManyWithWhereWithoutEmployee_WorkOrder_deletedByToEmp
 
 export type WorkOrderCreateWithoutProjectInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1015,7 +1015,7 @@ export type WorkOrderCreateWithoutProjectInput = {
 
 export type WorkOrderUncheckedCreateWithoutProjectInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1063,7 +1063,7 @@ export type WorkOrderUpdateManyWithWhereWithoutProjectInput = {
 
 export type WorkOrderCreateWithoutTargetInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1085,7 +1085,7 @@ export type WorkOrderCreateWithoutTargetInput = {
 
 export type WorkOrderUncheckedCreateWithoutTargetInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1133,7 +1133,7 @@ export type WorkOrderUpdateManyWithWhereWithoutTargetInput = {
 
 export type WorkOrderCreateWithoutTimeRegistryInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1155,7 +1155,7 @@ export type WorkOrderCreateWithoutTimeRegistryInput = {
 
 export type WorkOrderUncheckedCreateWithoutTimeRegistryInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1193,7 +1193,7 @@ export type WorkOrderUpdateToOneWithWhereWithoutTimeRegistryInput = {
 
 export type WorkOrderUpdateWithoutTimeRegistryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1215,7 +1215,7 @@ export type WorkOrderUpdateWithoutTimeRegistryInput = {
 
 export type WorkOrderUncheckedUpdateWithoutTimeRegistryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1237,7 +1237,7 @@ export type WorkOrderUncheckedUpdateWithoutTimeRegistryInput = {
 
 export type WorkOrderCreateWithoutTrainingInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1259,7 +1259,7 @@ export type WorkOrderCreateWithoutTrainingInput = {
 
 export type WorkOrderUncheckedCreateWithoutTrainingInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1297,7 +1297,7 @@ export type WorkOrderUpdateToOneWithWhereWithoutTrainingInput = {
 
 export type WorkOrderUpdateWithoutTrainingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1319,7 +1319,7 @@ export type WorkOrderUpdateWithoutTrainingInput = {
 
 export type WorkOrderUncheckedUpdateWithoutTrainingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1341,7 +1341,7 @@ export type WorkOrderUncheckedUpdateWithoutTrainingInput = {
 
 export type WorkOrderCreateWithoutWorkOrderInvoiceInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1363,7 +1363,7 @@ export type WorkOrderCreateWithoutWorkOrderInvoiceInput = {
 
 export type WorkOrderUncheckedCreateWithoutWorkOrderInvoiceInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1401,7 +1401,7 @@ export type WorkOrderUpdateToOneWithWhereWithoutWorkOrderInvoiceInput = {
 
 export type WorkOrderUpdateWithoutWorkOrderInvoiceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1423,7 +1423,7 @@ export type WorkOrderUpdateWithoutWorkOrderInvoiceInput = {
 
 export type WorkOrderUncheckedUpdateWithoutWorkOrderInvoiceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1445,7 +1445,7 @@ export type WorkOrderUncheckedUpdateWithoutWorkOrderInvoiceInput = {
 
 export type WorkOrderCreateWithoutWorkOrderStructureInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1467,7 +1467,7 @@ export type WorkOrderCreateWithoutWorkOrderStructureInput = {
 
 export type WorkOrderUncheckedCreateWithoutWorkOrderStructureInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1505,7 +1505,7 @@ export type WorkOrderUpdateToOneWithWhereWithoutWorkOrderStructureInput = {
 
 export type WorkOrderUpdateWithoutWorkOrderStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1527,7 +1527,7 @@ export type WorkOrderUpdateWithoutWorkOrderStructureInput = {
 
 export type WorkOrderUncheckedUpdateWithoutWorkOrderStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1549,7 +1549,7 @@ export type WorkOrderUncheckedUpdateWithoutWorkOrderStructureInput = {
 
 export type WorkOrderCreateManyEmployeeInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1567,7 +1567,7 @@ export type WorkOrderCreateManyEmployeeInput = {
 
 export type WorkOrderCreateManyEmployee_WorkOrder_deletedByToEmployeeInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1585,7 +1585,7 @@ export type WorkOrderCreateManyEmployee_WorkOrder_deletedByToEmployeeInput = {
 
 export type WorkOrderUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1607,7 +1607,7 @@ export type WorkOrderUpdateWithoutEmployeeInput = {
 
 export type WorkOrderUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1629,7 +1629,7 @@ export type WorkOrderUncheckedUpdateWithoutEmployeeInput = {
 
 export type WorkOrderUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1647,7 +1647,7 @@ export type WorkOrderUncheckedUpdateManyWithoutEmployeeInput = {
 
 export type WorkOrderUpdateWithoutEmployee_WorkOrder_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1669,7 +1669,7 @@ export type WorkOrderUpdateWithoutEmployee_WorkOrder_deletedByToEmployeeInput = 
 
 export type WorkOrderUncheckedUpdateWithoutEmployee_WorkOrder_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1691,7 +1691,7 @@ export type WorkOrderUncheckedUpdateWithoutEmployee_WorkOrder_deletedByToEmploye
 
 export type WorkOrderUncheckedUpdateManyWithoutEmployee_WorkOrder_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1709,7 +1709,7 @@ export type WorkOrderUncheckedUpdateManyWithoutEmployee_WorkOrder_deletedByToEmp
 
 export type WorkOrderCreateManyProjectInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1727,7 +1727,7 @@ export type WorkOrderCreateManyProjectInput = {
 
 export type WorkOrderUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1749,7 +1749,7 @@ export type WorkOrderUpdateWithoutProjectInput = {
 
 export type WorkOrderUncheckedUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1771,7 +1771,7 @@ export type WorkOrderUncheckedUpdateWithoutProjectInput = {
 
 export type WorkOrderUncheckedUpdateManyWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1789,7 +1789,7 @@ export type WorkOrderUncheckedUpdateManyWithoutProjectInput = {
 
 export type WorkOrderCreateManyTargetInput = {
   id: string
-  workOrderNumber?: string | null
+  workOrderNumber: string
   description?: string | null
   additionalInfo?: string | null
   startDate: Date | string
@@ -1807,7 +1807,7 @@ export type WorkOrderCreateManyTargetInput = {
 
 export type WorkOrderUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1829,7 +1829,7 @@ export type WorkOrderUpdateWithoutTargetInput = {
 
 export type WorkOrderUncheckedUpdateWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1851,7 +1851,7 @@ export type WorkOrderUncheckedUpdateWithoutTargetInput = {
 
 export type WorkOrderUncheckedUpdateManyWithoutTargetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  workOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workOrderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2001,7 +2001,7 @@ export type $WorkOrderPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    workOrderNumber: string | null
+    workOrderNumber: string
     description: string | null
     additionalInfo: string | null
     startDate: Date

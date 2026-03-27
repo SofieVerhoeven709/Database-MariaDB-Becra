@@ -1,4 +1,4 @@
-import type {Company, CompanyAdress, Employee, Prisma} from '@/generated/prisma/client'
+import type {Company, CompanyAddress, Employee, Prisma} from '@/generated/prisma/client'
 import type {
   CompanyDetailData,
   MappedCompany,
@@ -9,7 +9,7 @@ import type {
 import type {VisibilityWithRoleLevel} from '@/extra/visibilityForRole'
 import {mapVisibility} from '@/extra/visibilityForRole'
 
-type AddressWithCountry = CompanyAdress & {
+type AddressWithCountry = CompanyAddress & {
   Country?: {id: string; name: string} | null
 }
 
@@ -17,7 +17,7 @@ type CompanyWithRelations = Company & {
   Company: Company | null
   Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
   Employee_Company_deletedByToEmployee: Pick<Employee, 'id' | 'firstName' | 'lastName'> | null
-  CompanyAdress: AddressWithCountry[]
+  CompanyAddress: AddressWithCountry[]
   Target: {
     id: string
     VisibilityForRole: VisibilityWithRoleLevel[]
@@ -32,7 +32,7 @@ function mapAddress(a: AddressWithCountry): MappedCompanyAddress {
     busNumber: a.busNumber,
     zipCode: a.zipCode,
     place: a.place,
-    typeAdress: a.typeAdress,
+    typeAddress: a.typeAddress,
     countryId: a.countryId ?? null,
     countryName: a.Country?.name ?? null,
     createdAt: a.createdAt.toISOString(),
@@ -81,7 +81,7 @@ export function mapCompany(c: CompanyWithRelations): MappedCompany {
     deletedByName: c.Employee_Company_deletedByToEmployee
       ? `${c.Employee_Company_deletedByToEmployee.firstName} ${c.Employee_Company_deletedByToEmployee.lastName}`
       : null,
-    addresses: c.CompanyAdress.map(mapAddress),
+    addresses: c.CompanyAddress.map(mapAddress),
     targetId: c.Target.id,
     visibilityForRoles: c.Target.VisibilityForRole.map(mapVisibility),
   }
@@ -93,9 +93,15 @@ type CompanyDetailPayload = Prisma.CompanyGetPayload<{
     Employee: {select: {id: true; firstName: true; lastName: true}}
     Company: {select: {id: true; name: true}}
     other_Company: {select: {id: true; name: true; number: true; companyActive: true}}
-    CompanyAdress: {include: {Country: {select: {id: true; name: true}}}}
+    CompanyAddress: {include: {Country: {select: {id: true; name: true}}}}
     CompanyContact: {
       include: {
+        CompanyAddress: {
+          // add this
+          include: {
+            Country: {select: {name: true}}
+          }
+        }
         Contact: {
           select: {
             id: true
@@ -129,7 +135,7 @@ type CompanyDetailPayload = Prisma.CompanyGetPayload<{
   }
 }>
 
-function mapDetailAddress(a: CompanyDetailPayload['CompanyAdress'][number]): MappedCompanyAddress {
+function mapDetailAddress(a: CompanyDetailPayload['CompanyAddress'][number]): MappedCompanyAddress {
   return {
     id: a.id,
     street: a.street,
@@ -137,7 +143,7 @@ function mapDetailAddress(a: CompanyDetailPayload['CompanyAdress'][number]): Map
     busNumber: a.busNumber,
     zipCode: a.zipCode,
     place: a.place,
-    typeAdress: a.typeAdress,
+    typeAddress: a.typeAddress,
     countryId: a.countryId ?? null,
     countryName: (a as {Country?: {name: string} | null}).Country?.name ?? null,
     createdAt: a.createdAt.toISOString(),
@@ -170,6 +176,19 @@ function mapContact(cc: CompanyDetailPayload['CompanyContact'][number]): MappedC
       homePhone: cc.Contact.homePhone,
       active: cc.Contact.active,
     },
+    companyAddressId: cc.companyAddressId,
+    companyAddress: cc.CompanyAddress
+      ? {
+          id: cc.CompanyAddress.id,
+          typeAddress: cc.CompanyAddress.typeAddress,
+          street: cc.CompanyAddress.street,
+          houseNumber: cc.CompanyAddress.houseNumber,
+          busNumber: cc.CompanyAddress.busNumber,
+          zipCode: cc.CompanyAddress.zipCode,
+          place: cc.CompanyAddress.place,
+          countryName: cc.CompanyAddress.Country?.name ?? null,
+        }
+      : null,
   }
 }
 
@@ -222,7 +241,7 @@ export function mapCompanyDetail(c: CompanyDetailPayload): CompanyDetailData {
     companyId: c.companyId,
     parentCompanyName: c.Company?.name ?? null,
     targetId: c.Target.id,
-    addresses: c.CompanyAdress.map(mapDetailAddress),
+    addresses: c.CompanyAddress.map(mapDetailAddress),
     contacts: c.CompanyContact.map(mapContact),
     projects: c.Project.map(mapProject),
     subsidiaries: c.other_Company.map(s => ({

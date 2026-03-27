@@ -95,6 +95,13 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
       icon: 'Wallet',
       owner: 'accounting',
     },
+    {
+      id: 'priceList',
+      name: 'Price List',
+      description: 'Manage and apply pricing for materials, labor, and services',
+      icon: 'ListChecks',
+      owner: 'accounting',
+    },
   ],
 
   Engineering: [

@@ -60,11 +60,6 @@ export type CertificateType = Prisma.CertificateTypeModel
  */
 export type Company = Prisma.CompanyModel
 /**
- * Model CompanyAdress
- * 
- */
-export type CompanyAdress = Prisma.CompanyAdressModel
-/**
  * Model CompanyContact
  * 
  */
@@ -464,3 +459,23 @@ export type PaymentMethod = Prisma.PaymentMethodModel
  * 
  */
 export type VatMargin = Prisma.VatMarginModel
+/**
+ * Model PriceList
+ * 
+ */
+export type PriceList = Prisma.PriceListModel
+/**
+ * Model PriceListItem
+ * 
+ */
+export type PriceListItem = Prisma.PriceListItemModel
+/**
+ * Model CompanyAddress
+ * 
+ */
+export type CompanyAddress = Prisma.CompanyAddressModel
+/**
+ * Model PriceListItemTarget
+ * 
+ */
+export type PriceListItemTarget = Prisma.PriceListItemTargetModel

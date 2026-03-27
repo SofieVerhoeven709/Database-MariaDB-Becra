@@ -297,7 +297,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
     // Other created
     Certificate: {select: {id: true; descriptionShort: true; createdAt: true; CertificateType: {select: {name: true}}}}
     CertificateType: {select: {id: true; name: true; createdAt: true}}
-    CompanyAdress: {
+    CompanyAddress_CompanyAddress_createdByToEmployee: {
       select: {id: true; street: true; houseNumber: true; place: true; createdAt: true; Company: {select: {name: true}}}
     }
     CompanyContact: {
@@ -379,7 +379,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {id: true; descriptionShort: true; deletedAt: true; CertificateType: {select: {name: true}}}
     }
     CertificateType_CertificateType_deletedByToEmployee: {select: {id: true; name: true; deletedAt: true}}
-    CompanyAdress_CompanyAdress_deletedByToEmployee: {
+    CompanyAddress_CompanyAddress_deletedByToEmployee: {
       select: {id: true; street: true; houseNumber: true; place: true; deletedAt: true; Company: {select: {name: true}}}
     }
     CompanyContact_CompanyContact_deletedByToEmployee: {
@@ -988,7 +988,7 @@ export function mapEmployeeDetail(
         deletedAt: null,
         href: null,
       })),
-      ...e.CompanyAdress.map(r => ({
+      ...e.CompanyAddress_CompanyAddress_createdByToEmployee.map(r => ({
         id: r.id,
         type: 'Company Address' as const,
         label: [r.street, r.houseNumber].filter(Boolean).join(' ') || '(no address)',
@@ -1346,7 +1346,7 @@ export function mapEmployeeDetail(
         deletedAt: r.deletedAt?.toISOString() ?? null,
         href: null,
       })),
-      ...e.CompanyAdress_CompanyAdress_deletedByToEmployee.map(r => ({
+      ...e.CompanyAddress_CompanyAddress_deletedByToEmployee.map(r => ({
         id: r.id,
         type: 'Company Address' as const,
         label: [r.street, r.houseNumber].filter(Boolean).join(' ') || '(no address)',

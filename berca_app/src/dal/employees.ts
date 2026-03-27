@@ -501,7 +501,7 @@ export async function getEmployeeDetail(id: string) {
           take: 50,
           select: {id: true, name: true, createdAt: true},
         },
-        CompanyAdress: {
+        CompanyAddress_CompanyAddress_createdByToEmployee: {
           where: {deleted: false},
           orderBy: {createdAt: 'desc'},
           take: 50,
@@ -966,7 +966,7 @@ export async function getEmployeeDetail(id: string) {
           take: 50,
           select: {id: true, name: true, deletedAt: true},
         },
-        CompanyAdress_CompanyAdress_deletedByToEmployee: {
+        CompanyAddress_CompanyAddress_deletedByToEmployee: {
           where: {deleted: true},
           orderBy: {deletedAt: 'desc'},
           take: 50,

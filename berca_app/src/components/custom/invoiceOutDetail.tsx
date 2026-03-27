@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
-import {ArrowLeft, Pencil, X, Save, Plus, Trash2, ExternalLink} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, Plus, Trash2, ExternalLink, AlertTriangle} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -20,7 +20,7 @@ import {
   getActiveWorkOrdersForProjectAction,
   addWorkOrdersToInvoiceAction,
 } from '@/serverFunctions/invoices'
-import type {MappedInvoiceOut, InvoiceLookup, VatMarginOption} from '@/types/invoice'
+import type {MappedInvoiceOut, MappedBillingLine, InvoiceLookup, VatMarginOption} from '@/types/invoice'
 
 function formatDate(date: string | null) {
   if (!date) return '-'
@@ -32,6 +32,10 @@ function toDateInput(iso: string | null) {
   return new Date(iso).toISOString().slice(0, 10)
 }
 
+function formatEur(value: number) {
+  return `€${value.toFixed(2)}`
+}
+
 function BoolBadge({value}: {value: boolean}) {
   return value ? (
     <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
@@ -40,6 +44,16 @@ function BoolBadge({value}: {value: boolean}) {
       No
     </Badge>
   )
+}
+
+function TypeBadge({type}: {type: MappedBillingLine['type']}) {
+  const map = {
+    hours: {label: 'Hours', cls: 'bg-blue-500/10 text-blue-500 border-0'},
+    material: {label: 'Material', cls: 'bg-purple-500/10 text-purple-500 border-0'},
+    training: {label: 'Training', cls: 'bg-green-500/10 text-green-500 border-0'},
+  }
+  const {label, cls} = map[type]
+  return <Badge className={`${cls} font-medium text-xs`}>{label}</Badge>
 }
 
 interface WorkOrderOption {
@@ -80,6 +94,8 @@ type EditForm = {
 const thClass = 'whitespace-nowrap text-xs'
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 
+type Tab = 'lines' | 'workOrders' | 'contacts'
+
 export function InvoiceOutDetail({
   invoice,
   invoiceTypes,
@@ -96,7 +112,6 @@ export function InvoiceOutDetail({
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canEdit = currentUserLevel >= 40
   const canDelete = currentUserLevel >= 80
-  // Invoice number is editable only for level >= 80, matching company number behaviour
   const canEditNumber = currentUserLevel >= 80
 
   const isDraft = invoice.invoiceStatusName === 'Draft'
@@ -117,6 +132,7 @@ export function InvoiceOutDetail({
     outstanding: invoice.outstanding,
   })
 
+  const [activeTab, setActiveTab] = useState<Tab>('lines')
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState<EditForm>(buildForm)
@@ -133,7 +149,7 @@ export function InvoiceOutDetail({
   const linkedContactIds = new Set(invoice.contacts.map(c => c.contactId))
   const availableContacts = contactOptions.filter(c => !linkedContactIds.has(c.id))
 
-  // Work order management (draft only)
+  // Work order management
   const [availableWorkOrders, setAvailableWorkOrders] = useState<WorkOrderOption[]>([])
   const [selectedNewWorkOrderIds, setSelectedNewWorkOrderIds] = useState<string[]>([])
   const [loadingWorkOrders, setLoadingWorkOrders] = useState(false)
@@ -235,6 +251,12 @@ export function InvoiceOutDetail({
     }
   }
 
+  // All billing lines across all work orders
+  const allLines = invoice.workOrders.flatMap(wo =>
+    wo.billingLines.map(l => ({...l, workOrderNumber: wo.workOrderNumber, workOrderDesc: wo.description})),
+  )
+  const unmatchedCount = allLines.filter(l => l.unmatched).length
+
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
@@ -284,7 +306,6 @@ export function InvoiceOutDetail({
       {/* Info card */}
       <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Invoice Number */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">
               Invoice Number
@@ -484,10 +505,12 @@ export function InvoiceOutDetail({
             <Label className="text-xs text-muted-foreground">Created By</Label>
             <p className="text-sm text-muted-foreground">{invoice.createdByName}</p>
           </div>
+
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created At</Label>
             <p className="text-sm text-muted-foreground">{formatDate(invoice.createdAt)}</p>
           </div>
+
           {invoice.modifiedByName && (
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Last Modified By</Label>
@@ -517,268 +540,406 @@ export function InvoiceOutDetail({
         </div>
       </div>
 
-      {/* Work Orders */}
-      <div className="rounded-xl border border-border/60 bg-card p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-medium text-foreground">
-            Work Orders
-            <Badge variant="secondary" className="ml-2 text-xs">
-              {invoice.workOrders.length}
-            </Badge>
-          </h2>
-          {canEdit && isDraft && linkedProjectIds.length > 0 && !addingWorkOrders && (
-            <Button
-              size="sm"
-              variant="outline"
-              className="text-xs h-7 border-border gap-1"
-              onClick={() => setAddingWorkOrders(true)}>
-              <Plus className="h-3.5 w-3.5" /> Add Work Orders
-            </Button>
-          )}
+      {/* Tabs */}
+      <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
+        {/* Tab bar */}
+        <div className="flex border-b border-border/60">
+          {[
+            {id: 'lines' as Tab, label: 'Billing Lines', count: allLines.length, warn: unmatchedCount > 0},
+            {id: 'workOrders' as Tab, label: 'Work Orders', count: invoice.workOrders.length, warn: false},
+            {id: 'contacts' as Tab, label: 'Contacts', count: invoice.contacts.length, warn: false},
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-2 px-4 py-3 text-xs font-medium border-b-2 transition-colors ${
+                activeTab === tab.id
+                  ? 'border-accent text-foreground'
+                  : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+              }`}>
+              {tab.label}
+              <Badge variant={activeTab === tab.id ? 'default' : 'secondary'} className="text-xs h-4 px-1.5">
+                {tab.count}
+              </Badge>
+              {tab.warn && <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />}
+            </button>
+          ))}
         </div>
 
-        {addingWorkOrders && isDraft && (
-          <div className="mb-4 p-3 rounded-lg border border-border bg-secondary/30 flex flex-col gap-3">
-            <p className="text-xs font-medium text-foreground">Select additional work orders from linked projects</p>
-            {loadingWorkOrders ? (
-              <p className="text-xs text-muted-foreground">Loading…</p>
-            ) : availableWorkOrders.length === 0 ? (
-              <p className="text-xs text-muted-foreground">No additional active work orders available.</p>
+        {/* ── Billing Lines tab ── */}
+        {activeTab === 'lines' && (
+          <div className="p-4 flex flex-col gap-4">
+            {unmatchedCount > 0 && (
+              <div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2">
+                <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0" />
+                <p className="text-xs text-amber-600 dark:text-amber-400">
+                  {unmatchedCount} line{unmatchedCount !== 1 ? 's' : ''} have no matching price list item and will not
+                  be included in the total.
+                </p>
+              </div>
+            )}
+
+            {allLines.length === 0 ? (
+              <p className="text-sm text-muted-foreground text-center py-6">No billing lines found.</p>
             ) : (
-              <div className="rounded-lg border border-border bg-secondary/40 divide-y divide-border/60">
-                {availableWorkOrders.map(wo => (
-                  <label
-                    key={wo.id}
-                    className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-secondary/80 transition-colors">
-                    <Checkbox
-                      checked={selectedNewWorkOrderIds.includes(wo.id)}
-                      onCheckedChange={() => toggleNewWorkOrder(wo.id)}
-                    />
-                    <div className="flex flex-col gap-0.5">
-                      <span className="text-sm text-foreground font-medium">{wo.workOrderNumber ?? '(no number)'}</span>
-                      {wo.description && (
-                        <span className="text-xs text-muted-foreground line-clamp-1">{wo.description}</span>
-                      )}
+              <>
+                {/* Group by work order */}
+                {invoice.workOrders.map(wo => {
+                  if (wo.billingLines.length === 0) return null
+                  return (
+                    <div key={wo.id} className="flex flex-col gap-2">
+                      <div className="flex items-center gap-2">
+                        <p className="text-xs font-medium text-foreground">
+                          {wo.workOrderNumber ?? '(no number)'}
+                          {wo.description ? ` — ${wo.description}` : ''}
+                        </p>
+                        <span className="text-xs text-muted-foreground">
+                          {wo.projectNumber} · {wo.companyName}
+                        </span>
+                      </div>
+                      <div className="rounded-lg border border-border/60 overflow-x-auto">
+                        <Table>
+                          <TableHeader>
+                            <TableRow className="hover:bg-transparent border-border/60">
+                              <TableHead className={thClass}>Type</TableHead>
+                              <TableHead className={thClass}>Description</TableHead>
+                              <TableHead className={thClass}>Qty</TableHead>
+                              <TableHead className={thClass}>Unit</TableHead>
+                              <TableHead className={thClass}>Unit Price</TableHead>
+                              <TableHead className={thClass}>Total</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {wo.billingLines.map((line, i) => (
+                              <TableRow
+                                key={`${line.sourceId}-${i}`}
+                                className={`border-border/40 ${line.unmatched ? 'bg-amber-500/5 hover:bg-amber-500/10' : 'hover:bg-secondary/50'}`}>
+                                <TableCell>
+                                  <TypeBadge type={line.type} />
+                                </TableCell>
+                                <TableCell
+                                  className={`${tdClass} ${line.unmatched ? 'text-amber-600 dark:text-amber-400' : 'text-foreground font-medium'}`}>
+                                  <div className="flex items-center gap-1.5">
+                                    {line.unmatched && (
+                                      <AlertTriangle className="h-3.5 w-3.5 text-amber-500 shrink-0" />
+                                    )}
+                                    {line.sourceLabel}
+                                  </div>
+                                </TableCell>
+                                <TableCell className={tdClass}>{line.quantity}</TableCell>
+                                <TableCell className={tdClass}>{line.unit}</TableCell>
+                                <TableCell className={`${tdClass} font-mono`}>
+                                  {line.unitPriceFinal != null ? (
+                                    formatEur(line.unitPriceFinal)
+                                  ) : (
+                                    <span className="text-amber-500 text-xs">No price</span>
+                                  )}
+                                </TableCell>
+                                <TableCell className={`${tdClass} font-mono font-medium`}>
+                                  {line.lineTotalFinal != null ? (
+                                    formatEur(line.lineTotalFinal)
+                                  ) : (
+                                    <span className="text-amber-500 text-xs">—</span>
+                                  )}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </div>
                     </div>
-                  </label>
+                  )
+                })}
+
+                {/* Totals block */}
+                <div className="flex justify-end">
+                  <div className="flex flex-col gap-1.5 min-w-[260px] rounded-lg border border-border/60 bg-secondary/40 px-4 py-3">
+                    <div className="flex items-center justify-between gap-8">
+                      <span className="text-xs text-muted-foreground">Subtotal (ex VAT)</span>
+                      <span className="text-sm font-mono text-foreground">{formatEur(invoice.subtotalExVat)}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-8">
+                      <span className="text-xs text-muted-foreground">VAT ({invoice.vatMarginVat}%)</span>
+                      <span className="text-sm font-mono text-muted-foreground">{formatEur(invoice.vatAmount)}</span>
+                    </div>
+                    <div className="border-t border-border/60 pt-1.5 flex items-center justify-between gap-8">
+                      <span className="text-sm font-medium text-foreground">Total (incl. VAT)</span>
+                      <span className="text-base font-mono font-semibold text-foreground">
+                        {formatEur(invoice.totalInclVat)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* ── Work Orders tab ── */}
+        {activeTab === 'workOrders' && (
+          <div className="p-4 flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <p className="text-xs text-muted-foreground">
+                {invoice.workOrders.length} work order{invoice.workOrders.length !== 1 ? 's' : ''} linked
+              </p>
+              {canEdit && isDraft && linkedProjectIds.length > 0 && !addingWorkOrders && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs h-7 border-border gap-1"
+                  onClick={() => setAddingWorkOrders(true)}>
+                  <Plus className="h-3.5 w-3.5" /> Add Work Orders
+                </Button>
+              )}
+            </div>
+
+            {addingWorkOrders && isDraft && (
+              <div className="p-3 rounded-lg border border-border bg-secondary/30 flex flex-col gap-3">
+                <p className="text-xs font-medium text-foreground">
+                  Select additional work orders from linked projects
+                </p>
+                {loadingWorkOrders ? (
+                  <p className="text-xs text-muted-foreground">Loading…</p>
+                ) : availableWorkOrders.length === 0 ? (
+                  <p className="text-xs text-muted-foreground">No additional active work orders available.</p>
+                ) : (
+                  <div className="rounded-lg border border-border bg-secondary/40 divide-y divide-border/60">
+                    {availableWorkOrders.map(wo => (
+                      <label
+                        key={wo.id}
+                        className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-secondary/80 transition-colors">
+                        <Checkbox
+                          checked={selectedNewWorkOrderIds.includes(wo.id)}
+                          onCheckedChange={() => toggleNewWorkOrder(wo.id)}
+                        />
+                        <div className="flex flex-col gap-0.5">
+                          <span className="text-sm text-foreground font-medium">
+                            {wo.workOrderNumber ?? '(no number)'}
+                          </span>
+                          {wo.description && (
+                            <span className="text-xs text-muted-foreground line-clamp-1">{wo.description}</span>
+                          )}
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                )}
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    className="h-7 text-xs bg-accent text-accent-foreground hover:bg-accent/80"
+                    disabled={selectedNewWorkOrderIds.length === 0 || savingWorkOrders}
+                    onClick={handleAddWorkOrders}>
+                    {savingWorkOrders
+                      ? 'Adding…'
+                      : `Add ${selectedNewWorkOrderIds.length > 0 ? `(${selectedNewWorkOrderIds.length})` : ''}`}
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="h-7 text-xs border-border"
+                    onClick={() => {
+                      setAddingWorkOrders(false)
+                      setSelectedNewWorkOrderIds([])
+                    }}>
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {projectsOnInvoice.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {projectsOnInvoice.map(p => (
+                  <div
+                    key={p.projectId}
+                    className="flex items-center gap-3 rounded-lg border border-border bg-secondary/40 px-3 py-2">
+                    <div>
+                      <p className="text-xs font-medium text-foreground">
+                        {p.projectNumber} — {p.projectName}
+                      </p>
+                      <p className="text-xs text-muted-foreground">{p.companyName}</p>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Link href={`/departments/${departmentId}/project/${p.projectId}` as Route}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6 text-muted-foreground hover:text-accent hover:bg-accent/10"
+                          title="Open project">
+                          <ExternalLink className="h-3 w-3" />
+                        </Button>
+                      </Link>
+                      <Link href={`/departments/${departmentId}/company/${p.companyId}` as Route}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6 text-muted-foreground hover:text-accent hover:bg-accent/10"
+                          title="Open company">
+                          <ExternalLink className="h-3 w-3" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
                 ))}
               </div>
             )}
-            <div className="flex gap-2">
-              <Button
-                size="sm"
-                className="h-7 text-xs bg-accent text-accent-foreground hover:bg-accent/80"
-                disabled={selectedNewWorkOrderIds.length === 0 || savingWorkOrders}
-                onClick={handleAddWorkOrders}>
-                {savingWorkOrders
-                  ? 'Adding…'
-                  : `Add ${selectedNewWorkOrderIds.length > 0 ? `(${selectedNewWorkOrderIds.length})` : ''}`}
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-7 text-xs border-border"
-                onClick={() => {
-                  setAddingWorkOrders(false)
-                  setSelectedNewWorkOrderIds([])
-                }}>
-                Cancel
-              </Button>
+
+            {invoice.workOrders.length === 0 ? (
+              <p className="text-sm text-muted-foreground text-center py-4">No work orders linked.</p>
+            ) : (
+              <div className="rounded-lg border border-border/60 overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="hover:bg-transparent border-border/60">
+                      <TableHead className={thClass}>Work Order #</TableHead>
+                      <TableHead className={thClass}>Description</TableHead>
+                      <TableHead className={thClass}>Project</TableHead>
+                      <TableHead className={thClass}>Company</TableHead>
+                      <TableHead className={thClass}>Completed</TableHead>
+                      <TableHead className={thClass}>Hours Closed</TableHead>
+                      <TableHead className="w-10">
+                        <span className="sr-only">Open</span>
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {invoice.workOrders.map(wo => (
+                      <TableRow key={wo.id} className="border-border/40 hover:bg-secondary/50">
+                        <TableCell className={`${tdClass} text-foreground font-medium`}>
+                          {wo.workOrderNumber ?? '(no number)'}
+                        </TableCell>
+                        <TableCell className={tdClass}>{wo.description ?? '-'}</TableCell>
+                        <TableCell className={tdClass}>
+                          {wo.projectNumber} — {wo.projectName}
+                        </TableCell>
+                        <TableCell className={tdClass}>{wo.companyName}</TableCell>
+                        <TableCell>
+                          <BoolBadge value={wo.completed} />
+                        </TableCell>
+                        <TableCell>
+                          <BoolBadge value={wo.hoursMaterialClosed} />
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/departments/${departmentId}/workOrder/${wo.id}` as Route}>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                              <ExternalLink className="h-3.5 w-3.5" />
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── Contacts tab ── */}
+        {activeTab === 'contacts' && (
+          <div className="p-4 flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <p className="text-xs text-muted-foreground">
+                {invoice.contacts.length} contact{invoice.contacts.length !== 1 ? 's' : ''} linked
+              </p>
+              {canEdit && !addingContact && availableContacts.length > 0 && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs h-7 border-border gap-1"
+                  onClick={() => setAddingContact(true)}>
+                  <Plus className="h-3.5 w-3.5" /> Add Contact
+                </Button>
+              )}
+            </div>
+
+            {addingContact && (
+              <div className="flex items-center gap-2 p-3 rounded-lg border border-border bg-secondary/30">
+                <Select value={newContactId} onValueChange={setNewContactId}>
+                  <SelectTrigger className="h-8 text-xs bg-background border-border flex-1">
+                    <SelectValue placeholder="Select contact…" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="none" disabled>
+                      Select contact…
+                    </SelectItem>
+                    {availableContacts.map(c => (
+                      <SelectItem key={c.id} value={c.id} className="text-xs">
+                        {c.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button
+                  size="sm"
+                  className="h-8 text-xs bg-accent text-accent-foreground hover:bg-accent/80"
+                  onClick={handleAddContact}
+                  disabled={newContactId === 'none'}>
+                  Add
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="h-8 text-xs border-border"
+                  onClick={() => {
+                    setAddingContact(false)
+                    setNewContactId('none')
+                  }}>
+                  Cancel
+                </Button>
+              </div>
+            )}
+
+            <div className="rounded-lg border border-border/60 overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="hover:bg-transparent border-border/60">
+                    <TableHead className={thClass}>Name</TableHead>
+                    <TableHead className={thClass}>Email</TableHead>
+                    <TableHead className={thClass}>Phone</TableHead>
+                    {canDelete && (
+                      <TableHead className="w-12">
+                        <span className="sr-only">Remove</span>
+                      </TableHead>
+                    )}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {invoice.contacts.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={canDelete ? 4 : 3} className="h-16 text-center text-muted-foreground text-sm">
+                        No contacts linked.
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    invoice.contacts.map(c => (
+                      <TableRow key={c.id} className="border-border/40 hover:bg-secondary/50">
+                        <TableCell className={`${tdClass} text-foreground font-medium`}>{c.contactName}</TableCell>
+                        <TableCell className={tdClass}>{c.contactMail ?? '-'}</TableCell>
+                        <TableCell className={tdClass}>{c.contactPhone ?? '-'}</TableCell>
+                        {canDelete && (
+                          <TableCell>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                              onClick={() => handleRemoveContact(c.id)}>
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          </TableCell>
+                        )}
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
             </div>
           </div>
         )}
-
-        {projectsOnInvoice.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-4">
-            {projectsOnInvoice.map(p => (
-              <div
-                key={p.projectId}
-                className="flex items-center gap-3 rounded-lg border border-border bg-secondary/40 px-3 py-2">
-                <div>
-                  <p className="text-xs font-medium text-foreground">
-                    {p.projectNumber} — {p.projectName}
-                  </p>
-                  <p className="text-xs text-muted-foreground">{p.companyName}</p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Link href={`/departments/${departmentId}/project/${p.projectId}` as Route}>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-6 w-6 text-muted-foreground hover:text-accent hover:bg-accent/10"
-                      title="Open project">
-                      <ExternalLink className="h-3 w-3" />
-                    </Button>
-                  </Link>
-                  <Link href={`/departments/${departmentId}/company/${p.companyId}` as Route}>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-6 w-6 text-muted-foreground hover:text-accent hover:bg-accent/10"
-                      title="Open company">
-                      <ExternalLink className="h-3 w-3" />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {invoice.workOrders.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-4">No work orders linked.</p>
-        ) : (
-          <div className="rounded-lg border border-border/60 overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="hover:bg-transparent border-border/60">
-                  <TableHead className={thClass}>Work Order #</TableHead>
-                  <TableHead className={thClass}>Description</TableHead>
-                  <TableHead className={thClass}>Project</TableHead>
-                  <TableHead className={thClass}>Company</TableHead>
-                  <TableHead className={thClass}>Completed</TableHead>
-                  <TableHead className={thClass}>Hours Closed</TableHead>
-                  <TableHead className="w-10">
-                    <span className="sr-only">Open</span>
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {invoice.workOrders.map(wo => (
-                  <TableRow key={wo.id} className="border-border/40 hover:bg-secondary/50">
-                    <TableCell className={`${tdClass} text-foreground font-medium`}>
-                      {wo.workOrderNumber ?? '(no number)'}
-                    </TableCell>
-                    <TableCell className={tdClass}>{wo.description ?? '-'}</TableCell>
-                    <TableCell className={tdClass}>
-                      {wo.projectNumber} — {wo.projectName}
-                    </TableCell>
-                    <TableCell className={tdClass}>{wo.companyName}</TableCell>
-                    <TableCell>
-                      <BoolBadge value={wo.completed} />
-                    </TableCell>
-                    <TableCell>
-                      <BoolBadge value={wo.hoursMaterialClosed} />
-                    </TableCell>
-                    <TableCell>
-                      <Link href={`/departments/${departmentId}/workOrder/${wo.id}` as Route}>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
-                          <ExternalLink className="h-3.5 w-3.5" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        )}
-      </div>
-
-      {/* Contacts */}
-      <div className="rounded-xl border border-border/60 bg-card p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-medium text-foreground">
-            Contacts
-            <Badge variant="secondary" className="ml-2 text-xs">
-              {invoice.contacts.length}
-            </Badge>
-          </h2>
-          {canEdit && !addingContact && availableContacts.length > 0 && (
-            <Button
-              size="sm"
-              variant="outline"
-              className="text-xs h-7 border-border gap-1"
-              onClick={() => setAddingContact(true)}>
-              <Plus className="h-3.5 w-3.5" /> Add Contact
-            </Button>
-          )}
-        </div>
-
-        {addingContact && (
-          <div className="flex items-center gap-2 mb-4 p-3 rounded-lg border border-border bg-secondary/30">
-            <Select value={newContactId} onValueChange={setNewContactId}>
-              <SelectTrigger className="h-8 text-xs bg-background border-border flex-1">
-                <SelectValue placeholder="Select contact…" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                <SelectItem value="none" disabled>
-                  Select contact…
-                </SelectItem>
-                {availableContacts.map(c => (
-                  <SelectItem key={c.id} value={c.id} className="text-xs">
-                    {c.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Button
-              size="sm"
-              className="h-8 text-xs bg-accent text-accent-foreground hover:bg-accent/80"
-              onClick={handleAddContact}
-              disabled={newContactId === 'none'}>
-              Add
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              className="h-8 text-xs border-border"
-              onClick={() => {
-                setAddingContact(false)
-                setNewContactId('none')
-              }}>
-              Cancel
-            </Button>
-          </div>
-        )}
-
-        <div className="rounded-lg border border-border/60 overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow className="hover:bg-transparent border-border/60">
-                <TableHead className={thClass}>Name</TableHead>
-                <TableHead className={thClass}>Email</TableHead>
-                <TableHead className={thClass}>Phone</TableHead>
-                {canDelete && (
-                  <TableHead className="w-12">
-                    <span className="sr-only">Remove</span>
-                  </TableHead>
-                )}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {invoice.contacts.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={canDelete ? 4 : 3} className="h-16 text-center text-muted-foreground text-sm">
-                    No contacts linked.
-                  </TableCell>
-                </TableRow>
-              ) : (
-                invoice.contacts.map(c => (
-                  <TableRow key={c.id} className="border-border/40 hover:bg-secondary/50">
-                    <TableCell className={`${tdClass} text-foreground font-medium`}>{c.contactName}</TableCell>
-                    <TableCell className={tdClass}>{c.contactMail ?? '-'}</TableCell>
-                    <TableCell className={tdClass}>{c.contactPhone ?? '-'}</TableCell>
-                    {canDelete && (
-                      <TableCell>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                          onClick={() => handleRemoveContact(c.id)}>
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
-                      </TableCell>
-                    )}
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </div>
       </div>
     </div>
   )

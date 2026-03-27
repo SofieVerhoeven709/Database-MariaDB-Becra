@@ -6,6 +6,7 @@ export const companyContactSchema = z.object({
   startedDate: requiredDateSchema,
   endDate: dateSchema.optional(),
   roleWithCompany: z.string().max(100).nullable().optional(),
+  companyAddressId: z.string().nullable().optional(),
   createdAt: requiredDateSchema,
   createdBy: z.string(),
   contactId: z.string(),

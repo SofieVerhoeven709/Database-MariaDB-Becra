@@ -13,7 +13,7 @@ import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/cus
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import type {MappedDocument, DocumentGroupOption, DocumentPlaceOption} from '@/types/document'
 import type {RoleLevelOption} from '@/types/roleLevel'
-import {generateCompanyNumber, generatedocumentNumber} from '@/lib/utils'
+import {generatedocumentNumber} from '@/lib/utils'
 
 interface SelectOption {
   id: string
@@ -343,9 +343,6 @@ export function DocumentFormDialog({
                     setForm(f => ({
                       ...f,
                       documentGroupAId: val,
-                      documentGroupBId: '',
-                      documentGroupCId: '',
-                      documentGroupDId: '',
                     }))
                   }}>
                   <SelectTrigger className="bg-secondary border-border">

@@ -630,7 +630,7 @@ ALTER TABLE WorkOrder CHANGE COLUMN IF EXISTS `workOrderNumber` `workOrderNumber
 
 
 SET FOREIGN_KEY_CHECKS=0;
-ALTER TABLE WorkOrderInvoice DROP FOREIGN KEY WorkOrderInvoice_ibfk_1;
+ALTER TABLE WorkOrderInvoice DROP FOREIGN KEY IF EXISTS WorkOrderInvoice_ibfk_1;
 ALTER TABLE WorkOrderInvoice ADD CONSTRAINT fk_workorderinvoice_invoiceout
         FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut(id) ON DELETE CASCADE;
 SET FOREIGN_KEY_CHECKS=1;

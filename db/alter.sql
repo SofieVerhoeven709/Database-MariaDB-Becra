@@ -605,16 +605,16 @@ ALTER TABLE CompanyContact DROP FOREIGN KEY IF EXISTS fk_companyContact_companyA
 ALTER TABLE CompanyContact ADD CONSTRAINT fk_companyContact_companyAddress
     FOREIGN KEY (`companyAddressId`) REFERENCES CompanyAddress (`id`) ON DELETE SET NULL;
 
--- 46a. houtype & material: add targetId column
+-- 46a. hourtype & material: add targetId column
 ALTER TABLE HourType ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NULL;
 ALTER TABLE Material ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NULL;
 
--- 46b. houtype: add FK fk_hourType_target (skip if already exists)
+-- 46b. hourtype: add FK fk_hourType_target (skip if already exists)
 ALTER TABLE HourType DROP FOREIGN KEY IF EXISTS fk_hourType_target;
 ALTER TABLE HourType ADD CONSTRAINT fk_hourType_target
     FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
 
--- 46c. houtype: add FK fk_material_target (skip if already exists)
+-- 46c. material: add FK fk_material_target (skip if already exists)
 ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_target;
 ALTER TABLE Material ADD CONSTRAINT fk_material_target
     FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
@@ -630,3 +630,6 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 ALTER TABLE WorkOrder CHANGE COLUMN IF EXISTS `workOrderNumber` `workOrderNumber` VARCHAR(255) NOT NULL;
+
+ALTER TABLE HourType CHANGE COLUMN IF EXISTS `targetId` `targetId` VARCHAR(255) NOT NULL;
+ALTER TABLE Material CHANGE COLUMN IF EXISTS `targetId` `targetId` VARCHAR(255) NOT NULL;

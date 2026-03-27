@@ -679,10 +679,10 @@ model HourType {
   deleted                               Boolean        @default(false)
   deletedAt                             DateTime?      @db.DateTime(0)
   deletedBy                             String?        @db.Char(36)
-  targetId                              String?        @db.Char(36)
+  targetId                              String         @db.Char(36)
   Employee                              Employee       @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "HourType_ibfk_1")
   Employee_HourType_deletedByToEmployee Employee?      @relation("HourType_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "HourType_ibfk_2")
-  Target                                Target?        @relation(fields: [targetId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "HourType_ibfk_3")
+  Target                                Target         @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "HourType_ibfk_3")
   TimeRegistry                          TimeRegistry[]
 
   @@index([createdBy], map: "createdBy")
@@ -953,7 +953,7 @@ model Material {
   deleted                                                  Boolean              @default(false)
   deletedAt                                                DateTime?            @db.DateTime(0)
   deletedBy                                                String?              @db.Char(36)
-  targetId                                                 String?              @db.Char(36)
+  targetId                                                 String               @db.Char(36)
   Inventory_Inventory_materialIdToMaterial                 Inventory[]          @relation("Inventory_materialIdToMaterial")
   Inventory_Inventory_beNumberToMaterial                   Inventory?           @relation("Inventory_beNumberToMaterial")
   MaterialGroup_Material_materialGroupIdAToMaterialGroup   MaterialGroup?       @relation("Material_materialGroupIdAToMaterialGroup", fields: [materialGroupIdA], references: [id], onUpdate: Restrict, map: "fk_material_group_a")
@@ -964,7 +964,7 @@ model Material {
   Employee                                                 Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")
   Employee_Material_deletedByToEmployee                    Employee?            @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_6")
   PreferredSupplierCompany                                 Company?             @relation("Material_preferredSupplierCompanyIdToCompany", fields: [preferredSupplierCompanyId], references: [id], onUpdate: Restrict, map: "Material_ibfk_5")
-  Target                                                   Target?              @relation(fields: [targetId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_material_target")
+  Target                                                   Target               @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_material_target")
   MaterialMovement                                         MaterialMovement[]
   MaterialOther                                            MaterialOther[]
   MaterialStructure_MaterialStructure_materialIdToMaterial MaterialStructure[]  @relation("MaterialStructure_materialIdToMaterial")

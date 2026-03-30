@@ -539,5 +539,6 @@ export const seedProd = async (prisma: PrismaClient) => {
   }
 
   console.log('Invoice types seeded')
+
   console.log('Seed complete')
 }

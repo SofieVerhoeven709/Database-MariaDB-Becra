@@ -1,7 +1,6 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 
-// ─── Shared includes ───────────────────────────────────────────────────────────
 const invoiceOutInclude = {
   InvoiceType: {select: {id: true, name: true}},
   Employee: {select: {id: true, firstName: true, lastName: true}},
@@ -9,6 +8,24 @@ const invoiceOutInclude = {
   InvoiceSentType: {select: {id: true, name: true}},
   InvoiceStatus: {select: {id: true, name: true}},
   VatMargin: {select: {id: true, vat: true}},
+  // ← Price list at invoice level
+  PriceList: {
+    select: {
+      id: true,
+      name: true,
+      PriceListItem: {
+        where: {deleted: false},
+        select: {
+          id: true,
+          description: true,
+          unit: true,
+          price: true,
+          isCostMargin: true,
+          PriceListItemTarget: {select: {targetId: true}},
+        },
+      },
+    },
+  },
   InvoiceOutContact: {
     include: {
       Contact: {
@@ -40,28 +57,9 @@ const invoiceOutInclude = {
               projectName: true,
               companyId: true,
               Company: {select: {id: true, name: true}},
-              // Fetch pricelist with items + their target links
-              PriceList: {
-                select: {
-                  id: true,
-                  PriceListItem: {
-                    where: {deleted: false},
-                    select: {
-                      id: true,
-                      description: true,
-                      unit: true,
-                      price: true,
-                      isCostMargin: true,
-                      PriceListItemTarget: {
-                        select: {targetId: true},
-                      },
-                    },
-                  },
-                },
-              },
+              // No PriceList here anymore — it's on the invoice
             },
           },
-          // Time registries with employees
           TimeRegistry: {
             where: {deleted: false},
             select: {
@@ -72,12 +70,9 @@ const invoiceOutInclude = {
               endBreak: true,
               hourTypeId: true,
               HourType: {select: {id: true, name: true, targetId: true}},
-              TimeRegistryEmployee: {
-                select: {id: true, employeeId: true},
-              },
+              TimeRegistryEmployee: {select: {id: true, employeeId: true}},
             },
           },
-          // Material structure lines
           WorkOrderStructure: {
             where: {deleted: false},
             select: {
@@ -97,7 +92,6 @@ const invoiceOutInclude = {
               },
             },
           },
-          // Training  lines
           Training: {
             where: {deleted: false},
             select: {
@@ -111,11 +105,7 @@ const invoiceOutInclude = {
                   description: true,
                   location: true,
                   targetId: true,
-                  Certificate: {
-                    select: {
-                      descriptionShort: true,
-                    },
-                  },
+                  Certificate: {select: {descriptionShort: true}},
                 },
               },
             },
@@ -164,6 +154,24 @@ export async function getInvoiceInById(id: string) {
     where: {id},
     include: invoiceInInclude,
   })
+}
+
+// ─── Price lists available for a set of companies (via PriceListCompany) ──────
+// Returns all non-deleted price lists assigned to any of the given companies.
+// Deduped — if multiple companies share the same list, it appears once.
+export async function getPriceListsForCompanies(companyIds: string[]) {
+  if (companyIds.length === 0) return []
+  const rows = await prismaClient.priceListCompany.findMany({
+    where: {
+      companyId: {in: companyIds},
+      PriceList: {deleted: false},
+    },
+    select: {
+      PriceList: {select: {id: true, name: true}},
+    },
+    distinct: ['priceListId'],
+  })
+  return rows.map(r => r.PriceList)
 }
 
 // ─── Company contacts for invoice ──────────────────────────────────────────────

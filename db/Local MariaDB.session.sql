@@ -1,4 +1,7 @@
-CREATE DATABASE app_db;
+DROP DATABASE IF exists app_db;
+
+CREATE DATABASE IF NOT EXISTS app_db;
+
 USE app_db;
 
 CREATE TABLE
@@ -40,11 +43,10 @@ CREATE TABLE
             revisionDetail TEXT,
             valid BOOLEAN NOT NULL DEFAULT 1,
             process BOOLEAN NOT NULL DEFAULT 0,
+            canCopy BOOLEAN NOT NULL DEFAULT 0,
             additionalInfo TEXT,
             referenceDocId CHAR(36),
-            roleId CHAR(36),
             FOREIGN KEY (referenceDocId) REFERENCES DocumentStructure (id) ON DELETE SET NULL,
-            FOREIGN KEY (roleId) REFERENCES Role (id) ON DELETE SET NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             UNIQUE (documentNumber)
@@ -174,9 +176,10 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             beNumber VARCHAR(255) NOT NULL,
             name VARCHAR(255),
-            brandOrderNr VARCHAR(255) NULL,
+            brandOrderNr VARCHAR(255),
             shortDescription VARCHAR(255) NOT NULL,
             longDescription TEXT,
+            preferredSupplier VARCHAR(255),
             brandName VARCHAR(255),
             documentationPlace VARCHAR(255),
             bePartDoc VARCHAR(255) NULL,
@@ -255,11 +258,11 @@ ADD CONSTRAINT fk_title_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (i
 ALTER TABLE DocumentStructure ADD createdBy CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_createdBy FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
-ALTER TABLE DocumentStructure ADD revisedById CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_documentStructure_revisedBy FOREIGN KEY (revisedById) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE DocumentStructure ADD revisedById CHAR(36) NULL,
+ADD CONSTRAINT fk_documentStructure_revisedBy FOREIGN KEY (revisedById) REFERENCES Employee (id) ON DELETE SET NULL;
 
-ALTER TABLE DocumentStructure ADD managedById CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_documentStructure_managedBy FOREIGN KEY (managedById) REFERENCES Employee (id) ON DELETE RESTRICT;
+ALTER TABLE DocumentStructure ADD managedById CHAR(36) NULL,
+ADD CONSTRAINT fk_documentStructure_managedBy FOREIGN KEY (managedById) REFERENCES Employee (id) ON DELETE SET NULL;
 
 ALTER TABLE DocumentStructure ADD targetId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
@@ -310,9 +313,9 @@ CREATE TABLE
             officialName VARCHAR(255) NOT NULL,
             number VARCHAR(255) NOT NULL,
             idOld VARCHAR(255),
-            mail VARCHAR(100),
-            businessPhone VARCHAR(100),
-            website VARCHAR(100),
+            mail VARCHAR(255),
+            businessPhone VARCHAR(255),
+            website VARCHAR(255),
             vatNumber VARCHAR(100),
             bankNumber VARCHAR(100),
             iban VARCHAR(100),
@@ -452,8 +455,8 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             materialId CHAR(36) NOT NULL,
             companyId CHAR(36) NOT NULL,
-            supplierOrderNr VARCHAR(255),
-            shortDescription VARCHAR(255),
+            supplierOrderNr VARCHAR(255) NULL,
+            shortDescription VARCHAR(255) NULL,
             isPreferred BOOLEAN NOT NULL DEFAULT 0,
             CONSTRAINT uq_materialSupplier_material_company UNIQUE (materialId, companyId),
             FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
@@ -575,7 +578,6 @@ CREATE TABLE
             projectTypeId CHAR(36) NOT NULL,
             parentProjectId CHAR(36) NULL,
             targetId CHAR(36) NOT NULL,
-            priceListId CHAR(36),
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT,
             FOREIGN KEY (projectTypeId) REFERENCES ProjectType (id) ON DELETE RESTRICT,
@@ -858,8 +860,6 @@ CREATE TABLE
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
-ALTER TABLE Project ADD CONSTRAINT fk_project_pricelist FOREIGN KEY (`priceListId`) REFERENCES PriceList (`id`) ON DELETE RESTRICT;
-
 CREATE TABLE 
       IF NOT EXISTS PriceListItem (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -901,7 +901,7 @@ CREATE TABLE
             deletedAt DATETIME,
             modifiedAt DATETIME,
             reminderSent BOOLEAN NOT NULL DEFAULT 0,
-            outstanding BOOLEAN NOT NULL DEFAULT 0,
+            outstanding BOOLEAN NOT NULL DEFAULT 1,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedBy CHAR(36),
             createdBy CHAR(36) NOT NULL,
@@ -922,6 +922,7 @@ CREATE TABLE
             FOREIGN KEY (invoiceSentTypeId) REFERENCES InvoiceSentType (id) ON DELETE RESTRICT,
             FOREIGN KEY (invoiceStatusId) REFERENCES InvoiceStatus (id) ON DELETE RESTRICT,
             FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
+            FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
             UNIQUE (invoiceNumber)
       ) ENGINE = InnoDB;
 
@@ -969,6 +970,15 @@ CREATE TABLE
             invoiceOutId CHAR(36) NOT NULL,
             FOREIGN KEY (contactId) REFERENCES Contact (id) ON DELETE RESTRICT,
             FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+CREATE TABLE 
+      IF NOT EXISTS PriceListCompany (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            priceListId CHAR(36) NOT NULL,
+            companyId CHAR(36) NOT NULL,
+            FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE CASCADE,
+            FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -1242,7 +1252,6 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS DocumentGroupB (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            documentGroupAId CHAR(36) NOT NULL,
             name VARCHAR(255),
             createdBy CHAR(36) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -1250,14 +1259,12 @@ CREATE TABLE
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
       
 CREATE TABLE
       IF NOT EXISTS DocumentGroupC (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            documentGroupBId CHAR(36) NOT NULL,
             name VARCHAR(255),
             createdBy CHAR(36) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -1265,14 +1272,12 @@ CREATE TABLE
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (documentGroupBId) REFERENCES DocumentGroupB (id) ON DELETE RESTRICT
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE
       IF NOT EXISTS DocumentGroupD (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            documentGroupCId CHAR(36) NOT NULL,
             name VARCHAR(255),
             createdBy CHAR(36) NOT NULL,
             createdAt DATETIME NOT NULL,
@@ -1280,20 +1285,67 @@ CREATE TABLE
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
-ALTER TABLE DocumentStructure ADD documentGroupAId CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_documentStructure_documentGroupA FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD documentGroupBId CHAR(36) NULL,
-ADD CONSTRAINT fk_documentStructure_documentGroupB FOREIGN KEY (documentGroupBId) REFERENCES DocumentGroupB (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD documentGroupCId CHAR(36) NULL,
-ADD CONSTRAINT fk_documentStructure_documentGroupC FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD documentGroupDId CHAR(36) NULL,
-ADD CONSTRAINT fk_documentStructure_documentGroupD FOREIGN KEY (documentGroupDId) REFERENCES DocumentGroupD (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
+CREATE TABLE
+      IF NOT EXISTS DocumentStructureTarget (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            documentStructureId CHAR(36) NOT NULL,
+            targetId CHAR(36) NOT NULL,
+            FOREIGN KEY (documentStructureId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
+            FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
+            UNIQUE (priceListItemId)
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS DocumentGroup (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            groupAId VARCHAR(255),
+            groupBId VARCHAR(255),
+            groupCId VARCHAR(255),
+            groupDId VARCHAR(255),
+            FOREIGN KEY (groupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT,
+            FOREIGN KEY (groupBId) REFERENCES DocumentGroupB (id) ON DELETE SET NULL,
+            FOREIGN KEY (groupCId) REFERENCES DocumentGroupC (id) ON DELETE SET NULL,
+            FOREIGN KEY (groupDId) REFERENCES DocumentGroupD (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS DocumentStatus (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(255),
+            createdBy CHAR(36) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS DocumentRevision (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            documentId CHAR(36) NOT NULL,
+            shortDescription VARCHAR(255),
+            longDescription TEXT,
+            createdBy CHAR(36) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (documentId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+ALTER TABLE DocumentStructure ADD documentGroupId CHAR(36) NULL,
+      ADD CONSTRAINT fk_documentStructure_documentGroup FOREIGN KEY (documentGroupId) REFERENCES DocumentGroup (id) ON DELETE SET NULL;
+ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NULL,
+      ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE SET NUll;
+ALTER TABLE DocumentStructure ADD documentStatusId CHAR(36) NOT NULL,
+      ADD CONSTRAINT fk_documentStructure_documentStatus FOREIGN KEY (documentStatusId) REFERENCES DocumentStatus (id) ON DELETE SET NUll;
 
 CREATE TABLE
       IF NOT EXISTS MaterialFamily (
@@ -1358,8 +1410,8 @@ CREATE TABLE
             updatedAt DATETIME,
             rejected BOOLEAN,
             additionalInfo VARCHAR(255),
-            unitPrice Decimal(10,3),
-            quantityPrice DECIMAL(10,3),
+            unitPrice Decimal(10,2),
+            quantityPrice INT,
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -1786,3 +1838,6 @@ CREATE TABLE
             FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
+
+-- Select below then right click and run selected query
+SHOW TABLE STATUS

@@ -28,9 +28,8 @@ export default async function PriceListsPage({params}: PageProps) {
       <div className="mx-auto max-w-6xl">
         <div className="mb-8">
           <h1 className="text-lg font-semibold text-foreground">Price Lists</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Manage price lists and assign them to projects</p>
+          <p className="mt-1 text-sm text-muted-foreground">Manage price lists and assign them to companies</p>
         </div>
-
         <PriceListTable
           initialPriceLists={priceLists}
           currentUserRole={currentUserRole}

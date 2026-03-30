@@ -19,8 +19,15 @@ import {
   removeInvoiceOutContactDirectAction,
   getActiveWorkOrdersForProjectAction,
   addWorkOrdersToInvoiceAction,
+  assignPriceListToInvoiceAction,
 } from '@/serverFunctions/invoices'
-import type {MappedInvoiceOut, MappedBillingLine, InvoiceLookup, VatMarginOption} from '@/types/invoice'
+import type {
+  MappedInvoiceOut,
+  MappedBillingLine,
+  InvoiceLookup,
+  VatMarginOption,
+  PriceListOption,
+} from '@/types/invoice'
 
 function formatDate(date: string | null) {
   if (!date) return '-'
@@ -70,6 +77,7 @@ interface InvoiceOutDetailProps {
   invoiceStatuses: InvoiceLookup[]
   vatMargins: VatMarginOption[]
   contactOptions: InvoiceLookup[]
+  priceListOptions: PriceListOption[] // ← new
   currentUserLevel: number
   currentUserRole: string
   departmentId: string
@@ -104,6 +112,7 @@ export function InvoiceOutDetail({
   invoiceStatuses,
   vatMargins,
   contactOptions,
+  priceListOptions,
   currentUserLevel,
   currentUserRole,
   departmentId,
@@ -138,9 +147,24 @@ export function InvoiceOutDetail({
   const [form, setForm] = useState<EditForm>(buildForm)
   const [numberError, setNumberError] = useState<string | null>(null)
 
+  // Price list assignment — independent of the edit form
+  const [assigningPriceList, setAssigningPriceList] = useState(false)
+  const [selectedPriceListId, setSelectedPriceListId] = useState<string>(invoice.priceListId ?? 'none')
+
   const s = <K extends keyof EditForm>(key: K, v: EditForm[K]) => {
     setForm(f => ({...f, [key]: v}))
     if (key === 'invoiceNumber') setNumberError(null)
+  }
+
+  async function handleAssignPriceList() {
+    const value = selectedPriceListId === 'none' ? null : selectedPriceListId
+    setAssigningPriceList(true)
+    try {
+      await assignPriceListToInvoiceAction(invoice.id, value)
+      router.refresh()
+    } finally {
+      setAssigningPriceList(false)
+    }
   }
 
   // Contact management
@@ -211,6 +235,8 @@ export function InvoiceOutDetail({
         vatMarginId: form.vatMarginId,
         reminderSent: form.reminderSent,
         outstanding: form.outstanding,
+        // priceListId is managed separately via assignPriceListToInvoiceAction
+        priceListId: invoice.priceListId,
       })
       setEditing(false)
       router.refresh()
@@ -251,7 +277,6 @@ export function InvoiceOutDetail({
     }
   }
 
-  // All billing lines across all work orders
   const allLines = invoice.workOrders.flatMap(wo =>
     wo.billingLines.map(l => ({...l, workOrderNumber: wo.workOrderNumber, workOrderDesc: wo.description})),
   )
@@ -282,21 +307,18 @@ export function InvoiceOutDetail({
             {editing ? (
               <>
                 <Button variant="outline" onClick={handleCancel} className="gap-2 border-border">
-                  <X className="h-4 w-4" />
-                  Cancel
+                  <X className="h-4 w-4" /> Cancel
                 </Button>
                 <Button
                   onClick={handleSave}
                   disabled={saving}
                   className="gap-2 bg-accent text-accent-foreground hover:bg-accent/80">
-                  <Save className="h-4 w-4" />
-                  {saving ? 'Saving…' : 'Save'}
+                  <Save className="h-4 w-4" /> {saving ? 'Saving…' : 'Save'}
                 </Button>
               </>
             ) : (
               <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-                <Pencil className="h-4 w-4" />
-                Edit
+                <Pencil className="h-4 w-4" /> Edit
               </Button>
             )}
           </div>
@@ -306,6 +328,7 @@ export function InvoiceOutDetail({
       {/* Info card */}
       <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Invoice Number */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">
               Invoice Number
@@ -501,6 +524,44 @@ export function InvoiceOutDetail({
             )}
           </div>
 
+          {/* ─── Price List — always visible, independent of edit mode ─────── */}
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Price List</Label>
+            {canEdit ? (
+              <div className="flex items-center gap-2">
+                <Select value={selectedPriceListId} onValueChange={setSelectedPriceListId}>
+                  <SelectTrigger className="bg-secondary border-border flex-1 text-sm">
+                    <SelectValue placeholder="No price list…" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="none" className="text-xs text-muted-foreground">
+                      — No price list —
+                    </SelectItem>
+                    {priceListOptions.map(pl => (
+                      <SelectItem key={pl.id} value={pl.id} className="text-xs">
+                        {pl.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {selectedPriceListId !== (invoice.priceListId ?? 'none') && (
+                  <Button
+                    size="sm"
+                    className="h-9 text-xs bg-accent text-accent-foreground hover:bg-accent/80 shrink-0"
+                    disabled={assigningPriceList}
+                    onClick={handleAssignPriceList}>
+                    {assigningPriceList ? 'Saving…' : 'Apply'}
+                  </Button>
+                )}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">{invoice.priceListName ?? '-'}</p>
+            )}
+            {priceListOptions.length === 0 && (
+              <p className="text-xs text-amber-500 mt-0.5">No price lists assigned to the companies on this invoice.</p>
+            )}
+          </div>
+
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created By</Label>
             <p className="text-sm text-muted-foreground">{invoice.createdByName}</p>
@@ -542,7 +603,6 @@ export function InvoiceOutDetail({
 
       {/* Tabs */}
       <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
-        {/* Tab bar */}
         <div className="flex border-b border-border/60">
           {[
             {id: 'lines' as Tab, label: 'Billing Lines', count: allLines.length, warn: unmatchedCount > 0},
@@ -569,6 +629,14 @@ export function InvoiceOutDetail({
         {/* ── Billing Lines tab ── */}
         {activeTab === 'lines' && (
           <div className="p-4 flex flex-col gap-4">
+            {!invoice.priceListId && (
+              <div className="flex items-center gap-2 rounded-lg border border-border/40 bg-secondary/40 px-3 py-2">
+                <AlertTriangle className="h-4 w-4 text-muted-foreground shrink-0" />
+                <p className="text-xs text-muted-foreground">
+                  No price list assigned. Select one above to calculate billing amounts.
+                </p>
+              </div>
+            )}
             {unmatchedCount > 0 && (
               <div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2">
                 <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0" />
@@ -583,7 +651,6 @@ export function InvoiceOutDetail({
               <p className="text-sm text-muted-foreground text-center py-6">No billing lines found.</p>
             ) : (
               <>
-                {/* Group by work order */}
                 {invoice.workOrders.map(wo => {
                   if (wo.billingLines.length === 0) return null
                   return (
@@ -651,7 +718,6 @@ export function InvoiceOutDetail({
                   )
                 })}
 
-                {/* Totals block */}
                 <div className="flex justify-end">
                   <div className="flex flex-col gap-1.5 min-w-[260px] rounded-lg border border-border/60 bg-secondary/40 px-4 py-3">
                     <div className="flex items-center justify-between gap-8">

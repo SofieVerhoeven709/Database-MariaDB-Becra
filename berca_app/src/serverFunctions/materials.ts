@@ -2,7 +2,7 @@
 
 import {revalidatePath} from 'next/cache'
 import {randomUUID} from 'crypto'
-import {createMaterial, updateMaterial, softDeleteMaterial, restoreMaterial} from '@/dal/materials'
+import {createMaterial, updateMaterial, softDeleteMaterial} from '@/dal/materials'
 import {prismaClient} from '@/dal/prismaClient'
 import {protectedFormAction} from '@/lib/serverFunctions'
 import {createMaterialSchema, updateMaterialSchema, deleteMaterialSchema} from '@/schemas/materialSchemas'
@@ -10,42 +10,6 @@ import {createTargetForType} from '@/dal/targets'
 
 const REVALIDATE_MATERIAL = '/departments/engineering/material'
 const REVALIDATE_INVENTORY = '/departments/warehouse/inventory'
-const REVALIDATE_WAREHOUSE_PLACE = '/departments/warehouse/place'
-
-async function assignWarehousePlaceToMaterial(
-  warehousePlaceId: string | null | undefined,
-  materialBeNumber: string,
-  previousMaterialBeNumber?: string,
-) {
-  const beNumbersToClear = Array.from(new Set([materialBeNumber, previousMaterialBeNumber].filter(Boolean))) as string[]
-
-  // Keep a single place assignment per material by clearing prior links first.
-  await prismaClient.warehousePlace.updateMany({
-    where: {beNumber: {in: beNumbersToClear}},
-    data: {beNumber: null},
-  })
-
-  if (!warehousePlaceId) return
-
-  const target = await prismaClient.warehousePlace.findFirst({
-    where: {id: warehousePlaceId, deleted: false},
-    select: {id: true, beNumber: true, abbreviation: true, place: true},
-  })
-
-  if (!target) {
-    throw new Error('Selected warehouse place was not found.')
-  }
-
-  if (target.beNumber && target.beNumber !== materialBeNumber) {
-    const label = target.place ? `${target.abbreviation} (${target.place})` : target.abbreviation
-    throw new Error(`Selected warehouse place ${label} is already assigned to BE ${target.beNumber}.`)
-  }
-
-  await prismaClient.warehousePlace.update({
-    where: {id: warehousePlaceId},
-    data: {beNumber: materialBeNumber},
-  })
-}
 
 async function generateBeNumber() {
   const materials = await prismaClient.material.findMany({
@@ -73,7 +37,7 @@ export const createMaterialAction = protectedFormAction({
   globalErrorMessage: 'Could not create the material, please try again.',
   serverFn: async ({data, profile, logger}) => {
     const target = await createTargetForType('Company', profile.id)
-    const {brandOrderNr, warehousePlaceId, ...restData} = data
+    const {brandOrderNr, ...restData} = data
     let beNumber = data.beNumber?.trim()
     const preferredSupplierCompanyId = data.preferredSupplierCompanyId ?? null
     const supplierCompanyIds = Array.from(
@@ -105,12 +69,9 @@ export const createMaterialAction = protectedFormAction({
       targetId: target.id,
     })
 
-    await assignWarehousePlaceToMaterial(warehousePlaceId, beNumber)
-
     logger.info(`Material created: ${material.id}`)
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)
-    revalidatePath(REVALIDATE_WAREHOUSE_PLACE)
   },
 })
 
@@ -119,12 +80,7 @@ export const updateMaterialAction = protectedFormAction({
   functionName: 'Update material',
   globalErrorMessage: 'Could not update the material, please try again.',
   serverFn: async ({data, logger}) => {
-    const {id, warehousePlaceId, ...rest} = data
-    const existingMaterial = await prismaClient.material.findUnique({
-      where: {id},
-      select: {beNumber: true},
-    })
-
+    const {id, ...rest} = data
     const preferredSupplierCompanyId = rest.preferredSupplierCompanyId ?? null
     const supplierCompanyIds = Array.from(
       new Set([
@@ -140,13 +96,9 @@ export const updateMaterialAction = protectedFormAction({
       supplierCompanyIds,
       bePartDoc: rest.bePartDoc != null ? Number(rest.bePartDoc) : rest.bePartDoc,
     })
-
-    await assignWarehousePlaceToMaterial(warehousePlaceId, updated.beNumber, existingMaterial?.beNumber)
-
     logger.info(`Material updated: ${updated.id}`)
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)
-    revalidatePath(REVALIDATE_WAREHOUSE_PLACE)
     revalidatePath(`${REVALIDATE_MATERIAL}/${updated.id}`)
   },
 })
@@ -163,17 +115,3 @@ export const deleteMaterialAction = protectedFormAction({
     revalidatePath(`${REVALIDATE_MATERIAL}/${data.id}`)
   },
 })
-
-export const restoreMaterialAction = protectedFormAction({
-  schema: deleteMaterialSchema,
-  functionName: 'Restore material',
-  globalErrorMessage: 'Could not restore the material, please try again.',
-  serverFn: async ({data, logger}) => {
-    await restoreMaterial(data.id)
-    logger.info(`Material restored: ${data.id}`)
-    revalidatePath(REVALIDATE_MATERIAL)
-    revalidatePath(REVALIDATE_INVENTORY)
-    revalidatePath(`${REVALIDATE_MATERIAL}/${data.id}`)
-  },
-})
-

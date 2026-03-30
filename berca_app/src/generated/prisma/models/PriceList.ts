@@ -214,11 +214,12 @@ export type PriceListWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"PriceList"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"PriceList"> | string | null
   targetId?: Prisma.StringFilter<"PriceList"> | string
+  InvoiceOut?: Prisma.InvoiceOutListRelationFilter
   Employee_PriceList_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_PriceList_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  PriceListCompany?: Prisma.PriceListCompanyListRelationFilter
   PriceListItem?: Prisma.PriceListItemListRelationFilter
-  Project?: Prisma.ProjectListRelationFilter
 }
 
 export type PriceListOrderByWithRelationInput = {
@@ -231,11 +232,12 @@ export type PriceListOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   targetId?: Prisma.SortOrder
+  InvoiceOut?: Prisma.InvoiceOutOrderByRelationAggregateInput
   Employee_PriceList_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  PriceListCompany?: Prisma.PriceListCompanyOrderByRelationAggregateInput
   PriceListItem?: Prisma.PriceListItemOrderByRelationAggregateInput
-  Project?: Prisma.ProjectOrderByRelationAggregateInput
   _relevance?: Prisma.PriceListOrderByRelevanceInput
 }
 
@@ -252,11 +254,12 @@ export type PriceListWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"PriceList"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"PriceList"> | string | null
   targetId?: Prisma.StringFilter<"PriceList"> | string
+  InvoiceOut?: Prisma.InvoiceOutListRelationFilter
   Employee_PriceList_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_PriceList_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  PriceListCompany?: Prisma.PriceListCompanyListRelationFilter
   PriceListItem?: Prisma.PriceListItemListRelationFilter
-  Project?: Prisma.ProjectListRelationFilter
 }, "id">
 
 export type PriceListOrderByWithAggregationInput = {
@@ -296,11 +299,12 @@ export type PriceListCreateInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutPriceListInput
   Employee_PriceList_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_createdByToEmployeeInput
   Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_deletedByToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutPriceListInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutPriceListInput
   PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutPriceListInput
-  Project?: Prisma.ProjectCreateNestedManyWithoutPriceListInput
 }
 
 export type PriceListUncheckedCreateInput = {
@@ -313,8 +317,9 @@ export type PriceListUncheckedCreateInput = {
   deletedAt?: Date | string | null
   deletedBy?: string | null
   targetId: string
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutPriceListInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutPriceListInput
   PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutPriceListInput
-  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutPriceListInput
 }
 
 export type PriceListUpdateInput = {
@@ -324,11 +329,12 @@ export type PriceListUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutPriceListNestedInput
   Employee_PriceList_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceList_PriceList_createdByToEmployeeNestedInput
   Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceList_PriceList_deletedByToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutPriceListNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutPriceListNestedInput
   PriceListItem?: Prisma.PriceListItemUpdateManyWithoutPriceListNestedInput
-  Project?: Prisma.ProjectUpdateManyWithoutPriceListNestedInput
 }
 
 export type PriceListUncheckedUpdateInput = {
@@ -341,8 +347,9 @@ export type PriceListUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutPriceListNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutPriceListNestedInput
   PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutPriceListNestedInput
-  Project?: Prisma.ProjectUncheckedUpdateManyWithoutPriceListNestedInput
 }
 
 export type PriceListCreateManyInput = {
@@ -524,20 +531,20 @@ export type PriceListUncheckedUpdateManyWithoutEmployee_PriceList_deletedByToEmp
   deleteMany?: Prisma.PriceListScalarWhereInput | Prisma.PriceListScalarWhereInput[]
 }
 
-export type PriceListCreateNestedOneWithoutProjectInput = {
-  create?: Prisma.XOR<Prisma.PriceListCreateWithoutProjectInput, Prisma.PriceListUncheckedCreateWithoutProjectInput>
-  connectOrCreate?: Prisma.PriceListCreateOrConnectWithoutProjectInput
+export type PriceListCreateNestedOneWithoutInvoiceOutInput = {
+  create?: Prisma.XOR<Prisma.PriceListCreateWithoutInvoiceOutInput, Prisma.PriceListUncheckedCreateWithoutInvoiceOutInput>
+  connectOrCreate?: Prisma.PriceListCreateOrConnectWithoutInvoiceOutInput
   connect?: Prisma.PriceListWhereUniqueInput
 }
 
-export type PriceListUpdateOneWithoutProjectNestedInput = {
-  create?: Prisma.XOR<Prisma.PriceListCreateWithoutProjectInput, Prisma.PriceListUncheckedCreateWithoutProjectInput>
-  connectOrCreate?: Prisma.PriceListCreateOrConnectWithoutProjectInput
-  upsert?: Prisma.PriceListUpsertWithoutProjectInput
+export type PriceListUpdateOneWithoutInvoiceOutNestedInput = {
+  create?: Prisma.XOR<Prisma.PriceListCreateWithoutInvoiceOutInput, Prisma.PriceListUncheckedCreateWithoutInvoiceOutInput>
+  connectOrCreate?: Prisma.PriceListCreateOrConnectWithoutInvoiceOutInput
+  upsert?: Prisma.PriceListUpsertWithoutInvoiceOutInput
   disconnect?: Prisma.PriceListWhereInput | boolean
   delete?: Prisma.PriceListWhereInput | boolean
   connect?: Prisma.PriceListWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PriceListUpdateToOneWithWhereWithoutProjectInput, Prisma.PriceListUpdateWithoutProjectInput>, Prisma.PriceListUncheckedUpdateWithoutProjectInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PriceListUpdateToOneWithWhereWithoutInvoiceOutInput, Prisma.PriceListUpdateWithoutInvoiceOutInput>, Prisma.PriceListUncheckedUpdateWithoutInvoiceOutInput>
 }
 
 export type PriceListCreateNestedManyWithoutTargetInput = {
@@ -596,6 +603,20 @@ export type PriceListUpdateOneRequiredWithoutPriceListItemNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PriceListUpdateToOneWithWhereWithoutPriceListItemInput, Prisma.PriceListUpdateWithoutPriceListItemInput>, Prisma.PriceListUncheckedUpdateWithoutPriceListItemInput>
 }
 
+export type PriceListCreateNestedOneWithoutPriceListCompanyInput = {
+  create?: Prisma.XOR<Prisma.PriceListCreateWithoutPriceListCompanyInput, Prisma.PriceListUncheckedCreateWithoutPriceListCompanyInput>
+  connectOrCreate?: Prisma.PriceListCreateOrConnectWithoutPriceListCompanyInput
+  connect?: Prisma.PriceListWhereUniqueInput
+}
+
+export type PriceListUpdateOneRequiredWithoutPriceListCompanyNestedInput = {
+  create?: Prisma.XOR<Prisma.PriceListCreateWithoutPriceListCompanyInput, Prisma.PriceListUncheckedCreateWithoutPriceListCompanyInput>
+  connectOrCreate?: Prisma.PriceListCreateOrConnectWithoutPriceListCompanyInput
+  upsert?: Prisma.PriceListUpsertWithoutPriceListCompanyInput
+  connect?: Prisma.PriceListWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PriceListUpdateToOneWithWhereWithoutPriceListCompanyInput, Prisma.PriceListUpdateWithoutPriceListCompanyInput>, Prisma.PriceListUncheckedUpdateWithoutPriceListCompanyInput>
+}
+
 export type PriceListCreateWithoutEmployee_PriceList_createdByToEmployeeInput = {
   id: string
   name: string
@@ -603,10 +624,11 @@ export type PriceListCreateWithoutEmployee_PriceList_createdByToEmployeeInput = 
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutPriceListInput
   Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_deletedByToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutPriceListInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutPriceListInput
   PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutPriceListInput
-  Project?: Prisma.ProjectCreateNestedManyWithoutPriceListInput
 }
 
 export type PriceListUncheckedCreateWithoutEmployee_PriceList_createdByToEmployeeInput = {
@@ -618,8 +640,9 @@ export type PriceListUncheckedCreateWithoutEmployee_PriceList_createdByToEmploye
   deletedAt?: Date | string | null
   deletedBy?: string | null
   targetId: string
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutPriceListInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutPriceListInput
   PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutPriceListInput
-  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutPriceListInput
 }
 
 export type PriceListCreateOrConnectWithoutEmployee_PriceList_createdByToEmployeeInput = {
@@ -639,10 +662,11 @@ export type PriceListCreateWithoutEmployee_PriceList_deletedByToEmployeeInput = 
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutPriceListInput
   Employee_PriceList_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_createdByToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutPriceListInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutPriceListInput
   PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutPriceListInput
-  Project?: Prisma.ProjectCreateNestedManyWithoutPriceListInput
 }
 
 export type PriceListUncheckedCreateWithoutEmployee_PriceList_deletedByToEmployeeInput = {
@@ -654,8 +678,9 @@ export type PriceListUncheckedCreateWithoutEmployee_PriceList_deletedByToEmploye
   deleted?: boolean
   deletedAt?: Date | string | null
   targetId: string
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutPriceListInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutPriceListInput
   PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutPriceListInput
-  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutPriceListInput
 }
 
 export type PriceListCreateOrConnectWithoutEmployee_PriceList_deletedByToEmployeeInput = {
@@ -715,7 +740,7 @@ export type PriceListUpdateManyWithWhereWithoutEmployee_PriceList_deletedByToEmp
   data: Prisma.XOR<Prisma.PriceListUpdateManyMutationInput, Prisma.PriceListUncheckedUpdateManyWithoutEmployee_PriceList_deletedByToEmployeeInput>
 }
 
-export type PriceListCreateWithoutProjectInput = {
+export type PriceListCreateWithoutInvoiceOutInput = {
   id: string
   name: string
   repeatUse?: boolean
@@ -725,10 +750,11 @@ export type PriceListCreateWithoutProjectInput = {
   Employee_PriceList_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_createdByToEmployeeInput
   Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_deletedByToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutPriceListInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutPriceListInput
   PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutPriceListInput
 }
 
-export type PriceListUncheckedCreateWithoutProjectInput = {
+export type PriceListUncheckedCreateWithoutInvoiceOutInput = {
   id: string
   name: string
   repeatUse?: boolean
@@ -738,26 +764,27 @@ export type PriceListUncheckedCreateWithoutProjectInput = {
   deletedAt?: Date | string | null
   deletedBy?: string | null
   targetId: string
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutPriceListInput
   PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutPriceListInput
 }
 
-export type PriceListCreateOrConnectWithoutProjectInput = {
+export type PriceListCreateOrConnectWithoutInvoiceOutInput = {
   where: Prisma.PriceListWhereUniqueInput
-  create: Prisma.XOR<Prisma.PriceListCreateWithoutProjectInput, Prisma.PriceListUncheckedCreateWithoutProjectInput>
+  create: Prisma.XOR<Prisma.PriceListCreateWithoutInvoiceOutInput, Prisma.PriceListUncheckedCreateWithoutInvoiceOutInput>
 }
 
-export type PriceListUpsertWithoutProjectInput = {
-  update: Prisma.XOR<Prisma.PriceListUpdateWithoutProjectInput, Prisma.PriceListUncheckedUpdateWithoutProjectInput>
-  create: Prisma.XOR<Prisma.PriceListCreateWithoutProjectInput, Prisma.PriceListUncheckedCreateWithoutProjectInput>
+export type PriceListUpsertWithoutInvoiceOutInput = {
+  update: Prisma.XOR<Prisma.PriceListUpdateWithoutInvoiceOutInput, Prisma.PriceListUncheckedUpdateWithoutInvoiceOutInput>
+  create: Prisma.XOR<Prisma.PriceListCreateWithoutInvoiceOutInput, Prisma.PriceListUncheckedCreateWithoutInvoiceOutInput>
   where?: Prisma.PriceListWhereInput
 }
 
-export type PriceListUpdateToOneWithWhereWithoutProjectInput = {
+export type PriceListUpdateToOneWithWhereWithoutInvoiceOutInput = {
   where?: Prisma.PriceListWhereInput
-  data: Prisma.XOR<Prisma.PriceListUpdateWithoutProjectInput, Prisma.PriceListUncheckedUpdateWithoutProjectInput>
+  data: Prisma.XOR<Prisma.PriceListUpdateWithoutInvoiceOutInput, Prisma.PriceListUncheckedUpdateWithoutInvoiceOutInput>
 }
 
-export type PriceListUpdateWithoutProjectInput = {
+export type PriceListUpdateWithoutInvoiceOutInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   repeatUse?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -767,10 +794,11 @@ export type PriceListUpdateWithoutProjectInput = {
   Employee_PriceList_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceList_PriceList_createdByToEmployeeNestedInput
   Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceList_PriceList_deletedByToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutPriceListNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutPriceListNestedInput
   PriceListItem?: Prisma.PriceListItemUpdateManyWithoutPriceListNestedInput
 }
 
-export type PriceListUncheckedUpdateWithoutProjectInput = {
+export type PriceListUncheckedUpdateWithoutInvoiceOutInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   repeatUse?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -780,6 +808,7 @@ export type PriceListUncheckedUpdateWithoutProjectInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutPriceListNestedInput
   PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutPriceListNestedInput
 }
 
@@ -790,10 +819,11 @@ export type PriceListCreateWithoutTargetInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutPriceListInput
   Employee_PriceList_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_createdByToEmployeeInput
   Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_deletedByToEmployeeInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutPriceListInput
   PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutPriceListInput
-  Project?: Prisma.ProjectCreateNestedManyWithoutPriceListInput
 }
 
 export type PriceListUncheckedCreateWithoutTargetInput = {
@@ -805,8 +835,9 @@ export type PriceListUncheckedCreateWithoutTargetInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutPriceListInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutPriceListInput
   PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutPriceListInput
-  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutPriceListInput
 }
 
 export type PriceListCreateOrConnectWithoutTargetInput = {
@@ -842,10 +873,11 @@ export type PriceListCreateWithoutPriceListItemInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutPriceListInput
   Employee_PriceList_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_createdByToEmployeeInput
   Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_deletedByToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutPriceListInput
-  Project?: Prisma.ProjectCreateNestedManyWithoutPriceListInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutPriceListInput
 }
 
 export type PriceListUncheckedCreateWithoutPriceListItemInput = {
@@ -858,7 +890,8 @@ export type PriceListUncheckedCreateWithoutPriceListItemInput = {
   deletedAt?: Date | string | null
   deletedBy?: string | null
   targetId: string
-  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutPriceListInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutPriceListInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutPriceListInput
 }
 
 export type PriceListCreateOrConnectWithoutPriceListItemInput = {
@@ -884,10 +917,11 @@ export type PriceListUpdateWithoutPriceListItemInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutPriceListNestedInput
   Employee_PriceList_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceList_PriceList_createdByToEmployeeNestedInput
   Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceList_PriceList_deletedByToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutPriceListNestedInput
-  Project?: Prisma.ProjectUpdateManyWithoutPriceListNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutPriceListNestedInput
 }
 
 export type PriceListUncheckedUpdateWithoutPriceListItemInput = {
@@ -900,7 +934,80 @@ export type PriceListUncheckedUpdateWithoutPriceListItemInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  Project?: Prisma.ProjectUncheckedUpdateManyWithoutPriceListNestedInput
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutPriceListNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutPriceListNestedInput
+}
+
+export type PriceListCreateWithoutPriceListCompanyInput = {
+  id: string
+  name: string
+  repeatUse?: boolean
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutCreateNestedManyWithoutPriceListInput
+  Employee_PriceList_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_createdByToEmployeeInput
+  Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutPriceList_PriceList_deletedByToEmployeeInput
+  Target: Prisma.TargetCreateNestedOneWithoutPriceListInput
+  PriceListItem?: Prisma.PriceListItemCreateNestedManyWithoutPriceListInput
+}
+
+export type PriceListUncheckedCreateWithoutPriceListCompanyInput = {
+  id: string
+  name: string
+  repeatUse?: boolean
+  createdAt: Date | string
+  createdBy: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  targetId: string
+  InvoiceOut?: Prisma.InvoiceOutUncheckedCreateNestedManyWithoutPriceListInput
+  PriceListItem?: Prisma.PriceListItemUncheckedCreateNestedManyWithoutPriceListInput
+}
+
+export type PriceListCreateOrConnectWithoutPriceListCompanyInput = {
+  where: Prisma.PriceListWhereUniqueInput
+  create: Prisma.XOR<Prisma.PriceListCreateWithoutPriceListCompanyInput, Prisma.PriceListUncheckedCreateWithoutPriceListCompanyInput>
+}
+
+export type PriceListUpsertWithoutPriceListCompanyInput = {
+  update: Prisma.XOR<Prisma.PriceListUpdateWithoutPriceListCompanyInput, Prisma.PriceListUncheckedUpdateWithoutPriceListCompanyInput>
+  create: Prisma.XOR<Prisma.PriceListCreateWithoutPriceListCompanyInput, Prisma.PriceListUncheckedCreateWithoutPriceListCompanyInput>
+  where?: Prisma.PriceListWhereInput
+}
+
+export type PriceListUpdateToOneWithWhereWithoutPriceListCompanyInput = {
+  where?: Prisma.PriceListWhereInput
+  data: Prisma.XOR<Prisma.PriceListUpdateWithoutPriceListCompanyInput, Prisma.PriceListUncheckedUpdateWithoutPriceListCompanyInput>
+}
+
+export type PriceListUpdateWithoutPriceListCompanyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  repeatUse?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutPriceListNestedInput
+  Employee_PriceList_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceList_PriceList_createdByToEmployeeNestedInput
+  Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceList_PriceList_deletedByToEmployeeNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutPriceListNestedInput
+  PriceListItem?: Prisma.PriceListItemUpdateManyWithoutPriceListNestedInput
+}
+
+export type PriceListUncheckedUpdateWithoutPriceListCompanyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  repeatUse?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutPriceListNestedInput
+  PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutPriceListNestedInput
 }
 
 export type PriceListCreateManyEmployee_PriceList_createdByToEmployeeInput = {
@@ -932,10 +1039,11 @@ export type PriceListUpdateWithoutEmployee_PriceList_createdByToEmployeeInput = 
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutPriceListNestedInput
   Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceList_PriceList_deletedByToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutPriceListNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutPriceListNestedInput
   PriceListItem?: Prisma.PriceListItemUpdateManyWithoutPriceListNestedInput
-  Project?: Prisma.ProjectUpdateManyWithoutPriceListNestedInput
 }
 
 export type PriceListUncheckedUpdateWithoutEmployee_PriceList_createdByToEmployeeInput = {
@@ -947,8 +1055,9 @@ export type PriceListUncheckedUpdateWithoutEmployee_PriceList_createdByToEmploye
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutPriceListNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutPriceListNestedInput
   PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutPriceListNestedInput
-  Project?: Prisma.ProjectUncheckedUpdateManyWithoutPriceListNestedInput
 }
 
 export type PriceListUncheckedUpdateManyWithoutEmployee_PriceList_createdByToEmployeeInput = {
@@ -969,10 +1078,11 @@ export type PriceListUpdateWithoutEmployee_PriceList_deletedByToEmployeeInput = 
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutPriceListNestedInput
   Employee_PriceList_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceList_PriceList_createdByToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutPriceListNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutPriceListNestedInput
   PriceListItem?: Prisma.PriceListItemUpdateManyWithoutPriceListNestedInput
-  Project?: Prisma.ProjectUpdateManyWithoutPriceListNestedInput
 }
 
 export type PriceListUncheckedUpdateWithoutEmployee_PriceList_deletedByToEmployeeInput = {
@@ -984,8 +1094,9 @@ export type PriceListUncheckedUpdateWithoutEmployee_PriceList_deletedByToEmploye
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutPriceListNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutPriceListNestedInput
   PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutPriceListNestedInput
-  Project?: Prisma.ProjectUncheckedUpdateManyWithoutPriceListNestedInput
 }
 
 export type PriceListUncheckedUpdateManyWithoutEmployee_PriceList_deletedByToEmployeeInput = {
@@ -1017,10 +1128,11 @@ export type PriceListUpdateWithoutTargetInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  InvoiceOut?: Prisma.InvoiceOutUpdateManyWithoutPriceListNestedInput
   Employee_PriceList_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutPriceList_PriceList_createdByToEmployeeNestedInput
   Employee_PriceList_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutPriceList_PriceList_deletedByToEmployeeNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutPriceListNestedInput
   PriceListItem?: Prisma.PriceListItemUpdateManyWithoutPriceListNestedInput
-  Project?: Prisma.ProjectUpdateManyWithoutPriceListNestedInput
 }
 
 export type PriceListUncheckedUpdateWithoutTargetInput = {
@@ -1032,8 +1144,9 @@ export type PriceListUncheckedUpdateWithoutTargetInput = {
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  InvoiceOut?: Prisma.InvoiceOutUncheckedUpdateManyWithoutPriceListNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutPriceListNestedInput
   PriceListItem?: Prisma.PriceListItemUncheckedUpdateManyWithoutPriceListNestedInput
-  Project?: Prisma.ProjectUncheckedUpdateManyWithoutPriceListNestedInput
 }
 
 export type PriceListUncheckedUpdateManyWithoutTargetInput = {
@@ -1053,13 +1166,15 @@ export type PriceListUncheckedUpdateManyWithoutTargetInput = {
  */
 
 export type PriceListCountOutputType = {
+  InvoiceOut: number
+  PriceListCompany: number
   PriceListItem: number
-  Project: number
 }
 
 export type PriceListCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  InvoiceOut?: boolean | PriceListCountOutputTypeCountInvoiceOutArgs
+  PriceListCompany?: boolean | PriceListCountOutputTypeCountPriceListCompanyArgs
   PriceListItem?: boolean | PriceListCountOutputTypeCountPriceListItemArgs
-  Project?: boolean | PriceListCountOutputTypeCountProjectArgs
 }
 
 /**
@@ -1075,15 +1190,22 @@ export type PriceListCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
 /**
  * PriceListCountOutputType without action
  */
-export type PriceListCountOutputTypeCountPriceListItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PriceListItemWhereInput
+export type PriceListCountOutputTypeCountInvoiceOutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvoiceOutWhereInput
 }
 
 /**
  * PriceListCountOutputType without action
  */
-export type PriceListCountOutputTypeCountProjectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProjectWhereInput
+export type PriceListCountOutputTypeCountPriceListCompanyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PriceListCompanyWhereInput
+}
+
+/**
+ * PriceListCountOutputType without action
+ */
+export type PriceListCountOutputTypeCountPriceListItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PriceListItemWhereInput
 }
 
 
@@ -1097,11 +1219,12 @@ export type PriceListSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   deletedAt?: boolean
   deletedBy?: boolean
   targetId?: boolean
+  InvoiceOut?: boolean | Prisma.PriceList$InvoiceOutArgs<ExtArgs>
   Employee_PriceList_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_PriceList_deletedByToEmployee?: boolean | Prisma.PriceList$Employee_PriceList_deletedByToEmployeeArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  PriceListCompany?: boolean | Prisma.PriceList$PriceListCompanyArgs<ExtArgs>
   PriceListItem?: boolean | Prisma.PriceList$PriceListItemArgs<ExtArgs>
-  Project?: boolean | Prisma.PriceList$ProjectArgs<ExtArgs>
   _count?: boolean | Prisma.PriceListCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["priceList"]>
 
@@ -1121,22 +1244,24 @@ export type PriceListSelectScalar = {
 
 export type PriceListOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "repeatUse" | "createdAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy" | "targetId", ExtArgs["result"]["priceList"]>
 export type PriceListInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  InvoiceOut?: boolean | Prisma.PriceList$InvoiceOutArgs<ExtArgs>
   Employee_PriceList_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_PriceList_deletedByToEmployee?: boolean | Prisma.PriceList$Employee_PriceList_deletedByToEmployeeArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  PriceListCompany?: boolean | Prisma.PriceList$PriceListCompanyArgs<ExtArgs>
   PriceListItem?: boolean | Prisma.PriceList$PriceListItemArgs<ExtArgs>
-  Project?: boolean | Prisma.PriceList$ProjectArgs<ExtArgs>
   _count?: boolean | Prisma.PriceListCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $PriceListPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PriceList"
   objects: {
+    InvoiceOut: Prisma.$InvoiceOutPayload<ExtArgs>[]
     Employee_PriceList_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Employee_PriceList_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Target: Prisma.$TargetPayload<ExtArgs>
+    PriceListCompany: Prisma.$PriceListCompanyPayload<ExtArgs>[]
     PriceListItem: Prisma.$PriceListItemPayload<ExtArgs>[]
-    Project: Prisma.$ProjectPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1488,11 +1613,12 @@ readonly fields: PriceListFieldRefs;
  */
 export interface Prisma__PriceListClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  InvoiceOut<T extends Prisma.PriceList$InvoiceOutArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PriceList$InvoiceOutArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceOutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee_PriceList_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_PriceList_deletedByToEmployee<T extends Prisma.PriceList$Employee_PriceList_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PriceList$Employee_PriceList_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  PriceListCompany<T extends Prisma.PriceList$PriceListCompanyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PriceList$PriceListCompanyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceListCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   PriceListItem<T extends Prisma.PriceList$PriceListItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PriceList$PriceListItemArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceListItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  Project<T extends Prisma.PriceList$ProjectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PriceList$ProjectArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1874,6 +2000,30 @@ export type PriceListDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * PriceList.InvoiceOut
+ */
+export type PriceList$InvoiceOutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvoiceOut
+   */
+  select?: Prisma.InvoiceOutSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InvoiceOut
+   */
+  omit?: Prisma.InvoiceOutOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvoiceOutInclude<ExtArgs> | null
+  where?: Prisma.InvoiceOutWhereInput
+  orderBy?: Prisma.InvoiceOutOrderByWithRelationInput | Prisma.InvoiceOutOrderByWithRelationInput[]
+  cursor?: Prisma.InvoiceOutWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvoiceOutScalarFieldEnum | Prisma.InvoiceOutScalarFieldEnum[]
+}
+
+/**
  * PriceList.Employee_PriceList_deletedByToEmployee
  */
 export type PriceList$Employee_PriceList_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1890,6 +2040,30 @@ export type PriceList$Employee_PriceList_deletedByToEmployeeArgs<ExtArgs extends
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * PriceList.PriceListCompany
+ */
+export type PriceList$PriceListCompanyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PriceListCompany
+   */
+  select?: Prisma.PriceListCompanySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PriceListCompany
+   */
+  omit?: Prisma.PriceListCompanyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PriceListCompanyInclude<ExtArgs> | null
+  where?: Prisma.PriceListCompanyWhereInput
+  orderBy?: Prisma.PriceListCompanyOrderByWithRelationInput | Prisma.PriceListCompanyOrderByWithRelationInput[]
+  cursor?: Prisma.PriceListCompanyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PriceListCompanyScalarFieldEnum | Prisma.PriceListCompanyScalarFieldEnum[]
 }
 
 /**
@@ -1914,30 +2088,6 @@ export type PriceList$PriceListItemArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.PriceListItemScalarFieldEnum | Prisma.PriceListItemScalarFieldEnum[]
-}
-
-/**
- * PriceList.Project
- */
-export type PriceList$ProjectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Project
-   */
-  select?: Prisma.ProjectSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Project
-   */
-  omit?: Prisma.ProjectOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProjectInclude<ExtArgs> | null
-  where?: Prisma.ProjectWhereInput
-  orderBy?: Prisma.ProjectOrderByWithRelationInput | Prisma.ProjectOrderByWithRelationInput[]
-  cursor?: Prisma.ProjectWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[]
 }
 
 /**

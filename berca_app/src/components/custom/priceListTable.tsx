@@ -22,7 +22,7 @@ import {
   undeletePriceListAction,
 } from '@/serverFunctions/priceLists'
 
-type SortField = 'name' | 'repeatUse' | 'itemCount' | 'createdAt' | 'createdBy'
+type SortField = 'name' | 'repeatUse' | 'itemCount' | 'companyCount' | 'createdAt' | 'createdBy'
 type SortDir = 'asc' | 'desc'
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 
@@ -73,7 +73,6 @@ function CreateOrCloneDialog({open, onOpenChange, cloneSource, onSaved}: CreateD
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Reset on open
   const handleOpenChange = (v: boolean) => {
     if (v) {
       setName(cloneSource ? `Copy of ${cloneSource.name}` : '')
@@ -168,7 +167,6 @@ export function PriceListTable({
 }: PriceListTableProps) {
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  const canEdit = currentUserLevel >= 40
   const canCreate = currentUserLevel >= 60
   const canDelete = currentUserLevel >= 80
 
@@ -205,6 +203,8 @@ export function PriceListTable({
           return dir * (Number(a.repeatUse) - Number(b.repeatUse))
         case 'itemCount':
           return dir * (a.itemCount - b.itemCount)
+        case 'companyCount':
+          return dir * (a.companies.length - b.companies.length)
         case 'createdAt':
           return s(a.createdAt, b.createdAt)
         case 'createdBy':
@@ -261,8 +261,7 @@ export function PriceListTable({
               setDialogOpen(true)
             }}
             className="bg-accent text-accent-foreground hover:bg-accent/80 gap-2">
-            <Plus className="h-4 w-4" />
-            New Price List
+            <Plus className="h-4 w-4" /> New Price List
           </Button>
         )}
       </div>
@@ -274,7 +273,7 @@ export function PriceListTable({
             <TableRow className="hover:bg-transparent border-border/60">
               <Th field="name" label="Name" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="itemCount" label="Items" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
-              <TableHead className="whitespace-nowrap text-xs">Projects</TableHead>
+              <Th field="companyCount" label="Companies" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="repeatUse" label="Repeat Use" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdAt" label="Created At" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdBy" label="Created By" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
@@ -315,7 +314,7 @@ export function PriceListTable({
                   </TableCell>
                   <TableCell className={tdClass}>
                     <Badge variant="secondary" className="text-xs">
-                      {pl.projects.length}
+                      {pl.companies.length}
                     </Badge>
                   </TableCell>
                   <TableCell>

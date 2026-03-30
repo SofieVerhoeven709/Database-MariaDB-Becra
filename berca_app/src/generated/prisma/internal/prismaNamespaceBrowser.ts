@@ -138,7 +138,8 @@ export const ModelName = {
   DocumentGroupA: 'DocumentGroupA',
   DocumentGroupB: 'DocumentGroupB',
   DocumentGroupC: 'DocumentGroupC',
-  DocumentGroupD: 'DocumentGroupD'
+  DocumentGroupD: 'DocumentGroupD',
+  PriceListCompany: 'PriceListCompany'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1076,7 +1077,6 @@ export const ProjectScalarFieldEnum = {
   projectTypeId: 'projectTypeId',
   parentProjectId: 'parentProjectId',
   targetId: 'targetId',
-  priceListId: 'priceListId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -1774,6 +1774,15 @@ export const DocumentGroupDScalarFieldEnum = {
 } as const
 
 export type DocumentGroupDScalarFieldEnum = (typeof DocumentGroupDScalarFieldEnum)[keyof typeof DocumentGroupDScalarFieldEnum]
+
+
+export const PriceListCompanyScalarFieldEnum = {
+  id: 'id',
+  priceListId: 'priceListId',
+  companyId: 'companyId'
+} as const
+
+export type PriceListCompanyScalarFieldEnum = (typeof PriceListCompanyScalarFieldEnum)[keyof typeof PriceListCompanyScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2480,7 +2489,6 @@ export const ProjectOrderByRelevanceFieldEnum = {
   projectTypeId: 'projectTypeId',
   parentProjectId: 'parentProjectId',
   targetId: 'targetId',
-  priceListId: 'priceListId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -3015,4 +3023,13 @@ export const DocumentGroupDOrderByRelevanceFieldEnum = {
 } as const
 
 export type DocumentGroupDOrderByRelevanceFieldEnum = (typeof DocumentGroupDOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupDOrderByRelevanceFieldEnum]
+
+
+export const PriceListCompanyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  priceListId: 'priceListId',
+  companyId: 'companyId'
+} as const
+
+export type PriceListCompanyOrderByRelevanceFieldEnum = (typeof PriceListCompanyOrderByRelevanceFieldEnum)[keyof typeof PriceListCompanyOrderByRelevanceFieldEnum]
 

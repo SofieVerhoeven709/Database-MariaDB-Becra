@@ -467,3 +467,8 @@ export type DocumentGroupC = Prisma.DocumentGroupCModel
  * 
  */
 export type DocumentGroupD = Prisma.DocumentGroupDModel
+/**
+ * Model PriceListCompany
+ * 
+ */
+export type PriceListCompany = Prisma.PriceListCompanyModel

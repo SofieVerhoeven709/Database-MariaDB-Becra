@@ -93,6 +93,7 @@ model Company {
   MaterialPrice                                         MaterialPrice[]
   MaterialSerialTrack                                   MaterialSerialTrack[]
   MaterialSupplier                                      MaterialSupplier[]
+  PriceListCompany                                      PriceListCompany[]
   Project                                               Project[]
   Purchase                                              Purchase[]
 
@@ -691,10 +692,10 @@ model HourType {
   deleted                               Boolean        @default(false)
   deletedAt                             DateTime?      @db.DateTime(0)
   deletedBy                             String?        @db.Char(36)
-  targetId                              String?        @db.Char(36)
+  targetId                              String         @db.Char(36)
   Employee                              Employee       @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "HourType_ibfk_1")
   Employee_HourType_deletedByToEmployee Employee?      @relation("HourType_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "HourType_ibfk_2")
-  Target                                Target?        @relation(fields: [targetId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "HourType_ibfk_3")
+  Target                                Target         @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "HourType_ibfk_3")
   TimeRegistry                          TimeRegistry[]
 
   @@index([createdBy], map: "createdBy")
@@ -965,7 +966,7 @@ model Material {
   deleted                                                  Boolean              @default(false)
   deletedAt                                                DateTime?            @db.DateTime(0)
   deletedBy                                                String?              @db.Char(36)
-  targetId                                                 String?              @db.Char(36)
+  targetId                                                 String               @db.Char(36)
   Inventory_Inventory_materialIdToMaterial                 Inventory[]          @relation("Inventory_materialIdToMaterial")
   Inventory_Inventory_beNumberToMaterial                   Inventory?           @relation("Inventory_beNumberToMaterial")
   MaterialGroup_Material_materialGroupIdAToMaterialGroup   MaterialGroup?       @relation("Material_materialGroupIdAToMaterialGroup", fields: [materialGroupIdA], references: [id], onUpdate: Restrict, map: "fk_material_group_a")
@@ -976,7 +977,7 @@ model Material {
   Employee                                                 Employee             @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")
   Employee_Material_deletedByToEmployee                    Employee?            @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_6")
   PreferredSupplierCompany                                 Company?             @relation("Material_preferredSupplierCompanyIdToCompany", fields: [preferredSupplierCompanyId], references: [id], onUpdate: Restrict, map: "Material_ibfk_5")
-  Target                                                   Target?              @relation(fields: [targetId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_material_target")
+  Target                                                   Target               @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_material_target")
   MaterialMovement                                         MaterialMovement[]
   MaterialOther                                            MaterialOther[]
   MaterialStructure_MaterialStructure_materialIdToMaterial MaterialStructure[]  @relation("MaterialStructure_materialIdToMaterial")
@@ -1435,7 +1436,6 @@ model Project {
   projectTypeId                        String                @db.Char(36)
   parentProjectId                      String?               @db.Char(36)
   targetId                             String                @db.Char(36)
-  priceListId                          String?               @db.Char(36)
   deleted                              Boolean               @default(false)
   deletedAt                            DateTime?             @db.DateTime(0)
   deletedBy                            String?               @db.Char(36)
@@ -1447,7 +1447,6 @@ model Project {
   other_Project                        Project[]             @relation("ProjectToProject")
   Target                               Target                @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "Project_ibfk_5")
   Employee_Project_deletedByToEmployee Employee?             @relation("Project_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Project_ibfk_6")
-  PriceList                            PriceList?            @relation(fields: [priceListId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_project_pricelist")
   ProjectContact                       ProjectContact[]
   Purchase                             Purchase[]
   PurchaseDetail                       PurchaseDetail[]
@@ -1460,7 +1459,6 @@ model Project {
   @@index([projectTypeId], map: "projectTypeId")
   @@index([targetId], map: "targetId")
   @@index([deletedBy], map: "deletedBy")
-  @@index([priceListId], map: "fk_project_pricelist")
 }
 
 model ProjectContact {
@@ -2235,20 +2233,20 @@ model VatMargin {
 }
 
 model PriceList {
-  id                                     String          @id @db.Char(36)
-  name                                   String          @db.VarChar(255)
-  repeatUse                              Boolean         @default(false)
-  createdAt                              DateTime        @db.DateTime(0)
-  createdBy                              String          @db.Char(36)
-  deleted                                Boolean         @default(false)
-  deletedAt                              DateTime?       @db.DateTime(0)
-  deletedBy                              String?         @db.Char(36)
-  targetId                               String          @db.Char(36)
-  Employee_PriceList_createdByToEmployee Employee        @relation("PriceList_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_1")
-  Employee_PriceList_deletedByToEmployee Employee?       @relation("PriceList_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_2")
-  Target                                 Target          @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_3")
+  id                                     String             @id @db.Char(36)
+  name                                   String             @db.VarChar(255)
+  repeatUse                              Boolean            @default(false)
+  createdAt                              DateTime           @db.DateTime(0)
+  createdBy                              String             @db.Char(36)
+  deleted                                Boolean            @default(false)
+  deletedAt                              DateTime?          @db.DateTime(0)
+  deletedBy                              String?            @db.Char(36)
+  targetId                               String             @db.Char(36)
+  Employee_PriceList_createdByToEmployee Employee           @relation("PriceList_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_1")
+  Employee_PriceList_deletedByToEmployee Employee?          @relation("PriceList_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_2")
+  Target                                 Target             @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_3")
+  PriceListCompany                       PriceListCompany[]
   PriceListItem                          PriceListItem[]
-  Project                                Project[]
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
@@ -2388,4 +2386,15 @@ model DocumentGroupD {
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
   @@index([documentGroupCId], map: "documentGroupCId")
+}
+
+model PriceListCompany {
+  id          String    @id @db.Char(36)
+  priceListId String    @db.Char(36)
+  companyId   String    @db.Char(36)
+  Company     Company   @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "PriceListCompany_ibfk_1")
+  PriceList   PriceList @relation(fields: [priceListId], references: [id], onUpdate: Restrict, map: "PriceListCompany_ibfk_2")
+
+  @@index([companyId], map: "companyId")
+  @@index([priceListId], map: "priceListId")
 }

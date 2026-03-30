@@ -553,6 +553,14 @@ CREATE TABLE IF NOT EXISTS InvoiceOutContact (
       FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS PriceListCompany (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      priceListId CHAR(36) NOT NULL,
+      companyId CHAR(36) NOT NULL,
+      FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE CASCADE,
+      FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT
+) ENGINE = InnoDB;
+
 -- 40. Company: add officialName column
 -- Step 1: Add column as nullable (won't break existing rows)
 ALTER TABLE Company ADD COLUMN IF NOT EXISTS officialName VARCHAR(255) NULL;

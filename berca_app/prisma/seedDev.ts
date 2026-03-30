@@ -269,6 +269,7 @@ export const seedDev = async (prisma: PrismaClient) => {
   const companyTargetType = await prisma.targetType.findFirst({where: {name: 'Company'}})
   const hourTypeTargetType = await prisma.targetType.findFirst({where: {name: 'HourType'}})
   const materialTargetType = await prisma.targetType.findFirst({where: {name: 'Material'}})
+  const contactTargetType = await prisma.targetType.findFirst({where: {name: 'Contact'}})
 
   // 8. Upsert UrgencyTypes
   for (const name of URGENCY_TYPES) {
@@ -601,6 +602,94 @@ export const seedDev = async (prisma: PrismaClient) => {
   }
 
   console.log(`Backfilled ${materialsWithoutTarget.length} materials`)
+
+  const companies = await prisma.company.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  })
+
+  for (const company of companies) {
+    // 🔍 Check if invoice contact already exists
+    const existingInvoiceContact = await prisma.companyContact.findFirst({
+      where: {
+        companyId: company.id,
+        roleWithCompany: 'Invoice',
+      },
+    })
+
+    if (existingInvoiceContact) continue
+
+    // 🆕 Create target for contact
+    const contactTarget = await prisma.target.create({
+      data: {
+        id: randomUUID(),
+        createdAt: now,
+        createdBy: adminEmployee.id,
+        targetTypeId: contactTargetType!.id,
+      },
+    })
+
+    const contactId = randomUUID()
+
+    // 🆕 Create contact
+    await prisma.contact.create({
+      data: {
+        id: contactId,
+        firstName: company.name,
+        lastName: 'Invoice',
+        active: true,
+        infoCorrect: false,
+        checkInfo: false,
+        newYearCard: false,
+        newsLetter: false,
+        mailing: false,
+        trainingAdvice: false,
+        contactForTrainingAndAdvice: false,
+        customerTrainingAndAdvice: false,
+        potentialCustomerTrainingAndAdvice: false,
+        potentialTeacherTrainingAndAdvice: false,
+        teacherTrainingAndAdvice: false,
+        participantTrainingAndAdvice: false,
+        createdBy: adminEmployee.id,
+        createdAt: now,
+        targetId: contactTarget.id,
+      },
+    })
+
+    // 🏢 Get company addresses (for optional linking)
+    const addresses = await prisma.companyAddress.findMany({
+      where: {companyId: company.id},
+      select: {id: true},
+    })
+
+    // 🔗 Link contact to company
+    await prisma.companyContact.create({
+      data: {
+        id: randomUUID(),
+        contactId,
+        companyId: company.id,
+        roleWithCompany: 'Invoice',
+        companyAddressId: addresses.length === 1 ? addresses[0].id : null,
+        startedDate: now,
+        createdBy: adminEmployee.id,
+        createdAt: now,
+      },
+    })
+
+    // 👁 Optional: visibility (recommended)
+    await prisma.visibilityForRole.create({
+      data: {
+        id: randomUUID(),
+        visible: true,
+        roleLevelId: adminRoleLevel.id,
+        targetId: contactTarget.id,
+      },
+    })
+  }
+
+  console.log('Company invoice contact backfill complete')
 
   console.log('Seed complete')
 }

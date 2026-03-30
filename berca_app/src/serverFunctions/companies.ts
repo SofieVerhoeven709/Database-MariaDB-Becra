@@ -97,7 +97,7 @@ export const createCompanyAction = protectedServerFunction({
               id: crypto.randomUUID(),
               contactId: invoiceContactId,
               companyId,
-              roleWithCompany: 'invoice',
+              roleWithCompany: 'Invoice',
               companyAddressId: addrs.length === 1 ? addrs[0].id : null,
               startedDate: now,
               createdBy: profile.id,

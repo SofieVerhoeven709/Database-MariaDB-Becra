@@ -4,8 +4,6 @@ export interface MappedMaterialPlace {
   beNumber: string | null
   serialTrackedId: string | null
   place: string | null
-  storageEmployeeId: string | null
-  storageEmployeeName: string | null
   shelf: string | null
   column: string | null
   layer: string | null
@@ -20,9 +18,3 @@ export interface MappedMaterialPlace {
   deletedBy: string | null
   deletedByName: string | null
 }
-
-export interface MaterialPlaceEmployeeOption {
-  id: string
-  name: string
-}
-

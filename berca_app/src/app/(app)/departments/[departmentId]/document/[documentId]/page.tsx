@@ -1,23 +1,7 @@
 import {DocumentDetail} from '@/components/custom/documentDetail'
-import {
-  getDocumentDetail,
-  getDocumentGroupAs,
-  getDocumentGroupBs,
-  getDocumentGroupCs,
-  getDocumentGroupDs,
-  getDocumentPlaces,
-  getDocuments,
-} from '@/dal/documents'
+import {getDocumentDetail, getDocumentGroups, getDocumentPlaces, getDocuments} from '@/dal/documents'
 import {getAllRoleLevels} from '@/dal/roleLevel'
-import {
-  mapDocumentDetail,
-  mapDocumentGroupA,
-  mapDocumentGroupB,
-  mapDocumentGroupC,
-  mapDocumentGroupD,
-  mapDocumentPlace,
-  mapDocument,
-} from '@/extra/documents'
+import {mapDocumentDetail, mapDocumentPlace, mapDocument, mapDocumentGroup} from '@/extra/documents'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
@@ -32,41 +16,26 @@ interface PageProps {
 export default async function DocumentDetailPage({params}: PageProps) {
   const {departmentId, documentId} = await params
 
-  const [
-    department,
-    documentFromDAL,
-    allDocumentsFromDAL,
-    groupAs,
-    groupBs,
-    groupCs,
-    groupDs,
-    places,
-    roleLevels,
-    profile,
-    employees,
-    roles,
-  ] = await Promise.all([
-    getDepartmentById(departmentId),
-    getDocumentDetail(documentId).catch(() => null),
-    getDocuments(),
-    getDocumentGroupAs(),
-    getDocumentGroupBs(),
-    getDocumentGroupCs(),
-    getDocumentGroupDs(),
-    getDocumentPlaces(),
-    getAllRoleLevels(),
-    getSessionProfileFromCookieOrThrow(),
-    prismaClient.employee.findMany({
-      where: {deleted: false},
-      orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
-      select: {id: true, firstName: true, lastName: true},
-    }),
-    prismaClient.role.findMany({
-      where: {deleted: false},
-      orderBy: {name: 'asc'},
-      select: {id: true, name: true},
-    }),
-  ])
+  const [department, documentFromDAL, allDocumentsFromDAL, groups, places, roleLevels, profile, employees, roles] =
+    await Promise.all([
+      getDepartmentById(departmentId),
+      getDocumentDetail(documentId).catch(() => null),
+      getDocuments(),
+      getDocumentGroups(),
+      getDocumentPlaces(),
+      getAllRoleLevels(),
+      getSessionProfileFromCookieOrThrow(),
+      prismaClient.employee.findMany({
+        where: {deleted: false},
+        orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
+        select: {id: true, firstName: true, lastName: true},
+      }),
+      prismaClient.role.findMany({
+        where: {deleted: false},
+        orderBy: {name: 'asc'},
+        select: {id: true, name: true},
+      }),
+    ])
 
   if (!department) return <p>Department not found</p>
   if (!documentFromDAL) notFound()
@@ -79,22 +48,7 @@ export default async function DocumentDetailPage({params}: PageProps) {
   const roleOptions = roles.map(r => ({id: r.id, name: r.name}))
 
   // Build group options with parent IDs for cascading
-  const groupAOptions = groupAs
-    .filter(g => !g.deleted)
-    .map(mapDocumentGroupA)
-    .map(g => ({id: g.id, name: g.name}))
-  const groupBOptions = groupBs
-    .filter(g => !g.deleted)
-    .map(mapDocumentGroupB)
-    .map(g => ({id: g.id, name: g.name, documentGroupAId: g.documentGroupAId}))
-  const groupCOptions = groupCs
-    .filter(g => !g.deleted)
-    .map(mapDocumentGroupC)
-    .map(g => ({id: g.id, name: g.name, documentGroupBId: g.documentGroupBId}))
-  const groupDOptions = groupDs
-    .filter(g => !g.deleted)
-    .map(mapDocumentGroupD)
-    .map(g => ({id: g.id, name: g.name, documentGroupCId: g.documentGroupCId}))
+  const groupOptions = groups.map(mapDocumentGroup)
   const placeOptions = places
     .filter(p => !p.deleted)
     .map(mapDocumentPlace)
@@ -115,10 +69,7 @@ export default async function DocumentDetailPage({params}: PageProps) {
           defaultVisibleRoleNames={defaultVisibleRoleNames}
           employeeOptions={employeeOptions}
           roleOptions={roleOptions}
-          groupAOptions={groupAOptions}
-          groupBOptions={groupBOptions}
-          groupCOptions={groupCOptions}
-          groupDOptions={groupDOptions}
+          groupOptions={groupOptions}
           placeOptions={placeOptions}
           documentOptions={documentOptions}
           departmentId={departmentId}

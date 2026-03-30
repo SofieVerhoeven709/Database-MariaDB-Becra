@@ -1,53 +1,53 @@
 ﻿USE BecraBV;
- 
+
 -- ============================================================
 -- Idempotent migrations.
 -- Safe to run multiple times on both old and fresh databases.
 -- Uses MariaDB 11 native IF EXISTS / IF NOT EXISTS DDL --
 -- no stored procedures or DELIMITER required.
 -- ============================================================
- 
+
 -- 1. WarehousePlace: volume -> quantityInStock
 ALTER TABLE WarehousePlace CHANGE COLUMN IF EXISTS `volume` `quantityInStock` INT NOT NULL;
- 
+
 -- 2. WarehousePlace: add abbreviation column
 ALTER TABLE WarehousePlace ADD COLUMN IF NOT EXISTS `abbreviation` VARCHAR(255) NOT NULL AFTER `id`;
- 
+
 -- 3. WarehousePlace: add beNumber column
 ALTER TABLE WarehousePlace ADD COLUMN IF NOT EXISTS `beNumber` VARCHAR(255) AFTER `abbreviation`;
- 
+
 -- 4a. WarehousePlace: add serialTrackedId column
 ALTER TABLE WarehousePlace ADD COLUMN IF NOT EXISTS `serialTrackedId` CHAR(36) AFTER `beNumber`;
- 
+
 -- 4b. WarehousePlace: add FK fk_warehouseplace_serialtrack (skip if already exists)
 ALTER TABLE WarehousePlace DROP FOREIGN KEY IF EXISTS fk_warehouseplace_serialtrack;
 ALTER TABLE WarehousePlace ADD CONSTRAINT fk_warehouseplace_serialtrack
     FOREIGN KEY (`serialTrackedId`) REFERENCES MaterialSerialTrack (`id`) ON DELETE SET NULL;
- 
+
 -- 5. PurchaseDetail: volume -> quantityInStock
 ALTER TABLE PurchaseDetail CHANGE COLUMN IF EXISTS `volume` `quantityInStock` INT NOT NULL;
- 
+
 -- 6. MaterialPrice: unitPrice INT -> DECIMAL(10,2)
 ALTER TABLE MaterialPrice MODIFY COLUMN IF EXISTS `unitPrice` DECIMAL(10, 2);
- 
+
 -- 7. PurchaseDetail: unitPrice INT -> DECIMAL(10,2)
 ALTER TABLE PurchaseDetail MODIFY COLUMN IF EXISTS `unitPrice` DECIMAL(10, 2);
- 
+
 -- 8. PurchaseDetail: totalCost INT -> DECIMAL(10,2)
 ALTER TABLE PurchaseDetail MODIFY COLUMN IF EXISTS `totalCost` DECIMAL(10, 2);
- 
+
 -- 9. Inventory: serieNumber -> serialNumber
 ALTER TABLE Inventory CHANGE COLUMN IF EXISTS `serieNumber` `serialNumber` VARCHAR(255) NOT NULL;
- 
+
 -- 10. Purchase: preferedSupplier -> preferredSupplier
 ALTER TABLE Purchase CHANGE COLUMN IF EXISTS `preferedSupplier` `preferredSupplier` VARCHAR(255);
- 
+
 -- 11. Company: prefferedSupplier -> preferredSupplier
 ALTER TABLE Company CHANGE COLUMN IF EXISTS `prefferedSupplier` `preferredSupplier` BOOLEAN NOT NULL DEFAULT 0;
- 
+
 -- 12. Contact: trough -> through
 ALTER TABLE Contact CHANGE COLUMN IF EXISTS `trough` `through` VARCHAR(100);
- 
+
 -- 13. ProjectContact: moddifiedAt -> modifiedAt
 ALTER TABLE ProjectContact CHANGE COLUMN IF EXISTS `moddifiedAt` `modifiedAt` DATETIME;
  
@@ -60,12 +60,6 @@ ALTER TABLE ProjectContact ADD CONSTRAINT fk_projectcontact_modifiedBy
  
 -- 15. ProjectContact: idValid -> isValid
 ALTER TABLE ProjectContact CHANGE COLUMN IF EXISTS `idValid` `isValid` BOOLEAN NOT NULL DEFAULT 1;
- 
--- 16. InvoiceOut: invoiceInAttachement -> invoiceInAttachment
-ALTER TABLE InvoiceOut CHANGE COLUMN IF EXISTS `invoiceInAttachement` `invoiceInAttachment` VARCHAR(100);
- 
--- 17. InvoiceIn: invoiceOutAttachement -> invoiceOutAttachment
-ALTER TABLE InvoiceIn CHANGE COLUMN IF EXISTS `invoiceOutAttachement` `invoiceOutAttachment` VARCHAR(100);
  
 -- 18. QouteBecra -> QuoteBecra
 RENAME TABLE IF EXISTS QouteBecra TO QuoteBecra;
@@ -378,9 +372,8 @@ ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
 -- 39a. Drop old tables (disable FK checks to avoid constraint errors)
 SET FOREIGN_KEY_CHECKS = 0;
 
---DROP TABLE IF EXISTS InvoiceOutContact;
+DROP TABLE IF EXISTS InvoiceOutContact;
 DROP TABLE IF EXISTS InvoiceOut;
---DROP TABLE IF EXISTS InvoiceIn;
 
 SET FOREIGN_KEY_CHECKS = 1;
 -- 39b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
@@ -432,7 +425,7 @@ CREATE TABLE IF NOT EXISTS PaymentMethod (
       FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
 ) ENGINE = InnoDB;
 
---41. Create PriceList table
+-- 41. Create PriceList table
 CREATE TABLE
       IF NOT EXISTS PriceList (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -467,7 +460,6 @@ CREATE TABLE
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
-
 
 -- 39c. Create new InvoiceOut
 CREATE TABLE
@@ -647,12 +639,12 @@ ALTER TABLE Material CHANGE COLUMN IF EXISTS `targetId` `targetId` VARCHAR(255) 
 ALTER TABLE Material ADD CONSTRAINT fk_material_target
     FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
 
---SET FOREIGN_KEY_CHECKS = 0;
+-- SET FOREIGN_KEY_CHECKS = 0;
 
---DROP TABLE IF EXISTS DocumentPlace;
---DROP TABLE IF EXISTS DocumentGroup;
+-- DROP TABLE IF EXISTS DocumentPlace;
+-- DROP TABLE IF EXISTS DocumentGroup;
 
---SET FOREIGN_KEY_CHECKS = 1;
+-- SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE
       IF NOT EXISTS DocumentPlace (

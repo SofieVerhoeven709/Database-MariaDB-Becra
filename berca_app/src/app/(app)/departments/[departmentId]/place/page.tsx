@@ -3,7 +3,7 @@ import {WarehousePlaceTable} from '@/components/custom/warehousePlaceTable'
 import {mapWarehousePlace} from '@/extra/warehousePlace'
 
 export default async function WarehousePlacePage() {
-  const places = await getWarehousePlaces({includeDeleted: true})
+  const places = await getWarehousePlaces()
   const mappedPlaces = places.map(mapWarehousePlace)
 
   return (

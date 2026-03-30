@@ -238,9 +238,21 @@ export function MaterialTable({
 
       if (result && !result.success) {
         console.error('Material save failed:', result.errors)
-        const msgs = Object.entries(result.errors ?? {}).flatMap(([field, errs]) =>
-          (errs ?? []).map(e => `${field}: ${e}`),
-        )
+        // Support both field errors and global errors
+        let msgs: string[] = []
+        if (result.errors) {
+          // If errors is an object with a single 'errors' key, treat as global error
+          if (
+            Object.keys(result.errors).length === 1 &&
+            Array.isArray(result.errors.errors)
+          ) {
+            msgs = result.errors.errors
+          } else {
+            msgs = Object.entries(result.errors ?? {}).flatMap(([field, errs]) =>
+              (errs ?? []).map(e => `${field}: ${e}`),
+            )
+          }
+        }
         setSaveError(msgs.length ? msgs.join(' | ') : 'Could not save the material. Please check all required fields.')
         return
       }
@@ -351,6 +363,9 @@ export function MaterialTable({
                   <SortIcon field={col.key} sortField={sortField} sortDir={sortDir} />
                 </TableHead>
               ))}
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide text-center w-[80px]">
+                Serial Tracked
+              </TableHead>
               <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
@@ -359,7 +374,7 @@ export function MaterialTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + 1} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={columns.length + 2} className="text-center text-muted-foreground py-10">
                   No materials found
                 </TableCell>
               </TableRow>
@@ -417,6 +432,28 @@ export function MaterialTable({
                       </Badge>
                     )}
                   </TableCell>
+                  {/* Serial Tracked column */}
+                   <TableCell className="text-center">
+                     {m.isSerialTracked && m.serialTrackedId ? (
+                       <Button
+                         variant="outline"
+                         size="sm"
+                         className="text-xs bg-blue-100 text-blue-800 border-blue-300 px-2 py-1 h-auto min-h-0"
+                         onClick={e => {
+                           e.stopPropagation();
+                           router.push(`/departments/${departmentId}/serialTracked/${m.serialTrackedId}`)
+                         }}
+                       >
+                         Serial
+                       </Button>
+                     ) : m.isSerialTracked ? (
+                       <Badge variant="outline" className="text-xs bg-blue-100 text-blue-800 border-blue-300">
+                         Serial
+                       </Badge>
+                     ) : (
+                       <span className="text-muted-foreground">—</span>
+                     )}
+                   </TableCell>
                   <TableCell className="text-right" onClick={e => e.stopPropagation()}>
                     <div className="flex justify-end gap-1">
                       <Button

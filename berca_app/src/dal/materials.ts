@@ -42,6 +42,9 @@ export async function getMaterials(options?: {includeDeleted?: boolean}) {
           },
         },
       },
+      MaterialSerialTrack: {
+        select: { id: true },
+      },
     },
     orderBy: {beNumber: 'asc'},
   })
@@ -126,6 +129,8 @@ export async function createMaterial(data: {
   unitId: string
   createdBy: string
   targetId: string
+  isSerialTracked: boolean
+  isParentPart?: boolean
 }) {
   const {
     supplierCompanyIds = [],
@@ -134,16 +139,22 @@ export async function createMaterial(data: {
     preferredSupplierCompanyId,
     preferredSupplierOrderId,
     preferredSupplierShortDescription,
+    isParentPart,
     ...materialData
   } = data
 
-  const uniqueParentBeNumbers = Array.from(new Set(parentBeNumbers)).filter(
+  let uniqueParentBeNumbers = Array.from(new Set(parentBeNumbers)).filter(
     parentBeNumber => parentBeNumber !== data.beNumber,
   )
+
+  if (isParentPart === false) {
+    uniqueParentBeNumbers = []
+  }
 
   return prismaClient.material.create({
     data: {
       ...materialData,
+      isSerialTracked: data.isSerialTracked ?? false,
       bePartDoc: bePartDoc != null ? String(bePartDoc) : null,
       MaterialSupplier:
         supplierCompanyIds.length > 0
@@ -195,6 +206,8 @@ export async function updateMaterial(
     materialGroupIdC?: string | null
     materialGroupIdD?: string | null
     unitId?: string
+    isSerialTracked?: boolean
+    isParentPart?: boolean
   },
 ) {
   const {
@@ -204,17 +217,23 @@ export async function updateMaterial(
     preferredSupplierCompanyId,
     preferredSupplierOrderId,
     preferredSupplierShortDescription,
+    isParentPart,
     ...materialData
   } = data
 
-  const uniqueParentBeNumbers = parentBeNumbers
+  let uniqueParentBeNumbers = parentBeNumbers
     ? Array.from(new Set(parentBeNumbers)).filter(parentBeNumber => parentBeNumber !== materialData.beNumber)
     : undefined
+
+  if (isParentPart === false) {
+    uniqueParentBeNumbers = []
+  }
 
   return prismaClient.material.update({
     where: {id},
     data: {
       ...materialData,
+      isSerialTracked: data.isSerialTracked ?? false,
       bePartDoc: bePartDoc !== undefined ? (bePartDoc != null ? String(bePartDoc) : null) : undefined,
       MaterialSupplier:
         supplierCompanyIds === undefined
@@ -267,3 +286,14 @@ export async function restoreMaterial(id: string) {
   })
 }
 
+export async function updateMaterialSerialTrackedLink(materialId: string, serialTrackedId: string | null) {
+  // Disconnect any existing link, then connect the new one if provided
+  return prismaClient.material.update({
+    where: { id: materialId },
+    data: {
+      MaterialSerialTrack: serialTrackedId
+        ? { set: [{ id: serialTrackedId }] }
+        : { set: [] },
+    },
+  })
+}

@@ -119,6 +119,8 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
     documentationPlace: material.documentationPlace ?? '',
     bePartDoc: material.bePartDoc !== null ? material.bePartDoc : ('' as number | ''),
     rejected: material.rejected ?? false,
+    isSerialTracked: material.isSerialTracked ?? false,
+    isParentPart: (material.parentBeNumbers && material.parentBeNumbers.length > 0) ?? false,
     materialGroupIdA: material.materialGroupIdA ?? '',
     materialGroupIdB: material.materialGroupIdB,
     materialGroupIdC: material.materialGroupIdC,
@@ -163,6 +165,8 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
       if (form.documentationPlace) fd.append('documentationPlace', form.documentationPlace)
       if (form.bePartDoc !== '') fd.append('bePartDoc', String(form.bePartDoc))
       fd.append('rejected', String(form.rejected))
+      fd.append('isSerialTracked', String(form.isSerialTracked))
+      fd.append('isParentPart', String(form.isParentPart))
       fd.append('materialGroupIdA', form.materialGroupIdA)
       fd.append('materialGroupIdB', form.materialGroupIdB ?? '')
       fd.append('materialGroupIdC', form.materialGroupIdC ?? '')
@@ -665,6 +669,30 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                 </div>
               ) : (
                 <p className="text-sm">{material.rejected ? 'Yes' : 'No'}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Serial Tracked</Label>
+              {editing ? (
+                <div className="flex items-center gap-2 h-9">
+                  <Switch checked={form.isSerialTracked} onCheckedChange={v => handleField('isSerialTracked', v)} />
+                  <span className="text-sm text-muted-foreground">{form.isSerialTracked ? 'Yes' : 'No'}</span>
+                </div>
+              ) : (
+                <p className="text-sm">{material.isSerialTracked ? 'Yes' : 'No'}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Is Parent Part</Label>
+              {editing ? (
+                <div className="flex items-center gap-2 h-9">
+                  <Switch checked={form.isParentPart} onCheckedChange={v => handleField('isParentPart', v)} />
+                  <span className="text-sm text-muted-foreground">{form.isParentPart ? 'Yes' : 'No'}</span>
+                </div>
+              ) : (
+                <p className="text-sm">{(material.parentBeNumbers && material.parentBeNumbers.length > 0) ? 'Yes' : 'No'}</p>
               )}
             </div>
 

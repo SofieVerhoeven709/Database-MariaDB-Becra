@@ -152,7 +152,7 @@ function PreferredSupplierPicker({
   )
 }
 
-const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string; isSerialTracked: boolean} = {
+const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean} = {
   id: '',
   beNumber: '',
   name: '',
@@ -178,6 +178,7 @@ const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string; isSerialTracked: bo
   warehousePlaceLabel: null,
   unitId: '',
   isSerialTracked: false,
+  isParentPart: false,
 }
 
 export function MaterialFormDialog({
@@ -196,11 +197,11 @@ export function MaterialFormDialog({
 }: MaterialFormDialogProps) {
   const isEditing = material !== null
 
-  const makeForm = (): Partial<MappedMaterial> & {id: string} =>
+  const makeForm = (): Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean} =>
     material ? {...material} : {...EMPTY_MATERIAL, id: crypto.randomUUID()}
 
-  const [form, setForm] = useState<Partial<MappedMaterial> & {id: string}>(makeForm)
-  const [isParentPartEnabled, setIsParentPartEnabled] = useState(parentPartBeNumbersInUse.includes(form.beNumber ?? ''))
+  const [form, setForm] = useState<Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean}>(makeForm)
+  const [isParentPartEnabled, setIsParentPartEnabled] = useState(form.isParentPart ?? false)
   const [hasParentParts, setHasParentParts] = useState((form.parentBeNumbers ?? []).length > 0)
   const [parentPartSearch, setParentPartSearch] = useState('')
   const [isSerialTracked, setIsSerialTracked] = useState(form.isSerialTracked ?? false)
@@ -213,7 +214,7 @@ export function MaterialFormDialog({
     if (open) {
       const nextForm = makeForm()
       setForm(nextForm)
-      setIsParentPartEnabled(parentPartBeNumbersInUse.includes(nextForm.beNumber ?? ''))
+      setIsParentPartEnabled(nextForm.isParentPart ?? false)
       setHasParentParts((nextForm.parentBeNumbers ?? []).length > 0)
       setParentPartSearch('')
       setIsSerialTracked(nextForm.isSerialTracked ?? false)
@@ -225,6 +226,9 @@ export function MaterialFormDialog({
     setForm(prev => ({...prev, [field]: value}))
     if (field === 'isSerialTracked') {
       setIsSerialTracked(!!value)
+    }
+    if (field === 'isParentPart') {
+      setIsParentPartEnabled(!!value)
     }
   }
 
@@ -382,7 +386,7 @@ export function MaterialFormDialog({
         <form
           onSubmit={e => {
             e.preventDefault()
-            onSave(form)
+            onSave({...form, isParentPart: isParentPartEnabled})
           }}
           className="flex flex-col gap-5">
           {/* Be Number */}
@@ -406,7 +410,10 @@ export function MaterialFormDialog({
             </div>
             <Switch
               checked={isParentPartEnabled}
-              onCheckedChange={setIsParentPartEnabled}
+              onCheckedChange={v => {
+                setIsParentPartEnabled(v)
+                update('isParentPart', v)
+              }}
               aria-label="Is parent part"
             />
           </div>

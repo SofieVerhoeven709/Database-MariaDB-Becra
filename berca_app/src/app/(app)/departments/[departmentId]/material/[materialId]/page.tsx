@@ -97,6 +97,10 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
       valid: inv.valid,
       noValidDate: inv.noValidDate.toISOString(),
     })),
+    isSerialTracked: material.isSerialTracked ?? false,
+    serialTrackedId: material.MaterialSerialTrack?.id ?? null,
+    parentBeNumbers: material.MaterialStructure_MaterialStructure_materialIdToMaterial?.map(x => x.beNumber) ?? [],
+    isParentPart: (material.MaterialStructure_MaterialStructure_materialIdToMaterial?.length ?? 0) > 0,
   }
 
   const mappedGroups = groups.map(g => ({

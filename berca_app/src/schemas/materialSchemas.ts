@@ -69,6 +69,24 @@ export const materialSchema = z.object({
   materialGroupIdD: nullableUuidSchema,
   warehousePlaceId: nullableUuidSchema,
   unitId: z.string().uuid(),
+  isSerialTracked: z.preprocess(
+    val => {
+      if (val === undefined) return false;
+      if (val === 'false' || val === false || val === 0) return false;
+      if (val === 'true' || val === true || val === 1) return true;
+      return val;
+    },
+    z.boolean()
+  ).default(false),
+  isParentPart: z.preprocess(
+    val => {
+      if (val === undefined) return false;
+      if (val === 'false' || val === false || val === 0) return false;
+      if (val === 'true' || val === true || val === 1) return true;
+      return val;
+    },
+    z.boolean()
+  ).default(false),
 })
 
 export const createMaterialSchema = materialSchema.extend({

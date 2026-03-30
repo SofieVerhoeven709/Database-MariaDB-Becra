@@ -72,7 +72,8 @@ export default async function MaterialPage({params}: PageProps) {
       brandOrderNr: m.brandOrderNr,
       shortDescription: m.shortDescription,
       longDescription: m.longDescription ?? null,
-      isSerialTracked: false, // property not present in DAL result, set default
+      isSerialTracked: !!(m.MaterialSerialTrack && m.MaterialSerialTrack.length > 0),
+      serialTrackedId: m.MaterialSerialTrack?.[0]?.id ?? null,
       preferredSupplierCompanyId: m.preferredSupplierCompanyId ?? null,
       preferredSupplierCompanyName: m.PreferredSupplierCompany?.name ?? null,
       preferredSupplierOrderId: preferredSupplierEntry?.supplierOrderNr ?? null,

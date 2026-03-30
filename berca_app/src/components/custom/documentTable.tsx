@@ -14,13 +14,10 @@ import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from '@/
 import {Label} from '@/components/ui/label'
 import type {
   MappedDocument,
-  MappedDocumentGroupA,
-  MappedDocumentGroupB,
-  MappedDocumentGroupC,
-  MappedDocumentGroupD,
   MappedDocumentPlace,
   DocumentGroupOption,
   DocumentPlaceOption,
+  MappedDocumentGroup,
 } from '@/types/document'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import {
@@ -133,10 +130,7 @@ function Th({
 
 interface DocumentTableProps {
   initialDocuments: MappedDocument[]
-  initialGroupAs: MappedDocumentGroupA[]
-  initialGroupBs: MappedDocumentGroupB[]
-  initialGroupCs: MappedDocumentGroupC[]
-  initialGroupDs: MappedDocumentGroupD[]
+  initialGroups: MappedDocumentGroup[]
   initialPlaces: MappedDocumentPlace[]
   currentUserRole: string
   currentUserLevel: number
@@ -151,10 +145,7 @@ interface DocumentTableProps {
 
 export function DocumentTable({
   initialDocuments,
-  initialGroupAs,
-  initialGroupBs,
-  initialGroupCs,
-  initialGroupDs,
+  initialGroups,
   initialPlaces,
   currentUserRole,
   currentUserLevel,

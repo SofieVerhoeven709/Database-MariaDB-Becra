@@ -30,10 +30,7 @@ interface DocumentDetailProps {
   defaultVisibleRoleNames: string[]
   employeeOptions: SelectOption[]
   roleOptions: SelectOption[]
-  groupAOptions: DocumentGroupOption[]
-  groupBOptions: (DocumentGroupOption & {documentGroupAId: string})[]
-  groupCOptions: (DocumentGroupOption & {documentGroupBId: string})[]
-  groupDOptions: (DocumentGroupOption & {documentGroupCId: string})[]
+  groupOptions: DocumentGroupOption[]
   placeOptions: DocumentPlaceOption[]
   documentOptions: SelectOption[]
   departmentId: string
@@ -62,10 +59,7 @@ export function DocumentDetail({
   defaultVisibleRoleNames,
   employeeOptions,
   roleOptions,
-  groupAOptions,
-  groupBOptions,
-  groupCOptions,
-  groupDOptions,
+  groupOptions,
   placeOptions,
   documentOptions,
   departmentId,

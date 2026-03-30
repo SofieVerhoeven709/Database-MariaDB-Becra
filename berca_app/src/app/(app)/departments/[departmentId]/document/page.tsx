@@ -1,21 +1,7 @@
 import {DocumentTable} from '@/components/custom/documentTable'
-import {
-  getDocuments,
-  getDocumentGroupAs,
-  getDocumentGroupBs,
-  getDocumentGroupCs,
-  getDocumentGroupDs,
-  getDocumentPlaces,
-} from '@/dal/documents'
+import {getDocuments, getDocumentPlaces, getDocumentGroups} from '@/dal/documents'
 import {getAllRoleLevels} from '@/dal/roleLevel'
-import {
-  mapDocument,
-  mapDocumentGroupA,
-  mapDocumentGroupB,
-  mapDocumentGroupC,
-  mapDocumentGroupD,
-  mapDocumentPlace,
-} from '@/extra/documents'
+import {mapDocument, mapDocumentGroup, mapDocumentPlace} from '@/extra/documents'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
@@ -29,25 +15,10 @@ interface PageProps {
 export default async function DocumentsPage({params}: PageProps) {
   const {departmentId} = await params
 
-  const [
-    department,
-    documentsFromDAL,
-    groupAs,
-    groupBs,
-    groupCs,
-    groupDs,
-    places,
-    roleLevels,
-    profile,
-    employees,
-    roles,
-  ] = await Promise.all([
+  const [department, documentsFromDAL, groups, places, roleLevels, profile, employees, roles] = await Promise.all([
     getDepartmentById(departmentId),
     getDocuments(),
-    getDocumentGroupAs(),
-    getDocumentGroupBs(),
-    getDocumentGroupCs(),
-    getDocumentGroupDs(),
+    getDocumentGroups(),
     getDocumentPlaces(),
     getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
@@ -94,10 +65,7 @@ export default async function DocumentsPage({params}: PageProps) {
 
         <DocumentTable
           initialDocuments={documents}
-          initialGroupAs={groupAs.map(mapDocumentGroupA)}
-          initialGroupBs={groupBs.map(mapDocumentGroupB)}
-          initialGroupCs={groupCs.map(mapDocumentGroupC)}
-          initialGroupDs={groupDs.map(mapDocumentGroupD)}
+          initialGroups={groups.map(mapDocumentGroup)}
           initialPlaces={places.map(mapDocumentPlace)}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}

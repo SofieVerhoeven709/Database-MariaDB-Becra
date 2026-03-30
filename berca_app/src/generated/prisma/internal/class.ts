@@ -273,16 +273,6 @@ export interface PrismaClient<
   get department(): Prisma.DepartmentDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.documentGroup`: Exposes CRUD operations for the **DocumentGroup** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more DocumentGroups
-    * const documentGroups = await prisma.documentGroup.findMany()
-    * ```
-    */
-  get documentGroup(): Prisma.DocumentGroupDelegate<ExtArgs, { omit: OmitOpts }>;
-
-  /**
    * `prisma.documentPlace`: Exposes CRUD operations for the **DocumentPlace** model.
     * Example usage:
     * ```ts
@@ -1071,6 +1061,46 @@ export interface PrismaClient<
     * ```
     */
   get priceListItemTarget(): Prisma.PriceListItemTargetDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.documentGroupA`: Exposes CRUD operations for the **DocumentGroupA** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DocumentGroupAS
+    * const documentGroupAS = await prisma.documentGroupA.findMany()
+    * ```
+    */
+  get documentGroupA(): Prisma.DocumentGroupADelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.documentGroupB`: Exposes CRUD operations for the **DocumentGroupB** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DocumentGroupBS
+    * const documentGroupBS = await prisma.documentGroupB.findMany()
+    * ```
+    */
+  get documentGroupB(): Prisma.DocumentGroupBDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.documentGroupC`: Exposes CRUD operations for the **DocumentGroupC** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DocumentGroupCS
+    * const documentGroupCS = await prisma.documentGroupC.findMany()
+    * ```
+    */
+  get documentGroupC(): Prisma.DocumentGroupCDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.documentGroupD`: Exposes CRUD operations for the **DocumentGroupD** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DocumentGroupDS
+    * const documentGroupDS = await prisma.documentGroupD.findMany()
+    * ```
+    */
+  get documentGroupD(): Prisma.DocumentGroupDDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(dirname: string): PrismaClientConstructor {

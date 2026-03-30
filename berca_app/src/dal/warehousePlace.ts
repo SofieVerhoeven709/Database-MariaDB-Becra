@@ -6,11 +6,9 @@ export type WarehousePlaceWithRelations = WarehousePlace & {
   Employee: Pick<Employee, 'id' | 'firstName' | 'lastName'>
 }
 
-export async function getWarehousePlaces(options?: {includeDeleted?: boolean}): Promise<WarehousePlaceWithRelations[]> {
-  const includeDeleted = options?.includeDeleted ?? false
-
+export async function getWarehousePlaces(): Promise<WarehousePlaceWithRelations[]> {
   return prismaClient.warehousePlace.findMany({
-    where: includeDeleted ? undefined : {deleted: false},
+    where: {deleted: false},
     include: {
       Employee: {select: {id: true, firstName: true, lastName: true}},
     },

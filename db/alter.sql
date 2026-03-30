@@ -376,13 +376,13 @@ ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
 ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
 
 -- 39a. Drop old tables (disable FK checks to avoid constraint errors)
-SET FOREIGN_KEY_CHECKS = 0;
+--SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS InvoiceOutContact;
-DROP TABLE IF EXISTS InvoiceOut;
-DROP TABLE IF EXISTS InvoiceIn;
+--DROP TABLE IF EXISTS InvoiceOutContact;
+--DROP TABLE IF EXISTS InvoiceOut;
+--DROP TABLE IF EXISTS InvoiceIn;
 
-SET FOREIGN_KEY_CHECKS = 1;
+--SET FOREIGN_KEY_CHECKS = 1;
 -- 39b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
 CREATE TABLE IF NOT EXISTS VatMargin (
       id CHAR(36) NOT NULL PRIMARY KEY,
@@ -563,13 +563,8 @@ UPDATE Company SET officialName = name WHERE officialName IS NULL;
 -- Step 3: Now enforce NOT NULL since all rows are filled
 ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
--- 43a. Project: add priceListId column
-ALTER TABLE Project ADD COLUMN IF NOT EXISTS `priceListId` CHAR(36) NULL;
-
--- 43b. Project: add FK fk_project_pricelist (skip if already exists)
 ALTER TABLE Project DROP FOREIGN KEY IF EXISTS fk_project_pricelist;
-ALTER TABLE Project ADD CONSTRAINT fk_project_pricelist
-    FOREIGN KEY (`priceListId`) REFERENCES PriceList (`id`) ON DELETE RESTRICT;
+ALTER TABLE project DROP COLUMN IF EXISTS `priceListId`;
 
 -- 44. CompanyAddress: rename table from CompanyAdress (safe, only if old exists and new does not)
 SET @old_exists = (
@@ -643,14 +638,12 @@ ALTER TABLE Material CHANGE COLUMN IF EXISTS `targetId` `targetId` VARCHAR(255) 
 ALTER TABLE Material ADD CONSTRAINT fk_material_target
     FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
 
+--SET FOREIGN_KEY_CHECKS = 0;
 
+--DROP TABLE IF EXISTS DocumentPlace;
+--DROP TABLE IF EXISTS DocumentGroup;
 
-SET FOREIGN_KEY_CHECKS = 0;
-
-DROP TABLE IF EXISTS DocumentPlace;
-DROP TABLE IF EXISTS DocumentGroup;
-
-SET FOREIGN_KEY_CHECKS = 1;
+--SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE
       IF NOT EXISTS DocumentPlace (
@@ -736,4 +729,5 @@ ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
 
 ALTER TABLE MaterialSerialTrack CHANGE COLUMN IF EXISTS `serialTrackedId` `serialTrackedId` CHAR(36) NULL;
-ALTER TABLE MaterialSerialTrackStructure CHANGE COLUMN IF EXISTS `beNumber` `beNumber`  VARCHAR(255) NULL;
+
+

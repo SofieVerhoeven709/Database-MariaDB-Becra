@@ -50,7 +50,6 @@ export async function getUnassignedOpenProjects() {
     where: {
       deleted: false,
       isClosed: false,
-      priceListId: null,
     },
     select: {
       id: true,

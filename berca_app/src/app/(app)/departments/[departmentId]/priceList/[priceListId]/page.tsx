@@ -7,11 +7,11 @@ import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
 interface PageProps {
-  params: Promise<{departmentId: string; priceListId: string}>
+  params: { departmentId: string; priceListId: string }
 }
 
 export default async function PriceListDetailPage({params}: PageProps) {
-  const {departmentId, priceListId} = await params
+  const {departmentId, priceListId} = params
 
   const [department, priceListRaw, unassignedProjectsRaw, profile] = await Promise.all([
     getDepartmentById(departmentId),
@@ -33,11 +33,12 @@ export default async function PriceListDetailPage({params}: PageProps) {
   const priceList = mapPriceList(priceListRaw, resolvedTargets)
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
+  // Fix: Use Company.name if present, fallback to empty string
   const unassignedProjects = unassignedProjectsRaw.map(p => ({
     id: p.id,
     projectNumber: p.projectNumber,
     projectName: p.projectName,
-    companyName: p.Company.name,
+    companyName: p.Company?.name ?? '',
   }))
 
   return (

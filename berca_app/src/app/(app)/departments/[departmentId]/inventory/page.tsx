@@ -31,9 +31,9 @@ export default async function InventoryPage() {
 
   const mappedMaterials = materials.map(m => ({
     id: m.id,
-    beNumber: m.beNumber,
-    name: m.name ?? null,
-    shortDescription: m.shortDescription,
+    beNumber: m.beNumber ?? '', // Ensure beNumber is always a string
+    name: m.name ?? '', // Ensure name is always a string
+    shortDescription: m.shortDescription ?? '', // Ensure shortDescription is always a string
   }))
 
   return (

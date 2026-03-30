@@ -797,3 +797,17 @@ SET @sql = IF(@tbl_exists > 0,
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
+
+
+ALTER TABLE Material 
+ADD COLUMN IF NOT EXISTS `isSerialTracked` BOOLEAN NOT NULL DEFAULT 0;
+
+ALTER TABLE MaterialSerialTrack
+    ADD COLUMN IF NOT EXISTS `materialId` CHAR(36) NOT NULL;
+
+ALTER TABLE MaterialSerialTrack
+    DROP FOREIGN KEY IF EXISTS fk_materialSerialTrack_materialId;
+
+ALTER TABLE MaterialSerialTrack
+    ADD CONSTRAINT fk_materialSerialTrack_materialId
+    FOREIGN KEY (`materialId`) REFERENCES Material (`id`) ON DELETE RESTRICT;

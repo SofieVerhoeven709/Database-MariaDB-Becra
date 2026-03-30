@@ -27,10 +27,10 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
   if (!material) notFound()
 
   // Fetch serial tracked structure if serialTrackedId exists
-  const serialTrackedId = material.MaterialSerialTrack?.id ?? null
+  const serialTrackedId = (material as any).MaterialSerialTrack?.id ?? null
   const [serialTrackedStructure, nonBeNumberItems] = await Promise.all([
     serialTrackedId ? getSerialTrackedStructureBySerialTrackedId(serialTrackedId) : [],
-    getNonBeNumberItems(materialId),
+    getNonBeNumberItems(),
   ])
 
   const groupById = new Map(groups.map((g: any) => [g.id, g]))
@@ -42,7 +42,7 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
 
   const mappedMaterial = {
     id: material.id,
-    beNumber: material.beNumber,
+    beNumber: material.beNumber ?? '',
     name: material.name ?? null,
     brandOrderNr: material.brandOrderNr,
     shortDescription: material.shortDescription,
@@ -108,11 +108,11 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
       valid: inv.valid,
       noValidDate: inv.noValidDate.toISOString(),
     })),
-    isSerialTracked: material.isSerialTracked ?? false,
-    serialTrackedId: material.MaterialSerialTrack?.id ?? null,
+    isSerialTracked: (material as any).isSerialTracked ?? false,
+    serialTrackedId: (material as any).MaterialSerialTrack?.id ?? null,
     parentBeNumbers:
-      material.MaterialStructure_MaterialStructure_materialIdToMaterial?.map((x: any) => x.beNumber) ?? [],
-    isParentPart: (material.MaterialStructure_MaterialStructure_materialIdToMaterial?.length ?? 0) > 0,
+      (material as any).MaterialStructure_MaterialStructure_materialIdToMaterial?.map((x: any) => x.beNumber) ?? [],
+    isParentPart: ((material as any).MaterialStructure_MaterialStructure_materialIdToMaterial?.length ?? 0) > 0,
   }
 
   const mappedGroups = groups.map((g: any) => ({

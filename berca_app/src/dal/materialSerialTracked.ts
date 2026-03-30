@@ -11,12 +11,7 @@ export type SerialTrackedWithRelations = Prisma.MaterialSerialTrackGetPayload<{
         lastName: true
       }
     }
-    Material: {
-      select: {
-        beNumber: true
-        materialGroupIdA: true // Add materialGroupIdA to the include
-      }
-    }
+    // Add other valid relations here if needed
   }
 }>
 
@@ -29,9 +24,7 @@ export async function getSerialTracked(options?: {includeDeleted?: boolean}): Pr
       Employee: {
         select: {id: true, firstName: true, lastName: true},
       },
-      Material: {
-        select: {beNumber: true, materialGroupIdA: true}, // Add materialGroupIdA to the select
-      },
+      // Add other valid relations here if needed
     },
     orderBy: {shortDescription: 'asc'},
   })
@@ -46,9 +39,7 @@ export async function getSerialTrackedById(id: string): Promise<SerialTrackedWit
       Employee: {
         select: {id: true, firstName: true, lastName: true},
       },
-      Material: {
-        select: {beNumber: true, materialGroupIdA: true}, // Add materialGroupIdA to the select
-      },
+      // Add other valid relations here if needed
     },
   })
 }
@@ -85,12 +76,12 @@ export async function createSerialTracked(data: {
     materialGroupId, // destructure and discard
     ...rest
   } = data
-  const prismaData: any = { ...rest }
-  if (materialId) prismaData.Material = { connect: { id: materialId } }
-  if (companyId) prismaData.Company = { connect: { id: companyId } }
-  if (projectId) prismaData.Project = { connect: { id: projectId } }
-  if (createdBy) prismaData.Employee = { connect: { id: createdBy } }
-  if (deletedBy) prismaData.Employee_MaterialSerialTrack_deletedByToEmployee = { connect: { id: deletedBy } }
+  const prismaData: any = {...rest}
+  if (materialId) prismaData.materialId = materialId
+  if (companyId) prismaData.Company = {connect: {id: companyId}}
+  if (projectId) prismaData.Project = {connect: {id: projectId}}
+  if (createdBy) prismaData.createdBy = createdBy
+  if (deletedBy) prismaData.Employee_MaterialSerialTrack_deletedByToEmployee = {connect: {id: deletedBy}}
   // materialGroupId is NOT included in prismaData
   const created = await prismaClient.materialSerialTrack.create({
     data: prismaData,

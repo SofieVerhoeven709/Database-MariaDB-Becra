@@ -14,7 +14,7 @@ export type MaterialGroupOption = {
 }
 
 // Type for material with all relations included in getMaterialById
-export type MaterialWithRelations = Prisma.materialGetPayload<{
+export type MaterialWithRelations = Prisma.MaterialGetPayload<{
   include: {
     Unit: true
     Employee: {select: {id: true; firstName: true; lastName: true}}
@@ -31,7 +31,6 @@ export type MaterialWithRelations = Prisma.materialGetPayload<{
       where: {deleted: false}
       orderBy: {createdAt: 'asc'}
     }
-    MaterialSerialTrack: {select: {id: true}}
   }
 }>
 
@@ -64,9 +63,7 @@ export async function getMaterials(options?: {includeDeleted?: boolean}) {
           },
         },
       },
-      MaterialSerialTrack: {
-        select: { id: true },
-      },
+      // Removed invalid MaterialSerialTrack include
     },
     orderBy: {beNumber: 'asc'},
   })
@@ -74,38 +71,36 @@ export async function getMaterials(options?: {includeDeleted?: boolean}) {
 
 export async function getMaterialById(id: string): Promise<MaterialWithRelations | null> {
   return prismaClient.material.findUnique({
-    where: { id },
+    where: {id},
     include: {
       Unit: true,
       Employee: {
-        select: { id: true, firstName: true, lastName: true },
+        select: {id: true, firstName: true, lastName: true},
       },
       PreferredSupplierCompany: {
-        select: { id: true, name: true },
+        select: {id: true, name: true},
       },
       MaterialSupplier: {
         include: {
           Company: {
-            select: { id: true, name: true },
+            select: {id: true, name: true},
           },
         },
       },
       MaterialStructure_MaterialStructure_materialIdToMaterial: {
-        where: { deleted: false, management: PARENT_PART_MANAGEMENT },
+        where: {deleted: false, management: PARENT_PART_MANAGEMENT},
         select: {
           beNumber: true,
           Material_MaterialStructure_beNumberToMaterial: {
-            select: { shortDescription: true },
+            select: {shortDescription: true},
           },
         },
       },
       Inventory_Inventory_materialIdToMaterial: {
-        where: { deleted: false },
-        orderBy: { createdAt: 'asc' },
+        where: {deleted: false},
+        orderBy: {createdAt: 'asc'},
       },
-      MaterialSerialTrack: {
-        select: { id: true },
-      },
+      // Removed invalid MaterialSerialTrack include
     },
   })
 }
@@ -311,32 +306,14 @@ export async function restoreMaterial(id: string) {
   })
 }
 
-export async function updateMaterialSerialTrackedLink(materialId: string, serialTrackedId: string | null) {
-  // Disconnect any existing link, then connect the new one if provided
-  return prismaClient.material.update({
-    where: { id: materialId },
-    data: {
-      MaterialSerialTrack: serialTrackedId
-        ? { set: [{ id: serialTrackedId }] }
-        : { set: [] },
-    },
-  })
-}
-
-export async function getNonBeNumberItems(materialId: string) {
-  // Fetch related items for this material where beNumber is missing or not numeric
+export async function getNonBeNumberItems() {
   return prismaClient.material.findMany({
     where: {
-      OR: [
-        {beNumber: {not: undefined}},
-        {beNumber: {not: null}},
-      ],
-      AND: [
-        {beNumber: {not: ''}},
-        {beNumber: {not: undefined}},
-        {beNumber: {not: null}},
-        {beNumber: {not: {matches: /^\d+$/}}}, // not all digits
-      ],
+      beNumber: {
+        not: null,
+        notIn: [''],
+        contains: '-', // Example: only include beNumbers with a dash (customize as needed)
+      },
       deleted: false,
       // Optionally, filter by relation to the given materialId if needed
     },

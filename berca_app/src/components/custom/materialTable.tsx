@@ -170,6 +170,16 @@ export function MaterialTable({
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
 
+  // Filter for materials without BE numbers
+  const nonBeMaterials = materials.filter(
+    m => !m.beNumber || m.beNumber.trim().length === 0
+  )
+  // Debug: log which materials are being included in the Non BE Numbers table
+  if (nonBeMaterials.length > 0) {
+    // eslint-disable-next-line no-console
+    console.log('[DEBUG] Non BE Materials:', nonBeMaterials.map(m => ({ id: m.id, beNumber: m.beNumber, name: m.name })))
+  }
+
   async function handleSave(form: Partial<MappedMaterial> & {id: string}) {
     setSaving(true)
     setSaveError(null)
@@ -237,6 +247,13 @@ export function MaterialTable({
         : await createMaterialAction({success: false}, fd)
 
       if (result && !result.success) {
+        // Fallback: if errors is empty or not an object, show a generic error
+        const hasErrors = result.errors && typeof result.errors === 'object' && Object.keys(result.errors).length > 0
+        if (!hasErrors) {
+          console.error('Material save failed: Unknown error')
+          setSaveError('Could not save the material. Please check all required fields.')
+          return
+        }
         console.error('Material save failed:', result.errors)
         // Support both field errors and global errors
         let msgs: string[] = []
@@ -293,6 +310,125 @@ export function MaterialTable({
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Non-BE Number Table */}
+      {nonBeMaterials.length > 0 && (
+        <>
+          <h2 className="text-lg font-semibold mb-2">Materials Without BE Number</h2>
+          <div className="rounded-xl border border-border overflow-hidden mb-6">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-secondary hover:bg-secondary">
+                  {columns.map(col => (
+                    <TableHead
+                      key={col.key}
+                      className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
+                    >
+                      {col.label}
+                    </TableHead>
+                  ))}
+                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide text-center w-[80px]">
+                    Serial Tracked
+                  </TableHead>
+                  <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    Actions
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {nonBeMaterials.map(m => (
+                  <TableRow
+                    key={m.id}
+                    className="hover:bg-secondary/50 transition-colors cursor-pointer"
+                    onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
+                    <TableCell className="font-mono text-sm font-medium">—</TableCell>
+                    <TableCell className="text-sm">{m.name ?? <span className="text-muted-foreground">—</span>}</TableCell>
+                    <TableCell className="text-sm max-w-[220px] truncate" title={m.shortDescription}>{m.shortDescription}</TableCell>
+                    <TableCell className="text-sm">{m.brandName ?? <span className="text-muted-foreground">—</span>}</TableCell>
+                    <TableCell className="text-sm">{m.materialGroupLabelA || '—'}</TableCell>
+                    <TableCell className="text-sm">{m.materialGroupLabelB || '—'}</TableCell>
+                    <TableCell className="text-sm">{m.materialGroupLabelC || '—'}</TableCell>
+                    <TableCell className="text-sm">{m.materialGroupLabelD || '—'}</TableCell>
+                    <TableCell className="text-sm">{m.unitName}<span className="text-muted-foreground text-xs ml-1">({m.unitAbbreviation})</span></TableCell>
+                    <TableCell className="text-sm">{m.warehousePlaceLabel ?? <span className="text-muted-foreground">—</span>}</TableCell>
+                    <TableCell className="text-sm max-w-[220px]">
+                      {m.parentBeNumbers.length > 0 ? (
+                        <span title={m.parentBeNumbers.join(', ')}>
+                          {m.parentBeNumbers.slice(0, 2).join(', ')}
+                          {m.parentBeNumbers.length > 2 ? ` +${m.parentBeNumbers.length - 2}` : ''}
+                        </span>
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-sm">
+                      <div className="flex flex-col leading-tight">
+                        <span>{m.createdByName || '-'}</span>
+                        <span className="text-xs text-muted-foreground">{formatDateTime(m.createdAt)}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      {m.rejected ? (
+                        <Badge variant="destructive" className="text-xs">Rejected</Badge>
+                      ) : (
+                        <Badge variant="secondary" className="text-xs bg-green-500/15 text-green-700 dark:text-green-400">Active</Badge>
+                      )}
+                    </TableCell>
+                    {/* Serial Tracked column */}
+                    <TableCell className="text-center">
+                      {m.isSerialTracked && m.serialTrackedId ? (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-xs bg-blue-100 text-blue-800 border-blue-300 px-2 py-1 h-auto min-h-0"
+                          onClick={e => {
+                            e.stopPropagation();
+                            router.push(`/departments/${departmentId}/serialTracked/${m.serialTrackedId}`)
+                          }}
+                        >
+                          Serial
+                        </Button>
+                      ) : m.isSerialTracked ? (
+                        <Badge variant="outline" className="text-xs bg-blue-100 text-blue-800 border-blue-300">Serial</Badge>
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-right" onClick={e => e.stopPropagation()}>
+                      <div className="flex justify-end gap-1">
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7"
+                          onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
+                          <Eye className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7"
+                          onClick={() => {
+                            setEditingMaterial(m)
+                            setDialogOpen(true)
+                          }}>
+                          <Pencil className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7 text-destructive hover:text-destructive"
+                          onClick={() => handleDelete(m.id)}>
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </>
+      )}
+
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[200px]">

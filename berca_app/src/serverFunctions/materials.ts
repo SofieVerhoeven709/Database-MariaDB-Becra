@@ -55,7 +55,7 @@ async function generateBeNumber() {
   const START_NUMBER = 1000000
 
   const numericBeNumbers = materials
-    .map(({beNumber}) => beNumber.trim())
+    .map(({beNumber}) => (beNumber ?? '').trim()) // Ensure beNumber is always a string
     .filter(beNumber => /^\d+$/.test(beNumber))
     .map(Number)
 
@@ -105,6 +105,13 @@ export const createMaterialAction = protectedFormAction({
       targetId: target.id,
     })
 
+    if (!material) {
+      return {
+        success: false,
+        errors: {global: ['Material could not be created. Please try again.']},
+      }
+    }
+
     await assignWarehousePlaceToMaterial(warehousePlaceId, beNumber)
 
     logger.info(`Material created: ${material.id}`)
@@ -141,7 +148,14 @@ export const updateMaterialAction = protectedFormAction({
       bePartDoc: rest.bePartDoc != null ? Number(rest.bePartDoc) : rest.bePartDoc,
     })
 
-    await assignWarehousePlaceToMaterial(warehousePlaceId, updated.beNumber, existingMaterial?.beNumber)
+    if (!updated) {
+      return {
+        success: false,
+        errors: {global: ['Material could not be updated. Please try again.']},
+      }
+    }
+
+    await assignWarehousePlaceToMaterial(warehousePlaceId, updated.beNumber ?? '', existingMaterial?.beNumber ?? '')
 
     logger.info(`Material updated: ${updated.id}`)
     revalidatePath(REVALIDATE_MATERIAL)
@@ -176,4 +190,3 @@ export const restoreMaterialAction = protectedFormAction({
     revalidatePath(`${REVALIDATE_MATERIAL}/${data.id}`)
   },
 })
-

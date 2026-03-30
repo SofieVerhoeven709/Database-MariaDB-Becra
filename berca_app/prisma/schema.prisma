@@ -905,6 +905,7 @@ model InvoiceOut {
   vatMarginId                              String              @db.Char(36)
   priceListId                              String?             @db.Char(36)
   InvoiceType                              InvoiceType         @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_1")
+  PriceList                                PriceList?          @relation(fields: [priceListId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOut_ibfk_10")
   Employee                                 Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_2")
   Target                                   Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_3")
   Employee_InvoiceOut_deletedByToEmployee  Employee?           @relation("InvoiceOut_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_4")
@@ -925,6 +926,7 @@ model InvoiceOut {
   @@index([modifiedBy], map: "modifiedBy")
   @@index([paymentMethodId], map: "paymentMethodId")
   @@index([vatMarginId], map: "vatMarginId")
+  @@index([priceListId], map: "priceListId")
 }
 
 model InvoiceType {
@@ -2242,6 +2244,7 @@ model PriceList {
   deletedAt                              DateTime?          @db.DateTime(0)
   deletedBy                              String?            @db.Char(36)
   targetId                               String             @db.Char(36)
+  InvoiceOut                             InvoiceOut[]
   Employee_PriceList_createdByToEmployee Employee           @relation("PriceList_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_1")
   Employee_PriceList_deletedByToEmployee Employee?          @relation("PriceList_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_2")
   Target                                 Target             @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_3")

@@ -376,13 +376,13 @@ ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
 ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
 
 -- 39a. Drop old tables (disable FK checks to avoid constraint errors)
---SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS = 0;
 
 --DROP TABLE IF EXISTS InvoiceOutContact;
---DROP TABLE IF EXISTS InvoiceOut;
+DROP TABLE IF EXISTS InvoiceOut;
 --DROP TABLE IF EXISTS InvoiceIn;
 
---SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 1;
 -- 39b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
 CREATE TABLE IF NOT EXISTS VatMargin (
       id CHAR(36) NOT NULL PRIMARY KEY,
@@ -504,6 +504,7 @@ CREATE TABLE
             FOREIGN KEY (invoiceSentTypeId) REFERENCES InvoiceSentType (id) ON DELETE RESTRICT,
             FOREIGN KEY (invoiceStatusId) REFERENCES InvoiceStatus (id) ON DELETE RESTRICT,
             FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
+            FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
             UNIQUE (invoiceNumber)
       ) ENGINE = InnoDB;
 

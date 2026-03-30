@@ -120,3 +120,22 @@ export async function getDocumentPlaces() {
     orderBy: [{headFolder: 'asc'}, {subFolder: 'asc'}],
   })
 }
+
+const groupInclude = {
+  DocumentGroupA: {select: {id: true, name: true}},
+  DocumentGroupB: {select: {id: true, name: true}},
+  DocumentGroupC: {select: {id: true, name: true}},
+  DocumentGroupD: {select: {id: true, name: true}},
+} as const
+
+export async function getDocumentGroups() {
+  return prismaClient.documentGroup.findMany({
+    include: groupInclude,
+    orderBy: [
+      {DocumentGroupA: {name: 'asc'}},
+      {DocumentGroupB: {name: 'asc'}},
+      {DocumentGroupC: {name: 'asc'}},
+      {DocumentGroupD: {name: 'asc'}},
+    ],
+  })
+}

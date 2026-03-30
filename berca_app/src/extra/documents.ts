@@ -7,6 +7,7 @@ import type {
   MappedDocumentGroupC,
   MappedDocumentGroupD,
   MappedDocumentPlace,
+  MappedDocumentGroup,
 } from '@/types/document'
 import {mapVisibility} from '@/extra/visibilityForRole'
 
@@ -18,10 +19,15 @@ export type DocumentListPayload = Prisma.DocumentStructureGetPayload<{
     Employee_DocumentStructure_revisedByIdToEmployee: {select: {id: true; firstName: true; lastName: true}}
     Employee_DocumentStructure_managedByIdToEmployee: {select: {id: true; firstName: true; lastName: true}}
     Employee_DocumentStructure_deletedByToEmployee: {select: {id: true; firstName: true; lastName: true}}
-    DocumentGroupA: {select: {id: true; name: true}}
-    DocumentGroupB: {select: {id: true; name: true}}
-    DocumentGroupC: {select: {id: true; name: true}}
-    DocumentGroupD: {select: {id: true; name: true}}
+    DocumentGroup: {
+      select: {id: true}
+      include: {
+        DocumentGroupA: {select: {id: true; name: true}}
+        DocumentGroupB: {select: {id: true; name: true}}
+        DocumentGroupC: {select: {id: true; name: true}}
+        DocumentGroupD: {select: {id: true; name: true}}
+      }
+    }
     DocumentPlace: {select: {id: true; headFolder: true; subFolder: true}}
     Role: {select: {id: true; name: true}}
     DocumentStructure: {select: {id: true; documentNumber: true}}
@@ -78,6 +84,15 @@ export type DocumentPlacePayload = Prisma.DocumentPlaceGetPayload<{
   }
 }>
 
+export type DocumentGroupPayload = Prisma.DocumentGroupGetPayload<{
+  include: {
+    DocumentGroupA: {select: {id: true; name: true}}
+    DocumentGroupB: {select: {id: true; name: true}}
+    DocumentGroupC: {select: {id: true; name: true}}
+    DocumentGroupD: {select: {id: true; name: true}}
+  }
+}>
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function placeLabel(headFolder: string, subFolder: string | null): string {
@@ -103,24 +118,19 @@ export function mapDocument(d: DocumentListPayload): MappedDocument {
     additionalInfo: d.additionalInfo ?? null,
     referenceDocId: d.referenceDocId ?? null,
     referenceDocNumber: d.DocumentStructure?.documentNumber ?? null,
-    roleId: d.roleId ?? null,
-    roleName: d.Role?.name ?? null,
-    documentGroupAId: d.documentGroupAId,
-    documentGroupAName: d.DocumentGroupA.name,
-    documentGroupBId: d.documentGroupBId ?? null,
-    documentGroupBName: d.DocumentGroupB?.name ?? null,
-    documentGroupCId: d.documentGroupCId ?? null,
-    documentGroupCName: d.DocumentGroupC?.name ?? null,
-    documentGroupDId: d.documentGroupDId ?? null,
-    documentGroupDName: d.DocumentGroupD?.name ?? null,
+    documentGroupId: d.documentGroupId,
+    documentGroupAName: d.DocumentGroup?.DocumentGroupA?.name ?? null,
+    documentGroupBName: d.DocumentGroup?.DocumentGroupB?.name ?? null,
+    documentGroupCName: d.DocumentGroup?.DocumentGroupC?.name ?? null,
+    documentGroupDName: d.DocumentGroup?.DocumentGroupD?.name ?? null,
     documentPlaceId: d.documentPlaceId,
     documentPlaceLabel: placeLabel(d.DocumentPlace.headFolder, d.DocumentPlace.subFolder),
     createdBy: d.createdBy,
     createdByName: `${d.Employee_DocumentStructure_createdByToEmployee.firstName} ${d.Employee_DocumentStructure_createdByToEmployee.lastName}`,
-    revisedById: d.revisedById,
-    revisedByName: `${d.Employee_DocumentStructure_revisedByIdToEmployee.firstName} ${d.Employee_DocumentStructure_revisedByIdToEmployee.lastName}`,
-    managedById: d.managedById,
-    managedByName: `${d.Employee_DocumentStructure_managedByIdToEmployee.firstName} ${d.Employee_DocumentStructure_managedByIdToEmployee.lastName}`,
+    revisedById: d.revisedById ?? null,
+    revisedByName: `${d.Employee_DocumentStructure_revisedByIdToEmployee?.firstName} ${d.Employee_DocumentStructure_revisedByIdToEmployee?.lastName}`,
+    managedById: d.managedById ?? null,
+    managedByName: `${d.Employee_DocumentStructure_managedByIdToEmployee?.firstName} ${d.Employee_DocumentStructure_managedByIdToEmployee?.lastName}`,
     targetId: d.Target.id,
     visibilityForRoles: d.Target.VisibilityForRole.map(mapVisibility),
     deleted: d.deleted,
@@ -158,8 +168,6 @@ export function mapDocumentGroupB(g: DocumentGroupBPayload): MappedDocumentGroup
   return {
     id: g.id,
     name: g.name,
-    documentGroupAId: g.documentGroupAId,
-    documentGroupAName: g.DocumentGroupA.name,
     createdAt: g.createdAt.toISOString(),
     createdBy: g.createdBy,
     createdByName: `${g.Employee_DocumentGroupB_createdByToEmployee.firstName} ${g.Employee_DocumentGroupB_createdByToEmployee.lastName}`,
@@ -177,8 +185,6 @@ export function mapDocumentGroupC(g: DocumentGroupCPayload): MappedDocumentGroup
   return {
     id: g.id,
     name: g.name,
-    documentGroupBId: g.documentGroupBId,
-    documentGroupBName: g.DocumentGroupB.name,
     createdAt: g.createdAt.toISOString(),
     createdBy: g.createdBy,
     createdByName: `${g.Employee_DocumentGroupC_createdByToEmployee.firstName} ${g.Employee_DocumentGroupC_createdByToEmployee.lastName}`,
@@ -196,8 +202,6 @@ export function mapDocumentGroupD(g: DocumentGroupDPayload): MappedDocumentGroup
   return {
     id: g.id,
     name: g.name,
-    documentGroupCId: g.documentGroupCId,
-    documentGroupCName: g.DocumentGroupC.name,
     createdAt: g.createdAt.toISOString(),
     createdBy: g.createdBy,
     createdByName: `${g.Employee_DocumentGroupD_createdByToEmployee.firstName} ${g.Employee_DocumentGroupD_createdByToEmployee.lastName}`,
@@ -224,5 +228,19 @@ export function mapDocumentPlace(p: DocumentPlacePayload): MappedDocumentPlace {
     deletedAt: p.deletedAt?.toISOString() ?? null,
     deletedBy: p.deletedBy ?? null,
     deletedByName: del ? `${del.firstName} ${del.lastName}` : null,
+  }
+}
+
+export function mapDocumentGroup(g: DocumentGroupPayload): MappedDocumentGroup {
+  return {
+    id: g.id,
+    documentGroupAId: g.DocumentGroupA?.id ?? null,
+    documentGroupAName: g.DocumentGroupA?.name ?? null,
+    documentGroupBId: g.DocumentGroupB?.id ?? null,
+    documentGroupBName: g.DocumentGroupB?.name ?? null,
+    documentGroupCId: g.DocumentGroupC?.id ?? null,
+    documentGroupCName: g.DocumentGroupD?.name ?? null,
+    documentGroupDId: g.DocumentGroupD?.id ?? null,
+    documentGroupDName: g.DocumentGroupD?.name ?? null,
   }
 }

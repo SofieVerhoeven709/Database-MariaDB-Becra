@@ -31,16 +31,11 @@ export interface MappedDocument {
   additionalInfo: string | null
   referenceDocId: string | null
   referenceDocNumber: string | null
-  roleId: string | null
-  roleName: string | null
   // Group hierarchy
-  documentGroupAId: string
+  documentGroupId: string | null
   documentGroupAName: string | null
-  documentGroupBId: string | null
   documentGroupBName: string | null
-  documentGroupCId: string | null
   documentGroupCName: string | null
-  documentGroupDId: string | null
   documentGroupDName: string | null
   // Place
   documentPlaceId: string
@@ -48,10 +43,10 @@ export interface MappedDocument {
   // People
   createdBy: string
   createdByName: string
-  revisedById: string
-  revisedByName: string
-  managedById: string
-  managedByName: string
+  revisedById: string | null
+  revisedByName: string | null
+  managedById: string | null
+  managedByName: string | null
   // Visibility
   targetId: string
   visibilityForRoles: MappedVisibilityForRole[]
@@ -85,8 +80,6 @@ export interface MappedDocumentGroupA {
 export interface MappedDocumentGroupB {
   id: string
   name: string | null
-  documentGroupAId: string
-  documentGroupAName: string | null
   createdAt: string
   createdBy: string
   createdByName: string
@@ -99,8 +92,6 @@ export interface MappedDocumentGroupB {
 export interface MappedDocumentGroupC {
   id: string
   name: string | null
-  documentGroupBId: string
-  documentGroupBName: string | null
   createdAt: string
   createdBy: string
   createdByName: string
@@ -113,8 +104,6 @@ export interface MappedDocumentGroupC {
 export interface MappedDocumentGroupD {
   id: string
   name: string | null
-  documentGroupCId: string
-  documentGroupCName: string | null
   createdAt: string
   createdBy: string
   createdByName: string
@@ -136,4 +125,16 @@ export interface MappedDocumentPlace {
   deletedAt: string | null
   deletedBy: string | null
   deletedByName: string | null
+}
+
+export interface MappedDocumentGroup {
+  id: string
+  documentGroupAId: string | null
+  documentGroupAName: string | null
+  documentGroupBId: string | null
+  documentGroupBName: string | null
+  documentGroupCId: string | null
+  documentGroupCName: string | null
+  documentGroupDId: string | null
+  documentGroupDName: string | null
 }

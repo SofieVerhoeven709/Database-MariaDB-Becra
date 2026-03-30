@@ -480,7 +480,11 @@ export const ModelName = {
   DocumentGroupB: 'DocumentGroupB',
   DocumentGroupC: 'DocumentGroupC',
   DocumentGroupD: 'DocumentGroupD',
-  PriceListCompany: 'PriceListCompany'
+  PriceListCompany: 'PriceListCompany',
+  DocumentGroup: 'DocumentGroup',
+  DocumentRevision: 'DocumentRevision',
+  DocumentStatus: 'DocumentStatus',
+  DocumentStructureTarget: 'DocumentStructureTarget'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -496,7 +500,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -6506,6 +6510,270 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DocumentGroup: {
+      payload: Prisma.$DocumentGroupPayload<ExtArgs>
+      fields: Prisma.DocumentGroupFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DocumentGroupFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentGroupPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DocumentGroupFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentGroupPayload>
+        }
+        findFirst: {
+          args: Prisma.DocumentGroupFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentGroupPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DocumentGroupFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentGroupPayload>
+        }
+        findMany: {
+          args: Prisma.DocumentGroupFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentGroupPayload>[]
+        }
+        create: {
+          args: Prisma.DocumentGroupCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentGroupPayload>
+        }
+        createMany: {
+          args: Prisma.DocumentGroupCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.DocumentGroupDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentGroupPayload>
+        }
+        update: {
+          args: Prisma.DocumentGroupUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentGroupPayload>
+        }
+        deleteMany: {
+          args: Prisma.DocumentGroupDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DocumentGroupUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.DocumentGroupUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentGroupPayload>
+        }
+        aggregate: {
+          args: Prisma.DocumentGroupAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDocumentGroup>
+        }
+        groupBy: {
+          args: Prisma.DocumentGroupGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentGroupGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DocumentGroupCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentGroupCountAggregateOutputType> | number
+        }
+      }
+    }
+    DocumentRevision: {
+      payload: Prisma.$DocumentRevisionPayload<ExtArgs>
+      fields: Prisma.DocumentRevisionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DocumentRevisionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentRevisionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DocumentRevisionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentRevisionPayload>
+        }
+        findFirst: {
+          args: Prisma.DocumentRevisionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentRevisionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DocumentRevisionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentRevisionPayload>
+        }
+        findMany: {
+          args: Prisma.DocumentRevisionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentRevisionPayload>[]
+        }
+        create: {
+          args: Prisma.DocumentRevisionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentRevisionPayload>
+        }
+        createMany: {
+          args: Prisma.DocumentRevisionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.DocumentRevisionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentRevisionPayload>
+        }
+        update: {
+          args: Prisma.DocumentRevisionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentRevisionPayload>
+        }
+        deleteMany: {
+          args: Prisma.DocumentRevisionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DocumentRevisionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.DocumentRevisionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentRevisionPayload>
+        }
+        aggregate: {
+          args: Prisma.DocumentRevisionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDocumentRevision>
+        }
+        groupBy: {
+          args: Prisma.DocumentRevisionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentRevisionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DocumentRevisionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentRevisionCountAggregateOutputType> | number
+        }
+      }
+    }
+    DocumentStatus: {
+      payload: Prisma.$DocumentStatusPayload<ExtArgs>
+      fields: Prisma.DocumentStatusFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DocumentStatusFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStatusPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DocumentStatusFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStatusPayload>
+        }
+        findFirst: {
+          args: Prisma.DocumentStatusFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStatusPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DocumentStatusFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStatusPayload>
+        }
+        findMany: {
+          args: Prisma.DocumentStatusFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStatusPayload>[]
+        }
+        create: {
+          args: Prisma.DocumentStatusCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStatusPayload>
+        }
+        createMany: {
+          args: Prisma.DocumentStatusCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.DocumentStatusDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStatusPayload>
+        }
+        update: {
+          args: Prisma.DocumentStatusUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStatusPayload>
+        }
+        deleteMany: {
+          args: Prisma.DocumentStatusDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DocumentStatusUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.DocumentStatusUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStatusPayload>
+        }
+        aggregate: {
+          args: Prisma.DocumentStatusAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDocumentStatus>
+        }
+        groupBy: {
+          args: Prisma.DocumentStatusGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentStatusGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DocumentStatusCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentStatusCountAggregateOutputType> | number
+        }
+      }
+    }
+    DocumentStructureTarget: {
+      payload: Prisma.$DocumentStructureTargetPayload<ExtArgs>
+      fields: Prisma.DocumentStructureTargetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DocumentStructureTargetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStructureTargetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DocumentStructureTargetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStructureTargetPayload>
+        }
+        findFirst: {
+          args: Prisma.DocumentStructureTargetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStructureTargetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DocumentStructureTargetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStructureTargetPayload>
+        }
+        findMany: {
+          args: Prisma.DocumentStructureTargetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStructureTargetPayload>[]
+        }
+        create: {
+          args: Prisma.DocumentStructureTargetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStructureTargetPayload>
+        }
+        createMany: {
+          args: Prisma.DocumentStructureTargetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.DocumentStructureTargetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStructureTargetPayload>
+        }
+        update: {
+          args: Prisma.DocumentStructureTargetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStructureTargetPayload>
+        }
+        deleteMany: {
+          args: Prisma.DocumentStructureTargetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DocumentStructureTargetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.DocumentStructureTargetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentStructureTargetPayload>
+        }
+        aggregate: {
+          args: Prisma.DocumentStructureTargetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDocumentStructureTarget>
+        }
+        groupBy: {
+          args: Prisma.DocumentStructureTargetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentStructureTargetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DocumentStructureTargetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentStructureTargetCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -6729,9 +6997,9 @@ export const DocumentStructureScalarFieldEnum = {
   revisionDetail: 'revisionDetail',
   valid: 'valid',
   process: 'process',
+  canCopy: 'canCopy',
   additionalInfo: 'additionalInfo',
   referenceDocId: 'referenceDocId',
-  roleId: 'roleId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   createdBy: 'createdBy',
@@ -6739,11 +7007,9 @@ export const DocumentStructureScalarFieldEnum = {
   managedById: 'managedById',
   targetId: 'targetId',
   deletedBy: 'deletedBy',
-  documentGroupAId: 'documentGroupAId',
-  documentGroupBId: 'documentGroupBId',
-  documentGroupCId: 'documentGroupCId',
-  documentGroupDId: 'documentGroupDId',
-  documentPlaceId: 'documentPlaceId'
+  documentGroupId: 'documentGroupId',
+  documentPlaceId: 'documentPlaceId',
+  documentStatusId: 'documentStatusId'
 } as const
 
 export type DocumentStructureScalarFieldEnum = (typeof DocumentStructureScalarFieldEnum)[keyof typeof DocumentStructureScalarFieldEnum]
@@ -8123,7 +8389,6 @@ export type DocumentGroupAScalarFieldEnum = (typeof DocumentGroupAScalarFieldEnu
 
 export const DocumentGroupBScalarFieldEnum = {
   id: 'id',
-  documentGroupAId: 'documentGroupAId',
   name: 'name',
   createdBy: 'createdBy',
   createdAt: 'createdAt',
@@ -8137,7 +8402,6 @@ export type DocumentGroupBScalarFieldEnum = (typeof DocumentGroupBScalarFieldEnu
 
 export const DocumentGroupCScalarFieldEnum = {
   id: 'id',
-  documentGroupBId: 'documentGroupBId',
   name: 'name',
   createdBy: 'createdBy',
   createdAt: 'createdAt',
@@ -8151,7 +8415,6 @@ export type DocumentGroupCScalarFieldEnum = (typeof DocumentGroupCScalarFieldEnu
 
 export const DocumentGroupDScalarFieldEnum = {
   id: 'id',
-  documentGroupCId: 'documentGroupCId',
   name: 'name',
   createdBy: 'createdBy',
   createdAt: 'createdAt',
@@ -8170,6 +8433,54 @@ export const PriceListCompanyScalarFieldEnum = {
 } as const
 
 export type PriceListCompanyScalarFieldEnum = (typeof PriceListCompanyScalarFieldEnum)[keyof typeof PriceListCompanyScalarFieldEnum]
+
+
+export const DocumentGroupScalarFieldEnum = {
+  id: 'id',
+  groupAId: 'groupAId',
+  groupBId: 'groupBId',
+  groupCId: 'groupCId',
+  groupDId: 'groupDId'
+} as const
+
+export type DocumentGroupScalarFieldEnum = (typeof DocumentGroupScalarFieldEnum)[keyof typeof DocumentGroupScalarFieldEnum]
+
+
+export const DocumentRevisionScalarFieldEnum = {
+  id: 'id',
+  documentId: 'documentId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentRevisionScalarFieldEnum = (typeof DocumentRevisionScalarFieldEnum)[keyof typeof DocumentRevisionScalarFieldEnum]
+
+
+export const DocumentStatusScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentStatusScalarFieldEnum = (typeof DocumentStatusScalarFieldEnum)[keyof typeof DocumentStatusScalarFieldEnum]
+
+
+export const DocumentStructureTargetScalarFieldEnum = {
+  id: 'id',
+  documentStructureId: 'documentStructureId',
+  targetId: 'targetId'
+} as const
+
+export type DocumentStructureTargetScalarFieldEnum = (typeof DocumentStructureTargetScalarFieldEnum)[keyof typeof DocumentStructureTargetScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -8319,17 +8630,14 @@ export const DocumentStructureOrderByRelevanceFieldEnum = {
   revisionDetail: 'revisionDetail',
   additionalInfo: 'additionalInfo',
   referenceDocId: 'referenceDocId',
-  roleId: 'roleId',
   createdBy: 'createdBy',
   revisedById: 'revisedById',
   managedById: 'managedById',
   targetId: 'targetId',
   deletedBy: 'deletedBy',
-  documentGroupAId: 'documentGroupAId',
-  documentGroupBId: 'documentGroupBId',
-  documentGroupCId: 'documentGroupCId',
-  documentGroupDId: 'documentGroupDId',
-  documentPlaceId: 'documentPlaceId'
+  documentGroupId: 'documentGroupId',
+  documentPlaceId: 'documentPlaceId',
+  documentStatusId: 'documentStatusId'
 } as const
 
 export type DocumentStructureOrderByRelevanceFieldEnum = (typeof DocumentStructureOrderByRelevanceFieldEnum)[keyof typeof DocumentStructureOrderByRelevanceFieldEnum]
@@ -9381,7 +9689,6 @@ export type DocumentGroupAOrderByRelevanceFieldEnum = (typeof DocumentGroupAOrde
 
 export const DocumentGroupBOrderByRelevanceFieldEnum = {
   id: 'id',
-  documentGroupAId: 'documentGroupAId',
   name: 'name',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
@@ -9392,7 +9699,6 @@ export type DocumentGroupBOrderByRelevanceFieldEnum = (typeof DocumentGroupBOrde
 
 export const DocumentGroupCOrderByRelevanceFieldEnum = {
   id: 'id',
-  documentGroupBId: 'documentGroupBId',
   name: 'name',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
@@ -9403,7 +9709,6 @@ export type DocumentGroupCOrderByRelevanceFieldEnum = (typeof DocumentGroupCOrde
 
 export const DocumentGroupDOrderByRelevanceFieldEnum = {
   id: 'id',
-  documentGroupCId: 'documentGroupCId',
   name: 'name',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
@@ -9419,6 +9724,48 @@ export const PriceListCompanyOrderByRelevanceFieldEnum = {
 } as const
 
 export type PriceListCompanyOrderByRelevanceFieldEnum = (typeof PriceListCompanyOrderByRelevanceFieldEnum)[keyof typeof PriceListCompanyOrderByRelevanceFieldEnum]
+
+
+export const DocumentGroupOrderByRelevanceFieldEnum = {
+  id: 'id',
+  groupAId: 'groupAId',
+  groupBId: 'groupBId',
+  groupCId: 'groupCId',
+  groupDId: 'groupDId'
+} as const
+
+export type DocumentGroupOrderByRelevanceFieldEnum = (typeof DocumentGroupOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupOrderByRelevanceFieldEnum]
+
+
+export const DocumentRevisionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentId: 'documentId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentRevisionOrderByRelevanceFieldEnum = (typeof DocumentRevisionOrderByRelevanceFieldEnum)[keyof typeof DocumentRevisionOrderByRelevanceFieldEnum]
+
+
+export const DocumentStatusOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentStatusOrderByRelevanceFieldEnum = (typeof DocumentStatusOrderByRelevanceFieldEnum)[keyof typeof DocumentStatusOrderByRelevanceFieldEnum]
+
+
+export const DocumentStructureTargetOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentStructureId: 'documentStructureId',
+  targetId: 'targetId'
+} as const
+
+export type DocumentStructureTargetOrderByRelevanceFieldEnum = (typeof DocumentStructureTargetOrderByRelevanceFieldEnum)[keyof typeof DocumentStructureTargetOrderByRelevanceFieldEnum]
 
 
 
@@ -9646,6 +9993,10 @@ export type GlobalOmitConfig = {
   documentGroupC?: Prisma.DocumentGroupCOmit
   documentGroupD?: Prisma.DocumentGroupDOmit
   priceListCompany?: Prisma.PriceListCompanyOmit
+  documentGroup?: Prisma.DocumentGroupOmit
+  documentRevision?: Prisma.DocumentRevisionOmit
+  documentStatus?: Prisma.DocumentStatusOmit
+  documentStructureTarget?: Prisma.DocumentStructureTargetOmit
 }
 
 /* Types for Logging */

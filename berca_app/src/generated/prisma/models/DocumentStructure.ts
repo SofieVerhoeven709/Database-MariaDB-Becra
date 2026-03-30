@@ -45,9 +45,9 @@ export type DocumentStructureMinAggregateOutputType = {
   revisionDetail: string | null
   valid: boolean | null
   process: boolean | null
+  canCopy: boolean | null
   additionalInfo: string | null
   referenceDocId: string | null
-  roleId: string | null
   deleted: boolean | null
   deletedAt: Date | null
   createdBy: string | null
@@ -55,11 +55,9 @@ export type DocumentStructureMinAggregateOutputType = {
   managedById: string | null
   targetId: string | null
   deletedBy: string | null
-  documentGroupAId: string | null
-  documentGroupBId: string | null
-  documentGroupCId: string | null
-  documentGroupDId: string | null
+  documentGroupId: string | null
   documentPlaceId: string | null
+  documentStatusId: string | null
 }
 
 export type DocumentStructureMaxAggregateOutputType = {
@@ -73,9 +71,9 @@ export type DocumentStructureMaxAggregateOutputType = {
   revisionDetail: string | null
   valid: boolean | null
   process: boolean | null
+  canCopy: boolean | null
   additionalInfo: string | null
   referenceDocId: string | null
-  roleId: string | null
   deleted: boolean | null
   deletedAt: Date | null
   createdBy: string | null
@@ -83,11 +81,9 @@ export type DocumentStructureMaxAggregateOutputType = {
   managedById: string | null
   targetId: string | null
   deletedBy: string | null
-  documentGroupAId: string | null
-  documentGroupBId: string | null
-  documentGroupCId: string | null
-  documentGroupDId: string | null
+  documentGroupId: string | null
   documentPlaceId: string | null
+  documentStatusId: string | null
 }
 
 export type DocumentStructureCountAggregateOutputType = {
@@ -101,9 +97,9 @@ export type DocumentStructureCountAggregateOutputType = {
   revisionDetail: number
   valid: number
   process: number
+  canCopy: number
   additionalInfo: number
   referenceDocId: number
-  roleId: number
   deleted: number
   deletedAt: number
   createdBy: number
@@ -111,11 +107,9 @@ export type DocumentStructureCountAggregateOutputType = {
   managedById: number
   targetId: number
   deletedBy: number
-  documentGroupAId: number
-  documentGroupBId: number
-  documentGroupCId: number
-  documentGroupDId: number
+  documentGroupId: number
   documentPlaceId: number
+  documentStatusId: number
   _all: number
 }
 
@@ -139,9 +133,9 @@ export type DocumentStructureMinAggregateInputType = {
   revisionDetail?: true
   valid?: true
   process?: true
+  canCopy?: true
   additionalInfo?: true
   referenceDocId?: true
-  roleId?: true
   deleted?: true
   deletedAt?: true
   createdBy?: true
@@ -149,11 +143,9 @@ export type DocumentStructureMinAggregateInputType = {
   managedById?: true
   targetId?: true
   deletedBy?: true
-  documentGroupAId?: true
-  documentGroupBId?: true
-  documentGroupCId?: true
-  documentGroupDId?: true
+  documentGroupId?: true
   documentPlaceId?: true
+  documentStatusId?: true
 }
 
 export type DocumentStructureMaxAggregateInputType = {
@@ -167,9 +159,9 @@ export type DocumentStructureMaxAggregateInputType = {
   revisionDetail?: true
   valid?: true
   process?: true
+  canCopy?: true
   additionalInfo?: true
   referenceDocId?: true
-  roleId?: true
   deleted?: true
   deletedAt?: true
   createdBy?: true
@@ -177,11 +169,9 @@ export type DocumentStructureMaxAggregateInputType = {
   managedById?: true
   targetId?: true
   deletedBy?: true
-  documentGroupAId?: true
-  documentGroupBId?: true
-  documentGroupCId?: true
-  documentGroupDId?: true
+  documentGroupId?: true
   documentPlaceId?: true
+  documentStatusId?: true
 }
 
 export type DocumentStructureCountAggregateInputType = {
@@ -195,9 +185,9 @@ export type DocumentStructureCountAggregateInputType = {
   revisionDetail?: true
   valid?: true
   process?: true
+  canCopy?: true
   additionalInfo?: true
   referenceDocId?: true
-  roleId?: true
   deleted?: true
   deletedAt?: true
   createdBy?: true
@@ -205,11 +195,9 @@ export type DocumentStructureCountAggregateInputType = {
   managedById?: true
   targetId?: true
   deletedBy?: true
-  documentGroupAId?: true
-  documentGroupBId?: true
-  documentGroupCId?: true
-  documentGroupDId?: true
+  documentGroupId?: true
   documentPlaceId?: true
+  documentStatusId?: true
   _all?: true
 }
 
@@ -310,21 +298,19 @@ export type DocumentStructureGroupByOutputType = {
   revisionDetail: string | null
   valid: boolean
   process: boolean
+  canCopy: boolean
   additionalInfo: string | null
   referenceDocId: string | null
-  roleId: string | null
   deleted: boolean
   deletedAt: Date | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById: string | null
+  managedById: string | null
   targetId: string
   deletedBy: string | null
-  documentGroupAId: string
-  documentGroupBId: string | null
-  documentGroupCId: string | null
-  documentGroupDId: string | null
+  documentGroupId: string | null
   documentPlaceId: string
+  documentStatusId: string | null
   _count: DocumentStructureCountAggregateOutputType | null
   _avg: DocumentStructureAvgAggregateOutputType | null
   _sum: DocumentStructureSumAggregateOutputType | null
@@ -361,35 +347,32 @@ export type DocumentStructureWhereInput = {
   revisionDetail?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   valid?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolFilter<"DocumentStructure"> | boolean
+  canCopy?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   additionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   referenceDocId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  roleId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   deleted?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"DocumentStructure"> | Date | string | null
   createdBy?: Prisma.StringFilter<"DocumentStructure"> | string
-  revisedById?: Prisma.StringFilter<"DocumentStructure"> | string
-  managedById?: Prisma.StringFilter<"DocumentStructure"> | string
+  revisedById?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  managedById?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   targetId?: Prisma.StringFilter<"DocumentStructure"> | string
   deletedBy?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  documentGroupAId?: Prisma.StringFilter<"DocumentStructure"> | string
-  documentGroupBId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  documentGroupCId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  documentGroupDId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  documentGroupId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   documentPlaceId?: Prisma.StringFilter<"DocumentStructure"> | string
+  documentStatusId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   Contact?: Prisma.ContactListRelationFilter
+  DocumentRevision?: Prisma.DocumentRevisionListRelationFilter
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   other_DocumentStructure?: Prisma.DocumentStructureListRelationFilter
-  Role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
   Employee_DocumentStructure_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
-  DocumentGroupA?: Prisma.XOR<Prisma.DocumentGroupAScalarRelationFilter, Prisma.DocumentGroupAWhereInput>
-  DocumentGroupB?: Prisma.XOR<Prisma.DocumentGroupBNullableScalarRelationFilter, Prisma.DocumentGroupBWhereInput> | null
-  DocumentGroupC?: Prisma.XOR<Prisma.DocumentGroupCNullableScalarRelationFilter, Prisma.DocumentGroupCWhereInput> | null
-  DocumentGroupD?: Prisma.XOR<Prisma.DocumentGroupDNullableScalarRelationFilter, Prisma.DocumentGroupDWhereInput> | null
+  DocumentGroup?: Prisma.XOR<Prisma.DocumentGroupNullableScalarRelationFilter, Prisma.DocumentGroupWhereInput> | null
   DocumentPlace?: Prisma.XOR<Prisma.DocumentPlaceScalarRelationFilter, Prisma.DocumentPlaceWhereInput>
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  DocumentStatus?: Prisma.XOR<Prisma.DocumentStatusNullableScalarRelationFilter, Prisma.DocumentStatusWhereInput> | null
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetListRelationFilter
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeListRelationFilter
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
@@ -410,35 +393,32 @@ export type DocumentStructureOrderByWithRelationInput = {
   revisionDetail?: Prisma.SortOrderInput | Prisma.SortOrder
   valid?: Prisma.SortOrder
   process?: Prisma.SortOrder
+  canCopy?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceDocId?: Prisma.SortOrderInput | Prisma.SortOrder
-  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  revisedById?: Prisma.SortOrder
-  managedById?: Prisma.SortOrder
+  revisedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  managedById?: Prisma.SortOrderInput | Prisma.SortOrder
   targetId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  documentGroupAId?: Prisma.SortOrder
-  documentGroupBId?: Prisma.SortOrderInput | Prisma.SortOrder
-  documentGroupCId?: Prisma.SortOrderInput | Prisma.SortOrder
-  documentGroupDId?: Prisma.SortOrderInput | Prisma.SortOrder
+  documentGroupId?: Prisma.SortOrderInput | Prisma.SortOrder
   documentPlaceId?: Prisma.SortOrder
+  documentStatusId?: Prisma.SortOrderInput | Prisma.SortOrder
   Contact?: Prisma.ContactOrderByRelationAggregateInput
+  DocumentRevision?: Prisma.DocumentRevisionOrderByRelationAggregateInput
   DocumentStructure?: Prisma.DocumentStructureOrderByWithRelationInput
   other_DocumentStructure?: Prisma.DocumentStructureOrderByRelationAggregateInput
-  Role?: Prisma.RoleOrderByWithRelationInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
-  DocumentGroupA?: Prisma.DocumentGroupAOrderByWithRelationInput
-  DocumentGroupB?: Prisma.DocumentGroupBOrderByWithRelationInput
-  DocumentGroupC?: Prisma.DocumentGroupCOrderByWithRelationInput
-  DocumentGroupD?: Prisma.DocumentGroupDOrderByWithRelationInput
+  DocumentGroup?: Prisma.DocumentGroupOrderByWithRelationInput
   DocumentPlace?: Prisma.DocumentPlaceOrderByWithRelationInput
+  DocumentStatus?: Prisma.DocumentStatusOrderByWithRelationInput
   Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Target?: Prisma.TargetOrderByWithRelationInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetOrderByRelationAggregateInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeOrderByRelationAggregateInput
   FollowUp?: Prisma.FollowUpOrderByRelationAggregateInput
   FollowUpStructure?: Prisma.FollowUpStructureOrderByRelationAggregateInput
@@ -463,35 +443,32 @@ export type DocumentStructureWhereUniqueInput = Prisma.AtLeast<{
   revisionDetail?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   valid?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolFilter<"DocumentStructure"> | boolean
+  canCopy?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   additionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   referenceDocId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  roleId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   deleted?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"DocumentStructure"> | Date | string | null
   createdBy?: Prisma.StringFilter<"DocumentStructure"> | string
-  revisedById?: Prisma.StringFilter<"DocumentStructure"> | string
-  managedById?: Prisma.StringFilter<"DocumentStructure"> | string
+  revisedById?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  managedById?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   targetId?: Prisma.StringFilter<"DocumentStructure"> | string
   deletedBy?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  documentGroupAId?: Prisma.StringFilter<"DocumentStructure"> | string
-  documentGroupBId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  documentGroupCId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  documentGroupDId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  documentGroupId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   documentPlaceId?: Prisma.StringFilter<"DocumentStructure"> | string
+  documentStatusId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   Contact?: Prisma.ContactListRelationFilter
+  DocumentRevision?: Prisma.DocumentRevisionListRelationFilter
   DocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   other_DocumentStructure?: Prisma.DocumentStructureListRelationFilter
-  Role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
   Employee_DocumentStructure_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
-  DocumentGroupA?: Prisma.XOR<Prisma.DocumentGroupAScalarRelationFilter, Prisma.DocumentGroupAWhereInput>
-  DocumentGroupB?: Prisma.XOR<Prisma.DocumentGroupBNullableScalarRelationFilter, Prisma.DocumentGroupBWhereInput> | null
-  DocumentGroupC?: Prisma.XOR<Prisma.DocumentGroupCNullableScalarRelationFilter, Prisma.DocumentGroupCWhereInput> | null
-  DocumentGroupD?: Prisma.XOR<Prisma.DocumentGroupDNullableScalarRelationFilter, Prisma.DocumentGroupDWhereInput> | null
+  DocumentGroup?: Prisma.XOR<Prisma.DocumentGroupNullableScalarRelationFilter, Prisma.DocumentGroupWhereInput> | null
   DocumentPlace?: Prisma.XOR<Prisma.DocumentPlaceScalarRelationFilter, Prisma.DocumentPlaceWhereInput>
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  DocumentStatus?: Prisma.XOR<Prisma.DocumentStatusNullableScalarRelationFilter, Prisma.DocumentStatusWhereInput> | null
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Target?: Prisma.XOR<Prisma.TargetScalarRelationFilter, Prisma.TargetWhereInput>
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetListRelationFilter
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeListRelationFilter
   FollowUp?: Prisma.FollowUpListRelationFilter
   FollowUpStructure?: Prisma.FollowUpStructureListRelationFilter
@@ -512,21 +489,19 @@ export type DocumentStructureOrderByWithAggregationInput = {
   revisionDetail?: Prisma.SortOrderInput | Prisma.SortOrder
   valid?: Prisma.SortOrder
   process?: Prisma.SortOrder
+  canCopy?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceDocId?: Prisma.SortOrderInput | Prisma.SortOrder
-  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
-  revisedById?: Prisma.SortOrder
-  managedById?: Prisma.SortOrder
+  revisedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  managedById?: Prisma.SortOrderInput | Prisma.SortOrder
   targetId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  documentGroupAId?: Prisma.SortOrder
-  documentGroupBId?: Prisma.SortOrderInput | Prisma.SortOrder
-  documentGroupCId?: Prisma.SortOrderInput | Prisma.SortOrder
-  documentGroupDId?: Prisma.SortOrderInput | Prisma.SortOrder
+  documentGroupId?: Prisma.SortOrderInput | Prisma.SortOrder
   documentPlaceId?: Prisma.SortOrder
+  documentStatusId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.DocumentStructureCountOrderByAggregateInput
   _avg?: Prisma.DocumentStructureAvgOrderByAggregateInput
   _max?: Prisma.DocumentStructureMaxOrderByAggregateInput
@@ -548,21 +523,19 @@ export type DocumentStructureScalarWhereWithAggregatesInput = {
   revisionDetail?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
   valid?: Prisma.BoolWithAggregatesFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolWithAggregatesFilter<"DocumentStructure"> | boolean
+  canCopy?: Prisma.BoolWithAggregatesFilter<"DocumentStructure"> | boolean
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
   referenceDocId?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
-  roleId?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
   deleted?: Prisma.BoolWithAggregatesFilter<"DocumentStructure"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"DocumentStructure"> | Date | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
-  revisedById?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
-  managedById?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
+  revisedById?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
+  managedById?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
   targetId?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
   deletedBy?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
-  documentGroupAId?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
-  documentGroupBId?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
-  documentGroupCId?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
-  documentGroupDId?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
+  documentGroupId?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
   documentPlaceId?: Prisma.StringWithAggregatesFilter<"DocumentStructure"> | string
+  documentStatusId?: Prisma.StringNullableWithAggregatesFilter<"DocumentStructure"> | string | null
 }
 
 export type DocumentStructureCreateInput = {
@@ -576,23 +549,23 @@ export type DocumentStructureCreateInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -613,23 +586,23 @@ export type DocumentStructureUncheckedCreateInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -650,23 +623,23 @@ export type DocumentStructureUpdateInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -687,23 +660,23 @@ export type DocumentStructureUncheckedUpdateInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -724,21 +697,19 @@ export type DocumentStructureCreateManyInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
 }
 
 export type DocumentStructureUpdateManyMutationInput = {
@@ -752,6 +723,7 @@ export type DocumentStructureUpdateManyMutationInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -768,21 +740,19 @@ export type DocumentStructureUncheckedUpdateManyInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentStructureNullableScalarRelationFilter = {
@@ -817,9 +787,9 @@ export type DocumentStructureCountOrderByAggregateInput = {
   revisionDetail?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   process?: Prisma.SortOrder
+  canCopy?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
-  roleId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -827,11 +797,9 @@ export type DocumentStructureCountOrderByAggregateInput = {
   managedById?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  documentGroupAId?: Prisma.SortOrder
-  documentGroupBId?: Prisma.SortOrder
-  documentGroupCId?: Prisma.SortOrder
-  documentGroupDId?: Prisma.SortOrder
+  documentGroupId?: Prisma.SortOrder
   documentPlaceId?: Prisma.SortOrder
+  documentStatusId?: Prisma.SortOrder
 }
 
 export type DocumentStructureAvgOrderByAggregateInput = {
@@ -849,9 +817,9 @@ export type DocumentStructureMaxOrderByAggregateInput = {
   revisionDetail?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   process?: Prisma.SortOrder
+  canCopy?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
-  roleId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -859,11 +827,9 @@ export type DocumentStructureMaxOrderByAggregateInput = {
   managedById?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  documentGroupAId?: Prisma.SortOrder
-  documentGroupBId?: Prisma.SortOrder
-  documentGroupCId?: Prisma.SortOrder
-  documentGroupDId?: Prisma.SortOrder
+  documentGroupId?: Prisma.SortOrder
   documentPlaceId?: Prisma.SortOrder
+  documentStatusId?: Prisma.SortOrder
 }
 
 export type DocumentStructureMinOrderByAggregateInput = {
@@ -877,9 +843,9 @@ export type DocumentStructureMinOrderByAggregateInput = {
   revisionDetail?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   process?: Prisma.SortOrder
+  canCopy?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
-  roleId?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -887,11 +853,9 @@ export type DocumentStructureMinOrderByAggregateInput = {
   managedById?: Prisma.SortOrder
   targetId?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  documentGroupAId?: Prisma.SortOrder
-  documentGroupBId?: Prisma.SortOrder
-  documentGroupCId?: Prisma.SortOrder
-  documentGroupDId?: Prisma.SortOrder
+  documentGroupId?: Prisma.SortOrder
   documentPlaceId?: Prisma.SortOrder
+  documentStatusId?: Prisma.SortOrder
 }
 
 export type DocumentStructureSumOrderByAggregateInput = {
@@ -1283,48 +1247,6 @@ export type DocumentStructureUpdateOneWithoutMaterialStructureNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentStructureUpdateToOneWithWhereWithoutMaterialStructureInput, Prisma.DocumentStructureUpdateWithoutMaterialStructureInput>, Prisma.DocumentStructureUncheckedUpdateWithoutMaterialStructureInput>
 }
 
-export type DocumentStructureCreateNestedManyWithoutRoleInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutRoleInput, Prisma.DocumentStructureUncheckedCreateWithoutRoleInput> | Prisma.DocumentStructureCreateWithoutRoleInput[] | Prisma.DocumentStructureUncheckedCreateWithoutRoleInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutRoleInput | Prisma.DocumentStructureCreateOrConnectWithoutRoleInput[]
-  createMany?: Prisma.DocumentStructureCreateManyRoleInputEnvelope
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-}
-
-export type DocumentStructureUncheckedCreateNestedManyWithoutRoleInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutRoleInput, Prisma.DocumentStructureUncheckedCreateWithoutRoleInput> | Prisma.DocumentStructureCreateWithoutRoleInput[] | Prisma.DocumentStructureUncheckedCreateWithoutRoleInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutRoleInput | Prisma.DocumentStructureCreateOrConnectWithoutRoleInput[]
-  createMany?: Prisma.DocumentStructureCreateManyRoleInputEnvelope
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-}
-
-export type DocumentStructureUpdateManyWithoutRoleNestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutRoleInput, Prisma.DocumentStructureUncheckedCreateWithoutRoleInput> | Prisma.DocumentStructureCreateWithoutRoleInput[] | Prisma.DocumentStructureUncheckedCreateWithoutRoleInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutRoleInput | Prisma.DocumentStructureCreateOrConnectWithoutRoleInput[]
-  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutRoleInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutRoleInput[]
-  createMany?: Prisma.DocumentStructureCreateManyRoleInputEnvelope
-  set?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  disconnect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  delete?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutRoleInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutRoleInput[]
-  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutRoleInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutRoleInput[]
-  deleteMany?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
-}
-
-export type DocumentStructureUncheckedUpdateManyWithoutRoleNestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutRoleInput, Prisma.DocumentStructureUncheckedCreateWithoutRoleInput> | Prisma.DocumentStructureCreateWithoutRoleInput[] | Prisma.DocumentStructureUncheckedCreateWithoutRoleInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutRoleInput | Prisma.DocumentStructureCreateOrConnectWithoutRoleInput[]
-  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutRoleInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutRoleInput[]
-  createMany?: Prisma.DocumentStructureCreateManyRoleInputEnvelope
-  set?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  disconnect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  delete?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutRoleInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutRoleInput[]
-  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutRoleInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutRoleInput[]
-  deleteMany?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
-}
-
 export type DocumentStructureCreateNestedManyWithoutTargetInput = {
   create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutTargetInput, Prisma.DocumentStructureUncheckedCreateWithoutTargetInput> | Prisma.DocumentStructureCreateWithoutTargetInput[] | Prisma.DocumentStructureUncheckedCreateWithoutTargetInput[]
   connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutTargetInput | Prisma.DocumentStructureCreateOrConnectWithoutTargetInput[]
@@ -1381,172 +1303,116 @@ export type DocumentStructureUpdateOneRequiredWithoutTrainingDocumentNestedInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentStructureUpdateToOneWithWhereWithoutTrainingDocumentInput, Prisma.DocumentStructureUpdateWithoutTrainingDocumentInput>, Prisma.DocumentStructureUncheckedUpdateWithoutTrainingDocumentInput>
 }
 
-export type DocumentStructureCreateNestedManyWithoutDocumentGroupAInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupAInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupAInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupAInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupAInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupAInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupAInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupAInputEnvelope
+export type DocumentStructureCreateNestedManyWithoutDocumentGroupInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupInput[]
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupInput[]
+  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupInputEnvelope
   connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
 }
 
-export type DocumentStructureUncheckedCreateNestedManyWithoutDocumentGroupAInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupAInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupAInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupAInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupAInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupAInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupAInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupAInputEnvelope
+export type DocumentStructureUncheckedCreateNestedManyWithoutDocumentGroupInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupInput[]
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupInput[]
+  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupInputEnvelope
   connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
 }
 
-export type DocumentStructureUpdateManyWithoutDocumentGroupANestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupAInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupAInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupAInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupAInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupAInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupAInput[]
-  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupAInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupAInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupAInputEnvelope
+export type DocumentStructureUpdateManyWithoutDocumentGroupNestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupInput[]
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupInput[]
+  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupInput[]
+  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupInputEnvelope
   set?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   disconnect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   delete?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupAInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupAInput[]
-  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupAInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupAInput[]
+  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupInput[]
+  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupInput[]
   deleteMany?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
 }
 
-export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupANestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupAInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupAInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupAInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupAInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupAInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupAInput[]
-  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupAInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupAInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupAInputEnvelope
+export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupNestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupInput[]
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupInput[]
+  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupInput[]
+  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupInputEnvelope
   set?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   disconnect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   delete?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupAInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupAInput[]
-  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupAInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupAInput[]
+  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupInput[]
+  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupInput[]
   deleteMany?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
 }
 
-export type DocumentStructureCreateNestedManyWithoutDocumentGroupBInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupBInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupBInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupBInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupBInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupBInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupBInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupBInputEnvelope
+export type DocumentStructureCreateNestedOneWithoutDocumentRevisionInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentRevisionInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentRevisionInput>
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentRevisionInput
+  connect?: Prisma.DocumentStructureWhereUniqueInput
+}
+
+export type DocumentStructureUpdateOneRequiredWithoutDocumentRevisionNestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentRevisionInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentRevisionInput>
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentRevisionInput
+  upsert?: Prisma.DocumentStructureUpsertWithoutDocumentRevisionInput
+  connect?: Prisma.DocumentStructureWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentStructureUpdateToOneWithWhereWithoutDocumentRevisionInput, Prisma.DocumentStructureUpdateWithoutDocumentRevisionInput>, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentRevisionInput>
+}
+
+export type DocumentStructureCreateNestedManyWithoutDocumentStatusInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentStatusInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentStatusInput> | Prisma.DocumentStructureCreateWithoutDocumentStatusInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentStatusInput[]
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentStatusInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentStatusInput[]
+  createMany?: Prisma.DocumentStructureCreateManyDocumentStatusInputEnvelope
   connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
 }
 
-export type DocumentStructureUncheckedCreateNestedManyWithoutDocumentGroupBInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupBInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupBInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupBInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupBInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupBInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupBInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupBInputEnvelope
+export type DocumentStructureUncheckedCreateNestedManyWithoutDocumentStatusInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentStatusInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentStatusInput> | Prisma.DocumentStructureCreateWithoutDocumentStatusInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentStatusInput[]
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentStatusInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentStatusInput[]
+  createMany?: Prisma.DocumentStructureCreateManyDocumentStatusInputEnvelope
   connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
 }
 
-export type DocumentStructureUpdateManyWithoutDocumentGroupBNestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupBInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupBInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupBInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupBInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupBInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupBInput[]
-  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupBInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupBInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupBInputEnvelope
+export type DocumentStructureUpdateManyWithoutDocumentStatusNestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentStatusInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentStatusInput> | Prisma.DocumentStructureCreateWithoutDocumentStatusInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentStatusInput[]
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentStatusInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentStatusInput[]
+  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentStatusInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentStatusInput[]
+  createMany?: Prisma.DocumentStructureCreateManyDocumentStatusInputEnvelope
   set?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   disconnect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   delete?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupBInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupBInput[]
-  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupBInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupBInput[]
+  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentStatusInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentStatusInput[]
+  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentStatusInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentStatusInput[]
   deleteMany?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
 }
 
-export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupBNestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupBInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupBInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupBInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupBInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupBInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupBInput[]
-  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupBInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupBInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupBInputEnvelope
+export type DocumentStructureUncheckedUpdateManyWithoutDocumentStatusNestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentStatusInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentStatusInput> | Prisma.DocumentStructureCreateWithoutDocumentStatusInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentStatusInput[]
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentStatusInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentStatusInput[]
+  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentStatusInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentStatusInput[]
+  createMany?: Prisma.DocumentStructureCreateManyDocumentStatusInputEnvelope
   set?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   disconnect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   delete?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
   connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupBInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupBInput[]
-  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupBInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupBInput[]
+  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentStatusInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentStatusInput[]
+  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentStatusInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentStatusInput[]
   deleteMany?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
 }
 
-export type DocumentStructureCreateNestedManyWithoutDocumentGroupCInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupCInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupCInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupCInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupCInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupCInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupCInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupCInputEnvelope
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
+export type DocumentStructureCreateNestedOneWithoutDocumentStructureTargetInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentStructureTargetInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentStructureTargetInput>
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentStructureTargetInput
+  connect?: Prisma.DocumentStructureWhereUniqueInput
 }
 
-export type DocumentStructureUncheckedCreateNestedManyWithoutDocumentGroupCInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupCInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupCInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupCInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupCInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupCInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupCInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupCInputEnvelope
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-}
-
-export type DocumentStructureUpdateManyWithoutDocumentGroupCNestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupCInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupCInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupCInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupCInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupCInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupCInput[]
-  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupCInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupCInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupCInputEnvelope
-  set?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  disconnect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  delete?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupCInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupCInput[]
-  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupCInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupCInput[]
-  deleteMany?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
-}
-
-export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupCNestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupCInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupCInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupCInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupCInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupCInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupCInput[]
-  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupCInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupCInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupCInputEnvelope
-  set?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  disconnect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  delete?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupCInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupCInput[]
-  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupCInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupCInput[]
-  deleteMany?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
-}
-
-export type DocumentStructureCreateNestedManyWithoutDocumentGroupDInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupDInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupDInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupDInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupDInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupDInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupDInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupDInputEnvelope
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-}
-
-export type DocumentStructureUncheckedCreateNestedManyWithoutDocumentGroupDInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupDInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupDInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupDInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupDInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupDInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupDInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupDInputEnvelope
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-}
-
-export type DocumentStructureUpdateManyWithoutDocumentGroupDNestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupDInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupDInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupDInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupDInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupDInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupDInput[]
-  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupDInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupDInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupDInputEnvelope
-  set?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  disconnect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  delete?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupDInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupDInput[]
-  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupDInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupDInput[]
-  deleteMany?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
-}
-
-export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupDNestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupDInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupDInput> | Prisma.DocumentStructureCreateWithoutDocumentGroupDInput[] | Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupDInput[]
-  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupDInput | Prisma.DocumentStructureCreateOrConnectWithoutDocumentGroupDInput[]
-  upsert?: Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupDInput | Prisma.DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupDInput[]
-  createMany?: Prisma.DocumentStructureCreateManyDocumentGroupDInputEnvelope
-  set?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  disconnect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  delete?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  connect?: Prisma.DocumentStructureWhereUniqueInput | Prisma.DocumentStructureWhereUniqueInput[]
-  update?: Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupDInput | Prisma.DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupDInput[]
-  updateMany?: Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupDInput | Prisma.DocumentStructureUpdateManyWithWhereWithoutDocumentGroupDInput[]
-  deleteMany?: Prisma.DocumentStructureScalarWhereInput | Prisma.DocumentStructureScalarWhereInput[]
+export type DocumentStructureUpdateOneRequiredWithoutDocumentStructureTargetNestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentStructureTargetInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentStructureTargetInput>
+  connectOrCreate?: Prisma.DocumentStructureCreateOrConnectWithoutDocumentStructureTargetInput
+  upsert?: Prisma.DocumentStructureUpsertWithoutDocumentStructureTargetInput
+  connect?: Prisma.DocumentStructureWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentStructureUpdateToOneWithWhereWithoutDocumentStructureTargetInput, Prisma.DocumentStructureUpdateWithoutDocumentStructureTargetInput>, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentStructureTargetInput>
 }
 
 export type DocumentStructureCreateWithoutContactInput = {
@@ -1560,22 +1426,22 @@ export type DocumentStructureCreateWithoutContactInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -1596,22 +1462,22 @@ export type DocumentStructureUncheckedCreateWithoutContactInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -1648,22 +1514,22 @@ export type DocumentStructureUpdateWithoutContactInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -1684,22 +1550,22 @@ export type DocumentStructureUncheckedUpdateWithoutContactInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -1720,22 +1586,22 @@ export type DocumentStructureCreateWithoutDocumentPlaceInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -1756,22 +1622,22 @@ export type DocumentStructureUncheckedCreateWithoutDocumentPlaceInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -1821,21 +1687,19 @@ export type DocumentStructureScalarWhereInput = {
   revisionDetail?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   valid?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   process?: Prisma.BoolFilter<"DocumentStructure"> | boolean
+  canCopy?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   additionalInfo?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   referenceDocId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  roleId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   deleted?: Prisma.BoolFilter<"DocumentStructure"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"DocumentStructure"> | Date | string | null
   createdBy?: Prisma.StringFilter<"DocumentStructure"> | string
-  revisedById?: Prisma.StringFilter<"DocumentStructure"> | string
-  managedById?: Prisma.StringFilter<"DocumentStructure"> | string
+  revisedById?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  managedById?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   targetId?: Prisma.StringFilter<"DocumentStructure"> | string
   deletedBy?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  documentGroupAId?: Prisma.StringFilter<"DocumentStructure"> | string
-  documentGroupBId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  documentGroupCId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
-  documentGroupDId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
+  documentGroupId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
   documentPlaceId?: Prisma.StringFilter<"DocumentStructure"> | string
+  documentStatusId?: Prisma.StringNullableFilter<"DocumentStructure"> | string | null
 }
 
 export type DocumentStructureCreateWithoutOther_DocumentStructureInput = {
@@ -1849,22 +1713,22 @@ export type DocumentStructureCreateWithoutOther_DocumentStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -1885,22 +1749,22 @@ export type DocumentStructureUncheckedCreateWithoutOther_DocumentStructureInput 
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -1926,22 +1790,22 @@ export type DocumentStructureCreateWithoutDocumentStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -1962,22 +1826,22 @@ export type DocumentStructureUncheckedCreateWithoutDocumentStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2019,22 +1883,22 @@ export type DocumentStructureUpdateWithoutOther_DocumentStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -2055,22 +1919,22 @@ export type DocumentStructureUncheckedUpdateWithoutOther_DocumentStructureInput 
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -2107,22 +1971,22 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_createdByTo
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -2143,22 +2007,22 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_cr
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2189,22 +2053,22 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_deletedByTo
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -2225,22 +2089,22 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_de
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2271,22 +2135,22 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_managedById
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -2307,22 +2171,22 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_ma
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
+  revisedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2353,22 +2217,22 @@ export type DocumentStructureCreateWithoutEmployee_DocumentStructure_revisedById
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -2389,22 +2253,22 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_DocumentStructure_re
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  managedById: string
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -2435,23 +2299,23 @@ export type DocumentStructureCreateWithoutEmployee_Employee_pictureIdToDocumentS
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
@@ -2471,23 +2335,23 @@ export type DocumentStructureUncheckedCreateWithoutEmployee_Employee_pictureIdTo
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
@@ -2587,23 +2451,23 @@ export type DocumentStructureUpdateWithoutEmployee_Employee_pictureIdToDocumentS
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
@@ -2623,23 +2487,23 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_Employee_pictureIdTo
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
@@ -2659,23 +2523,23 @@ export type DocumentStructureCreateWithoutFollowUpInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
@@ -2695,23 +2559,23 @@ export type DocumentStructureUncheckedCreateWithoutFollowUpInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
@@ -2747,23 +2611,23 @@ export type DocumentStructureUpdateWithoutFollowUpInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
@@ -2783,23 +2647,23 @@ export type DocumentStructureUncheckedUpdateWithoutFollowUpInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
@@ -2819,23 +2683,23 @@ export type DocumentStructureCreateWithoutFollowUpStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
@@ -2855,23 +2719,23 @@ export type DocumentStructureUncheckedCreateWithoutFollowUpStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
@@ -2907,23 +2771,23 @@ export type DocumentStructureUpdateWithoutFollowUpStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
@@ -2943,23 +2807,23 @@ export type DocumentStructureUncheckedUpdateWithoutFollowUpStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
@@ -2979,23 +2843,23 @@ export type DocumentStructureCreateWithoutMaterialSerialTrackedStructure_Materia
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -3015,23 +2879,23 @@ export type DocumentStructureUncheckedCreateWithoutMaterialSerialTrackedStructur
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -3056,23 +2920,23 @@ export type DocumentStructureCreateWithoutMaterialSerialTrackedStructure_Materia
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -3092,23 +2956,23 @@ export type DocumentStructureUncheckedCreateWithoutMaterialSerialTrackedStructur
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -3144,23 +3008,23 @@ export type DocumentStructureUpdateWithoutMaterialSerialTrackedStructure_Materia
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -3180,23 +3044,23 @@ export type DocumentStructureUncheckedUpdateWithoutMaterialSerialTrackedStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -3227,23 +3091,23 @@ export type DocumentStructureUpdateWithoutMaterialSerialTrackedStructure_Materia
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -3263,23 +3127,23 @@ export type DocumentStructureUncheckedUpdateWithoutMaterialSerialTrackedStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -3299,23 +3163,23 @@ export type DocumentStructureCreateWithoutMaterialStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -3335,23 +3199,23 @@ export type DocumentStructureUncheckedCreateWithoutMaterialStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -3387,23 +3251,23 @@ export type DocumentStructureUpdateWithoutMaterialStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -3423,127 +3287,29 @@ export type DocumentStructureUncheckedUpdateWithoutMaterialStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
   MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutDocumentStructureNestedInput
-}
-
-export type DocumentStructureCreateWithoutRoleInput = {
-  id: string
-  documentNumber: string
-  description?: string | null
-  descriptionShort: string
-  createdAt: Date | string
-  expiryDate?: Date | string | null
-  revisionNumber?: number | null
-  revisionDetail?: string | null
-  valid?: boolean
-  process?: boolean
-  additionalInfo?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
-  other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
-  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
-  DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
-  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
-  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
-  MaterialStructure?: Prisma.MaterialStructureCreateNestedManyWithoutDocumentStructureInput
-  TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutDocumentStructureInput
-}
-
-export type DocumentStructureUncheckedCreateWithoutRoleInput = {
-  id: string
-  documentNumber: string
-  description?: string | null
-  descriptionShort: string
-  createdAt: Date | string
-  expiryDate?: Date | string | null
-  revisionNumber?: number | null
-  revisionDetail?: string | null
-  valid?: boolean
-  process?: boolean
-  additionalInfo?: string | null
-  referenceDocId?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
-  deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
-  documentPlaceId: string
-  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
-  other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
-  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
-  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
-  MaterialStructure?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutDocumentStructureInput
-}
-
-export type DocumentStructureCreateOrConnectWithoutRoleInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutRoleInput, Prisma.DocumentStructureUncheckedCreateWithoutRoleInput>
-}
-
-export type DocumentStructureCreateManyRoleInputEnvelope = {
-  data: Prisma.DocumentStructureCreateManyRoleInput | Prisma.DocumentStructureCreateManyRoleInput[]
-  skipDuplicates?: boolean
-}
-
-export type DocumentStructureUpsertWithWhereUniqueWithoutRoleInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutRoleInput, Prisma.DocumentStructureUncheckedUpdateWithoutRoleInput>
-  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutRoleInput, Prisma.DocumentStructureUncheckedCreateWithoutRoleInput>
-}
-
-export type DocumentStructureUpdateWithWhereUniqueWithoutRoleInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutRoleInput, Prisma.DocumentStructureUncheckedUpdateWithoutRoleInput>
-}
-
-export type DocumentStructureUpdateManyWithWhereWithoutRoleInput = {
-  where: Prisma.DocumentStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.DocumentStructureUpdateManyMutationInput, Prisma.DocumentStructureUncheckedUpdateManyWithoutRoleInput>
 }
 
 export type DocumentStructureCreateWithoutTargetInput = {
@@ -3557,22 +3323,22 @@ export type DocumentStructureCreateWithoutTargetInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -3593,22 +3359,22 @@ export type DocumentStructureUncheckedCreateWithoutTargetInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -3655,23 +3421,23 @@ export type DocumentStructureCreateWithoutTrainingDocumentInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
@@ -3691,23 +3457,23 @@ export type DocumentStructureUncheckedCreateWithoutTrainingDocumentInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -3743,23 +3509,23 @@ export type DocumentStructureUpdateWithoutTrainingDocumentInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -3779,23 +3545,23 @@ export type DocumentStructureUncheckedUpdateWithoutTrainingDocumentInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -3804,7 +3570,7 @@ export type DocumentStructureUncheckedUpdateWithoutTrainingDocumentInput = {
   MaterialStructure?: Prisma.MaterialStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
 }
 
-export type DocumentStructureCreateWithoutDocumentGroupAInput = {
+export type DocumentStructureCreateWithoutDocumentGroupInput = {
   id: string
   documentNumber: string
   description?: string | null
@@ -3815,21 +3581,377 @@ export type DocumentStructureCreateWithoutDocumentGroupAInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
+  additionalInfo?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
+  other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
+  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
+  DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
+  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
+  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
+  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
+  MaterialStructure?: Prisma.MaterialStructureCreateNestedManyWithoutDocumentStructureInput
+  TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutDocumentStructureInput
+}
+
+export type DocumentStructureUncheckedCreateWithoutDocumentGroupInput = {
+  id: string
+  documentNumber: string
+  description?: string | null
+  descriptionShort: string
+  createdAt: Date | string
+  expiryDate?: Date | string | null
+  revisionNumber?: number | null
+  revisionDetail?: string | null
+  valid?: boolean
+  process?: boolean
+  canCopy?: boolean
+  additionalInfo?: string | null
+  referenceDocId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  createdBy: string
+  revisedById?: string | null
+  managedById?: string | null
+  targetId: string
+  deletedBy?: string | null
+  documentPlaceId: string
+  documentStatusId?: string | null
+  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
+  other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
+  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
+  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
+  MaterialStructure?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutDocumentStructureInput
+}
+
+export type DocumentStructureCreateOrConnectWithoutDocumentGroupInput = {
+  where: Prisma.DocumentStructureWhereUniqueInput
+  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupInput>
+}
+
+export type DocumentStructureCreateManyDocumentGroupInputEnvelope = {
+  data: Prisma.DocumentStructureCreateManyDocumentGroupInput | Prisma.DocumentStructureCreateManyDocumentGroupInput[]
+  skipDuplicates?: boolean
+}
+
+export type DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupInput = {
+  where: Prisma.DocumentStructureWhereUniqueInput
+  update: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentGroupInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentGroupInput>
+  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupInput>
+}
+
+export type DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupInput = {
+  where: Prisma.DocumentStructureWhereUniqueInput
+  data: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentGroupInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentGroupInput>
+}
+
+export type DocumentStructureUpdateManyWithWhereWithoutDocumentGroupInput = {
+  where: Prisma.DocumentStructureScalarWhereInput
+  data: Prisma.XOR<Prisma.DocumentStructureUpdateManyMutationInput, Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentGroupInput>
+}
+
+export type DocumentStructureCreateWithoutDocumentRevisionInput = {
+  id: string
+  documentNumber: string
+  description?: string | null
+  descriptionShort: string
+  createdAt: Date | string
+  expiryDate?: Date | string | null
+  revisionNumber?: number | null
+  revisionDetail?: string | null
+  valid?: boolean
+  process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
   DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
   Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
   DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
+  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
+  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
+  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
+  MaterialStructure?: Prisma.MaterialStructureCreateNestedManyWithoutDocumentStructureInput
+  TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutDocumentStructureInput
+}
+
+export type DocumentStructureUncheckedCreateWithoutDocumentRevisionInput = {
+  id: string
+  documentNumber: string
+  description?: string | null
+  descriptionShort: string
+  createdAt: Date | string
+  expiryDate?: Date | string | null
+  revisionNumber?: number | null
+  revisionDetail?: string | null
+  valid?: boolean
+  process?: boolean
+  canCopy?: boolean
+  additionalInfo?: string | null
+  referenceDocId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  createdBy: string
+  revisedById?: string | null
+  managedById?: string | null
+  targetId: string
+  deletedBy?: string | null
+  documentGroupId?: string | null
+  documentPlaceId: string
+  documentStatusId?: string | null
+  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
+  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
+  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
+  MaterialStructure?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutDocumentStructureInput
+}
+
+export type DocumentStructureCreateOrConnectWithoutDocumentRevisionInput = {
+  where: Prisma.DocumentStructureWhereUniqueInput
+  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentRevisionInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentRevisionInput>
+}
+
+export type DocumentStructureUpsertWithoutDocumentRevisionInput = {
+  update: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentRevisionInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentRevisionInput>
+  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentRevisionInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentRevisionInput>
+  where?: Prisma.DocumentStructureWhereInput
+}
+
+export type DocumentStructureUpdateToOneWithWhereWithoutDocumentRevisionInput = {
+  where?: Prisma.DocumentStructureWhereInput
+  data: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentRevisionInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentRevisionInput>
+}
+
+export type DocumentStructureUpdateWithoutDocumentRevisionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
+  other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
+  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
+  DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
+  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
+  FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
+  MaterialStructure?: Prisma.MaterialStructureUpdateManyWithoutDocumentStructureNestedInput
+  TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutDocumentStructureNestedInput
+}
+
+export type DocumentStructureUncheckedUpdateWithoutDocumentRevisionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
+  FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
+  MaterialStructure?: Prisma.MaterialStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutDocumentStructureNestedInput
+}
+
+export type DocumentStructureCreateWithoutDocumentStatusInput = {
+  id: string
+  documentNumber: string
+  description?: string | null
+  descriptionShort: string
+  createdAt: Date | string
+  expiryDate?: Date | string | null
+  revisionNumber?: number | null
+  revisionDetail?: string | null
+  valid?: boolean
+  process?: boolean
+  canCopy?: boolean
+  additionalInfo?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
+  other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
+  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
+  DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
+  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetCreateNestedManyWithoutDocumentStructureInput
+  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
+  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
+  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
+  MaterialStructure?: Prisma.MaterialStructureCreateNestedManyWithoutDocumentStructureInput
+  TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutDocumentStructureInput
+}
+
+export type DocumentStructureUncheckedCreateWithoutDocumentStatusInput = {
+  id: string
+  documentNumber: string
+  description?: string | null
+  descriptionShort: string
+  createdAt: Date | string
+  expiryDate?: Date | string | null
+  revisionNumber?: number | null
+  revisionDetail?: string | null
+  valid?: boolean
+  process?: boolean
+  canCopy?: boolean
+  additionalInfo?: string | null
+  referenceDocId?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  createdBy: string
+  revisedById?: string | null
+  managedById?: string | null
+  targetId: string
+  deletedBy?: string | null
+  documentGroupId?: string | null
+  documentPlaceId: string
+  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
+  other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedCreateNestedManyWithoutDocumentStructureInput
+  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
+  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
+  MaterialStructure?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
+  TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutDocumentStructureInput
+}
+
+export type DocumentStructureCreateOrConnectWithoutDocumentStatusInput = {
+  where: Prisma.DocumentStructureWhereUniqueInput
+  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentStatusInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentStatusInput>
+}
+
+export type DocumentStructureCreateManyDocumentStatusInputEnvelope = {
+  data: Prisma.DocumentStructureCreateManyDocumentStatusInput | Prisma.DocumentStructureCreateManyDocumentStatusInput[]
+  skipDuplicates?: boolean
+}
+
+export type DocumentStructureUpsertWithWhereUniqueWithoutDocumentStatusInput = {
+  where: Prisma.DocumentStructureWhereUniqueInput
+  update: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentStatusInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentStatusInput>
+  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentStatusInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentStatusInput>
+}
+
+export type DocumentStructureUpdateWithWhereUniqueWithoutDocumentStatusInput = {
+  where: Prisma.DocumentStructureWhereUniqueInput
+  data: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentStatusInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentStatusInput>
+}
+
+export type DocumentStructureUpdateManyWithWhereWithoutDocumentStatusInput = {
+  where: Prisma.DocumentStructureScalarWhereInput
+  data: Prisma.XOR<Prisma.DocumentStructureUpdateManyMutationInput, Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStatusInput>
+}
+
+export type DocumentStructureCreateWithoutDocumentStructureTargetInput = {
+  id: string
+  documentNumber: string
+  description?: string | null
+  descriptionShort: string
+  createdAt: Date | string
+  expiryDate?: Date | string | null
+  revisionNumber?: number | null
+  revisionDetail?: string | null
+  valid?: boolean
+  process?: boolean
+  canCopy?: boolean
+  additionalInfo?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionCreateNestedManyWithoutDocumentStructureInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
+  other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
+  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
+  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
+  DocumentGroup?: Prisma.DocumentGroupCreateNestedOneWithoutDocumentStructureInput
+  DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
+  DocumentStatus?: Prisma.DocumentStatusCreateNestedOneWithoutDocumentStructureInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
   Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
@@ -3840,7 +3962,7 @@ export type DocumentStructureCreateWithoutDocumentGroupAInput = {
   TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutDocumentStructureInput
 }
 
-export type DocumentStructureUncheckedCreateWithoutDocumentGroupAInput = {
+export type DocumentStructureUncheckedCreateWithoutDocumentStructureTargetInput = {
   id: string
   documentNumber: string
   description?: string | null
@@ -3851,21 +3973,21 @@ export type DocumentStructureUncheckedCreateWithoutDocumentGroupAInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
   Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedCreateNestedManyWithoutDocumentStructureInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
   FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
@@ -3876,324 +3998,92 @@ export type DocumentStructureUncheckedCreateWithoutDocumentGroupAInput = {
   TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutDocumentStructureInput
 }
 
-export type DocumentStructureCreateOrConnectWithoutDocumentGroupAInput = {
+export type DocumentStructureCreateOrConnectWithoutDocumentStructureTargetInput = {
   where: Prisma.DocumentStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupAInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupAInput>
+  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentStructureTargetInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentStructureTargetInput>
 }
 
-export type DocumentStructureCreateManyDocumentGroupAInputEnvelope = {
-  data: Prisma.DocumentStructureCreateManyDocumentGroupAInput | Prisma.DocumentStructureCreateManyDocumentGroupAInput[]
-  skipDuplicates?: boolean
+export type DocumentStructureUpsertWithoutDocumentStructureTargetInput = {
+  update: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentStructureTargetInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentStructureTargetInput>
+  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentStructureTargetInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentStructureTargetInput>
+  where?: Prisma.DocumentStructureWhereInput
 }
 
-export type DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupAInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentGroupAInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentGroupAInput>
-  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupAInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupAInput>
+export type DocumentStructureUpdateToOneWithWhereWithoutDocumentStructureTargetInput = {
+  where?: Prisma.DocumentStructureWhereInput
+  data: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentStructureTargetInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentStructureTargetInput>
 }
 
-export type DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupAInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentGroupAInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentGroupAInput>
+export type DocumentStructureUpdateWithoutDocumentStructureTargetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
+  other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
+  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
+  DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
+  FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
+  MaterialStructure?: Prisma.MaterialStructureUpdateManyWithoutDocumentStructureNestedInput
+  TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutDocumentStructureNestedInput
 }
 
-export type DocumentStructureUpdateManyWithWhereWithoutDocumentGroupAInput = {
-  where: Prisma.DocumentStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.DocumentStructureUpdateManyMutationInput, Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentGroupAInput>
-}
-
-export type DocumentStructureCreateWithoutDocumentGroupBInput = {
-  id: string
-  documentNumber: string
-  description?: string | null
-  descriptionShort: string
-  createdAt: Date | string
-  expiryDate?: Date | string | null
-  revisionNumber?: number | null
-  revisionDetail?: string | null
-  valid?: boolean
-  process?: boolean
-  additionalInfo?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
-  other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
-  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
-  DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
-  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
-  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
-  MaterialStructure?: Prisma.MaterialStructureCreateNestedManyWithoutDocumentStructureInput
-  TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutDocumentStructureInput
-}
-
-export type DocumentStructureUncheckedCreateWithoutDocumentGroupBInput = {
-  id: string
-  documentNumber: string
-  description?: string | null
-  descriptionShort: string
-  createdAt: Date | string
-  expiryDate?: Date | string | null
-  revisionNumber?: number | null
-  revisionDetail?: string | null
-  valid?: boolean
-  process?: boolean
-  additionalInfo?: string | null
-  referenceDocId?: string | null
-  roleId?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
-  deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
-  documentPlaceId: string
-  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
-  other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
-  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
-  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
-  MaterialStructure?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutDocumentStructureInput
-}
-
-export type DocumentStructureCreateOrConnectWithoutDocumentGroupBInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupBInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupBInput>
-}
-
-export type DocumentStructureCreateManyDocumentGroupBInputEnvelope = {
-  data: Prisma.DocumentStructureCreateManyDocumentGroupBInput | Prisma.DocumentStructureCreateManyDocumentGroupBInput[]
-  skipDuplicates?: boolean
-}
-
-export type DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupBInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentGroupBInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentGroupBInput>
-  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupBInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupBInput>
-}
-
-export type DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupBInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentGroupBInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentGroupBInput>
-}
-
-export type DocumentStructureUpdateManyWithWhereWithoutDocumentGroupBInput = {
-  where: Prisma.DocumentStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.DocumentStructureUpdateManyMutationInput, Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentGroupBInput>
-}
-
-export type DocumentStructureCreateWithoutDocumentGroupCInput = {
-  id: string
-  documentNumber: string
-  description?: string | null
-  descriptionShort: string
-  createdAt: Date | string
-  expiryDate?: Date | string | null
-  revisionNumber?: number | null
-  revisionDetail?: string | null
-  valid?: boolean
-  process?: boolean
-  additionalInfo?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
-  other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
-  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupD?: Prisma.DocumentGroupDCreateNestedOneWithoutDocumentStructureInput
-  DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
-  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
-  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
-  MaterialStructure?: Prisma.MaterialStructureCreateNestedManyWithoutDocumentStructureInput
-  TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutDocumentStructureInput
-}
-
-export type DocumentStructureUncheckedCreateWithoutDocumentGroupCInput = {
-  id: string
-  documentNumber: string
-  description?: string | null
-  descriptionShort: string
-  createdAt: Date | string
-  expiryDate?: Date | string | null
-  revisionNumber?: number | null
-  revisionDetail?: string | null
-  valid?: boolean
-  process?: boolean
-  additionalInfo?: string | null
-  referenceDocId?: string | null
-  roleId?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
-  deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupDId?: string | null
-  documentPlaceId: string
-  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
-  other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
-  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
-  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
-  MaterialStructure?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutDocumentStructureInput
-}
-
-export type DocumentStructureCreateOrConnectWithoutDocumentGroupCInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupCInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupCInput>
-}
-
-export type DocumentStructureCreateManyDocumentGroupCInputEnvelope = {
-  data: Prisma.DocumentStructureCreateManyDocumentGroupCInput | Prisma.DocumentStructureCreateManyDocumentGroupCInput[]
-  skipDuplicates?: boolean
-}
-
-export type DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupCInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentGroupCInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentGroupCInput>
-  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupCInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupCInput>
-}
-
-export type DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupCInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentGroupCInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentGroupCInput>
-}
-
-export type DocumentStructureUpdateManyWithWhereWithoutDocumentGroupCInput = {
-  where: Prisma.DocumentStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.DocumentStructureUpdateManyMutationInput, Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentGroupCInput>
-}
-
-export type DocumentStructureCreateWithoutDocumentGroupDInput = {
-  id: string
-  documentNumber: string
-  description?: string | null
-  descriptionShort: string
-  createdAt: Date | string
-  expiryDate?: Date | string | null
-  revisionNumber?: number | null
-  revisionDetail?: string | null
-  valid?: boolean
-  process?: boolean
-  additionalInfo?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  Contact?: Prisma.ContactCreateNestedManyWithoutDocumentStructureInput
-  DocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutOther_DocumentStructureInput
-  other_DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentStructureInput
-  Role?: Prisma.RoleCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_createdByToEmployeeInput
-  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeInput
-  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupB?: Prisma.DocumentGroupBCreateNestedOneWithoutDocumentStructureInput
-  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedOneWithoutDocumentStructureInput
-  DocumentPlace: Prisma.DocumentPlaceCreateNestedOneWithoutDocumentStructureInput
-  Employee_DocumentStructure_managedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeInput
-  Employee_DocumentStructure_revisedByIdToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeInput
-  Target: Prisma.TargetCreateNestedOneWithoutDocumentStructureInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
-  FollowUp?: Prisma.FollowUpCreateNestedManyWithoutDocumentStructureInput
-  FollowUpStructure?: Prisma.FollowUpStructureCreateNestedManyWithoutDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
-  MaterialStructure?: Prisma.MaterialStructureCreateNestedManyWithoutDocumentStructureInput
-  TrainingDocument?: Prisma.TrainingDocumentCreateNestedManyWithoutDocumentStructureInput
-}
-
-export type DocumentStructureUncheckedCreateWithoutDocumentGroupDInput = {
-  id: string
-  documentNumber: string
-  description?: string | null
-  descriptionShort: string
-  createdAt: Date | string
-  expiryDate?: Date | string | null
-  revisionNumber?: number | null
-  revisionDetail?: string | null
-  valid?: boolean
-  process?: boolean
-  additionalInfo?: string | null
-  referenceDocId?: string | null
-  roleId?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
-  deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentPlaceId: string
-  Contact?: Prisma.ContactUncheckedCreateNestedManyWithoutDocumentStructureInput
-  other_DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedCreateNestedManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureInput
-  FollowUp?: Prisma.FollowUpUncheckedCreateNestedManyWithoutDocumentStructureInput
-  FollowUpStructure?: Prisma.FollowUpStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
-  MaterialStructure?: Prisma.MaterialStructureUncheckedCreateNestedManyWithoutDocumentStructureInput
-  TrainingDocument?: Prisma.TrainingDocumentUncheckedCreateNestedManyWithoutDocumentStructureInput
-}
-
-export type DocumentStructureCreateOrConnectWithoutDocumentGroupDInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupDInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupDInput>
-}
-
-export type DocumentStructureCreateManyDocumentGroupDInputEnvelope = {
-  data: Prisma.DocumentStructureCreateManyDocumentGroupDInput | Prisma.DocumentStructureCreateManyDocumentGroupDInput[]
-  skipDuplicates?: boolean
-}
-
-export type DocumentStructureUpsertWithWhereUniqueWithoutDocumentGroupDInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentGroupDInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentGroupDInput>
-  create: Prisma.XOR<Prisma.DocumentStructureCreateWithoutDocumentGroupDInput, Prisma.DocumentStructureUncheckedCreateWithoutDocumentGroupDInput>
-}
-
-export type DocumentStructureUpdateWithWhereUniqueWithoutDocumentGroupDInput = {
-  where: Prisma.DocumentStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.DocumentStructureUpdateWithoutDocumentGroupDInput, Prisma.DocumentStructureUncheckedUpdateWithoutDocumentGroupDInput>
-}
-
-export type DocumentStructureUpdateManyWithWhereWithoutDocumentGroupDInput = {
-  where: Prisma.DocumentStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.DocumentStructureUpdateManyMutationInput, Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentGroupDInput>
+export type DocumentStructureUncheckedUpdateWithoutDocumentStructureTargetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
+  FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
+  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
+  MaterialStructure?: Prisma.MaterialStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutDocumentStructureNestedInput
 }
 
 export type DocumentStructureCreateManyDocumentPlaceInput = {
@@ -4207,20 +4097,18 @@ export type DocumentStructureCreateManyDocumentPlaceInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
+  documentStatusId?: string | null
 }
 
 export type DocumentStructureUpdateWithoutDocumentPlaceInput = {
@@ -4234,22 +4122,22 @@ export type DocumentStructureUpdateWithoutDocumentPlaceInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -4270,22 +4158,22 @@ export type DocumentStructureUncheckedUpdateWithoutDocumentPlaceInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -4306,20 +4194,18 @@ export type DocumentStructureUncheckedUpdateManyWithoutDocumentPlaceInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentStructureCreateManyDocumentStructureInput = {
@@ -4333,20 +4219,18 @@ export type DocumentStructureCreateManyDocumentStructureInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
 }
 
 export type DocumentStructureUpdateWithoutDocumentStructureInput = {
@@ -4360,22 +4244,22 @@ export type DocumentStructureUpdateWithoutDocumentStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -4396,22 +4280,22 @@ export type DocumentStructureUncheckedUpdateWithoutDocumentStructureInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -4432,20 +4316,18 @@ export type DocumentStructureUncheckedUpdateManyWithoutDocumentStructureInput = 
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentStructureCreateManyEmployee_DocumentStructure_createdByToEmployeeInput = {
@@ -4459,20 +4341,18 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_createdByToEmp
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
 }
 
 export type DocumentStructureCreateManyEmployee_DocumentStructure_deletedByToEmployeeInput = {
@@ -4486,20 +4366,18 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_deletedByToEmp
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
 }
 
 export type DocumentStructureCreateManyEmployee_DocumentStructure_managedByIdToEmployeeInput = {
@@ -4513,20 +4391,18 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_managedByIdToE
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
+  revisedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
 }
 
 export type DocumentStructureCreateManyEmployee_DocumentStructure_revisedByIdToEmployeeInput = {
@@ -4540,20 +4416,18 @@ export type DocumentStructureCreateManyEmployee_DocumentStructure_revisedByIdToE
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  managedById: string
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
 }
 
 export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_createdByToEmployeeInput = {
@@ -4567,22 +4441,22 @@ export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_createdByTo
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -4603,22 +4477,22 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_cr
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -4639,20 +4513,18 @@ export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_deletedByToEmployeeInput = {
@@ -4666,22 +4538,22 @@ export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_deletedByTo
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -4702,22 +4574,22 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_de
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -4738,20 +4610,18 @@ export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_managedByIdToEmployeeInput = {
@@ -4765,22 +4635,22 @@ export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_managedById
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -4801,22 +4671,22 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_ma
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -4837,20 +4707,18 @@ export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_revisedByIdToEmployeeInput = {
@@ -4864,22 +4732,22 @@ export type DocumentStructureUpdateWithoutEmployee_DocumentStructure_revisedById
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -4900,22 +4768,22 @@ export type DocumentStructureUncheckedUpdateWithoutEmployee_DocumentStructure_re
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -4936,146 +4804,18 @@ export type DocumentStructureUncheckedUpdateManyWithoutEmployee_DocumentStructur
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type DocumentStructureCreateManyRoleInput = {
-  id: string
-  documentNumber: string
-  description?: string | null
-  descriptionShort: string
-  createdAt: Date | string
-  expiryDate?: Date | string | null
-  revisionNumber?: number | null
-  revisionDetail?: string | null
-  valid?: boolean
-  process?: boolean
-  additionalInfo?: string | null
-  referenceDocId?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
-  deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
-  documentPlaceId: string
-}
-
-export type DocumentStructureUpdateWithoutRoleInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
-  other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
-  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
-  DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
-  Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
-  FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
-  FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
-  MaterialStructure?: Prisma.MaterialStructureUpdateManyWithoutDocumentStructureNestedInput
-  TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutDocumentStructureNestedInput
-}
-
-export type DocumentStructureUncheckedUpdateWithoutRoleInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
-  FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
-  MaterialStructure?: Prisma.MaterialStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutDocumentStructureNestedInput
-}
-
-export type DocumentStructureUncheckedUpdateManyWithoutRoleInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type DocumentStructureCreateManyTargetInput = {
@@ -5089,20 +4829,18 @@ export type DocumentStructureCreateManyTargetInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
 }
 
 export type DocumentStructureUpdateWithoutTargetInput = {
@@ -5116,22 +4854,22 @@ export type DocumentStructureUpdateWithoutTargetInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -5152,22 +4890,22 @@ export type DocumentStructureUncheckedUpdateWithoutTargetInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -5188,23 +4926,21 @@ export type DocumentStructureUncheckedUpdateManyWithoutTargetInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type DocumentStructureCreateManyDocumentGroupAInput = {
+export type DocumentStructureCreateManyDocumentGroupInput = {
   id: string
   documentNumber: string
   description?: string | null
@@ -5215,23 +4951,21 @@ export type DocumentStructureCreateManyDocumentGroupAInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
   documentPlaceId: string
+  documentStatusId?: string | null
 }
 
-export type DocumentStructureUpdateWithoutDocumentGroupAInput = {
+export type DocumentStructureUpdateWithoutDocumentGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5242,22 +4976,22 @@ export type DocumentStructureUpdateWithoutDocumentGroupAInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  DocumentStatus?: Prisma.DocumentStatusUpdateOneWithoutDocumentStructureNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -5267,7 +5001,7 @@ export type DocumentStructureUpdateWithoutDocumentGroupAInput = {
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutDocumentStructureNestedInput
 }
 
-export type DocumentStructureUncheckedUpdateWithoutDocumentGroupAInput = {
+export type DocumentStructureUncheckedUpdateWithoutDocumentGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5278,22 +5012,22 @@ export type DocumentStructureUncheckedUpdateWithoutDocumentGroupAInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -5303,7 +5037,7 @@ export type DocumentStructureUncheckedUpdateWithoutDocumentGroupAInput = {
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutDocumentStructureNestedInput
 }
 
-export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupAInput = {
+export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5314,23 +5048,21 @@ export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupAInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentStatusId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type DocumentStructureCreateManyDocumentGroupBInput = {
+export type DocumentStructureCreateManyDocumentStatusInput = {
   id: string
   documentNumber: string
   description?: string | null
@@ -5341,23 +5073,21 @@ export type DocumentStructureCreateManyDocumentGroupBInput = {
   revisionDetail?: string | null
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: string | null
   referenceDocId?: string | null
-  roleId?: string | null
   deleted?: boolean
   deletedAt?: Date | string | null
   createdBy: string
-  revisedById: string
-  managedById: string
+  revisedById?: string | null
+  managedById?: string | null
   targetId: string
   deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupCId?: string | null
-  documentGroupDId?: string | null
+  documentGroupId?: string | null
   documentPlaceId: string
 }
 
-export type DocumentStructureUpdateWithoutDocumentGroupBInput = {
+export type DocumentStructureUpdateWithoutDocumentStatusInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5368,22 +5098,22 @@ export type DocumentStructureUpdateWithoutDocumentGroupBInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUpdateManyWithoutDocumentStructureNestedInput
   DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
   Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
   Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
+  DocumentGroup?: Prisma.DocumentGroupUpdateOneWithoutDocumentStructureNestedInput
   DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
+  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
   Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
@@ -5393,7 +5123,7 @@ export type DocumentStructureUpdateWithoutDocumentGroupBInput = {
   TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutDocumentStructureNestedInput
 }
 
-export type DocumentStructureUncheckedUpdateWithoutDocumentGroupBInput = {
+export type DocumentStructureUncheckedUpdateWithoutDocumentStatusInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5404,22 +5134,22 @@ export type DocumentStructureUncheckedUpdateWithoutDocumentGroupBInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
   Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentRevision?: Prisma.DocumentRevisionUncheckedUpdateManyWithoutDocumentStructureNestedInput
   other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
+  DocumentStructureTarget?: Prisma.DocumentStructureTargetUncheckedUpdateManyWithoutDocumentStructureNestedInput
   Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
   FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
   FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
@@ -5429,7 +5159,7 @@ export type DocumentStructureUncheckedUpdateWithoutDocumentGroupBInput = {
   TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutDocumentStructureNestedInput
 }
 
-export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupBInput = {
+export type DocumentStructureUncheckedUpdateManyWithoutDocumentStatusInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -5440,271 +5170,17 @@ export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupBInput = {
   revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   process?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  canCopy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
+  revisedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type DocumentStructureCreateManyDocumentGroupCInput = {
-  id: string
-  documentNumber: string
-  description?: string | null
-  descriptionShort: string
-  createdAt: Date | string
-  expiryDate?: Date | string | null
-  revisionNumber?: number | null
-  revisionDetail?: string | null
-  valid?: boolean
-  process?: boolean
-  additionalInfo?: string | null
-  referenceDocId?: string | null
-  roleId?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
-  deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupDId?: string | null
-  documentPlaceId: string
-}
-
-export type DocumentStructureUpdateWithoutDocumentGroupCInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
-  other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
-  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupD?: Prisma.DocumentGroupDUpdateOneWithoutDocumentStructureNestedInput
-  DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
-  Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
-  FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
-  FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
-  MaterialStructure?: Prisma.MaterialStructureUpdateManyWithoutDocumentStructureNestedInput
-  TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutDocumentStructureNestedInput
-}
-
-export type DocumentStructureUncheckedUpdateWithoutDocumentGroupCInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
-  FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
-  MaterialStructure?: Prisma.MaterialStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutDocumentStructureNestedInput
-}
-
-export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupCInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupDId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type DocumentStructureCreateManyDocumentGroupDInput = {
-  id: string
-  documentNumber: string
-  description?: string | null
-  descriptionShort: string
-  createdAt: Date | string
-  expiryDate?: Date | string | null
-  revisionNumber?: number | null
-  revisionDetail?: string | null
-  valid?: boolean
-  process?: boolean
-  additionalInfo?: string | null
-  referenceDocId?: string | null
-  roleId?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  createdBy: string
-  revisedById: string
-  managedById: string
-  targetId: string
-  deletedBy?: string | null
-  documentGroupAId: string
-  documentGroupBId?: string | null
-  documentGroupCId?: string | null
-  documentPlaceId: string
-}
-
-export type DocumentStructureUpdateWithoutDocumentGroupDInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Contact?: Prisma.ContactUpdateManyWithoutDocumentStructureNestedInput
-  DocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutOther_DocumentStructureNestedInput
-  other_DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentStructureNestedInput
-  Role?: Prisma.RoleUpdateOneWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_createdByToEmployeeNestedInput
-  Employee_DocumentStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentStructure_DocumentStructure_deletedByToEmployeeNestedInput
-  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentStructureNestedInput
-  DocumentGroupB?: Prisma.DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput
-  DocumentGroupC?: Prisma.DocumentGroupCUpdateOneWithoutDocumentStructureNestedInput
-  DocumentPlace?: Prisma.DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_DocumentStructure_managedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_managedByIdToEmployeeNestedInput
-  Employee_DocumentStructure_revisedByIdToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentStructure_DocumentStructure_revisedByIdToEmployeeNestedInput
-  Target?: Prisma.TargetUpdateOneRequiredWithoutDocumentStructureNestedInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
-  FollowUp?: Prisma.FollowUpUpdateManyWithoutDocumentStructureNestedInput
-  FollowUpStructure?: Prisma.FollowUpStructureUpdateManyWithoutDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
-  MaterialStructure?: Prisma.MaterialStructureUpdateManyWithoutDocumentStructureNestedInput
-  TrainingDocument?: Prisma.TrainingDocumentUpdateManyWithoutDocumentStructureNestedInput
-}
-
-export type DocumentStructureUncheckedUpdateWithoutDocumentGroupDInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
-  Contact?: Prisma.ContactUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  other_DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  Employee_Employee_pictureIdToDocumentStructure?: Prisma.EmployeeUncheckedUpdateManyWithoutDocumentStructure_Employee_pictureIdToDocumentStructureNestedInput
-  FollowUp?: Prisma.FollowUpUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  FollowUpStructure?: Prisma.FollowUpStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
-  MaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
-  MaterialStructure?: Prisma.MaterialStructureUncheckedUpdateManyWithoutDocumentStructureNestedInput
-  TrainingDocument?: Prisma.TrainingDocumentUncheckedUpdateManyWithoutDocumentStructureNestedInput
-}
-
-export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupDInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  documentNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  descriptionShort?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  revisionNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  revisionDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  process?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
-  revisedById?: Prisma.StringFieldUpdateOperationsInput | string
-  managedById?: Prisma.StringFieldUpdateOperationsInput | string
-  targetId?: Prisma.StringFieldUpdateOperationsInput | string
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
-  documentGroupBId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentGroupCId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentPlaceId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -5715,7 +5191,9 @@ export type DocumentStructureUncheckedUpdateManyWithoutDocumentGroupDInput = {
 
 export type DocumentStructureCountOutputType = {
   Contact: number
+  DocumentRevision: number
   other_DocumentStructure: number
+  DocumentStructureTarget: number
   Employee_Employee_pictureIdToDocumentStructure: number
   FollowUp: number
   FollowUpStructure: number
@@ -5727,7 +5205,9 @@ export type DocumentStructureCountOutputType = {
 
 export type DocumentStructureCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Contact?: boolean | DocumentStructureCountOutputTypeCountContactArgs
+  DocumentRevision?: boolean | DocumentStructureCountOutputTypeCountDocumentRevisionArgs
   other_DocumentStructure?: boolean | DocumentStructureCountOutputTypeCountOther_DocumentStructureArgs
+  DocumentStructureTarget?: boolean | DocumentStructureCountOutputTypeCountDocumentStructureTargetArgs
   Employee_Employee_pictureIdToDocumentStructure?: boolean | DocumentStructureCountOutputTypeCountEmployee_Employee_pictureIdToDocumentStructureArgs
   FollowUp?: boolean | DocumentStructureCountOutputTypeCountFollowUpArgs
   FollowUpStructure?: boolean | DocumentStructureCountOutputTypeCountFollowUpStructureArgs
@@ -5757,8 +5237,22 @@ export type DocumentStructureCountOutputTypeCountContactArgs<ExtArgs extends run
 /**
  * DocumentStructureCountOutputType without action
  */
+export type DocumentStructureCountOutputTypeCountDocumentRevisionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DocumentRevisionWhereInput
+}
+
+/**
+ * DocumentStructureCountOutputType without action
+ */
 export type DocumentStructureCountOutputTypeCountOther_DocumentStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.DocumentStructureWhereInput
+}
+
+/**
+ * DocumentStructureCountOutputType without action
+ */
+export type DocumentStructureCountOutputTypeCountDocumentStructureTargetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DocumentStructureTargetWhereInput
 }
 
 /**
@@ -5822,9 +5316,9 @@ export type DocumentStructureSelect<ExtArgs extends runtime.Types.Extensions.Int
   revisionDetail?: boolean
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: boolean
   referenceDocId?: boolean
-  roleId?: boolean
   deleted?: boolean
   deletedAt?: boolean
   createdBy?: boolean
@@ -5832,25 +5326,22 @@ export type DocumentStructureSelect<ExtArgs extends runtime.Types.Extensions.Int
   managedById?: boolean
   targetId?: boolean
   deletedBy?: boolean
-  documentGroupAId?: boolean
-  documentGroupBId?: boolean
-  documentGroupCId?: boolean
-  documentGroupDId?: boolean
+  documentGroupId?: boolean
   documentPlaceId?: boolean
+  documentStatusId?: boolean
   Contact?: boolean | Prisma.DocumentStructure$ContactArgs<ExtArgs>
+  DocumentRevision?: boolean | Prisma.DocumentStructure$DocumentRevisionArgs<ExtArgs>
   DocumentStructure?: boolean | Prisma.DocumentStructure$DocumentStructureArgs<ExtArgs>
   other_DocumentStructure?: boolean | Prisma.DocumentStructure$other_DocumentStructureArgs<ExtArgs>
-  Role?: boolean | Prisma.DocumentStructure$RoleArgs<ExtArgs>
   Employee_DocumentStructure_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_DocumentStructure_deletedByToEmployee?: boolean | Prisma.DocumentStructure$Employee_DocumentStructure_deletedByToEmployeeArgs<ExtArgs>
-  DocumentGroupA?: boolean | Prisma.DocumentGroupADefaultArgs<ExtArgs>
-  DocumentGroupB?: boolean | Prisma.DocumentStructure$DocumentGroupBArgs<ExtArgs>
-  DocumentGroupC?: boolean | Prisma.DocumentStructure$DocumentGroupCArgs<ExtArgs>
-  DocumentGroupD?: boolean | Prisma.DocumentStructure$DocumentGroupDArgs<ExtArgs>
+  DocumentGroup?: boolean | Prisma.DocumentStructure$DocumentGroupArgs<ExtArgs>
   DocumentPlace?: boolean | Prisma.DocumentPlaceDefaultArgs<ExtArgs>
-  Employee_DocumentStructure_managedByIdToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  Employee_DocumentStructure_revisedByIdToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  DocumentStatus?: boolean | Prisma.DocumentStructure$DocumentStatusArgs<ExtArgs>
+  Employee_DocumentStructure_managedByIdToEmployee?: boolean | Prisma.DocumentStructure$Employee_DocumentStructure_managedByIdToEmployeeArgs<ExtArgs>
+  Employee_DocumentStructure_revisedByIdToEmployee?: boolean | Prisma.DocumentStructure$Employee_DocumentStructure_revisedByIdToEmployeeArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  DocumentStructureTarget?: boolean | Prisma.DocumentStructure$DocumentStructureTargetArgs<ExtArgs>
   Employee_Employee_pictureIdToDocumentStructure?: boolean | Prisma.DocumentStructure$Employee_Employee_pictureIdToDocumentStructureArgs<ExtArgs>
   FollowUp?: boolean | Prisma.DocumentStructure$FollowUpArgs<ExtArgs>
   FollowUpStructure?: boolean | Prisma.DocumentStructure$FollowUpStructureArgs<ExtArgs>
@@ -5874,9 +5365,9 @@ export type DocumentStructureSelectScalar = {
   revisionDetail?: boolean
   valid?: boolean
   process?: boolean
+  canCopy?: boolean
   additionalInfo?: boolean
   referenceDocId?: boolean
-  roleId?: boolean
   deleted?: boolean
   deletedAt?: boolean
   createdBy?: boolean
@@ -5884,29 +5375,26 @@ export type DocumentStructureSelectScalar = {
   managedById?: boolean
   targetId?: boolean
   deletedBy?: boolean
-  documentGroupAId?: boolean
-  documentGroupBId?: boolean
-  documentGroupCId?: boolean
-  documentGroupDId?: boolean
+  documentGroupId?: boolean
   documentPlaceId?: boolean
+  documentStatusId?: boolean
 }
 
-export type DocumentStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "documentNumber" | "description" | "descriptionShort" | "createdAt" | "expiryDate" | "revisionNumber" | "revisionDetail" | "valid" | "process" | "additionalInfo" | "referenceDocId" | "roleId" | "deleted" | "deletedAt" | "createdBy" | "revisedById" | "managedById" | "targetId" | "deletedBy" | "documentGroupAId" | "documentGroupBId" | "documentGroupCId" | "documentGroupDId" | "documentPlaceId", ExtArgs["result"]["documentStructure"]>
+export type DocumentStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "documentNumber" | "description" | "descriptionShort" | "createdAt" | "expiryDate" | "revisionNumber" | "revisionDetail" | "valid" | "process" | "canCopy" | "additionalInfo" | "referenceDocId" | "deleted" | "deletedAt" | "createdBy" | "revisedById" | "managedById" | "targetId" | "deletedBy" | "documentGroupId" | "documentPlaceId" | "documentStatusId", ExtArgs["result"]["documentStructure"]>
 export type DocumentStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Contact?: boolean | Prisma.DocumentStructure$ContactArgs<ExtArgs>
+  DocumentRevision?: boolean | Prisma.DocumentStructure$DocumentRevisionArgs<ExtArgs>
   DocumentStructure?: boolean | Prisma.DocumentStructure$DocumentStructureArgs<ExtArgs>
   other_DocumentStructure?: boolean | Prisma.DocumentStructure$other_DocumentStructureArgs<ExtArgs>
-  Role?: boolean | Prisma.DocumentStructure$RoleArgs<ExtArgs>
   Employee_DocumentStructure_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   Employee_DocumentStructure_deletedByToEmployee?: boolean | Prisma.DocumentStructure$Employee_DocumentStructure_deletedByToEmployeeArgs<ExtArgs>
-  DocumentGroupA?: boolean | Prisma.DocumentGroupADefaultArgs<ExtArgs>
-  DocumentGroupB?: boolean | Prisma.DocumentStructure$DocumentGroupBArgs<ExtArgs>
-  DocumentGroupC?: boolean | Prisma.DocumentStructure$DocumentGroupCArgs<ExtArgs>
-  DocumentGroupD?: boolean | Prisma.DocumentStructure$DocumentGroupDArgs<ExtArgs>
+  DocumentGroup?: boolean | Prisma.DocumentStructure$DocumentGroupArgs<ExtArgs>
   DocumentPlace?: boolean | Prisma.DocumentPlaceDefaultArgs<ExtArgs>
-  Employee_DocumentStructure_managedByIdToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
-  Employee_DocumentStructure_revisedByIdToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  DocumentStatus?: boolean | Prisma.DocumentStructure$DocumentStatusArgs<ExtArgs>
+  Employee_DocumentStructure_managedByIdToEmployee?: boolean | Prisma.DocumentStructure$Employee_DocumentStructure_managedByIdToEmployeeArgs<ExtArgs>
+  Employee_DocumentStructure_revisedByIdToEmployee?: boolean | Prisma.DocumentStructure$Employee_DocumentStructure_revisedByIdToEmployeeArgs<ExtArgs>
   Target?: boolean | Prisma.TargetDefaultArgs<ExtArgs>
+  DocumentStructureTarget?: boolean | Prisma.DocumentStructure$DocumentStructureTargetArgs<ExtArgs>
   Employee_Employee_pictureIdToDocumentStructure?: boolean | Prisma.DocumentStructure$Employee_Employee_pictureIdToDocumentStructureArgs<ExtArgs>
   FollowUp?: boolean | Prisma.DocumentStructure$FollowUpArgs<ExtArgs>
   FollowUpStructure?: boolean | Prisma.DocumentStructure$FollowUpStructureArgs<ExtArgs>
@@ -5921,19 +5409,18 @@ export type $DocumentStructurePayload<ExtArgs extends runtime.Types.Extensions.I
   name: "DocumentStructure"
   objects: {
     Contact: Prisma.$ContactPayload<ExtArgs>[]
+    DocumentRevision: Prisma.$DocumentRevisionPayload<ExtArgs>[]
     DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs> | null
     other_DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs>[]
-    Role: Prisma.$RolePayload<ExtArgs> | null
     Employee_DocumentStructure_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
     Employee_DocumentStructure_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
-    DocumentGroupA: Prisma.$DocumentGroupAPayload<ExtArgs>
-    DocumentGroupB: Prisma.$DocumentGroupBPayload<ExtArgs> | null
-    DocumentGroupC: Prisma.$DocumentGroupCPayload<ExtArgs> | null
-    DocumentGroupD: Prisma.$DocumentGroupDPayload<ExtArgs> | null
+    DocumentGroup: Prisma.$DocumentGroupPayload<ExtArgs> | null
     DocumentPlace: Prisma.$DocumentPlacePayload<ExtArgs>
-    Employee_DocumentStructure_managedByIdToEmployee: Prisma.$EmployeePayload<ExtArgs>
-    Employee_DocumentStructure_revisedByIdToEmployee: Prisma.$EmployeePayload<ExtArgs>
+    DocumentStatus: Prisma.$DocumentStatusPayload<ExtArgs> | null
+    Employee_DocumentStructure_managedByIdToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
+    Employee_DocumentStructure_revisedByIdToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Target: Prisma.$TargetPayload<ExtArgs>
+    DocumentStructureTarget: Prisma.$DocumentStructureTargetPayload<ExtArgs>[]
     Employee_Employee_pictureIdToDocumentStructure: Prisma.$EmployeePayload<ExtArgs>[]
     FollowUp: Prisma.$FollowUpPayload<ExtArgs>[]
     FollowUpStructure: Prisma.$FollowUpStructurePayload<ExtArgs>[]
@@ -5953,21 +5440,19 @@ export type $DocumentStructurePayload<ExtArgs extends runtime.Types.Extensions.I
     revisionDetail: string | null
     valid: boolean
     process: boolean
+    canCopy: boolean
     additionalInfo: string | null
     referenceDocId: string | null
-    roleId: string | null
     deleted: boolean
     deletedAt: Date | null
     createdBy: string
-    revisedById: string
-    managedById: string
+    revisedById: string | null
+    managedById: string | null
     targetId: string
     deletedBy: string | null
-    documentGroupAId: string
-    documentGroupBId: string | null
-    documentGroupCId: string | null
-    documentGroupDId: string | null
+    documentGroupId: string | null
     documentPlaceId: string
+    documentStatusId: string | null
   }, ExtArgs["result"]["documentStructure"]>
   composites: {}
 }
@@ -6309,19 +5794,18 @@ readonly fields: DocumentStructureFieldRefs;
 export interface Prisma__DocumentStructureClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Contact<T extends Prisma.DocumentStructure$ContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$ContactArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  DocumentRevision<T extends Prisma.DocumentStructure$DocumentRevisionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$DocumentRevisionArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentRevisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   DocumentStructure<T extends Prisma.DocumentStructure$DocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$DocumentStructureArgs<ExtArgs>>): Prisma.Prisma__DocumentStructureClient<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   other_DocumentStructure<T extends Prisma.DocumentStructure$other_DocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$other_DocumentStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  Role<T extends Prisma.DocumentStructure$RoleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$RoleArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_DocumentStructure_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Employee_DocumentStructure_deletedByToEmployee<T extends Prisma.DocumentStructure$Employee_DocumentStructure_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$Employee_DocumentStructure_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  DocumentGroupA<T extends Prisma.DocumentGroupADefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentGroupADefaultArgs<ExtArgs>>): Prisma.Prisma__DocumentGroupAClient<runtime.Types.Result.GetResult<Prisma.$DocumentGroupAPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  DocumentGroupB<T extends Prisma.DocumentStructure$DocumentGroupBArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$DocumentGroupBArgs<ExtArgs>>): Prisma.Prisma__DocumentGroupBClient<runtime.Types.Result.GetResult<Prisma.$DocumentGroupBPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  DocumentGroupC<T extends Prisma.DocumentStructure$DocumentGroupCArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$DocumentGroupCArgs<ExtArgs>>): Prisma.Prisma__DocumentGroupCClient<runtime.Types.Result.GetResult<Prisma.$DocumentGroupCPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  DocumentGroupD<T extends Prisma.DocumentStructure$DocumentGroupDArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$DocumentGroupDArgs<ExtArgs>>): Prisma.Prisma__DocumentGroupDClient<runtime.Types.Result.GetResult<Prisma.$DocumentGroupDPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  DocumentGroup<T extends Prisma.DocumentStructure$DocumentGroupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$DocumentGroupArgs<ExtArgs>>): Prisma.Prisma__DocumentGroupClient<runtime.Types.Result.GetResult<Prisma.$DocumentGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   DocumentPlace<T extends Prisma.DocumentPlaceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentPlaceDefaultArgs<ExtArgs>>): Prisma.Prisma__DocumentPlaceClient<runtime.Types.Result.GetResult<Prisma.$DocumentPlacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  Employee_DocumentStructure_managedByIdToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  Employee_DocumentStructure_revisedByIdToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  DocumentStatus<T extends Prisma.DocumentStructure$DocumentStatusArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$DocumentStatusArgs<ExtArgs>>): Prisma.Prisma__DocumentStatusClient<runtime.Types.Result.GetResult<Prisma.$DocumentStatusPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Employee_DocumentStructure_managedByIdToEmployee<T extends Prisma.DocumentStructure$Employee_DocumentStructure_managedByIdToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$Employee_DocumentStructure_managedByIdToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Employee_DocumentStructure_revisedByIdToEmployee<T extends Prisma.DocumentStructure$Employee_DocumentStructure_revisedByIdToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$Employee_DocumentStructure_revisedByIdToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Target<T extends Prisma.TargetDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TargetDefaultArgs<ExtArgs>>): Prisma.Prisma__TargetClient<runtime.Types.Result.GetResult<Prisma.$TargetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  DocumentStructureTarget<T extends Prisma.DocumentStructure$DocumentStructureTargetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$DocumentStructureTargetArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentStructureTargetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee_Employee_pictureIdToDocumentStructure<T extends Prisma.DocumentStructure$Employee_Employee_pictureIdToDocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$Employee_Employee_pictureIdToDocumentStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   FollowUp<T extends Prisma.DocumentStructure$FollowUpArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$FollowUpArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   FollowUpStructure<T extends Prisma.DocumentStructure$FollowUpStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentStructure$FollowUpStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FollowUpStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -6368,9 +5852,9 @@ export interface DocumentStructureFieldRefs {
   readonly revisionDetail: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly valid: Prisma.FieldRef<"DocumentStructure", 'Boolean'>
   readonly process: Prisma.FieldRef<"DocumentStructure", 'Boolean'>
+  readonly canCopy: Prisma.FieldRef<"DocumentStructure", 'Boolean'>
   readonly additionalInfo: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly referenceDocId: Prisma.FieldRef<"DocumentStructure", 'String'>
-  readonly roleId: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly deleted: Prisma.FieldRef<"DocumentStructure", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"DocumentStructure", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"DocumentStructure", 'String'>
@@ -6378,11 +5862,9 @@ export interface DocumentStructureFieldRefs {
   readonly managedById: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly targetId: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly deletedBy: Prisma.FieldRef<"DocumentStructure", 'String'>
-  readonly documentGroupAId: Prisma.FieldRef<"DocumentStructure", 'String'>
-  readonly documentGroupBId: Prisma.FieldRef<"DocumentStructure", 'String'>
-  readonly documentGroupCId: Prisma.FieldRef<"DocumentStructure", 'String'>
-  readonly documentGroupDId: Prisma.FieldRef<"DocumentStructure", 'String'>
+  readonly documentGroupId: Prisma.FieldRef<"DocumentStructure", 'String'>
   readonly documentPlaceId: Prisma.FieldRef<"DocumentStructure", 'String'>
+  readonly documentStatusId: Prisma.FieldRef<"DocumentStructure", 'String'>
 }
     
 
@@ -6750,6 +6232,30 @@ export type DocumentStructure$ContactArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
+ * DocumentStructure.DocumentRevision
+ */
+export type DocumentStructure$DocumentRevisionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DocumentRevision
+   */
+  select?: Prisma.DocumentRevisionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DocumentRevision
+   */
+  omit?: Prisma.DocumentRevisionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DocumentRevisionInclude<ExtArgs> | null
+  where?: Prisma.DocumentRevisionWhereInput
+  orderBy?: Prisma.DocumentRevisionOrderByWithRelationInput | Prisma.DocumentRevisionOrderByWithRelationInput[]
+  cursor?: Prisma.DocumentRevisionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DocumentRevisionScalarFieldEnum | Prisma.DocumentRevisionScalarFieldEnum[]
+}
+
+/**
  * DocumentStructure.DocumentStructure
  */
 export type DocumentStructure$DocumentStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -6793,25 +6299,6 @@ export type DocumentStructure$other_DocumentStructureArgs<ExtArgs extends runtim
 }
 
 /**
- * DocumentStructure.Role
- */
-export type DocumentStructure$RoleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Role
-   */
-  select?: Prisma.RoleSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Role
-   */
-  omit?: Prisma.RoleOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.RoleInclude<ExtArgs> | null
-  where?: Prisma.RoleWhereInput
-}
-
-/**
  * DocumentStructure.Employee_DocumentStructure_deletedByToEmployee
  */
 export type DocumentStructure$Employee_DocumentStructure_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -6831,60 +6318,103 @@ export type DocumentStructure$Employee_DocumentStructure_deletedByToEmployeeArgs
 }
 
 /**
- * DocumentStructure.DocumentGroupB
+ * DocumentStructure.DocumentGroup
  */
-export type DocumentStructure$DocumentGroupBArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DocumentStructure$DocumentGroupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the DocumentGroupB
+   * Select specific fields to fetch from the DocumentGroup
    */
-  select?: Prisma.DocumentGroupBSelect<ExtArgs> | null
+  select?: Prisma.DocumentGroupSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the DocumentGroupB
+   * Omit specific fields from the DocumentGroup
    */
-  omit?: Prisma.DocumentGroupBOmit<ExtArgs> | null
+  omit?: Prisma.DocumentGroupOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DocumentGroupBInclude<ExtArgs> | null
-  where?: Prisma.DocumentGroupBWhereInput
+  include?: Prisma.DocumentGroupInclude<ExtArgs> | null
+  where?: Prisma.DocumentGroupWhereInput
 }
 
 /**
- * DocumentStructure.DocumentGroupC
+ * DocumentStructure.DocumentStatus
  */
-export type DocumentStructure$DocumentGroupCArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DocumentStructure$DocumentStatusArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the DocumentGroupC
+   * Select specific fields to fetch from the DocumentStatus
    */
-  select?: Prisma.DocumentGroupCSelect<ExtArgs> | null
+  select?: Prisma.DocumentStatusSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the DocumentGroupC
+   * Omit specific fields from the DocumentStatus
    */
-  omit?: Prisma.DocumentGroupCOmit<ExtArgs> | null
+  omit?: Prisma.DocumentStatusOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DocumentGroupCInclude<ExtArgs> | null
-  where?: Prisma.DocumentGroupCWhereInput
+  include?: Prisma.DocumentStatusInclude<ExtArgs> | null
+  where?: Prisma.DocumentStatusWhereInput
 }
 
 /**
- * DocumentStructure.DocumentGroupD
+ * DocumentStructure.Employee_DocumentStructure_managedByIdToEmployee
  */
-export type DocumentStructure$DocumentGroupDArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DocumentStructure$Employee_DocumentStructure_managedByIdToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the DocumentGroupD
+   * Select specific fields to fetch from the Employee
    */
-  select?: Prisma.DocumentGroupDSelect<ExtArgs> | null
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the DocumentGroupD
+   * Omit specific fields from the Employee
    */
-  omit?: Prisma.DocumentGroupDOmit<ExtArgs> | null
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DocumentGroupDInclude<ExtArgs> | null
-  where?: Prisma.DocumentGroupDWhereInput
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * DocumentStructure.Employee_DocumentStructure_revisedByIdToEmployee
+ */
+export type DocumentStructure$Employee_DocumentStructure_revisedByIdToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * DocumentStructure.DocumentStructureTarget
+ */
+export type DocumentStructure$DocumentStructureTargetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DocumentStructureTarget
+   */
+  select?: Prisma.DocumentStructureTargetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DocumentStructureTarget
+   */
+  omit?: Prisma.DocumentStructureTargetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DocumentStructureTargetInclude<ExtArgs> | null
+  where?: Prisma.DocumentStructureTargetWhereInput
+  orderBy?: Prisma.DocumentStructureTargetOrderByWithRelationInput | Prisma.DocumentStructureTargetOrderByWithRelationInput[]
+  cursor?: Prisma.DocumentStructureTargetWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DocumentStructureTargetScalarFieldEnum | Prisma.DocumentStructureTargetScalarFieldEnum[]
 }
 
 /**

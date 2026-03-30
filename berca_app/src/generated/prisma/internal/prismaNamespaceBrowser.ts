@@ -56,7 +56,6 @@ export const ModelName = {
   Contact: 'Contact',
   DeliveryNoteSupplier: 'DeliveryNoteSupplier',
   Department: 'Department',
-  DocumentGroup: 'DocumentGroup',
   DocumentPlace: 'DocumentPlace',
   DocumentStructure: 'DocumentStructure',
   EmergencyContact: 'EmergencyContact',
@@ -135,7 +134,11 @@ export const ModelName = {
   PriceList: 'PriceList',
   PriceListItem: 'PriceListItem',
   CompanyAddress: 'CompanyAddress',
-  PriceListItemTarget: 'PriceListItemTarget'
+  PriceListItemTarget: 'PriceListItemTarget',
+  DocumentGroupA: 'DocumentGroupA',
+  DocumentGroupB: 'DocumentGroupB',
+  DocumentGroupC: 'DocumentGroupC',
+  DocumentGroupD: 'DocumentGroupD'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -313,26 +316,12 @@ export const DepartmentScalarFieldEnum = {
 export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
 
 
-export const DocumentGroupScalarFieldEnum = {
-  id: 'id',
-  groupA: 'groupA',
-  groupB: 'groupB',
-  groupC: 'groupC',
-  groupD: 'groupD',
-  deleted: 'deleted',
-  deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy'
-} as const
-
-export type DocumentGroupScalarFieldEnum = (typeof DocumentGroupScalarFieldEnum)[keyof typeof DocumentGroupScalarFieldEnum]
-
-
 export const DocumentPlaceScalarFieldEnum = {
   id: 'id',
-  placeA: 'placeA',
-  placeB: 'placeB',
-  placeC: 'placeC',
-  placeD: 'placeD',
+  headFolder: 'headFolder',
+  subFolder: 'subFolder',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -361,7 +350,12 @@ export const DocumentStructureScalarFieldEnum = {
   revisedById: 'revisedById',
   managedById: 'managedById',
   targetId: 'targetId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  documentGroupAId: 'documentGroupAId',
+  documentGroupBId: 'documentGroupBId',
+  documentGroupCId: 'documentGroupCId',
+  documentGroupDId: 'documentGroupDId',
+  documentPlaceId: 'documentPlaceId'
 } as const
 
 export type DocumentStructureScalarFieldEnum = (typeof DocumentStructureScalarFieldEnum)[keyof typeof DocumentStructureScalarFieldEnum]
@@ -1727,6 +1721,61 @@ export const PriceListItemTargetScalarFieldEnum = {
 export type PriceListItemTargetScalarFieldEnum = (typeof PriceListItemTargetScalarFieldEnum)[keyof typeof PriceListItemTargetScalarFieldEnum]
 
 
+export const DocumentGroupAScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentGroupAScalarFieldEnum = (typeof DocumentGroupAScalarFieldEnum)[keyof typeof DocumentGroupAScalarFieldEnum]
+
+
+export const DocumentGroupBScalarFieldEnum = {
+  id: 'id',
+  documentGroupAId: 'documentGroupAId',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentGroupBScalarFieldEnum = (typeof DocumentGroupBScalarFieldEnum)[keyof typeof DocumentGroupBScalarFieldEnum]
+
+
+export const DocumentGroupCScalarFieldEnum = {
+  id: 'id',
+  documentGroupBId: 'documentGroupBId',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentGroupCScalarFieldEnum = (typeof DocumentGroupCScalarFieldEnum)[keyof typeof DocumentGroupCScalarFieldEnum]
+
+
+export const DocumentGroupDScalarFieldEnum = {
+  id: 'id',
+  documentGroupCId: 'documentGroupCId',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentGroupDScalarFieldEnum = (typeof DocumentGroupDScalarFieldEnum)[keyof typeof DocumentGroupDScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1855,24 +1904,11 @@ export const DepartmentOrderByRelevanceFieldEnum = {
 export type DepartmentOrderByRelevanceFieldEnum = (typeof DepartmentOrderByRelevanceFieldEnum)[keyof typeof DepartmentOrderByRelevanceFieldEnum]
 
 
-export const DocumentGroupOrderByRelevanceFieldEnum = {
-  id: 'id',
-  groupA: 'groupA',
-  groupB: 'groupB',
-  groupC: 'groupC',
-  groupD: 'groupD',
-  deletedBy: 'deletedBy'
-} as const
-
-export type DocumentGroupOrderByRelevanceFieldEnum = (typeof DocumentGroupOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupOrderByRelevanceFieldEnum]
-
-
 export const DocumentPlaceOrderByRelevanceFieldEnum = {
   id: 'id',
-  placeA: 'placeA',
-  placeB: 'placeB',
-  placeC: 'placeC',
-  placeD: 'placeD',
+  headFolder: 'headFolder',
+  subFolder: 'subFolder',
+  createdBy: 'createdBy',
   deletedBy: 'deletedBy'
 } as const
 
@@ -1892,7 +1928,12 @@ export const DocumentStructureOrderByRelevanceFieldEnum = {
   revisedById: 'revisedById',
   managedById: 'managedById',
   targetId: 'targetId',
-  deletedBy: 'deletedBy'
+  deletedBy: 'deletedBy',
+  documentGroupAId: 'documentGroupAId',
+  documentGroupBId: 'documentGroupBId',
+  documentGroupCId: 'documentGroupCId',
+  documentGroupDId: 'documentGroupDId',
+  documentPlaceId: 'documentPlaceId'
 } as const
 
 export type DocumentStructureOrderByRelevanceFieldEnum = (typeof DocumentStructureOrderByRelevanceFieldEnum)[keyof typeof DocumentStructureOrderByRelevanceFieldEnum]
@@ -2931,4 +2972,47 @@ export const PriceListItemTargetOrderByRelevanceFieldEnum = {
 } as const
 
 export type PriceListItemTargetOrderByRelevanceFieldEnum = (typeof PriceListItemTargetOrderByRelevanceFieldEnum)[keyof typeof PriceListItemTargetOrderByRelevanceFieldEnum]
+
+
+export const DocumentGroupAOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentGroupAOrderByRelevanceFieldEnum = (typeof DocumentGroupAOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupAOrderByRelevanceFieldEnum]
+
+
+export const DocumentGroupBOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentGroupAId: 'documentGroupAId',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentGroupBOrderByRelevanceFieldEnum = (typeof DocumentGroupBOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupBOrderByRelevanceFieldEnum]
+
+
+export const DocumentGroupCOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentGroupBId: 'documentGroupBId',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentGroupCOrderByRelevanceFieldEnum = (typeof DocumentGroupCOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupCOrderByRelevanceFieldEnum]
+
+
+export const DocumentGroupDOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentGroupCId: 'documentGroupCId',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentGroupDOrderByRelevanceFieldEnum = (typeof DocumentGroupDOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupDOrderByRelevanceFieldEnum]
 

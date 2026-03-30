@@ -605,16 +605,16 @@ ALTER TABLE CompanyContact DROP FOREIGN KEY IF EXISTS fk_companyContact_companyA
 ALTER TABLE CompanyContact ADD CONSTRAINT fk_companyContact_companyAddress
     FOREIGN KEY (`companyAddressId`) REFERENCES CompanyAddress (`id`) ON DELETE SET NULL;
 
--- 46a. houtype & material: add targetId column
+-- 46a. hourtype & material: add targetId column
 ALTER TABLE HourType ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NULL;
 ALTER TABLE Material ADD COLUMN IF NOT EXISTS `targetId` CHAR(36) NULL;
 
--- 46b. houtype: add FK fk_hourType_target (skip if already exists)
+-- 46b. hourtype: add FK fk_hourType_target (skip if already exists)
 ALTER TABLE HourType DROP FOREIGN KEY IF EXISTS fk_hourType_target;
 ALTER TABLE HourType ADD CONSTRAINT fk_hourType_target
     FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
 
--- 46c. houtype: add FK fk_material_target (skip if already exists)
+-- 46c. material: add FK fk_material_target (skip if already exists)
 ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_target;
 ALTER TABLE Material ADD CONSTRAINT fk_material_target
     FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
@@ -630,3 +630,99 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 ALTER TABLE WorkOrder CHANGE COLUMN IF EXISTS `workOrderNumber` `workOrderNumber` VARCHAR(255) NOT NULL;
+
+ALTER TABLE HourType CHANGE COLUMN IF EXISTS `targetId` `targetId` VARCHAR(255) NOT NULL;
+ALTER TABLE Material CHANGE COLUMN IF EXISTS `targetId` `targetId` VARCHAR(255) NOT NULL;
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS DocumentPlace;
+DROP TABLE IF EXISTS DocumentGroup;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE
+      IF NOT EXISTS DocumentPlace (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            headFolder VARCHAR(255) NOT NULL,
+            subFolder VARCHAR(255),
+            createdBy CHAR(36) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS DocumentGroupA (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            name VARCHAR(255),
+            createdBy CHAR(36) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS DocumentGroupB (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            documentGroupAId CHAR(36) NOT NULL,
+            name VARCHAR(255),
+            createdBy CHAR(36) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+      
+CREATE TABLE
+      IF NOT EXISTS DocumentGroupC (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            documentGroupBId CHAR(36) NOT NULL,
+            name VARCHAR(255),
+            createdBy CHAR(36) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (documentGroupBId) REFERENCES DocumentGroupB (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS DocumentGroupD (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            documentGroupCId CHAR(36) NOT NULL,
+            name VARCHAR(255),
+            createdBy CHAR(36) NOT NULL,
+            createdAt DATETIME NOT NULL,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT
+      ) ENGINE = InnoDB;
+
+ALTER TABLE DocumentStructure ADD documentGroupAId CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_documentStructure_documentGroupA FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT;
+ALTER TABLE DocumentStructure ADD documentGroupBId CHAR(36) NULL,
+ADD CONSTRAINT fk_documentStructure_documentGroupB FOREIGN KEY (documentGroupBId) REFERENCES DocumentGroupB (id) ON DELETE RESTRICT;
+ALTER TABLE DocumentStructure ADD documentGroupCId CHAR(36) NULL,
+ADD CONSTRAINT fk_documentStructure_documentGroupC FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT;
+ALTER TABLE DocumentStructure ADD documentGroupDId CHAR(36) NULL,
+ADD CONSTRAINT fk_documentStructure_documentGroupD FOREIGN KEY (documentGroupDId) REFERENCES DocumentGroupD (id) ON DELETE RESTRICT;
+ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NOT NULL,
+ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
+
+ALTER TABLE MaterialSerialTrack CHANGE COLUMN IF EXISTS `serialTrackedId` `serialTrackedId` CHAR(36) NULL;
+ALTER TABLE MaterialSerialTrackStructure CHANGE COLUMN IF EXISTS `beNumber` `beNumber`  VARCHAR(255) NULL;

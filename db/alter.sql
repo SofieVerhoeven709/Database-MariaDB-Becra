@@ -717,21 +717,60 @@ CREATE TABLE
             FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
-ALTER TABLE DocumentStructure ADD COLUMN IF NOT EXISTS documentGroupAId CHAR(36) NOT NULL,
-DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentGroupA,
-ADD CONSTRAINT IF NOT EXISTS fk_documentStructure_documentGroupA FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD COLUMN IF NOT EXISTS documentGroupBId CHAR(36) NULL,
-DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentGroupB,
-ADD CONSTRAINT IF NOT EXISTS fk_documentStructure_documentGroupB FOREIGN KEY (documentGroupBId) REFERENCES DocumentGroupB (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD COLUMN IF NOT EXISTS documentGroupCId CHAR(36) NULL,
-DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentGroupC,
-ADD CONSTRAINT IF NOT EXISTS fk_documentStructure_documentGroupC FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD COLUMN IF NOT EXISTS documentGroupDId CHAR(36) NULL,
-DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentGroupD,
-ADD CONSTRAINT IF NOT EXISTS fk_documentStructure_documentGroupD FOREIGN KEY (documentGroupDId) REFERENCES DocumentGroupD (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD COLUMN IF NOT EXISTS documentPlaceId CHAR(36) NOT NULL,
-DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentPlace,
-ADD CONSTRAINT IF NOT EXISTS fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
+-- 1. documentGroupAId
+ALTER TABLE DocumentStructure 
+    ADD COLUMN IF NOT EXISTS documentGroupAId CHAR(36) NOT NULL;
+
+ALTER TABLE DocumentStructure 
+    DROP FOREIGN KEY fk_documentStructure_documentGroupA;
+
+ALTER TABLE DocumentStructure 
+    ADD CONSTRAINT fk_documentStructure_documentGroupA
+    FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT;
+
+-- 2. documentGroupBId
+ALTER TABLE DocumentStructure 
+    ADD COLUMN IF NOT EXISTS documentGroupBId CHAR(36) NULL;
+
+ALTER TABLE DocumentStructure 
+    DROP FOREIGN KEY fk_documentStructure_documentGroupB;
+
+ALTER TABLE DocumentStructure 
+    ADD CONSTRAINT fk_documentStructure_documentGroupB
+    FOREIGN KEY (documentGroupBId) REFERENCES DocumentGroupB (id) ON DELETE RESTRICT;
+
+-- 3. documentGroupCId
+ALTER TABLE DocumentStructure 
+    ADD COLUMN IF NOT EXISTS documentGroupCId CHAR(36) NULL;
+
+ALTER TABLE DocumentStructure 
+    DROP FOREIGN KEY fk_documentStructure_documentGroupC;
+
+ALTER TABLE DocumentStructure 
+    ADD CONSTRAINT fk_documentStructure_documentGroupC
+    FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT;
+
+-- 4. documentGroupDId
+ALTER TABLE DocumentStructure 
+    ADD COLUMN IF NOT EXISTS documentGroupDId CHAR(36) NULL;
+
+ALTER TABLE DocumentStructure 
+    DROP FOREIGN KEY fk_documentStructure_documentGroupD;
+
+ALTER TABLE DocumentStructure 
+    ADD CONSTRAINT fk_documentStructure_documentGroupD
+    FOREIGN KEY (documentGroupDId) REFERENCES DocumentGroupD (id) ON DELETE RESTRICT;
+
+-- 5. documentPlaceId
+ALTER TABLE DocumentStructure 
+    ADD COLUMN IF NOT EXISTS documentPlaceId CHAR(36) NOT NULL;
+
+ALTER TABLE DocumentStructure 
+    DROP FOREIGN KEY fk_documentStructure_documentPlace;
+
+ALTER TABLE DocumentStructure 
+    ADD CONSTRAINT fk_documentStructure_documentPlace
+    FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
 
 ALTER TABLE MaterialSerialTrack CHANGE COLUMN IF EXISTS `serialTrackedId` `serialTrackedId` CHAR(36) NULL;
 SET @tbl_exists = (

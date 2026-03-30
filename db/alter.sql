@@ -718,14 +718,19 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 ALTER TABLE DocumentStructure ADD documentGroupAId CHAR(36) NOT NULL,
+ALTER TABLE DocumentStructure DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentGroupA;
 ADD CONSTRAINT fk_documentStructure_documentGroupA FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT;
 ALTER TABLE DocumentStructure ADD documentGroupBId CHAR(36) NULL,
+ALTER TABLE DocumentStructure DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentGroupB;
 ADD CONSTRAINT fk_documentStructure_documentGroupB FOREIGN KEY (documentGroupBId) REFERENCES DocumentGroupB (id) ON DELETE RESTRICT;
 ALTER TABLE DocumentStructure ADD documentGroupCId CHAR(36) NULL,
+ALTER TABLE DocumentStructure DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentGroupC;
 ADD CONSTRAINT fk_documentStructure_documentGroupC FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT;
 ALTER TABLE DocumentStructure ADD documentGroupDId CHAR(36) NULL,
+ALTER TABLE DocumentStructure DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentGroupD;
 ADD CONSTRAINT fk_documentStructure_documentGroupD FOREIGN KEY (documentGroupDId) REFERENCES DocumentGroupD (id) ON DELETE RESTRICT;
 ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NOT NULL,
+ALTER TABLE DocumentStructure DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentPlace;
 ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
 
 ALTER TABLE MaterialSerialTrack CHANGE COLUMN IF EXISTS `serialTrackedId` `serialTrackedId` CHAR(36) NULL;

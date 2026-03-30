@@ -1,4 +1,4 @@
-﻿USE  BecraBV;
+﻿USE app_db;
  
 -- ============================================================
 -- Idempotent migrations.
@@ -375,14 +375,14 @@ ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
 -- 38. Company: add idOld column
 ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
 
--- 39a. Drop old tables (disable FK checks to avoid constraint errors) commented to prevent data losses
-SET FOREIGN_KEY_CHECKS = 0;
+-- 39a. Drop old tables (disable FK checks to avoid constraint errors)
+-- SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS InvoiceOutContact;
-DROP TABLE IF EXISTS InvoiceOut;
-DROP TABLE IF EXISTS InvoiceIn;
+-- DROP TABLE IF EXISTS InvoiceOutContact;
+-- DROP TABLE IF EXISTS InvoiceOut;
+-- DROP TABLE IF EXISTS InvoiceIn;
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- SET FOREIGN_KEY_CHECKS = 1;
 -- 39b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
 CREATE TABLE IF NOT EXISTS VatMargin (
       id CHAR(36) NOT NULL PRIMARY KEY,
@@ -504,6 +504,7 @@ CREATE TABLE
             FOREIGN KEY (invoiceSentTypeId) REFERENCES InvoiceSentType (id) ON DELETE RESTRICT,
             FOREIGN KEY (invoiceStatusId) REFERENCES InvoiceStatus (id) ON DELETE RESTRICT,
             FOREIGN KEY (vatMarginId) REFERENCES VatMargin (id) ON DELETE RESTRICT,
+            FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT,
             UNIQUE (invoiceNumber)
       ) ENGINE = InnoDB;
 
@@ -553,6 +554,14 @@ CREATE TABLE IF NOT EXISTS InvoiceOutContact (
       FOREIGN KEY (invoiceOutId) REFERENCES InvoiceOut (id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS PriceListCompany (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      priceListId CHAR(36) NOT NULL,
+      companyId CHAR(36) NOT NULL,
+      FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE CASCADE,
+      FOREIGN KEY (priceListId) REFERENCES PriceList (id) ON DELETE RESTRICT
+) ENGINE = InnoDB;
+
 -- 40. Company: add officialName column
 -- Step 1: Add column as nullable (won't break existing rows)
 ALTER TABLE Company ADD COLUMN IF NOT EXISTS officialName VARCHAR(255) NULL;
@@ -563,75 +572,8 @@ UPDATE Company SET officialName = name WHERE officialName IS NULL;
 -- Step 3: Now enforce NOT NULL since all rows are filled
 ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
-
-ALTER TABLE MaterialSerialTrack
-DROP COLUMN IF EXISTS beNumber;
-
--- Add the materialId column (nullable)
-ALTER TABLE MaterialSerialTrack
-ADD COLUMN materialId CHAR(36) NULL;
-
--- Add an index for performance (optional but recommended)
--- CREATE INDEX idx_materialId ON MaterialSerialTrack(materialId);
-
--- Add the foreign key constraint
-ALTER TABLE MaterialSerialTrack
-ADD CONSTRAINT fk_material_serialtrack_materialId
-FOREIGN KEY (materialId) REFERENCES Material(id)
-ON DELETE SET NULL
-ON UPDATE RESTRICT;
-
--- Add a serial tracked boolean to the materials
-ALTER TABLE Material
-ADD COLUMN isSerialTracked BOOLEAN NOT NULL DEFAULT 0;
-
--- Removing materialgroupid from materialSerialTrack
-
--- Remove materialGroupId from MaterialSerialTrack safely
-SET @fk_name = (
-  SELECT CONSTRAINT_NAME
-  FROM information_schema.KEY_COLUMN_USAGE
-  WHERE TABLE_SCHEMA = DATABASE()
-    AND TABLE_NAME = 'MaterialSerialTrack'
-    AND COLUMN_NAME = 'materialGroupId'
-    AND REFERENCED_TABLE_NAME IS NOT NULL
-  LIMIT 1
-);
-SET @sql = IF(@fk_name IS NOT NULL,
-  CONCAT('ALTER TABLE MaterialSerialTrack DROP FOREIGN KEY `', @fk_name, '`'),
-  'SELECT ''No FK to drop on MaterialSerialTrack.materialGroupId'''
-);
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-ALTER TABLE MaterialSerialTrack DROP COLUMN IF EXISTS materialGroupId;
-
--- Remove materialGroupId from MaterialSerialTrackedStructure safely
-SET @fk_name2 = (
-  SELECT CONSTRAINT_NAME
-  FROM information_schema.KEY_COLUMN_USAGE
-  WHERE TABLE_SCHEMA = DATABASE()
-    AND TABLE_NAME = 'MaterialSerialTrackedStructure'
-    AND COLUMN_NAME = 'materialGroupId'
-    AND REFERENCED_TABLE_NAME IS NOT NULL
-  LIMIT 1
-);
-SET @sql2 = IF(@fk_name2 IS NOT NULL,
-  CONCAT('ALTER TABLE MaterialSerialTrackedStructure DROP FOREIGN KEY `', @fk_name2, '`'),
-  'SELECT ''No FK to drop on MaterialSerialTrackedStructure.materialGroupId'''
-);
-PREPARE stmt2 FROM @sql2;
-EXECUTE stmt2;
-DEALLOCATE PREPARE stmt2;
-ALTER TABLE MaterialSerialTrackedStructure DROP COLUMN IF EXISTS materialGroupId;
-
--- 43a. Project: add priceListId column
-ALTER TABLE Project ADD COLUMN IF NOT EXISTS `priceListId` CHAR(36) NULL;
-
--- 43b. Project: add FK fk_project_pricelist (skip if already exists)
 ALTER TABLE Project DROP FOREIGN KEY IF EXISTS fk_project_pricelist;
-ALTER TABLE Project ADD CONSTRAINT fk_project_pricelist
-    FOREIGN KEY (`priceListId`) REFERENCES PriceList (`id`) ON DELETE RESTRICT;
+ALTER TABLE Project DROP COLUMN IF EXISTS `priceListId`;
 
 -- 44. CompanyAddress: rename table from CompanyAdress (safe, only if old exists and new does not)
 SET @old_exists = (
@@ -693,44 +635,24 @@ CREATE TABLE
 
 ALTER TABLE WorkOrder CHANGE COLUMN IF EXISTS `workOrderNumber` `workOrderNumber` VARCHAR(255) NOT NULL;
 
--- Drop FK on HourType.targetId if exists (look up actual constraint name)
-SET @fk_name = (
-      SELECT CONSTRAINT_NAME
-      FROM information_schema.KEY_COLUMN_USAGE
-      WHERE TABLE_SCHEMA = DATABASE()
-            AND TABLE_NAME = 'HourType'
-            AND COLUMN_NAME = 'targetId'
-            AND REFERENCED_TABLE_NAME IS NOT NULL
-      LIMIT 1
-);
-SET @sql = IF(@fk_name IS NOT NULL,
-      CONCAT('ALTER TABLE HourType DROP FOREIGN KEY `', @fk_name, '`'),
-      'SELECT ''No FK to drop on HourType.targetId'''
-);
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+-- 46b. hourtype: add FK fk_hourType_target (skip if already exists)
+-- ALTER TABLE HourType DROP FOREIGN KEY IF EXISTS fk_hourType_target;
+-- ALTER TABLE HourType CHANGE COLUMN IF EXISTS `targetId` `targetId` VARCHAR(255) NOT NULL;
+-- ALTER TABLE HourType ADD CONSTRAINT fk_hourType_target
+  --  FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
 
--- Ensure FK is dropped before altering column
-ALTER TABLE HourType DROP FOREIGN KEY IF EXISTS fk_hourType_target;
-ALTER TABLE HourType CHANGE COLUMN IF EXISTS `targetId` `targetId` VARCHAR(255) NOT NULL;
--- Re-add FK after column change
-ALTER TABLE HourType ADD CONSTRAINT fk_hourType_target
-      FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
-
--- Ensure FK is dropped before altering column
+-- 46c. material: add FK fk_material_target (skip if already exists)
 ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_target;
 ALTER TABLE Material CHANGE COLUMN IF EXISTS `targetId` `targetId` VARCHAR(255) NOT NULL;
--- Re-add FK after column change
 ALTER TABLE Material ADD CONSTRAINT fk_material_target
-      FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
+    FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
 
-SET FOREIGN_KEY_CHECKS = 0;
+-- SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS DocumentPlace;
-DROP TABLE IF EXISTS DocumentGroup;
+-- DROP TABLE IF EXISTS DocumentPlace;
+-- DROP TABLE IF EXISTS DocumentGroup;
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE
       IF NOT EXISTS DocumentPlace (
@@ -804,16 +726,60 @@ CREATE TABLE
             FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
-ALTER TABLE DocumentStructure ADD documentGroupAId CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_documentStructure_documentGroupA FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD documentGroupBId CHAR(36) NULL,
-ADD CONSTRAINT fk_documentStructure_documentGroupB FOREIGN KEY (documentGroupBId) REFERENCES DocumentGroupB (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD documentGroupCId CHAR(36) NULL,
-ADD CONSTRAINT fk_documentStructure_documentGroupC FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD documentGroupDId CHAR(36) NULL,
-ADD CONSTRAINT fk_documentStructure_documentGroupD FOREIGN KEY (documentGroupDId) REFERENCES DocumentGroupD (id) ON DELETE RESTRICT;
-ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NOT NULL,
-ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
+-- 1. documentGroupAId
+ALTER TABLE DocumentStructure 
+    ADD COLUMN IF NOT EXISTS documentGroupAId CHAR(36) NOT NULL;
+
+ALTER TABLE DocumentStructure 
+    DROP FOREIGN KEY fk_documentStructure_documentGroupA;
+
+ALTER TABLE DocumentStructure 
+    ADD CONSTRAINT fk_documentStructure_documentGroupA
+    FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT;
+
+-- 2. documentGroupBId
+ALTER TABLE DocumentStructure 
+    ADD COLUMN IF NOT EXISTS documentGroupBId CHAR(36) NULL;
+
+ALTER TABLE DocumentStructure 
+    DROP FOREIGN KEY fk_documentStructure_documentGroupB;
+
+ALTER TABLE DocumentStructure 
+    ADD CONSTRAINT fk_documentStructure_documentGroupB
+    FOREIGN KEY (documentGroupBId) REFERENCES DocumentGroupB (id) ON DELETE RESTRICT;
+
+-- 3. documentGroupCId
+ALTER TABLE DocumentStructure 
+    ADD COLUMN IF NOT EXISTS documentGroupCId CHAR(36) NULL;
+
+ALTER TABLE DocumentStructure 
+    DROP FOREIGN KEY fk_documentStructure_documentGroupC;
+
+ALTER TABLE DocumentStructure 
+    ADD CONSTRAINT fk_documentStructure_documentGroupC
+    FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT;
+
+-- 4. documentGroupDId
+ALTER TABLE DocumentStructure 
+    ADD COLUMN IF NOT EXISTS documentGroupDId CHAR(36) NULL;
+
+ALTER TABLE DocumentStructure 
+    DROP FOREIGN KEY fk_documentStructure_documentGroupD;
+
+ALTER TABLE DocumentStructure 
+    ADD CONSTRAINT fk_documentStructure_documentGroupD
+    FOREIGN KEY (documentGroupDId) REFERENCES DocumentGroupD (id) ON DELETE RESTRICT;
+
+-- 5. documentPlaceId
+ALTER TABLE DocumentStructure 
+    ADD COLUMN IF NOT EXISTS documentPlaceId CHAR(36) NOT NULL;
+
+ALTER TABLE DocumentStructure 
+    DROP FOREIGN KEY fk_documentStructure_documentPlace;
+
+ALTER TABLE DocumentStructure 
+    ADD CONSTRAINT fk_documentStructure_documentPlace
+    FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
 
 ALTER TABLE MaterialSerialTrack CHANGE COLUMN IF EXISTS `serialTrackedId` `serialTrackedId` CHAR(36) NULL;
 SET @tbl_exists = (
@@ -822,32 +788,12 @@ SET @tbl_exists = (
       WHERE TABLE_SCHEMA = DATABASE()
             AND TABLE_NAME = 'MaterialSerialTrackStructure'
 );
-
+ 
 SET @sql = IF(@tbl_exists > 0,
       'ALTER TABLE MaterialSerialTrackStructure CHANGE COLUMN IF EXISTS `beNumber` `beNumber`  VARCHAR(255) NULL;',
       'SELECT ''Skipping: MaterialSerialTrackStructure does not exist'''
 );
-
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-
-ALTER TABLE Material 
-    ADD COLUMN IF NOT EXISTS IOSNumber VARCHAR(255) NULL;
-
-SET @idx_exists = (
-      SELECT COUNT(*)
-      FROM information_schema.STATISTICS
-      WHERE TABLE_SCHEMA = DATABASE()
-            AND TABLE_NAME = 'Material'
-            AND INDEX_NAME = 'IOSNumber'
-);
-
-SET @sql = IF(@idx_exists = 0,
-      'CREATE INDEX IOSNumber ON Material(IOSNumber)',
-      'SELECT ''Index IOSNumber already exists'''
-);
-
+ 
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;

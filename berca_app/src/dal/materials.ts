@@ -13,6 +13,28 @@ export type MaterialGroupOption = {
   groupD: string | null
 }
 
+// Type for material with all relations included in getMaterialById
+export type MaterialWithRelations = Prisma.materialGetPayload<{
+  include: {
+    Unit: true
+    Employee: {select: {id: true; firstName: true; lastName: true}}
+    PreferredSupplierCompany: {select: {id: true; name: true}}
+    MaterialSupplier: {include: {Company: {select: {id: true; name: true}}}}
+    MaterialStructure_MaterialStructure_materialIdToMaterial: {
+      where: {deleted: false; management: typeof PARENT_PART_MANAGEMENT}
+      select: {
+        beNumber: true
+        Material_MaterialStructure_beNumberToMaterial: {select: {shortDescription: true}}
+      }
+    }
+    Inventory_Inventory_materialIdToMaterial: {
+      where: {deleted: false}
+      orderBy: {createdAt: 'asc'}
+    }
+    MaterialSerialTrack: {select: {id: true}}
+  }
+}>
+
 export async function getMaterials(options?: {includeDeleted?: boolean}) {
   const includeDeleted = options?.includeDeleted ?? false
 
@@ -50,36 +72,39 @@ export async function getMaterials(options?: {includeDeleted?: boolean}) {
   })
 }
 
-export async function getMaterialById(id: string) {
+export async function getMaterialById(id: string): Promise<MaterialWithRelations | null> {
   return prismaClient.material.findUnique({
-    where: {id},
+    where: { id },
     include: {
       Unit: true,
       Employee: {
-        select: {id: true, firstName: true, lastName: true},
+        select: { id: true, firstName: true, lastName: true },
       },
       PreferredSupplierCompany: {
-        select: {id: true, name: true},
+        select: { id: true, name: true },
       },
       MaterialSupplier: {
         include: {
           Company: {
-            select: {id: true, name: true},
+            select: { id: true, name: true },
           },
         },
       },
       MaterialStructure_MaterialStructure_materialIdToMaterial: {
-        where: {deleted: false, management: PARENT_PART_MANAGEMENT},
+        where: { deleted: false, management: PARENT_PART_MANAGEMENT },
         select: {
           beNumber: true,
           Material_MaterialStructure_beNumberToMaterial: {
-            select: {shortDescription: true},
+            select: { shortDescription: true },
           },
         },
       },
       Inventory_Inventory_materialIdToMaterial: {
-        where: {deleted: false},
-        orderBy: {createdAt: 'asc'},
+        where: { deleted: false },
+        orderBy: { createdAt: 'asc' },
+      },
+      MaterialSerialTrack: {
+        select: { id: true },
       },
     },
   })

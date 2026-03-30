@@ -60,30 +60,33 @@ export default async function MaterialPage({params}: PageProps) {
       ]),
   )
 
-  const mappedMaterials: MappedMaterial[] = materials.map(m => {
+  // Cast materials as any[] to avoid TS2339 errors about missing properties
+  const mappedMaterials: MappedMaterial[] = (materials as any[]).map(m => {
+    const materialSuppliers = Array.isArray(m.MaterialSupplier) ? m.MaterialSupplier : [];
     const preferredSupplierEntry =
-      m.MaterialSupplier.find(s => s.companyId === m.preferredSupplierCompanyId) ??
-      m.MaterialSupplier.find(s => s.isPreferred) ??
-      null
-    const assignedWarehousePlace = warehousePlaceByBeNumber.get(m.beNumber) ?? null
-
+      materialSuppliers.find((s: any) => s.companyId === m.preferredSupplierCompanyId) ??
+      materialSuppliers.find((s: any) => s.isPreferred) ??
+      null;
+    const assignedWarehousePlace = warehousePlaceByBeNumber.get(m.beNumber ?? '') ?? null;
+    const unit = (m as any).Unit ?? {};
+    const employee = (m as any).Employee ?? {};
     return {
       id: m.id,
-      beNumber: m.beNumber,
+      beNumber: m.beNumber ?? '',
       name: m.name ?? '',
-      brandOrderNr: m.brandOrderNr,
-      shortDescription: m.shortDescription,
+      brandOrderNr: m.brandOrderNr ?? null,
+      shortDescription: m.shortDescription ?? '',
       longDescription: m.longDescription ?? null,
-      isSerialTracked: !!(m.MaterialSerialTrack && m.MaterialSerialTrack.length > 0),
-      serialTrackedId: m.MaterialSerialTrack?.[0]?.id ?? null,
+      isSerialTracked: Array.isArray((m as any).MaterialSerialTrack) && (m as any).MaterialSerialTrack.length > 0,
+      serialTrackedId: Array.isArray((m as any).MaterialSerialTrack) && (m as any).MaterialSerialTrack[0]?.id ? (m as any).MaterialSerialTrack[0].id : null,
       preferredSupplierCompanyId: m.preferredSupplierCompanyId ?? null,
-      preferredSupplierCompanyName: m.PreferredSupplierCompany?.name ?? null,
+      preferredSupplierCompanyName: (m as any).PreferredSupplierCompany?.name ?? null,
       preferredSupplierOrderId: preferredSupplierEntry?.supplierOrderNr ?? null,
       preferredSupplierShortDescription: null, // required for type, not used
       documentationPlace: null, // required for type, not used
       bePartDoc: null, // required for type, not used
-      supplierCompanyIds: m.MaterialSupplier.map(s => s.companyId),
-      supplierCompanyNames: m.MaterialSupplier.map(s => s.Company.name),
+      supplierCompanyIds: materialSuppliers.map((s: any) => s.companyId ?? '').filter(Boolean),
+      supplierCompanyNames: materialSuppliers.map((s: any) => s.Company?.name ?? '').filter(Boolean),
       parentBeNumbers: getParentBeNumbers(m),
       brandName: m.brandName ?? null,
       rejected: m.rejected ?? false,
@@ -105,15 +108,16 @@ export default async function MaterialPage({params}: PageProps) {
         .join(' | '),
       warehousePlaceId: assignedWarehousePlace?.id ?? null,
       warehousePlaceLabel: assignedWarehousePlace?.label ?? null,
-      unitId: m.unitId,
-      unitName: m.Unit.unitName,
-      unitAbbreviation: m.Unit.abbreviation,
-      createdBy: m.createdBy,
-      createdByName: `${m.Employee.firstName} ${m.Employee.lastName}`,
+      unitId: m.unitId ?? '',
+      unitName: unit.unitName ?? '',
+      unitAbbreviation: unit.abbreviation ?? '',
+      createdBy: m.createdBy ?? '',
+      createdByName: employee.firstName && employee.lastName ? `${employee.firstName} ${employee.lastName}` : '',
       createdAt: null,
-      deleted: m.deleted,
-      deletedAt: m.deletedAt?.toISOString() ?? null,
+      deleted: m.deleted ?? false,
+      deletedAt: m.deletedAt ? (typeof m.deletedAt === 'string' ? m.deletedAt : m.deletedAt.toISOString()) : null,
       deletedBy: m.deletedBy ?? null,
+      isParentPart: false, // Added to satisfy MappedMaterial type
     }
   })
 
@@ -138,12 +142,12 @@ export default async function MaterialPage({params}: PageProps) {
   }))
 
    // Non BE Numbers: materials that are not BE numbers (custom, unchecked, etc.)
-   const mappedNonBeNumbers = materials
+   const mappedNonBeNumbers = (materials as any[])
      .filter(m => !m.deleted)
-     .filter(m => typeof m.beNumber === 'string' && m.beNumber.length > 0)
+     .filter(m => typeof m.beNumber === 'string' && (m.beNumber ?? '').length > 0)
      .map(m => ({
-       iosNumber: m.beNumber, // Display beNumber as IOS Number
-       shortDescription: m.shortDescription,
+       beNumber: m.beNumber ?? '', // Ensure string, never null
+       shortDescription: m.shortDescription ?? '',
      }))
 
   const mappedWarehousePlaces = warehousePlaces.map(place => ({
@@ -194,8 +198,8 @@ export default async function MaterialPage({params}: PageProps) {
                   </TableRow>
                 ) : (
                   mappedNonBeNumbers.map(opt => (
-                    <TableRow key={opt.iosNumber}>
-                      <TableCell>{opt.iosNumber}</TableCell>
+                    <TableRow key={opt.beNumber}>
+                      <TableCell>{opt.beNumber}</TableCell> {/* Display as IOS Number */}
                       <TableCell>{opt.shortDescription}</TableCell>
                     </TableRow>
                   ))

@@ -62,6 +62,9 @@ interface MappedMaterialDetail {
   deletedAt: string | null
   deletedBy: string | null
   inventoryItems: InventoryItem[]
+  parentBeNumbers: string[]
+  isParentPart: boolean
+  isSerialTracked: boolean
 }
 
 interface MaterialGroup {
@@ -90,6 +93,7 @@ interface MaterialDetailProps {
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
   nonBeNumberItems: any[] // TODO: type properly
+  serialTrackedStructure?: any
 }
 
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
@@ -100,7 +104,13 @@ function formatDate(iso: string | null | undefined) {
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
-export function MaterialDetail({material, materialGroups, units, supplierCompanies, nonBeNumberItems}: MaterialDetailProps) {
+export function MaterialDetail({
+  material,
+  materialGroups,
+  units,
+  supplierCompanies,
+  nonBeNumberItems,
+}: MaterialDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -224,7 +234,10 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
   }
 
   const groupAOptions = ensureSelectedOption(
-    buildUniqueGroupOptions(() => true, group => group.groupA),
+    buildUniqueGroupOptions(
+      () => true,
+      group => group.groupA,
+    ),
     form.materialGroupIdA,
     selectedGroupA?.groupA,
   )
@@ -258,7 +271,8 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
         if (!group.groupD) return false
         if (!selectedGroupA) return true
         if (!selectedGroupB?.groupB) return group.groupA === selectedGroupA.groupA
-        if (!selectedGroupC?.groupC) return group.groupA === selectedGroupA.groupA && group.groupB === selectedGroupB.groupB
+        if (!selectedGroupC?.groupC)
+          return group.groupA === selectedGroupA.groupA && group.groupB === selectedGroupB.groupB
         return (
           group.groupA === selectedGroupA.groupA &&
           group.groupB === selectedGroupB.groupB &&
@@ -694,7 +708,9 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                   <span className="text-sm text-muted-foreground">{form.isParentPart ? 'Yes' : 'No'}</span>
                 </div>
               ) : (
-                <p className="text-sm">{(material.parentBeNumbers && material.parentBeNumbers.length > 0) ? 'Yes' : 'No'}</p>
+                <p className="text-sm">
+                  {material.parentBeNumbers && material.parentBeNumbers.length > 0 ? 'Yes' : 'No'}
+                </p>
               )}
             </div>
 
@@ -786,9 +802,15 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                 <TableBody>
                   {nonBeNumberItems.map((item: any) => (
                     <TableRow key={item.id}>
-                      <TableCell className={tdClass}>{item.beNumber ?? <span className="text-muted-foreground">—</span>}</TableCell>
-                      <TableCell className={tdClass}>{item.shortDescription ?? <span className="text-muted-foreground">—</span>}</TableCell>
-                      <TableCell className={tdClass}>{item.brandName ?? <span className="text-muted-foreground">—</span>}</TableCell>
+                      <TableCell className={tdClass}>
+                        {item.beNumber ?? <span className="text-muted-foreground">—</span>}
+                      </TableCell>
+                      <TableCell className={tdClass}>
+                        {item.shortDescription ?? <span className="text-muted-foreground">—</span>}
+                      </TableCell>
+                      <TableCell className={tdClass}>
+                        {item.brandName ?? <span className="text-muted-foreground">—</span>}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

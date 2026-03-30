@@ -1,5 +1,5 @@
-CREATE DATABASE BecraBV; 
-USE BecraBV;
+CREATE DATABASE app_db;
+USE app_db;
 
 CREATE TABLE
       IF NOT EXISTS Role (
@@ -172,7 +172,8 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS Material (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            beNumber VARCHAR(255) NOT NULL,
+            beNumber VARCHAR(255),
+            IOSNumber VARCHAR(255),
             name VARCHAR(255),
             brandOrderNr VARCHAR(255) NULL,
             shortDescription VARCHAR(255) NOT NULL,
@@ -189,6 +190,7 @@ CREATE TABLE
             unitId CHAR(36) NOT NULL,
             createdBy CHAR(36) NOT NULL,
             CONSTRAINT uq_material_beNumber UNIQUE (beNumber),
+            CONSTRAINT uq_material_IOSNumber UNIQUE (IOSNumber),
             FOREIGN KEY (materialGroupIdA) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
             FOREIGN KEY (materialGroupIdB) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
             FOREIGN KEY (materialGroupIdC) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
@@ -198,7 +200,11 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            CONSTRAINT chk_material_be_or_ios CHECK (
+                  (beNumber IS NOT NULL AND beNumber <> '')
+                  OR (IOSNumber IS NOT NULL AND IOSNumber <> '')
+            )
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -1414,7 +1420,7 @@ CREATE TABLE
             layer VARCHAR(255),
             layerPlace VARCHAR(255),
             information VARCHAR(255),
-            volume INT NOT NULL,
+            quantityInStock INT NOT NULL,
             createdAt DATETIME NOT NULL,
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,

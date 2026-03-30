@@ -15,11 +15,16 @@ interface PageProps {
 }
 
 export default async function SerialTrackedDetailPage({params}: PageProps) {
+
   const {departmentId, serialTrackedId} = await params
+
+  const itemPromise = typeof serialTrackedId === 'string'
+    ? getSerialTrackedById(serialTrackedId).catch(() => null)
+    : Promise.resolve(null)
 
   const [department, item, profile, companiesFromDAL, projectsFromDAL, materialGroupsFromDAL, materialsFromDAL] = await Promise.all([
     getDepartmentById(departmentId),
-    getSerialTrackedById(serialTrackedId).catch(() => null),
+    itemPromise,
     getSessionProfileFromCookieOrThrow(),
     getCompanies(),
     getProjects(),

@@ -138,7 +138,8 @@ export const ModelName = {
   DocumentGroupA: 'DocumentGroupA',
   DocumentGroupB: 'DocumentGroupB',
   DocumentGroupC: 'DocumentGroupC',
-  DocumentGroupD: 'DocumentGroupD'
+  DocumentGroupD: 'DocumentGroupD',
+  PriceListCompany: 'PriceListCompany'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -678,8 +679,7 @@ export const InvoiceOutScalarFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  vatMarginId: 'vatMarginId',
-  priceListId: 'priceListId'
+  vatMarginId: 'vatMarginId'
 } as const
 
 export type InvoiceOutScalarFieldEnum = (typeof InvoiceOutScalarFieldEnum)[keyof typeof InvoiceOutScalarFieldEnum]
@@ -701,6 +701,7 @@ export type InvoiceTypeScalarFieldEnum = (typeof InvoiceTypeScalarFieldEnum)[key
 export const MaterialScalarFieldEnum = {
   id: 'id',
   beNumber: 'beNumber',
+  IOSNumber: 'IOSNumber',
   name: 'name',
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
@@ -719,8 +720,7 @@ export const MaterialScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  targetId: 'targetId',
-  isSerialTracked: 'isSerialTracked'
+  targetId: 'targetId'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -895,6 +895,7 @@ export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)
 
 export const MaterialSerialTrackScalarFieldEnum = {
   id: 'id',
+  beNumber: 'beNumber',
   brandName: 'brandName',
   management: 'management',
   brandOrderNumber: 'brandOrderNumber',
@@ -903,6 +904,7 @@ export const MaterialSerialTrackScalarFieldEnum = {
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   transactionType: 'transactionType',
+  materialGroupId: 'materialGroupId',
   fromLocation: 'fromLocation',
   toLocation: 'toLocation',
   updatedAt: 'updatedAt',
@@ -914,8 +916,7 @@ export const MaterialSerialTrackScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy',
-  materialId: 'materialId'
+  deletedBy: 'deletedBy'
 } as const
 
 export type MaterialSerialTrackScalarFieldEnum = (typeof MaterialSerialTrackScalarFieldEnum)[keyof typeof MaterialSerialTrackScalarFieldEnum]
@@ -927,6 +928,7 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -1074,7 +1076,6 @@ export const ProjectScalarFieldEnum = {
   projectTypeId: 'projectTypeId',
   parentProjectId: 'parentProjectId',
   targetId: 'targetId',
-  priceListId: 'priceListId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy'
@@ -1774,6 +1775,15 @@ export const DocumentGroupDScalarFieldEnum = {
 export type DocumentGroupDScalarFieldEnum = (typeof DocumentGroupDScalarFieldEnum)[keyof typeof DocumentGroupDScalarFieldEnum]
 
 
+export const PriceListCompanyScalarFieldEnum = {
+  id: 'id',
+  priceListId: 'priceListId',
+  companyId: 'companyId'
+} as const
+
+export type PriceListCompanyScalarFieldEnum = (typeof PriceListCompanyScalarFieldEnum)[keyof typeof PriceListCompanyScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2166,8 +2176,7 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  vatMarginId: 'vatMarginId',
-  priceListId: 'priceListId'
+  vatMarginId: 'vatMarginId'
 } as const
 
 export type InvoiceOutOrderByRelevanceFieldEnum = (typeof InvoiceOutOrderByRelevanceFieldEnum)[keyof typeof InvoiceOutOrderByRelevanceFieldEnum]
@@ -2186,6 +2195,7 @@ export type InvoiceTypeOrderByRelevanceFieldEnum = (typeof InvoiceTypeOrderByRel
 export const MaterialOrderByRelevanceFieldEnum = {
   id: 'id',
   beNumber: 'beNumber',
+  IOSNumber: 'IOSNumber',
   name: 'name',
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
@@ -2345,6 +2355,7 @@ export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderB
 
 export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   id: 'id',
+  beNumber: 'beNumber',
   brandName: 'brandName',
   management: 'management',
   brandOrderNumber: 'brandOrderNumber',
@@ -2353,6 +2364,7 @@ export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   transactionType: 'transactionType',
+  materialGroupId: 'materialGroupId',
   fromLocation: 'fromLocation',
   toLocation: 'toLocation',
   preferredSupplier: 'preferredSupplier',
@@ -2360,8 +2372,7 @@ export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   projectId: 'projectId',
   becraCode: 'becraCode',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy',
-  materialId: 'materialId'
+  deletedBy: 'deletedBy'
 } as const
 
 export type MaterialSerialTrackOrderByRelevanceFieldEnum = (typeof MaterialSerialTrackOrderByRelevanceFieldEnum)[keyof typeof MaterialSerialTrackOrderByRelevanceFieldEnum]
@@ -2373,6 +2384,7 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -2475,7 +2487,6 @@ export const ProjectOrderByRelevanceFieldEnum = {
   projectTypeId: 'projectTypeId',
   parentProjectId: 'parentProjectId',
   targetId: 'targetId',
-  priceListId: 'priceListId',
   deletedBy: 'deletedBy'
 } as const
 
@@ -3010,4 +3021,13 @@ export const DocumentGroupDOrderByRelevanceFieldEnum = {
 } as const
 
 export type DocumentGroupDOrderByRelevanceFieldEnum = (typeof DocumentGroupDOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupDOrderByRelevanceFieldEnum]
+
+
+export const PriceListCompanyOrderByRelevanceFieldEnum = {
+  id: 'id',
+  priceListId: 'priceListId',
+  companyId: 'companyId'
+} as const
+
+export type PriceListCompanyOrderByRelevanceFieldEnum = (typeof PriceListCompanyOrderByRelevanceFieldEnum)[keyof typeof PriceListCompanyOrderByRelevanceFieldEnum]
 

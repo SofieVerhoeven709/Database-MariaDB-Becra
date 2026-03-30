@@ -564,7 +564,7 @@ UPDATE Company SET officialName = name WHERE officialName IS NULL;
 ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
 ALTER TABLE Project DROP FOREIGN KEY IF EXISTS fk_project_pricelist;
-ALTER TABLE project DROP COLUMN IF EXISTS `priceListId`;
+ALTER TABLE Project DROP COLUMN IF EXISTS `priceListId`;
 
 -- 44. CompanyAddress: rename table from CompanyAdress (safe, only if old exists and new does not)
 SET @old_exists = (

@@ -4,6 +4,7 @@ import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown} from 'lucide-react
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {WarehousePlaceFormDialog} from '@/components/custom/warehousePlaceFormDialog'
 import type {MappedWarehousePlace} from '@/types/warehousePlace'
 import {
@@ -11,10 +12,10 @@ import {
   updateWarehousePlaceAction,
   deleteWarehousePlaceAction,
 } from '@/serverFunctions/warehousePlaces'
-import {useRouter} from 'next/navigation'
 
 type SortField = 'abbreviation' | 'beNumber' | 'place' | 'quantityInStock'
 type SortDir = 'asc' | 'desc'
+type DeletedFilter = 'active' | 'deleted' | 'all'
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
@@ -30,9 +31,9 @@ interface WarehousePlaceTableProps {
 }
 
 export function WarehousePlaceTable({initialItems}: WarehousePlaceTableProps) {
-  const router = useRouter()
-  const [items] = useState(initialItems)
+  const [items, setItems] = useState(initialItems)
   const [search, setSearch] = useState('')
+  const [deletedFilter, setDeletedFilter] = useState<DeletedFilter>('active')
   const [sortField, setSortField] = useState<SortField>('abbreviation')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -48,6 +49,10 @@ export function WarehousePlaceTable({initialItems}: WarehousePlaceTableProps) {
   }
 
   const filtered = items
+    .filter(i => {
+      if (deletedFilter === 'all') return true
+      return deletedFilter === 'deleted' ? i.deleted : !i.deleted
+    })
     .filter(i => {
       if (!search) return true
       const q = search.toLowerCase()
@@ -82,6 +87,25 @@ export function WarehousePlaceTable({initialItems}: WarehousePlaceTableProps) {
         information: form.information || undefined,
         quantityInStock: form.quantityInStock ?? 0,
       })
+
+      setItems(prev =>
+        prev.map(item =>
+          item.id === form.id
+            ? {
+                ...item,
+                abbreviation: form.abbreviation ?? item.abbreviation,
+                beNumber: form.beNumber ?? null,
+                place: form.place ?? null,
+                shelf: form.shelf ?? null,
+                column: form.column ?? null,
+                layer: form.layer ?? null,
+                layerPlace: form.layerPlace ?? null,
+                information: form.information ?? null,
+                quantityInStock: form.quantityInStock ?? item.quantityInStock,
+              }
+            : item,
+        ),
+      )
     } else {
       await createWarehousePlaceAction({
         id: form.id,
@@ -95,16 +119,50 @@ export function WarehousePlaceTable({initialItems}: WarehousePlaceTableProps) {
         information: form.information || undefined,
         quantityInStock: form.quantityInStock ?? 0,
       })
+
+      const nowIso = new Date().toISOString()
+      setItems(prev => [
+        ...prev,
+        {
+          id: form.id,
+          abbreviation: form.abbreviation ?? '',
+          beNumber: form.beNumber ?? null,
+          serialTrackedId: null,
+          place: form.place ?? null,
+          shelf: form.shelf ?? null,
+          column: form.column ?? null,
+          layer: form.layer ?? null,
+          layerPlace: form.layerPlace ?? null,
+          information: form.information ?? null,
+          quantityInStock: form.quantityInStock ?? 0,
+          createdAt: nowIso,
+          createdBy: '',
+          createdByName: '-',
+          deleted: false,
+          deletedAt: null,
+          deletedBy: null,
+        },
+      ])
     }
+
     setDialogOpen(false)
     setEditingItem(null)
-    router.refresh()
   }
 
   async function handleDelete(id: string) {
     if (!confirm('Are you sure you want to delete this warehouse place?')) return
     await deleteWarehousePlaceAction({id})
-    router.refresh()
+    setItems(prev =>
+      prev.map(item =>
+        item.id === id
+          ? {
+              ...item,
+              deleted: true,
+              deletedAt: new Date().toISOString(),
+            }
+          : item,
+      ),
+    )
   }
 
   const columns: {key: SortField; label: string}[] = [
@@ -127,6 +185,16 @@ export function WarehousePlaceTable({initialItems}: WarehousePlaceTableProps) {
             onChange={e => setSearch(e.target.value)}
           />
         </div>
+        <Select value={deletedFilter} onValueChange={v => setDeletedFilter(v as DeletedFilter)}>
+          <SelectTrigger className="w-[180px] bg-secondary border-border">
+            <SelectValue placeholder="Filter status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="active">Active only</SelectItem>
+            <SelectItem value="deleted">Deleted only</SelectItem>
+            <SelectItem value="all">All statuses</SelectItem>
+          </SelectContent>
+        </Select>
         <Button
           onClick={() => {
             setEditingItem(null)

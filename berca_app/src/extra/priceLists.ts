@@ -2,7 +2,7 @@ import type {
   MappedPriceList,
   MappedPriceListItem,
   MappedPriceListItemTarget,
-  MappedPriceListProject,
+  MappedPriceListCompany,
   LinkableTargetType,
 } from '@/types/priceList'
 
@@ -40,12 +40,10 @@ type PriceListRaw = {
   targetId: string
   Employee_PriceList_createdByToEmployee: {id: string; firstName: string; lastName: string}
   PriceListItem: PriceListItemRaw[]
-  Project: {
+  PriceListCompany: {
     id: string
-    projectNumber: string
-    projectName: string
     companyId: string
-    Company: {id: string; name: string}
+    Company: {id: string; number: string; name: string}
   }[]
 }
 
@@ -88,12 +86,12 @@ export function mapPriceList(
   resolvedTargets: Map<string, {targetType: LinkableTargetType; displayLabel: string}> = new Map(),
 ): MappedPriceList {
   const items = r.PriceListItem.map(item => mapItem(item, resolvedTargets))
-  const projects: MappedPriceListProject[] = r.Project.map(p => ({
-    id: p.id,
-    projectNumber: p.projectNumber,
-    projectName: p.projectName,
-    companyId: p.companyId,
-    companyName: p.Company.name,
+
+  const companies: MappedPriceListCompany[] = r.PriceListCompany.map(c => ({
+    id: c.id,
+    companyId: c.Company.id,
+    companyNumber: c.Company.number,
+    companyName: c.Company.name,
   }))
 
   return {
@@ -109,7 +107,7 @@ export function mapPriceList(
     deletedByName: null,
     targetId: r.targetId,
     items,
-    projects,
+    companies,
     itemCount: items.filter(i => !i.deleted).length,
   }
 }

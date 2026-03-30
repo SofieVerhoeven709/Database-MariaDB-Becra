@@ -1,7 +1,7 @@
 'use server'
 import {revalidatePath} from 'next/cache'
 import {prismaClient} from '@/dal/prismaClient'
-import {searchLinkableTargets} from '@/dal/priceLists'
+import {searchLinkableTargets, searchCompanies} from '@/dal/priceLists'
 import {
   createPriceListSchema,
   updatePriceListSchema,
@@ -11,13 +11,12 @@ import {
   updatePriceListItemSchema,
   priceListItemIdSchema,
   linkPriceListItemTargetSchema,
-  assignProjectSchema,
-  unassignProjectSchema,
+  assignCompanySchema,
+  unassignCompanySchema,
 } from '@/schemas/priceListSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
-import type {LinkableTargetType, LinkableTargetResult} from '@/types/priceList'
-import {createCompanyAction} from '@/serverFunctions/companies'
+import type {LinkableTargetType, LinkableTargetResult, CompanySearchResult} from '@/types/priceList'
 
 const COST_MARGIN_DESCRIPTION = 'Cost Margin'
 const COST_MARGIN_UNIT = '%'
@@ -135,7 +134,7 @@ export const clonePriceListAction = protectedServerFunction({
       })
     }
 
-    logger.info(`Price list cloned: ${newId} from ${sourceId} (${source.PriceListItem.length} items)`)
+    logger.info(`Price list cloned: ${newId} from ${sourceId}`)
     revalidatePath('/priceLists')
   },
 })
@@ -329,29 +328,29 @@ export async function searchLinkableTargetsAction(
   return []
 }
 
-// ─── Project assignment ────────────────────────────────────────────────────────
-export const assignProjectToPriceListAction = protectedServerFunction({
-  schema: assignProjectSchema,
-  functionName: 'Assign project to price list action',
-  serverFn: async ({data: {priceListId, projectId}, logger}) => {
-    await prismaClient.project.update({
-      where: {id: projectId},
-      data: {priceListId},
+// ─── Company assignment ────────────────────────────────────────────────────────
+export const assignCompanyToPriceListAction = protectedServerFunction({
+  schema: assignCompanySchema,
+  functionName: 'Assign company to price list action',
+  serverFn: async ({data: {priceListId, companyId}, logger}) => {
+    await prismaClient.priceListCompany.create({
+      data: {id: crypto.randomUUID(), priceListId, companyId},
     })
-    logger.info(`Project ${projectId} assigned to price list ${priceListId}`)
+    logger.info(`Company ${companyId} assigned to price list ${priceListId}`)
     revalidatePath('/priceLists')
   },
 })
 
-export const unassignProjectFromPriceListAction = protectedServerFunction({
-  schema: unassignProjectSchema,
-  functionName: 'Unassign project from price list action',
-  serverFn: async ({data: {projectId}, logger}) => {
-    await prismaClient.project.update({
-      where: {id: projectId},
-      data: {priceListId: null},
-    })
-    logger.info(`Project ${projectId} unassigned from price list`)
+export const unassignCompanyFromPriceListAction = protectedServerFunction({
+  schema: unassignCompanySchema,
+  functionName: 'Unassign company from price list action',
+  serverFn: async ({data: {priceListCompanyId}, logger}) => {
+    await prismaClient.priceListCompany.delete({where: {id: priceListCompanyId}})
+    logger.info(`PriceListCompany row ${priceListCompanyId} deleted`)
     revalidatePath('/priceLists')
   },
 })
+
+export async function searchCompaniesAction(query: string, excludeIds: string[]): Promise<CompanySearchResult[]> {
+  return searchCompanies(query, excludeIds)
+}

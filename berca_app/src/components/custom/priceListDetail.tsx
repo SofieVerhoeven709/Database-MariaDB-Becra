@@ -2,9 +2,7 @@
 
 import {useState, useEffect, useRef} from 'react'
 import {useRouter} from 'next/navigation'
-import Link from 'next/link'
-import type {Route} from 'next'
-import {ArrowLeft, Pencil, X, Save, Plus, Trash2, ExternalLink} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, Plus, Trash2} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
@@ -13,7 +11,7 @@ import {Badge} from '@/components/ui/badge'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from '@/components/ui/dialog'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
-import type {MappedPriceList, MappedPriceListItem, UnassignedProjectOption} from '@/types/priceList'
+import type {MappedPriceList, MappedPriceListItem, CompanySearchResult} from '@/types/priceList'
 import {
   updatePriceListAction,
   createPriceListItemAction,
@@ -23,8 +21,9 @@ import {
   restorePriceListItemAction,
   linkPriceListItemTargetAction,
   searchLinkableTargetsAction,
-  assignProjectToPriceListAction,
-  unassignProjectFromPriceListAction,
+  assignCompanyToPriceListAction,
+  unassignCompanyFromPriceListAction,
+  searchCompaniesAction,
   createPriceListItemAndReturnIdAction,
 } from '@/serverFunctions/priceLists'
 import type {LinkableTargetType, LinkableTargetResult} from '@/types/priceList'
@@ -42,12 +41,12 @@ function formatPrice(value: number, isCostMargin: boolean) {
 const thClass = 'whitespace-nowrap text-xs'
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 
-// ─── Item form dialog ──────────────────────────────────────────────────────────
+// ─── Item dialog ───────────────────────────────────────────────────────────────
 interface ItemDialogProps {
   open: boolean
   onOpenChange: (v: boolean) => void
   priceListId: string
-  item: MappedPriceListItem | null // null = create
+  item: MappedPriceListItem | null
   isCostMargin?: boolean
   onSaved: () => void
   onCreated?: (newItemId: string) => void
@@ -68,7 +67,6 @@ function ItemDialog({
   const [saving, setSaving] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  // Reset form whenever the dialog opens, keyed off the current item/mode
   const prevOpenRef = useRef(false)
   useEffect(() => {
     if (open && !prevOpenRef.current) {
@@ -192,6 +190,7 @@ function ItemDialog({
   )
 }
 
+// ─── Link dialog ───────────────────────────────────────────────────────────────
 const TARGET_TYPE_LABELS: Record<LinkableTargetType, string> = {
   HourType: 'Hour Type',
   Material: 'Material',
@@ -240,10 +239,7 @@ function LinkDialog({open, onOpenChange, priceListItemId, onSaved}: LinkDialogPr
     if (!selectedResult) return
     setSaving(true)
     try {
-      await linkPriceListItemTargetAction({
-        priceListItemId,
-        targetId: selectedResult.targetId,
-      })
+      await linkPriceListItemTargetAction({priceListItemId, targetId: selectedResult.targetId})
       onSaved()
       onOpenChange(false)
     } finally {
@@ -258,7 +254,6 @@ function LinkDialog({open, onOpenChange, priceListItemId, onSaved}: LinkDialogPr
           <DialogTitle className="text-foreground">Link to Target</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4 py-2">
-          {/* Step 1: pick type */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Type *</Label>
             <Select value={selectedType} onValueChange={v => setSelectedType(v as LinkableTargetType)}>
@@ -274,8 +269,6 @@ function LinkDialog({open, onOpenChange, priceListItemId, onSaved}: LinkDialogPr
               </SelectContent>
             </Select>
           </div>
-
-          {/* Step 2: search within type */}
           {selectedType && (
             <>
               <div className="flex flex-col gap-1.5">
@@ -288,7 +281,6 @@ function LinkDialog({open, onOpenChange, priceListItemId, onSaved}: LinkDialogPr
                   autoFocus
                 />
               </div>
-
               <div className="flex flex-col gap-1 max-h-52 overflow-y-auto rounded-lg border border-border bg-secondary/30">
                 {searching ? (
                   <p className="text-xs text-muted-foreground px-3 py-4 text-center">Searching…</p>
@@ -300,16 +292,13 @@ function LinkDialog({open, onOpenChange, priceListItemId, onSaved}: LinkDialogPr
                       key={r.targetId}
                       type="button"
                       onClick={() => setSelectedResult(r)}
-                      className={`flex flex-col gap-0.5 px-3 py-2 text-left hover:bg-secondary/80 transition-colors border-b border-border/40 last:border-0 ${
-                        selectedResult?.targetId === r.targetId ? 'bg-accent/10' : ''
-                      }`}>
+                      className={`flex flex-col gap-0.5 px-3 py-2 text-left hover:bg-secondary/80 transition-colors border-b border-border/40 last:border-0 ${selectedResult?.targetId === r.targetId ? 'bg-accent/10' : ''}`}>
                       <span className="text-sm text-foreground font-medium">{r.displayLabel}</span>
                       {r.subLabel && <span className="text-xs text-muted-foreground">{r.subLabel}</span>}
                     </button>
                   ))
                 )}
               </div>
-
               {selectedResult && (
                 <p className="text-xs text-muted-foreground">
                   Selected: <span className="text-foreground font-medium">{selectedResult.displayLabel}</span>
@@ -337,22 +326,117 @@ function LinkDialog({open, onOpenChange, priceListItemId, onSaved}: LinkDialogPr
   )
 }
 
+// ─── Assign company dialog ─────────────────────────────────────────────────────
+interface AssignCompanyDialogProps {
+  open: boolean
+  onOpenChange: (v: boolean) => void
+  priceListId: string
+  alreadyAssignedIds: string[]
+  onSaved: () => void
+}
+
+function AssignCompanyDialog({open, onOpenChange, priceListId, alreadyAssignedIds, onSaved}: AssignCompanyDialogProps) {
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState<CompanySearchResult[]>([])
+  const [searching, setSearching] = useState(false)
+  const [selectedCompany, setSelectedCompany] = useState<CompanySearchResult | null>(null)
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    if (!open) {
+      setQuery('')
+      setResults([])
+      setSelectedCompany(null)
+    }
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
+    setSearching(true)
+    searchCompaniesAction(query, alreadyAssignedIds)
+      .then(setResults)
+      .finally(() => setSearching(false))
+  }, [query, open, alreadyAssignedIds])
+
+  async function handleAssign() {
+    if (!selectedCompany) return
+    setSaving(true)
+    try {
+      await assignCompanyToPriceListAction({priceListId, companyId: selectedCompany.id})
+      onSaved()
+      onOpenChange(false)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-md bg-card border-border">
+        <DialogHeader>
+          <DialogTitle className="text-foreground">Assign Company</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-4 py-2">
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">Search</Label>
+            <Input
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              placeholder="Search by name or number…"
+              className="bg-secondary border-border"
+              autoFocus
+            />
+          </div>
+          <div className="flex flex-col gap-1 max-h-52 overflow-y-auto rounded-lg border border-border bg-secondary/30">
+            {searching ? (
+              <p className="text-xs text-muted-foreground px-3 py-4 text-center">Searching…</p>
+            ) : results.length === 0 ? (
+              <p className="text-xs text-muted-foreground px-3 py-4 text-center">No companies found.</p>
+            ) : (
+              results.map(c => (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => setSelectedCompany(c)}
+                  className={`flex flex-col gap-0.5 px-3 py-2 text-left hover:bg-secondary/80 transition-colors border-b border-border/40 last:border-0 ${selectedCompany?.id === c.id ? 'bg-accent/10' : ''}`}>
+                  <span className="text-sm text-foreground font-medium">{c.name}</span>
+                  <span className="text-xs text-muted-foreground">{c.number}</span>
+                </button>
+              ))
+            )}
+          </div>
+          {selectedCompany && (
+            <p className="text-xs text-muted-foreground">
+              Selected: <span className="text-foreground font-medium">{selectedCompany.name}</span>
+              <span className="ml-1 text-muted-foreground">({selectedCompany.number})</span>
+            </p>
+          )}
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)} className="border-border">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleAssign}
+            disabled={!selectedCompany || saving}
+            className="bg-accent text-accent-foreground hover:bg-accent/80">
+            {saving ? 'Assigning…' : 'Assign'}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 // ─── Main component ────────────────────────────────────────────────────────────
 interface PriceListDetailProps {
   priceList: MappedPriceList
-  unassignedProjects: UnassignedProjectOption[]
   currentUserLevel: number
   currentUserRole: string
   departmentId: string
 }
 
-export function PriceListDetail({
-  priceList,
-  unassignedProjects,
-  currentUserLevel,
-  currentUserRole,
-  departmentId,
-}: PriceListDetailProps) {
+export function PriceListDetail({priceList, currentUserLevel, currentUserRole, departmentId}: PriceListDetailProps) {
   const router = useRouter()
   const canEdit = currentUserLevel >= 40
   const canCreate = currentUserLevel >= 60
@@ -393,16 +477,6 @@ export function PriceListDetail({
   const [itemDialogOpen, setItemDialogOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<MappedPriceListItem | null>(null)
 
-  function openAddItem() {
-    setEditingItem(null)
-    setItemDialogOpen(true)
-  }
-
-  function openEditItem(item: MappedPriceListItem) {
-    setEditingItem(item)
-    setItemDialogOpen(true)
-  }
-
   // Link dialog
   const [linkDialogOpen, setLinkDialogOpen] = useState(false)
   const [linkingItemId, setLinkingItemId] = useState<string | null>(null)
@@ -431,30 +505,15 @@ export function PriceListDetail({
   type ItemFilter = 'not-deleted' | 'deleted' | 'all'
   const [itemFilter, setItemFilter] = useState<ItemFilter>('not-deleted')
 
-  // Project assignment
-  const [assigningProject, setAssigningProject] = useState(false)
-  const [selectedProjectId, setSelectedProjectId] = useState('none')
-  const [assigningSaving, setAssigningSaving] = useState(false)
+  // Assign company dialog
+  const [assignCompanyOpen, setAssignCompanyOpen] = useState(false)
+  const alreadyAssignedIds = priceList.companies.map(c => c.companyId)
 
-  async function handleAssignProject() {
-    if (selectedProjectId === 'none') return
-    setAssigningSaving(true)
-    try {
-      await assignProjectToPriceListAction({priceListId: priceList.id, projectId: selectedProjectId})
-      setSelectedProjectId('none')
-      setAssigningProject(false)
-      router.refresh()
-    } finally {
-      setAssigningSaving(false)
-    }
-  }
-
-  async function handleUnassignProject(projectId: string) {
-    await unassignProjectFromPriceListAction({projectId})
+  async function handleUnassignCompany(priceListCompanyId: string) {
+    await unassignCompanyFromPriceListAction({priceListCompanyId})
     router.refresh()
   }
 
-  // Separate items: cost margin first, then regular
   const costMarginItem = priceList.items.find(i => i.isCostMargin && !i.deleted)
   const regularItems = priceList.items.filter(i => !i.isCostMargin)
 
@@ -473,8 +532,8 @@ export function PriceListDetail({
           <div>
             <h1 className="text-lg font-semibold text-foreground">{priceList.name}</h1>
             <p className="text-sm text-muted-foreground">
-              {priceList.items.length} item{priceList.items.length !== 1 ? 's' : ''} · {priceList.projects.length}{' '}
-              project{priceList.projects.length !== 1 ? 's' : ''}
+              {priceList.items.length} item{priceList.items.length !== 1 ? 's' : ''} · {priceList.companies.length}{' '}
+              compan{priceList.companies.length !== 1 ? 'ies' : 'y'}
             </p>
           </div>
         </div>
@@ -483,21 +542,18 @@ export function PriceListDetail({
             {editing ? (
               <>
                 <Button variant="outline" onClick={handleCancel} className="gap-2 border-border">
-                  <X className="h-4 w-4" />
-                  Cancel
+                  <X className="h-4 w-4" /> Cancel
                 </Button>
                 <Button
                   onClick={handleSave}
                   disabled={saving}
                   className="gap-2 bg-accent text-accent-foreground hover:bg-accent/80">
-                  <Save className="h-4 w-4" />
-                  {saving ? 'Saving…' : 'Save'}
+                  <Save className="h-4 w-4" /> {saving ? 'Saving…' : 'Save'}
                 </Button>
               </>
             ) : (
               <Button onClick={() => setEditing(true)} variant="outline" className="gap-2 border-border">
-                <Pencil className="h-4 w-4" />
-                Edit
+                <Pencil className="h-4 w-4" /> Edit
               </Button>
             )}
           </div>
@@ -525,17 +581,14 @@ export function PriceListDetail({
               <p className="text-sm text-muted-foreground">{priceList.name}</p>
             )}
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created By</Label>
             <p className="text-sm text-muted-foreground">{priceList.createdByName}</p>
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">Created At</Label>
             <p className="text-sm text-muted-foreground">{formatDate(priceList.createdAt)}</p>
           </div>
-
           <div className="sm:col-span-2 lg:col-span-3">
             <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2 max-w-xs">
               <Label className="text-xs text-muted-foreground">Repeat Use</Label>
@@ -567,7 +620,10 @@ export function PriceListDetail({
               size="sm"
               variant="outline"
               className="text-xs h-7 border-border gap-1"
-              onClick={() => openEditItem(costMarginItem)}>
+              onClick={() => {
+                setEditingItem(costMarginItem)
+                setItemDialogOpen(true)
+              }}>
               <Pencil className="h-3 w-3" /> Edit
             </Button>
           )}
@@ -592,7 +648,7 @@ export function PriceListDetail({
             </Badge>
           </h2>
           <div className="flex items-center gap-2">
-            <Select value={itemFilter} onValueChange={v => setItemFilter(v as 'not-deleted' | 'deleted' | 'all')}>
+            <Select value={itemFilter} onValueChange={v => setItemFilter(v as ItemFilter)}>
               <SelectTrigger className="h-7 text-xs w-[130px] bg-secondary border-border">
                 <SelectValue />
               </SelectTrigger>
@@ -609,13 +665,19 @@ export function PriceListDetail({
               </SelectContent>
             </Select>
             {canCreate && (
-              <Button size="sm" variant="outline" className="text-xs h-7 border-border gap-1" onClick={openAddItem}>
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-xs h-7 border-border gap-1"
+                onClick={() => {
+                  setEditingItem(null)
+                  setItemDialogOpen(true)
+                }}>
                 <Plus className="h-3.5 w-3.5" /> Add Item
               </Button>
             )}
           </div>
         </div>
-
         {(() => {
           const visibleItems = regularItems.filter(i => {
             if (itemFilter === 'not-deleted') return !i.deleted
@@ -683,7 +745,10 @@ export function PriceListDetail({
                                   variant="ghost"
                                   size="icon"
                                   className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                                  onClick={() => openEditItem(item)}>
+                                  onClick={() => {
+                                    setEditingItem(item)
+                                    setItemDialogOpen(true)
+                                  }}>
                                   <Pencil className="h-3 w-3" />
                                 </Button>
                               )}
@@ -732,113 +797,55 @@ export function PriceListDetail({
         })()}
       </div>
 
-      {/* Linked Projects */}
+      {/* Linked Companies */}
       <div className="rounded-xl border border-border/60 bg-card p-4">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-medium text-foreground">
-            Linked Projects
+            Linked Companies
             <Badge variant="secondary" className="ml-2 text-xs">
-              {priceList.projects.length}
+              {priceList.companies.length}
             </Badge>
           </h2>
-          {canEdit && !assigningProject && unassignedProjects.length > 0 && (
+          {canEdit && (
             <Button
               size="sm"
               variant="outline"
               className="text-xs h-7 border-border gap-1"
-              onClick={() => setAssigningProject(true)}>
-              <Plus className="h-3.5 w-3.5" /> Assign Project
+              onClick={() => setAssignCompanyOpen(true)}>
+              <Plus className="h-3.5 w-3.5" /> Assign Company
             </Button>
           )}
         </div>
-
-        {assigningProject && (
-          <div className="flex items-center gap-2 mb-4 p-3 rounded-lg border border-border bg-secondary/30">
-            <Select value={selectedProjectId} onValueChange={setSelectedProjectId}>
-              <SelectTrigger className="h-8 text-xs bg-background border-border flex-1">
-                <SelectValue placeholder="Select project…" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                <SelectItem value="none" disabled>
-                  Select project…
-                </SelectItem>
-                {unassignedProjects.map(p => (
-                  <SelectItem key={p.id} value={p.id} className="text-xs">
-                    {p.projectNumber} — {p.projectName}
-                    <span className="ml-1 text-muted-foreground">({p.companyName})</span>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Button
-              size="sm"
-              className="h-8 text-xs bg-accent text-accent-foreground hover:bg-accent/80"
-              onClick={handleAssignProject}
-              disabled={selectedProjectId === 'none' || assigningSaving}>
-              {assigningSaving ? 'Saving…' : 'Assign'}
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              className="h-8 text-xs border-border"
-              onClick={() => {
-                setAssigningProject(false)
-                setSelectedProjectId('none')
-              }}>
-              Cancel
-            </Button>
-          </div>
-        )}
-
-        {unassignedProjects.length === 0 && !assigningProject && priceList.projects.length === 0 && (
-          <p className="text-xs text-muted-foreground mb-3">
-            No open projects without a price list available to assign.
-          </p>
-        )}
-
-        {priceList.projects.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-4">No projects linked.</p>
+        {priceList.companies.length === 0 ? (
+          <p className="text-sm text-muted-foreground text-center py-4">No companies linked.</p>
         ) : (
           <div className="rounded-lg border border-border/60 overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent border-border/60">
-                  <TableHead className={thClass}>Project #</TableHead>
+                  <TableHead className={thClass}>Number</TableHead>
                   <TableHead className={thClass}>Name</TableHead>
-                  <TableHead className={thClass}>Company</TableHead>
-                  <TableHead className="w-20">
+                  <TableHead className="w-16">
                     <span className="sr-only">Actions</span>
                   </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {priceList.projects.map(p => (
-                  <TableRow key={p.id} className="border-border/40 hover:bg-secondary/50">
-                    <TableCell className={`${tdClass} text-foreground font-medium`}>{p.projectNumber}</TableCell>
-                    <TableCell className={tdClass}>{p.projectName}</TableCell>
-                    <TableCell className={tdClass}>{p.companyName}</TableCell>
+                {priceList.companies.map(c => (
+                  <TableRow key={c.id} className="border-border/40 hover:bg-secondary/50">
+                    <TableCell className={`${tdClass} text-foreground font-medium`}>{c.companyNumber}</TableCell>
+                    <TableCell className={tdClass}>{c.companyName}</TableCell>
                     <TableCell>
-                      <div className="flex items-center gap-1">
-                        <Link href={`/departments/${departmentId}/project/${p.id}` as Route}>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10"
-                            title="Open project">
-                            <ExternalLink className="h-3 w-3" />
-                          </Button>
-                        </Link>
-                        {canEdit && (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                            title="Unassign"
-                            onClick={() => handleUnassignProject(p.id)}>
-                            <X className="h-3 w-3" />
-                          </Button>
-                        )}
-                      </div>
+                      {canEdit && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                          title="Unassign"
+                          onClick={() => handleUnassignCompany(c.id)}>
+                          <X className="h-3 w-3" />
+                        </Button>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -870,6 +877,15 @@ export function PriceListDetail({
           onSaved={() => router.refresh()}
         />
       )}
+
+      {/* Assign company dialog */}
+      <AssignCompanyDialog
+        open={assignCompanyOpen}
+        onOpenChange={setAssignCompanyOpen}
+        priceListId={priceList.id}
+        alreadyAssignedIds={alreadyAssignedIds}
+        onSaved={() => router.refresh()}
+      />
     </div>
   )
 }

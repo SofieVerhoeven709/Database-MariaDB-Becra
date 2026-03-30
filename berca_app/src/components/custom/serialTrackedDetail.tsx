@@ -2,8 +2,11 @@
 
 import {Badge} from '@/components/ui/badge'
 import {Pencil} from 'lucide-react'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {MaterialSerialTrackedFormDialog} from '@/components/custom/serialTrackedFormDialog'
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import {getSerialTrackedStructureBySerialTrackedId} from '@/dal/materialSerialTrackedStructure'
 
 interface Props {
   item: any
@@ -17,6 +20,15 @@ interface Props {
 
 export function MaterialSerialTrackedDetail({item, companies, projects, materialGroups, materialOptions, currentUserRole, currentUserLevel}: Props) {
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [structure, setStructure] = useState<any[]>([])
+  useEffect(() => {
+    async function fetchStructure() {
+      const data = await getSerialTrackedStructureBySerialTrackedId(item.id)
+      setStructure(data)
+    }
+    fetchStructure()
+  }, [item.id])
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -34,35 +46,67 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
         </button>
       </div>
 
-      {/* Info grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border rounded-lg p-4">
-        <Field label="Short Description" value={item.shortDescription} />
-        <Field label="Brand Name" value={item.brandName} />
-        <Field label="Management" value={item.management} />
-        <Field label="Order Number" value={item.orderNumber} />
-        <Field label="Transaction Type" value={item.transactionType} />
-        <Field label="From Location" value={item.fromLocation} />
-        <Field label="To Location" value={item.toLocation} />
-        <Field label="Preferred Supplier" value={item.preferredSupplier} />
-        <Field label="Becra Code" value={item.becraCode} />
+      <Tabs defaultValue="details">
+        <TabsList>
+          <TabsTrigger value="details">Details</TabsTrigger>
+          <TabsTrigger value="structure">Structure</TabsTrigger>
+        </TabsList>
+        <TabsContent value="details">
+          {/* Info grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border rounded-lg p-4">
+            <Field label="Short Description" value={item.shortDescription} />
+            <Field label="Brand Name" value={item.brandName} />
+            <Field label="Management" value={item.management} />
+            <Field label="Order Number" value={item.orderNumber} />
+            <Field label="Transaction Type" value={item.transactionType} />
+            <Field label="From Location" value={item.fromLocation} />
+            <Field label="To Location" value={item.toLocation} />
+            <Field label="Preferred Supplier" value={item.preferredSupplier} />
+            <Field label="Becra Code" value={item.becraCode} />
 
-        <div>
-          <p className="text-xs text-muted-foreground">Rejected</p>
-          {item.rejected === true ? (
-            <Badge variant="destructive">Yes</Badge>
-          ) : item.rejected === false ? (
-            <Badge variant="secondary">No</Badge>
-          ) : (
-            <span className="text-muted-foreground">-</span>
-          )}
-        </div>
-      </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Rejected</p>
+              {item.rejected === true ? (
+                <Badge variant="destructive">Yes</Badge>
+              ) : item.rejected === false ? (
+                <Badge variant="secondary">No</Badge>
+              ) : (
+                <span className="text-muted-foreground">-</span>
+              )}
+            </div>
+          </div>
 
-      {/* Descriptions */}
-      <div className="space-y-3">
-        <Field label="Long Description" value={item.longDescription} multiline />
-        <Field label="Additional Info" value={item.additionalInfo} multiline />
-      </div>
+          {/* Descriptions */}
+          <div className="space-y-3">
+            <Field label="Long Description" value={item.longDescription} multiline />
+            <Field label="Additional Info" value={item.additionalInfo} multiline />
+          </div>
+        </TabsContent>
+        <TabsContent value="structure">
+          <div className="rounded-xl border border-border bg-card p-6">
+            {structure.length === 0 ? (
+              <p className="text-muted-foreground text-sm">No structure found for this serial tracked item.</p>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Short Description</TableHead>
+                    <TableHead>Long Description</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {structure.map((s: any) => (
+                    <TableRow key={s.id}>
+                      <TableCell>{s.shortDescription}</TableCell>
+                      <TableCell>{s.longDescription}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
+          </div>
+        </TabsContent>
+      </Tabs>
 
       <MaterialSerialTrackedFormDialog
         open={dialogOpen}

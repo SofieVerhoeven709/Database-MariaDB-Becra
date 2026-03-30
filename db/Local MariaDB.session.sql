@@ -1,5 +1,5 @@
-CREATE DATABASE app_db;
-USE app_db;
+CREATE DATABASE BecraBV; 
+USE BecraBV;
 
 CREATE TABLE
       IF NOT EXISTS Role (
@@ -444,7 +444,7 @@ CREATE TABLE
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-            FOREIGN KEY (companyAddressId) REFERENCES CompanyAddress (id) ON DELETE RESTRICT
+            FOREIGN KEY (companyAddressId) REFERENCES CompanyAddress (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -901,7 +901,7 @@ CREATE TABLE
             deletedAt DATETIME,
             modifiedAt DATETIME,
             reminderSent BOOLEAN NOT NULL DEFAULT 0,
-            outstanding BOOLEAN NOT NULL DEFAULT 0,
+            outstanding BOOLEAN NOT NULL DEFAULT 1,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedBy CHAR(36),
             createdBy CHAR(36) NOT NULL,
@@ -912,7 +912,6 @@ CREATE TABLE
             invoiceSentTypeId CHAR(36) NOT NULL,
             invoiceStatusId CHAR(36) NOT NULL,
             vatMarginId CHAR(36) NOT NULL,
-            priceListId CHAR(36),
             FOREIGN KEY (invoiceTypeId) REFERENCES InvoiceType (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT,
@@ -1295,6 +1294,7 @@ ADD CONSTRAINT fk_documentStructure_documentGroupD FOREIGN KEY (documentGroupDId
 ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
 
+
 CREATE TABLE
       IF NOT EXISTS MaterialFamily (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -1414,7 +1414,7 @@ CREATE TABLE
             layer VARCHAR(255),
             layerPlace VARCHAR(255),
             information VARCHAR(255),
-            quantityInStock INT NOT NULL,
+            volume INT NOT NULL,
             createdAt DATETIME NOT NULL,
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,

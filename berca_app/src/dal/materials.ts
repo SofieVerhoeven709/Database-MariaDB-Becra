@@ -297,3 +297,24 @@ export async function updateMaterialSerialTrackedLink(materialId: string, serial
     },
   })
 }
+
+export async function getNonBeNumberItems(materialId: string) {
+  // Fetch related items for this material where beNumber is missing or not numeric
+  return prismaClient.material.findMany({
+    where: {
+      OR: [
+        {beNumber: {not: undefined}},
+        {beNumber: {not: null}},
+      ],
+      AND: [
+        {beNumber: {not: ''}},
+        {beNumber: {not: undefined}},
+        {beNumber: {not: null}},
+        {beNumber: {not: {matches: /^\d+$/}}}, // not all digits
+      ],
+      deleted: false,
+      // Optionally, filter by relation to the given materialId if needed
+    },
+    orderBy: {beNumber: 'asc'},
+  })
+}

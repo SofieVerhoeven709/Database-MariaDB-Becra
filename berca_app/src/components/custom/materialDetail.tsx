@@ -89,6 +89,7 @@ interface MaterialDetailProps {
   materialGroups: MaterialGroup[]
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
+  nonBeNumberItems: any[] // TODO: type properly
 }
 
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
@@ -99,7 +100,7 @@ function formatDate(iso: string | null | undefined) {
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
-export function MaterialDetail({material, materialGroups, units, supplierCompanies}: MaterialDetailProps) {
+export function MaterialDetail({material, materialGroups, units, supplierCompanies, nonBeNumberItems}: MaterialDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -352,6 +353,7 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
               {totalStock}
             </Badge>
           </TabsTrigger>
+          <TabsTrigger value="nonBeNumbers">Non BE-numbers</TabsTrigger>
         </TabsList>
 
         {/* Details tab */}
@@ -765,6 +767,34 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
               {material.inventoryItems.length !== 1 ? 's' : ''}
             </p>
           )}
+        </TabsContent>
+
+        {/* Non BE-numbers tab */}
+        <TabsContent value="nonBeNumbers" className="mt-4">
+          <div className="rounded-xl border border-border bg-card p-6">
+            {nonBeNumberItems.length === 0 ? (
+              <p className="text-muted-foreground text-sm">No non-BE-number items found for this material.</p>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className={thClass}>BE Number</TableHead>
+                    <TableHead className={thClass}>Short Description</TableHead>
+                    <TableHead className={thClass}>Brand</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {nonBeNumberItems.map((item: any) => (
+                    <TableRow key={item.id}>
+                      <TableCell className={tdClass}>{item.beNumber ?? <span className="text-muted-foreground">—</span>}</TableCell>
+                      <TableCell className={tdClass}>{item.shortDescription ?? <span className="text-muted-foreground">—</span>}</TableCell>
+                      <TableCell className={tdClass}>{item.brandName ?? <span className="text-muted-foreground">—</span>}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
+          </div>
         </TabsContent>
       </Tabs>
     </div>

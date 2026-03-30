@@ -565,7 +565,7 @@ ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
 
 ALTER TABLE MaterialSerialTrack
-DROP COLUMN beNumber;
+DROP COLUMN IF EXISTS beNumber;
 
 -- Add the materialId column (nullable)
 ALTER TABLE MaterialSerialTrack
@@ -693,8 +693,37 @@ CREATE TABLE
 
 ALTER TABLE WorkOrder CHANGE COLUMN IF EXISTS `workOrderNumber` `workOrderNumber` VARCHAR(255) NOT NULL;
 
+-- Drop FK on HourType.targetId if exists (look up actual constraint name)
+SET @fk_name = (
+      SELECT CONSTRAINT_NAME
+      FROM information_schema.KEY_COLUMN_USAGE
+      WHERE TABLE_SCHEMA = DATABASE()
+            AND TABLE_NAME = 'HourType'
+            AND COLUMN_NAME = 'targetId'
+            AND REFERENCED_TABLE_NAME IS NOT NULL
+      LIMIT 1
+);
+SET @sql = IF(@fk_name IS NOT NULL,
+      CONCAT('ALTER TABLE HourType DROP FOREIGN KEY `', @fk_name, '`'),
+      'SELECT ''No FK to drop on HourType.targetId'''
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Ensure FK is dropped before altering column
+ALTER TABLE HourType DROP FOREIGN KEY IF EXISTS fk_hourType_target;
 ALTER TABLE HourType CHANGE COLUMN IF EXISTS `targetId` `targetId` VARCHAR(255) NOT NULL;
+-- Re-add FK after column change
+ALTER TABLE HourType ADD CONSTRAINT fk_hourType_target
+      FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
+
+-- Ensure FK is dropped before altering column
+ALTER TABLE Material DROP FOREIGN KEY IF EXISTS fk_material_target;
 ALTER TABLE Material CHANGE COLUMN IF EXISTS `targetId` `targetId` VARCHAR(255) NOT NULL;
+-- Re-add FK after column change
+ALTER TABLE Material ADD CONSTRAINT fk_material_target
+      FOREIGN KEY (`targetId`) REFERENCES Target (`id`) ON DELETE RESTRICT;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -787,4 +816,38 @@ ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
 
 ALTER TABLE MaterialSerialTrack CHANGE COLUMN IF EXISTS `serialTrackedId` `serialTrackedId` CHAR(36) NULL;
-ALTER TABLE MaterialSerialTrackStructure CHANGE COLUMN IF EXISTS `beNumber` `beNumber`  VARCHAR(255) NULL;
+SET @tbl_exists = (
+      SELECT COUNT(*)
+      FROM information_schema.TABLES
+      WHERE TABLE_SCHEMA = DATABASE()
+            AND TABLE_NAME = 'MaterialSerialTrackStructure'
+);
+
+SET @sql = IF(@tbl_exists > 0,
+      'ALTER TABLE MaterialSerialTrackStructure CHANGE COLUMN IF EXISTS `beNumber` `beNumber`  VARCHAR(255) NULL;',
+      'SELECT ''Skipping: MaterialSerialTrackStructure does not exist'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+ALTER TABLE Material 
+    ADD COLUMN IF NOT EXISTS IOSNumber VARCHAR(255) NULL;
+
+SET @idx_exists = (
+      SELECT COUNT(*)
+      FROM information_schema.STATISTICS
+      WHERE TABLE_SCHEMA = DATABASE()
+            AND TABLE_NAME = 'Material'
+            AND INDEX_NAME = 'IOSNumber'
+);
+
+SET @sql = IF(@idx_exists = 0,
+      'CREATE INDEX IOSNumber ON Material(IOSNumber)',
+      'SELECT ''Index IOSNumber already exists'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;

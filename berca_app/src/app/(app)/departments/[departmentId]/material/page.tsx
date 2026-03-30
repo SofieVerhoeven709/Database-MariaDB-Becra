@@ -1,6 +1,8 @@
 import {getMaterials, getMaterialGroups, getUnits} from '@/dal/materials'
 import {getWarehousePlaces} from '@/dal/warehousePlace'
 import {MaterialTable} from '@/components/custom/materialTable'
+import {Tabs, TabsList, TabsTrigger, TabsContent} from '@/components/ui/tabs'
+import {Table, TableHeader, TableRow, TableHead, TableBody, TableCell} from '@/components/ui/table'
 import {getDepartmentById} from '@/dal/department'
 import {getSupplierCompanies} from '@/dal/companies'
 import type {MappedMaterial} from '@/types/material'
@@ -135,13 +137,14 @@ export default async function MaterialPage({params}: PageProps) {
     number: c.number,
   }))
 
-  const mappedParentPartOptions = materials
-    .filter(m => !m.deleted)
-    .filter(m => typeof m.beNumber === 'string' && m.beNumber.length > 0)
-    .map(m => ({
-      beNumber: m.beNumber,
-      shortDescription: m.shortDescription,
-    }))
+   // Non BE Numbers: materials that are not BE numbers (custom, unchecked, etc.)
+   const mappedNonBeNumbers = materials
+     .filter(m => !m.deleted)
+     .filter(m => typeof m.beNumber === 'string' && m.beNumber.length > 0)
+     .map(m => ({
+       iosNumber: m.beNumber, // Display beNumber as IOS Number
+       shortDescription: m.shortDescription,
+     }))
 
   const mappedWarehousePlaces = warehousePlaces.map(place => ({
     id: place.id,
@@ -157,15 +160,54 @@ export default async function MaterialPage({params}: PageProps) {
           Manage engineering materials, components, and their specifications.
         </p>
       </div>
-      <MaterialTable
-        initialMaterials={mappedMaterials}
-        materialGroups={mappedGroups}
-        units={mappedUnits}
-        supplierCompanies={mappedSupplierCompanies}
-        departmentId={departmentId}
-        parentPartOptions={mappedParentPartOptions}
-        warehousePlaces={mappedWarehousePlaces}
-      />
+      <Tabs defaultValue="materials" className="w-full">
+        <TabsList className="mb-6 bg-secondary">
+          <TabsTrigger value="materials">Materials</TabsTrigger>
+          <TabsTrigger value="nonBeNumbers">Non BE Numbers</TabsTrigger>
+        </TabsList>
+        <TabsContent value="materials">
+          <MaterialTable
+            initialMaterials={mappedMaterials}
+            materialGroups={mappedGroups}
+            units={mappedUnits}
+            supplierCompanies={mappedSupplierCompanies}
+            departmentId={departmentId}
+            parentPartOptions={mappedNonBeNumbers}
+            warehousePlaces={mappedWarehousePlaces}
+          />
+        </TabsContent>
+        <TabsContent value="nonBeNumbers">
+          <div className="rounded-xl border border-border overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">IOS Number</TableHead>
+                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Short Description</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {mappedNonBeNumbers.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={2} className="text-center text-muted-foreground py-10">
+                      No IOS numbers found
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  mappedNonBeNumbers.map(opt => (
+                    <TableRow key={opt.iosNumber}>
+                      <TableCell>{opt.iosNumber}</TableCell>
+                      <TableCell>{opt.shortDescription}</TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+            <p className="text-xs text-muted-foreground mt-2">
+              {mappedNonBeNumbers.length} IOS number{mappedNonBeNumbers.length !== 1 ? 's' : ''}
+            </p>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

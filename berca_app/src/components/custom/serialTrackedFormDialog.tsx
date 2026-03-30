@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useMemo, useState, useTransition} from 'react'
+import {useEffect, useMemo, useState, useTransition, useRef} from 'react'
 import {useRouter} from 'next/navigation'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter} from '@/components/ui/dialog'
 import {Input} from '@/components/ui/input'
@@ -145,6 +145,8 @@ export function MaterialSerialTrackedFormDialog({
   const [isPending, startTransition] = useTransition()
   const [form, setForm] = useState<FormState>(emptyForm)
   const [error, setError] = useState<string | null>(null)
+  const [createdId, setCreatedId] = useState<string | null>(null)
+  const idInputRef = useRef<HTMLInputElement>(null)
   const isEditing = !!materialSerialTracked
 
   useEffect(() => {
@@ -178,7 +180,7 @@ export function MaterialSerialTrackedFormDialog({
     }
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setError(null)
     startTransition(async () => {
@@ -207,7 +209,7 @@ export function MaterialSerialTrackedFormDialog({
             becraCode: form.becraCode,
           })
         } else {
-          await createMaterialSerialTrackedAction({
+          const result = await createMaterialSerialTrackedAction({
             materialId: form.materialId || null,
             beNumber: form.beNumber,
             brandName: form.brandName,
@@ -227,12 +229,23 @@ export function MaterialSerialTrackedFormDialog({
             projectId: form.projectId,
             becraCode: form.becraCode,
           })
+          // If the action returns the created item or ID, set it here:
+          if (result && result.id) {
+            setCreatedId(result.id)
+          }
         }
         onOpenChange(false)
       } catch (err: any) {
         setError(err?.message || 'Failed to save. Please check your input and try again.')
       }
     })
+  }
+
+  function handleCopyId() {
+    if (createdId) {
+      navigator.clipboard.writeText(createdId)
+      alert('Serial tracked ID copied to clipboard.')
+    }
   }
 
   return (
@@ -444,6 +457,13 @@ export function MaterialSerialTrackedFormDialog({
 
           {error && (
             <div className="text-red-500 text-sm mt-2">{error}</div>
+          )}
+
+          {createdId && (
+            <div className="mt-4 flex items-center gap-2">
+              <Input ref={idInputRef} value={createdId} readOnly className="w-auto" />
+              <Button type="button" onClick={handleCopyId}>Copy ID</Button>
+            </div>
           )}
 
           <DialogFooter>

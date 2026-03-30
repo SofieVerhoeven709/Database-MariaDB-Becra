@@ -7,15 +7,16 @@ import {Badge} from '@/components/ui/badge'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialPlaceFormDialog} from '@/components/custom/materialPlaceFormDialog'
-import type {MappedMaterialPlace} from '@/types/materialPlace'
+import type {MappedMaterialPlace, MaterialPlaceEmployeeOption} from '@/types/materialPlace'
 import {
   createMaterialPlaceAction,
   updateMaterialPlaceAction,
   deleteMaterialPlaceAction,
 } from '@/serverFunctions/materialPlaces'
 import {useRouter} from 'next/navigation'
+import {encodeMaterialPlaceField} from '@/extra/materialPlace'
 
-type SortField = 'abbreviation' | 'beNumber' | 'place' | 'quantityInStock'
+type SortField = 'abbreviation' | 'beNumber' | 'place' | 'storageEmployeeName' | 'quantityInStock'
 type SortDir = 'asc' | 'desc'
 type DeletedFilter = 'active' | 'deleted' | 'all'
 
@@ -30,9 +31,10 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
 
 interface MaterialPlaceTableProps {
   initialItems: MappedMaterialPlace[]
+  employees: MaterialPlaceEmployeeOption[]
 }
 
-export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
+export function MaterialPlaceTable({initialItems, employees}: MaterialPlaceTableProps) {
   const router = useRouter()
   const [items] = useState(initialItems)
   const [search, setSearch] = useState('')
@@ -70,6 +72,7 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
         (i.abbreviation ?? '').toLowerCase().includes(q) ||
         (i.beNumber ?? '').toLowerCase().includes(q) ||
         (i.place ?? '').toLowerCase().includes(q) ||
+        (i.storageEmployeeName ?? '').toLowerCase().includes(q) ||
         (i.shelf ?? '').toLowerCase().includes(q) ||
         (i.column ?? '').toLowerCase().includes(q) ||
         (i.layer ?? '').toLowerCase().includes(q) ||
@@ -89,7 +92,7 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
         id: form.id,
         abbreviation: form.abbreviation || undefined,
         beNumber: form.beNumber || undefined,
-        place: form.place || undefined,
+        place: encodeMaterialPlaceField(form.place, form.storageEmployeeId) || undefined,
         shelf: form.shelf || undefined,
         column: form.column || undefined,
         layer: form.layer || undefined,
@@ -102,7 +105,7 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
         id: form.id,
         abbreviation: form.abbreviation ?? '',
         beNumber: form.beNumber || undefined,
-        place: form.place || undefined,
+        place: encodeMaterialPlaceField(form.place, form.storageEmployeeId) || undefined,
         shelf: form.shelf || undefined,
         column: form.column || undefined,
         layer: form.layer || undefined,
@@ -126,6 +129,7 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
     {key: 'abbreviation', label: 'Abbreviation'},
     {key: 'beNumber', label: 'BE Number'},
     {key: 'place', label: 'Place'},
+    {key: 'storageEmployeeName', label: 'Storage Employee'},
     {key: 'quantityInStock', label: 'Qty In Stock'},
   ]
 
@@ -201,6 +205,9 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
                     {item.beNumber ?? <span className="text-muted-foreground">-</span>}
                   </TableCell>
                   <TableCell className="text-sm">{item.place ?? <span className="text-muted-foreground">-</span>}</TableCell>
+                  <TableCell className="text-sm">
+                    {item.storageEmployeeName ?? <span className="text-muted-foreground">-</span>}
+                  </TableCell>
                   <TableCell className="text-sm font-semibold">{item.quantityInStock}</TableCell>
                   <TableCell
                     className="text-sm text-muted-foreground max-w-[200px] truncate"
@@ -269,6 +276,7 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
           if (!open) setEditingItem(null)
         }}
         item={editingItem}
+        employees={employees}
         onSave={handleSave}
       />
     </div>

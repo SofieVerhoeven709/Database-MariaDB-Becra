@@ -13,9 +13,11 @@ export type MaterialGroupOption = {
   groupD: string | null
 }
 
-export async function getMaterials() {
+export async function getMaterials(options?: {includeDeleted?: boolean}) {
+  const includeDeleted = options?.includeDeleted ?? false
+
   return prismaClient.material.findMany({
-    where: {deleted: false},
+    where: includeDeleted ? undefined : {deleted: false},
     include: {
       Unit: true,
       Employee: {
@@ -253,3 +255,15 @@ export async function softDeleteMaterial(id: string, deletedBy: string) {
     },
   })
 }
+
+export async function restoreMaterial(id: string) {
+  return prismaClient.material.update({
+    where: {id},
+    data: {
+      deleted: false,
+      deletedAt: null,
+      deletedBy: null,
+    },
+  })
+}
+

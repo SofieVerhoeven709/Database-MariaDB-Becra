@@ -1,6 +1,6 @@
 import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
 
-// ─── Group option helpers (for dropdowns) ────────────────────────────────────
+// ─── Group option helpers ─────────────────────────────────────────────────────
 
 export interface DocumentGroupOption {
   id: string
@@ -11,7 +11,27 @@ export interface DocumentPlaceOption {
   id: string
   headFolder: string
   subFolder: string | null
-  /** Display label: "headFolder / subFolder" or just "headFolder" */
+  label: string
+}
+
+export interface DocumentStatusOption {
+  id: string
+  name: string | null
+}
+
+// ─── Mapped DocumentGroup (the junction) ─────────────────────────────────────
+
+export interface MappedDocumentGroup {
+  id: string
+  groupAId: string | null
+  groupAName: string | null
+  groupBId: string | null
+  groupBName: string | null
+  groupCId: string | null
+  groupCName: string | null
+  groupDId: string | null
+  groupDName: string | null
+  /** Human-readable label e.g. "A > B > C > D" */
   label: string
 }
 
@@ -28,18 +48,19 @@ export interface MappedDocument {
   revisionDetail: string | null
   valid: boolean
   process: boolean
+  canCopy: boolean
   additionalInfo: string | null
   referenceDocId: string | null
   referenceDocNumber: string | null
-  // Group hierarchy
+  // Group
   documentGroupId: string | null
-  documentGroupAName: string | null
-  documentGroupBName: string | null
-  documentGroupCName: string | null
-  documentGroupDName: string | null
+  documentGroup: MappedDocumentGroup | null
   // Place
   documentPlaceId: string
   documentPlaceLabel: string
+  // Status
+  documentStatusId: string | null
+  documentStatusName: string | null
   // People
   createdBy: string
   createdByName: string
@@ -47,6 +68,10 @@ export interface MappedDocument {
   revisedByName: string | null
   managedById: string | null
   managedByName: string | null
+  // Target link (DocumentStructureTarget)
+  documentTargetId: string | null // DocumentStructureTarget.id
+  documentTargetTargetId: string | null // Target.id
+  documentTargetTypeName: string | null // TargetType.name
   // Visibility
   targetId: string
   visibilityForRoles: MappedVisibilityForRole[]
@@ -59,11 +84,25 @@ export interface MappedDocument {
 
 // ─── Full detail ──────────────────────────────────────────────────────────────
 
-export interface DocumentDetailData extends MappedDocument {
-  // Could be extended with related records (e.g. FollowUps, TrainingDocuments)
+export interface MappedDocumentRevision {
+  id: string
+  documentId: string
+  shortDescription: string | null
+  longDescription: string | null
+  createdAt: string
+  createdBy: string
+  createdByName: string
+  deleted: boolean
+  deletedAt: string | null
+  deletedBy: string | null
+  deletedByName: string | null
 }
 
-// ─── Mapped group types ───────────────────────────────────────────────────────
+export interface DocumentDetailData extends MappedDocument {
+  revisions: MappedDocumentRevision[]
+}
+
+// ─── Mapped group types (for management tab) ──────────────────────────────────
 
 export interface MappedDocumentGroupA {
   id: string
@@ -127,14 +166,19 @@ export interface MappedDocumentPlace {
   deletedByName: string | null
 }
 
-export interface MappedDocumentGroup {
+export interface MappedDocumentStatus {
   id: string
-  documentGroupAId: string | null
-  documentGroupAName: string | null
-  documentGroupBId: string | null
-  documentGroupBName: string | null
-  documentGroupCId: string | null
-  documentGroupCName: string | null
-  documentGroupDId: string | null
-  documentGroupDName: string | null
+  name: string | null
+  createdAt: string
+  createdBy: string
+  createdByName: string
+  deleted: boolean
+  deletedAt: string | null
+  deletedBy: string | null
+  deletedByName: string | null
 }
+
+// ─── Allowed target types for document ───────────────────────────────────────
+
+export const DOCUMENT_TARGET_TYPE_NAMES = ['Material', 'Project', 'Company'] as const
+export type DocumentTargetTypeName = (typeof DOCUMENT_TARGET_TYPE_NAMES)[number]

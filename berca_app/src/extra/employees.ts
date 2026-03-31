@@ -334,7 +334,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {id: true; name: true; shortDescription: true; createdAt: true; Material: {select: {beNumber: true}}}
     }
     MaterialPrice: {select: {id: true; beNumber: true; shortDescription: true}}
-    MaterialSerialTrack: {select: {id: true; beNumber: true; shortDescription: true}}
+    MaterialSerialTrack: {select: {id: true; shortDescription: true}}
     Part: {select: {id: true; name: true; shortDescription: true}}
     Phantom: {select: {id: true; description: true}}
     Product: {select: {id: true; shortDescription: true; status: true}}
@@ -426,7 +426,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {id: true; beNumber: true; shortDescription: true; deletedAt: true}
     }
     MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee: {
-      select: {id: true; beNumber: true; shortDescription: true; deletedAt: true}
+      select: {id: true; shortDescription: true; deletedAt: true}
     }
     Part_Part_deletedByToEmployee: {select: {id: true; name: true; shortDescription: true; deletedAt: true}}
     Phantom_Phantom_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
@@ -658,13 +658,13 @@ export function mapEmployeeDetail(
       href: null,
     })),
     ...e.Material.map(r => ({
-       id: r.id,
-       type: 'Material' as const,
-       label: r.beNumber ?? '',
-       detail: r.shortDescription,
-       date: null,
-       deletedAt: null,
-       href: null,
+      id: r.id,
+      type: 'Material' as const,
+      label: r.beNumber ?? '',
+      detail: r.shortDescription,
+      date: null,
+      deletedAt: null,
+      href: null,
     })),
     ...createdEmployees.map(emp => ({
       id: emp.id,
@@ -824,13 +824,13 @@ export function mapEmployeeDetail(
       href: null,
     })),
     ...e.Material_Material_deletedByToEmployee.map(r => ({
-       id: r.id,
-       type: 'Material' as const,
-       label: r.beNumber ?? '',
-       detail: r.shortDescription,
-       date: null,
-       deletedAt: r.deletedAt?.toISOString() ?? null,
-       href: null,
+      id: r.id,
+      type: 'Material' as const,
+      label: r.beNumber ?? '',
+      detail: r.shortDescription,
+      date: null,
+      deletedAt: r.deletedAt?.toISOString() ?? null,
+      href: null,
     })),
     ...deletedEmployees.map(emp => ({
       id: emp.id,
@@ -1126,7 +1126,7 @@ export function mapEmployeeDetail(
       ...e.MaterialSerialTrack.map(r => ({
         id: r.id,
         type: 'Material Serial Track' as const,
-        label: r.beNumber ?? '(no BE)',
+        label: r.shortDescription ?? '(no short description)',
         detail: r.shortDescription ?? null,
         date: null,
         deletedAt: null,
@@ -1493,7 +1493,7 @@ export function mapEmployeeDetail(
       ...e.MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee.map(r => ({
         id: r.id,
         type: 'Material Serial Track' as const,
-        label: r.beNumber ?? '(no BE)',
+        label: r.shortDescription ?? '(no short description)',
         detail: r.shortDescription ?? null,
         date: null,
         deletedAt: r.deletedAt?.toISOString() ?? null,

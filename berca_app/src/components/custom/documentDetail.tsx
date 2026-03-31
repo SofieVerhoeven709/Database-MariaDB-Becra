@@ -205,7 +205,7 @@ export function DocumentDetail({
   async function handleSave() {
     setSaving(true)
     try {
-      await updateDocumentAction({
+      const core = {
         id: document.id,
         documentNumber: form.documentNumber,
         description: form.description || null,
@@ -224,12 +224,8 @@ export function DocumentDetail({
         documentPlaceId: form.documentPlaceId,
         documentStatusId: form.documentStatusId || null,
         visibilityForRoles: visibilityRows,
-        targetAssignments: [
-          ...(targetMaterial ? [{typeName: 'Material' as DocumentTargetTypeName, targetId: targetMaterial}] : []),
-          ...(targetProject ? [{typeName: 'Project' as DocumentTargetTypeName, targetId: targetProject}] : []),
-          ...(targetCompany ? [{typeName: 'Company' as DocumentTargetTypeName, targetId: targetCompany}] : []),
-        ],
-      })
+      }
+      await updateDocumentAction({...core})
       setEditing(false)
       router.refresh()
     } finally {

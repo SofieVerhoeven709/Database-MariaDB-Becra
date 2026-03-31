@@ -631,7 +631,7 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: false},
           orderBy: {updatedAt: 'desc'},
           take: 50,
-          select: {id: true, beNumber: true, shortDescription: true},
+          select: {id: true, shortDescription: true},
         },
         Part: {
           where: {deleted: false},
@@ -1102,7 +1102,7 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: true},
           orderBy: {deletedAt: 'desc'},
           take: 50,
-          select: {id: true, beNumber: true, shortDescription: true, deletedAt: true},
+          select: {id: true, shortDescription: true, deletedAt: true},
         },
         Part_Part_deletedByToEmployee: {
           where: {deleted: true},

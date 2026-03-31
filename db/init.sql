@@ -1,6 +1,5 @@
-CREATE DATABASE app_db;
-
-USE app_db;
+CREATE DATABASE BecraBV;
+USE BecraBV;
 
 CREATE TABLE
       IF NOT EXISTS Role (
@@ -51,7 +50,7 @@ CREATE TABLE
             UNIQUE (documentNumber)
       ) ENGINE = InnoDB;
 
-CREATE TABLE
+ CREATE TABLE
       IF NOT EXISTS SubRole (
             id CHAR(36) NOT NULL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
@@ -59,10 +58,10 @@ CREATE TABLE
             createdAt DATETIME NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME
-      ) ENGINE = InnoDB;
+      ) ENGINE = InnoDB;     
 
 CREATE TABLE
-      IF NOT EXISTS RoleLevel (
+      IF NOT EXISTS RoleLevel(
             id CHAR(36) NOT NULL PRIMARY KEY,
             roleId CHAR(36) NOT NULL,
             subRoleId CHAR(36) NOT NULL,
@@ -71,7 +70,7 @@ CREATE TABLE
             deletedAt DATETIME,
             FOREIGN KEY (roleId) REFERENCES Role (id) ON DELETE RESTRICT,
             FOREIGN KEY (subRoleId) REFERENCES SubRole (id) ON DELETE RESTRICT
-      ) ENGINE = InnoDB;
+      ) ENGINE = InnoDB;    
 
 CREATE TABLE
       IF NOT EXISTS Employee (
@@ -173,7 +172,7 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS Material (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            beNumber VARCHAR(255),
+            beNumber VARCHAR(255) NOT NULL,
             name VARCHAR(255),
             brandOrderNr VARCHAR(255) NULL,
             shortDescription VARCHAR(255) NOT NULL,
@@ -199,7 +198,7 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -1252,7 +1251,7 @@ CREATE TABLE
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
-
+      
 CREATE TABLE
       IF NOT EXISTS DocumentGroupC (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -1285,16 +1284,12 @@ CREATE TABLE
 
 ALTER TABLE DocumentStructure ADD documentGroupAId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_documentGroupA FOREIGN KEY (documentGroupAId) REFERENCES DocumentGroupA (id) ON DELETE RESTRICT;
-
 ALTER TABLE DocumentStructure ADD documentGroupBId CHAR(36) NULL,
 ADD CONSTRAINT fk_documentStructure_documentGroupB FOREIGN KEY (documentGroupBId) REFERENCES DocumentGroupB (id) ON DELETE RESTRICT;
-
 ALTER TABLE DocumentStructure ADD documentGroupCId CHAR(36) NULL,
 ADD CONSTRAINT fk_documentStructure_documentGroupC FOREIGN KEY (documentGroupCId) REFERENCES DocumentGroupC (id) ON DELETE RESTRICT;
-
 ALTER TABLE DocumentStructure ADD documentGroupDId CHAR(36) NULL,
 ADD CONSTRAINT fk_documentStructure_documentGroupD FOREIGN KEY (documentGroupDId) REFERENCES DocumentGroupD (id) ON DELETE RESTRICT;
-
 ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
 
@@ -1361,8 +1356,8 @@ CREATE TABLE
             updatedAt DATETIME,
             rejected BOOLEAN,
             additionalInfo VARCHAR(255),
-            unitPrice Decimal(10, 3),
-            quantityPrice DECIMAL(10, 3),
+            unitPrice Decimal(10,3),
+            quantityPrice DECIMAL(10,3),
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
@@ -1417,7 +1412,7 @@ CREATE TABLE
             layer VARCHAR(255),
             layerPlace VARCHAR(255),
             information VARCHAR(255),
-            quantityInStock INT NOT NULL,
+            volume INT NOT NULL,
             createdAt DATETIME NOT NULL,
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
@@ -1719,9 +1714,9 @@ CREATE TABLE
             projectId CHAR(36),
             purchaseId CHAR(36),
             beNumber VARCHAR(255),
-            unitPrice Decimal(10, 2),
+            unitPrice Decimal(10,2),
             quantity INT,
-            totalCost Decimal(10, 2),
+            totalCost Decimal(10,2),
             status VARCHAR(255),
             additionalInfo VARCHAR(255),
             updatedAt DATETIME,
@@ -1781,7 +1776,7 @@ CREATE TABLE
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-CREATE TABLE
+CREATE TABLE 
       IF NOT EXISTS RoleLevelEmployee (
             id CHAR(36) NOT NULL PRIMARY KEY,
             employeeId CHAR(36) NOT NULL,

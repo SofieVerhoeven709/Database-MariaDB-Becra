@@ -48,7 +48,6 @@ export type MaterialSerialTrackMinAggregateOutputType = {
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
-  materialId: string | null
 }
 
 export type MaterialSerialTrackMaxAggregateOutputType = {
@@ -75,7 +74,6 @@ export type MaterialSerialTrackMaxAggregateOutputType = {
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
-  materialId: string | null
 }
 
 export type MaterialSerialTrackCountAggregateOutputType = {
@@ -102,7 +100,6 @@ export type MaterialSerialTrackCountAggregateOutputType = {
   deleted: number
   deletedAt: number
   deletedBy: number
-  materialId: number
   _all: number
 }
 
@@ -131,7 +128,6 @@ export type MaterialSerialTrackMinAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  materialId?: true
 }
 
 export type MaterialSerialTrackMaxAggregateInputType = {
@@ -158,7 +154,6 @@ export type MaterialSerialTrackMaxAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  materialId?: true
 }
 
 export type MaterialSerialTrackCountAggregateInputType = {
@@ -185,7 +180,6 @@ export type MaterialSerialTrackCountAggregateInputType = {
   deleted?: true
   deletedAt?: true
   deletedBy?: true
-  materialId?: true
   _all?: true
 }
 
@@ -376,7 +370,6 @@ export type MaterialSerialTrackOrderByWithRelationInput = {
   Project?: Prisma.ProjectOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_MaterialSerialTrack_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
-  Material?: Prisma.MaterialOrderByWithRelationInput
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureOrderByRelationAggregateInput
   WarehousePlace?: Prisma.WarehousePlaceOrderByRelationAggregateInput
   _relevance?: Prisma.MaterialSerialTrackOrderByRelevanceInput
@@ -721,7 +714,6 @@ export type MaterialSerialTrackCountOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
 }
 
 export type MaterialSerialTrackMaxOrderByAggregateInput = {
@@ -748,7 +740,6 @@ export type MaterialSerialTrackMaxOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
 }
 
 export type MaterialSerialTrackMinOrderByAggregateInput = {
@@ -775,7 +766,6 @@ export type MaterialSerialTrackMinOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
-  materialId?: Prisma.SortOrder
 }
 
 export type MaterialSerialTrackScalarRelationFilter = {
@@ -909,45 +899,45 @@ export type MaterialSerialTrackUncheckedUpdateManyWithoutEmployee_MaterialSerial
   deleteMany?: Prisma.MaterialSerialTrackScalarWhereInput | Prisma.MaterialSerialTrackScalarWhereInput[]
 }
 
-export type MaterialSerialTrackCreateNestedManyWithoutMaterialInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialInput> | Prisma.MaterialSerialTrackCreateWithoutMaterialInput[] | Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialInput | Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialInput[]
-  createMany?: Prisma.MaterialSerialTrackCreateManyMaterialInputEnvelope
+export type MaterialSerialTrackCreateNestedManyWithoutMaterialGroupInput = {
+  create?: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput> | Prisma.MaterialSerialTrackCreateWithoutMaterialGroupInput[] | Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput[]
+  connectOrCreate?: Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialGroupInput | Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialGroupInput[]
+  createMany?: Prisma.MaterialSerialTrackCreateManyMaterialGroupInputEnvelope
   connect?: Prisma.MaterialSerialTrackWhereUniqueInput | Prisma.MaterialSerialTrackWhereUniqueInput[]
 }
 
-export type MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialInput> | Prisma.MaterialSerialTrackCreateWithoutMaterialInput[] | Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialInput | Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialInput[]
-  createMany?: Prisma.MaterialSerialTrackCreateManyMaterialInputEnvelope
+export type MaterialSerialTrackUncheckedCreateNestedManyWithoutMaterialGroupInput = {
+  create?: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput> | Prisma.MaterialSerialTrackCreateWithoutMaterialGroupInput[] | Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput[]
+  connectOrCreate?: Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialGroupInput | Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialGroupInput[]
+  createMany?: Prisma.MaterialSerialTrackCreateManyMaterialGroupInputEnvelope
   connect?: Prisma.MaterialSerialTrackWhereUniqueInput | Prisma.MaterialSerialTrackWhereUniqueInput[]
 }
 
-export type MaterialSerialTrackUpdateManyWithoutMaterialNestedInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialInput> | Prisma.MaterialSerialTrackCreateWithoutMaterialInput[] | Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialInput | Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialInput[]
-  upsert?: Prisma.MaterialSerialTrackUpsertWithWhereUniqueWithoutMaterialInput | Prisma.MaterialSerialTrackUpsertWithWhereUniqueWithoutMaterialInput[]
-  createMany?: Prisma.MaterialSerialTrackCreateManyMaterialInputEnvelope
+export type MaterialSerialTrackUpdateManyWithoutMaterialGroupNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput> | Prisma.MaterialSerialTrackCreateWithoutMaterialGroupInput[] | Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput[]
+  connectOrCreate?: Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialGroupInput | Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialGroupInput[]
+  upsert?: Prisma.MaterialSerialTrackUpsertWithWhereUniqueWithoutMaterialGroupInput | Prisma.MaterialSerialTrackUpsertWithWhereUniqueWithoutMaterialGroupInput[]
+  createMany?: Prisma.MaterialSerialTrackCreateManyMaterialGroupInputEnvelope
   set?: Prisma.MaterialSerialTrackWhereUniqueInput | Prisma.MaterialSerialTrackWhereUniqueInput[]
   disconnect?: Prisma.MaterialSerialTrackWhereUniqueInput | Prisma.MaterialSerialTrackWhereUniqueInput[]
   delete?: Prisma.MaterialSerialTrackWhereUniqueInput | Prisma.MaterialSerialTrackWhereUniqueInput[]
   connect?: Prisma.MaterialSerialTrackWhereUniqueInput | Prisma.MaterialSerialTrackWhereUniqueInput[]
-  update?: Prisma.MaterialSerialTrackUpdateWithWhereUniqueWithoutMaterialInput | Prisma.MaterialSerialTrackUpdateWithWhereUniqueWithoutMaterialInput[]
-  updateMany?: Prisma.MaterialSerialTrackUpdateManyWithWhereWithoutMaterialInput | Prisma.MaterialSerialTrackUpdateManyWithWhereWithoutMaterialInput[]
+  update?: Prisma.MaterialSerialTrackUpdateWithWhereUniqueWithoutMaterialGroupInput | Prisma.MaterialSerialTrackUpdateWithWhereUniqueWithoutMaterialGroupInput[]
+  updateMany?: Prisma.MaterialSerialTrackUpdateManyWithWhereWithoutMaterialGroupInput | Prisma.MaterialSerialTrackUpdateManyWithWhereWithoutMaterialGroupInput[]
   deleteMany?: Prisma.MaterialSerialTrackScalarWhereInput | Prisma.MaterialSerialTrackScalarWhereInput[]
 }
 
-export type MaterialSerialTrackUncheckedUpdateManyWithoutMaterialNestedInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialInput> | Prisma.MaterialSerialTrackCreateWithoutMaterialInput[] | Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialInput | Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialInput[]
-  upsert?: Prisma.MaterialSerialTrackUpsertWithWhereUniqueWithoutMaterialInput | Prisma.MaterialSerialTrackUpsertWithWhereUniqueWithoutMaterialInput[]
-  createMany?: Prisma.MaterialSerialTrackCreateManyMaterialInputEnvelope
+export type MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput> | Prisma.MaterialSerialTrackCreateWithoutMaterialGroupInput[] | Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput[]
+  connectOrCreate?: Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialGroupInput | Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialGroupInput[]
+  upsert?: Prisma.MaterialSerialTrackUpsertWithWhereUniqueWithoutMaterialGroupInput | Prisma.MaterialSerialTrackUpsertWithWhereUniqueWithoutMaterialGroupInput[]
+  createMany?: Prisma.MaterialSerialTrackCreateManyMaterialGroupInputEnvelope
   set?: Prisma.MaterialSerialTrackWhereUniqueInput | Prisma.MaterialSerialTrackWhereUniqueInput[]
   disconnect?: Prisma.MaterialSerialTrackWhereUniqueInput | Prisma.MaterialSerialTrackWhereUniqueInput[]
   delete?: Prisma.MaterialSerialTrackWhereUniqueInput | Prisma.MaterialSerialTrackWhereUniqueInput[]
   connect?: Prisma.MaterialSerialTrackWhereUniqueInput | Prisma.MaterialSerialTrackWhereUniqueInput[]
-  update?: Prisma.MaterialSerialTrackUpdateWithWhereUniqueWithoutMaterialInput | Prisma.MaterialSerialTrackUpdateWithWhereUniqueWithoutMaterialInput[]
-  updateMany?: Prisma.MaterialSerialTrackUpdateManyWithWhereWithoutMaterialInput | Prisma.MaterialSerialTrackUpdateManyWithWhereWithoutMaterialInput[]
+  update?: Prisma.MaterialSerialTrackUpdateWithWhereUniqueWithoutMaterialGroupInput | Prisma.MaterialSerialTrackUpdateWithWhereUniqueWithoutMaterialGroupInput[]
+  updateMany?: Prisma.MaterialSerialTrackUpdateManyWithWhereWithoutMaterialGroupInput | Prisma.MaterialSerialTrackUpdateManyWithWhereWithoutMaterialGroupInput[]
   deleteMany?: Prisma.MaterialSerialTrackScalarWhereInput | Prisma.MaterialSerialTrackScalarWhereInput[]
 }
 
@@ -1112,7 +1102,6 @@ export type MaterialSerialTrackCreateWithoutCompanyInput = {
 
 export type MaterialSerialTrackUncheckedCreateWithoutCompanyInput = {
   id: string
-  beNumber?: string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1363,7 +1352,7 @@ export type MaterialSerialTrackUpdateManyWithWhereWithoutEmployee_MaterialSerial
   data: Prisma.XOR<Prisma.MaterialSerialTrackUpdateManyMutationInput, Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeInput>
 }
 
-export type MaterialSerialTrackCreateWithoutMaterialInput = {
+export type MaterialSerialTrackCreateWithoutMaterialGroupInput = {
   id: string
   beNumber?: string | null
   brandName?: string | null
@@ -1392,7 +1381,7 @@ export type MaterialSerialTrackCreateWithoutMaterialInput = {
   WarehousePlace?: Prisma.WarehousePlaceCreateNestedManyWithoutMaterialSerialTrackInput
 }
 
-export type MaterialSerialTrackUncheckedCreateWithoutMaterialInput = {
+export type MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput = {
   id: string
   beNumber?: string | null
   brandName?: string | null
@@ -1421,30 +1410,30 @@ export type MaterialSerialTrackUncheckedCreateWithoutMaterialInput = {
   WarehousePlace?: Prisma.WarehousePlaceUncheckedCreateNestedManyWithoutMaterialSerialTrackInput
 }
 
-export type MaterialSerialTrackCreateOrConnectWithoutMaterialInput = {
+export type MaterialSerialTrackCreateOrConnectWithoutMaterialGroupInput = {
   where: Prisma.MaterialSerialTrackWhereUniqueInput
-  create: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialInput>
+  create: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput>
 }
 
-export type MaterialSerialTrackCreateManyMaterialInputEnvelope = {
-  data: Prisma.MaterialSerialTrackCreateManyMaterialInput | Prisma.MaterialSerialTrackCreateManyMaterialInput[]
+export type MaterialSerialTrackCreateManyMaterialGroupInputEnvelope = {
+  data: Prisma.MaterialSerialTrackCreateManyMaterialGroupInput | Prisma.MaterialSerialTrackCreateManyMaterialGroupInput[]
   skipDuplicates?: boolean
 }
 
-export type MaterialSerialTrackUpsertWithWhereUniqueWithoutMaterialInput = {
+export type MaterialSerialTrackUpsertWithWhereUniqueWithoutMaterialGroupInput = {
   where: Prisma.MaterialSerialTrackWhereUniqueInput
-  update: Prisma.XOR<Prisma.MaterialSerialTrackUpdateWithoutMaterialInput, Prisma.MaterialSerialTrackUncheckedUpdateWithoutMaterialInput>
-  create: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialInput>
+  update: Prisma.XOR<Prisma.MaterialSerialTrackUpdateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackUncheckedUpdateWithoutMaterialGroupInput>
+  create: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput>
 }
 
-export type MaterialSerialTrackUpdateWithWhereUniqueWithoutMaterialInput = {
+export type MaterialSerialTrackUpdateWithWhereUniqueWithoutMaterialGroupInput = {
   where: Prisma.MaterialSerialTrackWhereUniqueInput
-  data: Prisma.XOR<Prisma.MaterialSerialTrackUpdateWithoutMaterialInput, Prisma.MaterialSerialTrackUncheckedUpdateWithoutMaterialInput>
+  data: Prisma.XOR<Prisma.MaterialSerialTrackUpdateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackUncheckedUpdateWithoutMaterialGroupInput>
 }
 
-export type MaterialSerialTrackUpdateManyWithWhereWithoutMaterialInput = {
+export type MaterialSerialTrackUpdateManyWithWhereWithoutMaterialGroupInput = {
   where: Prisma.MaterialSerialTrackScalarWhereInput
-  data: Prisma.XOR<Prisma.MaterialSerialTrackUpdateManyMutationInput, Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialInput>
+  data: Prisma.XOR<Prisma.MaterialSerialTrackUpdateManyMutationInput, Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupInput>
 }
 
 export type MaterialSerialTrackCreateWithoutMaterialGroupInput = {
@@ -2288,7 +2277,6 @@ export type MaterialSerialTrackUpdateWithoutEmployee_MaterialSerialTrack_deleted
 
 export type MaterialSerialTrackUncheckedUpdateWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2341,7 +2329,7 @@ export type MaterialSerialTrackUncheckedUpdateManyWithoutEmployee_MaterialSerial
   materialId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type MaterialSerialTrackCreateManyMaterialInput = {
+export type MaterialSerialTrackCreateManyMaterialGroupInput = {
   id: string
   beNumber?: string | null
   brandName?: string | null
@@ -2367,7 +2355,7 @@ export type MaterialSerialTrackCreateManyMaterialInput = {
   deletedBy?: string | null
 }
 
-export type MaterialSerialTrackUpdateWithoutMaterialInput = {
+export type MaterialSerialTrackUpdateWithoutMaterialGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2396,7 +2384,7 @@ export type MaterialSerialTrackUpdateWithoutMaterialInput = {
   WarehousePlace?: Prisma.WarehousePlaceUpdateManyWithoutMaterialSerialTrackNestedInput
 }
 
-export type MaterialSerialTrackUncheckedUpdateWithoutMaterialInput = {
+export type MaterialSerialTrackUncheckedUpdateWithoutMaterialGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2425,7 +2413,7 @@ export type MaterialSerialTrackUncheckedUpdateWithoutMaterialInput = {
   WarehousePlace?: Prisma.WarehousePlaceUncheckedUpdateManyWithoutMaterialSerialTrackNestedInput
 }
 
-export type MaterialSerialTrackUncheckedUpdateManyWithoutMaterialInput = {
+export type MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2731,7 +2719,6 @@ export type MaterialSerialTrackSelect<ExtArgs extends runtime.Types.Extensions.I
   shortDescription?: boolean
   longDescription?: boolean
   transactionType?: boolean
-  materialGroupId?: boolean
   fromLocation?: boolean
   toLocation?: boolean
   updatedAt?: boolean
@@ -2744,14 +2731,12 @@ export type MaterialSerialTrackSelect<ExtArgs extends runtime.Types.Extensions.I
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  materialId?: boolean
   MaterialMovement?: boolean | Prisma.MaterialSerialTrack$MaterialMovementArgs<ExtArgs>
   Company?: boolean | Prisma.MaterialSerialTrack$CompanyArgs<ExtArgs>
   MaterialGroup?: boolean | Prisma.MaterialSerialTrack$MaterialGroupArgs<ExtArgs>
   Project?: boolean | Prisma.MaterialSerialTrack$ProjectArgs<ExtArgs>
   Employee?: boolean | Prisma.MaterialSerialTrack$EmployeeArgs<ExtArgs>
   Employee_MaterialSerialTrack_deletedByToEmployee?: boolean | Prisma.MaterialSerialTrack$Employee_MaterialSerialTrack_deletedByToEmployeeArgs<ExtArgs>
-  Material?: boolean | Prisma.MaterialDefaultArgs<ExtArgs>
   MaterialSerialTrackedStructure?: boolean | Prisma.MaterialSerialTrack$MaterialSerialTrackedStructureArgs<ExtArgs>
   WarehousePlace?: boolean | Prisma.MaterialSerialTrack$WarehousePlaceArgs<ExtArgs>
   _count?: boolean | Prisma.MaterialSerialTrackCountOutputTypeDefaultArgs<ExtArgs>
@@ -2783,10 +2768,10 @@ export type MaterialSerialTrackSelectScalar = {
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  materialId?: boolean
 }
 
 export type MaterialSerialTrackOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "beNumber" | "brandName" | "management" | "brandOrderNumber" | "companyId" | "orderNumber" | "shortDescription" | "longDescription" | "transactionType" | "materialGroupId" | "fromLocation" | "toLocation" | "updatedAt" | "preferredSupplier" | "rejected" | "additionalInfo" | "projectId" | "becraCode" | "createdBy" | "deleted" | "deletedAt" | "deletedBy" | "materialId", ExtArgs["result"]["materialSerialTrack"]>
+export type MaterialSerialTrackOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "beNumber" | "brandName" | "management" | "brandOrderNumber" | "companyId" | "orderNumber" | "shortDescription" | "longDescription" | "transactionType" | "materialGroupId" | "fromLocation" | "toLocation" | "updatedAt" | "preferredSupplier" | "rejected" | "additionalInfo" | "projectId" | "becraCode" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["materialSerialTrack"]>
 export type MaterialSerialTrackInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   MaterialMovement?: boolean | Prisma.MaterialSerialTrack$MaterialMovementArgs<ExtArgs>
   Company?: boolean | Prisma.MaterialSerialTrack$CompanyArgs<ExtArgs>
@@ -3239,7 +3224,6 @@ export interface MaterialSerialTrackFieldRefs {
   readonly deleted: Prisma.FieldRef<"MaterialSerialTrack", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"MaterialSerialTrack", 'DateTime'>
   readonly deletedBy: Prisma.FieldRef<"MaterialSerialTrack", 'String'>
-  readonly materialId: Prisma.FieldRef<"MaterialSerialTrack", 'String'>
 }
     
 

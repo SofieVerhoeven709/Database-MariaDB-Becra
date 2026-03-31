@@ -1,7 +1,7 @@
 'use client'
 
 import {useMemo, useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye, Copy} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -9,12 +9,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
 import type {MappedMaterial} from '@/types/material'
-import {
-  createMaterialAction,
-  updateMaterialAction,
-  deleteMaterialAction,
-  cloneMaterialAction,
-} from '@/serverFunctions/materials'
+import {createMaterialAction, updateMaterialAction, deleteMaterialAction} from '@/serverFunctions/materials'
 import {useRouter} from 'next/navigation'
 
 interface MaterialGroup {
@@ -42,12 +37,6 @@ interface ParentPartOption {
   shortDescription: string
 }
 
-interface WarehousePlaceOption {
-  id: string
-  label: string
-  beNumber: string | null
-}
-
 type SortField =
   | 'beNumber'
   | 'name'
@@ -58,15 +47,12 @@ type SortField =
   | 'materialGroupLabelC'
   | 'materialGroupLabelD'
   | 'unitName'
-  | 'warehousePlaceLabel'
   | 'parentBeNumbers'
   | 'createdByName'
   | 'createdAt'
   | 'rejected'
 type SortDir = 'asc' | 'desc'
 type FilterRejected = 'all' | 'active' | 'rejected'
-type FilterPlace = 'all' | 'withPlace' | 'withoutPlace'
-type FilterDeleted = 'all' | 'notDeleted' | 'deleted'
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
@@ -96,7 +82,6 @@ interface MaterialTableProps {
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
   parentPartOptions: ParentPartOption[]
-  warehousePlaces: WarehousePlaceOption[]
   departmentId?: string
 }
 
@@ -106,7 +91,6 @@ export function MaterialTable({
   units,
   supplierCompanies,
   parentPartOptions,
-  warehousePlaces,
   departmentId,
 }: MaterialTableProps) {
   const router = useRouter() as unknown as {refresh: () => void; push: (href: string) => void}
@@ -115,13 +99,15 @@ export function MaterialTable({
   const [sortField, setSortField] = useState<SortField>('beNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [filterRejected, setFilterRejected] = useState<FilterRejected>('all')
-  const [filterPlace, setFilterPlace] = useState<FilterPlace>('all')
-  const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('notDeleted')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
-  const parentPartBeNumbersInUse = useMemo(() => [...new Set(materials.flatMap(m => m.parentBeNumbers))], [materials])
+
+  const parentPartBeNumbersInUse = useMemo(
+    () => [...new Set(materials.flatMap(m => m.parentBeNumbers))],
+    [materials],
+  )
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -139,16 +125,6 @@ export function MaterialTable({
       return true
     })
     .filter(m => {
-      if (filterPlace === 'withPlace') return Boolean(m.warehousePlaceLabel)
-      if (filterPlace === 'withoutPlace') return !m.warehousePlaceLabel
-      return true
-    })
-    .filter(m => {
-      if (filterDeleted === 'notDeleted') return !m.deleted
-      if (filterDeleted === 'deleted') return m.deleted
-      return true
-    })
-    .filter(m => {
       if (!search) return true
       const q = search.toLowerCase()
       return (
@@ -162,7 +138,6 @@ export function MaterialTable({
         m.materialGroupLabelC.toLowerCase().includes(q) ||
         m.materialGroupLabelD.toLowerCase().includes(q) ||
         m.unitName.toLowerCase().includes(q) ||
-        (m.warehousePlaceLabel ?? '').toLowerCase().includes(q) ||
         m.parentBeNumbers.some(parent => parent.toLowerCase().includes(q)) ||
         (m.preferredSupplierCompanyName ?? '').toLowerCase().includes(q) ||
         m.supplierCompanyNames.some(name => name.toLowerCase().includes(q))
@@ -173,17 +148,6 @@ export function MaterialTable({
       const bVal = String(b[sortField] ?? '')
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
-
-  // Filter for materials without BE numbers
-  const nonBeMaterials = materials.filter(m => !m.beNumber || m.beNumber.trim().length === 0)
-  // Debug: log which materials are being included in the Non BE Numbers table
-  if (nonBeMaterials.length > 0) {
-    // eslint-disable-next-line no-console
-    console.log(
-      '[DEBUG] Non BE Materials:',
-      nonBeMaterials.map(m => ({id: m.id, beNumber: m.beNumber, name: m.name})),
-    )
-  }
 
   async function handleSave(form: Partial<MappedMaterial> & {id: string}) {
     setSaving(true)
@@ -199,18 +163,17 @@ export function MaterialTable({
         'longDescription',
         'preferredSupplierCompanyId',
         'preferredSupplierOrderId',
-        /*'preferredSupplierShortDescription',*/
+        'preferredSupplierShortDescription',
         'supplierCompanyIds',
         'parentBeNumbers',
         'brandName',
-        /* 'documentationPlace',
-        'bePartDoc',*/
+        'documentationPlace',
+        'bePartDoc',
         'rejected',
         'materialGroupIdA',
         'materialGroupIdB',
         'materialGroupIdC',
         'materialGroupIdD',
-        'warehousePlaceId',
         'unitId',
       ])
 
@@ -220,14 +183,13 @@ export function MaterialTable({
         'longDescription',
         'preferredSupplierCompanyId',
         'preferredSupplierOrderId',
-        /*'preferredSupplierShortDescription',*/
+        'preferredSupplierShortDescription',
         'brandName',
-        /* 'documentationPlace',
-        'bePartDoc',*/
+        'documentationPlace',
+        'bePartDoc',
         'materialGroupIdB',
         'materialGroupIdC',
         'materialGroupIdD',
-        'warehousePlaceId',
       ])
 
       const fd = new FormData()
@@ -252,26 +214,10 @@ export function MaterialTable({
         : await createMaterialAction({success: false}, fd)
 
       if (result && !result.success) {
-        // Fallback: if errors is empty or not an object, show a generic error
-        const hasErrors = result.errors && typeof result.errors === 'object' && Object.keys(result.errors).length > 0
-        if (!hasErrors) {
-          console.error('Material save failed: Unknown error')
-          setSaveError('Could not save the material. Please check all required fields.')
-          return
-        }
         console.error('Material save failed:', result.errors)
-        // Support both field errors and global errors
-        let msgs: string[] = []
-        if (result.errors) {
-          // If errors is an object with a single 'errors' key, treat as global error
-          if (Object.keys(result.errors).length === 1 && Array.isArray(result.errors.errors)) {
-            msgs = result.errors.errors
-          } else {
-            msgs = Object.entries(result.errors ?? {}).flatMap(([field, errs]) =>
-              (errs ?? []).map(e => `${field}: ${e}`),
-            )
-          }
-        }
+        const msgs = Object.entries(result.errors ?? {}).flatMap(([field, errs]) =>
+          (errs ?? []).map(e => `${field}: ${e}`),
+        )
         setSaveError(msgs.length ? msgs.join(' | ') : 'Could not save the material. Please check all required fields.')
         return
       }
@@ -294,27 +240,6 @@ export function MaterialTable({
     router.refresh()
   }
 
-  async function handleClone(material: MappedMaterial) {
-    setSaving(true)
-    setSaveError(null)
-    try {
-      const fd = new FormData()
-      fd.append('id', material.id)
-      const result = await cloneMaterialAction({success: false}, fd)
-      if (result && result.success) {
-        setDialogOpen(false)
-        setEditingMaterial(null)
-        router.refresh()
-      } else {
-        setSaveError('Could not clone the material. Please try again.')
-      }
-    } catch (_e) {
-      setSaveError('An unexpected error occurred. Please try again.')
-    } finally {
-      setSaving(false)
-    }
-  }
-
   const columns: {key: SortField; label: string}[] = [
     {key: 'beNumber', label: 'BE Number'},
     {key: 'name', label: 'Name'},
@@ -325,7 +250,6 @@ export function MaterialTable({
     {key: 'materialGroupLabelC', label: 'Group C'},
     {key: 'materialGroupLabelD', label: 'Group D'},
     {key: 'unitName', label: 'Unit'},
-    {key: 'warehousePlaceLabel', label: 'Warehouse Place'},
     {key: 'parentBeNumbers', label: 'Parent Parts'},
     {key: 'createdByName', label: 'Created'},
     {key: 'rejected', label: 'Status'},
@@ -333,8 +257,9 @@ export function MaterialTable({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2 mb-4">
-        <div className="relative flex-1 min-w-50">
+      {/* Toolbar */}
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="relative flex-1 min-w-[200px]">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             className="pl-9 bg-secondary border-border"
@@ -352,28 +277,6 @@ export function MaterialTable({
             <SelectItem value="all">All statuses</SelectItem>
             <SelectItem value="active">Active</SelectItem>
             <SelectItem value="rejected">Rejected</SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Select value={filterPlace} onValueChange={v => setFilterPlace(v as FilterPlace)}>
-          <SelectTrigger className="w-44 bg-secondary border-border">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All places</SelectItem>
-            <SelectItem value="withPlace">With place</SelectItem>
-            <SelectItem value="withoutPlace">Without place</SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Select value={filterDeleted} onValueChange={v => setFilterDeleted(v as FilterDeleted)}>
-          <SelectTrigger className="w-44 bg-secondary border-border">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All items</SelectItem>
-            <SelectItem value="notDeleted">Not deleted</SelectItem>
-            <SelectItem value="deleted">Deleted</SelectItem>
           </SelectContent>
         </Select>
 
@@ -402,10 +305,7 @@ export function MaterialTable({
                   <SortIcon field={col.key} sortField={sortField} sortDir={sortDir} />
                 </TableHead>
               ))}
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide text-center w-20">
-                Serial Tracked
-              </TableHead>
-              <TableHead className="w-25 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
             </TableRow>
@@ -413,7 +313,7 @@ export function MaterialTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + 2} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={columns.length + 1} className="text-center text-muted-foreground py-10">
                   No materials found
                 </TableCell>
               </TableRow>
@@ -427,7 +327,7 @@ export function MaterialTable({
                   <TableCell className="text-sm">
                     {m.name ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
-                  <TableCell className="text-sm max-w-55 truncate" title={m.shortDescription}>
+                  <TableCell className="text-sm max-w-[220px] truncate" title={m.shortDescription}>
                     {m.shortDescription}
                   </TableCell>
                   <TableCell className="text-sm">
@@ -441,10 +341,7 @@ export function MaterialTable({
                     {m.unitName}
                     <span className="text-muted-foreground text-xs ml-1">({m.unitAbbreviation})</span>
                   </TableCell>
-                  <TableCell className="text-sm">
-                    {m.warehousePlaceLabel ?? <span className="text-muted-foreground">—</span>}
-                  </TableCell>
-                  <TableCell className="text-sm max-w-55">
+                  <TableCell className="text-sm max-w-[220px]">
                     {m.parentBeNumbers.length > 0 ? (
                       <span title={m.parentBeNumbers.join(', ')}>
                         {m.parentBeNumbers.slice(0, 2).join(', ')}
@@ -469,27 +366,6 @@ export function MaterialTable({
                       <Badge variant="secondary" className="text-xs bg-green-500/15 text-green-700 dark:text-green-400">
                         Active
                       </Badge>
-                    )}
-                  </TableCell>
-                  {/* Serial Tracked column */}
-                  <TableCell className="text-center">
-                    {m.isSerialTracked && m.serialTrackedId ? (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-xs bg-blue-100 text-blue-800 border-blue-300 px-2 py-1 h-auto min-h-0"
-                        onClick={e => {
-                          e.stopPropagation()
-                          router.push(`/departments/${departmentId}/serialTracked/${m.serialTrackedId}`)
-                        }}>
-                        Serial
-                      </Button>
-                    ) : m.isSerialTracked ? (
-                      <Badge variant="outline" className="text-xs bg-blue-100 text-blue-800 border-blue-300">
-                        Serial
-                      </Badge>
-                    ) : (
-                      <span className="text-muted-foreground">—</span>
                     )}
                   </TableCell>
                   <TableCell className="text-right" onClick={e => e.stopPropagation()}>
@@ -518,14 +394,6 @@ export function MaterialTable({
                         onClick={() => handleDelete(m.id)}>
                         <Trash2 className="h-3.5 w-3.5" />
                       </Button>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                        title="Clone"
-                        onClick={() => handleClone(m)}>
-                        <Copy className="h-3.5 w-3.5" />
-                      </Button>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -553,7 +421,6 @@ export function MaterialTable({
         units={units}
         supplierCompanies={supplierCompanies}
         parentPartOptions={parentPartOptions}
-        warehousePlaces={warehousePlaces}
         parentPartBeNumbersInUse={parentPartBeNumbersInUse}
         onSave={handleSave}
         saving={saving}

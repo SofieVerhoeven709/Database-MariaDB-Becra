@@ -1,6 +1,7 @@
 import 'server-only'
 import {prismaClient} from './prismaClient'
 import type {Prisma, Employee, EmergencyContact} from '@/generated/prisma/client'
+import {cache} from 'react'
 import {hashPassword} from '@/lib/passwordUtils'
 import type {Profile, SessionWithProfile} from '@/models/employees'
 import {profileOmit, sessionWithProfileInclude} from '@/models/employees'
@@ -188,7 +189,7 @@ export async function updateEmployee({id, ...data}: UpdateEmployeeParams): Promi
  * Extend the given session so that is remains active for another 24 hours.
  *
  * @param id The id of the session to extend.
- * @param subRole
+ * @param role The role of the user for whom to start the session.
  */
 export async function extendSession(id: string, subRole: {name: string}): Promise<SessionWithProfile> {
   const duration = SessionDuration[subRole.name.toLowerCase()] ?? DEFAULT_SESSION_DURATION
@@ -588,7 +589,7 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: false},
           orderBy: {id: 'desc'},
           take: 50,
-           select: {id: true, shortDescription: true, beNumber: true},
+          select: {id: true, beNumber: true, shortDescription: true},
         },
         MaterialAssembly: {
           where: {deleted: false},
@@ -630,7 +631,7 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: false},
           orderBy: {updatedAt: 'desc'},
           take: 50,
-          select: {id: true, shortDescription: true},
+          select: {id: true, beNumber: true, shortDescription: true},
         },
         Part: {
           where: {deleted: false},
@@ -1101,7 +1102,7 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: true},
           orderBy: {deletedAt: 'desc'},
           take: 50,
-          select: {id: true, shortDescription: true, deletedAt: true},
+          select: {id: true, beNumber: true, shortDescription: true, deletedAt: true},
         },
         Part_Part_deletedByToEmployee: {
           where: {deleted: true},
@@ -1125,13 +1126,12 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: true},
           orderBy: {deletedAt: 'desc'},
           take: 50,
-           select: {
-             id: true,
-             createdAt: true,
-             deletedAt: true,
-             Contact: {select: {firstName: true, lastName: true}},
-             Project: {select: {projectNumber: true, projectName: true}},
-           },
+          select: {
+            id: true,
+            deletedAt: true,
+            Contact: {select: {firstName: true, lastName: true}},
+            Project: {select: {projectNumber: true, projectName: true}},
+          },
         },
         ProjectType_ProjectType_deletedByToEmployee: {
           where: {deleted: true},

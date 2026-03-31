@@ -10,7 +10,7 @@ const booleanFromString = z.preprocess(
   z.boolean().nullable().optional(),
 )
 
-const beNumberSchema = z.string().trim().min(1).max(255).regex(/^\d+$/, 'BE number can only contain digits')
+const beNumberSchema = z.string().trim().min(1).max(255).regex(/^\d+$/, 'BE number mag enkel cijfers bevatten')
 
 const brandOrderNrSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),
@@ -67,7 +67,6 @@ export const materialSchema = z.object({
   materialGroupIdB: nullableUuidSchema,
   materialGroupIdC: nullableUuidSchema,
   materialGroupIdD: nullableUuidSchema,
-  warehousePlaceId: nullableUuidSchema,
   unitId: z.string().uuid(),
   isSerialTracked: z
     .preprocess(val => {

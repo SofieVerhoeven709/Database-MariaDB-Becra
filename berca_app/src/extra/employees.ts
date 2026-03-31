@@ -334,7 +334,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {id: true; name: true; shortDescription: true; createdAt: true; Material: {select: {beNumber: true}}}
     }
     MaterialPrice: {select: {id: true; beNumber: true; shortDescription: true}}
-    MaterialSerialTrack: {select: {id: true; shortDescription: true}}
+    MaterialSerialTrack: {select: {id: true; beNumber: true; shortDescription: true}}
     Part: {select: {id: true; name: true; shortDescription: true}}
     Phantom: {select: {id: true; description: true}}
     Product: {select: {id: true; shortDescription: true; status: true}}
@@ -426,7 +426,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
       select: {id: true; beNumber: true; shortDescription: true; deletedAt: true}
     }
     MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee: {
-      select: {id: true; shortDescription: true; deletedAt: true}
+      select: {id: true; beNumber: true; shortDescription: true; deletedAt: true}
     }
     Part_Part_deletedByToEmployee: {select: {id: true; name: true; shortDescription: true; deletedAt: true}}
     Phantom_Phantom_deletedByToEmployee: {select: {id: true; description: true; deletedAt: true}}
@@ -434,7 +434,7 @@ type EmployeeDetailPayload = Prisma.EmployeeGetPayload<{
     ProjectContact_ProjectContact_deletedByToEmployee: {
       select: {
         id: true
-        createdAt: true
+        deletedAt: true
         Contact: {select: {firstName: true; lastName: true}}
         Project: {select: {projectNumber: true; projectName: true}}
       }
@@ -1126,8 +1126,8 @@ export function mapEmployeeDetail(
       ...e.MaterialSerialTrack.map(r => ({
         id: r.id,
         type: 'Material Serial Track' as const,
-        label: r.shortDescription ?? '(no desc)',
-        detail: null,
+        label: r.beNumber ?? '(no BE)',
+        detail: r.shortDescription ?? null,
         date: null,
         deletedAt: null,
         href: null,
@@ -1493,8 +1493,8 @@ export function mapEmployeeDetail(
       ...e.MaterialSerialTrack_MaterialSerialTrack_deletedByToEmployee.map(r => ({
         id: r.id,
         type: 'Material Serial Track' as const,
-        label: r.shortDescription ?? '(no desc)',
-        detail: null,
+        label: r.beNumber ?? '(no BE)',
+        detail: r.shortDescription ?? null,
         date: null,
         deletedAt: r.deletedAt?.toISOString() ?? null,
         href: null,
@@ -1532,7 +1532,7 @@ export function mapEmployeeDetail(
         label: `${r.Contact.firstName} ${r.Contact.lastName}`,
         detail: `${r.Project.projectNumber} — ${r.Project.projectName}`,
         date: null,
-        deletedAt: null,
+        deletedAt: r.deletedAt?.toISOString() ?? null,
         href: null,
       })),
       ...e.ProjectType_ProjectType_deletedByToEmployee.map(r => ({
@@ -1541,7 +1541,7 @@ export function mapEmployeeDetail(
         label: r.name,
         detail: null,
         date: null,
-        deletedAt: null,
+        deletedAt: r.deletedAt?.toISOString() ?? null,
         href: null,
       })),
       ...e.PurchaseDetail_PurchaseDetail_deletedByToEmployee.map(r => ({
@@ -1550,7 +1550,7 @@ export function mapEmployeeDetail(
         label: r.Purchase?.orderNumber ?? '(no order)',
         detail: r.beNumber ?? null,
         date: null,
-        deletedAt: null,
+        deletedAt: r.deletedAt?.toISOString() ?? null,
         href: null,
       })),
       ...e.PurchaseOrderBecra_PurchaseOrderBecra_deletedByToEmployee.map(r => ({
@@ -1559,7 +1559,7 @@ export function mapEmployeeDetail(
         label: r.description ?? '(no desc)',
         detail: null,
         date: null,
-        deletedAt: null,
+        deletedAt: r.deletedAt?.toISOString() ?? null,
         href: null,
       })),
       ...e.QuoteBecra_QuoteBecra_deletedByToEmployee.map(r => ({
@@ -1568,7 +1568,7 @@ export function mapEmployeeDetail(
         label: r.description ?? '(no desc)',
         detail: null,
         date: null,
-        deletedAt: null,
+        deletedAt: r.deletedAt?.toISOString() ?? null,
         href: null,
       })),
       ...e.Role_Role_deletedByToEmployee.map(r => ({

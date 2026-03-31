@@ -35,12 +35,6 @@ interface ParentPartOption {
   shortDescription: string
 }
 
-interface WarehousePlaceOption {
-  id: string
-  label: string
-  beNumber: string | null
-}
-
 interface MaterialFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -48,7 +42,6 @@ interface MaterialFormDialogProps {
   materialGroups: MaterialGroup[]
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
-  warehousePlaces: WarehousePlaceOption[]
   parentPartOptions?: ParentPartOption[]
   parentPartBeNumbersInUse?: string[]
   onSave: (material: Partial<MappedMaterial> & {id: string}) => void
@@ -155,7 +148,7 @@ function PreferredSupplierPicker({
 const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean} = {
   id: '',
   beNumber: '',
-  name: '',
+  name: null,
   brandOrderNr: '',
   shortDescription: '',
   longDescription: null,
@@ -174,8 +167,6 @@ const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string; isSerialTracked: bo
   materialGroupIdB: null,
   materialGroupIdC: null,
   materialGroupIdD: null,
-  warehousePlaceId: null,
-  warehousePlaceLabel: null,
   unitId: '',
   isSerialTracked: false,
   isParentPart: false,
@@ -188,7 +179,6 @@ export function MaterialFormDialog({
   materialGroups,
   units,
   supplierCompanies,
-  warehousePlaces,
   parentPartOptions: _parentPartOptions,
   parentPartBeNumbersInUse = [],
   onSave,
@@ -200,7 +190,9 @@ export function MaterialFormDialog({
   const makeForm = (): Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean} =>
     material ? {...material} : {...EMPTY_MATERIAL, id: crypto.randomUUID()}
 
-  const [form, setForm] = useState<Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean}>(makeForm)
+  const [form, setForm] = useState<
+    Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean}
+  >(makeForm)
   const [isParentPartEnabled, setIsParentPartEnabled] = useState(form.isParentPart ?? false)
   const [hasParentParts, setHasParentParts] = useState((form.parentBeNumbers ?? []).length > 0)
   const [parentPartSearch, setParentPartSearch] = useState('')
@@ -267,8 +259,6 @@ export function MaterialFormDialog({
   const selectedSupplierCompanies = supplierCompanies.filter(company =>
     (form.supplierCompanyIds ?? []).includes(company.id),
   )
-
-  const selectableWarehousePlaces = warehousePlaces.filter(place => !place.beNumber || place.beNumber === form.beNumber)
 
   const selectedGroupA = materialGroups.find(g => g.id === form.materialGroupIdA) ?? null
   const selectedGroupB = materialGroups.find(g => g.id === form.materialGroupIdB) ?? null
@@ -531,6 +521,7 @@ export function MaterialFormDialog({
               </Select>
             </div>
           </div>
+
           {/* Row 4: Optional Material Group B/C */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
@@ -570,6 +561,7 @@ export function MaterialFormDialog({
               </Select>
             </div>
           </div>
+
           {/* Row 5: Optional Material Group D + Preferred Supplier Order ID */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
@@ -603,25 +595,7 @@ export function MaterialFormDialog({
               />
             </div>
           </div>
-          <div className="flex flex-col gap-2">
-            <Label className="text-xs text-muted-foreground">Warehouse Place</Label>
-            <Select
-              value={form.warehousePlaceId ?? '__none__'}
-              onValueChange={v => update('warehousePlaceId', v === '__none__' ? null : v)}>
-              <SelectTrigger className={inputStyles}>
-                <SelectValue placeholder="No place assigned" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="__none__">No place assigned</SelectItem>
-                {selectableWarehousePlaces.map(place => (
-                  <SelectItem key={place.id} value={place.id}>
-                    {place.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <p className="text-xs text-muted-foreground">Optional: assign a place now or later.</p>
-          </div>
+
           {/* Preferred Supplier Short Description */}
           {/* <div className="flex flex-col gap-2">
             <Label htmlFor="preferredSupplierShortDescription" className="text-xs text-muted-foreground">
@@ -637,7 +611,7 @@ export function MaterialFormDialog({
               placeholder="Short description or notes about the preferred supplier"
             />
           </div>
-          */}
+ */}
           {/* Preferred Supplier Company - Searchable */}
           <div className="flex flex-col gap-2">
             <Label className="text-xs text-muted-foreground">Preferred Supplier Company</Label>
@@ -694,6 +668,7 @@ export function MaterialFormDialog({
               Select one or more suppliers. Preferred supplier must be selected from this list.
             </p>
           </div>
+
           {/* Parent Parts Button */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
@@ -743,6 +718,7 @@ export function MaterialFormDialog({
               </>
             )}
           </div>
+
           {/* Row 5: BE Part Doc + Rejected */}
 
           <div className="grid grid-cols-2 gap-4 items-end">

@@ -289,7 +289,7 @@ ALTER TABLE Title ADD deletedBy CHAR(36) NULL,
 ADD CONSTRAINT fk_title_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
 ALTER TABLE DocumentStructure ADD deletedBy CHAR(36) NULL,
-ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL;
 
 ALTER TABLE Material ADD targetId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_material_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
@@ -1344,7 +1344,7 @@ ALTER TABLE DocumentStructure ADD documentGroupId CHAR(36) NULL,
       ADD CONSTRAINT fk_documentStructure_documentGroup FOREIGN KEY (documentGroupId) REFERENCES DocumentGroup (id) ON DELETE SET NULL;
 ALTER TABLE DocumentStructure ADD documentPlaceId CHAR(36) NULL,
       ADD CONSTRAINT fk_documentStructure_documentPlace FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE SET NUll;
-ALTER TABLE DocumentStructure ADD documentStatusId CHAR(36) NOT NULL,
+ALTER TABLE DocumentStructure ADD documentStatusId CHAR(36) NULL,
       ADD CONSTRAINT fk_documentStructure_documentStatus FOREIGN KEY (documentStatusId) REFERENCES DocumentStatus (id) ON DELETE SET NUll;
 
 CREATE TABLE

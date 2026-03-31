@@ -756,17 +756,6 @@ CREATE TABLE
             UNIQUE (documentNumber)
       ) ENGINE = InnoDB;
 
--- Title.createdBy
-ALTER TABLE Title 
-    ADD COLUMN IF NOT EXISTS createdBy CHAR(36) NOT NULL;
-
-ALTER TABLE Title 
-    DROP FOREIGN KEY IF EXISTS fk_title_createdBy;
-
-ALTER TABLE Title 
-    ADD CONSTRAINT fk_title_createdBy
-    FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT;
-
 
 -- DocumentStructure.createdBy
 ALTER TABLE DocumentStructure 
@@ -825,7 +814,7 @@ ALTER TABLE DocumentStructure
 
 ALTER TABLE DocumentStructure 
     ADD CONSTRAINT fk_documentStructure_deletedBy
-    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL;
 
 CREATE TABLE
       IF NOT EXISTS DocumentStructureTarget (
@@ -889,18 +878,18 @@ ALTER TABLE DocumentStructure
 
 ALTER TABLE DocumentStructure 
     ADD CONSTRAINT fk_documentStructure_documentGroup
-    FOREIGN KEY (documentGroupId) REFERENCES DocumentGroup (id) ON DELETE RESTRICT;
+    FOREIGN KEY (documentGroupId) REFERENCES DocumentGroup (id) ON DELETE SET NULL;
 
 -- 5. documentPlaceId
 ALTER TABLE DocumentStructure 
-    ADD COLUMN IF NOT EXISTS documentPlaceId CHAR(36) NOT NULL;
+    ADD COLUMN IF NOT EXISTS documentPlaceId CHAR(36) NULL;
 
 ALTER TABLE DocumentStructure 
     DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentPlace;
 
 ALTER TABLE DocumentStructure 
     ADD CONSTRAINT fk_documentStructure_documentPlace
-    FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE RESTRICT;
+    FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE SET NULL;
 
 ALTER TABLE DocumentStructure 
     ADD COLUMN IF NOT EXISTS documentStatusId CHAR(36) NULL;
@@ -910,4 +899,4 @@ ALTER TABLE DocumentStructure
 
 ALTER TABLE DocumentStructure 
     ADD CONSTRAINT fk_documentStructure_documentStatus
-    FOREIGN KEY (documentStatusId) REFERENCES DocumentStatus (id) ON DELETE RESTRICT;
+    FOREIGN KEY (documentStatusId) REFERENCES DocumentStatus (id) ON DELETE SET NULL;

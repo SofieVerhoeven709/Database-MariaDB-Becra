@@ -285,7 +285,7 @@ ALTER TABLE Title ADD deletedBy CHAR(36) NULL,
 ADD CONSTRAINT fk_title_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
 
 ALTER TABLE DocumentStructure ADD deletedBy CHAR(36) NULL,
-ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE RESTRICT;
+ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL;
 
 ALTER TABLE Material ADD targetId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_material_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;

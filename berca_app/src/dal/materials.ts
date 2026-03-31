@@ -17,9 +17,9 @@ export type MaterialGroupOption = {
 export type MaterialWithRelations = Prisma.MaterialGetPayload<{
   include: {
     Unit: true
-    Employee: {select: {id: true; firstName: true; lastName: true}}
-    PreferredSupplierCompany: {select: {id: true; name: true}}
-    MaterialSupplier: {include: {Company: {select: {id: true; name: true}}}}
+    Employee_Material_deletedByToEmployee: {select: {id: true; firstName: true; lastName: true}}
+    PreferredSupplierCompany: {select: {id: true, name: true}}
+    MaterialSupplier: {include: {Company: {select: {id: true, name: true}}}}
     MaterialStructure_MaterialStructure_materialIdToMaterial: {
       where: {deleted: false; management: typeof PARENT_PART_MANAGEMENT}
       select: {
@@ -36,15 +36,11 @@ export type MaterialWithRelations = Prisma.MaterialGetPayload<{
 
 export async function getMaterials(options?: {includeDeleted?: boolean}) {
   const includeDeleted = options?.includeDeleted ?? false
-
-export async function getMaterials() {
   return prismaClient.material.findMany({
-    where: {deleted: false},
+    where: {deleted: includeDeleted ? undefined : false},
     include: {
       Unit: true,
-      Employee: {
-        select: {id: true, firstName: true, lastName: true},
-      },
+      Employee_Material_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}}, // deleter
       PreferredSupplierCompany: {
         select: {id: true, name: true},
       },
@@ -64,7 +60,6 @@ export async function getMaterials() {
           },
         },
       },
-      // Removed invalid MaterialSerialTrack include
     },
     orderBy: {beNumber: 'asc'},
   })
@@ -75,9 +70,7 @@ export async function getMaterialById(id: string): Promise<MaterialWithRelations
     where: {id},
     include: {
       Unit: true,
-      Employee: {
-        select: {id: true, firstName: true, lastName: true},
-      },
+      Employee_Material_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}}, // deleter
       PreferredSupplierCompany: {
         select: {id: true, name: true},
       },
@@ -101,7 +94,6 @@ export async function getMaterialById(id: string): Promise<MaterialWithRelations
         where: {deleted: false},
         orderBy: {createdAt: 'asc'},
       },
-      // Removed invalid MaterialSerialTrack include
     },
   })
 }
@@ -306,27 +298,11 @@ export async function restoreMaterial(id: string) {
   })
 }
 
-export async function getNonBeNumberItems() {
-  return prismaClient.material.findMany({
-    where: {
-      beNumber: {
-        not: null,
-        notIn: [''],
-        contains: '-', // Example: only include beNumbers with a dash (customize as needed)
-      },
-      deleted: false,
-      // Optionally, filter by relation to the given materialId if needed
-    },
-    orderBy: {beNumber: 'asc'},
-  })
-}
-
 export async function cloneMaterial(id: string, createdBy: string) {
   const original = await prismaClient.material.findUniqueOrThrow({where: {id}})
   const {id: _oldId, deleted: _deleted, deletedAt: _deletedAt, deletedBy: _deletedBy, beNumber, ...rest} = original
   const newId = randomUUID()
 
-  // Generate a unique beNumber for the clone
   let baseBeNumber = beNumber ? String(beNumber) : 'CLONE'
   let newBeNumber = baseBeNumber + '-copy'
   let counter = 1

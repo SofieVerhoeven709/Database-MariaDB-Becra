@@ -77,11 +77,13 @@ export async function createSerialTracked(data: {
     materialGroupId, // destructure and discard
     ...rest
   } = data
+  // Remove createdBy from rest to avoid duplicate key
+  if ('createdBy' in rest) delete rest.createdBy;
   const prismaData: any = {...rest}
-  if (materialId) prismaData.materialId = materialId
+  if (materialId) prismaData.material = { connect: { id: materialId } }
   if (companyId) prismaData.Company = {connect: {id: companyId}}
   if (projectId) prismaData.Project = {connect: {id: projectId}}
-  if (createdBy) prismaData.createdBy = createdBy
+  if (createdBy) prismaData.Employee = { connect: { id: createdBy } }
   if (deletedBy) prismaData.Employee_MaterialSerialTrack_deletedByToEmployee = {connect: {id: deletedBy}}
   // materialGroupId is NOT included in prismaData
   const created = await prismaClient.materialSerialTrack.create({
@@ -94,7 +96,6 @@ export async function createSerialTracked(data: {
 export async function updateSerialTracked(
   id: string,
   data: {
-    beNumber?: string | null
     brandName?: string | null
     management?: string | null
     brandOrderNumber?: string | null

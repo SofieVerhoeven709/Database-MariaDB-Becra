@@ -11,9 +11,8 @@ interface PageProps {
 function getParentBeNumbers(material: unknown): string[] {
   if (!material || typeof material !== 'object') return []
 
-  const links =
-    (material as {MaterialStructure_MaterialStructure_materialIdToMaterial?: unknown})
-      .MaterialStructure_MaterialStructure_materialIdToMaterial
+  const links = (material as {MaterialStructure_MaterialStructure_materialIdToMaterial?: unknown})
+    .MaterialStructure_MaterialStructure_materialIdToMaterial
   if (!Array.isArray(links)) return []
 
   return links
@@ -52,9 +51,9 @@ export default async function MaterialPage({params}: PageProps) {
       m.MaterialSupplier.find(s => s.isPreferred) ??
       null
 
-    return {
+    const mapped: MappedMaterial = {
       id: m.id,
-      beNumber: m.beNumber,
+      beNumber: m.beNumber ?? '',
       name: m.name ?? null,
       brandOrderNr: m.brandOrderNr,
       shortDescription: m.shortDescription,
@@ -90,12 +89,16 @@ export default async function MaterialPage({params}: PageProps) {
       unitName: m.Unit.unitName,
       unitAbbreviation: m.Unit.abbreviation,
       createdBy: m.createdBy,
-      createdByName: `${m.Employee.firstName} ${m.Employee.lastName}`,
+      createdByName: '',
       createdAt: null,
       deleted: m.deleted,
       deletedAt: m.deletedAt?.toISOString() ?? null,
       deletedBy: m.deletedBy ?? null,
+      isSerialTracked: m.isSerialTracked ?? false,
+      serialTrackedId: null,
+      isParentPart: false,
     }
+    return mapped
   })
 
   const mappedGroups = groups.map(g => ({
@@ -121,7 +124,7 @@ export default async function MaterialPage({params}: PageProps) {
   const mappedParentPartOptions = materials
     .filter(m => typeof m.beNumber === 'string' && m.beNumber.length > 0)
     .map(m => ({
-      beNumber: m.beNumber,
+      beNumber: m.beNumber ?? '',
       shortDescription: m.shortDescription,
     }))
 

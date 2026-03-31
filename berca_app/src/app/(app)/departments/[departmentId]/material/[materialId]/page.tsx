@@ -90,7 +90,7 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     unitName: material.Unit.unitName,
     unitAbbreviation: material.Unit.abbreviation,
     createdBy: material.createdBy,
-    createdByName: `${material.Employee.firstName} ${material.Employee.lastName}`,
+    createdByName: '', // No relation available; would require separate lookup
     deleted: material.deleted,
     deletedAt: material.deletedAt?.toISOString() ?? null,
     deletedBy: material.deletedBy ?? null,

@@ -268,7 +268,6 @@ export const seedProd = async (prisma: PrismaClient) => {
   const departmentTargetType = await prisma.targetType.findFirst({where: {name: 'Department'}})
   const companyTargetType = await prisma.targetType.findFirst({where: {name: 'Company'}})
   const hourTypeTargetType = await prisma.targetType.findFirst({where: {name: 'HourType'}})
-  const materialTargetType = await prisma.targetType.findFirst({where: {name: 'Material'}})
 
   // 8. Upsert UrgencyTypes
   for (const name of URGENCY_TYPES) {
@@ -539,68 +538,6 @@ export const seedProd = async (prisma: PrismaClient) => {
   }
 
   console.log('Invoice types seeded')
-
-  const hourTypesWithoutTarget = await prisma.hourType.findMany({
-    where: {targetId: null},
-  })
-
-  for (const ht of hourTypesWithoutTarget) {
-    const target = await prisma.target.create({
-      data: {
-        id: randomUUID(),
-        createdAt: now,
-        createdBy: adminEmployee.id,
-        targetTypeId: hourTypeTargetType!.id,
-      },
-    })
-
-    await prisma.hourType.update({
-      where: {id: ht.id},
-      data: {targetId: target.id},
-    })
-
-    await prisma.visibilityForRole.create({
-      data: {
-        id: randomUUID(),
-        visible: true,
-        roleLevelId: adminRoleLevel.id,
-        targetId: target.id,
-      },
-    })
-  }
-
-  console.log(`Backfilled ${hourTypesWithoutTarget.length} hourTypes`)
-
-  const materialsWithoutTarget = await prisma.material.findMany({
-    where: {targetId: null},
-  })
-
-  for (const mat of materialsWithoutTarget) {
-    const target = await prisma.target.create({
-      data: {
-        id: randomUUID(),
-        createdAt: now,
-        createdBy: adminEmployee.id,
-        targetTypeId: materialTargetType!.id,
-      },
-    })
-
-    await prisma.material.update({
-      where: {id: mat.id},
-      data: {targetId: target.id},
-    })
-
-    await prisma.visibilityForRole.create({
-      data: {
-        id: randomUUID(),
-        visible: true,
-        roleLevelId: adminRoleLevel.id,
-        targetId: target.id,
-      },
-    })
-  }
-
-  console.log(`Backfilled ${materialsWithoutTarget.length} materials`)
 
   console.log('Seed complete')
 }

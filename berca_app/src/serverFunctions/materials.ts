@@ -145,7 +145,6 @@ export const cloneMaterialAction = protectedFormAction({
     logger.info(`Material cloned: ${cloned.id} from ${id}`)
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)
-    revalidatePath(REVALIDATE_WAREHOUSE_PLACE)
     return {success: true, id: cloned.id}
   },
 })

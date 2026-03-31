@@ -15,6 +15,7 @@ import type {MappedDocument, MappedDocumentGroup, DocumentPlaceOption, DocumentS
 import {type DocumentTargetTypeName} from '@/types/document'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import {generateDocumentNumber} from '@/lib/utils'
+import {getDocumentGroupId} from '@/dal/documents'
 
 interface SelectOption {
   id: string
@@ -228,7 +229,7 @@ export function DocumentFormDialog({
       if (targetMaterial) assignments.push({typeName: 'Material', targetId: targetMaterial})
       if (targetProject) assignments.push({typeName: 'Project', targetId: targetProject})
       if (targetCompany) assignments.push({typeName: 'Company', targetId: targetCompany})
-
+      const docGroup = await getDocumentGroupId(selAId, selCId, selBId, selDId)
       await onSave(
         {
           ...form,
@@ -237,6 +238,7 @@ export function DocumentFormDialog({
           additionalInfo: form.additionalInfo?.trim() || null,
           revisionDetail: form.revisionDetail?.trim() || null,
           documentNumber: form.documentNumber.trim(),
+          documentGroupId: docGroup.id,
         },
         visibilityRows,
         assignments,

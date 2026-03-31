@@ -185,3 +185,14 @@ export async function getDocumentTargetOptions() {
     Company: companies.map(c => ({id: c.targetId, name: c.name})),
   }
 }
+
+export async function getDocumentGroupId(aId: string, bId: string, cId: string, dId: string) {
+  return prismaClient.documentGroup.findFirstOrThrow({
+    where: {
+      groupAId: aId,
+      groupBId: bId,
+      groupCId: cId,
+      groupDId: dId,
+    },
+  })
+}

@@ -239,7 +239,7 @@ export const documentStructureSchema = z.object({
   deletedAt: dateSchema.optional(),
   deletedBy: z.string().nullable().optional(),
   documentGroupId: z.string().nullable().optional(),
-  documentPlaceId: z.string(),
+  documentPlaceId: z.string().nullable().optional(),
   documentStatusId: z.string().nullable().optional(),
 })
 
@@ -256,6 +256,14 @@ export const updateDocumentStructureSchema = documentStructureSchema
   .omit({createdAt: true, createdBy: true, targetId: true, deleted: true, deletedAt: true, deletedBy: true})
   .extend({
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
+    targetAssignments: z
+      .array(
+        z.object({
+          typeName: z.enum(DOCUMENT_TARGET_TYPE_NAMES),
+          targetId: z.string(),
+        }),
+      )
+      .optional(),
   })
 
 export const documentStructureIdSchema = documentStructureSchema.pick({id: true})

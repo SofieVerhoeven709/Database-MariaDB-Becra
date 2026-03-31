@@ -1,6 +1,6 @@
 import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
 
-// ─── Group option helpers ─────────────────────────────────────────────────────
+// ─── Group / place / status option helpers ────────────────────────────────────
 
 export interface DocumentGroupOption {
   id: string
@@ -19,7 +19,8 @@ export interface DocumentStatusOption {
   name: string | null
 }
 
-// ─── Mapped DocumentGroup (the junction) ─────────────────────────────────────
+// ─── MappedDocumentGroup — the junction row ───────────────────────────────────
+// DocumentGroup links optional A/B/C/D ids together into a named combo.
 
 export interface MappedDocumentGroup {
   id: string
@@ -31,8 +32,16 @@ export interface MappedDocumentGroup {
   groupCName: string | null
   groupDId: string | null
   groupDName: string | null
-  /** Human-readable label e.g. "A > B > C > D" */
   label: string
+}
+
+// ─── Target link (one DocumentStructureTarget row) ────────────────────────────
+
+export interface MappedDocumentTarget {
+  id: string // DocumentStructureTarget.id
+  targetId: string // Target.id
+  targetTypeName: string // TargetType.name
+  targetDisplayName: string | null
 }
 
 // ─── Mapped document (list / table row) ──────────────────────────────────────
@@ -56,8 +65,8 @@ export interface MappedDocument {
   documentGroupId: string | null
   documentGroup: MappedDocumentGroup | null
   // Place
-  documentPlaceId: string
-  documentPlaceLabel: string
+  documentPlaceId: string | null
+  documentPlaceLabel: string | null
   // Status
   documentStatusId: string | null
   documentStatusName: string | null
@@ -82,7 +91,7 @@ export interface MappedDocument {
   deletedByName: string | null
 }
 
-// ─── Full detail ──────────────────────────────────────────────────────────────
+// ─── Revision ─────────────────────────────────────────────────────────────────
 
 export interface MappedDocumentRevision {
   id: string
@@ -98,11 +107,14 @@ export interface MappedDocumentRevision {
   deletedByName: string | null
 }
 
+// ─── Full detail (includes revisions + all target links) ─────────────────────
+
 export interface DocumentDetailData extends MappedDocument {
   revisions: MappedDocumentRevision[]
+  documentStructureTargets: MappedDocumentTarget[]
 }
 
-// ─── Mapped group types (for management tab) ──────────────────────────────────
+// ─── Mapped group types (for management tabs) ─────────────────────────────────
 
 export interface MappedDocumentGroupA {
   id: string

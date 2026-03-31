@@ -198,8 +198,8 @@ export function mapDocument(d: DocumentListPayload): MappedDocument {
     referenceDocNumber: d.DocumentStructure?.documentNumber ?? null,
     documentGroupId: d.documentGroupId ?? null,
     documentGroup: mapDocumentGroup(d.DocumentGroup),
-    documentPlaceId: d.documentPlaceId,
-    documentPlaceLabel: placeLabel(d.DocumentPlace.headFolder, d.DocumentPlace.subFolder),
+    documentPlaceId: d.documentPlaceId ?? null,
+    documentPlaceLabel: placeLabel(d.DocumentPlace!.headFolder, d.DocumentPlace!.subFolder),
     documentStatusId: d.documentStatusId ?? null,
     documentStatusName: d.DocumentStatus?.name ?? null,
     createdBy: d.createdBy,
@@ -248,6 +248,12 @@ export function mapDocumentDetail(d: DocumentDetailPayload): DocumentDetailData 
   return {
     ...base,
     revisions: d.DocumentRevision.map(mapRevision),
+    documentStructureTargets: d.DocumentStructureTarget.map(t => ({
+      id: t.id,
+      targetId: t.Target.id,
+      targetTypeName: t.Target.TargetType.name,
+      targetDisplayName: t.Target.TargetType.name ?? null, // adjust if needed
+    })),
   }
 }
 

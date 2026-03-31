@@ -186,6 +186,7 @@ export function DocumentTable({
   const canCreate = currentUserLevel >= 60
   const canDelete = currentUserLevel >= 80
   const canManageVisibility = currentUserLevel >= 80
+  const canEditNumber = currentUserLevel >= 80
 
   const [search, setSearch] = useState('')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('not-deleted')
@@ -246,7 +247,7 @@ export function DocumentTable({
         d.descriptionShort.toLowerCase().includes(q) ||
         (d.description?.toLowerCase().includes(q) ?? false) ||
         (d.documentGroup?.label.toLowerCase().includes(q) ?? false) ||
-        d.documentPlaceLabel.toLowerCase().includes(q) ||
+        d.documentPlaceLabel?.toLowerCase().includes(q) ||
         (d.managedByName?.toLowerCase().includes(q) ?? false) ||
         (d.documentStatusName?.toLowerCase().includes(q) ?? false)
       )
@@ -285,12 +286,7 @@ export function DocumentTable({
 
   // ─── Save handler ──────────────────────────────────────────────────────────
 
-  async function handleSave(
-    doc: MappedDocument,
-    visibilityRows: VisibilityRow[],
-    documentTargetId?: string,
-    documentTargetTypeName?: DocumentTargetTypeName,
-  ) {
+  async function handleSave(doc: MappedDocument, visibilityRows: VisibilityRow[]) {
     const core = {
       documentNumber: doc.documentNumber,
       description: doc.description,
@@ -316,8 +312,6 @@ export function DocumentTable({
       await createDocumentAction({
         ...core,
         visibilityForRoles: visibilityRows,
-        documentTargetId,
-        documentTargetTypeName,
       })
     }
     setDialogOpen(false)
@@ -819,6 +813,7 @@ export function DocumentTable({
         documentOptions={documentOptions}
         targetOptions={targetOptions}
         canManageVisibility={canManageVisibility}
+        canEditNumber={canEditNumber}
       />
 
       {copyDialogDoc && (

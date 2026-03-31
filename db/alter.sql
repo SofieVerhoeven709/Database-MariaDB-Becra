@@ -821,7 +821,7 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             documentStructureId CHAR(36) NOT NULL,
             targetId CHAR(36) NOT NULL,
-            FOREIGN KEY (documentStructureId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
+            FOREIGN KEY (documentStructureId) REFERENCES DocumentStructure (id) ON DELETE CASCADE,
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 

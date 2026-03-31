@@ -1,7 +1,7 @@
 'use client'
 
 import {useMemo, useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye, Copy} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -9,7 +9,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
 import type {MappedMaterial} from '@/types/material'
-import {createMaterialAction, updateMaterialAction, deleteMaterialAction} from '@/serverFunctions/materials'
+import {createMaterialAction, updateMaterialAction, deleteMaterialAction, cloneMaterialAction} from '@/serverFunctions/materials'
 import {useRouter} from 'next/navigation'
 
 interface MaterialGroup {
@@ -116,6 +116,7 @@ export function MaterialTable({
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
+  const [cloningMaterial, setCloningMaterial] = useState<MappedMaterial | null>(null)
 
   const parentPartBeNumbersInUse = useMemo(() => [...new Set(materials.flatMap(m => m.parentBeNumbers))], [materials])
 
@@ -292,6 +293,28 @@ export function MaterialTable({
     router.refresh()
   }
 
+  async function handleClone(material: MappedMaterial) {
+    setSaving(true)
+    setSaveError(null)
+    try {
+      const fd = new FormData()
+      fd.append('id', material.id)
+      const result = await cloneMaterialAction({success: false}, fd)
+      if (result && result.success) {
+        setDialogOpen(false)
+        setEditingMaterial(null)
+        setCloningMaterial(null)
+        router.refresh()
+      } else {
+        setSaveError('Could not clone the material. Please try again.')
+      }
+    } catch (_e) {
+      setSaveError('An unexpected error occurred. Please try again.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
   const columns: {key: SortField; label: string}[] = [
     {key: 'beNumber', label: 'BE Number'},
     {key: 'name', label: 'Name'},
@@ -318,7 +341,10 @@ export function MaterialTable({
             <Table>
               <TableHeader>
                 <TableRow className="bg-secondary hover:bg-secondary">
-                  {columns.map(col => (
+                  <TableHead className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    IOS Number
+                  </TableHead>
+                  {columns.slice(1).map(col => (
                     <TableHead
                       key={col.key}
                       className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
@@ -340,7 +366,7 @@ export function MaterialTable({
                     key={m.id}
                     className="hover:bg-secondary/50 transition-colors cursor-pointer"
                     onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
-                    <TableCell className="font-mono text-sm font-medium">—</TableCell>
+                    <TableCell className="font-mono text-sm font-medium">{m.IOSNumber ?? <span className="text-muted-foreground">—</span>}</TableCell>
                     <TableCell className="text-sm">{m.name ?? <span className="text-muted-foreground">—</span>}</TableCell>
                     <TableCell className="text-sm max-w-[220px] truncate" title={m.shortDescription}>{m.shortDescription}</TableCell>
                     <TableCell className="text-sm">{m.brandName ?? <span className="text-muted-foreground">—</span>}</TableCell>
@@ -418,6 +444,14 @@ export function MaterialTable({
                           className="h-7 w-7 text-destructive hover:text-destructive"
                           onClick={() => handleDelete(m.id)}>
                           <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                          title="Clone"
+                          onClick={() => handleClone(m)}>
+                          <Copy className="h-3.5 w-3.5" />
                         </Button>
                       </div>
                     </TableCell>
@@ -615,6 +649,14 @@ export function MaterialTable({
                         className="h-7 w-7 text-destructive hover:text-destructive"
                         onClick={() => handleDelete(m.id)}>
                         <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                        title="Clone"
+                        onClick={() => handleClone(m)}>
+                        <Copy className="h-3.5 w-3.5" />
                       </Button>
                     </div>
                   </TableCell>

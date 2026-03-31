@@ -320,3 +320,29 @@ export async function getNonBeNumberItems() {
     orderBy: {beNumber: 'asc'},
   })
 }
+
+export async function cloneMaterial(id: string, createdBy: string) {
+  const original = await prismaClient.material.findUniqueOrThrow({where: {id}})
+  const {id: _oldId, deleted: _deleted, deletedAt: _deletedAt, deletedBy: _deletedBy, beNumber, ...rest} = original
+  const newId = randomUUID()
+
+  // Generate a unique beNumber for the clone
+  let baseBeNumber = beNumber ? String(beNumber) : 'CLONE'
+  let newBeNumber = baseBeNumber + '-copy'
+  let counter = 1
+  while (await prismaClient.material.findUnique({where: {beNumber: newBeNumber}})) {
+    newBeNumber = `${baseBeNumber}-copy${counter}`
+    counter++
+  }
+
+  return await prismaClient.material.create({
+    data: {
+      ...rest,
+      id: newId,
+      beNumber: newBeNumber,
+      deleted: false,
+      deletedAt: null,
+      deletedBy: null,
+    },
+  })
+}

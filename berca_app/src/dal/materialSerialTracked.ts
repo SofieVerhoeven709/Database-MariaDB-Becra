@@ -1,6 +1,7 @@
 import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 import type {Prisma} from '@/generated/prisma/client'
+import { randomUUID } from 'crypto'
 
 export type SerialTrackedWithRelations = Prisma.MaterialSerialTrackGetPayload<{
   include: {
@@ -130,4 +131,30 @@ export async function softDeleteSerialTracked(id: string, deletedBy: string) {
       deletedBy,
     },
   })
+}
+
+export async function cloneSerialTracked(id: string, createdBy: string) {
+  const original = await prismaClient.materialSerialTrack.findUniqueOrThrow({ where: { id } })
+  const {
+    id: _oldId,
+    createdAt: _createdAt,
+    deleted: _deleted,
+    deletedAt: _deletedAt,
+    deletedBy: _deletedBy,
+    ...rest
+  } = original
+  const newId = randomUUID()
+  const now = new Date()
+  const newSerialTracked = await prismaClient.materialSerialTrack.create({
+    data: {
+      ...rest,
+      id: newId,
+      createdAt: now,
+      createdBy,
+      deleted: false,
+      deletedAt: null,
+      deletedBy: null,
+    },
+  })
+  return newSerialTracked
 }

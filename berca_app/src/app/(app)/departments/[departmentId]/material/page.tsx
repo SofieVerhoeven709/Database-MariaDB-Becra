@@ -187,27 +187,37 @@ export default async function MaterialPage({params}: PageProps) {
                 <TableRow>
                   <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">IOS Number</TableHead>
                   <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Short Description</TableHead>
+                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Brand Name</TableHead>
+                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Material Group</TableHead>
+                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Preferred Supplier</TableHead>
+                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Warehouse Place</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {mappedNonBeNumbers.length === 0 ? (
+                {mappedMaterials.filter(m => !m.deleted && m.beNumber && m.beNumber.length > 0).length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={2} className="text-center text-muted-foreground py-10">
+                    <TableCell colSpan={6} className="text-center text-muted-foreground py-10">
                       No IOS numbers found
                     </TableCell>
                   </TableRow>
                 ) : (
-                  mappedNonBeNumbers.map(opt => (
-                    <TableRow key={opt.beNumber}>
-                      <TableCell>{opt.beNumber}</TableCell> {/* Display as IOS Number */}
-                      <TableCell>{opt.shortDescription}</TableCell>
-                    </TableRow>
-                  ))
+                  mappedMaterials
+                    .filter(m => !m.deleted && m.beNumber && m.beNumber.length > 0)
+                    .map(m => (
+                      <TableRow key={m.beNumber}>
+                        <TableCell>{m.beNumber}</TableCell>
+                        <TableCell>{m.shortDescription}</TableCell>
+                        <TableCell>{m.brandName ?? ''}</TableCell>
+                        <TableCell>{m.materialGroupLabel}</TableCell>
+                        <TableCell>{m.preferredSupplierCompanyName ?? ''}</TableCell>
+                        <TableCell>{m.warehousePlaceLabel ?? ''}</TableCell>
+                      </TableRow>
+                    ))
                 )}
               </TableBody>
             </Table>
             <p className="text-xs text-muted-foreground mt-2">
-              {mappedNonBeNumbers.length} IOS number{mappedNonBeNumbers.length !== 1 ? 's' : ''}
+              {mappedMaterials.filter(m => !m.deleted && m.beNumber && m.beNumber.length > 0).length} IOS number{mappedMaterials.filter(m => !m.deleted && m.beNumber && m.beNumber.length > 0).length !== 1 ? 's' : ''}
             </p>
           </div>
         </TabsContent>

@@ -8,7 +8,6 @@ import {Badge} from '@/components/ui/badge'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
-import {MaterialIOSFormDialog} from '@/components/custom/materialIOSFormDialog'
 import type {MappedMaterial} from '@/types/material'
 import {
   createMaterialAction,
@@ -17,7 +16,6 @@ import {
   cloneMaterialAction,
 } from '@/serverFunctions/materials'
 import {useRouter} from 'next/navigation'
-import type { IOSMaterial } from '@/components/custom/materialIOSFormDialog';
 
 interface MaterialGroup {
   id: string
@@ -120,14 +118,9 @@ export function MaterialTable({
   const [filterPlace, setFilterPlace] = useState<FilterPlace>('all')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('notDeleted')
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [iosDialogOpen, setIOSDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
-  const [editingIOSMaterial, setEditingIOSMaterial] = useState(null)
   const [saving, setSaving] = useState(false)
-  const [savingIOS, setSavingIOS] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
-  const [saveErrorIOS, setSaveErrorIOS] = useState(null)
-
   const parentPartBeNumbersInUse = useMemo(() => [...new Set(materials.flatMap(m => m.parentBeNumbers))], [materials])
 
   function handleSort(field: SortField) {
@@ -322,21 +315,6 @@ export function MaterialTable({
     }
   }
 
-  async function handleSaveIOS(form: IOSMaterial) {
-    setSavingIOS(true);
-    setSaveErrorIOS(null);
-    try {
-      // TODO: Implement actual save logic for IOS materials (API call or local state update)
-      setIOSDialogOpen(false);
-      setEditingIOSMaterial(null);
-      // Optionally refresh data here
-    } catch (e) {
-      setSaveErrorIOS('An unexpected error occurred. Please try again.' as any);
-    } finally {
-      setSavingIOS(false);
-    }
-  }
-
   const columns: {key: SortField; label: string}[] = [
     {key: 'beNumber', label: 'BE Number'},
     {key: 'name', label: 'Name'},
@@ -407,15 +385,6 @@ export function MaterialTable({
           className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
           New material
-        </Button>
-        <Button
-          onClick={() => {
-            setEditingIOSMaterial(null)
-            setIOSDialogOpen(true)
-          }}
-          className="flex items-center gap-2 bg-blue-900 text-white hover:bg-blue-800">
-          <Plus className="h-4 w-4" />
-          New IOS Number Material
         </Button>
       </div>
 
@@ -589,20 +558,6 @@ export function MaterialTable({
         onSave={handleSave}
         saving={saving}
         saveError={saveError}
-      />
-      <MaterialIOSFormDialog
-        open={iosDialogOpen}
-        onOpenChange={open => {
-          setIOSDialogOpen(open)
-          if (!open) {
-            setEditingIOSMaterial(null)
-            setSaveErrorIOS(null)
-          }
-        }}
-        material={editingIOSMaterial}
-        onSave={handleSaveIOS}
-        saving={savingIOS}
-        saveError={saveErrorIOS}
       />
     </div>
   )

@@ -38,7 +38,5 @@ export interface MappedMaterial {
   deletedBy: string | null
   isSerialTracked: boolean
   serialTrackedId: string | null
-  IOSNumber: string
-  lotNumber: string
   isParentPart: boolean
 }

@@ -1,7 +1,6 @@
 import {getMaterials, getMaterialGroups, getUnits} from '@/dal/materials'
 import {getWarehousePlaces} from '@/dal/warehousePlace'
 import {MaterialTable} from '@/components/custom/materialTable'
-import {NonBeNumbersTable} from '@/components/custom/NonBeNumbersTable'
 import {Tabs, TabsList, TabsTrigger, TabsContent} from '@/components/ui/tabs'
 import {getDepartmentById} from '@/dal/department'
 import {getSupplierCompanies} from '@/dal/companies'
@@ -81,8 +80,6 @@ export default async function MaterialPage({params}: PageProps) {
       brandOrderNr: m.brandOrderNr ?? null,
       shortDescription: m.shortDescription ?? '',
       longDescription: m.longDescription ?? null,
-      lotNumber: m.lotNumber ?? '',
-      IOSNumber: m.IOSNumber ?? '',
       isSerialTracked: Array.isArray((m as any).MaterialSerialTrack) && (m as any).MaterialSerialTrack.length > 0,
       serialTrackedId:
         Array.isArray((m as any).MaterialSerialTrack) && (m as any).MaterialSerialTrack[0]?.id
@@ -167,7 +164,6 @@ export default async function MaterialPage({params}: PageProps) {
       <Tabs defaultValue="materials" className="w-full">
         <TabsList className="mb-6 bg-secondary">
           <TabsTrigger value="materials">Materials</TabsTrigger>
-          <TabsTrigger value="nonBeNumbers">Non BE Numbers</TabsTrigger>
         </TabsList>
         <TabsContent value="materials">
           <MaterialTable
@@ -178,20 +174,6 @@ export default async function MaterialPage({params}: PageProps) {
             departmentId={departmentId}
             parentPartOptions={mappedParentPartOptions(mappedMaterials)}
             warehousePlaces={mappedWarehousePlaces}
-          />
-        </TabsContent>
-        <TabsContent value="nonBeNumbers">
-          <NonBeNumbersTable
-            materials={mappedMaterials
-              .filter(m => !m.deleted && (!m.IOSNumber || m.IOSNumber.length === 0))
-              .map(m => ({
-                id: m.id,
-                IOSNumber: m.IOSNumber ?? '',
-                name: m.name ?? '',
-                lotNumber: m.lotNumber ?? '',
-                shortDescription: m.shortDescription ?? '',
-                brandName: m.brandName ?? '',
-              }))}
           />
         </TabsContent>
       </Tabs>

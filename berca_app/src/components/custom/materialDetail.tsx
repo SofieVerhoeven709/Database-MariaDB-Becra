@@ -102,12 +102,7 @@ function formatDate(iso: string | null | undefined) {
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
-export function MaterialDetail({
-  material,
-  materialGroups,
-  units,
-  supplierCompanies,
-}: MaterialDetailProps) {
+export function MaterialDetail({material, materialGroups, units, supplierCompanies}: MaterialDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)

@@ -8,9 +8,16 @@ import {Badge} from '@/components/ui/badge'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
+import {MaterialIOSFormDialog} from '@/components/custom/materialIOSFormDialog'
 import type {MappedMaterial} from '@/types/material'
-import {createMaterialAction, updateMaterialAction, deleteMaterialAction, cloneMaterialAction} from '@/serverFunctions/materials'
+import {
+  createMaterialAction,
+  updateMaterialAction,
+  deleteMaterialAction,
+  cloneMaterialAction,
+} from '@/serverFunctions/materials'
 import {useRouter} from 'next/navigation'
+import type { IOSMaterial } from '@/components/custom/materialIOSFormDialog';
 
 interface MaterialGroup {
   id: string
@@ -113,10 +120,13 @@ export function MaterialTable({
   const [filterPlace, setFilterPlace] = useState<FilterPlace>('all')
   const [filterDeleted, setFilterDeleted] = useState<FilterDeleted>('notDeleted')
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [iosDialogOpen, setIOSDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
+  const [editingIOSMaterial, setEditingIOSMaterial] = useState(null)
   const [saving, setSaving] = useState(false)
+  const [savingIOS, setSavingIOS] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
-  const [cloningMaterial, setCloningMaterial] = useState<MappedMaterial | null>(null)
+  const [saveErrorIOS, setSaveErrorIOS] = useState(null)
 
   const parentPartBeNumbersInUse = useMemo(() => [...new Set(materials.flatMap(m => m.parentBeNumbers))], [materials])
 
@@ -172,13 +182,14 @@ export function MaterialTable({
     })
 
   // Filter for materials without BE numbers
-  const nonBeMaterials = materials.filter(
-    m => !m.beNumber || m.beNumber.trim().length === 0
-  )
+  const nonBeMaterials = materials.filter(m => !m.beNumber || m.beNumber.trim().length === 0)
   // Debug: log which materials are being included in the Non BE Numbers table
   if (nonBeMaterials.length > 0) {
     // eslint-disable-next-line no-console
-    console.log('[DEBUG] Non BE Materials:', nonBeMaterials.map(m => ({ id: m.id, beNumber: m.beNumber, name: m.name })))
+    console.log(
+      '[DEBUG] Non BE Materials:',
+      nonBeMaterials.map(m => ({id: m.id, beNumber: m.beNumber, name: m.name})),
+    )
   }
 
   async function handleSave(form: Partial<MappedMaterial> & {id: string}) {
@@ -260,10 +271,7 @@ export function MaterialTable({
         let msgs: string[] = []
         if (result.errors) {
           // If errors is an object with a single 'errors' key, treat as global error
-          if (
-            Object.keys(result.errors).length === 1 &&
-            Array.isArray(result.errors.errors)
-          ) {
+          if (Object.keys(result.errors).length === 1 && Array.isArray(result.errors.errors)) {
             msgs = result.errors.errors
           } else {
             msgs = Object.entries(result.errors ?? {}).flatMap(([field, errs]) =>
@@ -303,7 +311,6 @@ export function MaterialTable({
       if (result && result.success) {
         setDialogOpen(false)
         setEditingMaterial(null)
-        setCloningMaterial(null)
         router.refresh()
       } else {
         setSaveError('Could not clone the material. Please try again.')
@@ -312,6 +319,21 @@ export function MaterialTable({
       setSaveError('An unexpected error occurred. Please try again.')
     } finally {
       setSaving(false)
+    }
+  }
+
+  async function handleSaveIOS(form: IOSMaterial) {
+    setSavingIOS(true);
+    setSaveErrorIOS(null);
+    try {
+      // TODO: Implement actual save logic for IOS materials (API call or local state update)
+      setIOSDialogOpen(false);
+      setEditingIOSMaterial(null);
+      // Optionally refresh data here
+    } catch (e) {
+      setSaveErrorIOS('An unexpected error occurred. Please try again.' as any);
+    } finally {
+      setSavingIOS(false);
     }
   }
 
@@ -333,139 +355,8 @@ export function MaterialTable({
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Non-BE Number Table */}
-      {nonBeMaterials.length > 0 && (
-        <>
-          <h2 className="text-lg font-semibold mb-2">Materials Without BE Number</h2>
-          <div className="rounded-xl border border-border overflow-hidden mb-6">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-secondary hover:bg-secondary">
-                  <TableHead className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                    IOS Number
-                  </TableHead>
-                  {columns.slice(1).map(col => (
-                    <TableHead
-                      key={col.key}
-                      className="cursor-pointer select-none text-xs font-semibold text-muted-foreground uppercase tracking-wide"
-                    >
-                      {col.label}
-                    </TableHead>
-                  ))}
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide text-center w-[80px]">
-                    Serial Tracked
-                  </TableHead>
-                  <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                    Actions
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {nonBeMaterials.map(m => (
-                  <TableRow
-                    key={m.id}
-                    className="hover:bg-secondary/50 transition-colors cursor-pointer"
-                    onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
-                    <TableCell className="font-mono text-sm font-medium">{m.IOSNumber ?? <span className="text-muted-foreground">—</span>}</TableCell>
-                    <TableCell className="text-sm">{m.name ?? <span className="text-muted-foreground">—</span>}</TableCell>
-                    <TableCell className="text-sm max-w-[220px] truncate" title={m.shortDescription}>{m.shortDescription}</TableCell>
-                    <TableCell className="text-sm">{m.brandName ?? <span className="text-muted-foreground">—</span>}</TableCell>
-                    <TableCell className="text-sm">{m.materialGroupLabelA || '—'}</TableCell>
-                    <TableCell className="text-sm">{m.materialGroupLabelB || '—'}</TableCell>
-                    <TableCell className="text-sm">{m.materialGroupLabelC || '—'}</TableCell>
-                    <TableCell className="text-sm">{m.materialGroupLabelD || '—'}</TableCell>
-                    <TableCell className="text-sm">{m.unitName}<span className="text-muted-foreground text-xs ml-1">({m.unitAbbreviation})</span></TableCell>
-                    <TableCell className="text-sm">{m.warehousePlaceLabel ?? <span className="text-muted-foreground">—</span>}</TableCell>
-                    <TableCell className="text-sm max-w-[220px]">
-                      {m.parentBeNumbers.length > 0 ? (
-                        <span title={m.parentBeNumbers.join(', ')}>
-                          {m.parentBeNumbers.slice(0, 2).join(', ')}
-                          {m.parentBeNumbers.length > 2 ? ` +${m.parentBeNumbers.length - 2}` : ''}
-                        </span>
-                      ) : (
-                        <span className="text-muted-foreground">—</span>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-sm">
-                      <div className="flex flex-col leading-tight">
-                        <span>{m.createdByName || '-'}</span>
-                        <span className="text-xs text-muted-foreground">{formatDateTime(m.createdAt)}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      {m.rejected ? (
-                        <Badge variant="destructive" className="text-xs">Rejected</Badge>
-                      ) : (
-                        <Badge variant="secondary" className="text-xs bg-green-500/15 text-green-700 dark:text-green-400">Active</Badge>
-                      )}
-                    </TableCell>
-                    {/* Serial Tracked column */}
-                    <TableCell className="text-center">
-                      {m.isSerialTracked && m.serialTrackedId ? (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="text-xs bg-blue-100 text-blue-800 border-blue-300 px-2 py-1 h-auto min-h-0"
-                          onClick={e => {
-                            e.stopPropagation();
-                            router.push(`/departments/${departmentId}/serialTracked/${m.serialTrackedId}`)
-                          }}
-                        >
-                          Serial
-                        </Button>
-                      ) : m.isSerialTracked ? (
-                        <Badge variant="outline" className="text-xs bg-blue-100 text-blue-800 border-blue-300">Serial</Badge>
-                      ) : (
-                        <span className="text-muted-foreground">—</span>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-right" onClick={e => e.stopPropagation()}>
-                      <div className="flex justify-end gap-1">
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-7 w-7"
-                          onClick={() => router.push(`/departments/${departmentId}/material/${m.id}`)}>
-                          <Eye className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-7 w-7"
-                          onClick={() => {
-                            setEditingMaterial(m)
-                            setDialogOpen(true)
-                          }}>
-                          <Pencil className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-7 w-7 text-destructive hover:text-destructive"
-                          onClick={() => handleDelete(m.id)}>
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                          title="Clone"
-                          onClick={() => handleClone(m)}>
-                          <Copy className="h-3.5 w-3.5" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </>
-      )}
-
-      {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[200px]">
+      <div className="flex items-center gap-2 mb-4">
+        <div className="relative flex-1 min-w-50">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             className="pl-9 bg-secondary border-border"
@@ -517,6 +408,15 @@ export function MaterialTable({
           <Plus className="h-4 w-4" />
           New material
         </Button>
+        <Button
+          onClick={() => {
+            setEditingIOSMaterial(null)
+            setIOSDialogOpen(true)
+          }}
+          className="flex items-center gap-2 bg-blue-900 text-white hover:bg-blue-800">
+          <Plus className="h-4 w-4" />
+          New IOS Number Material
+        </Button>
       </div>
 
       {/* Table */}
@@ -533,10 +433,10 @@ export function MaterialTable({
                   <SortIcon field={col.key} sortField={sortField} sortDir={sortDir} />
                 </TableHead>
               ))}
-              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide text-center w-[80px]">
+              <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide text-center w-20">
                 Serial Tracked
               </TableHead>
-              <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <TableHead className="w-25 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
             </TableRow>
@@ -558,7 +458,7 @@ export function MaterialTable({
                   <TableCell className="text-sm">
                     {m.name ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
-                  <TableCell className="text-sm max-w-[220px] truncate" title={m.shortDescription}>
+                  <TableCell className="text-sm max-w-55 truncate" title={m.shortDescription}>
                     {m.shortDescription}
                   </TableCell>
                   <TableCell className="text-sm">
@@ -575,7 +475,7 @@ export function MaterialTable({
                   <TableCell className="text-sm">
                     {m.warehousePlaceLabel ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
-                  <TableCell className="text-sm max-w-[220px]">
+                  <TableCell className="text-sm max-w-55">
                     {m.parentBeNumbers.length > 0 ? (
                       <span title={m.parentBeNumbers.join(', ')}>
                         {m.parentBeNumbers.slice(0, 2).join(', ')}
@@ -603,27 +503,26 @@ export function MaterialTable({
                     )}
                   </TableCell>
                   {/* Serial Tracked column */}
-                   <TableCell className="text-center">
-                     {m.isSerialTracked && m.serialTrackedId ? (
-                       <Button
-                         variant="outline"
-                         size="sm"
-                         className="text-xs bg-blue-100 text-blue-800 border-blue-300 px-2 py-1 h-auto min-h-0"
-                         onClick={e => {
-                           e.stopPropagation();
-                           router.push(`/departments/${departmentId}/serialTracked/${m.serialTrackedId}`)
-                         }}
-                       >
-                         Serial
-                       </Button>
-                     ) : m.isSerialTracked ? (
-                       <Badge variant="outline" className="text-xs bg-blue-100 text-blue-800 border-blue-300">
-                         Serial
-                       </Badge>
-                     ) : (
-                       <span className="text-muted-foreground">—</span>
-                     )}
-                   </TableCell>
+                  <TableCell className="text-center">
+                    {m.isSerialTracked && m.serialTrackedId ? (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-xs bg-blue-100 text-blue-800 border-blue-300 px-2 py-1 h-auto min-h-0"
+                        onClick={e => {
+                          e.stopPropagation()
+                          router.push(`/departments/${departmentId}/serialTracked/${m.serialTrackedId}`)
+                        }}>
+                        Serial
+                      </Button>
+                    ) : m.isSerialTracked ? (
+                      <Badge variant="outline" className="text-xs bg-blue-100 text-blue-800 border-blue-300">
+                        Serial
+                      </Badge>
+                    ) : (
+                      <span className="text-muted-foreground">—</span>
+                    )}
+                  </TableCell>
                   <TableCell className="text-right" onClick={e => e.stopPropagation()}>
                     <div className="flex justify-end gap-1">
                       <Button
@@ -690,6 +589,20 @@ export function MaterialTable({
         onSave={handleSave}
         saving={saving}
         saveError={saveError}
+      />
+      <MaterialIOSFormDialog
+        open={iosDialogOpen}
+        onOpenChange={open => {
+          setIOSDialogOpen(open)
+          if (!open) {
+            setEditingIOSMaterial(null)
+            setSaveErrorIOS(null)
+          }
+        }}
+        material={editingIOSMaterial}
+        onSave={handleSaveIOS}
+        saving={savingIOS}
+        saveError={saveErrorIOS}
       />
     </div>
   )

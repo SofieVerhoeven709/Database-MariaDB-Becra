@@ -486,8 +486,6 @@ CREATE TABLE
             outstanding BOOLEAN NOT NULL DEFAULT 1,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedBy CHAR(36),
-            createdBy CHAR(36) NOT NULL,
-            modifiedBy CHAR(36),
             invoiceTypeId CHAR(36) NOT NULL,
             targetId CHAR(36) NOT NULL,
             paymentMethodId CHAR(36) NOT NULL,
@@ -811,3 +809,30 @@ ALTER TABLE MaterialSerialTrack
 ALTER TABLE MaterialSerialTrack
     ADD CONSTRAINT fk_materialSerialTrack_materialId
     FOREIGN KEY (`materialId`) REFERENCES Material (`id`) ON DELETE RESTRICT;
+
+CREATE TABLE IF NOT EXISTS IOSMaterial (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    iosNumber VARCHAR(100) NOT NULL, -- Adjust length/type as needed
+    name VARCHAR(255) NOT NULL,
+    brandName VARCHAR(255) NOT NULL,
+    shortDescription VARCHAR(255),
+    lotNumber VARCHAR(100), -- Adjust length/type as needed
+    createdBy CHAR(36) NOT NULL,
+    createdAt DATETIME NOT NULL,
+    deleted BOOLEAN NOT NULL DEFAULT 0,
+    deletedAt DATETIME,
+    deletedBy CHAR(36),
+    FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+    FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+    INDEX idx_iosNumber (iosNumber)
+) ENGINE = InnoDB;
+
+-- Add iosMaterialId to MaterialPrice for IOSMaterial pricing
+ALTER TABLE MaterialPrice
+  ADD COLUMN IF NOT EXISTS iosMaterialId CHAR(36),
+  ADD CONSTRAINT fk_materialprice_iosmaterial FOREIGN KEY (iosMaterialId) REFERENCES IOSMaterial (id) ON DELETE SET NULL;
+
+-- Add iosMaterialId to WorkOrderStructure for IOSMaterial support
+ALTER TABLE WorkOrderStructure
+  ADD COLUMN IF NOT EXISTS iosMaterialId CHAR(36) NULL AFTER materialId,
+  ADD CONSTRAINT fk_workorderstructure_iosmaterial FOREIGN KEY (iosMaterialId) REFERENCES IOSMaterial (id) ON DELETE SET NULL;

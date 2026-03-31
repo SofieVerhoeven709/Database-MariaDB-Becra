@@ -472,3 +472,8 @@ export type DocumentGroupD = Prisma.DocumentGroupDModel
  * 
  */
 export type PriceListCompany = Prisma.PriceListCompanyModel
+/**
+ * Model IOSMaterial
+ * 
+ */
+export type IOSMaterial = Prisma.IOSMaterialModel

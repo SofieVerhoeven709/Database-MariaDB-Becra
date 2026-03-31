@@ -480,7 +480,8 @@ export const ModelName = {
   DocumentGroupB: 'DocumentGroupB',
   DocumentGroupC: 'DocumentGroupC',
   DocumentGroupD: 'DocumentGroupD',
-  PriceListCompany: 'PriceListCompany'
+  PriceListCompany: 'PriceListCompany',
+  IOSMaterial: 'IOSMaterial'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -496,7 +497,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "iOSMaterial"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -6506,6 +6507,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    IOSMaterial: {
+      payload: Prisma.$IOSMaterialPayload<ExtArgs>
+      fields: Prisma.IOSMaterialFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IOSMaterialFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IOSMaterialPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IOSMaterialFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IOSMaterialPayload>
+        }
+        findFirst: {
+          args: Prisma.IOSMaterialFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IOSMaterialPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IOSMaterialFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IOSMaterialPayload>
+        }
+        findMany: {
+          args: Prisma.IOSMaterialFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IOSMaterialPayload>[]
+        }
+        create: {
+          args: Prisma.IOSMaterialCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IOSMaterialPayload>
+        }
+        createMany: {
+          args: Prisma.IOSMaterialCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.IOSMaterialDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IOSMaterialPayload>
+        }
+        update: {
+          args: Prisma.IOSMaterialUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IOSMaterialPayload>
+        }
+        deleteMany: {
+          args: Prisma.IOSMaterialDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IOSMaterialUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.IOSMaterialUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IOSMaterialPayload>
+        }
+        aggregate: {
+          args: Prisma.IOSMaterialAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIOSMaterial>
+        }
+        groupBy: {
+          args: Prisma.IOSMaterialGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IOSMaterialGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IOSMaterialCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IOSMaterialCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -7275,7 +7342,8 @@ export const MaterialPriceScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  companyId: 'companyId'
+  companyId: 'companyId',
+  iosMaterialId: 'iosMaterialId'
 } as const
 
 export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)[keyof typeof MaterialPriceScalarFieldEnum]
@@ -7900,6 +7968,7 @@ export const WorkOrderStructureScalarFieldEnum = {
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',
   materialId: 'materialId',
+  iosMaterialId: 'iosMaterialId',
   targetId: 'targetId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -8171,6 +8240,23 @@ export const PriceListCompanyScalarFieldEnum = {
 } as const
 
 export type PriceListCompanyScalarFieldEnum = (typeof PriceListCompanyScalarFieldEnum)[keyof typeof PriceListCompanyScalarFieldEnum]
+
+
+export const IOSMaterialScalarFieldEnum = {
+  id: 'id',
+  iosNumber: 'iosNumber',
+  name: 'name',
+  brandName: 'brandName',
+  shortDescription: 'shortDescription',
+  lotNumber: 'lotNumber',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IOSMaterialScalarFieldEnum = (typeof IOSMaterialScalarFieldEnum)[keyof typeof IOSMaterialScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -8736,7 +8822,8 @@ export const MaterialPriceOrderByRelevanceFieldEnum = {
   additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy',
-  companyId: 'companyId'
+  companyId: 'companyId',
+  iosMaterialId: 'iosMaterialId'
 } as const
 
 export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderByRelevanceFieldEnum)[keyof typeof MaterialPriceOrderByRelevanceFieldEnum]
@@ -9205,6 +9292,7 @@ export const WorkOrderStructureOrderByRelevanceFieldEnum = {
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',
   materialId: 'materialId',
+  iosMaterialId: 'iosMaterialId',
   targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const
@@ -9420,6 +9508,20 @@ export const PriceListCompanyOrderByRelevanceFieldEnum = {
 } as const
 
 export type PriceListCompanyOrderByRelevanceFieldEnum = (typeof PriceListCompanyOrderByRelevanceFieldEnum)[keyof typeof PriceListCompanyOrderByRelevanceFieldEnum]
+
+
+export const IOSMaterialOrderByRelevanceFieldEnum = {
+  id: 'id',
+  iosNumber: 'iosNumber',
+  name: 'name',
+  brandName: 'brandName',
+  shortDescription: 'shortDescription',
+  lotNumber: 'lotNumber',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IOSMaterialOrderByRelevanceFieldEnum = (typeof IOSMaterialOrderByRelevanceFieldEnum)[keyof typeof IOSMaterialOrderByRelevanceFieldEnum]
 
 
 
@@ -9647,6 +9749,7 @@ export type GlobalOmitConfig = {
   documentGroupC?: Prisma.DocumentGroupCOmit
   documentGroupD?: Prisma.DocumentGroupDOmit
   priceListCompany?: Prisma.PriceListCompanyOmit
+  iOSMaterial?: Prisma.IOSMaterialOmit
 }
 
 /* Types for Logging */

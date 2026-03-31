@@ -3,7 +3,6 @@ import {MaterialDetail} from '@/components/custom/materialDetail'
 import {notFound} from 'next/navigation'
 import {getSupplierCompanies} from '@/dal/companies'
 import {getSerialTrackedStructureBySerialTrackedId} from '@/dal/materialSerialTrackedStructure'
-import {getNonBeNumberItems} from '@/dal/materials'
 
 interface MaterialDetailPageProps {
   params: Promise<{materialId: string}>
@@ -28,9 +27,8 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
 
   // Fetch serial tracked structure if serialTrackedId exists
   const serialTrackedId = (material as any).MaterialSerialTrack?.id ?? null
-  const [serialTrackedStructure, nonBeNumberItems] = await Promise.all([
+  const [serialTrackedStructure] = await Promise.all([
     serialTrackedId ? getSerialTrackedStructureBySerialTrackedId(serialTrackedId) : [],
-    getNonBeNumberItems(),
   ])
 
   const groupById = new Map(groups.map((g: any) => [g.id, g]))
@@ -142,8 +140,6 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
         materialGroups={mappedGroups}
         units={mappedUnits}
         supplierCompanies={mappedSupplierCompanies}
-        serialTrackedStructure={serialTrackedStructure}
-        nonBeNumberItems={nonBeNumberItems}
       />
     </div>
   )

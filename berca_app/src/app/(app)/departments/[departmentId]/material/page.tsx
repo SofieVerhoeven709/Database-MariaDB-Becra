@@ -1,8 +1,8 @@
 import {getMaterials, getMaterialGroups, getUnits} from '@/dal/materials'
 import {getWarehousePlaces} from '@/dal/warehousePlace'
 import {MaterialTable} from '@/components/custom/materialTable'
+import {NonBeNumbersTable} from '@/components/custom/NonBeNumbersTable'
 import {Tabs, TabsList, TabsTrigger, TabsContent} from '@/components/ui/tabs'
-import {Table, TableHeader, TableRow, TableHead, TableBody, TableCell} from '@/components/ui/table'
 import {getDepartmentById} from '@/dal/department'
 import {getSupplierCompanies} from '@/dal/companies'
 import type {MappedMaterial} from '@/types/material'
@@ -27,13 +27,17 @@ function getParentBeNumbers(material: unknown): string[] {
     .filter((value): value is string => value !== null)
 }
 
-export default async function MaterialPage({params}: PageProps) {
-  const parseBePartDoc = (value: string | null) => {
-    if (value == null || value === '') return null
-    const parsed = Number(value)
-    return Number.isFinite(parsed) ? parsed : null
-  }
+// Add this helper function above MaterialPage
+function mappedParentPartOptions(materials: MappedMaterial[]) {
+  return materials
+    .filter(m => !m.deleted && m.beNumber && m.beNumber.length > 0)
+    .map(m => ({
+      beNumber: m.beNumber,
+      shortDescription: m.shortDescription,
+    }))
+}
 
+export default async function MaterialPage({params}: PageProps) {
   const {departmentId} = await params
 
   const [department, materials, groups, units, supplierCompanies, warehousePlaces] = await Promise.all([
@@ -62,14 +66,14 @@ export default async function MaterialPage({params}: PageProps) {
 
   // Cast materials as any[] to avoid TS2339 errors about missing properties
   const mappedMaterials: MappedMaterial[] = (materials as any[]).map(m => {
-    const materialSuppliers = Array.isArray(m.MaterialSupplier) ? m.MaterialSupplier : [];
+    const materialSuppliers = Array.isArray(m.MaterialSupplier) ? m.MaterialSupplier : []
     const preferredSupplierEntry =
       materialSuppliers.find((s: any) => s.companyId === m.preferredSupplierCompanyId) ??
       materialSuppliers.find((s: any) => s.isPreferred) ??
-      null;
-    const assignedWarehousePlace = warehousePlaceByBeNumber.get(m.beNumber ?? '') ?? null;
-    const unit = (m as any).Unit ?? {};
-    const employee = (m as any).Employee ?? {};
+      null
+    const assignedWarehousePlace = warehousePlaceByBeNumber.get(m.beNumber ?? '') ?? null
+    const unit = (m as any).Unit ?? {}
+    const employee = (m as any).Employee ?? {}
     return {
       id: m.id,
       beNumber: m.beNumber ?? '',
@@ -77,8 +81,13 @@ export default async function MaterialPage({params}: PageProps) {
       brandOrderNr: m.brandOrderNr ?? null,
       shortDescription: m.shortDescription ?? '',
       longDescription: m.longDescription ?? null,
+      lotNumber: m.lotNumber ?? '',
+      IOSNumber: m.IOSNumber ?? '',
       isSerialTracked: Array.isArray((m as any).MaterialSerialTrack) && (m as any).MaterialSerialTrack.length > 0,
-      serialTrackedId: Array.isArray((m as any).MaterialSerialTrack) && (m as any).MaterialSerialTrack[0]?.id ? (m as any).MaterialSerialTrack[0].id : null,
+      serialTrackedId:
+        Array.isArray((m as any).MaterialSerialTrack) && (m as any).MaterialSerialTrack[0]?.id
+          ? (m as any).MaterialSerialTrack[0].id
+          : null,
       preferredSupplierCompanyId: m.preferredSupplierCompanyId ?? null,
       preferredSupplierCompanyName: (m as any).PreferredSupplierCompany?.name ?? null,
       preferredSupplierOrderId: preferredSupplierEntry?.supplierOrderNr ?? null,
@@ -141,15 +150,6 @@ export default async function MaterialPage({params}: PageProps) {
     number: c.number,
   }))
 
-   // Non BE Numbers: materials that are not BE numbers (custom, unchecked, etc.)
-   const mappedNonBeNumbers = (materials as any[])
-     .filter(m => !m.deleted)
-     .filter(m => typeof m.beNumber === 'string' && (m.beNumber ?? '').length > 0)
-     .map(m => ({
-       beNumber: m.beNumber ?? '', // Ensure string, never null
-       shortDescription: m.shortDescription ?? '',
-     }))
-
   const mappedWarehousePlaces = warehousePlaces.map(place => ({
     id: place.id,
     label: place.place ? `${place.abbreviation} (${place.place})` : place.abbreviation,
@@ -176,50 +176,23 @@ export default async function MaterialPage({params}: PageProps) {
             units={mappedUnits}
             supplierCompanies={mappedSupplierCompanies}
             departmentId={departmentId}
-            parentPartOptions={mappedNonBeNumbers}
+            parentPartOptions={mappedParentPartOptions(mappedMaterials)}
             warehousePlaces={mappedWarehousePlaces}
           />
         </TabsContent>
         <TabsContent value="nonBeNumbers">
-          <div className="rounded-xl border border-border overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">IOS Number</TableHead>
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Short Description</TableHead>
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Brand Name</TableHead>
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Material Group</TableHead>
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Preferred Supplier</TableHead>
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Warehouse Place</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {mappedMaterials.filter(m => !m.deleted && m.beNumber && m.beNumber.length > 0).length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={6} className="text-center text-muted-foreground py-10">
-                      No IOS numbers found
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  mappedMaterials
-                    .filter(m => !m.deleted && m.beNumber && m.beNumber.length > 0)
-                    .map(m => (
-                      <TableRow key={m.beNumber}>
-                        <TableCell>{m.beNumber}</TableCell>
-                        <TableCell>{m.shortDescription}</TableCell>
-                        <TableCell>{m.brandName ?? ''}</TableCell>
-                        <TableCell>{m.materialGroupLabel}</TableCell>
-                        <TableCell>{m.preferredSupplierCompanyName ?? ''}</TableCell>
-                        <TableCell>{m.warehousePlaceLabel ?? ''}</TableCell>
-                      </TableRow>
-                    ))
-                )}
-              </TableBody>
-            </Table>
-            <p className="text-xs text-muted-foreground mt-2">
-              {mappedMaterials.filter(m => !m.deleted && m.beNumber && m.beNumber.length > 0).length} IOS number{mappedMaterials.filter(m => !m.deleted && m.beNumber && m.beNumber.length > 0).length !== 1 ? 's' : ''}
-            </p>
-          </div>
+          <NonBeNumbersTable
+            materials={mappedMaterials
+              .filter(m => !m.deleted && (!m.IOSNumber || m.IOSNumber.length === 0))
+              .map(m => ({
+                id: m.id,
+                IOSNumber: m.IOSNumber ?? '',
+                name: m.name ?? '',
+                lotNumber: m.lotNumber ?? '',
+                shortDescription: m.shortDescription ?? '',
+                brandName: m.brandName ?? '',
+              }))}
+          />
         </TabsContent>
       </Tabs>
     </div>

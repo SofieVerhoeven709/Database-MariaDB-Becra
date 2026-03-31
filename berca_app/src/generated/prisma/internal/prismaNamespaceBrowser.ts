@@ -139,7 +139,8 @@ export const ModelName = {
   DocumentGroupB: 'DocumentGroupB',
   DocumentGroupC: 'DocumentGroupC',
   DocumentGroupD: 'DocumentGroupD',
-  PriceListCompany: 'PriceListCompany'
+  PriceListCompany: 'PriceListCompany',
+  IOSMaterial: 'IOSMaterial'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -888,7 +889,8 @@ export const MaterialPriceScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  companyId: 'companyId'
+  companyId: 'companyId',
+  iosMaterialId: 'iosMaterialId'
 } as const
 
 export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)[keyof typeof MaterialPriceScalarFieldEnum]
@@ -1513,6 +1515,7 @@ export const WorkOrderStructureScalarFieldEnum = {
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',
   materialId: 'materialId',
+  iosMaterialId: 'iosMaterialId',
   targetId: 'targetId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -1784,6 +1787,23 @@ export const PriceListCompanyScalarFieldEnum = {
 } as const
 
 export type PriceListCompanyScalarFieldEnum = (typeof PriceListCompanyScalarFieldEnum)[keyof typeof PriceListCompanyScalarFieldEnum]
+
+
+export const IOSMaterialScalarFieldEnum = {
+  id: 'id',
+  iosNumber: 'iosNumber',
+  name: 'name',
+  brandName: 'brandName',
+  shortDescription: 'shortDescription',
+  lotNumber: 'lotNumber',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IOSMaterialScalarFieldEnum = (typeof IOSMaterialScalarFieldEnum)[keyof typeof IOSMaterialScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2349,7 +2369,8 @@ export const MaterialPriceOrderByRelevanceFieldEnum = {
   additionalInfo: 'additionalInfo',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy',
-  companyId: 'companyId'
+  companyId: 'companyId',
+  iosMaterialId: 'iosMaterialId'
 } as const
 
 export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderByRelevanceFieldEnum)[keyof typeof MaterialPriceOrderByRelevanceFieldEnum]
@@ -2818,6 +2839,7 @@ export const WorkOrderStructureOrderByRelevanceFieldEnum = {
   createdBy: 'createdBy',
   workOrderId: 'workOrderId',
   materialId: 'materialId',
+  iosMaterialId: 'iosMaterialId',
   targetId: 'targetId',
   deletedBy: 'deletedBy'
 } as const
@@ -3033,4 +3055,18 @@ export const PriceListCompanyOrderByRelevanceFieldEnum = {
 } as const
 
 export type PriceListCompanyOrderByRelevanceFieldEnum = (typeof PriceListCompanyOrderByRelevanceFieldEnum)[keyof typeof PriceListCompanyOrderByRelevanceFieldEnum]
+
+
+export const IOSMaterialOrderByRelevanceFieldEnum = {
+  id: 'id',
+  iosNumber: 'iosNumber',
+  name: 'name',
+  brandName: 'brandName',
+  shortDescription: 'shortDescription',
+  lotNumber: 'lotNumber',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type IOSMaterialOrderByRelevanceFieldEnum = (typeof IOSMaterialOrderByRelevanceFieldEnum)[keyof typeof IOSMaterialOrderByRelevanceFieldEnum]
 

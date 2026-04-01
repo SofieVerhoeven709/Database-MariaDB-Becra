@@ -1,5 +1,5 @@
-CREATE DATABASE app_db;
-USE app_db;
+CREATE DATABASE BecraBV;
+USE BecraBV;
 
 CREATE TABLE
       IF NOT EXISTS Role (

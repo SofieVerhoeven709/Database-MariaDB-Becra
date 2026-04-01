@@ -268,7 +268,6 @@ export const seedProd = async (prisma: PrismaClient) => {
   const departmentTargetType = await prisma.targetType.findFirst({where: {name: 'Department'}})
   const companyTargetType = await prisma.targetType.findFirst({where: {name: 'Company'}})
   const hourTypeTargetType = await prisma.targetType.findFirst({where: {name: 'HourType'}})
-  const materialTargetType = await prisma.targetType.findFirst({where: {name: 'Material'}})
 
   // 8. Upsert UrgencyTypes
   for (const name of URGENCY_TYPES) {

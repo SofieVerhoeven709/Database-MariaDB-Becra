@@ -34,4 +34,7 @@ export interface MappedMaterial {
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
+  isSerialTracked: boolean
+  serialTrackedId: string | null
+  isParentPart: boolean
 }

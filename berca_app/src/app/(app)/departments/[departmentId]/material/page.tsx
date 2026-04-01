@@ -1,4 +1,5 @@
 import {getMaterials, getMaterialGroups, getUnits} from '@/dal/materials'
+import type {MaterialListItem} from '@/dal/materials'
 import {MaterialTable} from '@/components/custom/materialTable'
 import {getDepartmentById} from '@/dal/department'
 import {getSupplierCompanies} from '@/dal/companies'
@@ -11,9 +12,8 @@ interface PageProps {
 function getParentBeNumbers(material: unknown): string[] {
   if (!material || typeof material !== 'object') return []
 
-  const links =
-    (material as {MaterialStructure_MaterialStructure_materialIdToMaterial?: unknown})
-      .MaterialStructure_MaterialStructure_materialIdToMaterial
+  const links = (material as {MaterialStructure_MaterialStructure_materialIdToMaterial?: unknown})
+    .MaterialStructure_MaterialStructure_materialIdToMaterial
   if (!Array.isArray(links)) return []
 
   return links
@@ -46,15 +46,15 @@ export default async function MaterialPage({params}: PageProps) {
 
   const groupById = new Map(groups.map(g => [g.id, g]))
 
-  const mappedMaterials: MappedMaterial[] = materials.map(m => {
+  const mappedMaterials: MappedMaterial[] = materials.map((m: MaterialListItem) => {
     const preferredSupplierEntry =
       m.MaterialSupplier.find(s => s.companyId === m.preferredSupplierCompanyId) ??
       m.MaterialSupplier.find(s => s.isPreferred) ??
       null
 
-    return {
+    const mapped: MappedMaterial = {
       id: m.id,
-      beNumber: m.beNumber,
+      beNumber: m.beNumber ?? '',
       name: m.name ?? null,
       brandOrderNr: m.brandOrderNr,
       shortDescription: m.shortDescription,
@@ -90,12 +90,16 @@ export default async function MaterialPage({params}: PageProps) {
       unitName: m.Unit.unitName,
       unitAbbreviation: m.Unit.abbreviation,
       createdBy: m.createdBy,
-      createdByName: `${m.Employee.firstName} ${m.Employee.lastName}`,
+      createdByName: '',
       createdAt: null,
       deleted: m.deleted,
       deletedAt: m.deletedAt?.toISOString() ?? null,
       deletedBy: m.deletedBy ?? null,
+      isSerialTracked: m.isSerialTracked ?? false,
+      serialTrackedId: m.MaterialSerialTrack[0]?.id ?? null,
+      isParentPart: false,
     }
+    return mapped
   })
 
   const mappedGroups = groups.map(g => ({
@@ -121,7 +125,7 @@ export default async function MaterialPage({params}: PageProps) {
   const mappedParentPartOptions = materials
     .filter(m => typeof m.beNumber === 'string' && m.beNumber.length > 0)
     .map(m => ({
-      beNumber: m.beNumber,
+      beNumber: m.beNumber ?? '',
       shortDescription: m.shortDescription,
     }))
 

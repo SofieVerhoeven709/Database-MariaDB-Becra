@@ -1,5 +1,5 @@
-CREATE DATABASE BecraBV;
-USE BecraBV;
+CREATE DATABASE app_db;
+USE app_db;
 
 CREATE TABLE
       IF NOT EXISTS Role (
@@ -197,7 +197,7 @@ CREATE TABLE
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -289,7 +289,6 @@ ADD CONSTRAINT fk_documentStructure_deletedBy FOREIGN KEY (deletedBy) REFERENCES
 
 ALTER TABLE Material ADD targetId CHAR(36) NOT NULL,
 ADD CONSTRAINT fk_material_target FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT;
-
 
 CREATE TABLE
       IF NOT EXISTS EmergencyContact (
@@ -856,13 +855,14 @@ CREATE TABLE
             FOREIGN KEY (targetId) REFERENCES Target (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
-CREATE TABLE 
+
+CREATE TABLE
       IF NOT EXISTS PriceListItem (
             id CHAR(36) NOT NULL PRIMARY KEY,
             priceListId CHAR(36) NOT NULL,
             description VARCHAR(255) NOT NULL,
             unit VARCHAR(100) NOT NULL,
-            price DECIMAL(10,2) NOT NULL,
+            price DECIMAL(10, 2) NOT NULL,
             createdAt DATETIME NOT NULL,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             isCostMargin BOOLEAN NOT NULL DEFAULT 0,
@@ -1460,7 +1460,7 @@ CREATE TABLE
             layer VARCHAR(255),
             layerPlace VARCHAR(255),
             information VARCHAR(255),
-            quantityInStock INT NOT NULL,
+            volume INT NOT NULL,
             createdAt DATETIME NOT NULL,
             createdBy CHAR(36) NOT NULL,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,

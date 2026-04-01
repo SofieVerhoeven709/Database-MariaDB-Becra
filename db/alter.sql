@@ -1,4 +1,4 @@
-﻿USE BecraBV;
+﻿﻿USE BecraBV;
 
 -- ============================================================
 -- Idempotent migrations.
@@ -478,8 +478,6 @@ CREATE TABLE
             outstanding BOOLEAN NOT NULL DEFAULT 1,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedBy CHAR(36),
-            createdBy CHAR(36) NOT NULL,
-            modifiedBy CHAR(36),
             invoiceTypeId CHAR(36) NOT NULL,
             targetId CHAR(36) NOT NULL,
             paymentMethodId CHAR(36) NOT NULL,
@@ -564,6 +562,72 @@ UPDATE Company SET officialName = name WHERE officialName IS NULL;
 -- Step 3: Now enforce NOT NULL since all rows are filled
 ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
+
+ALTER TABLE MaterialSerialTrack
+DROP COLUMN beNumber;
+
+-- Add the materialId column (nullable)
+ALTER TABLE MaterialSerialTrack
+ADD COLUMN materialId CHAR(36) NULL;
+
+-- Add an index for performance (optional but recommended)
+-- CREATE INDEX idx_materialId ON MaterialSerialTrack(materialId);
+
+-- Add the foreign key constraint
+ALTER TABLE MaterialSerialTrack
+ADD CONSTRAINT fk_material_serialtrack_materialId
+FOREIGN KEY (materialId) REFERENCES Material(id)
+ON DELETE SET NULL
+ON UPDATE RESTRICT;
+
+-- Add a serial tracked boolean to the materials
+ALTER TABLE Material
+ADD COLUMN isSerialTracked BOOLEAN NOT NULL DEFAULT 0;
+
+-- Removing materialgroupid from materialSerialTrack
+
+-- Remove materialGroupId from MaterialSerialTrack safely
+SET @fk_name = (
+  SELECT CONSTRAINT_NAME
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MaterialSerialTrack'
+    AND COLUMN_NAME = 'materialGroupId'
+    AND REFERENCED_TABLE_NAME IS NOT NULL
+  LIMIT 1
+);
+SET @sql = IF(@fk_name IS NOT NULL,
+  CONCAT('ALTER TABLE MaterialSerialTrack DROP FOREIGN KEY `', @fk_name, '`'),
+  'SELECT ''No FK to drop on MaterialSerialTrack.materialGroupId'''
+);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+ALTER TABLE MaterialSerialTrack DROP COLUMN IF EXISTS materialGroupId;
+
+-- Remove materialGroupId from MaterialSerialTrackedStructure safely
+SET @fk_name2 = (
+  SELECT CONSTRAINT_NAME
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MaterialSerialTrackedStructure'
+    AND COLUMN_NAME = 'materialGroupId'
+    AND REFERENCED_TABLE_NAME IS NOT NULL
+  LIMIT 1
+);
+SET @sql2 = IF(@fk_name2 IS NOT NULL,
+  CONCAT('ALTER TABLE MaterialSerialTrackedStructure DROP FOREIGN KEY `', @fk_name2, '`'),
+  'SELECT ''No FK to drop on MaterialSerialTrackedStructure.materialGroupId'''
+);
+PREPARE stmt2 FROM @sql2;
+EXECUTE stmt2;
+DEALLOCATE PREPARE stmt2;
+ALTER TABLE MaterialSerialTrackedStructure DROP COLUMN IF EXISTS materialGroupId;
+
+-- 43a. Project: add priceListId column
+ALTER TABLE Project ADD COLUMN IF NOT EXISTS `priceListId` CHAR(36) NULL;
+
+-- 43b. Project: add FK fk_project_pricelist (skip if already exists)
 ALTER TABLE Project DROP FOREIGN KEY IF EXISTS fk_project_pricelist;
 ALTER TABLE Project DROP COLUMN IF EXISTS `priceListId`;
 
@@ -887,12 +951,28 @@ ALTER TABLE DocumentStructure
 ALTER TABLE DocumentStructure 
     DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentPlace;
 
-ALTER TABLE DocumentStructure 
+ALTER TABLE DocumentStructure
     ADD CONSTRAINT fk_documentStructure_documentPlace
     FOREIGN KEY (documentPlaceId) REFERENCES DocumentPlace (id) ON DELETE SET NULL;
 
 ALTER TABLE DocumentStructure 
     ADD COLUMN IF NOT EXISTS documentStatusId CHAR(36) NULL;
+ALTER TABLE MaterialSerialTrack CHANGE COLUMN IF EXISTS `serialTrackedId` `serialTrackedId` CHAR(36) NULL;
+SET @tbl_exists = (
+      SELECT COUNT(*)
+      FROM information_schema.TABLES
+      WHERE TABLE_SCHEMA = DATABASE()
+            AND TABLE_NAME = 'MaterialSerialTrackStructure'
+);
+
+SET @sql = IF(@tbl_exists > 0,
+      'ALTER TABLE MaterialSerialTrackStructure CHANGE COLUMN IF EXISTS `beNumber` `beNumber`  VARCHAR(255) NULL;',
+      'SELECT ''Skipping: MaterialSerialTrackStructure does not exist'''
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 ALTER TABLE DocumentStructure 
     DROP FOREIGN KEY IF EXISTS fk_documentStructure_documentStatus;
@@ -900,3 +980,24 @@ ALTER TABLE DocumentStructure
 ALTER TABLE DocumentStructure 
     ADD CONSTRAINT fk_documentStructure_documentStatus
     FOREIGN KEY (documentStatusId) REFERENCES DocumentStatus (id) ON DELETE SET NULL;
+ALTER TABLE Material
+ADD COLUMN IF NOT EXISTS `isSerialTracked` BOOLEAN NOT NULL DEFAULT 0;
+
+ALTER TABLE MaterialSerialTrack
+    ADD COLUMN IF NOT EXISTS `materialId` CHAR(36) NOT NULL;
+
+ALTER TABLE MaterialSerialTrack
+    DROP FOREIGN KEY IF EXISTS fk_materialSerialTrack_materialId;
+
+ALTER TABLE MaterialSerialTrack
+    ADD CONSTRAINT fk_materialSerialTrack_materialId
+    FOREIGN KEY (`materialId`) REFERENCES Material (`id`) ON DELETE RESTRICT;
+
+-- Add beNumber and materialGroupId to MaterialSerialTrack
+ALTER TABLE MaterialSerialTrack
+  ADD COLUMN IF NOT EXISTS `beNumber` VARCHAR(255) AFTER `materialId`,
+  ADD COLUMN IF NOT EXISTS `materialGroupId` CHAR(36) NULL AFTER `beNumber`;
+
+ALTER TABLE MaterialSerialTrack
+  ADD CONSTRAINT fk_materialSerialTrack_materialGroupId
+  FOREIGN KEY (`materialGroupId`) REFERENCES MaterialGroup(`id`) ON DELETE SET NULL;

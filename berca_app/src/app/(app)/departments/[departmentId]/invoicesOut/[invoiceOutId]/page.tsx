@@ -16,11 +16,11 @@ import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
 interface PageProps {
-  params: Promise<{departmentId: string; invoiceOutId: string}>
+  params: { departmentId: string; invoiceOutId: string }
 }
 
 export default async function InvoiceOutDetailPage({params}: PageProps) {
-  const {departmentId, invoiceOutId} = await params
+  const {departmentId, invoiceOutId} = params
 
   const [department, invoiceRaw, invoiceTypes, paymentMethods, invoiceSentTypes, invoiceStatuses, vatMargins, profile] =
     await Promise.all([
@@ -37,7 +37,31 @@ export default async function InvoiceOutDetailPage({params}: PageProps) {
   if (!department) return <p>Department not found</p>
   if (!invoiceRaw) notFound()
 
-  const invoice = mapInvoiceOut(invoiceRaw)
+  // Fix: Deep clone and coerce all beNumber fields to string for WorkOrderStructure.Material
+  let invoiceRawFixed = invoiceRaw
+  if (invoiceRaw && Array.isArray(invoiceRaw.WorkOrderInvoice)) {
+    invoiceRawFixed = {
+      ...invoiceRaw,
+      WorkOrderInvoice: invoiceRaw.WorkOrderInvoice.map(wi => ({
+        ...wi,
+        WorkOrder: wi.WorkOrder && Array.isArray(wi.WorkOrder.WorkOrderStructure)
+          ? {
+              ...wi.WorkOrder,
+              WorkOrderStructure: wi.WorkOrder.WorkOrderStructure.map(wos => ({
+                ...wos,
+                Material: wos.Material
+                  ? {
+                      ...wos.Material,
+                      beNumber: wos.Material.beNumber ?? '',
+                    }
+                  : wos.Material,
+              })),
+            }
+          : wi.WorkOrder,
+      })),
+    }
+  }
+  const invoice = mapInvoiceOut(invoiceRawFixed as any)
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   const companyIds = [...new Set(invoice.workOrders.map(wo => wo.companyId))]

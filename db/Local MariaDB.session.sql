@@ -1,9 +1,5 @@
-DROP DATABASE IF exists app_db;
-
-CREATE DATABASE IF NOT EXISTS app_db;
-
-USE app_db;
-
+CREATE DATABASE BecraBV;
+USE BecraBV;
 CREATE TABLE
       IF NOT EXISTS Role (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -174,7 +170,7 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS Material (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            beNumber VARCHAR(255) NOT NULL,
+            beNumber VARCHAR(255),
             name VARCHAR(255),
             brandOrderNr VARCHAR(255),
             shortDescription VARCHAR(255) NOT NULL,
@@ -447,7 +443,7 @@ CREATE TABLE
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
-            FOREIGN KEY (companyAddressId) REFERENCES CompanyAddress (id) ON DELETE RESTRICT
+            FOREIGN KEY (companyAddressId) REFERENCES CompanyAddress (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -1837,6 +1833,3 @@ CREATE TABLE
             FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
-
--- Select below then right click and run selected query
-SHOW TABLE STATUS

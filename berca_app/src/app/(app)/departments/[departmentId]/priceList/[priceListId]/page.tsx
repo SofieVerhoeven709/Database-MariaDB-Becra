@@ -7,11 +7,11 @@ import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
 interface PageProps {
-  params: Promise<{departmentId: string; priceListId: string}>
+  params: { departmentId: string; priceListId: string }
 }
 
 export default async function PriceListDetailPage({params}: PageProps) {
-  const {departmentId, priceListId} = await params
+  const {departmentId, priceListId} = params
 
   const [department, priceListRaw, profile] = await Promise.all([
     getDepartmentById(departmentId),

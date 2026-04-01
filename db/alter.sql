@@ -1,4 +1,4 @@
-﻿USE BecraBV;
+USE app_db;
  
 -- ============================================================
 -- Idempotent migrations.
@@ -572,7 +572,8 @@ ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
 
 ALTER TABLE MaterialSerialTrack
-DROP COLUMN beNumber;
+DROP COLUMN IF EXISTS beNumber;
+
 
 -- Add the materialId column (nullable)
 ALTER TABLE MaterialSerialTrack

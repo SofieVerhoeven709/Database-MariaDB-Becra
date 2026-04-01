@@ -7,6 +7,7 @@ import {
   getInvoiceStatuses,
   getVatMargins,
   getCompanyContactsForInvoice,
+  getPriceListsForCompanies,
 } from '@/dal/invoices'
 import {mapInvoiceOut} from '@/extra/invoices'
 import {InvoiceOutDetail} from '@/components/custom/invoiceOutDetail'
@@ -15,11 +16,11 @@ import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
 interface PageProps {
-  params: { departmentId: string; invoiceOutId: string }
+  params: Promise<{departmentId: string; invoiceOutId: string}>
 }
 
 export default async function InvoiceOutDetailPage({params}: PageProps) {
-  const {departmentId, invoiceOutId} = params
+  const {departmentId, invoiceOutId} = await params
 
   const [department, invoiceRaw, invoiceTypes, paymentMethods, invoiceSentTypes, invoiceStatuses, vatMargins, profile] =
     await Promise.all([
@@ -43,29 +44,34 @@ export default async function InvoiceOutDetailPage({params}: PageProps) {
       ...invoiceRaw,
       WorkOrderInvoice: invoiceRaw.WorkOrderInvoice.map(wi => ({
         ...wi,
-        WorkOrder: wi.WorkOrder && Array.isArray(wi.WorkOrder.WorkOrderStructure)
-          ? {
-              ...wi.WorkOrder,
-              WorkOrderStructure: wi.WorkOrder.WorkOrderStructure.map(wos => ({
-                ...wos,
-                Material: wos.Material
-                  ? {
-                      ...wos.Material,
-                      beNumber: wos.Material.beNumber ?? '',
-                    }
-                  : wos.Material,
-              })),
-            }
-          : wi.WorkOrder,
+        WorkOrder:
+          wi.WorkOrder && Array.isArray(wi.WorkOrder.WorkOrderStructure)
+            ? {
+                ...wi.WorkOrder,
+                WorkOrderStructure: wi.WorkOrder.WorkOrderStructure.map(wos => ({
+                  ...wos,
+                  Material: wos.Material
+                    ? {
+                        ...wos.Material,
+                        beNumber: wos.Material.beNumber ?? '',
+                      }
+                    : wos.Material,
+                })),
+              }
+            : wi.WorkOrder,
       })),
     }
   }
   const invoice = mapInvoiceOut(invoiceRawFixed as any)
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
-  // Derive company IDs from linked work orders → projects
   const companyIds = [...new Set(invoice.workOrders.map(wo => wo.companyId))]
-  const companyContacts = await getCompanyContactsForInvoice(companyIds)
+
+  const [companyContacts, priceListOptions] = await Promise.all([
+    getCompanyContactsForInvoice(companyIds),
+    getPriceListsForCompanies(companyIds),
+  ])
+
   const contactOptions = companyContacts.map(cc => ({
     id: cc.Contact.id,
     name: `${cc.Contact.firstName} ${cc.Contact.lastName}`,
@@ -82,6 +88,7 @@ export default async function InvoiceOutDetailPage({params}: PageProps) {
           invoiceStatuses={invoiceStatuses}
           vatMargins={vatMargins}
           contactOptions={contactOptions}
+          priceListOptions={priceListOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           departmentId={departmentId}

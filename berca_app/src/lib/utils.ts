@@ -92,7 +92,7 @@ export function generateInvoiceOutNumber(year: number, sequence: number): string
   return `${year}${String(sequence + 100).padStart(4, '0')}`
 }
 
-export function generatedocumentNumber() {
+export function generateDocumentNumber() {
   const now = new Date()
 
   const year = now.getFullYear().toString().slice(-2) // 26

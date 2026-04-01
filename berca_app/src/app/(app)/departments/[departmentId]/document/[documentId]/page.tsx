@@ -1,29 +1,22 @@
 import {DocumentDetail} from '@/components/custom/documentDetail'
 import {
   getDocumentDetail,
-  getDocumentGroupAs,
-  getDocumentGroupBs,
-  getDocumentGroupCs,
-  getDocumentGroupDs,
+  getDocumentGroups,
   getDocumentPlaces,
   getDocuments,
+  getDocumentStatuses,
+  getDocumentStructureTargetNames,
 } from '@/dal/documents'
 import {getAllRoleLevels} from '@/dal/roleLevel'
-import {
-  mapDocumentDetail,
-  mapDocumentGroupA,
-  mapDocumentGroupB,
-  mapDocumentGroupC,
-  mapDocumentGroupD,
-  mapDocumentPlace,
-  mapDocument,
-} from '@/extra/documents'
+import {mapDocumentDetail, mapDocumentPlace, mapDocument, mapDocumentStatus} from '@/extra/documents'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {mapRoleLevelOptions} from '@/types/roleLevel'
 import {prismaClient} from '@/dal/prismaClient'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 import {notFound} from 'next/navigation'
+import type {MappedDocumentGroup} from '@/types/document'
+import {getDocumentTargetOptions} from '@/dal/documents'
 
 interface PageProps {
   params: Promise<{departmentId: string; documentId: string}>
@@ -35,25 +28,25 @@ export default async function DocumentDetailPage({params}: PageProps) {
   const [
     department,
     documentFromDAL,
+    targetDisplayNames,
     allDocumentsFromDAL,
-    groupAs,
-    groupBs,
-    groupCs,
-    groupDs,
+    documentGroupsFromDAL,
     places,
+    statuses,
     roleLevels,
     profile,
     employees,
-    roles,
+    targetOptions,
   ] = await Promise.all([
     getDepartmentById(departmentId),
     getDocumentDetail(documentId).catch(() => null),
+    getDocumentDetail(documentId)
+      .catch(() => null)
+      .then(d => (d ? getDocumentStructureTargetNames(documentId) : [])),
     getDocuments(),
-    getDocumentGroupAs(),
-    getDocumentGroupBs(),
-    getDocumentGroupCs(),
-    getDocumentGroupDs(),
+    getDocumentGroups(),
     getDocumentPlaces(),
+    getDocumentStatuses(),
     getAllRoleLevels(),
     getSessionProfileFromCookieOrThrow(),
     prismaClient.employee.findMany({
@@ -61,44 +54,75 @@ export default async function DocumentDetailPage({params}: PageProps) {
       orderBy: [{firstName: 'asc'}, {lastName: 'asc'}],
       select: {id: true, firstName: true, lastName: true},
     }),
-    prismaClient.role.findMany({
-      where: {deleted: false},
-      orderBy: {name: 'asc'},
-      select: {id: true, name: true},
-    }),
+    getDocumentTargetOptions(),
   ])
 
   if (!department) return <p>Department not found</p>
   if (!documentFromDAL) notFound()
 
-  const doc = mapDocumentDetail(documentFromDAL)
+  const doc = mapDocumentDetail(documentFromDAL, targetDisplayNames)
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
   const defaultVisibleRoleNames = [department.name]
   const employeeOptions = employees.map(e => ({id: e.id, name: `${e.firstName} ${e.lastName}`}))
-  const roleOptions = roles.map(r => ({id: r.id, name: r.name}))
 
-  // Build group options with parent IDs for cascading
-  const groupAOptions = groupAs
-    .filter(g => !g.deleted)
-    .map(mapDocumentGroupA)
-    .map(g => ({id: g.id, name: g.name}))
-  const groupBOptions = groupBs
-    .filter(g => !g.deleted)
-    .map(mapDocumentGroupB)
-    .map(g => ({id: g.id, name: g.name, documentGroupAId: g.documentGroupAId}))
-  const groupCOptions = groupCs
-    .filter(g => !g.deleted)
-    .map(mapDocumentGroupC)
-    .map(g => ({id: g.id, name: g.name, documentGroupBId: g.documentGroupBId}))
-  const groupDOptions = groupDs
-    .filter(g => !g.deleted)
-    .map(mapDocumentGroupD)
-    .map(g => ({id: g.id, name: g.name, documentGroupCId: g.documentGroupCId}))
+  // Map DocumentGroup junctions for the cascade logic
+  const documentGroups: MappedDocumentGroup[] = documentGroupsFromDAL.map(g => ({
+    id: g.id,
+    groupAId: g.groupAId,
+    groupAName: g.DocumentGroupA?.name ?? null,
+    groupBId: g.groupBId,
+    groupBName: g.DocumentGroupB?.name ?? null,
+    groupCId: g.groupCId,
+    groupCName: g.DocumentGroupC?.name ?? null,
+    groupDId: g.groupDId,
+    groupDName: g.DocumentGroupD?.name ?? null,
+    label:
+      [g.DocumentGroupA?.name, g.DocumentGroupB?.name, g.DocumentGroupC?.name, g.DocumentGroupD?.name]
+        .filter(Boolean)
+        .join(' › ') || '—',
+  }))
+
+  // Build flat group A/B/C/D option lists for the selects
+  const groupAOptions = Array.from(
+    new Map(
+      documentGroupsFromDAL
+        .filter(g => g.groupAId && g.DocumentGroupA)
+        .map(g => [g.groupAId!, {id: g.groupAId!, name: g.DocumentGroupA?.name ?? null}]),
+    ).values(),
+  )
+  const groupBOptions = Array.from(
+    new Map(
+      documentGroupsFromDAL
+        .filter(g => g.groupBId && g.DocumentGroupB)
+        .map(g => [g.groupBId!, {id: g.groupBId!, name: g.DocumentGroupB?.name ?? null}]),
+    ).values(),
+  )
+  const groupCOptions = Array.from(
+    new Map(
+      documentGroupsFromDAL
+        .filter(g => g.groupCId && g.DocumentGroupC)
+        .map(g => [g.groupCId!, {id: g.groupCId!, name: g.DocumentGroupC?.name ?? null}]),
+    ).values(),
+  )
+  const groupDOptions = Array.from(
+    new Map(
+      documentGroupsFromDAL
+        .filter(g => g.groupDId && g.DocumentGroupD)
+        .map(g => [g.groupDId!, {id: g.groupDId!, name: g.DocumentGroupD?.name ?? null}]),
+    ).values(),
+  )
+
   const placeOptions = places
     .filter(p => !p.deleted)
     .map(mapDocumentPlace)
     .map(p => ({id: p.id, headFolder: p.headFolder, subFolder: p.subFolder, label: p.label}))
+
+  const statusOptions = statuses
+    .filter(s => !s.deleted)
+    .map(mapDocumentStatus)
+    .map(s => ({id: s.id, name: s.name}))
+
   const documentOptions = allDocumentsFromDAL
     .map(mapDocument)
     .filter(d => !d.deleted && d.id !== documentId)
@@ -114,13 +138,15 @@ export default async function DocumentDetailPage({params}: PageProps) {
           roleLevelOptions={roleLevelOptions}
           defaultVisibleRoleNames={defaultVisibleRoleNames}
           employeeOptions={employeeOptions}
-          roleOptions={roleOptions}
           groupAOptions={groupAOptions}
           groupBOptions={groupBOptions}
           groupCOptions={groupCOptions}
           groupDOptions={groupDOptions}
+          documentGroups={documentGroups}
           placeOptions={placeOptions}
+          statusOptions={statusOptions}
           documentOptions={documentOptions}
+          targetOptions={targetOptions}
           departmentId={departmentId}
         />
       </div>

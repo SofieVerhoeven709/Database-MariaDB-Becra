@@ -6,7 +6,7 @@ export interface MappedPriceListItemTarget {
   priceListItemId: string
   targetId: string
   targetType: LinkableTargetType
-  displayLabel: string // human readable name shown in the UI
+  displayLabel: string
 }
 
 // ─── PriceListItem ─────────────────────────────────────────────────────────────
@@ -27,11 +27,10 @@ export interface MappedPriceListItem {
 }
 
 // ─── PriceList ─────────────────────────────────────────────────────────────────
-export interface MappedPriceListProject {
-  id: string
-  projectNumber: string
-  projectName: string
+export interface MappedPriceListCompany {
+  id: string // PriceListCompany join row id — used for unassign
   companyId: string
+  companyNumber: string
   companyName: string
 }
 
@@ -48,17 +47,8 @@ export interface MappedPriceList {
   deletedByName: string | null
   targetId: string
   items: MappedPriceListItem[]
-  projects: MappedPriceListProject[]
-  // Computed
+  companies: MappedPriceListCompany[]
   itemCount: number
-}
-
-// ─── Lookup ────────────────────────────────────────────────────────────────────
-export interface UnassignedProjectOption {
-  id: string
-  projectNumber: string
-  projectName: string
-  companyName: string
 }
 
 // ─── Linkable target search results ───────────────────────────────────────────
@@ -66,5 +56,12 @@ export interface LinkableTargetResult {
   targetId: string
   targetType: LinkableTargetType
   displayLabel: string
-  subLabel: string | null // e.g. beNumber for Material
+  subLabel: string | null
+}
+
+// ─── Company search result ─────────────────────────────────────────────────────
+export interface CompanySearchResult {
+  id: string
+  number: string
+  name: string
 }

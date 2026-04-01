@@ -571,8 +571,8 @@ UPDATE Company SET officialName = name WHERE officialName IS NULL;
 ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
 
-ALTER TABLE MaterialSerialTrack
-DROP COLUMN IF EXISTS beNumber;
+-- ALTER TABLE MaterialSerialTrack
+-- DROP COLUMN IF EXISTS beNumber;
 
 
 -- Add the materialId column (nullable)

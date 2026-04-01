@@ -15,7 +15,7 @@ import type {MappedDocument, MappedDocumentGroup, DocumentPlaceOption, DocumentS
 import {type DocumentTargetTypeName} from '@/types/document'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import {generateDocumentNumber} from '@/lib/utils'
-import {getDocumentGroupId} from '@/dal/documents'
+import {Badge} from '@/components/ui/badge'
 
 interface SelectOption {
   id: string
@@ -59,6 +59,7 @@ interface DocumentFormDialogProps {
   targetOptions: Record<DocumentTargetTypeName, SelectOption[]>
   canManageVisibility: boolean
   canEditNumber: boolean
+  existingTargets?: {targetTypeName: string; targetDisplayName: string | null}[]
 }
 
 function emptyDocument(): MappedDocument {
@@ -89,10 +90,10 @@ function emptyDocument(): MappedDocument {
     revisedByName: null,
     managedById: null,
     managedByName: null,
-    // target link fields — read-only display only
     documentTargetId: null,
     documentTargetTargetId: null,
     documentTargetTypeName: null,
+    documentStructureTargets: [],
     targetId: '',
     visibilityForRoles: [],
     deleted: false,
@@ -122,6 +123,7 @@ export function DocumentFormDialog({
   targetOptions,
   canManageVisibility,
   canEditNumber,
+  existingTargets,
 }: DocumentFormDialogProps) {
   const [form, setForm] = useState<MappedDocument>(emptyDocument())
   const [saving, setSaving] = useState(false)
@@ -562,12 +564,21 @@ export function DocumentFormDialog({
                 {targetSelectField('Project', targetProject, setTargetProject)}
                 {targetSelectField('Company', targetCompany, setTargetCompany)}
               </div>
-              {/* Show existing links when editing */}
-              {isEdit && document?.documentTargetTypeName && (
-                <div className="sm:col-span-2 rounded-lg border border-border bg-secondary px-3 py-2 text-xs text-muted-foreground">
-                  <span className="font-medium text-foreground">Currently linked to: </span>
-                  {document.documentTargetTypeName}
-                  {' — use the dropdowns above to add or change links.'}
+              {isEdit && existingTargets && existingTargets.length > 0 && (
+                <div className="sm:col-span-2 flex flex-col gap-1.5">
+                  <p className="text-xs font-medium text-muted-foreground">Currently linked:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {existingTargets.map((t, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-1.5 rounded-lg border border-border bg-secondary px-3 py-1.5">
+                        <Badge variant="outline" className="text-xs border-border">
+                          {t.targetTypeName}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">{t.targetDisplayName ?? '—'}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -628,7 +639,7 @@ export function CopyDocumentDialog({open, onOpenChange, sourceDocument, onCopy}:
 
   useEffect(() => {
     if (open) {
-      setDocumentNumber(`${sourceDocument.documentNumber}-COPY`)
+      setDocumentNumber(generateDocumentNumber())
       setDescriptionShort(sourceDocument.descriptionShort)
     }
   }, [open, sourceDocument.id])
@@ -656,11 +667,21 @@ export function CopyDocumentDialog({open, onOpenChange, sourceDocument, onCopy}:
           </p>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">New Document Number *</Label>
-            <Input
-              value={documentNumber}
-              onChange={e => setDocumentNumber(e.target.value)}
-              className="bg-secondary border-border"
-            />
+            <div className="flex gap-2">
+              <Input
+                value={documentNumber}
+                onChange={e => setDocumentNumber(e.target.value)}
+                className="bg-secondary border-border flex-1"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-10 px-3 border-border text-xs shrink-0"
+                onClick={() => setDocumentNumber(generateDocumentNumber())}>
+                Regenerate
+              </Button>
+            </div>
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-muted-foreground">New Short Description *</Label>

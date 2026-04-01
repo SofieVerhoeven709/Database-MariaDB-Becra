@@ -205,6 +205,11 @@ export function DocumentDetail({
   async function handleSave() {
     setSaving(true)
     try {
+      const targetAssignments: {typeName: DocumentTargetTypeName; targetId: string}[] = []
+      if (targetMaterial) targetAssignments.push({typeName: 'Material', targetId: targetMaterial})
+      if (targetProject) targetAssignments.push({typeName: 'Project', targetId: targetProject})
+      if (targetCompany) targetAssignments.push({typeName: 'Company', targetId: targetCompany})
+
       const core = {
         id: document.id,
         documentNumber: form.documentNumber,
@@ -224,6 +229,7 @@ export function DocumentDetail({
         documentPlaceId: form.documentPlaceId,
         documentStatusId: form.documentStatusId || null,
         visibilityForRoles: visibilityRows,
+        targetAssignments,
       }
       await updateDocumentAction({...core})
       setEditing(false)

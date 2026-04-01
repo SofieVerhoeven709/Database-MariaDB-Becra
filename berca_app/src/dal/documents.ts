@@ -16,12 +16,14 @@ const documentGroupInclude = {
 } as const
 
 const documentTargetInclude = {
-  take: 1,
   include: {
     Target: {
       select: {
         id: true,
         TargetType: {select: {name: true}},
+        Material: {select: {name: true}},
+        Project: {select: {projectName: true}},
+        Company: {select: {name: true}},
       },
     },
   },
@@ -195,4 +197,29 @@ export async function getDocumentGroupId(aId: string, bId: string, cId: string, 
       groupDId: dId,
     },
   })
+}
+
+export async function getDocumentStructureTargetNames(documentId: string) {
+  const targets = await prismaClient.documentStructureTarget.findMany({
+    where: {documentStructureId: documentId},
+    include: {
+      Target: {
+        select: {
+          id: true,
+          TargetType: {select: {name: true}},
+          Material: {select: {name: true}},
+          Project: {select: {projectName: true}},
+          Company: {select: {name: true}},
+        },
+      },
+    },
+  })
+
+  return targets.map(t => ({
+    id: t.id,
+    targetId: t.Target.id,
+    targetTypeName: t.Target.TargetType.name,
+    targetDisplayName:
+      t.Target.Material[0]?.name ?? t.Target.Project[0]?.projectName ?? t.Target.Company[0]?.name ?? null,
+  }))
 }

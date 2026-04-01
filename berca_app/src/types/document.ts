@@ -89,6 +89,7 @@ export interface MappedDocument {
   deletedAt: string | null
   deletedBy: string | null
   deletedByName: string | null
+  documentStructureTargets: {targetTypeName: string; targetDisplayName: string | null}[]
 }
 
 // ─── Revision ─────────────────────────────────────────────────────────────────

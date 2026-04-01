@@ -35,12 +35,14 @@ export type DocumentListPayload = Prisma.DocumentStructureGetPayload<{
     DocumentStatus: {select: {id: true; name: true}}
     DocumentStructure: {select: {id: true; documentNumber: true}}
     DocumentStructureTarget: {
-      take: 1
       include: {
         Target: {
           select: {
             id: true
             TargetType: {select: {name: true}}
+            Material: {select: {name: true}}
+            Project: {select: {projectName: true}}
+            Company: {select: {name: true}}
           }
         }
       }
@@ -215,6 +217,11 @@ export function mapDocument(d: DocumentListPayload): MappedDocument {
     documentTargetId: docTarget?.id ?? null,
     documentTargetTargetId: docTarget?.Target.id ?? null,
     documentTargetTypeName: docTarget?.Target.TargetType.name ?? null,
+    documentStructureTargets: d.DocumentStructureTarget.map(t => ({
+      targetTypeName: t.Target.TargetType.name,
+      targetDisplayName:
+        t.Target.Material[0]?.name ?? t.Target.Project[0]?.projectName ?? t.Target.Company[0]?.name ?? null,
+    })),
     targetId: d.Target.id,
     visibilityForRoles: d.Target.VisibilityForRole.map(mapVisibility),
     deleted: d.deleted,
@@ -243,17 +250,22 @@ function mapRevision(r: DocumentDetailPayload['DocumentRevision'][number]): Mapp
   }
 }
 
-export function mapDocumentDetail(d: DocumentDetailPayload): DocumentDetailData {
+export function mapDocumentDetail(
+  d: DocumentDetailPayload,
+  targetDisplayNames?: {id: string; targetId: string; targetTypeName: string; targetDisplayName: string | null}[],
+): DocumentDetailData {
   const base = mapDocument(d as unknown as DocumentListPayload)
   return {
     ...base,
     revisions: d.DocumentRevision.map(mapRevision),
-    documentStructureTargets: d.DocumentStructureTarget.map(t => ({
-      id: t.id,
-      targetId: t.Target.id,
-      targetTypeName: t.Target.TargetType.name,
-      targetDisplayName: t.Target.TargetType.name ?? null, // adjust if needed
-    })),
+    documentStructureTargets:
+      targetDisplayNames ??
+      d.DocumentStructureTarget.map(t => ({
+        id: t.id,
+        targetId: t.Target.id,
+        targetTypeName: t.Target.TargetType.name,
+        targetDisplayName: null,
+      })),
   }
 }
 

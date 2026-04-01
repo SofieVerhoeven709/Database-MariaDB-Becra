@@ -34,6 +34,7 @@ import {
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createTargetForType} from '@/dal/targets'
 import {upsertVisibilityRows} from '@/serverFunctions/visibilityForRoles'
+import {generateDocumentNumber} from '@/lib/utils'
 
 const REVALIDATE = '/documents'
 
@@ -45,7 +46,7 @@ export const createDocumentAction = protectedServerFunction({
   schema: createDocumentStructureSchema,
   functionName: 'Create document',
   serverFn: async ({
-    data: {visibilityForRoles, documentTargetId, documentTargetTypeName, ...data},
+    data: {visibilityForRoles, documentTargetId, documentTargetTypeName, targetAssignments, ...data},
     logger,
     profile,
   }) => {
@@ -53,21 +54,47 @@ export const createDocumentAction = protectedServerFunction({
 
     const target = await createTargetForType('DocumentStructure', profile.id)
     const id = crypto.randomUUID()
+    const now = new Date()
 
-    await prismaClient.documentStructure.create({
-      data: {...data, id, createdBy: profile.id, createdAt: new Date(), targetId: target.id},
-    })
+    // Retry loop for unique document number
+    let documentNumber = data.documentNumber
+    let attempts = 0
 
-    // Link to a target entity (Material / Project / Company) if provided
-    if (documentTargetId) {
-      await prismaClient.documentStructureTarget.create({
-        data: {
-          id: crypto.randomUUID(),
-          documentStructureId: id,
-          targetId: documentTargetId,
-        },
-      })
+    while (attempts < 5) {
+      try {
+        await prismaClient.$transaction(async tx => {
+          await tx.documentStructure.create({
+            data: {...data, documentNumber, id, createdBy: profile.id, createdAt: now, targetId: target.id},
+          })
+
+          // Create all target links
+          const allAssignments = [
+            ...(targetAssignments ?? []),
+            ...(documentTargetId ? [{targetId: documentTargetId}] : []),
+          ]
+          if (allAssignments.length > 0) {
+            await Promise.all(
+              allAssignments.map(a =>
+                tx.documentStructureTarget.create({
+                  data: {id: crypto.randomUUID(), documentStructureId: id, targetId: a.targetId},
+                }),
+              ),
+            )
+          }
+        })
+        break
+      } catch (err: unknown) {
+        const prismaErr = err as {code?: string}
+        if (prismaErr.code === 'P2002') {
+          attempts++
+          documentNumber = generateDocumentNumber()
+          continue
+        }
+        throw err
+      }
     }
+
+    if (attempts >= 5) throw new Error('Failed to generate a unique document number after 5 attempts')
 
     if (visibilityForRoles.length > 0) {
       await upsertVisibilityRows(target.id, visibilityForRoles)
@@ -81,7 +108,7 @@ export const createDocumentAction = protectedServerFunction({
 export const updateDocumentAction = protectedServerFunction({
   schema: updateDocumentStructureSchema,
   functionName: 'Update document',
-  serverFn: async ({data: {id, visibilityForRoles, ...data}, logger}) => {
+  serverFn: async ({data: {id, visibilityForRoles, targetAssignments, ...data}, logger}) => {
     const {targetId} = await prismaClient.documentStructure.findUniqueOrThrow({
       where: {id},
       select: {targetId: true},
@@ -91,6 +118,19 @@ export const updateDocumentAction = protectedServerFunction({
       prismaClient.documentStructure.update({where: {id}, data}),
       upsertVisibilityRows(targetId, visibilityForRoles),
     ])
+
+    if (targetAssignments && targetAssignments.length > 0) {
+      for (const a of targetAssignments) {
+        const exists = await prismaClient.documentStructureTarget.findFirst({
+          where: {documentStructureId: id, targetId: a.targetId},
+        })
+        if (!exists) {
+          await prismaClient.documentStructureTarget.create({
+            data: {id: crypto.randomUUID(), documentStructureId: id, targetId: a.targetId},
+          })
+        }
+      }
+    }
 
     logger.info(`Document updated: ${id}`)
     revalidatePath(REVALIDATE)

@@ -247,9 +247,12 @@ export const createDocumentStructureSchema = documentStructureSchema
   .omit({id: true, createdAt: true, createdBy: true, targetId: true, deleted: true, deletedAt: true, deletedBy: true})
   .extend({
     visibilityForRoles: z.array(visibilityInputSchema).default([]),
-    // Optional: link to a target entity at creation time
     documentTargetId: z.string().nullable().optional(),
     documentTargetTypeName: z.enum(DOCUMENT_TARGET_TYPE_NAMES).nullable().optional(),
+    // Add this:
+    targetAssignments: z
+      .array(z.object({typeName: z.enum(DOCUMENT_TARGET_TYPE_NAMES), targetId: z.string()}))
+      .optional(),
   })
 
 export const updateDocumentStructureSchema = documentStructureSchema

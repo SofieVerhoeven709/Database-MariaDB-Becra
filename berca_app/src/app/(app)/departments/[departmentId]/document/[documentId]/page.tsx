@@ -5,6 +5,7 @@ import {
   getDocumentPlaces,
   getDocuments,
   getDocumentStatuses,
+  getDocumentStructureTargetNames,
 } from '@/dal/documents'
 import {getAllRoleLevels} from '@/dal/roleLevel'
 import {mapDocumentDetail, mapDocumentPlace, mapDocument, mapDocumentStatus} from '@/extra/documents'
@@ -27,6 +28,7 @@ export default async function DocumentDetailPage({params}: PageProps) {
   const [
     department,
     documentFromDAL,
+    targetDisplayNames,
     allDocumentsFromDAL,
     documentGroupsFromDAL,
     places,
@@ -38,6 +40,9 @@ export default async function DocumentDetailPage({params}: PageProps) {
   ] = await Promise.all([
     getDepartmentById(departmentId),
     getDocumentDetail(documentId).catch(() => null),
+    getDocumentDetail(documentId)
+      .catch(() => null)
+      .then(d => (d ? getDocumentStructureTargetNames(documentId) : [])),
     getDocuments(),
     getDocumentGroups(),
     getDocumentPlaces(),
@@ -55,7 +60,7 @@ export default async function DocumentDetailPage({params}: PageProps) {
   if (!department) return <p>Department not found</p>
   if (!documentFromDAL) notFound()
 
-  const doc = mapDocumentDetail(documentFromDAL)
+  const doc = mapDocumentDetail(documentFromDAL, targetDisplayNames)
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
   const roleLevelOptions = mapRoleLevelOptions(roleLevels)
   const defaultVisibleRoleNames = [department.name]

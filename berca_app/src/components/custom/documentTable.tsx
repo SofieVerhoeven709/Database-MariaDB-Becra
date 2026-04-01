@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, Copy} from 'lucide-react'
-import {DocumentFormDialog, CopyDocumentDialog} from '@/components/custom/documentFormDialog'
+import {DocumentFormDialog, CopyDocumentDialog, DocumentTargetAssignment} from '@/components/custom/documentFormDialog'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
@@ -286,7 +286,11 @@ export function DocumentTable({
 
   // ─── Save handler ──────────────────────────────────────────────────────────
 
-  async function handleSave(doc: MappedDocument, visibilityRows: VisibilityRow[]) {
+  async function handleSave(
+    doc: MappedDocument,
+    visibilityRows: VisibilityRow[],
+    targetAssignments: DocumentTargetAssignment[],
+  ) {
     const core = {
       documentNumber: doc.documentNumber,
       description: doc.description,
@@ -307,11 +311,12 @@ export function DocumentTable({
     }
 
     if (editingDocument) {
-      await updateDocumentAction({id: doc.id, ...core, visibilityForRoles: visibilityRows})
+      await updateDocumentAction({id: doc.id, ...core, visibilityForRoles: visibilityRows, targetAssignments})
     } else {
       await createDocumentAction({
         ...core,
         visibilityForRoles: visibilityRows,
+        targetAssignments,
       })
     }
     setDialogOpen(false)
@@ -403,6 +408,9 @@ export function DocumentTable({
                     sortDir={sortDir}
                     onSort={toggleSort}
                   />
+                  <TableHead className="whitespace-nowrap text-xs">Material</TableHead>
+                  <TableHead className="whitespace-nowrap text-xs">Project</TableHead>
+                  <TableHead className="whitespace-nowrap text-xs">Company</TableHead>
                   <Th field="valid" label="Valid" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
                   <Th field="process" label="Process" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
                   <Th field="canCopy" label="Can Copy" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
@@ -454,6 +462,16 @@ export function DocumentTable({
                       </TableCell>
                       <TableCell className={tdClass}>{d.documentPlaceLabel}</TableCell>
                       <TableCell className={tdClass}>{d.documentStatusName ?? '-'}</TableCell>
+                      <TableCell className={tdClass}>
+                        {d.documentStructureTargets.find(t => t.targetTypeName === 'Material')?.targetDisplayName ??
+                          '-'}
+                      </TableCell>
+                      <TableCell className={tdClass}>
+                        {d.documentStructureTargets.find(t => t.targetTypeName === 'Project')?.targetDisplayName ?? '-'}
+                      </TableCell>
+                      <TableCell className={tdClass}>
+                        {d.documentStructureTargets.find(t => t.targetTypeName === 'Company')?.targetDisplayName ?? '-'}
+                      </TableCell>
                       <TableCell>
                         <YesNoBadge value={d.valid} />
                       </TableCell>
@@ -814,6 +832,7 @@ export function DocumentTable({
         targetOptions={targetOptions}
         canManageVisibility={canManageVisibility}
         canEditNumber={canEditNumber}
+        existingTargets={editingDocument?.documentStructureTargets}
       />
 
       {copyDialogDoc && (

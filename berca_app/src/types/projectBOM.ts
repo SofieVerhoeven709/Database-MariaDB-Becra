@@ -47,7 +47,7 @@ export interface MappedProjectBOM {
 // ─── Material option ───────────────────────────────────────────────────────────
 export interface BomMaterialOption {
   id: string
-  beNumber: string
+  beNumber: string | null
   name: string | null
   shortDescription: string | null
 }

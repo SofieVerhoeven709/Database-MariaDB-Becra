@@ -115,7 +115,7 @@ export function ProjectBOMStructureFormDialog({
               <SelectContent className="bg-card border-border">
                 {materialOptions.map(m => (
                   <SelectItem key={m.id} value={m.id}>
-                    {m.beNumber}
+                    {m.beNumber ?? m.id}
                     {m.name ? ` — ${m.name}` : m.shortDescription ? ` — ${m.shortDescription}` : ''}
                   </SelectItem>
                 ))}

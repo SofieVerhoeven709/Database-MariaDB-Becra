@@ -18,7 +18,7 @@ type ProjectBOMStructureRaw = {
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
-  Material: {id: string; name: string | null; beNumber: string; shortDescription: string | null}
+  Material: {id: string; name: string | null; beNumber: string | null; shortDescription: string | null}
   Employee_ProjectBOMStructure_createdByToEmployee: {id: string; firstName: string; lastName: string}
 }
 
@@ -48,8 +48,8 @@ function mapStructure(r: ProjectBOMStructureRaw): MappedProjectBOMStructure {
     id: r.id,
     projectBOMId: r.projectBOMId,
     materialId: r.materialId,
-    materialName: r.Material.name ?? r.Material.shortDescription ?? r.Material.beNumber,
-    materialBeNumber: r.Material.beNumber,
+    materialName: r.Material.name ?? r.Material.shortDescription ?? r.Material.beNumber ?? r.materialId,
+    materialBeNumber: r.Material.beNumber ?? '',
     shortDescription: r.shortDescription,
     additionalInfo: r.additionalInfo,
     description: r.description,

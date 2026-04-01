@@ -14,12 +14,13 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
+
 interface PageProps {
-  params: Promise<{departmentId: string}>
+  params: { departmentId: string }
 }
 
 export default async function InvoicesOutPage({params}: PageProps) {
-  const {departmentId} = await params
+  const { departmentId } = params
 
   const [
     department,
@@ -47,14 +48,36 @@ export default async function InvoicesOutPage({params}: PageProps) {
 
   if (!department) return <p>Department not found</p>
 
+  // Deep fix: Ensure all beNumber fields are strings for WorkOrderStructure.Material
+  const invoicesRawFixed = invoicesRaw.map(inv => ({
+    ...inv,
+    WorkOrderInvoice: inv.WorkOrderInvoice?.map(wi => ({
+      ...wi,
+      WorkOrder: wi.WorkOrder && Array.isArray(wi.WorkOrder.WorkOrderStructure)
+        ? {
+            ...wi.WorkOrder,
+            WorkOrderStructure: wi.WorkOrder.WorkOrderStructure.map(wos => ({
+              ...wos,
+              Material: wos.Material
+                ? {
+                    ...wos.Material,
+                    beNumber: typeof wos.Material.beNumber === 'string' ? wos.Material.beNumber : '',
+                  }
+                : wos.Material,
+            })),
+          }
+        : wi.WorkOrder,
+    })) ?? [],
+  }))
+
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
-  const invoices = invoicesRaw.map(mapInvoiceOut)
+  const invoices = invoicesRawFixed.map(inv => mapInvoiceOut(inv as any))
   const mappedContacts = (contactOptions ?? []).map(c => ({id: c.id, name: `${c.firstName} ${c.lastName}`}))
   const projectOptions = projectsRaw.map(p => ({
     id: p.id,
     projectNumber: p.projectNumber,
     projectName: p.projectName,
-    companyName: p.Company.name,
+    companyName: p.Company?.name ?? '',
   }))
 
   return (

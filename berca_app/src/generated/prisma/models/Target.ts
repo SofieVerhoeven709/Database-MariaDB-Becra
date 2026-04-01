@@ -495,11 +495,6 @@ export type TargetOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type TargetNullableScalarRelationFilter = {
-  is?: Prisma.TargetWhereInput | null
-  isNot?: Prisma.TargetWhereInput | null
-}
-
 export type TargetOrderByRelevanceInput = {
   fields: Prisma.TargetOrderByRelevanceFieldEnum | Prisma.TargetOrderByRelevanceFieldEnum[]
   sort: Prisma.SortOrder
@@ -738,12 +733,10 @@ export type TargetCreateNestedOneWithoutHourTypeInput = {
   connect?: Prisma.TargetWhereUniqueInput
 }
 
-export type TargetUpdateOneWithoutHourTypeNestedInput = {
+export type TargetUpdateOneRequiredWithoutHourTypeNestedInput = {
   create?: Prisma.XOR<Prisma.TargetCreateWithoutHourTypeInput, Prisma.TargetUncheckedCreateWithoutHourTypeInput>
   connectOrCreate?: Prisma.TargetCreateOrConnectWithoutHourTypeInput
   upsert?: Prisma.TargetUpsertWithoutHourTypeInput
-  disconnect?: Prisma.TargetWhereInput | boolean
-  delete?: Prisma.TargetWhereInput | boolean
   connect?: Prisma.TargetWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TargetUpdateToOneWithWhereWithoutHourTypeInput, Prisma.TargetUpdateWithoutHourTypeInput>, Prisma.TargetUncheckedUpdateWithoutHourTypeInput>
 }
@@ -796,12 +789,10 @@ export type TargetCreateNestedOneWithoutMaterialInput = {
   connect?: Prisma.TargetWhereUniqueInput
 }
 
-export type TargetUpdateOneWithoutMaterialNestedInput = {
+export type TargetUpdateOneRequiredWithoutMaterialNestedInput = {
   create?: Prisma.XOR<Prisma.TargetCreateWithoutMaterialInput, Prisma.TargetUncheckedCreateWithoutMaterialInput>
   connectOrCreate?: Prisma.TargetCreateOrConnectWithoutMaterialInput
   upsert?: Prisma.TargetUpsertWithoutMaterialInput
-  disconnect?: Prisma.TargetWhereInput | boolean
-  delete?: Prisma.TargetWhereInput | boolean
   connect?: Prisma.TargetWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TargetUpdateToOneWithWhereWithoutMaterialInput, Prisma.TargetUpdateWithoutMaterialInput>, Prisma.TargetUncheckedUpdateWithoutMaterialInput>
 }

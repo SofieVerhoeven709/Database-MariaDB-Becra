@@ -34,7 +34,7 @@ export default async function WorkOrderStructuresPage({params}: PageProps) {
       name: w.workOrderNumber ?? w.id,
       description: w.description ?? null,
     }))
-  const materialOptions = materialsFromDAL.map(m => ({id: m.id, name: m.name ?? '', beNumber: m.beNumber}))
+  const materialOptions = materialsFromDAL.map(m => ({id: m.id, name: m.name ?? '', beNumber: m.beNumber ?? '' as string}))
 
   return (
     <main className="px-6 py-8 lg:px-10 lg:py-10">

@@ -220,26 +220,27 @@ async function handleServerFunction<Schema extends ZodType, ReturnType, Auth ext
     return result ?? {success: true, submittedData: options.sendBackOnSuccess && submittedData}
   } catch (e) {
     const error = e as Error
-
     // The Next redirect function works by throwing an error, so we should not catch this error, but throw it again so
     // that Next can properly redirect the user.
     if (error.message === 'NEXT_REDIRECT') {
       logger.info(`${functionName} completed successfully in ${Date.now() - start} ms`)
       throw e
     }
-
     logger.error({
       msg: `An error occurred in ${functionName}.`,
       error: error.message,
+      stack: error.stack,
     })
-  }
-
-  return {
-    errors: {
-      errors: [options.globalErrorMessage ?? 'Something went wrong, please ensure you are logged in and try again'],
-    },
-    success: false,
-    submittedData: generateSubmittedData(unvalidatedData),
+    // Return the real error message to the frontend for debugging
+    return {
+      errors: {
+        global: [options.globalErrorMessage ?? 'Something went wrong, please ensure you are logged in and try again'],
+        message: [error.message],
+        stack: process.env.NODE_ENV !== 'production' && error.stack ? [error.stack] : undefined,
+      },
+      success: false,
+      submittedData: generateSubmittedData(unvalidatedData),
+    }
   }
 }
 

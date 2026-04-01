@@ -5,6 +5,7 @@ import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye} from 'lucide-
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
+import {Alert} from '@/components/ui/alert'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
@@ -53,6 +54,7 @@ type SortField =
   | 'rejected'
 type SortDir = 'asc' | 'desc'
 type FilterRejected = 'all' | 'active' | 'rejected'
+type FilterNumberKind = 'all' | 'be' | 'ios'
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
   if (sortField !== field) return null
@@ -99,15 +101,18 @@ export function MaterialTable({
   const [sortField, setSortField] = useState<SortField>('beNumber')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [filterRejected, setFilterRejected] = useState<FilterRejected>('all')
+  const [filterNumberKind, setFilterNumberKind] = useState<FilterNumberKind>('all')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
+  const [alert, setAlert] = useState<{
+    title: string
+    description: string
+    type?: 'info' | 'success' | 'warning' | 'error'
+  } | null>(null)
 
-  const parentPartBeNumbersInUse = useMemo(
-    () => [...new Set(materials.flatMap(m => m.parentBeNumbers))],
-    [materials],
-  )
+  const parentPartBeNumbersInUse = useMemo(() => [...new Set(materials.flatMap(m => m.parentBeNumbers))], [materials])
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -118,7 +123,16 @@ export function MaterialTable({
     }
   }
 
+  function getNumberKind(beNumber: string): FilterNumberKind {
+    const normalized = (beNumber ?? '').trim()
+    return normalized.startsWith('4') ? 'ios' : 'be'
+  }
+
   const filtered = materials
+    .filter(m => {
+      if (filterNumberKind === 'all') return true
+      return getNumberKind(m.beNumber) === filterNumberKind
+    })
     .filter(m => {
       if (filterRejected === 'active') return !m.rejected
       if (filterRejected === 'rejected') return m.rejected
@@ -175,6 +189,8 @@ export function MaterialTable({
         'materialGroupIdC',
         'materialGroupIdD',
         'unitId',
+        'isSerialTracked',
+        'isParentPart',
       ])
 
       const nullableSchemaFields = new Set([
@@ -240,8 +256,30 @@ export function MaterialTable({
     router.refresh()
   }
 
+  async function handleViewSerialTracked(serialTrackedId: string | null, beNumber: string, departmentId?: string, router?: any) {
+    if (!departmentId || !router) return
+
+    if (serialTrackedId) {
+      router.push(`/departments/${departmentId}/serialTracked/${serialTrackedId}`)
+      return
+    }
+
+    if (!beNumber) return
+    try {
+      const res = await fetch(`/api/serialTracked/byBeNumber/${encodeURIComponent(beNumber)}`)
+      const data = await res.json()
+      if (data.found && data.id) {
+        router.push(`/departments/${departmentId}/serialTracked/${data.id}`)
+      } else {
+        setAlert({title: 'Not found', description: 'No serial tracked item for this BE Number.', type: 'warning'})
+      }
+    } catch (_e) {
+      setAlert({title: 'Error', description: 'Failed to check serial tracked item.', type: 'error'})
+    }
+  }
+
   const columns: {key: SortField; label: string}[] = [
-    {key: 'beNumber', label: 'BE Number'},
+    {key: 'beNumber', label: 'Number'},
     {key: 'name', label: 'Name'},
     {key: 'shortDescription', label: 'Description'},
     {key: 'brandName', label: 'Brand'},
@@ -257,9 +295,13 @@ export function MaterialTable({
 
   return (
     <div className="flex flex-col gap-4">
+      {alert && (
+        <Alert title={alert.title} description={alert.description} type={alert.type} onClose={() => setAlert(null)} />
+      )}
+
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[200px]">
+        <div className="relative flex-1 min-w-50">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             className="pl-9 bg-secondary border-border"
@@ -268,6 +310,17 @@ export function MaterialTable({
             onChange={e => setSearch(e.target.value)}
           />
         </div>
+
+        <Select value={filterNumberKind} onValueChange={v => setFilterNumberKind(v as FilterNumberKind)}>
+          <SelectTrigger className="w-36 bg-secondary border-border">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All numbers</SelectItem>
+            <SelectItem value="be">BE</SelectItem>
+            <SelectItem value="ios">IOS</SelectItem>
+          </SelectContent>
+        </Select>
 
         <Select value={filterRejected} onValueChange={v => setFilterRejected(v as FilterRejected)}>
           <SelectTrigger className="w-36 bg-secondary border-border">
@@ -305,7 +358,10 @@ export function MaterialTable({
                   <SortIcon field={col.key} sortField={sortField} sortDir={sortDir} />
                 </TableHead>
               ))}
-              <TableHead className="w-[100px] text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <TableHead className="w-25 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                Serial Tracked
+              </TableHead>
+              <TableHead className="w-25 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                 Actions
               </TableHead>
             </TableRow>
@@ -313,7 +369,7 @@ export function MaterialTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length + 1} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={columns.length + 2} className="text-center text-muted-foreground py-10">
                   No materials found
                 </TableCell>
               </TableRow>
@@ -327,7 +383,7 @@ export function MaterialTable({
                   <TableCell className="text-sm">
                     {m.name ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
-                  <TableCell className="text-sm max-w-[220px] truncate" title={m.shortDescription}>
+                  <TableCell className="text-sm max-w-55 truncate" title={m.shortDescription}>
                     {m.shortDescription}
                   </TableCell>
                   <TableCell className="text-sm">
@@ -341,7 +397,7 @@ export function MaterialTable({
                     {m.unitName}
                     <span className="text-muted-foreground text-xs ml-1">({m.unitAbbreviation})</span>
                   </TableCell>
-                  <TableCell className="text-sm max-w-[220px]">
+                  <TableCell className="text-sm max-w-55">
                     {m.parentBeNumbers.length > 0 ? (
                       <span title={m.parentBeNumbers.join(', ')}>
                         {m.parentBeNumbers.slice(0, 2).join(', ')}
@@ -368,6 +424,22 @@ export function MaterialTable({
                       </Badge>
                     )}
                   </TableCell>
+                  {/* Serial Tracked Button Column */}
+                  <TableCell className="text-center">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-8"
+                      disabled={!m.isSerialTracked}
+                      onClick={e => {
+                        e.stopPropagation()
+                        handleViewSerialTracked(m.serialTrackedId, m.beNumber, departmentId, router)
+                      }}
+                      title={m.isSerialTracked ? 'Open Serial Tracked' : 'Material is not serial tracked'}>
+                      Serial Tracked
+                    </Button>
+                  </TableCell>
+                  {/* Actions Column */}
                   <TableCell className="text-right" onClick={e => e.stopPropagation()}>
                     <div className="flex justify-end gap-1">
                       <Button

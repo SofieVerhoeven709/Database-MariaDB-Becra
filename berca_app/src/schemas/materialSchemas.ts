@@ -10,7 +10,12 @@ const booleanFromString = z.preprocess(
   z.boolean().nullable().optional(),
 )
 
-const beNumberSchema = z.string().trim().min(1).max(255).regex(/^\d+$/, 'BE number mag enkel cijfers bevatten')
+const beNumberSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(255)
+  .regex(/^(1\d{6}|4\d{6})$/, 'Nummer moet in de 1000000-reeks (BE) of 4000000-reeks (IOS) liggen')
 
 const brandOrderNrSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),
@@ -29,7 +34,7 @@ const parentBeNumbersSchema = z.preprocess(
     if (val == null || val === '') return []
     return [val]
   },
-  z.array(z.string().trim().regex(/^\d+$/, 'Parent BE number mag enkel cijfers bevatten')).default([]),
+  z.array(z.string().trim().regex(/^\d+$/, 'Parent BE number can only contains numbers')).default([]),
 )
 
 const nullableUuidSchema = z.preprocess(
@@ -68,6 +73,22 @@ export const materialSchema = z.object({
   materialGroupIdC: nullableUuidSchema,
   materialGroupIdD: nullableUuidSchema,
   unitId: z.string().uuid(),
+  isSerialTracked: z
+    .preprocess(val => {
+      if (val === undefined) return false
+      if (val === 'false' || val === false || val === 0) return false
+      if (val === 'true' || val === true || val === 1) return true
+      return val
+    }, z.boolean())
+    .default(false),
+  isParentPart: z
+    .preprocess(val => {
+      if (val === undefined) return false
+      if (val === 'false' || val === false || val === 0) return false
+      if (val === 'true' || val === true || val === 1) return true
+      return val
+    }, z.boolean())
+    .default(false),
 })
 
 export const createMaterialSchema = materialSchema.extend({

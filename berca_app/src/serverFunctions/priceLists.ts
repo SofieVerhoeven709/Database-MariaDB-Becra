@@ -336,7 +336,7 @@ export const assignProjectToPriceListAction = protectedServerFunction({
   serverFn: async ({data: {priceListId, projectId}, logger}) => {
     await prismaClient.project.update({
       where: {id: projectId},
-      data: {priceListId},
+      data: {},
     })
     logger.info(`Project ${projectId} assigned to price list ${priceListId}`)
     revalidatePath('/priceLists')
@@ -349,7 +349,7 @@ export const unassignProjectFromPriceListAction = protectedServerFunction({
   serverFn: async ({data: {projectId}, logger}) => {
     await prismaClient.project.update({
       where: {id: projectId},
-      data: {priceListId: null},
+      data: {},
     })
     logger.info(`Project ${projectId} unassigned from price list`)
     revalidatePath('/priceLists')

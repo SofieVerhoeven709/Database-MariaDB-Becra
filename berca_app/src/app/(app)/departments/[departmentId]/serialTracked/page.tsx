@@ -51,10 +51,6 @@ export default async function SerialTrackedPage({params}: PageProps) {
     materialGroupIdD: item.materialGroupIdD ?? '',
   }))
 
-  // DEBUG: Log the number of items fetched and show the first few
-  console.log('serialTrackedFromDAL count:', serialTrackedFromDAL.length, serialTrackedFromDAL.slice(0, 3))
-  console.log('serialTracked mapped count:', serialTracked.length, serialTracked.slice(0, 3))
-
   const companyOptions = companiesFromDAL.map(c => ({
     id: c.id,
     name: c.name,
@@ -89,9 +85,6 @@ export default async function SerialTrackedPage({params}: PageProps) {
     materialGroupId: m.materialGroupIdA ?? '', // Use materialGroupIdA
   }))
 
-  // DEBUG: Show first few serialTrackedFromDAL and serialTracked entries to diagnose why the table is empty
-  const debugSerialTrackedFromDAL = serialTrackedFromDAL.slice(0, 3)
-  const debugSerialTracked = serialTracked.slice(0, 3)
 
   // Fetch all serial tracked structures for all serialTracked items in this department
   // (Assuming serialTracked contains all items for this department)

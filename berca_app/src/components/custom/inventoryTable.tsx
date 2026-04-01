@@ -95,7 +95,7 @@ export function InventoryTable({initialItems, materials}: InventoryTableProps) {
     router.refresh()
   }
   const columns: {key: SortField; label: string}[] = [
-    {key: 'beNumber', label: 'BE Number'},
+    {key: 'beNumber', label: 'Material Number (BE/IOS)'},
     {key: 'materialName', label: 'Material'},
     {key: 'shortDescription', label: 'Description'},
     {key: 'place', label: 'Location'},

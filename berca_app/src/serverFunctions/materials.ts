@@ -7,9 +7,24 @@ import {prismaClient} from '@/dal/prismaClient'
 import {protectedFormAction} from '@/lib/serverFunctions'
 import {createMaterialSchema, updateMaterialSchema, deleteMaterialSchema} from '@/schemas/materialSchemas'
 import {createTargetForType} from '@/dal/targets'
+import {z} from 'zod/v4'
+import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
+import {getLogger} from '@/lib/logger'
 
 const REVALIDATE_MATERIAL = '/departments/engineering/material'
 const REVALIDATE_INVENTORY = '/departments/warehouse/inventory'
+const REVALIDATE_WAREHOUSE_PLACE = '/departments/[departmentId]/place'
+const REVALIDATE_MATERIAL_PLACE = '/departments/[departmentId]/materialPlace'
+
+const createMaterialForPlaceSchema = z.object({
+  id: z.string().uuid(),
+  beNumber: z
+    .string()
+    .trim()
+    .regex(/^(1\d{6}|4\d{6})$/, 'Nummer moet in de 1000000-reeks (BE) of 4000000-reeks (IOS) liggen'),
+  shortDescription: z.string().trim().min(1).max(255),
+  name: z.string().trim().max(255).optional(),
+})
 
 async function generateBeNumber() {
   const materials = await prismaClient.material.findMany({
@@ -148,3 +163,52 @@ export const cloneMaterialAction = protectedFormAction({
     return {success: true, id: cloned.id}
   },
 })
+
+export async function createMaterialForPlaceAction(unvalidatedData: z.infer<typeof createMaterialForPlaceSchema>) {
+  const logger = await getLogger()
+  const profile = await getSessionProfileFromCookieOrThrow()
+  const data = createMaterialForPlaceSchema.parse(unvalidatedData)
+
+  const [defaultUnit, defaultMaterialGroup] = await Promise.all([
+    prismaClient.unit.findFirst({
+      where: {deleted: false, valid: true},
+      select: {id: true},
+      orderBy: {unitName: 'asc'},
+    }),
+    prismaClient.materialGroup.findFirst({
+      where: {deleted: false},
+      select: {id: true},
+      orderBy: [{groupA: 'asc'}, {groupB: 'asc'}, {groupC: 'asc'}, {groupD: 'asc'}],
+    }),
+  ])
+
+  if (!defaultUnit || !defaultMaterialGroup) {
+    throw new Error('No standard unit of materialgroup found for creating material.')
+  }
+
+  const target = await createTargetForType('Company', profile.id)
+  const material = await createMaterial({
+    id: data.id,
+    beNumber: data.beNumber,
+    shortDescription: data.shortDescription,
+    name: data.name || null,
+    materialGroupIdA: defaultMaterialGroup.id,
+    unitId: defaultUnit.id,
+    createdBy: profile.id,
+    targetId: target.id,
+    isSerialTracked: false,
+  })
+
+  logger.info(`Material quick-created for place: ${material.id}`)
+  revalidatePath(REVALIDATE_MATERIAL)
+  revalidatePath(REVALIDATE_INVENTORY)
+  revalidatePath(REVALIDATE_WAREHOUSE_PLACE, 'page')
+  revalidatePath(REVALIDATE_MATERIAL_PLACE, 'page')
+
+  return {
+    id: material.id,
+    beNumber: material.beNumber,
+    name: material.name,
+    shortDescription: material.shortDescription,
+  }
+}

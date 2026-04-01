@@ -1,10 +1,17 @@
 import {getWarehousePlaces} from '@/dal/warehousePlace'
+import {getMaterials} from '@/dal/materials'
 import {WarehousePlaceTable} from '@/components/custom/warehousePlaceTable'
 import {mapWarehousePlace} from '@/extra/warehousePlace'
 
 export default async function WarehousePlacePage() {
-  const places = await getWarehousePlaces()
+  const [places, materials] = await Promise.all([getWarehousePlaces(), getMaterials()])
   const mappedPlaces = places.map(mapWarehousePlace)
+  const materialOptions = materials.map(m => ({
+    id: m.id,
+    beNumber: m.beNumber,
+    name: m.name,
+    shortDescription: m.shortDescription,
+  }))
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
@@ -14,7 +21,7 @@ export default async function WarehousePlacePage() {
           Manage storage locations, shelves, columns, layers and their capacity.
         </p>
       </div>
-      <WarehousePlaceTable initialItems={mappedPlaces} />
+      <WarehousePlaceTable initialItems={mappedPlaces} materials={materialOptions} />
     </div>
   )
 }

@@ -85,7 +85,6 @@ export async function getSerialTracked(options?: {includeDeleted?: boolean}): Pr
     },
     orderBy: {shortDescription: 'asc'},
   })
-  console.log('[DAL:getSerialTracked] count:', results.length, 'sample:', results.slice(0, 2))
   return results
 }
 
@@ -152,7 +151,6 @@ export async function createSerialTracked(data: {
   beNumber?: string | null
   warehousePlaceId?: string | null
 }) {
-  console.log('[DAL:createSerialTracked] input:', data)
   const {materialId, companyId, projectId, createdBy, deletedBy, warehousePlaceId, ...rest} = data
 
   const prismaData: any = {...rest}
@@ -186,7 +184,6 @@ export async function createSerialTracked(data: {
 
     return createdItem
   })
-  console.log('[DAL:createSerialTracked] created:', created)
   return created
 }
 

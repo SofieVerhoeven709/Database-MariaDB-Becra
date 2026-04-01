@@ -6,7 +6,6 @@ import {Button} from '@/components/ui/button'
 import {Label} from '@/components/ui/label'
 import {Textarea} from '@/components/ui/textarea'
 import {Switch} from '@/components/ui/switch'
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedInventory} from '@/types/inventory'
 interface MaterialOption {
   id: string
@@ -21,6 +20,90 @@ interface InventoryFormDialogProps {
   materials: MaterialOption[]
   onSave: (item: Partial<MappedInventory> & {id: string}) => void
 }
+
+interface MaterialNumberPickerProps {
+  materials: MaterialOption[]
+  selectedMaterialId: string
+  disabled?: boolean
+  inputStyles: string
+  onSelect: (materialId: string) => void
+}
+
+function MaterialNumberPicker({
+  materials,
+  selectedMaterialId,
+  disabled = false,
+  inputStyles,
+  onSelect,
+}: MaterialNumberPickerProps) {
+  const [search, setSearch] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
+
+  const selectedMaterial = materials.find(m => m.id === selectedMaterialId)
+
+  const filtered = materials.filter(m => {
+    const q = search.toLowerCase().trim()
+    if (!q) return true
+    return (
+      m.beNumber.toLowerCase().includes(q) ||
+      (m.name ?? '').toLowerCase().includes(q) ||
+      m.shortDescription.toLowerCase().includes(q)
+    )
+  })
+
+  const displayValue = isFocused
+    ? search
+    : search ||
+      (selectedMaterial
+        ? `${selectedMaterial.beNumber} - ${selectedMaterial.name ?? selectedMaterial.shortDescription}`
+        : '')
+
+  return (
+    <div className="relative">
+      <Input
+        className={inputStyles}
+        placeholder="Type materiaalnummer of naam..."
+        value={displayValue}
+        disabled={disabled}
+        onChange={e => {
+          setSearch(e.target.value)
+          setIsOpen(true)
+        }}
+        onFocus={() => {
+          if (disabled) return
+          setIsFocused(true)
+          setIsOpen(true)
+        }}
+        onBlur={() => {
+          setIsFocused(false)
+          setTimeout(() => setIsOpen(false), 150)
+        }}
+      />
+      {isOpen && !disabled && (
+        <div className="absolute top-full left-0 right-0 mt-1 z-50 max-h-56 overflow-y-auto rounded-md border border-border bg-secondary">
+          {filtered.map(m => (
+            <div
+              key={m.id}
+              className={`cursor-pointer px-2 py-1.5 text-sm hover:bg-secondary/80 ${selectedMaterialId === m.id ? 'bg-secondary/80 font-semibold' : ''}`}
+              onClick={() => {
+                onSelect(m.id)
+                setSearch('')
+                setIsOpen(false)
+                setIsFocused(false)
+              }}>
+              {m.beNumber} - {m.name ?? m.shortDescription}
+            </div>
+          ))}
+          {filtered.length === 0 && (
+            <div className="px-2 py-1.5 text-xs text-muted-foreground">Geen materiaal gevonden</div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
 const today = new Date().toISOString().split('T')[0]
 const EMPTY: Partial<MappedInventory> & {id: string} = {
@@ -45,12 +128,11 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
   const [form, setForm] = useState(makeForm)
   useEffect(() => {
     if (open) setForm(makeForm())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, item?.id])
   function update<K extends keyof MappedInventory>(field: K, value: MappedInventory[K]) {
     setForm(prev => ({...prev, [field]: value}))
   }
-  // Auto-fill beNumber when material is selected (for new items)
+  // Autofill beNumber when material is selected (for new items)
   function handleMaterialChange(materialId: string) {
     const mat = materials.find(m => m.id === materialId)
     setForm(prev => ({
@@ -80,37 +162,32 @@ export function InventoryFormDialog({open, onOpenChange, item, materials, onSave
           {/* Material */}
           <div className="flex flex-col gap-2">
             <Label className="text-xs text-muted-foreground">Material *</Label>
-            <Select value={form.materialId ?? ''} onValueChange={handleMaterialChange} required disabled={isEditing}>
-              <SelectTrigger className={inputStyles}>
-                <SelectValue placeholder="Select material..." />
-              </SelectTrigger>
-              <SelectContent>
-                {materials.map(m => (
-                  <SelectItem key={m.id} value={m.id}>
-                    {m.beNumber} - {m.name ?? m.shortDescription}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MaterialNumberPicker
+              materials={materials}
+              selectedMaterialId={form.materialId ?? ''}
+              onSelect={handleMaterialChange}
+              disabled={isEditing}
+              inputStyles={inputStyles}
+            />
           </div>
-          {/* BE Number + Serie Number */}
+          {/* Material Number (BE/IOS) + Serie Number */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="inv-beNumber" className="text-xs text-muted-foreground">
-                BE Number *
+                Material Number (BE/IOS) *
               </Label>
               <Input
                 id="inv-beNumber"
                 className={inputStyles}
                 value={form.beNumber ?? ''}
                 onChange={e => update('beNumber', e.target.value)}
-                placeholder="BE-0001"
+                placeholder="1000943 or 4001234"
                 required
               />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="inv-serie" className="text-xs text-muted-foreground">
-                Serie Number *
+                Serial Number *
               </Label>
               <Input
                 id="inv-serie"

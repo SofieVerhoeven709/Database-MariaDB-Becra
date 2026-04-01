@@ -28,7 +28,6 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
       const res = await fetch(`/api/serialTrackedStructure/${item.id}`)
       if (res.ok) {
         const data = await res.json()
-        console.log('Fetched structure:', data)
         setStructure(data)
       } else {
         setStructure([])
@@ -109,10 +108,6 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
         </TabsContent>
         <TabsContent value="structure">
           <div className="rounded-xl border border-border bg-card p-6">
-            <details>
-              <summary className="mb-2 cursor-pointer text-xs text-muted-foreground">Show raw structure data (debug)</summary>
-              <pre className="text-xs bg-muted p-2 rounded overflow-x-auto max-h-64">{JSON.stringify(structure, null, 2)}</pre>
-            </details>
             {structure.length === 0 ? (
               <p className="text-muted-foreground text-sm">No structure found for this serial tracked item.</p>
             ) : (

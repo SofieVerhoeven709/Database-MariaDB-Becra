@@ -30,11 +30,12 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
 
 interface MaterialPlaceTableProps {
   initialItems: MappedMaterialPlace[]
+  materials: {id: string; beNumber: string; name: string | null; shortDescription: string}[]
 }
 
-export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
+export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTableProps) {
   const router = useRouter()
-  const [items] = useState(initialItems)
+  const items = initialItems
   const [search, setSearch] = useState('')
   const [deletedFilter, setDeletedFilter] = useState<DeletedFilter>('active')
   const [sortField, setSortField] = useState<SortField>('abbreviation')
@@ -117,15 +118,15 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm('Are you sure you want to delete this material place?')) return
+    if (!confirm('Are you sure you want to delete this warehouse place?')) return
     await deleteMaterialPlaceAction({id})
     router.refresh()
   }
 
   const columns: {key: SortField; label: string}[] = [
     {key: 'abbreviation', label: 'Abbreviation'},
-    {key: 'beNumber', label: 'BE Number'},
-    {key: 'place', label: 'Place'},
+    {key: 'beNumber', label: 'Material Number (BE/IOS)'},
+    {key: 'place', label: 'Warehouse Place'},
     {key: 'quantityInStock', label: 'Qty In Stock'},
   ]
 
@@ -136,7 +137,7 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             className="pl-9 bg-secondary border-border"
-            placeholder="Search material places..."
+            placeholder="Search warehouse places..."
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -158,7 +159,7 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
           }}
           className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
-          New material place
+          New warehouse place
         </Button>
       </div>
 
@@ -190,7 +191,7 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
             {filtered.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={columns.length + 5} className="text-center text-muted-foreground py-10">
-                  No material places found
+                  No warehouse places found
                 </TableCell>
               </TableRow>
             ) : (
@@ -259,7 +260,7 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
       </div>
 
       <p className="text-xs text-muted-foreground">
-        Showing {filtered.length} of {items.length} material place{items.length !== 1 ? 's' : ''}
+        Showing {filtered.length} of {items.length} warehouse place{items.length !== 1 ? 's' : ''}
       </p>
 
       <MaterialPlaceFormDialog
@@ -269,6 +270,7 @@ export function MaterialPlaceTable({initialItems}: MaterialPlaceTableProps) {
           if (!open) setEditingItem(null)
         }}
         item={editingItem}
+        materials={materials}
         onSave={handleSave}
       />
     </div>

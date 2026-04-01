@@ -135,10 +135,6 @@ export function SerialTrackedTable({
   departmentId,
   materialOptions,
 }: SerialTrackedTableProps) {
-  // DEBUG: Log incoming data and filtered data
-  console.log('SerialTrackedTable initialSerialTracked:', initialSerialTracked)
-  console.log('[SerialTrackedTable] initialSerialTracked:', initialSerialTracked)
-
   const router = useRouter()
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
   const canDelete = currentUserRole === 'Administrator' || currentUserLevel >= 80
@@ -225,8 +221,6 @@ export function SerialTrackedTable({
       }
     })
 
-  // DEBUG: Log filtered data
-  console.log('SerialTrackedTable filtered:', filtered)
 
   async function handleSoftDelete(item: MappedMaterialSerialTracked) {
     await deleteMaterialSerialTrackedAction({id: item.id})

@@ -27,11 +27,12 @@ function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: Sor
 
 interface WarehousePlaceTableProps {
   initialItems: MappedWarehousePlace[]
+  materials: {id: string; beNumber: string; name: string | null; shortDescription: string}[]
 }
 
-export function WarehousePlaceTable({initialItems}: WarehousePlaceTableProps) {
+export function WarehousePlaceTable({initialItems, materials}: WarehousePlaceTableProps) {
   const router = useRouter()
-  const [items] = useState(initialItems)
+  const items = initialItems
   const [search, setSearch] = useState('')
   const [sortField, setSortField] = useState<SortField>('abbreviation')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
@@ -109,7 +110,7 @@ export function WarehousePlaceTable({initialItems}: WarehousePlaceTableProps) {
 
   const columns: {key: SortField; label: string}[] = [
     {key: 'abbreviation', label: 'Abbreviation'},
-    {key: 'beNumber', label: 'BE Number'},
+    {key: 'beNumber', label: 'Material Number (BE/IOS)'},
     {key: 'place', label: 'Place'},
     {key: 'quantityInStock', label: 'Qty In Stock'},
   ]
@@ -222,6 +223,7 @@ export function WarehousePlaceTable({initialItems}: WarehousePlaceTableProps) {
           if (!open) setEditingItem(null)
         }}
         item={editingItem}
+        materials={materials}
         onSave={handleSave}
       />
     </div>

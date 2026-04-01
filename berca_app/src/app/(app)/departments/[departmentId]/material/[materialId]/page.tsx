@@ -3,6 +3,7 @@ import {MaterialDetail} from '@/components/custom/materialDetail'
 import {notFound} from 'next/navigation'
 import {getSupplierCompanies} from '@/dal/companies'
 import {getSerialTrackedStructureBySerialTrackedId} from '@/dal/materialSerialTrackedStructure'
+import {getWarehousePlaces} from '@/dal/warehousePlace'
 
 interface MaterialDetailPageProps {
   params: Promise<{materialId: string}>
@@ -16,11 +17,12 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
   }
 
   const {materialId} = await params
-  const [material, groups, units, supplierCompanies] = await Promise.all([
+  const [material, groups, units, supplierCompanies, warehousePlaces] = await Promise.all([
     getMaterialById(materialId).catch(() => null),
     getMaterialGroups(),
     getUnits(),
     getSupplierCompanies(),
+    getWarehousePlaces(),
   ])
 
   if (!material) notFound()
@@ -133,6 +135,13 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     number: c.number,
   }))
 
+  const mappedWarehousePlaces = warehousePlaces.map((place: any) => ({
+    id: place.id,
+    label: [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
+      .filter(Boolean)
+      .join(' - '),
+  }))
+
   return (
     <div className="p-6 max-w-5xl mx-auto">
       <MaterialDetail
@@ -140,6 +149,7 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
         materialGroups={mappedGroups}
         units={mappedUnits}
         supplierCompanies={mappedSupplierCompanies}
+        warehousePlaces={mappedWarehousePlaces}
       />
     </div>
   )

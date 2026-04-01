@@ -12,7 +12,22 @@ export type SerialTrackedWithRelations = Prisma.MaterialSerialTrackGetPayload<{
         lastName: true
       }
     }
-    // Add other valid relations here if needed
+    material: {
+      select: {
+        id: true
+        beNumber: true
+        materialGroupIdA: true
+      }
+    }
+    MaterialGroup: {
+      select: {
+        id: true
+        groupA: true
+        groupB: true
+        groupC: true
+        groupD: true
+      }
+    }
   }
 }>
 
@@ -25,7 +40,22 @@ export async function getSerialTracked(options?: {includeDeleted?: boolean}): Pr
       Employee: {
         select: {id: true, firstName: true, lastName: true},
       },
-      // Add other valid relations here if needed
+      material: {
+        select: {
+          id: true,
+          beNumber: true,
+          materialGroupIdA: true,
+        },
+      },
+      MaterialGroup: {
+        select: {
+          id: true,
+          groupA: true,
+          groupB: true,
+          groupC: true,
+          groupD: true,
+        },
+      },
     },
     orderBy: {shortDescription: 'asc'},
   })
@@ -40,7 +70,22 @@ export async function getSerialTrackedById(id: string): Promise<SerialTrackedWit
       Employee: {
         select: {id: true, firstName: true, lastName: true},
       },
-      // Add other valid relations here if needed
+      material: {
+        select: {
+          id: true,
+          beNumber: true,
+          materialGroupIdA: true,
+        },
+      },
+      MaterialGroup: {
+        select: {
+          id: true,
+          groupA: true,
+          groupB: true,
+          groupC: true,
+          groupD: true,
+        },
+      },
     },
   })
 }
@@ -59,33 +104,25 @@ export async function createSerialTracked(data: {
   shortDescription?: string | null
   longDescription?: string | null
   transactionType?: string | null
-  materialGroupId?: string | null // still accepted for compatibility, but will be removed before Prisma call
+  materialGroupId?: string | null
   fromLocation?: string | null
   toLocation?: string | null
   preferredSupplier?: string | null
   rejected?: boolean | null
   additionalInfo?: string | null
   becraCode?: string | null
+  beNumber?: string | null
 }) {
   console.log('[DAL:createSerialTracked] input:', data)
-  const {
-    materialId,
-    companyId,
-    projectId,
-    createdBy,
-    deletedBy,
-    materialGroupId, // destructure and discard
-    ...rest
-  } = data
-  // Remove createdBy from rest to avoid duplicate key
-  if ('createdBy' in rest) delete rest.createdBy;
+  const {materialId, companyId, projectId, createdBy, deletedBy, ...rest} = data
+
   const prismaData: any = {...rest}
-  if (materialId) prismaData.material = { connect: { id: materialId } }
+  if (materialId) prismaData.material = {connect: {id: materialId}}
   if (companyId) prismaData.Company = {connect: {id: companyId}}
   if (projectId) prismaData.Project = {connect: {id: projectId}}
-  if (createdBy) prismaData.Employee = { connect: { id: createdBy } }
+  if (createdBy) prismaData.Employee = {connect: {id: createdBy}}
   if (deletedBy) prismaData.Employee_MaterialSerialTrack_deletedByToEmployee = {connect: {id: deletedBy}}
-  // materialGroupId is NOT included in prismaData
+
   const created = await prismaClient.materialSerialTrack.create({
     data: prismaData,
   })

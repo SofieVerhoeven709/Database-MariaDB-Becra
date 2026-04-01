@@ -141,7 +141,7 @@ export const cloneMaterialAction = protectedFormAction({
   globalErrorMessage: 'Could not clone the material, please try again.',
   serverFn: async ({data, profile, logger}) => {
     const {id} = data
-    const cloned = await cloneMaterial(id, profile.id)
+    const cloned = await cloneMaterial(id)
     logger.info(`Material cloned: ${cloned.id} from ${id}`)
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)

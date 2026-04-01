@@ -1,7 +1,6 @@
 import 'server-only'
 import {prismaClient} from './prismaClient'
 import type {Prisma, Employee, EmergencyContact} from '@/generated/prisma/client'
-import {cache} from 'react'
 import {hashPassword} from '@/lib/passwordUtils'
 import type {Profile, SessionWithProfile} from '@/models/employees'
 import {profileOmit, sessionWithProfileInclude} from '@/models/employees'
@@ -631,7 +630,7 @@ export async function getEmployeeDetail(id: string) {
           where: {deleted: false},
           orderBy: {updatedAt: 'desc'},
           take: 50,
-          select: {id: true, shortDescription: true},
+          select: {id: true, beNumber: true, shortDescription: true},
         },
         Part: {
           where: {deleted: false},

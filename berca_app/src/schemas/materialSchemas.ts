@@ -10,7 +10,12 @@ const booleanFromString = z.preprocess(
   z.boolean().nullable().optional(),
 )
 
-const beNumberSchema = z.string().trim().min(1).max(255).regex(/^\d+$/, 'BE number mag enkel cijfers bevatten')
+const beNumberSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(255)
+  .regex(/^(1\d{6}|4\d{6})$/, 'Nummer moet in de 1000000-reeks (BE) of 4000000-reeks (IOS) liggen')
 
 const brandOrderNrSchema = z.preprocess(
   val => (val === '' || val == null ? null : val),

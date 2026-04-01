@@ -7302,7 +7302,9 @@ export const MaterialSerialTrackScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  materialId: 'materialId'
+  materialId: 'materialId',
+  beNumber: 'beNumber',
+  materialGroupId: 'materialGroupId'
 } as const
 
 export type MaterialSerialTrackScalarFieldEnum = (typeof MaterialSerialTrackScalarFieldEnum)[keyof typeof MaterialSerialTrackScalarFieldEnum]
@@ -8755,7 +8757,9 @@ export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   becraCode: 'becraCode',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy',
-  materialId: 'materialId'
+  materialId: 'materialId',
+  beNumber: 'beNumber',
+  materialGroupId: 'materialGroupId'
 } as const
 
 export type MaterialSerialTrackOrderByRelevanceFieldEnum = (typeof MaterialSerialTrackOrderByRelevanceFieldEnum)[keyof typeof MaterialSerialTrackOrderByRelevanceFieldEnum]

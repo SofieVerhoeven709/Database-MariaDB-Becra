@@ -6,7 +6,7 @@ import {useEffect, useState} from 'react'
 import {MaterialSerialTrackedFormDialog} from '@/components/custom/serialTrackedFormDialog'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
-import {getSerialTrackedStructureBySerialTrackedId} from '@/dal/materialSerialTrackedStructure'
+
 
 interface Props {
   item: any
@@ -23,8 +23,15 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
   const [structure, setStructure] = useState<any[]>([])
   useEffect(() => {
     async function fetchStructure() {
-      const data = await getSerialTrackedStructureBySerialTrackedId(item.id)
-      setStructure(data)
+      // Fetch from API route instead of direct DAL call
+      const res = await fetch(`/api/serialTrackedStructure/${item.id}`)
+      if (res.ok) {
+        const data = await res.json()
+        console.log('Fetched structure:', data)
+        setStructure(data)
+      } else {
+        setStructure([])
+      }
     }
     fetchStructure()
   }, [item.id])
@@ -84,6 +91,10 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
         </TabsContent>
         <TabsContent value="structure">
           <div className="rounded-xl border border-border bg-card p-6">
+            <details>
+              <summary className="mb-2 cursor-pointer text-xs text-muted-foreground">Show raw structure data (debug)</summary>
+              <pre className="text-xs bg-muted p-2 rounded overflow-x-auto max-h-64">{JSON.stringify(structure, null, 2)}</pre>
+            </details>
             {structure.length === 0 ? (
               <p className="text-muted-foreground text-sm">No structure found for this serial tracked item.</p>
             ) : (
@@ -92,6 +103,8 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
                   <TableRow>
                     <TableHead>Short Description</TableHead>
                     <TableHead>Long Description</TableHead>
+                    <TableHead>BE Number</TableHead>
+                    <TableHead>Material Group</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -99,6 +112,12 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
                     <TableRow key={s.id}>
                       <TableCell>{s.shortDescription}</TableCell>
                       <TableCell>{s.longDescription}</TableCell>
+                      <TableCell>{s.MaterialSerialTrack?.beNumber ?? '-'}</TableCell>
+                      <TableCell>
+                        {s.MaterialSerialTrack?.MaterialGroup
+                          ? [s.MaterialSerialTrack.MaterialGroup.groupA, s.MaterialSerialTrack.MaterialGroup.groupB, s.MaterialSerialTrack.MaterialGroup.groupC, s.MaterialSerialTrack.MaterialGroup.groupD].filter(Boolean).join(' / ')
+                          : '-'}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

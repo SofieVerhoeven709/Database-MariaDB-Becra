@@ -103,7 +103,7 @@ function toFormState(item: MaterialSerialTrackedFormValue | null): FormState {
 
   return {
     id: item.id,
-    materialId: item.id, // Set materialId from item.id
+    materialId: '',
     beNumber: item.beNumber ?? '',
     brandName: item.brandName ?? '',
     management: item.management ?? '',
@@ -124,12 +124,12 @@ function toFormState(item: MaterialSerialTrackedFormValue | null): FormState {
   }
 }
 
-//function parseBooleanString(value: string): boolean | null | undefined {
-//if (value === 'true') return true
-//if (value === 'false') return false
-//if (value === '') return null
-//return undefined
-//}
+function parseBooleanString(value: string): boolean | null | undefined {
+  if (value === 'true') return true
+  if (value === 'false') return false
+  if (value === '') return null
+  return undefined
+}
 
 export function MaterialSerialTrackedFormDialog({
   open,

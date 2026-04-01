@@ -1,4 +1,5 @@
 import {getMaterials, getMaterialGroups, getUnits} from '@/dal/materials'
+import type {MaterialListItem} from '@/dal/materials'
 import {MaterialTable} from '@/components/custom/materialTable'
 import {getDepartmentById} from '@/dal/department'
 import {getSupplierCompanies} from '@/dal/companies'
@@ -45,7 +46,7 @@ export default async function MaterialPage({params}: PageProps) {
 
   const groupById = new Map(groups.map(g => [g.id, g]))
 
-  const mappedMaterials: MappedMaterial[] = materials.map(m => {
+  const mappedMaterials: MappedMaterial[] = materials.map((m: MaterialListItem) => {
     const preferredSupplierEntry =
       m.MaterialSupplier.find(s => s.companyId === m.preferredSupplierCompanyId) ??
       m.MaterialSupplier.find(s => s.isPreferred) ??
@@ -95,7 +96,7 @@ export default async function MaterialPage({params}: PageProps) {
       deletedAt: m.deletedAt?.toISOString() ?? null,
       deletedBy: m.deletedBy ?? null,
       isSerialTracked: m.isSerialTracked ?? false,
-      serialTrackedId: null,
+      serialTrackedId: m.MaterialSerialTrack[0]?.id ?? null,
       isParentPart: false,
     }
     return mapped

@@ -51,6 +51,22 @@ interface MaterialFormDialogProps {
 
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
 
+type NumberKind = 'BE' | 'IOS'
+
+function detectNumberKind(value: string | null | undefined): NumberKind {
+  const normalized = (value ?? '').trim()
+  return normalized.startsWith('4') ? 'IOS' : 'BE'
+}
+
+function normalizeMaterialNumber(value: string | null | undefined, kind: NumberKind): string {
+  const digits = (value ?? '').replace(/\D/g, '')
+  if (!digits) return ''
+
+  // Keep the last 6 digits and enforce series prefix: 1xxxxxx for BE, 4xxxxxx for IOS.
+  const tail = digits.length > 6 ? digits.slice(-6) : digits.padStart(6, '0')
+  return `${kind === 'IOS' ? '4' : '1'}${tail}`
+}
+
 interface PreferredSupplierPickerProps {
   selectedCompanyId: string | null
   onSelect: (companyId: string | null) => void
@@ -197,6 +213,7 @@ export function MaterialFormDialog({
   const [hasParentParts, setHasParentParts] = useState((form.parentBeNumbers ?? []).length > 0)
   const [parentPartSearch, setParentPartSearch] = useState('')
   const [isSerialTracked, setIsSerialTracked] = useState(form.isSerialTracked ?? false)
+  const [numberKind, setNumberKind] = useState<NumberKind>(detectNumberKind(form.beNumber))
 
   // Sync form state when the dialogue opens or switches between materials.
   // The lint rule warns against sync setState in effects, but this is intentional:
@@ -210,8 +227,8 @@ export function MaterialFormDialog({
       setHasParentParts((nextForm.parentBeNumbers ?? []).length > 0)
       setParentPartSearch('')
       setIsSerialTracked(nextForm.isSerialTracked ?? false)
+      setNumberKind(detectNumberKind(nextForm.beNumber))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, material?.id])
 
   function update<K extends keyof MappedMaterial>(field: K, value: MappedMaterial[K]) {
@@ -376,21 +393,53 @@ export function MaterialFormDialog({
         <form
           onSubmit={e => {
             e.preventDefault()
-            onSave({...form, isParentPart: isParentPartEnabled})
+            onSave({
+              ...form,
+              beNumber: normalizeMaterialNumber(form.beNumber, numberKind),
+              isParentPart: isParentPartEnabled,
+            })
           }}
           className="flex flex-col gap-5">
+          {/* Number Type */}
+          <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">
+            <div className="flex flex-col">
+              <Label className="text-xs text-muted-foreground">Nummer type</Label>
+              <p className="text-xs text-muted-foreground">Schakel tussen BE en IOS.</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <span
+                className={`text-xs ${numberKind === 'BE' ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
+                BE
+              </span>
+              <Switch
+                checked={numberKind === 'IOS'}
+                onCheckedChange={checked => {
+                  const nextKind: NumberKind = checked ? 'IOS' : 'BE'
+                  setNumberKind(nextKind)
+                  const current = normalizeMaterialNumber(form.beNumber, nextKind)
+                  update('beNumber', current || (nextKind === 'IOS' ? '4000000' : '1000000'))
+                }}
+                aria-label="Nummer type IOS"
+              />
+              <span
+                className={`text-xs ${numberKind === 'IOS' ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
+                IOS
+              </span>
+            </div>
+          </div>
+
           {/* Be Number */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="beNumber" className="text-xs text-muted-foreground">
-              BE Number
+              {numberKind} Number
             </Label>
-            <p className="text-xs text-muted-foreground">Leave empty for automatic generation</p>
+            <p className="text-xs text-muted-foreground">Laat leeg voor automatische generatie</p>
             <Input
               id="beNumber"
               className={inputStyles}
               value={form.beNumber ?? ''}
               onChange={e => update('beNumber', e.target.value)}
-              placeholder="Leave empty = generate automatically"
+              placeholder={numberKind === 'IOS' ? 'bijv. 4000000' : 'bijv. 1000000'}
             />
           </div>
           <div className="flex items-center justify-between rounded-md border border-border bg-secondary/40 px-3 py-2">

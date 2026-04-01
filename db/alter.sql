@@ -875,3 +875,12 @@ ALTER TABLE MaterialSerialTrack
 ALTER TABLE MaterialSerialTrack
     ADD CONSTRAINT fk_materialSerialTrack_materialId
     FOREIGN KEY (`materialId`) REFERENCES Material (`id`) ON DELETE RESTRICT;
+
+-- Add beNumber and materialGroupId to MaterialSerialTrack
+ALTER TABLE MaterialSerialTrack
+  ADD COLUMN IF NOT EXISTS `beNumber` VARCHAR(255) AFTER `materialId`,
+  ADD COLUMN IF NOT EXISTS `materialGroupId` CHAR(36) NULL AFTER `beNumber`;
+
+ALTER TABLE MaterialSerialTrack
+  ADD CONSTRAINT fk_materialSerialTrack_materialGroupId
+  FOREIGN KEY (`materialGroupId`) REFERENCES MaterialGroup(`id`) ON DELETE SET NULL;

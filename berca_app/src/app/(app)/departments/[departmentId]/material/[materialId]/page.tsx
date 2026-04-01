@@ -26,7 +26,7 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
   if (!material) notFound()
 
   // Fetch serial tracked structure if serialTrackedId exists
-  const serialTrackedId = (material as any).MaterialSerialTrack?.id ?? null
+  const serialTrackedId = (material as any).MaterialSerialTrack?.[0]?.id ?? null
   const [serialTrackedStructure] = await Promise.all([
     serialTrackedId ? getSerialTrackedStructureBySerialTrackedId(serialTrackedId) : [],
   ])
@@ -107,7 +107,7 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
       noValidDate: inv.noValidDate.toISOString(),
     })),
     isSerialTracked: (material as any).isSerialTracked ?? false,
-    serialTrackedId: (material as any).MaterialSerialTrack?.id ?? null,
+    serialTrackedId: (material as any).MaterialSerialTrack?.[0]?.id ?? null,
     parentBeNumbers:
       (material as any).MaterialStructure_MaterialStructure_materialIdToMaterial?.map((x: any) => x.beNumber) ?? [],
     isParentPart: ((material as any).MaterialStructure_MaterialStructure_materialIdToMaterial?.length ?? 0) > 0,

@@ -1,4 +1,4 @@
-﻿USE app_db;
+USE BecraBV;
  
 -- ============================================================
 -- Idempotent migrations.
@@ -571,48 +571,20 @@ UPDATE Company SET officialName = name WHERE officialName IS NULL;
 ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
 
-ALTER TABLE MaterialSerialTrack
-DROP COLUMN beNumber;
+-- Keep beNumber for compatibility; skip destructive drop here.
+-- ALTER TABLE MaterialSerialTrack DROP COLUMN IF EXISTS beNumber;
 
 -- Add the materialId column (nullable)
 ALTER TABLE MaterialSerialTrack
-ADD COLUMN materialId CHAR(36) NULL;
+ADD COLUMN IF NOT EXISTS materialId CHAR(36) NULL;
 
--- Add an index for performance (optional but recommended)
--- CREATE INDEX idx_materialId ON MaterialSerialTrack(materialId);
-
--- Add the foreign key constraint
-ALTER TABLE MaterialSerialTrack
-ADD CONSTRAINT fk_material_serialtrack_materialId
-FOREIGN KEY (materialId) REFERENCES Material(id)
-ON DELETE SET NULL
-ON UPDATE RESTRICT;
+-- FK is standardized later in one canonical block to avoid conflicting names/actions.
 
 -- Add a serial tracked boolean to the materials
 ALTER TABLE Material
-ADD COLUMN isSerialTracked BOOLEAN NOT NULL DEFAULT 0;
+ADD COLUMN IF NOT EXISTS isSerialTracked BOOLEAN NOT NULL DEFAULT 0;
 
--- Removing materialgroupid from materialSerialTrack
-
--- Remove materialGroupId from MaterialSerialTrack safely
-SET @fk_name = (
-  SELECT CONSTRAINT_NAME
-  FROM information_schema.KEY_COLUMN_USAGE
-  WHERE TABLE_SCHEMA = DATABASE()
-    AND TABLE_NAME = 'MaterialSerialTrack'
-    AND COLUMN_NAME = 'materialGroupId'
-    AND REFERENCED_TABLE_NAME IS NOT NULL
-  LIMIT 1
-);
-SET @sql = IF(@fk_name IS NOT NULL,
-  CONCAT('ALTER TABLE MaterialSerialTrack DROP FOREIGN KEY `', @fk_name, '`'),
-  'SELECT ''No FK to drop on MaterialSerialTrack.materialGroupId'''
-);
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-ALTER TABLE MaterialSerialTrack DROP COLUMN IF EXISTS materialGroupId;
-
+-- Keep materialGroupId on MaterialSerialTrack; do not drop it in this earlier block.
 -- Remove materialGroupId from MaterialSerialTrackedStructure safely
 SET @fk_name2 = (
   SELECT CONSTRAINT_NAME
@@ -867,10 +839,16 @@ ALTER TABLE Material
 ADD COLUMN IF NOT EXISTS `isSerialTracked` BOOLEAN NOT NULL DEFAULT 0;
 
 ALTER TABLE MaterialSerialTrack
-    ADD COLUMN IF NOT EXISTS `materialId` CHAR(36) NOT NULL;
+    ADD COLUMN IF NOT EXISTS `materialId` CHAR(36) NULL;
+
+ALTER TABLE MaterialSerialTrack
+    MODIFY COLUMN IF EXISTS `materialId` CHAR(36) NULL;
 
 ALTER TABLE MaterialSerialTrack
     DROP FOREIGN KEY IF EXISTS fk_materialSerialTrack_materialId;
+
+ALTER TABLE MaterialSerialTrack
+    DROP FOREIGN KEY IF EXISTS fk_material_serialtrack_materialId;
 
 ALTER TABLE MaterialSerialTrack
     ADD CONSTRAINT fk_materialSerialTrack_materialId
@@ -880,6 +858,9 @@ ALTER TABLE MaterialSerialTrack
 ALTER TABLE MaterialSerialTrack
   ADD COLUMN IF NOT EXISTS `beNumber` VARCHAR(255) AFTER `materialId`,
   ADD COLUMN IF NOT EXISTS `materialGroupId` CHAR(36) NULL AFTER `beNumber`;
+
+ALTER TABLE MaterialSerialTrack
+  DROP FOREIGN KEY IF EXISTS fk_materialSerialTrack_materialGroupId;
 
 ALTER TABLE MaterialSerialTrack
   ADD CONSTRAINT fk_materialSerialTrack_materialGroupId

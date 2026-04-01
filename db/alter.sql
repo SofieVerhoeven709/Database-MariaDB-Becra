@@ -478,6 +478,8 @@ CREATE TABLE
             outstanding BOOLEAN NOT NULL DEFAULT 1,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedBy CHAR(36),
+            createdBy CHAR(36) NOT NULL,
+            modifiedBy CHAR(36),
             invoiceTypeId CHAR(36) NOT NULL,
             targetId CHAR(36) NOT NULL,
             paymentMethodId CHAR(36) NOT NULL,
@@ -595,9 +597,6 @@ PREPARE stmt2 FROM @sql2;
 EXECUTE stmt2;
 DEALLOCATE PREPARE stmt2;
 ALTER TABLE MaterialSerialTrackedStructure DROP COLUMN IF EXISTS materialGroupId;
-
--- 43a. Project: add priceListId column
-ALTER TABLE Project ADD COLUMN IF NOT EXISTS `priceListId` CHAR(36) NULL;
 
 -- 43b. Project: add FK fk_project_pricelist (skip if already exists)
 ALTER TABLE Project DROP FOREIGN KEY IF EXISTS fk_project_pricelist;

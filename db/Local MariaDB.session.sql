@@ -1,5 +1,6 @@
-CREATE DATABASE BecraBV;
-USE BecraBV;
+DROP DATABASE app_db;
+CREATE DATABASE app_db;
+USE app_db;
 CREATE TABLE
       IF NOT EXISTS Role (
             id CHAR(36) NOT NULL PRIMARY KEY,
@@ -180,6 +181,7 @@ CREATE TABLE
             documentationPlace VARCHAR(255),
             bePartDoc VARCHAR(255) NULL,
             rejected BOOLEAN DEFAULT FALSE,
+            isSerialTracked BOOLEAN NOT NULL DEFAULT 0,
             materialGroupIdA CHAR(36) NULL,
             materialGroupIdB CHAR(36) NULL,
             materialGroupIdC CHAR(36) NULL,
@@ -1420,6 +1422,7 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS MaterialSerialTrack (
             id CHAR(36) NOT NULL PRIMARY KEY,
+            materialId CHAR(36) NULL,
             beNumber VARCHAR(255),
             brandName VARCHAR(255),
             management VARCHAR(255),
@@ -1440,9 +1443,10 @@ CREATE TABLE
             becraCode VARCHAR(255),
             createdBy CHAR(36),
             FOREIGN KEY (companyId) REFERENCES Company (id) ON DELETE RESTRICT,
-            FOREIGN KEY (materialGroupId) REFERENCES MaterialGroup (id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialGroupId) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
             FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),

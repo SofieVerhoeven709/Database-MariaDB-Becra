@@ -14,13 +14,12 @@ import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
-
 interface PageProps {
-  params: { departmentId: string }
+  params: Promise<{departmentId: string}>
 }
 
 export default async function InvoicesOutPage({params}: PageProps) {
-  const { departmentId } = params
+  const {departmentId} = await params
 
   const [
     department,
@@ -51,23 +50,25 @@ export default async function InvoicesOutPage({params}: PageProps) {
   // Deep fix: Ensure all beNumber fields are strings for WorkOrderStructure.Material
   const invoicesRawFixed = invoicesRaw.map(inv => ({
     ...inv,
-    WorkOrderInvoice: inv.WorkOrderInvoice?.map(wi => ({
-      ...wi,
-      WorkOrder: wi.WorkOrder && Array.isArray(wi.WorkOrder.WorkOrderStructure)
-        ? {
-            ...wi.WorkOrder,
-            WorkOrderStructure: wi.WorkOrder.WorkOrderStructure.map(wos => ({
-              ...wos,
-              Material: wos.Material
-                ? {
-                    ...wos.Material,
-                    beNumber: typeof wos.Material.beNumber === 'string' ? wos.Material.beNumber : '',
-                  }
-                : wos.Material,
-            })),
-          }
-        : wi.WorkOrder,
-    })) ?? [],
+    WorkOrderInvoice:
+      inv.WorkOrderInvoice?.map(wi => ({
+        ...wi,
+        WorkOrder:
+          wi.WorkOrder && Array.isArray(wi.WorkOrder.WorkOrderStructure)
+            ? {
+                ...wi.WorkOrder,
+                WorkOrderStructure: wi.WorkOrder.WorkOrderStructure.map(wos => ({
+                  ...wos,
+                  Material: wos.Material
+                    ? {
+                        ...wos.Material,
+                        beNumber: typeof wos.Material.beNumber === 'string' ? wos.Material.beNumber : '',
+                      }
+                    : wos.Material,
+                })),
+              }
+            : wi.WorkOrder,
+      })) ?? [],
   }))
 
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)

@@ -33,6 +33,7 @@ type MaterialSerialTrackedFormValue = {
   additionalInfo: string | null
   projectId: string | null
   becraCode: string | null
+  warehousePlaceId: string | null
 }
 
 interface MaterialSerialTrackedFormDialogProps {
@@ -42,6 +43,7 @@ interface MaterialSerialTrackedFormDialogProps {
   companyOptions: {id: string; name: string}[]
   projectOptions: {id: string; name: string}[]
   materialGroupOptions: {id: string; name: string}[]
+  warehousePlaceOptions: {id: string; label: string}[]
   materialOptions: {
     id: string
     beNumber: string
@@ -75,6 +77,7 @@ type FormState = {
   additionalInfo: string
   projectId: string
   becraCode: string
+  warehousePlaceId: string
 }
 
 const emptyForm: FormState = {
@@ -96,6 +99,7 @@ const emptyForm: FormState = {
   additionalInfo: '',
   projectId: '',
   becraCode: '',
+  warehousePlaceId: '',
 }
 
 function toFormState(item: MaterialSerialTrackedFormValue | null): FormState {
@@ -121,6 +125,7 @@ function toFormState(item: MaterialSerialTrackedFormValue | null): FormState {
     additionalInfo: item.additionalInfo ?? '',
     projectId: item.projectId ?? '',
     becraCode: item.becraCode ?? '',
+    warehousePlaceId: item.warehousePlaceId ?? (item as any).WarehousePlace?.[0]?.id ?? '',
   }
 }
 
@@ -137,6 +142,7 @@ export function MaterialSerialTrackedFormDialog({
   materialSerialTracked,
   companyOptions,
   materialGroupOptions,
+  warehousePlaceOptions,
   materialOptions,
 }: MaterialSerialTrackedFormDialogProps) {
   //const router = useRouter()
@@ -205,6 +211,7 @@ export function MaterialSerialTrackedFormDialog({
             additionalInfo: form.additionalInfo,
             projectId: form.projectId,
             becraCode: form.becraCode,
+            warehousePlaceId: form.warehousePlaceId || null,
           })
         } else {
           await createMaterialSerialTrackedAction({
@@ -226,6 +233,7 @@ export function MaterialSerialTrackedFormDialog({
             additionalInfo: form.additionalInfo,
             projectId: form.projectId,
             becraCode: form.becraCode,
+            warehousePlaceId: form.warehousePlaceId || null,
           })
         }
         onOpenChange(false)
@@ -360,6 +368,25 @@ export function MaterialSerialTrackedFormDialog({
                   {materialGroupOptions.map(option => (
                     <SelectItem key={option.id} value={option.id}>
                       {option.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Stock Location</Label>
+              <Select
+                value={form.warehousePlaceId || '__none__'}
+                onValueChange={value => setField('warehousePlaceId', value === '__none__' ? '' : value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select stock location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__none__">No location</SelectItem>
+                  {warehousePlaceOptions.map(option => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.label}
                     </SelectItem>
                   ))}
                 </SelectContent>

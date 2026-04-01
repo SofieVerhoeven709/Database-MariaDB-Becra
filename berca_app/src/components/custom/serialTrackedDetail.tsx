@@ -13,12 +13,13 @@ interface Props {
   companies: {id: string; name: string}[]
   projects: {id: string; name: string}[]
   materialGroups: {id: string; name: string}[]
+  warehousePlaces: {id: string; label: string}[]
   materialOptions: any[] // Add this line
   currentUserRole: string
   currentUserLevel: number
 }
 
-export function MaterialSerialTrackedDetail({item, companies, projects, materialGroups, materialOptions, currentUserRole, currentUserLevel}: Props) {
+export function MaterialSerialTrackedDetail({item, companies, projects, materialGroups, warehousePlaces, materialOptions, currentUserRole, currentUserLevel}: Props) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [structure, setStructure] = useState<any[]>([])
   useEffect(() => {
@@ -66,6 +67,23 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
             <Field label="Management" value={item.management} />
             <Field label="Order Number" value={item.orderNumber} />
             <Field label="Transaction Type" value={item.transactionType} />
+            <Field
+              label="Stock Location"
+              value={
+                item.WarehousePlace?.[0]
+                  ? [
+                      item.WarehousePlace[0].abbreviation,
+                      item.WarehousePlace[0].place,
+                      item.WarehousePlace[0].shelf,
+                      item.WarehousePlace[0].column,
+                      item.WarehousePlace[0].layer,
+                      item.WarehousePlace[0].layerPlace,
+                    ]
+                      .filter(Boolean)
+                      .join(' / ')
+                  : null
+              }
+            />
             <Field label="From Location" value={item.fromLocation} />
             <Field label="To Location" value={item.toLocation} />
             <Field label="Preferred Supplier" value={item.preferredSupplier} />
@@ -134,6 +152,7 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
         companyOptions={companies}
         projectOptions={projects}
         materialGroupOptions={materialGroups}
+        warehousePlaceOptions={warehousePlaces}
         materialOptions={materialOptions} // Pass the prop
         departmentId={item.departmentId}
       />

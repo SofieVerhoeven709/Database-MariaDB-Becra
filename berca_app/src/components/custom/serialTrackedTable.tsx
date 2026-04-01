@@ -51,6 +51,8 @@ export type MappedMaterialSerialTracked = {
   additionalInfo: string | null
   projectId: string | null
   becraCode: string | null
+  warehousePlaceId: string | null
+  warehousePlaceLabel: string | null
   createdBy: string | null
   createdByName: string | null
   deleted: boolean
@@ -108,6 +110,7 @@ interface SerialTrackedTableProps {
   companyOptions: {id: string; name: string}[]
   projectOptions: {id: string; name: string}[]
   materialGroupOptions: {id: string; name: string}[]
+  warehousePlaceOptions: {id: string; label: string}[]
   departmentId: string
   materialOptions: {
     id: string
@@ -128,6 +131,7 @@ export function SerialTrackedTable({
   companyOptions,
   projectOptions,
   materialGroupOptions,
+  warehousePlaceOptions,
   departmentId,
   materialOptions,
 }: SerialTrackedTableProps) {
@@ -180,7 +184,8 @@ export function SerialTrackedTable({
         item.createdByName?.toLowerCase().includes(q) ||
         (item.companyId ? companyMap.get(item.companyId)?.toLowerCase().includes(q) : false) ||
         (item.projectId ? projectMap.get(item.projectId)?.toLowerCase().includes(q) : false) ||
-        (item.materialGroupId ? materialGroupMap.get(item.materialGroupId)?.toLowerCase().includes(q) : false)
+        (item.materialGroupId ? materialGroupMap.get(item.materialGroupId)?.toLowerCase().includes(q) : false) ||
+        item.warehousePlaceLabel?.toLowerCase().includes(q)
       )
     })
     .sort((a, b) => {
@@ -239,7 +244,7 @@ export function SerialTrackedTable({
   }
 
   const showDeletedCols = filterDeleted !== 'not-deleted'
-  const colCount = showDeletedCols ? 16 : 13
+  const colCount = showDeletedCols ? 17 : 14
 
   return (
     <div className="flex flex-col gap-6">
@@ -311,6 +316,7 @@ export function SerialTrackedTable({
               <TableHead className="whitespace-nowrap text-xs">Company</TableHead>
               <TableHead className="whitespace-nowrap text-xs">Material Group</TableHead>
               <TableHead className="whitespace-nowrap text-xs">Project</TableHead>
+              <TableHead className="whitespace-nowrap text-xs">Stock Location</TableHead>
               <Th field="fromLocation" label="From" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="toLocation" label="To" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="rejected" label="Rejected" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
@@ -367,6 +373,7 @@ export function SerialTrackedTable({
                   <TableCell className={tdClass}>
                     {item.projectId ? (projectMap.get(item.projectId) ?? '-') : '-'}
                   </TableCell>
+                  <TableCell className={tdClass}>{item.warehousePlaceLabel ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{item.fromLocation ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{item.toLocation ?? '-'}</TableCell>
 
@@ -473,6 +480,7 @@ export function SerialTrackedTable({
         companyOptions={companyOptions}
         projectOptions={projectOptions}
         materialGroupOptions={materialGroupOptions}
+        warehousePlaceOptions={warehousePlaceOptions}
         materialOptions={materialOptions}
         departmentId={departmentId}
       />

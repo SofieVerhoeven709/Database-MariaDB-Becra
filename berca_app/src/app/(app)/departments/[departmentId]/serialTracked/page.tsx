@@ -3,6 +3,7 @@ import {getSerialTracked} from '@/dal/materialSerialTracked'
 import {getProjects} from '@/dal/projects'
 import {getCompanies} from '@/dal/companies'
 import {getMaterialGroups, getMaterials} from '@/dal/materials'
+import {getWarehousePlaces} from '@/dal/warehousePlace'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
@@ -25,6 +26,7 @@ export default async function SerialTrackedPage({params}: PageProps) {
     projectsFromDAL,
     materialGroupsFromDAL,
     materialsFromDAL,
+    warehousePlacesFromDAL,
     profile,
   ] = await Promise.all([
     getDepartmentById(departmentId),
@@ -33,6 +35,7 @@ export default async function SerialTrackedPage({params}: PageProps) {
     getProjects(),
     getMaterialGroups(),
     getMaterials(),
+    getWarehousePlaces(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
@@ -65,6 +68,13 @@ export default async function SerialTrackedPage({params}: PageProps) {
   const materialGroupOptions = materialGroupsFromDAL.map(mg => ({
     id: mg.id,
     name: [mg.groupA, mg.groupB, mg.groupC, mg.groupD].filter(Boolean).join(' / '),
+  }))
+
+  const warehousePlaceOptions = warehousePlacesFromDAL.map(place => ({
+    id: place.id,
+    label: [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
+      .filter(Boolean)
+      .join(' / '),
   }))
 
   // Map materials to the shape expected by materialOptions, only include global materialGroupId
@@ -111,6 +121,7 @@ export default async function SerialTrackedPage({params}: PageProps) {
               companyOptions={companyOptions}
               projectOptions={projectOptions}
               materialGroupOptions={materialGroupOptions}
+              warehousePlaceOptions={warehousePlaceOptions}
               currentUserRole={currentUserRole}
               currentUserLevel={currentUserLevel}
               departmentId={departmentId}

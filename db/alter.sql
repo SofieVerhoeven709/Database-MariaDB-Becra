@@ -577,7 +577,7 @@ ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
 -- Add the materialId column (nullable)
 ALTER TABLE MaterialSerialTrack
-ADD COLUMN materialId CHAR(36) NULL;
+ADD COLUMN IF NOT EXISTS materialId CHAR(36) NULL;
 
 -- Add an index for performance (optional but recommended)
 -- CREATE INDEX idx_materialId ON MaterialSerialTrack(materialId);

@@ -901,6 +901,7 @@ model InvoiceOut {
   invoiceSentTypeId                        String              @db.Char(36)
   invoiceStatusId                          String              @db.Char(36)
   vatMarginId                              String              @db.Char(36)
+  priceListId                              String?             @db.Char(36)
   InvoiceType                              InvoiceType         @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_1")
   PriceList                                PriceList?          @relation(fields: [priceListId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOut_ibfk_10")
   Employee                                 Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_2")
@@ -2449,15 +2450,4 @@ model DocumentStructureTarget {
 
   @@index([documentStructureId], map: "documentStructureId")
   @@index([targetId], map: "targetId")
-}
-
-model PriceListCompany {
-  id          String    @id @db.Char(36)
-  priceListId String    @db.Char(36)
-  companyId   String    @db.Char(36)
-  Company     Company   @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "PriceListCompany_ibfk_1")
-  PriceList   PriceList @relation(fields: [priceListId], references: [id], onUpdate: Restrict, map: "PriceListCompany_ibfk_2")
-
-  @@index([companyId], map: "companyId")
-  @@index([priceListId], map: "priceListId")
 }

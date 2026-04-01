@@ -10,7 +10,87 @@ interface MaterialPlaceFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   item: MappedMaterialPlace | null
+  materials: {id: string; beNumber: string; name: string | null; shortDescription: string}[]
   onSave: (item: Partial<MappedMaterialPlace> & {id: string}) => Promise<void>
+}
+
+interface MaterialNumberPickerProps {
+  selectedBeNumber: string
+  materials: {id: string; beNumber: string; name: string | null; shortDescription: string}[]
+  inputStyles: string
+  onSelect: (beNumber: string) => void
+}
+
+function MaterialNumberPicker({selectedBeNumber, materials, inputStyles, onSelect}: MaterialNumberPickerProps) {
+  const [search, setSearch] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
+
+  const selectedMaterial = materials.find(m => m.beNumber === selectedBeNumber)
+
+  const filtered = materials.filter(m => {
+    const q = search.toLowerCase().trim()
+    if (!q) return true
+    return (
+      m.beNumber.toLowerCase().includes(q) ||
+      (m.name ?? '').toLowerCase().includes(q) ||
+      m.shortDescription.toLowerCase().includes(q)
+    )
+  })
+
+  const displayValue = isFocused
+    ? search
+    : search || (selectedMaterial ? `${selectedMaterial.beNumber} - ${selectedMaterial.name ?? selectedMaterial.shortDescription}` : selectedBeNumber)
+
+  return (
+    <div className="relative">
+      <Input
+        className={inputStyles}
+        placeholder="Type materiaalnummer of naam..."
+        value={displayValue}
+        onChange={e => {
+          setSearch(e.target.value)
+          setIsOpen(true)
+        }}
+        onFocus={() => {
+          setIsFocused(true)
+          setIsOpen(true)
+        }}
+        onBlur={() => {
+          setIsFocused(false)
+          setTimeout(() => setIsOpen(false), 150)
+        }}
+      />
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 mt-1 z-50 max-h-56 overflow-y-auto rounded-md border border-border bg-secondary">
+          <div
+            className="cursor-pointer border-b border-border px-2 py-1.5 text-sm text-muted-foreground hover:bg-secondary/80"
+            onClick={() => {
+              onSelect('')
+              setSearch('')
+              setIsOpen(false)
+              setIsFocused(false)
+            }}>
+            Geen materiaal
+          </div>
+          {filtered.map(m => (
+            <div
+              key={m.id}
+              className={`cursor-pointer px-2 py-1.5 text-sm hover:bg-secondary/80 ${selectedBeNumber === m.beNumber ? 'bg-secondary/80 font-semibold' : ''}`}
+              onClick={() => {
+                onSelect(m.beNumber)
+                setSearch('')
+                setIsOpen(false)
+                setIsFocused(false)
+              }}>
+              {m.beNumber} - {m.name ?? m.shortDescription}
+            </div>
+          ))}
+          {filtered.length === 0 && <div className="px-2 py-1.5 text-xs text-muted-foreground">Geen materiaal gevonden</div>}
+        </div>
+      )}
+    </div>
+  )
 }
 
 const inputStyles = 'bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent'
@@ -29,7 +109,7 @@ const EMPTY: Partial<MappedMaterialPlace> & {id: string} = {
   quantityInStock: 0,
 }
 
-export function MaterialPlaceFormDialog({open, onOpenChange, item, onSave}: MaterialPlaceFormDialogProps) {
+export function MaterialPlaceFormDialog({open, onOpenChange, item, materials, onSave}: MaterialPlaceFormDialogProps) {
   const isEditing = item !== null
   const makeForm = (): Partial<MappedMaterialPlace> & {id: string} =>
     item ? {...item} : {...EMPTY, id: crypto.randomUUID()}
@@ -66,9 +146,9 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, onSave}: Mate
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-card border-border max-w-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-foreground">{isEditing ? 'Edit Material Place' : 'New Material Place'}</DialogTitle>
+          <DialogTitle className="text-foreground">{isEditing ? 'Edit Warehouse Place' : 'New Warehouse Place'}</DialogTitle>
           <DialogDescription>
-            {isEditing ? `Editing place: ${item.abbreviation ?? item.id}` : 'Register a new material storage location.'}
+            {isEditing ? `Editing place: ${item.abbreviation ?? item.id}` : 'Register a new warehouse storage location.'}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -88,14 +168,13 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, onSave}: Mate
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="mp-beNumber" className="text-xs text-muted-foreground">
-                BE Number
+                Material Number (BE/IOS)
               </Label>
-              <Input
-                id="mp-beNumber"
-                className={inputStyles}
-                value={form.beNumber ?? ''}
-                onChange={e => update('beNumber', e.target.value)}
-                placeholder="e.g. 1000943"
+              <MaterialNumberPicker
+                selectedBeNumber={form.beNumber ?? ''}
+                materials={materials}
+                inputStyles={inputStyles}
+                onSelect={beNumber => update('beNumber', beNumber)}
               />
             </div>
           </div>
@@ -202,7 +281,7 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, onSave}: Mate
                 Cancel
               </Button>
               <Button type="submit" disabled={saving}>
-                {saving ? 'Saving...' : isEditing ? 'Save changes' : 'Create material place'}
+                {saving ? 'Saving...' : isEditing ? 'Save changes' : 'Create warehouse place'}
               </Button>
             </div>
           </DialogFooter>

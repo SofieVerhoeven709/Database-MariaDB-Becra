@@ -51,6 +51,17 @@ export const createMaterialSerialTrackedAction = protectedServerFunction({
       throw new Error('Er bestaat al een serial tracked record voor dit materiaal.')
     }
 
+    if (data.warehousePlaceId) {
+      const warehousePlace = await prismaClient.warehousePlace.findUnique({
+        where: {id: data.warehousePlaceId},
+        select: {id: true, deleted: true},
+      })
+
+      if (!warehousePlace || warehousePlace.deleted) {
+        throw new Error('Geselecteerde stockplaats bestaat niet of is verwijderd.')
+      }
+    }
+
     const payload = {
       ...data,
       id: data.id || randomUUID(),
@@ -72,6 +83,17 @@ export const updateMaterialSerialTrackedAction = protectedServerFunction({
   functionName: 'Update serial tracked item',
   serverFn: async ({data, logger}) => {
     const {id, ...rest} = data
+
+    if (rest.warehousePlaceId) {
+      const warehousePlace = await prismaClient.warehousePlace.findUnique({
+        where: {id: rest.warehousePlaceId},
+        select: {id: true, deleted: true},
+      })
+
+      if (!warehousePlace || warehousePlace.deleted) {
+        throw new Error('Geselecteerde stockplaats bestaat niet of is verwijderd.')
+      }
+    }
 
     const item = await updateSerialTracked(id, rest)
 

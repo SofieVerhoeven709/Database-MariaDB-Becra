@@ -472,23 +472,3 @@ export type DocumentGroupD = Prisma.DocumentGroupDModel
  * 
  */
 export type PriceListCompany = Prisma.PriceListCompanyModel
-/**
- * Model DocumentGroup
- * 
- */
-export type DocumentGroup = Prisma.DocumentGroupModel
-/**
- * Model DocumentRevision
- * 
- */
-export type DocumentRevision = Prisma.DocumentRevisionModel
-/**
- * Model DocumentStatus
- * 
- */
-export type DocumentStatus = Prisma.DocumentStatusModel
-/**
- * Model DocumentStructureTarget
- * 
- */
-export type DocumentStructureTarget = Prisma.DocumentStructureTargetModel

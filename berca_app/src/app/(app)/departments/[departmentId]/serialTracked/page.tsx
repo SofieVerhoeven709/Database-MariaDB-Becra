@@ -3,6 +3,7 @@ import {getSerialTracked} from '@/dal/materialSerialTracked'
 import {getProjects} from '@/dal/projects'
 import {getCompanies} from '@/dal/companies'
 import {getMaterialGroups, getMaterials} from '@/dal/materials'
+import {getWarehousePlaces} from '@/dal/warehousePlace'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
@@ -25,6 +26,7 @@ export default async function SerialTrackedPage({params}: PageProps) {
     projectsFromDAL,
     materialGroupsFromDAL,
     materialsFromDAL,
+    warehousePlacesFromDAL,
     profile,
   ] = await Promise.all([
     getDepartmentById(departmentId),
@@ -33,6 +35,7 @@ export default async function SerialTrackedPage({params}: PageProps) {
     getProjects(),
     getMaterialGroups(),
     getMaterials(),
+    getWarehousePlaces(),
     getSessionProfileFromCookieOrThrow(),
   ])
 
@@ -47,10 +50,6 @@ export default async function SerialTrackedPage({params}: PageProps) {
     materialGroupIdC: item.materialGroupIdC ?? '',
     materialGroupIdD: item.materialGroupIdD ?? '',
   }))
-
-  // DEBUG: Log the number of items fetched and show the first few
-  console.log('serialTrackedFromDAL count:', serialTrackedFromDAL.length, serialTrackedFromDAL.slice(0, 3))
-  console.log('serialTracked mapped count:', serialTracked.length, serialTracked.slice(0, 3))
 
   const companyOptions = companiesFromDAL.map(c => ({
     id: c.id,
@@ -67,6 +66,13 @@ export default async function SerialTrackedPage({params}: PageProps) {
     name: [mg.groupA, mg.groupB, mg.groupC, mg.groupD].filter(Boolean).join(' / '),
   }))
 
+  const warehousePlaceOptions = warehousePlacesFromDAL.map(place => ({
+    id: place.id,
+    label: [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
+      .filter(Boolean)
+      .join(' / '),
+  }))
+
   // Map materials to the shape expected by materialOptions, only include global materialGroupId
   const materialOptions = materialsFromDAL.map((m: any) => ({
     id: m.id,
@@ -79,9 +85,6 @@ export default async function SerialTrackedPage({params}: PageProps) {
     materialGroupId: m.materialGroupIdA ?? '', // Use materialGroupIdA
   }))
 
-  // DEBUG: Show first few serialTrackedFromDAL and serialTracked entries to diagnose why the table is empty
-  const debugSerialTrackedFromDAL = serialTrackedFromDAL.slice(0, 3)
-  const debugSerialTracked = serialTracked.slice(0, 3)
 
   // Fetch all serial tracked structures for all serialTracked items in this department
   // (Assuming serialTracked contains all items for this department)
@@ -111,6 +114,7 @@ export default async function SerialTrackedPage({params}: PageProps) {
               companyOptions={companyOptions}
               projectOptions={projectOptions}
               materialGroupOptions={materialGroupOptions}
+              warehousePlaceOptions={warehousePlaceOptions}
               currentUserRole={currentUserRole}
               currentUserLevel={currentUserLevel}
               departmentId={departmentId}

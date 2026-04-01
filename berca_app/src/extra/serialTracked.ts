@@ -21,10 +21,23 @@ type SerialTrackedFromDAL = Prisma.MaterialSerialTrackGetPayload<{
         id: true
       }
     }
+    WarehousePlace: {
+      select: {
+        id: true
+        abbreviation: true
+        place: true
+        shelf: true
+        column: true
+        layer: true
+        layerPlace: true
+      }
+    }
   }
 }>
 
 export function mapMaterialSerialTracked(item: SerialTrackedFromDAL): MappedMaterialSerialTracked {
+  const warehousePlace = item.WarehousePlace?.[0] ?? null
+
   return {
     id: item.id,
     beNumber: item.beNumber ?? item.material?.beNumber ?? null,
@@ -49,5 +62,11 @@ export function mapMaterialSerialTracked(item: SerialTrackedFromDAL): MappedMate
     deleted: item.deleted,
     deletedAt: item.deletedAt ? item.deletedAt.toISOString() : null,
     deletedByName: null,
+    warehousePlaceId: warehousePlace?.id ?? null,
+    warehousePlaceLabel: warehousePlace
+      ? [warehousePlace.abbreviation, warehousePlace.place, warehousePlace.shelf, warehousePlace.column, warehousePlace.layer, warehousePlace.layerPlace]
+          .filter(Boolean)
+          .join(' / ')
+      : null,
   }
 }

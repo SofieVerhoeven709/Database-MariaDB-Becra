@@ -5,7 +5,7 @@ import {createMaterialPlace, updateMaterialPlace, softDeleteMaterialPlace} from 
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {createMaterialPlaceSchema, updateMaterialPlaceSchema, deleteMaterialPlaceSchema} from '@/schemas/materialPlaceSchemas'
 
-const REVALIDATE = '/departments/warehouse/materialPlace'
+const REVALIDATE = '/departments/[departmentId]/materialPlace'
 
 export const createMaterialPlaceAction = protectedServerFunction({
   schema: createMaterialPlaceSchema,
@@ -19,7 +19,7 @@ export const createMaterialPlaceAction = protectedServerFunction({
       createdBy: profile.id,
     })
     logger.info(`MaterialPlace created: ${item.id}`)
-    revalidatePath(REVALIDATE)
+    revalidatePath(REVALIDATE, 'page')
   },
 })
 
@@ -33,7 +33,7 @@ export const updateMaterialPlaceAction = protectedServerFunction({
       quantityInStock: rest.quantityInStock != null ? Number(rest.quantityInStock) : undefined,
     })
     logger.info(`MaterialPlace updated: ${item.id}`)
-    revalidatePath(REVALIDATE)
+    revalidatePath(REVALIDATE, 'page')
   },
 })
 
@@ -43,7 +43,7 @@ export const deleteMaterialPlaceAction = protectedServerFunction({
   serverFn: async ({data, profile, logger}) => {
     await softDeleteMaterialPlace(data.id, profile.id)
     logger.info(`MaterialPlace soft-deleted: ${data.id}`)
-    revalidatePath(REVALIDATE)
+    revalidatePath(REVALIDATE, 'page')
   },
 })
 

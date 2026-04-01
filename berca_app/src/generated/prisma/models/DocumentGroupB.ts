@@ -26,6 +26,7 @@ export type AggregateDocumentGroupB = {
 
 export type DocumentGroupBMinAggregateOutputType = {
   id: string | null
+  documentGroupAId: string | null
   name: string | null
   createdBy: string | null
   createdAt: Date | null
@@ -36,6 +37,7 @@ export type DocumentGroupBMinAggregateOutputType = {
 
 export type DocumentGroupBMaxAggregateOutputType = {
   id: string | null
+  documentGroupAId: string | null
   name: string | null
   createdBy: string | null
   createdAt: Date | null
@@ -46,6 +48,7 @@ export type DocumentGroupBMaxAggregateOutputType = {
 
 export type DocumentGroupBCountAggregateOutputType = {
   id: number
+  documentGroupAId: number
   name: number
   createdBy: number
   createdAt: number
@@ -58,6 +61,7 @@ export type DocumentGroupBCountAggregateOutputType = {
 
 export type DocumentGroupBMinAggregateInputType = {
   id?: true
+  documentGroupAId?: true
   name?: true
   createdBy?: true
   createdAt?: true
@@ -68,6 +72,7 @@ export type DocumentGroupBMinAggregateInputType = {
 
 export type DocumentGroupBMaxAggregateInputType = {
   id?: true
+  documentGroupAId?: true
   name?: true
   createdBy?: true
   createdAt?: true
@@ -78,6 +83,7 @@ export type DocumentGroupBMaxAggregateInputType = {
 
 export type DocumentGroupBCountAggregateInputType = {
   id?: true
+  documentGroupAId?: true
   name?: true
   createdBy?: true
   createdAt?: true
@@ -161,6 +167,7 @@ export type DocumentGroupBGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 
 export type DocumentGroupBGroupByOutputType = {
   id: string
+  documentGroupAId: string
   name: string | null
   createdBy: string
   createdAt: Date
@@ -192,28 +199,34 @@ export type DocumentGroupBWhereInput = {
   OR?: Prisma.DocumentGroupBWhereInput[]
   NOT?: Prisma.DocumentGroupBWhereInput | Prisma.DocumentGroupBWhereInput[]
   id?: Prisma.StringFilter<"DocumentGroupB"> | string
+  documentGroupAId?: Prisma.StringFilter<"DocumentGroupB"> | string
   name?: Prisma.StringNullableFilter<"DocumentGroupB"> | string | null
   createdBy?: Prisma.StringFilter<"DocumentGroupB"> | string
   createdAt?: Prisma.DateTimeFilter<"DocumentGroupB"> | Date | string
   deleted?: Prisma.BoolFilter<"DocumentGroupB"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"DocumentGroupB"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"DocumentGroupB"> | string | null
-  DocumentGroup?: Prisma.DocumentGroupListRelationFilter
   Employee_DocumentGroupB_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_DocumentGroupB_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  DocumentGroupA?: Prisma.XOR<Prisma.DocumentGroupAScalarRelationFilter, Prisma.DocumentGroupAWhereInput>
+  DocumentGroupC?: Prisma.DocumentGroupCListRelationFilter
+  DocumentStructure?: Prisma.DocumentStructureListRelationFilter
 }
 
 export type DocumentGroupBOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  documentGroupAId?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  DocumentGroup?: Prisma.DocumentGroupOrderByRelationAggregateInput
   Employee_DocumentGroupB_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_DocumentGroupB_createdByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
+  DocumentGroupA?: Prisma.DocumentGroupAOrderByWithRelationInput
+  DocumentGroupC?: Prisma.DocumentGroupCOrderByRelationAggregateInput
+  DocumentStructure?: Prisma.DocumentStructureOrderByRelationAggregateInput
   _relevance?: Prisma.DocumentGroupBOrderByRelevanceInput
 }
 
@@ -222,19 +235,23 @@ export type DocumentGroupBWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.DocumentGroupBWhereInput | Prisma.DocumentGroupBWhereInput[]
   OR?: Prisma.DocumentGroupBWhereInput[]
   NOT?: Prisma.DocumentGroupBWhereInput | Prisma.DocumentGroupBWhereInput[]
+  documentGroupAId?: Prisma.StringFilter<"DocumentGroupB"> | string
   name?: Prisma.StringNullableFilter<"DocumentGroupB"> | string | null
   createdBy?: Prisma.StringFilter<"DocumentGroupB"> | string
   createdAt?: Prisma.DateTimeFilter<"DocumentGroupB"> | Date | string
   deleted?: Prisma.BoolFilter<"DocumentGroupB"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"DocumentGroupB"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"DocumentGroupB"> | string | null
-  DocumentGroup?: Prisma.DocumentGroupListRelationFilter
   Employee_DocumentGroupB_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_DocumentGroupB_createdByToEmployee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
+  DocumentGroupA?: Prisma.XOR<Prisma.DocumentGroupAScalarRelationFilter, Prisma.DocumentGroupAWhereInput>
+  DocumentGroupC?: Prisma.DocumentGroupCListRelationFilter
+  DocumentStructure?: Prisma.DocumentStructureListRelationFilter
 }, "id">
 
 export type DocumentGroupBOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  documentGroupAId?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -251,6 +268,7 @@ export type DocumentGroupBScalarWhereWithAggregatesInput = {
   OR?: Prisma.DocumentGroupBScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DocumentGroupBScalarWhereWithAggregatesInput | Prisma.DocumentGroupBScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"DocumentGroupB"> | string
+  documentGroupAId?: Prisma.StringWithAggregatesFilter<"DocumentGroupB"> | string
   name?: Prisma.StringNullableWithAggregatesFilter<"DocumentGroupB"> | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"DocumentGroupB"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DocumentGroupB"> | Date | string
@@ -265,20 +283,24 @@ export type DocumentGroupBCreateInput = {
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  DocumentGroup?: Prisma.DocumentGroupCreateNestedManyWithoutDocumentGroupBInput
   Employee_DocumentGroupB_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentGroupB_DocumentGroupB_deletedByToEmployeeInput
   Employee_DocumentGroupB_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentGroupB_DocumentGroupB_createdByToEmployeeInput
+  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentGroupBInput
+  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedManyWithoutDocumentGroupBInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentGroupBInput
 }
 
 export type DocumentGroupBUncheckedCreateInput = {
   id: string
+  documentGroupAId: string
   name?: string | null
   createdBy: string
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  DocumentGroup?: Prisma.DocumentGroupUncheckedCreateNestedManyWithoutDocumentGroupBInput
+  DocumentGroupC?: Prisma.DocumentGroupCUncheckedCreateNestedManyWithoutDocumentGroupBInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentGroupBInput
 }
 
 export type DocumentGroupBUpdateInput = {
@@ -287,24 +309,29 @@ export type DocumentGroupBUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  DocumentGroup?: Prisma.DocumentGroupUpdateManyWithoutDocumentGroupBNestedInput
   Employee_DocumentGroupB_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentGroupB_DocumentGroupB_deletedByToEmployeeNestedInput
   Employee_DocumentGroupB_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentGroupB_DocumentGroupB_createdByToEmployeeNestedInput
+  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentGroupBNestedInput
+  DocumentGroupC?: Prisma.DocumentGroupCUpdateManyWithoutDocumentGroupBNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentGroupBNestedInput
 }
 
 export type DocumentGroupBUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  DocumentGroup?: Prisma.DocumentGroupUncheckedUpdateManyWithoutDocumentGroupBNestedInput
+  DocumentGroupC?: Prisma.DocumentGroupCUncheckedUpdateManyWithoutDocumentGroupBNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentGroupBNestedInput
 }
 
 export type DocumentGroupBCreateManyInput = {
   id: string
+  documentGroupAId: string
   name?: string | null
   createdBy: string
   createdAt: Date | string
@@ -323,12 +350,18 @@ export type DocumentGroupBUpdateManyMutationInput = {
 
 export type DocumentGroupBUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type DocumentGroupBNullableScalarRelationFilter = {
+  is?: Prisma.DocumentGroupBWhereInput | null
+  isNot?: Prisma.DocumentGroupBWhereInput | null
 }
 
 export type DocumentGroupBListRelationFilter = {
@@ -349,6 +382,7 @@ export type DocumentGroupBOrderByRelevanceInput = {
 
 export type DocumentGroupBCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  documentGroupAId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -359,6 +393,7 @@ export type DocumentGroupBCountOrderByAggregateInput = {
 
 export type DocumentGroupBMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  documentGroupAId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -369,6 +404,7 @@ export type DocumentGroupBMaxOrderByAggregateInput = {
 
 export type DocumentGroupBMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  documentGroupAId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -377,9 +413,25 @@ export type DocumentGroupBMinOrderByAggregateInput = {
   deletedBy?: Prisma.SortOrder
 }
 
-export type DocumentGroupBNullableScalarRelationFilter = {
-  is?: Prisma.DocumentGroupBWhereInput | null
-  isNot?: Prisma.DocumentGroupBWhereInput | null
+export type DocumentGroupBScalarRelationFilter = {
+  is?: Prisma.DocumentGroupBWhereInput
+  isNot?: Prisma.DocumentGroupBWhereInput
+}
+
+export type DocumentGroupBCreateNestedOneWithoutDocumentStructureInput = {
+  create?: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentStructureInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentStructureInput>
+  connectOrCreate?: Prisma.DocumentGroupBCreateOrConnectWithoutDocumentStructureInput
+  connect?: Prisma.DocumentGroupBWhereUniqueInput
+}
+
+export type DocumentGroupBUpdateOneWithoutDocumentStructureNestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentStructureInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentStructureInput>
+  connectOrCreate?: Prisma.DocumentGroupBCreateOrConnectWithoutDocumentStructureInput
+  upsert?: Prisma.DocumentGroupBUpsertWithoutDocumentStructureInput
+  disconnect?: Prisma.DocumentGroupBWhereInput | boolean
+  delete?: Prisma.DocumentGroupBWhereInput | boolean
+  connect?: Prisma.DocumentGroupBWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentGroupBUpdateToOneWithWhereWithoutDocumentStructureInput, Prisma.DocumentGroupBUpdateWithoutDocumentStructureInput>, Prisma.DocumentGroupBUncheckedUpdateWithoutDocumentStructureInput>
 }
 
 export type DocumentGroupBCreateNestedManyWithoutEmployee_DocumentGroupB_deletedByToEmployeeInput = {
@@ -466,20 +518,124 @@ export type DocumentGroupBUncheckedUpdateManyWithoutEmployee_DocumentGroupB_crea
   deleteMany?: Prisma.DocumentGroupBScalarWhereInput | Prisma.DocumentGroupBScalarWhereInput[]
 }
 
-export type DocumentGroupBCreateNestedOneWithoutDocumentGroupInput = {
-  create?: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupInput>
-  connectOrCreate?: Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupInput
+export type DocumentGroupBCreateNestedManyWithoutDocumentGroupAInput = {
+  create?: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupAInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupAInput> | Prisma.DocumentGroupBCreateWithoutDocumentGroupAInput[] | Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupAInput[]
+  connectOrCreate?: Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupAInput | Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupAInput[]
+  createMany?: Prisma.DocumentGroupBCreateManyDocumentGroupAInputEnvelope
+  connect?: Prisma.DocumentGroupBWhereUniqueInput | Prisma.DocumentGroupBWhereUniqueInput[]
+}
+
+export type DocumentGroupBUncheckedCreateNestedManyWithoutDocumentGroupAInput = {
+  create?: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupAInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupAInput> | Prisma.DocumentGroupBCreateWithoutDocumentGroupAInput[] | Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupAInput[]
+  connectOrCreate?: Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupAInput | Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupAInput[]
+  createMany?: Prisma.DocumentGroupBCreateManyDocumentGroupAInputEnvelope
+  connect?: Prisma.DocumentGroupBWhereUniqueInput | Prisma.DocumentGroupBWhereUniqueInput[]
+}
+
+export type DocumentGroupBUpdateManyWithoutDocumentGroupANestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupAInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupAInput> | Prisma.DocumentGroupBCreateWithoutDocumentGroupAInput[] | Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupAInput[]
+  connectOrCreate?: Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupAInput | Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupAInput[]
+  upsert?: Prisma.DocumentGroupBUpsertWithWhereUniqueWithoutDocumentGroupAInput | Prisma.DocumentGroupBUpsertWithWhereUniqueWithoutDocumentGroupAInput[]
+  createMany?: Prisma.DocumentGroupBCreateManyDocumentGroupAInputEnvelope
+  set?: Prisma.DocumentGroupBWhereUniqueInput | Prisma.DocumentGroupBWhereUniqueInput[]
+  disconnect?: Prisma.DocumentGroupBWhereUniqueInput | Prisma.DocumentGroupBWhereUniqueInput[]
+  delete?: Prisma.DocumentGroupBWhereUniqueInput | Prisma.DocumentGroupBWhereUniqueInput[]
+  connect?: Prisma.DocumentGroupBWhereUniqueInput | Prisma.DocumentGroupBWhereUniqueInput[]
+  update?: Prisma.DocumentGroupBUpdateWithWhereUniqueWithoutDocumentGroupAInput | Prisma.DocumentGroupBUpdateWithWhereUniqueWithoutDocumentGroupAInput[]
+  updateMany?: Prisma.DocumentGroupBUpdateManyWithWhereWithoutDocumentGroupAInput | Prisma.DocumentGroupBUpdateManyWithWhereWithoutDocumentGroupAInput[]
+  deleteMany?: Prisma.DocumentGroupBScalarWhereInput | Prisma.DocumentGroupBScalarWhereInput[]
+}
+
+export type DocumentGroupBUncheckedUpdateManyWithoutDocumentGroupANestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupAInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupAInput> | Prisma.DocumentGroupBCreateWithoutDocumentGroupAInput[] | Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupAInput[]
+  connectOrCreate?: Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupAInput | Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupAInput[]
+  upsert?: Prisma.DocumentGroupBUpsertWithWhereUniqueWithoutDocumentGroupAInput | Prisma.DocumentGroupBUpsertWithWhereUniqueWithoutDocumentGroupAInput[]
+  createMany?: Prisma.DocumentGroupBCreateManyDocumentGroupAInputEnvelope
+  set?: Prisma.DocumentGroupBWhereUniqueInput | Prisma.DocumentGroupBWhereUniqueInput[]
+  disconnect?: Prisma.DocumentGroupBWhereUniqueInput | Prisma.DocumentGroupBWhereUniqueInput[]
+  delete?: Prisma.DocumentGroupBWhereUniqueInput | Prisma.DocumentGroupBWhereUniqueInput[]
+  connect?: Prisma.DocumentGroupBWhereUniqueInput | Prisma.DocumentGroupBWhereUniqueInput[]
+  update?: Prisma.DocumentGroupBUpdateWithWhereUniqueWithoutDocumentGroupAInput | Prisma.DocumentGroupBUpdateWithWhereUniqueWithoutDocumentGroupAInput[]
+  updateMany?: Prisma.DocumentGroupBUpdateManyWithWhereWithoutDocumentGroupAInput | Prisma.DocumentGroupBUpdateManyWithWhereWithoutDocumentGroupAInput[]
+  deleteMany?: Prisma.DocumentGroupBScalarWhereInput | Prisma.DocumentGroupBScalarWhereInput[]
+}
+
+export type DocumentGroupBCreateNestedOneWithoutDocumentGroupCInput = {
+  create?: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupCInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupCInput>
+  connectOrCreate?: Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupCInput
   connect?: Prisma.DocumentGroupBWhereUniqueInput
 }
 
-export type DocumentGroupBUpdateOneWithoutDocumentGroupNestedInput = {
-  create?: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupInput>
-  connectOrCreate?: Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupInput
-  upsert?: Prisma.DocumentGroupBUpsertWithoutDocumentGroupInput
-  disconnect?: Prisma.DocumentGroupBWhereInput | boolean
-  delete?: Prisma.DocumentGroupBWhereInput | boolean
+export type DocumentGroupBUpdateOneRequiredWithoutDocumentGroupCNestedInput = {
+  create?: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupCInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupCInput>
+  connectOrCreate?: Prisma.DocumentGroupBCreateOrConnectWithoutDocumentGroupCInput
+  upsert?: Prisma.DocumentGroupBUpsertWithoutDocumentGroupCInput
   connect?: Prisma.DocumentGroupBWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentGroupBUpdateToOneWithWhereWithoutDocumentGroupInput, Prisma.DocumentGroupBUpdateWithoutDocumentGroupInput>, Prisma.DocumentGroupBUncheckedUpdateWithoutDocumentGroupInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentGroupBUpdateToOneWithWhereWithoutDocumentGroupCInput, Prisma.DocumentGroupBUpdateWithoutDocumentGroupCInput>, Prisma.DocumentGroupBUncheckedUpdateWithoutDocumentGroupCInput>
+}
+
+export type DocumentGroupBCreateWithoutDocumentStructureInput = {
+  id: string
+  name?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee_DocumentGroupB_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentGroupB_DocumentGroupB_deletedByToEmployeeInput
+  Employee_DocumentGroupB_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentGroupB_DocumentGroupB_createdByToEmployeeInput
+  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentGroupBInput
+  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedManyWithoutDocumentGroupBInput
+}
+
+export type DocumentGroupBUncheckedCreateWithoutDocumentStructureInput = {
+  id: string
+  documentGroupAId: string
+  name?: string | null
+  createdBy: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  DocumentGroupC?: Prisma.DocumentGroupCUncheckedCreateNestedManyWithoutDocumentGroupBInput
+}
+
+export type DocumentGroupBCreateOrConnectWithoutDocumentStructureInput = {
+  where: Prisma.DocumentGroupBWhereUniqueInput
+  create: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentStructureInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentStructureInput>
+}
+
+export type DocumentGroupBUpsertWithoutDocumentStructureInput = {
+  update: Prisma.XOR<Prisma.DocumentGroupBUpdateWithoutDocumentStructureInput, Prisma.DocumentGroupBUncheckedUpdateWithoutDocumentStructureInput>
+  create: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentStructureInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentStructureInput>
+  where?: Prisma.DocumentGroupBWhereInput
+}
+
+export type DocumentGroupBUpdateToOneWithWhereWithoutDocumentStructureInput = {
+  where?: Prisma.DocumentGroupBWhereInput
+  data: Prisma.XOR<Prisma.DocumentGroupBUpdateWithoutDocumentStructureInput, Prisma.DocumentGroupBUncheckedUpdateWithoutDocumentStructureInput>
+}
+
+export type DocumentGroupBUpdateWithoutDocumentStructureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee_DocumentGroupB_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentGroupB_DocumentGroupB_deletedByToEmployeeNestedInput
+  Employee_DocumentGroupB_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentGroupB_DocumentGroupB_createdByToEmployeeNestedInput
+  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentGroupBNestedInput
+  DocumentGroupC?: Prisma.DocumentGroupCUpdateManyWithoutDocumentGroupBNestedInput
+}
+
+export type DocumentGroupBUncheckedUpdateWithoutDocumentStructureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DocumentGroupC?: Prisma.DocumentGroupCUncheckedUpdateManyWithoutDocumentGroupBNestedInput
 }
 
 export type DocumentGroupBCreateWithoutEmployee_DocumentGroupB_deletedByToEmployeeInput = {
@@ -488,18 +644,22 @@ export type DocumentGroupBCreateWithoutEmployee_DocumentGroupB_deletedByToEmploy
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  DocumentGroup?: Prisma.DocumentGroupCreateNestedManyWithoutDocumentGroupBInput
   Employee_DocumentGroupB_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentGroupB_DocumentGroupB_createdByToEmployeeInput
+  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentGroupBInput
+  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedManyWithoutDocumentGroupBInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentGroupBInput
 }
 
 export type DocumentGroupBUncheckedCreateWithoutEmployee_DocumentGroupB_deletedByToEmployeeInput = {
   id: string
+  documentGroupAId: string
   name?: string | null
   createdBy: string
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  DocumentGroup?: Prisma.DocumentGroupUncheckedCreateNestedManyWithoutDocumentGroupBInput
+  DocumentGroupC?: Prisma.DocumentGroupCUncheckedCreateNestedManyWithoutDocumentGroupBInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentGroupBInput
 }
 
 export type DocumentGroupBCreateOrConnectWithoutEmployee_DocumentGroupB_deletedByToEmployeeInput = {
@@ -518,18 +678,22 @@ export type DocumentGroupBCreateWithoutEmployee_DocumentGroupB_createdByToEmploy
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
-  DocumentGroup?: Prisma.DocumentGroupCreateNestedManyWithoutDocumentGroupBInput
   Employee_DocumentGroupB_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentGroupB_DocumentGroupB_deletedByToEmployeeInput
+  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentGroupBInput
+  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedManyWithoutDocumentGroupBInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentGroupBInput
 }
 
 export type DocumentGroupBUncheckedCreateWithoutEmployee_DocumentGroupB_createdByToEmployeeInput = {
   id: string
+  documentGroupAId: string
   name?: string | null
   createdAt: Date | string
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
-  DocumentGroup?: Prisma.DocumentGroupUncheckedCreateNestedManyWithoutDocumentGroupBInput
+  DocumentGroupC?: Prisma.DocumentGroupCUncheckedCreateNestedManyWithoutDocumentGroupBInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentGroupBInput
 }
 
 export type DocumentGroupBCreateOrConnectWithoutEmployee_DocumentGroupB_createdByToEmployeeInput = {
@@ -563,6 +727,7 @@ export type DocumentGroupBScalarWhereInput = {
   OR?: Prisma.DocumentGroupBScalarWhereInput[]
   NOT?: Prisma.DocumentGroupBScalarWhereInput | Prisma.DocumentGroupBScalarWhereInput[]
   id?: Prisma.StringFilter<"DocumentGroupB"> | string
+  documentGroupAId?: Prisma.StringFilter<"DocumentGroupB"> | string
   name?: Prisma.StringNullableFilter<"DocumentGroupB"> | string | null
   createdBy?: Prisma.StringFilter<"DocumentGroupB"> | string
   createdAt?: Prisma.DateTimeFilter<"DocumentGroupB"> | Date | string
@@ -587,7 +752,7 @@ export type DocumentGroupBUpdateManyWithWhereWithoutEmployee_DocumentGroupB_crea
   data: Prisma.XOR<Prisma.DocumentGroupBUpdateManyMutationInput, Prisma.DocumentGroupBUncheckedUpdateManyWithoutEmployee_DocumentGroupB_createdByToEmployeeInput>
 }
 
-export type DocumentGroupBCreateWithoutDocumentGroupInput = {
+export type DocumentGroupBCreateWithoutDocumentGroupAInput = {
   id: string
   name?: string | null
   createdAt: Date | string
@@ -595,9 +760,11 @@ export type DocumentGroupBCreateWithoutDocumentGroupInput = {
   deletedAt?: Date | string | null
   Employee_DocumentGroupB_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentGroupB_DocumentGroupB_deletedByToEmployeeInput
   Employee_DocumentGroupB_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentGroupB_DocumentGroupB_createdByToEmployeeInput
+  DocumentGroupC?: Prisma.DocumentGroupCCreateNestedManyWithoutDocumentGroupBInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentGroupBInput
 }
 
-export type DocumentGroupBUncheckedCreateWithoutDocumentGroupInput = {
+export type DocumentGroupBUncheckedCreateWithoutDocumentGroupAInput = {
   id: string
   name?: string | null
   createdBy: string
@@ -605,25 +772,77 @@ export type DocumentGroupBUncheckedCreateWithoutDocumentGroupInput = {
   deleted?: boolean
   deletedAt?: Date | string | null
   deletedBy?: string | null
+  DocumentGroupC?: Prisma.DocumentGroupCUncheckedCreateNestedManyWithoutDocumentGroupBInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentGroupBInput
 }
 
-export type DocumentGroupBCreateOrConnectWithoutDocumentGroupInput = {
+export type DocumentGroupBCreateOrConnectWithoutDocumentGroupAInput = {
   where: Prisma.DocumentGroupBWhereUniqueInput
-  create: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupInput>
+  create: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupAInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupAInput>
 }
 
-export type DocumentGroupBUpsertWithoutDocumentGroupInput = {
-  update: Prisma.XOR<Prisma.DocumentGroupBUpdateWithoutDocumentGroupInput, Prisma.DocumentGroupBUncheckedUpdateWithoutDocumentGroupInput>
-  create: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupInput>
+export type DocumentGroupBCreateManyDocumentGroupAInputEnvelope = {
+  data: Prisma.DocumentGroupBCreateManyDocumentGroupAInput | Prisma.DocumentGroupBCreateManyDocumentGroupAInput[]
+  skipDuplicates?: boolean
+}
+
+export type DocumentGroupBUpsertWithWhereUniqueWithoutDocumentGroupAInput = {
+  where: Prisma.DocumentGroupBWhereUniqueInput
+  update: Prisma.XOR<Prisma.DocumentGroupBUpdateWithoutDocumentGroupAInput, Prisma.DocumentGroupBUncheckedUpdateWithoutDocumentGroupAInput>
+  create: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupAInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupAInput>
+}
+
+export type DocumentGroupBUpdateWithWhereUniqueWithoutDocumentGroupAInput = {
+  where: Prisma.DocumentGroupBWhereUniqueInput
+  data: Prisma.XOR<Prisma.DocumentGroupBUpdateWithoutDocumentGroupAInput, Prisma.DocumentGroupBUncheckedUpdateWithoutDocumentGroupAInput>
+}
+
+export type DocumentGroupBUpdateManyWithWhereWithoutDocumentGroupAInput = {
+  where: Prisma.DocumentGroupBScalarWhereInput
+  data: Prisma.XOR<Prisma.DocumentGroupBUpdateManyMutationInput, Prisma.DocumentGroupBUncheckedUpdateManyWithoutDocumentGroupAInput>
+}
+
+export type DocumentGroupBCreateWithoutDocumentGroupCInput = {
+  id: string
+  name?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee_DocumentGroupB_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutDocumentGroupB_DocumentGroupB_deletedByToEmployeeInput
+  Employee_DocumentGroupB_createdByToEmployee: Prisma.EmployeeCreateNestedOneWithoutDocumentGroupB_DocumentGroupB_createdByToEmployeeInput
+  DocumentGroupA: Prisma.DocumentGroupACreateNestedOneWithoutDocumentGroupBInput
+  DocumentStructure?: Prisma.DocumentStructureCreateNestedManyWithoutDocumentGroupBInput
+}
+
+export type DocumentGroupBUncheckedCreateWithoutDocumentGroupCInput = {
+  id: string
+  documentGroupAId: string
+  name?: string | null
+  createdBy: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  DocumentStructure?: Prisma.DocumentStructureUncheckedCreateNestedManyWithoutDocumentGroupBInput
+}
+
+export type DocumentGroupBCreateOrConnectWithoutDocumentGroupCInput = {
+  where: Prisma.DocumentGroupBWhereUniqueInput
+  create: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupCInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupCInput>
+}
+
+export type DocumentGroupBUpsertWithoutDocumentGroupCInput = {
+  update: Prisma.XOR<Prisma.DocumentGroupBUpdateWithoutDocumentGroupCInput, Prisma.DocumentGroupBUncheckedUpdateWithoutDocumentGroupCInput>
+  create: Prisma.XOR<Prisma.DocumentGroupBCreateWithoutDocumentGroupCInput, Prisma.DocumentGroupBUncheckedCreateWithoutDocumentGroupCInput>
   where?: Prisma.DocumentGroupBWhereInput
 }
 
-export type DocumentGroupBUpdateToOneWithWhereWithoutDocumentGroupInput = {
+export type DocumentGroupBUpdateToOneWithWhereWithoutDocumentGroupCInput = {
   where?: Prisma.DocumentGroupBWhereInput
-  data: Prisma.XOR<Prisma.DocumentGroupBUpdateWithoutDocumentGroupInput, Prisma.DocumentGroupBUncheckedUpdateWithoutDocumentGroupInput>
+  data: Prisma.XOR<Prisma.DocumentGroupBUpdateWithoutDocumentGroupCInput, Prisma.DocumentGroupBUncheckedUpdateWithoutDocumentGroupCInput>
 }
 
-export type DocumentGroupBUpdateWithoutDocumentGroupInput = {
+export type DocumentGroupBUpdateWithoutDocumentGroupCInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -631,20 +850,25 @@ export type DocumentGroupBUpdateWithoutDocumentGroupInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Employee_DocumentGroupB_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentGroupB_DocumentGroupB_deletedByToEmployeeNestedInput
   Employee_DocumentGroupB_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentGroupB_DocumentGroupB_createdByToEmployeeNestedInput
+  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentGroupBNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentGroupBNestedInput
 }
 
-export type DocumentGroupBUncheckedUpdateWithoutDocumentGroupInput = {
+export type DocumentGroupBUncheckedUpdateWithoutDocumentGroupCInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentGroupBNestedInput
 }
 
 export type DocumentGroupBCreateManyEmployee_DocumentGroupB_deletedByToEmployeeInput = {
   id: string
+  documentGroupAId: string
   name?: string | null
   createdBy: string
   createdAt: Date | string
@@ -654,6 +878,7 @@ export type DocumentGroupBCreateManyEmployee_DocumentGroupB_deletedByToEmployeeI
 
 export type DocumentGroupBCreateManyEmployee_DocumentGroupB_createdByToEmployeeInput = {
   id: string
+  documentGroupAId: string
   name?: string | null
   createdAt: Date | string
   deleted?: boolean
@@ -667,22 +892,27 @@ export type DocumentGroupBUpdateWithoutEmployee_DocumentGroupB_deletedByToEmploy
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  DocumentGroup?: Prisma.DocumentGroupUpdateManyWithoutDocumentGroupBNestedInput
   Employee_DocumentGroupB_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentGroupB_DocumentGroupB_createdByToEmployeeNestedInput
+  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentGroupBNestedInput
+  DocumentGroupC?: Prisma.DocumentGroupCUpdateManyWithoutDocumentGroupBNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentGroupBNestedInput
 }
 
 export type DocumentGroupBUncheckedUpdateWithoutEmployee_DocumentGroupB_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  DocumentGroup?: Prisma.DocumentGroupUncheckedUpdateManyWithoutDocumentGroupBNestedInput
+  DocumentGroupC?: Prisma.DocumentGroupCUncheckedUpdateManyWithoutDocumentGroupBNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentGroupBNestedInput
 }
 
 export type DocumentGroupBUncheckedUpdateManyWithoutEmployee_DocumentGroupB_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -696,23 +926,72 @@ export type DocumentGroupBUpdateWithoutEmployee_DocumentGroupB_createdByToEmploy
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  DocumentGroup?: Prisma.DocumentGroupUpdateManyWithoutDocumentGroupBNestedInput
   Employee_DocumentGroupB_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentGroupB_DocumentGroupB_deletedByToEmployeeNestedInput
+  DocumentGroupA?: Prisma.DocumentGroupAUpdateOneRequiredWithoutDocumentGroupBNestedInput
+  DocumentGroupC?: Prisma.DocumentGroupCUpdateManyWithoutDocumentGroupBNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentGroupBNestedInput
 }
 
 export type DocumentGroupBUncheckedUpdateWithoutEmployee_DocumentGroupB_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  DocumentGroup?: Prisma.DocumentGroupUncheckedUpdateManyWithoutDocumentGroupBNestedInput
+  DocumentGroupC?: Prisma.DocumentGroupCUncheckedUpdateManyWithoutDocumentGroupBNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentGroupBNestedInput
 }
 
 export type DocumentGroupBUncheckedUpdateManyWithoutEmployee_DocumentGroupB_createdByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  documentGroupAId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type DocumentGroupBCreateManyDocumentGroupAInput = {
+  id: string
+  name?: string | null
+  createdBy: string
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type DocumentGroupBUpdateWithoutDocumentGroupAInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee_DocumentGroupB_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutDocumentGroupB_DocumentGroupB_deletedByToEmployeeNestedInput
+  Employee_DocumentGroupB_createdByToEmployee?: Prisma.EmployeeUpdateOneRequiredWithoutDocumentGroupB_DocumentGroupB_createdByToEmployeeNestedInput
+  DocumentGroupC?: Prisma.DocumentGroupCUpdateManyWithoutDocumentGroupBNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUpdateManyWithoutDocumentGroupBNestedInput
+}
+
+export type DocumentGroupBUncheckedUpdateWithoutDocumentGroupAInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  DocumentGroupC?: Prisma.DocumentGroupCUncheckedUpdateManyWithoutDocumentGroupBNestedInput
+  DocumentStructure?: Prisma.DocumentStructureUncheckedUpdateManyWithoutDocumentGroupBNestedInput
+}
+
+export type DocumentGroupBUncheckedUpdateManyWithoutDocumentGroupAInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -725,11 +1004,13 @@ export type DocumentGroupBUncheckedUpdateManyWithoutEmployee_DocumentGroupB_crea
  */
 
 export type DocumentGroupBCountOutputType = {
-  DocumentGroup: number
+  DocumentGroupC: number
+  DocumentStructure: number
 }
 
 export type DocumentGroupBCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  DocumentGroup?: boolean | DocumentGroupBCountOutputTypeCountDocumentGroupArgs
+  DocumentGroupC?: boolean | DocumentGroupBCountOutputTypeCountDocumentGroupCArgs
+  DocumentStructure?: boolean | DocumentGroupBCountOutputTypeCountDocumentStructureArgs
 }
 
 /**
@@ -745,22 +1026,32 @@ export type DocumentGroupBCountOutputTypeDefaultArgs<ExtArgs extends runtime.Typ
 /**
  * DocumentGroupBCountOutputType without action
  */
-export type DocumentGroupBCountOutputTypeCountDocumentGroupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DocumentGroupWhereInput
+export type DocumentGroupBCountOutputTypeCountDocumentGroupCArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DocumentGroupCWhereInput
+}
+
+/**
+ * DocumentGroupBCountOutputType without action
+ */
+export type DocumentGroupBCountOutputTypeCountDocumentStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DocumentStructureWhereInput
 }
 
 
 export type DocumentGroupBSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  documentGroupAId?: boolean
   name?: boolean
   createdBy?: boolean
   createdAt?: boolean
   deleted?: boolean
   deletedAt?: boolean
   deletedBy?: boolean
-  DocumentGroup?: boolean | Prisma.DocumentGroupB$DocumentGroupArgs<ExtArgs>
   Employee_DocumentGroupB_deletedByToEmployee?: boolean | Prisma.DocumentGroupB$Employee_DocumentGroupB_deletedByToEmployeeArgs<ExtArgs>
   Employee_DocumentGroupB_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  DocumentGroupA?: boolean | Prisma.DocumentGroupADefaultArgs<ExtArgs>
+  DocumentGroupC?: boolean | Prisma.DocumentGroupB$DocumentGroupCArgs<ExtArgs>
+  DocumentStructure?: boolean | Prisma.DocumentGroupB$DocumentStructureArgs<ExtArgs>
   _count?: boolean | Prisma.DocumentGroupBCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["documentGroupB"]>
 
@@ -768,6 +1059,7 @@ export type DocumentGroupBSelect<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type DocumentGroupBSelectScalar = {
   id?: boolean
+  documentGroupAId?: boolean
   name?: boolean
   createdBy?: boolean
   createdAt?: boolean
@@ -776,23 +1068,28 @@ export type DocumentGroupBSelectScalar = {
   deletedBy?: boolean
 }
 
-export type DocumentGroupBOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdBy" | "createdAt" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["documentGroupB"]>
+export type DocumentGroupBOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "documentGroupAId" | "name" | "createdBy" | "createdAt" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["documentGroupB"]>
 export type DocumentGroupBInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  DocumentGroup?: boolean | Prisma.DocumentGroupB$DocumentGroupArgs<ExtArgs>
   Employee_DocumentGroupB_deletedByToEmployee?: boolean | Prisma.DocumentGroupB$Employee_DocumentGroupB_deletedByToEmployeeArgs<ExtArgs>
   Employee_DocumentGroupB_createdByToEmployee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
+  DocumentGroupA?: boolean | Prisma.DocumentGroupADefaultArgs<ExtArgs>
+  DocumentGroupC?: boolean | Prisma.DocumentGroupB$DocumentGroupCArgs<ExtArgs>
+  DocumentStructure?: boolean | Prisma.DocumentGroupB$DocumentStructureArgs<ExtArgs>
   _count?: boolean | Prisma.DocumentGroupBCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $DocumentGroupBPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DocumentGroupB"
   objects: {
-    DocumentGroup: Prisma.$DocumentGroupPayload<ExtArgs>[]
     Employee_DocumentGroupB_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
     Employee_DocumentGroupB_createdByToEmployee: Prisma.$EmployeePayload<ExtArgs>
+    DocumentGroupA: Prisma.$DocumentGroupAPayload<ExtArgs>
+    DocumentGroupC: Prisma.$DocumentGroupCPayload<ExtArgs>[]
+    DocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    documentGroupAId: string
     name: string | null
     createdBy: string
     createdAt: Date
@@ -1139,9 +1436,11 @@ readonly fields: DocumentGroupBFieldRefs;
  */
 export interface Prisma__DocumentGroupBClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  DocumentGroup<T extends Prisma.DocumentGroupB$DocumentGroupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentGroupB$DocumentGroupArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Employee_DocumentGroupB_deletedByToEmployee<T extends Prisma.DocumentGroupB$Employee_DocumentGroupB_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentGroupB$Employee_DocumentGroupB_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_DocumentGroupB_createdByToEmployee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  DocumentGroupA<T extends Prisma.DocumentGroupADefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentGroupADefaultArgs<ExtArgs>>): Prisma.Prisma__DocumentGroupAClient<runtime.Types.Result.GetResult<Prisma.$DocumentGroupAPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  DocumentGroupC<T extends Prisma.DocumentGroupB$DocumentGroupCArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentGroupB$DocumentGroupCArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentGroupCPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  DocumentStructure<T extends Prisma.DocumentGroupB$DocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocumentGroupB$DocumentStructureArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1172,6 +1471,7 @@ export interface Prisma__DocumentGroupBClient<T, Null = never, ExtArgs extends r
  */
 export interface DocumentGroupBFieldRefs {
   readonly id: Prisma.FieldRef<"DocumentGroupB", 'String'>
+  readonly documentGroupAId: Prisma.FieldRef<"DocumentGroupB", 'String'>
   readonly name: Prisma.FieldRef<"DocumentGroupB", 'String'>
   readonly createdBy: Prisma.FieldRef<"DocumentGroupB", 'String'>
   readonly createdAt: Prisma.FieldRef<"DocumentGroupB", 'DateTime'>
@@ -1521,30 +1821,6 @@ export type DocumentGroupBDeleteManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * DocumentGroupB.DocumentGroup
- */
-export type DocumentGroupB$DocumentGroupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the DocumentGroup
-   */
-  select?: Prisma.DocumentGroupSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the DocumentGroup
-   */
-  omit?: Prisma.DocumentGroupOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DocumentGroupInclude<ExtArgs> | null
-  where?: Prisma.DocumentGroupWhereInput
-  orderBy?: Prisma.DocumentGroupOrderByWithRelationInput | Prisma.DocumentGroupOrderByWithRelationInput[]
-  cursor?: Prisma.DocumentGroupWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.DocumentGroupScalarFieldEnum | Prisma.DocumentGroupScalarFieldEnum[]
-}
-
-/**
  * DocumentGroupB.Employee_DocumentGroupB_deletedByToEmployee
  */
 export type DocumentGroupB$Employee_DocumentGroupB_deletedByToEmployeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1561,6 +1837,54 @@ export type DocumentGroupB$Employee_DocumentGroupB_deletedByToEmployeeArgs<ExtAr
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * DocumentGroupB.DocumentGroupC
+ */
+export type DocumentGroupB$DocumentGroupCArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DocumentGroupC
+   */
+  select?: Prisma.DocumentGroupCSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DocumentGroupC
+   */
+  omit?: Prisma.DocumentGroupCOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DocumentGroupCInclude<ExtArgs> | null
+  where?: Prisma.DocumentGroupCWhereInput
+  orderBy?: Prisma.DocumentGroupCOrderByWithRelationInput | Prisma.DocumentGroupCOrderByWithRelationInput[]
+  cursor?: Prisma.DocumentGroupCWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DocumentGroupCScalarFieldEnum | Prisma.DocumentGroupCScalarFieldEnum[]
+}
+
+/**
+ * DocumentGroupB.DocumentStructure
+ */
+export type DocumentGroupB$DocumentStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DocumentStructure
+   */
+  select?: Prisma.DocumentStructureSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DocumentStructure
+   */
+  omit?: Prisma.DocumentStructureOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DocumentStructureInclude<ExtArgs> | null
+  where?: Prisma.DocumentStructureWhereInput
+  orderBy?: Prisma.DocumentStructureOrderByWithRelationInput | Prisma.DocumentStructureOrderByWithRelationInput[]
+  cursor?: Prisma.DocumentStructureWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DocumentStructureScalarFieldEnum | Prisma.DocumentStructureScalarFieldEnum[]
 }
 
 /**

@@ -35,6 +35,11 @@ interface ParentPartOption {
   shortDescription: string
 }
 
+interface WarehousePlaceOption {
+  id: string
+  label: string
+}
+
 interface MaterialFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -42,6 +47,7 @@ interface MaterialFormDialogProps {
   materialGroups: MaterialGroup[]
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
+  warehousePlaces: WarehousePlaceOption[]
   parentPartOptions?: ParentPartOption[]
   parentPartBeNumbersInUse?: string[]
   onSave: (material: Partial<MappedMaterial> & {id: string}) => void
@@ -195,6 +201,7 @@ export function MaterialFormDialog({
   materialGroups,
   units,
   supplierCompanies,
+  warehousePlaces,
   parentPartOptions: _parentPartOptions,
   parentPartBeNumbersInUse = [],
   onSave,
@@ -571,6 +578,25 @@ export function MaterialFormDialog({
             </div>
           </div>
 
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs text-muted-foreground">Warehouse Place</Label>
+            <Select
+              value={form.documentationPlace ?? '__none__'}
+              onValueChange={value => update('documentationPlace', value === '__none__' ? null : value)}>
+              <SelectTrigger className={inputStyles}>
+                <SelectValue placeholder="Select warehouse place..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="__none__">None</SelectItem>
+                {warehousePlaces.map(place => (
+                  <SelectItem key={place.id} value={place.id}>
+                    {place.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           {/* Row 4: Optional Material Group B/C */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
@@ -676,12 +702,12 @@ export function MaterialFormDialog({
               <p className="text-xs text-muted-foreground">Preferred supplier is selected from your supplier list.</p>
             ) : null}
           </div>
-          {/* Row 6: Documentation Place
+          {/* Row 6: Warehouse Place
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2" />
             <div className="flex flex-col gap-2">
               <Label htmlFor="documentationPlace" className="text-xs text-muted-foreground">
-                Documentation Place
+                Warehouse Place
               </Label>
               <Input
                 id="documentationPlace"

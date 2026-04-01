@@ -38,6 +38,7 @@ type ProjectBOMRaw = {
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
+  Project: {id: string; number: string | null; name: string | null}
   Employee_ProjectBOM_createdByToEmployee: {id: string; firstName: string; lastName: string}
   Employee_ProjectBOM_deletedByToEmployee: {id: string; firstName: string; lastName: string} | null
   ProjectBOMStructure: ProjectBOMStructureRaw[]
@@ -72,6 +73,8 @@ export function mapProjectBOM(r: ProjectBOMRaw): MappedProjectBOM {
   return {
     id: r.id,
     projectId: r.projectId,
+    projectName: r.Project.name,
+    projectNumber: r.Project.number,
     parentPart: r.parentPart,
     additionalInfo: r.additionalInfo,
     description: r.description,

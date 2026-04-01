@@ -25,6 +25,8 @@ export interface MappedProjectBOMStructure {
 export interface MappedProjectBOM {
   id: string
   projectId: string
+  projectName: string | null
+  projectNumber: string | null
   parentPart: string | null
   additionalInfo: string | null
   description: string | null
@@ -42,6 +44,13 @@ export interface MappedProjectBOM {
   deletedByName: string | null
   structures: MappedProjectBOMStructure[]
   structureCount: number
+}
+
+// ─── Project option (for search/select) ───────────────────────────────────────
+export interface ProjectOption {
+  id: string
+  projectNumber: string
+  projectName: string
 }
 
 // ─── Material option ───────────────────────────────────────────────────────────

@@ -10,6 +10,8 @@ import {
   projectBOMStructureIdSchema,
 } from '@/schemas/projectBOMSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
+import {searchProjects} from '@/dal/projectBOM'
+import type {ProjectOption} from '@/types/projectBOM'
 
 // ─── ProjectBOM CRUD ───────────────────────────────────────────────────────────
 export const createProjectBOMAction = protectedServerFunction({
@@ -141,3 +143,8 @@ export const restoreProjectBOMStructureAction = protectedServerFunction({
     revalidatePath('/projectBOMs')
   },
 })
+
+// ─── Project search ────────────────────────────────────────────────────────────
+export async function searchProjectsAction(query: string): Promise<ProjectOption[]> {
+  return searchProjects(query)
+}

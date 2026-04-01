@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import type {Route} from 'next'
@@ -13,20 +13,21 @@ import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from '@/components/ui/dialog'
-import type {MappedProjectBOM} from '@/types/projectBOM'
+import type {MappedProjectBOM, ProjectOption} from '@/types/projectBOM'
 import {
   createProjectBOMAction,
   softDeleteProjectBOMAction,
   hardDeleteProjectBOMAction,
   undeleteProjectBOMAction,
+  searchProjectsAction,
 } from '@/serverFunctions/projectBOM'
 
-type SortField = 'description' | 'structureCount' | 'startDate' | 'createdAt' | 'createdBy'
+type SortField = 'description' | 'project' | 'structureCount' | 'startDate' | 'createdAt' | 'createdBy'
 type SortDir = 'asc' | 'desc'
 type FilterDeleted = 'not-deleted' | 'deleted' | 'all'
 
 function formatDate(date: string | null) {
-  if (!date) return '-'
+  if (!date) return '—'
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
@@ -63,11 +64,11 @@ function Th({
 interface CreateDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  projectId: string
+  defaultProjectId?: string
   onSaved: () => void
 }
 
-function CreateProjectBOMDialog({open, onOpenChange, projectId, onSaved}: CreateDialogProps) {
+function CreateProjectBOMDialog({open, onOpenChange, defaultProjectId, onSaved}: CreateDialogProps) {
   const [description, setDescription] = useState('')
   const [parentPart, setParentPart] = useState('')
   const [additionalInfo, setAdditionalInfo] = useState('')
@@ -77,7 +78,13 @@ function CreateProjectBOMDialog({open, onOpenChange, projectId, onSaved}: Create
   const [materialClosed, setMaterialClosed] = useState(false)
   const [readyForPurchase, setReadyForPurchase] = useState(false)
   const [saving, setSaving] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  // Project search
+  const [projectQuery, setProjectQuery] = useState('')
+  const [projectResults, setProjectResults] = useState<ProjectOption[]>([])
+  const [projectSearching, setProjectSearching] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<ProjectOption | null>(null)
 
   function resetForm() {
     setDescription('')
@@ -88,7 +95,10 @@ function CreateProjectBOMDialog({open, onOpenChange, projectId, onSaved}: Create
     setClosed(false)
     setMaterialClosed(false)
     setReadyForPurchase(false)
-    setError(null)
+    setErrors({})
+    setProjectQuery('')
+    setProjectResults([])
+    setSelectedProject(null)
   }
 
   const handleOpenChange = (v: boolean) => {
@@ -96,15 +106,27 @@ function CreateProjectBOMDialog({open, onOpenChange, projectId, onSaved}: Create
     onOpenChange(v)
   }
 
+  // Search projects whenever query changes (only when dialog is open)
+  useEffect(() => {
+    if (!open) return
+    setProjectSearching(true)
+    searchProjectsAction(projectQuery)
+      .then(setProjectResults)
+      .finally(() => setProjectSearching(false))
+  }, [projectQuery, open])
+
   async function handleSubmit() {
-    if (!startDate) {
-      setError('Start date is required.')
+    const e: Record<string, string> = {}
+    if (!selectedProject && !defaultProjectId) e.project = 'Please select a project.'
+    if (!startDate) e.startDate = 'Start date is required.'
+    if (Object.keys(e).length > 0) {
+      setErrors(e)
       return
     }
     setSaving(true)
     try {
       await createProjectBOMAction({
-        projectId,
+        projectId: selectedProject?.id ?? defaultProjectId!,
         description: description.trim() || null,
         parentPart: parentPart.trim() || null,
         additionalInfo: additionalInfo.trim() || null,
@@ -128,6 +150,64 @@ function CreateProjectBOMDialog({open, onOpenChange, projectId, onSaved}: Create
           <DialogTitle className="text-foreground">New Project BOM</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4 py-2">
+          {/* Project search — hidden if projectId is fixed by route */}
+          {!defaultProjectId && (
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Project *</Label>
+              {selectedProject ? (
+                <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-sm text-foreground font-medium">
+                      {selectedProject.projectName ?? selectedProject.id}
+                    </span>
+                    {selectedProject.projectNumber && (
+                      <span className="text-xs text-muted-foreground">{selectedProject.projectNumber}</span>
+                    )}
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 text-xs text-muted-foreground hover:text-foreground px-2"
+                    onClick={() => setSelectedProject(null)}>
+                    Change
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <Input
+                    value={projectQuery}
+                    onChange={e => {
+                      setProjectQuery(e.target.value)
+                      setErrors(prev => ({...prev, project: ''}))
+                    }}
+                    placeholder="Search by name or number…"
+                    className={`bg-secondary border-border ${errors.project ? 'border-destructive' : ''}`}
+                    autoFocus
+                  />
+                  {errors.project && <p className="text-xs text-destructive">{errors.project}</p>}
+                  <div className="flex flex-col gap-1 max-h-40 overflow-y-auto rounded-lg border border-border bg-secondary/30">
+                    {projectSearching ? (
+                      <p className="text-xs text-muted-foreground px-3 py-3 text-center">Searching…</p>
+                    ) : projectResults.length === 0 ? (
+                      <p className="text-xs text-muted-foreground px-3 py-3 text-center">No projects found.</p>
+                    ) : (
+                      projectResults.map(p => (
+                        <button
+                          key={p.id}
+                          type="button"
+                          onClick={() => setSelectedProject(p)}
+                          className="flex flex-col gap-0.5 px-3 py-2 text-left hover:bg-secondary/80 transition-colors border-b border-border/40 last:border-0">
+                          <span className="text-sm text-foreground font-medium">{p.projectName ?? p.id}</span>
+                          {p.projectNumber && <span className="text-xs text-muted-foreground">{p.projectNumber}</span>}
+                        </button>
+                      ))
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Description</Label>
@@ -136,7 +216,7 @@ function CreateProjectBOMDialog({open, onOpenChange, projectId, onSaved}: Create
                 onChange={e => setDescription(e.target.value)}
                 placeholder="BOM description…"
                 className="bg-secondary border-border"
-                autoFocus
+                autoFocus={!!defaultProjectId}
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -155,11 +235,11 @@ function CreateProjectBOMDialog({open, onOpenChange, projectId, onSaved}: Create
                 value={startDate}
                 onChange={e => {
                   setStartDate(e.target.value)
-                  setError(null)
+                  setErrors(prev => ({...prev, startDate: ''}))
                 }}
-                className={`bg-secondary border-border ${error ? 'border-destructive' : ''}`}
+                className={`bg-secondary border-border ${errors.startDate ? 'border-destructive' : ''}`}
               />
-              {error && <p className="text-xs text-destructive">{error}</p>}
+              {errors.startDate && <p className="text-xs text-destructive">{errors.startDate}</p>}
             </div>
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">End Date</Label>
@@ -180,6 +260,7 @@ function CreateProjectBOMDialog({open, onOpenChange, projectId, onSaved}: Create
               />
             </div>
           </div>
+
           <div className="flex flex-col gap-2">
             {(
               [
@@ -218,7 +299,8 @@ interface ProjectBOMTableProps {
   initialBOMs: MappedProjectBOM[]
   currentUserRole: string
   currentUserLevel: number
-  projectId: string
+  /** Pass when the table is scoped to a specific project (e.g. from a project detail page) */
+  projectId?: string
   departmentId: string
 }
 
@@ -259,6 +341,8 @@ export function ProjectBOMTable({
       return (
         bom.description?.toLowerCase().includes(q) ||
         bom.parentPart?.toLowerCase().includes(q) ||
+        bom.projectName?.toLowerCase().includes(q) ||
+        bom.projectNumber?.toLowerCase().includes(q) ||
         bom.createdByName.toLowerCase().includes(q)
       )
     })
@@ -268,6 +352,8 @@ export function ProjectBOMTable({
       switch (sortField) {
         case 'description':
           return s(a.description ?? '', b.description ?? '')
+        case 'project':
+          return s(a.projectName ?? '', b.projectName ?? '')
         case 'structureCount':
           return dir * (a.structureCount - b.structureCount)
         case 'startDate':
@@ -304,7 +390,7 @@ export function ProjectBOMTable({
           <div className="relative max-w-sm flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search description, parent part…"
+              placeholder="Search description, project…"
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="pl-10 bg-secondary border-border placeholder:text-muted-foreground/60 focus-visible:ring-accent"
@@ -336,6 +422,7 @@ export function ProjectBOMTable({
           <TableHeader>
             <TableRow className="hover:bg-transparent border-border/60">
               <Th field="description" label="Description" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <Th field="project" label="Project" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <TableHead className="whitespace-nowrap text-xs">Parent Part</TableHead>
               <Th
                 field="structureCount"
@@ -363,7 +450,7 @@ export function ProjectBOMTable({
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={showDeletedCols ? 11 : 9} className="h-32 text-center text-muted-foreground">
+                <TableCell colSpan={showDeletedCols ? 12 : 10} className="h-32 text-center text-muted-foreground">
                   No BOMs found.
                 </TableCell>
               </TableRow>
@@ -378,6 +465,12 @@ export function ProjectBOMTable({
                       className="hover:text-accent hover:underline transition-colors">
                       {bom.description ?? '—'}
                     </Link>
+                  </TableCell>
+                  <TableCell className={tdClass}>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-foreground text-sm">{bom.projectName ?? '—'}</span>
+                      {bom.projectNumber && <span className="text-xs text-muted-foreground">{bom.projectNumber}</span>}
+                    </div>
                   </TableCell>
                   <TableCell className={tdClass}>{bom.parentPart ?? '—'}</TableCell>
                   <TableCell className={tdClass}>
@@ -475,7 +568,7 @@ export function ProjectBOMTable({
       <CreateProjectBOMDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}
-        projectId={projectId}
+        defaultProjectId={projectId}
         onSaved={() => router.refresh()}
       />
     </div>

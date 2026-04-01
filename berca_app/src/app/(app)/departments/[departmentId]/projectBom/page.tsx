@@ -6,11 +6,13 @@ import {getDepartmentById} from '@/dal/department'
 import {getDepartmentRoleInfo} from '@/lib/utils'
 
 interface PageProps {
-  params: Promise<{departmentId: string; projectId: string}>
+  params: Promise<{departmentId: string}>
+  searchParams: Promise<{projectId?: string}>
 }
 
-export default async function ProjectBOMsPage({params}: PageProps) {
-  const {departmentId, projectId} = await params
+export default async function ProjectBOMsPage({params, searchParams}: PageProps) {
+  const {departmentId} = await params
+  const {projectId} = await searchParams
 
   const [department, bomsRaw, profile] = await Promise.all([
     getDepartmentById(departmentId),
@@ -28,7 +30,7 @@ export default async function ProjectBOMsPage({params}: PageProps) {
       <div className="mx-auto max-w-6xl">
         <div className="mb-8">
           <h1 className="text-lg font-semibold text-foreground">Project BOMs</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Manage bill of materials for this project</p>
+          <p className="mt-1 text-sm text-muted-foreground">Manage bill of materials for projects</p>
         </div>
         <ProjectBOMTable
           initialBOMs={boms}

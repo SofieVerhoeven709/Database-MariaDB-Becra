@@ -7,6 +7,7 @@ import {notFound} from 'next/navigation'
 import {getCompanies} from '@/dal/companies'
 import {getProjects} from '@/dal/projects'
 import {getMaterials, getMaterialGroups} from '@/dal/materials'
+import {getWarehousePlaces} from '@/dal/warehousePlace'
 
 import {MaterialSerialTrackedDetail} from '@/components/custom/serialTrackedDetail'
 
@@ -22,7 +23,7 @@ export default async function SerialTrackedDetailPage({params}: PageProps) {
     ? getSerialTrackedById(serialTrackedId).catch(() => null)
     : Promise.resolve(null)
 
-  const [department, item, profile, companiesFromDAL, projectsFromDAL, materialGroupsFromDAL, materialsFromDAL] = await Promise.all([
+  const [department, item, profile, companiesFromDAL, projectsFromDAL, materialGroupsFromDAL, materialsFromDAL, warehousePlacesFromDAL] = await Promise.all([
     getDepartmentById(departmentId),
     itemPromise,
     getSessionProfileFromCookieOrThrow(),
@@ -30,6 +31,7 @@ export default async function SerialTrackedDetailPage({params}: PageProps) {
     getProjects(),
     getMaterialGroups(),
     getMaterials(),
+    getWarehousePlaces(),
   ])
 
   if (!department) return <p>Department not found</p>
@@ -52,6 +54,13 @@ export default async function SerialTrackedDetailPage({params}: PageProps) {
     name: [mg.groupA, mg.groupB, mg.groupC, mg.groupD].filter(Boolean).join(' / '),
   }))
 
+  const warehousePlaceOptions = warehousePlacesFromDAL.map(place => ({
+    id: place.id,
+    label: [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
+      .filter(Boolean)
+      .join(' / '),
+  }))
+
   // Map materials for dialog
   const materialOptions = materialsFromDAL.map(m => ({
     id: m.id,
@@ -71,6 +80,7 @@ export default async function SerialTrackedDetailPage({params}: PageProps) {
           companies={companyOptions}
           projects={projectOptions}
           materialGroups={materialGroupOptions}
+          warehousePlaces={warehousePlaceOptions}
           materialOptions={materialOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}

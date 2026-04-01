@@ -28,6 +28,20 @@ export type SerialTrackedWithRelations = Prisma.MaterialSerialTrackGetPayload<{
         groupD: true
       }
     }
+    WarehousePlace: {
+      where: {
+        deleted: false
+      }
+      select: {
+        id: true
+        abbreviation: true
+        place: true
+        shelf: true
+        column: true
+        layer: true
+        layerPlace: true
+      }
+    }
   }
 }>
 
@@ -56,10 +70,21 @@ export async function getSerialTracked(options?: {includeDeleted?: boolean}): Pr
           groupD: true,
         },
       },
+      WarehousePlace: {
+        where: {deleted: false},
+        select: {
+          id: true,
+          abbreviation: true,
+          place: true,
+          shelf: true,
+          column: true,
+          layer: true,
+          layerPlace: true,
+        },
+      },
     },
     orderBy: {shortDescription: 'asc'},
   })
-  console.log('[DAL:getSerialTracked] count:', results.length, 'sample:', results.slice(0, 2))
   return results
 }
 
@@ -84,6 +109,18 @@ export async function getSerialTrackedById(id: string): Promise<SerialTrackedWit
           groupB: true,
           groupC: true,
           groupD: true,
+        },
+      },
+      WarehousePlace: {
+        where: {deleted: false},
+        select: {
+          id: true,
+          abbreviation: true,
+          place: true,
+          shelf: true,
+          column: true,
+          layer: true,
+          layerPlace: true,
         },
       },
     },
@@ -112,9 +149,9 @@ export async function createSerialTracked(data: {
   additionalInfo?: string | null
   becraCode?: string | null
   beNumber?: string | null
+  warehousePlaceId?: string | null
 }) {
-  console.log('[DAL:createSerialTracked] input:', data)
-  const {materialId, companyId, projectId, createdBy, deletedBy, ...rest} = data
+  const {materialId, companyId, projectId, createdBy, deletedBy, warehousePlaceId, ...rest} = data
 
   const prismaData: any = {...rest}
   if (materialId) prismaData.material = {connect: {id: materialId}}
@@ -123,10 +160,30 @@ export async function createSerialTracked(data: {
   if (createdBy) prismaData.Employee = {connect: {id: createdBy}}
   if (deletedBy) prismaData.Employee_MaterialSerialTrack_deletedByToEmployee = {connect: {id: deletedBy}}
 
-  const created = await prismaClient.materialSerialTrack.create({
-    data: prismaData,
+  const created = await prismaClient.$transaction(async tx => {
+    const createdItem = await tx.materialSerialTrack.create({
+      data: prismaData,
+    })
+
+    if (warehousePlaceId !== undefined) {
+      await tx.warehousePlace.updateMany({
+        where: {serialTrackedId: createdItem.id, deleted: false},
+        data: {serialTrackedId: null},
+      })
+
+      if (warehousePlaceId) {
+        await tx.warehousePlace.update({
+          where: {id: warehousePlaceId},
+          data: {
+            serialTrackedId: createdItem.id,
+            beNumber: createdItem.beNumber ?? null,
+          },
+        })
+      }
+    }
+
+    return createdItem
   })
-  console.log('[DAL:createSerialTracked] created:', created)
   return created
 }
 
@@ -149,14 +206,44 @@ export async function updateSerialTracked(
     additionalInfo?: string | null
     projectId?: string | null
     becraCode?: string | null
+    beNumber?: string | null
+    warehousePlaceId?: string | null
   },
 ) {
-  return prismaClient.materialSerialTrack.update({
-    where: {id},
-    data: {
-      ...data,
-      updatedAt: new Date(),
-    },
+  const {warehousePlaceId, ...rest} = data
+
+  return prismaClient.$transaction(async tx => {
+    const updatedItem = await tx.materialSerialTrack.update({
+      where: {id},
+      data: {
+        ...rest,
+        updatedAt: new Date(),
+      },
+    })
+
+    if (warehousePlaceId !== undefined) {
+      await tx.warehousePlace.updateMany({
+        where: {serialTrackedId: id, deleted: false},
+        data: {serialTrackedId: null},
+      })
+
+      if (warehousePlaceId) {
+        await tx.warehousePlace.update({
+          where: {id: warehousePlaceId},
+          data: {
+            serialTrackedId: id,
+            beNumber: updatedItem.beNumber ?? null,
+          },
+        })
+      }
+    } else if (rest.beNumber !== undefined) {
+      await tx.warehousePlace.updateMany({
+        where: {serialTrackedId: id, deleted: false},
+        data: {beNumber: rest.beNumber ?? null},
+      })
+    }
+
+    return updatedItem
   })
 }
 

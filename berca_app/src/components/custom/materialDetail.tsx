@@ -87,11 +87,17 @@ interface SupplierCompanyOption {
   number: string
 }
 
+interface WarehousePlaceOption {
+  id: string
+  label: string
+}
+
 interface MaterialDetailProps {
   material: MappedMaterialDetail
   materialGroups: MaterialGroup[]
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
+  warehousePlaces?: WarehousePlaceOption[]
 }
 
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
@@ -102,7 +108,7 @@ function formatDate(iso: string | null | undefined) {
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
 }
 
-export function MaterialDetail({material, materialGroups, units, supplierCompanies}: MaterialDetailProps) {
+export function MaterialDetail({material, materialGroups, units, supplierCompanies, warehousePlaces = []}: MaterialDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -145,6 +151,10 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
       handleField('preferredSupplierCompanyId', '__none__')
     }
   }
+
+  const warehousePlaceById = new Map(warehousePlaces.map(place => [place.id, place.label]))
+  const resolvedWarehousePlace =
+    form.documentationPlace ? warehousePlaceById.get(form.documentationPlace) ?? form.documentationPlace : null
 
   async function handleSave() {
     setSaving(true)
@@ -639,17 +649,25 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Documentation Place</Label>
+              <Label className="text-xs text-muted-foreground">Warehouse Place</Label>
               {editing ? (
-                <Input
-                  value={form.documentationPlace}
-                  onChange={e => handleField('documentationPlace', e.target.value)}
-                  placeholder="—"
-                />
+                <Select
+                  value={form.documentationPlace || '__none__'}
+                  onValueChange={value => handleField('documentationPlace', value === '__none__' ? '' : value)}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select warehouse place" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__none__">None</SelectItem>
+                    {warehousePlaces.map(place => (
+                      <SelectItem key={place.id} value={place.id}>
+                        {place.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               ) : (
-                <p className="text-sm">
-                  {material.documentationPlace ?? <span className="text-muted-foreground">—</span>}
-                </p>
+                <p className="text-sm">{resolvedWarehousePlace ?? <span className="text-muted-foreground">—</span>}</p>
               )}
             </div>
 

@@ -38,10 +38,16 @@ interface ParentPartOption {
   shortDescription: string
 }
 
+interface WarehousePlaceOption {
+  id: string
+  label: string
+}
+
 type SortField =
   | 'beNumber'
   | 'name'
   | 'shortDescription'
+  | 'documentationPlace'
   | 'brandName'
   | 'materialGroupLabelA'
   | 'materialGroupLabelB'
@@ -84,6 +90,7 @@ interface MaterialTableProps {
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
   parentPartOptions: ParentPartOption[]
+  warehousePlaces: WarehousePlaceOption[]
   departmentId?: string
 }
 
@@ -93,6 +100,7 @@ export function MaterialTable({
   units,
   supplierCompanies,
   parentPartOptions,
+  warehousePlaces,
   departmentId,
 }: MaterialTableProps) {
   const router = useRouter() as unknown as {refresh: () => void; push: (href: string) => void}
@@ -128,6 +136,13 @@ export function MaterialTable({
     return normalized.startsWith('4') ? 'ios' : 'be'
   }
 
+  const warehousePlaceById = useMemo(() => new Map(warehousePlaces.map(place => [place.id, place.label])), [warehousePlaces])
+
+  function resolveMaterialPlace(value: string | null): string {
+    if (!value) return ''
+    return warehousePlaceById.get(value) ?? value
+  }
+
   const filtered = materials
     .filter(m => {
       if (filterNumberKind === 'all') return true
@@ -145,6 +160,7 @@ export function MaterialTable({
         m.beNumber.toLowerCase().includes(q) ||
         (m.name ?? '').toLowerCase().includes(q) ||
         m.shortDescription.toLowerCase().includes(q) ||
+        resolveMaterialPlace(m.documentationPlace).toLowerCase().includes(q) ||
         (m.brandName ?? '').toLowerCase().includes(q) ||
         m.materialGroupLabel.toLowerCase().includes(q) ||
         m.materialGroupLabelA.toLowerCase().includes(q) ||
@@ -158,8 +174,8 @@ export function MaterialTable({
       )
     })
     .sort((a, b) => {
-      const aVal = String(a[sortField] ?? '')
-      const bVal = String(b[sortField] ?? '')
+      const aVal = sortField === 'documentationPlace' ? resolveMaterialPlace(a.documentationPlace) : String(a[sortField] ?? '')
+      const bVal = sortField === 'documentationPlace' ? resolveMaterialPlace(b.documentationPlace) : String(b[sortField] ?? '')
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
 
@@ -256,7 +272,12 @@ export function MaterialTable({
     router.refresh()
   }
 
-  async function handleViewSerialTracked(serialTrackedId: string | null, beNumber: string, departmentId?: string, router?: any) {
+  async function handleViewSerialTracked(
+    serialTrackedId: string | null,
+    beNumber: string,
+    departmentId?: string,
+    router?: any,
+  ) {
     if (!departmentId || !router) return
 
     if (serialTrackedId) {
@@ -282,6 +303,7 @@ export function MaterialTable({
     {key: 'beNumber', label: 'Number'},
     {key: 'name', label: 'Name'},
     {key: 'shortDescription', label: 'Description'},
+    {key: 'documentationPlace', label: 'Warehouse Place'},
     {key: 'brandName', label: 'Brand'},
     {key: 'materialGroupLabelA', label: 'Group A'},
     {key: 'materialGroupLabelB', label: 'Group B'},
@@ -385,6 +407,9 @@ export function MaterialTable({
                   </TableCell>
                   <TableCell className="text-sm max-w-55 truncate" title={m.shortDescription}>
                     {m.shortDescription}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {resolveMaterialPlace(m.documentationPlace) || <span className="text-muted-foreground">—</span>}
                   </TableCell>
                   <TableCell className="text-sm">
                     {m.brandName ?? <span className="text-muted-foreground">—</span>}
@@ -494,6 +519,7 @@ export function MaterialTable({
         supplierCompanies={supplierCompanies}
         parentPartOptions={parentPartOptions}
         parentPartBeNumbersInUse={parentPartBeNumbersInUse}
+        warehousePlaces={warehousePlaces}
         onSave={handleSave}
         saving={saving}
         saveError={saveError}

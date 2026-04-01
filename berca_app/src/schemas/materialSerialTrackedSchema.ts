@@ -51,6 +51,7 @@ export const materialSerialTrackedSchema = z.object({
   additionalInfo: nullableString255Schema,
   projectId: nullableUuidSchema,
   becraCode: nullableString255Schema,
+  warehousePlaceId: nullableUuidSchema,
   createdBy: nullableUuidSchema,
 })
 

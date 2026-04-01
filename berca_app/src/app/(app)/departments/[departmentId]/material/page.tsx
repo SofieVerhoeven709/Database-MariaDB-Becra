@@ -1,8 +1,8 @@
 import {getMaterials, getMaterialGroups, getUnits} from '@/dal/materials'
-import type {MaterialListItem} from '@/dal/materials'
 import {MaterialTable} from '@/components/custom/materialTable'
 import {getDepartmentById} from '@/dal/department'
 import {getSupplierCompanies} from '@/dal/companies'
+import {getWarehousePlaces} from '@/dal/warehousePlace'
 import type {MappedMaterial} from '@/types/material'
 
 interface PageProps {
@@ -25,6 +25,8 @@ function getParentBeNumbers(material: unknown): string[] {
     .filter((value): value is string => value !== null)
 }
 
+type MaterialRow = Awaited<ReturnType<typeof getMaterials>>[number]
+
 export default async function MaterialPage({params}: PageProps) {
   const parseBePartDoc = (value: string | null) => {
     if (value == null || value === '') return null
@@ -34,19 +36,20 @@ export default async function MaterialPage({params}: PageProps) {
 
   const {departmentId} = await params
 
-  const [department, materials, groups, units, supplierCompanies] = await Promise.all([
+  const [department, materials, groups, units, supplierCompanies, warehousePlaces] = await Promise.all([
     getDepartmentById(departmentId),
     getMaterials(),
     getMaterialGroups(),
     getUnits(),
     getSupplierCompanies(),
+    getWarehousePlaces(),
   ])
 
   if (!department) return <p>Department not found</p>
 
   const groupById = new Map(groups.map(g => [g.id, g]))
 
-  const mappedMaterials: MappedMaterial[] = materials.map((m: MaterialListItem) => {
+  const mappedMaterials: MappedMaterial[] = materials.map((m: MaterialRow) => {
     const preferredSupplierEntry =
       m.MaterialSupplier.find(s => s.companyId === m.preferredSupplierCompanyId) ??
       m.MaterialSupplier.find(s => s.isPreferred) ??
@@ -122,6 +125,13 @@ export default async function MaterialPage({params}: PageProps) {
     number: c.number,
   }))
 
+  const mappedWarehousePlaces = warehousePlaces.map(place => ({
+    id: place.id,
+    label: [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
+      .filter(Boolean)
+      .join(' - '),
+  }))
+
   const mappedParentPartOptions = materials
     .filter(m => typeof m.beNumber === 'string' && m.beNumber.length > 0)
     .map(m => ({
@@ -142,6 +152,7 @@ export default async function MaterialPage({params}: PageProps) {
         materialGroups={mappedGroups}
         units={mappedUnits}
         supplierCompanies={mappedSupplierCompanies}
+        warehousePlaces={mappedWarehousePlaces}
         departmentId={departmentId}
         parentPartOptions={mappedParentPartOptions}
       />

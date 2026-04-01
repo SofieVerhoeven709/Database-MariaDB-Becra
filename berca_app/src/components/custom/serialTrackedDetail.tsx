@@ -13,12 +13,13 @@ interface Props {
   companies: {id: string; name: string}[]
   projects: {id: string; name: string}[]
   materialGroups: {id: string; name: string}[]
+  warehousePlaces: {id: string; label: string}[]
   materialOptions: any[] // Add this line
   currentUserRole: string
   currentUserLevel: number
 }
 
-export function MaterialSerialTrackedDetail({item, companies, projects, materialGroups, materialOptions, currentUserRole, currentUserLevel}: Props) {
+export function MaterialSerialTrackedDetail({item, companies, projects, materialGroups, warehousePlaces, materialOptions, currentUserRole, currentUserLevel}: Props) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [structure, setStructure] = useState<any[]>([])
   useEffect(() => {
@@ -27,7 +28,6 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
       const res = await fetch(`/api/serialTrackedStructure/${item.id}`)
       if (res.ok) {
         const data = await res.json()
-        console.log('Fetched structure:', data)
         setStructure(data)
       } else {
         setStructure([])
@@ -66,6 +66,23 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
             <Field label="Management" value={item.management} />
             <Field label="Order Number" value={item.orderNumber} />
             <Field label="Transaction Type" value={item.transactionType} />
+            <Field
+              label="Stock Location"
+              value={
+                item.WarehousePlace?.[0]
+                  ? [
+                      item.WarehousePlace[0].abbreviation,
+                      item.WarehousePlace[0].place,
+                      item.WarehousePlace[0].shelf,
+                      item.WarehousePlace[0].column,
+                      item.WarehousePlace[0].layer,
+                      item.WarehousePlace[0].layerPlace,
+                    ]
+                      .filter(Boolean)
+                      .join(' / ')
+                  : null
+              }
+            />
             <Field label="From Location" value={item.fromLocation} />
             <Field label="To Location" value={item.toLocation} />
             <Field label="Preferred Supplier" value={item.preferredSupplier} />
@@ -91,10 +108,6 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
         </TabsContent>
         <TabsContent value="structure">
           <div className="rounded-xl border border-border bg-card p-6">
-            <details>
-              <summary className="mb-2 cursor-pointer text-xs text-muted-foreground">Show raw structure data (debug)</summary>
-              <pre className="text-xs bg-muted p-2 rounded overflow-x-auto max-h-64">{JSON.stringify(structure, null, 2)}</pre>
-            </details>
             {structure.length === 0 ? (
               <p className="text-muted-foreground text-sm">No structure found for this serial tracked item.</p>
             ) : (
@@ -134,6 +147,7 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
         companyOptions={companies}
         projectOptions={projects}
         materialGroupOptions={materialGroups}
+        warehousePlaceOptions={warehousePlaces}
         materialOptions={materialOptions} // Pass the prop
         departmentId={item.departmentId}
       />

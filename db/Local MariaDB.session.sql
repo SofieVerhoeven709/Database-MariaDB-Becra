@@ -1837,3 +1837,49 @@ CREATE TABLE
             FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS ProjectBOM (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            parentPart VARCHAR(255),
+            additionalInfo VARCHAR(255),
+            description VARCHAR(255),
+            startDate DATETIME NOT NULL,
+            endDate DATETIME,
+            createdAt DATETIME NOT NULL,
+            deletedAt DATETIME,
+            closed BOOLEAN NOT NULL DEFAULT 0,
+            materialClosed BOOLEAN NOT NULL DEFAULT 0,
+            readyForPurchase BOOLEAN NOT NULL DEFAULT 0,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            createdBy CHAR(36) NOT NULL,
+            projectId CHAR(36) NOT NULL,
+            deletedBy CHAR(36),
+            FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS ProjectBOMStructure (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            shortDescription VARCHAR(255),
+            additionalInfo VARCHAR(255),
+            description VARCHAR(255),
+            tag VARCHAR(255),
+            requiredQuantity INT,
+            reservedQuantity INT,
+            issuedQuantity INT,
+            createdAt DATETIME NOT NULL,
+            readyForPurchaseDate DATETIME,
+            deletedAt DATETIME,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            createdBy CHAR(36) NOT NULL,
+            materialId CHAR(36) NOT NULL,
+            projectBOMId CHAR(36) NOT NULL,
+            deletedBy CHAR(36),
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE RESTRICT,
+            FOREIGN KEY (projectBOMId) REFERENCES ProjectBOM (id) ON DELETE RESTRICT,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;

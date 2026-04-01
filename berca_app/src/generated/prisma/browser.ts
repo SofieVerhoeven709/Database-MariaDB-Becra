@@ -492,3 +492,13 @@ export type DocumentStatus = Prisma.DocumentStatusModel
  * 
  */
 export type DocumentStructureTarget = Prisma.DocumentStructureTargetModel
+/**
+ * Model ProjectBOM
+ * 
+ */
+export type ProjectBOM = Prisma.ProjectBOMModel
+/**
+ * Model ProjectBOMStructure
+ * 
+ */
+export type ProjectBOMStructure = Prisma.ProjectBOMStructureModel

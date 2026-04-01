@@ -484,7 +484,9 @@ export const ModelName = {
   DocumentGroup: 'DocumentGroup',
   DocumentRevision: 'DocumentRevision',
   DocumentStatus: 'DocumentStatus',
-  DocumentStructureTarget: 'DocumentStructureTarget'
+  DocumentStructureTarget: 'DocumentStructureTarget',
+  ProjectBOM: 'ProjectBOM',
+  ProjectBOMStructure: 'ProjectBOMStructure'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -500,7 +502,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "projectBOM" | "projectBOMStructure"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -6774,6 +6776,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProjectBOM: {
+      payload: Prisma.$ProjectBOMPayload<ExtArgs>
+      fields: Prisma.ProjectBOMFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectBOMFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectBOMFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMPayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectBOMFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectBOMFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMPayload>
+        }
+        findMany: {
+          args: Prisma.ProjectBOMFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMPayload>[]
+        }
+        create: {
+          args: Prisma.ProjectBOMCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMPayload>
+        }
+        createMany: {
+          args: Prisma.ProjectBOMCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ProjectBOMDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMPayload>
+        }
+        update: {
+          args: Prisma.ProjectBOMUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectBOMDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectBOMUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ProjectBOMUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMPayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectBOMAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectBOM>
+        }
+        groupBy: {
+          args: Prisma.ProjectBOMGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectBOMGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectBOMCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectBOMCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProjectBOMStructure: {
+      payload: Prisma.$ProjectBOMStructurePayload<ExtArgs>
+      fields: Prisma.ProjectBOMStructureFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectBOMStructureFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMStructurePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectBOMStructureFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMStructurePayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectBOMStructureFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMStructurePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectBOMStructureFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMStructurePayload>
+        }
+        findMany: {
+          args: Prisma.ProjectBOMStructureFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMStructurePayload>[]
+        }
+        create: {
+          args: Prisma.ProjectBOMStructureCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMStructurePayload>
+        }
+        createMany: {
+          args: Prisma.ProjectBOMStructureCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ProjectBOMStructureDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMStructurePayload>
+        }
+        update: {
+          args: Prisma.ProjectBOMStructureUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMStructurePayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectBOMStructureDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectBOMStructureUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ProjectBOMStructureUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectBOMStructurePayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectBOMStructureAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectBOMStructure>
+        }
+        groupBy: {
+          args: Prisma.ProjectBOMStructureGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectBOMStructureGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectBOMStructureCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectBOMStructureCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -7359,10 +7493,12 @@ export const MaterialScalarFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
   rejected: 'rejected',
+  isSerialTracked: 'isSerialTracked',
   materialGroupIdA: 'materialGroupIdA',
   materialGroupIdB: 'materialGroupIdB',
   materialGroupIdC: 'materialGroupIdC',
@@ -7373,8 +7509,7 @@ export const MaterialScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  targetId: 'targetId',
-  isSerialTracked: 'isSerialTracked'
+  targetId: 'targetId'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -7549,6 +7684,8 @@ export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)
 
 export const MaterialSerialTrackScalarFieldEnum = {
   id: 'id',
+  materialId: 'materialId',
+  beNumber: 'beNumber',
   brandName: 'brandName',
   management: 'management',
   brandOrderNumber: 'brandOrderNumber',
@@ -7557,6 +7694,7 @@ export const MaterialSerialTrackScalarFieldEnum = {
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   transactionType: 'transactionType',
+  materialGroupId: 'materialGroupId',
   fromLocation: 'fromLocation',
   toLocation: 'toLocation',
   updatedAt: 'updatedAt',
@@ -7568,10 +7706,7 @@ export const MaterialSerialTrackScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy',
-  materialId: 'materialId',
-  beNumber: 'beNumber',
-  materialGroupId: 'materialGroupId'
+  deletedBy: 'deletedBy'
 } as const
 
 export type MaterialSerialTrackScalarFieldEnum = (typeof MaterialSerialTrackScalarFieldEnum)[keyof typeof MaterialSerialTrackScalarFieldEnum]
@@ -7583,6 +7718,7 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -8483,6 +8619,49 @@ export const DocumentStructureTargetScalarFieldEnum = {
 export type DocumentStructureTargetScalarFieldEnum = (typeof DocumentStructureTargetScalarFieldEnum)[keyof typeof DocumentStructureTargetScalarFieldEnum]
 
 
+export const ProjectBOMScalarFieldEnum = {
+  id: 'id',
+  parentPart: 'parentPart',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  createdAt: 'createdAt',
+  deletedAt: 'deletedAt',
+  closed: 'closed',
+  materialClosed: 'materialClosed',
+  readyForPurchase: 'readyForPurchase',
+  deleted: 'deleted',
+  createdBy: 'createdBy',
+  projectId: 'projectId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ProjectBOMScalarFieldEnum = (typeof ProjectBOMScalarFieldEnum)[keyof typeof ProjectBOMScalarFieldEnum]
+
+
+export const ProjectBOMStructureScalarFieldEnum = {
+  id: 'id',
+  shortDescription: 'shortDescription',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  tag: 'tag',
+  requiredQuantity: 'requiredQuantity',
+  reservedQuantity: 'reservedQuantity',
+  issuedQuantity: 'issuedQuantity',
+  createdAt: 'createdAt',
+  readyForPurchaseDate: 'readyForPurchaseDate',
+  deletedAt: 'deletedAt',
+  deleted: 'deleted',
+  createdBy: 'createdBy',
+  materialId: 'materialId',
+  projectBOMId: 'projectBOMId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ProjectBOMStructureScalarFieldEnum = (typeof ProjectBOMStructureScalarFieldEnum)[keyof typeof ProjectBOMStructureScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -8896,6 +9075,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -9051,6 +9231,8 @@ export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderB
 
 export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   id: 'id',
+  materialId: 'materialId',
+  beNumber: 'beNumber',
   brandName: 'brandName',
   management: 'management',
   brandOrderNumber: 'brandOrderNumber',
@@ -9059,6 +9241,7 @@ export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   transactionType: 'transactionType',
+  materialGroupId: 'materialGroupId',
   fromLocation: 'fromLocation',
   toLocation: 'toLocation',
   preferredSupplier: 'preferredSupplier',
@@ -9066,10 +9249,7 @@ export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   projectId: 'projectId',
   becraCode: 'becraCode',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy',
-  materialId: 'materialId',
-  beNumber: 'beNumber',
-  materialGroupId: 'materialGroupId'
+  deletedBy: 'deletedBy'
 } as const
 
 export type MaterialSerialTrackOrderByRelevanceFieldEnum = (typeof MaterialSerialTrackOrderByRelevanceFieldEnum)[keyof typeof MaterialSerialTrackOrderByRelevanceFieldEnum]
@@ -9081,6 +9261,7 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -9767,6 +9948,34 @@ export const DocumentStructureTargetOrderByRelevanceFieldEnum = {
 export type DocumentStructureTargetOrderByRelevanceFieldEnum = (typeof DocumentStructureTargetOrderByRelevanceFieldEnum)[keyof typeof DocumentStructureTargetOrderByRelevanceFieldEnum]
 
 
+export const ProjectBOMOrderByRelevanceFieldEnum = {
+  id: 'id',
+  parentPart: 'parentPart',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  createdBy: 'createdBy',
+  projectId: 'projectId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ProjectBOMOrderByRelevanceFieldEnum = (typeof ProjectBOMOrderByRelevanceFieldEnum)[keyof typeof ProjectBOMOrderByRelevanceFieldEnum]
+
+
+export const ProjectBOMStructureOrderByRelevanceFieldEnum = {
+  id: 'id',
+  shortDescription: 'shortDescription',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  tag: 'tag',
+  createdBy: 'createdBy',
+  materialId: 'materialId',
+  projectBOMId: 'projectBOMId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type ProjectBOMStructureOrderByRelevanceFieldEnum = (typeof ProjectBOMStructureOrderByRelevanceFieldEnum)[keyof typeof ProjectBOMStructureOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -9996,6 +10205,8 @@ export type GlobalOmitConfig = {
   documentRevision?: Prisma.DocumentRevisionOmit
   documentStatus?: Prisma.DocumentStatusOmit
   documentStructureTarget?: Prisma.DocumentStructureTargetOmit
+  projectBOM?: Prisma.ProjectBOMOmit
+  projectBOMStructure?: Prisma.ProjectBOMStructureOmit
 }
 
 /* Types for Logging */

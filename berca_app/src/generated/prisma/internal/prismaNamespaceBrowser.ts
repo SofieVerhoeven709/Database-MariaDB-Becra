@@ -139,7 +139,11 @@ export const ModelName = {
   DocumentGroupB: 'DocumentGroupB',
   DocumentGroupC: 'DocumentGroupC',
   DocumentGroupD: 'DocumentGroupD',
-  PriceListCompany: 'PriceListCompany'
+  PriceListCompany: 'PriceListCompany',
+  DocumentGroup: 'DocumentGroup',
+  DocumentRevision: 'DocumentRevision',
+  DocumentStatus: 'DocumentStatus',
+  DocumentStructureTarget: 'DocumentStructureTarget'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -342,9 +346,9 @@ export const DocumentStructureScalarFieldEnum = {
   revisionDetail: 'revisionDetail',
   valid: 'valid',
   process: 'process',
+  canCopy: 'canCopy',
   additionalInfo: 'additionalInfo',
   referenceDocId: 'referenceDocId',
-  roleId: 'roleId',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   createdBy: 'createdBy',
@@ -352,11 +356,9 @@ export const DocumentStructureScalarFieldEnum = {
   managedById: 'managedById',
   targetId: 'targetId',
   deletedBy: 'deletedBy',
-  documentGroupAId: 'documentGroupAId',
-  documentGroupBId: 'documentGroupBId',
-  documentGroupCId: 'documentGroupCId',
-  documentGroupDId: 'documentGroupDId',
-  documentPlaceId: 'documentPlaceId'
+  documentGroupId: 'documentGroupId',
+  documentPlaceId: 'documentPlaceId',
+  documentStatusId: 'documentStatusId'
 } as const
 
 export type DocumentStructureScalarFieldEnum = (typeof DocumentStructureScalarFieldEnum)[keyof typeof DocumentStructureScalarFieldEnum]
@@ -679,7 +681,8 @@ export const InvoiceOutScalarFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  vatMarginId: 'vatMarginId'
+  vatMarginId: 'vatMarginId',
+  priceListId: 'priceListId'
 } as const
 
 export type InvoiceOutScalarFieldEnum = (typeof InvoiceOutScalarFieldEnum)[keyof typeof InvoiceOutScalarFieldEnum]
@@ -705,10 +708,12 @@ export const MaterialScalarFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
   rejected: 'rejected',
+  isSerialTracked: 'isSerialTracked',
   materialGroupIdA: 'materialGroupIdA',
   materialGroupIdB: 'materialGroupIdB',
   materialGroupIdC: 'materialGroupIdC',
@@ -719,8 +724,7 @@ export const MaterialScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  targetId: 'targetId',
-  isSerialTracked: 'isSerialTracked'
+  targetId: 'targetId'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -895,6 +899,7 @@ export type MaterialPriceScalarFieldEnum = (typeof MaterialPriceScalarFieldEnum)
 
 export const MaterialSerialTrackScalarFieldEnum = {
   id: 'id',
+  materialId: 'materialId',
   beNumber: 'beNumber',
   brandName: 'brandName',
   management: 'management',
@@ -916,8 +921,7 @@ export const MaterialSerialTrackScalarFieldEnum = {
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
-  deletedBy: 'deletedBy',
-  materialId: 'materialId'
+  deletedBy: 'deletedBy'
 } as const
 
 export type MaterialSerialTrackScalarFieldEnum = (typeof MaterialSerialTrackScalarFieldEnum)[keyof typeof MaterialSerialTrackScalarFieldEnum]
@@ -929,6 +933,7 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -1735,7 +1740,6 @@ export type DocumentGroupAScalarFieldEnum = (typeof DocumentGroupAScalarFieldEnu
 
 export const DocumentGroupBScalarFieldEnum = {
   id: 'id',
-  documentGroupAId: 'documentGroupAId',
   name: 'name',
   createdBy: 'createdBy',
   createdAt: 'createdAt',
@@ -1749,7 +1753,6 @@ export type DocumentGroupBScalarFieldEnum = (typeof DocumentGroupBScalarFieldEnu
 
 export const DocumentGroupCScalarFieldEnum = {
   id: 'id',
-  documentGroupBId: 'documentGroupBId',
   name: 'name',
   createdBy: 'createdBy',
   createdAt: 'createdAt',
@@ -1763,7 +1766,6 @@ export type DocumentGroupCScalarFieldEnum = (typeof DocumentGroupCScalarFieldEnu
 
 export const DocumentGroupDScalarFieldEnum = {
   id: 'id',
-  documentGroupCId: 'documentGroupCId',
   name: 'name',
   createdBy: 'createdBy',
   createdAt: 'createdAt',
@@ -1782,6 +1784,54 @@ export const PriceListCompanyScalarFieldEnum = {
 } as const
 
 export type PriceListCompanyScalarFieldEnum = (typeof PriceListCompanyScalarFieldEnum)[keyof typeof PriceListCompanyScalarFieldEnum]
+
+
+export const DocumentGroupScalarFieldEnum = {
+  id: 'id',
+  groupAId: 'groupAId',
+  groupBId: 'groupBId',
+  groupCId: 'groupCId',
+  groupDId: 'groupDId'
+} as const
+
+export type DocumentGroupScalarFieldEnum = (typeof DocumentGroupScalarFieldEnum)[keyof typeof DocumentGroupScalarFieldEnum]
+
+
+export const DocumentRevisionScalarFieldEnum = {
+  id: 'id',
+  documentId: 'documentId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentRevisionScalarFieldEnum = (typeof DocumentRevisionScalarFieldEnum)[keyof typeof DocumentRevisionScalarFieldEnum]
+
+
+export const DocumentStatusScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  deleted: 'deleted',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentStatusScalarFieldEnum = (typeof DocumentStatusScalarFieldEnum)[keyof typeof DocumentStatusScalarFieldEnum]
+
+
+export const DocumentStructureTargetScalarFieldEnum = {
+  id: 'id',
+  documentStructureId: 'documentStructureId',
+  targetId: 'targetId'
+} as const
+
+export type DocumentStructureTargetScalarFieldEnum = (typeof DocumentStructureTargetScalarFieldEnum)[keyof typeof DocumentStructureTargetScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1931,17 +1981,14 @@ export const DocumentStructureOrderByRelevanceFieldEnum = {
   revisionDetail: 'revisionDetail',
   additionalInfo: 'additionalInfo',
   referenceDocId: 'referenceDocId',
-  roleId: 'roleId',
   createdBy: 'createdBy',
   revisedById: 'revisedById',
   managedById: 'managedById',
   targetId: 'targetId',
   deletedBy: 'deletedBy',
-  documentGroupAId: 'documentGroupAId',
-  documentGroupBId: 'documentGroupBId',
-  documentGroupCId: 'documentGroupCId',
-  documentGroupDId: 'documentGroupDId',
-  documentPlaceId: 'documentPlaceId'
+  documentGroupId: 'documentGroupId',
+  documentPlaceId: 'documentPlaceId',
+  documentStatusId: 'documentStatusId'
 } as const
 
 export type DocumentStructureOrderByRelevanceFieldEnum = (typeof DocumentStructureOrderByRelevanceFieldEnum)[keyof typeof DocumentStructureOrderByRelevanceFieldEnum]
@@ -2176,7 +2223,8 @@ export const InvoiceOutOrderByRelevanceFieldEnum = {
   paymentMethodId: 'paymentMethodId',
   invoiceSentTypeId: 'invoiceSentTypeId',
   invoiceStatusId: 'invoiceStatusId',
-  vatMarginId: 'vatMarginId'
+  vatMarginId: 'vatMarginId',
+  priceListId: 'priceListId'
 } as const
 
 export type InvoiceOutOrderByRelevanceFieldEnum = (typeof InvoiceOutOrderByRelevanceFieldEnum)[keyof typeof InvoiceOutOrderByRelevanceFieldEnum]
@@ -2199,6 +2247,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   brandOrderNr: 'brandOrderNr',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
+  preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
   documentationPlace: 'documentationPlace',
   bePartDoc: 'bePartDoc',
@@ -2354,6 +2403,7 @@ export type MaterialPriceOrderByRelevanceFieldEnum = (typeof MaterialPriceOrderB
 
 export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   id: 'id',
+  materialId: 'materialId',
   beNumber: 'beNumber',
   brandName: 'brandName',
   management: 'management',
@@ -2371,8 +2421,7 @@ export const MaterialSerialTrackOrderByRelevanceFieldEnum = {
   projectId: 'projectId',
   becraCode: 'becraCode',
   createdBy: 'createdBy',
-  deletedBy: 'deletedBy',
-  materialId: 'materialId'
+  deletedBy: 'deletedBy'
 } as const
 
 export type MaterialSerialTrackOrderByRelevanceFieldEnum = (typeof MaterialSerialTrackOrderByRelevanceFieldEnum)[keyof typeof MaterialSerialTrackOrderByRelevanceFieldEnum]
@@ -2384,6 +2433,7 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
+  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
@@ -2991,7 +3041,6 @@ export type DocumentGroupAOrderByRelevanceFieldEnum = (typeof DocumentGroupAOrde
 
 export const DocumentGroupBOrderByRelevanceFieldEnum = {
   id: 'id',
-  documentGroupAId: 'documentGroupAId',
   name: 'name',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
@@ -3002,7 +3051,6 @@ export type DocumentGroupBOrderByRelevanceFieldEnum = (typeof DocumentGroupBOrde
 
 export const DocumentGroupCOrderByRelevanceFieldEnum = {
   id: 'id',
-  documentGroupBId: 'documentGroupBId',
   name: 'name',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
@@ -3013,7 +3061,6 @@ export type DocumentGroupCOrderByRelevanceFieldEnum = (typeof DocumentGroupCOrde
 
 export const DocumentGroupDOrderByRelevanceFieldEnum = {
   id: 'id',
-  documentGroupCId: 'documentGroupCId',
   name: 'name',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy'
@@ -3029,4 +3076,46 @@ export const PriceListCompanyOrderByRelevanceFieldEnum = {
 } as const
 
 export type PriceListCompanyOrderByRelevanceFieldEnum = (typeof PriceListCompanyOrderByRelevanceFieldEnum)[keyof typeof PriceListCompanyOrderByRelevanceFieldEnum]
+
+
+export const DocumentGroupOrderByRelevanceFieldEnum = {
+  id: 'id',
+  groupAId: 'groupAId',
+  groupBId: 'groupBId',
+  groupCId: 'groupCId',
+  groupDId: 'groupDId'
+} as const
+
+export type DocumentGroupOrderByRelevanceFieldEnum = (typeof DocumentGroupOrderByRelevanceFieldEnum)[keyof typeof DocumentGroupOrderByRelevanceFieldEnum]
+
+
+export const DocumentRevisionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentId: 'documentId',
+  shortDescription: 'shortDescription',
+  longDescription: 'longDescription',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentRevisionOrderByRelevanceFieldEnum = (typeof DocumentRevisionOrderByRelevanceFieldEnum)[keyof typeof DocumentRevisionOrderByRelevanceFieldEnum]
+
+
+export const DocumentStatusOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdBy: 'createdBy',
+  deletedBy: 'deletedBy'
+} as const
+
+export type DocumentStatusOrderByRelevanceFieldEnum = (typeof DocumentStatusOrderByRelevanceFieldEnum)[keyof typeof DocumentStatusOrderByRelevanceFieldEnum]
+
+
+export const DocumentStructureTargetOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentStructureId: 'documentStructureId',
+  targetId: 'targetId'
+} as const
+
+export type DocumentStructureTargetOrderByRelevanceFieldEnum = (typeof DocumentStructureTargetOrderByRelevanceFieldEnum)[keyof typeof DocumentStructureTargetOrderByRelevanceFieldEnum]
 

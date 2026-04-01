@@ -370,12 +370,12 @@ ALTER TABLE Material DROP COLUMN IF EXISTS `preferredSupplierShortDescription`;
 ALTER TABLE Company ADD COLUMN IF NOT EXISTS `idOld` VARCHAR(255) NULL;
 
 -- 39a. Drop old tables (disable FK checks to avoid constraint errors)
-SET FOREIGN_KEY_CHECKS = 0;
+-- SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS InvoiceOutContact;
-DROP TABLE IF EXISTS InvoiceOut;
+-- DROP TABLE IF EXISTS InvoiceOutContact;
+-- DROP TABLE IF EXISTS InvoiceOut;
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- SET FOREIGN_KEY_CHECKS = 1;
 -- 39b. Create new supporting tables (required before InvoiceOut/InvoiceIn reference them)
 CREATE TABLE IF NOT EXISTS VatMargin (
       id CHAR(36) NOT NULL PRIMARY KEY,
@@ -692,17 +692,17 @@ EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 
 
-SET FOREIGN_KEY_CHECKS = 0;
+-- SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS DocumentPlace;
-DROP TABLE IF EXISTS DocumentGroupA;
-DROP TABLE IF EXISTS DocumentGroupB;
-DROP TABLE IF EXISTS DocumentGroupC;
-DROP TABLE IF EXISTS DocumentGroupD;
-DROP TABLE IF EXISTS DocumentGroup;
-DROP TABLE IF EXISTS DocumentStructure;
+-- DROP TABLE IF EXISTS DocumentPlace;
+-- DROP TABLE IF EXISTS DocumentGroupA;
+-- DROP TABLE IF EXISTS DocumentGroupB;
+-- DROP TABLE IF EXISTS DocumentGroupC;
+-- DROP TABLE IF EXISTS DocumentGroupD;
+-- DROP TABLE IF EXISTS DocumentGroup;
+-- DROP TABLE IF EXISTS DocumentStructure;
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE
       IF NOT EXISTS DocumentPlace (

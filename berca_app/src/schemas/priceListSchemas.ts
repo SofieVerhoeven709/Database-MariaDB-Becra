@@ -58,14 +58,20 @@ export const updatePriceListItemSchema = priceListItemSchema.pick({
 
 export const priceListItemIdSchema = priceListItemSchema.pick({id: true})
 
-// ─── Project assignment ────────────────────────────────────────────────────────
-export const assignProjectSchema = z.object({
+// ─── Company assignment ────────────────────────────────────────────────────────
+export const assignCompanySchema = z.object({
   priceListId: z.string(),
-  projectId: z.string(),
+  companyId: z.string(),
 })
 
-export const unassignProjectSchema = z.object({
-  projectId: z.string(),
+export const unassignCompanySchema = z.object({
+  priceListCompanyId: z.string(),
+})
+
+// ─── Company search ────────────────────────────────────────────────────────────
+export const searchCompaniesSchema = z.object({
+  query: z.string(),
+  excludeIds: z.array(z.string()).optional(),
 })
 
 // ─── PriceListItemTarget ───────────────────────────────────────────────────────

@@ -6,9 +6,6 @@ import type {
   MappedBillingLine,
 } from '@/types/invoice'
 
-// ─── Helpers ───────────────────────────────────────────────────────────────────
-
-// Returns hours as a rounded integer: (end - start) - break, × employee count
 function calcHours(
   startTime: Date,
   endTime: Date | null,
@@ -33,7 +30,6 @@ type PriceListItemRaw = {
   PriceListItemTarget: {targetId: string} | null
 }
 
-// Build a map of targetId → pricelist item for quick lookup
 function buildTargetPriceMap(
   items: PriceListItemRaw[],
 ): Map<string, {itemId: string; unit: string; basePrice: number}> {
@@ -50,12 +46,10 @@ function buildTargetPriceMap(
   return map
 }
 
-// Apply cost margin to a base price
 function applyMargin(basePrice: number, marginPercent: number): number {
   return basePrice * (1 + marginPercent / 100)
 }
 
-// ─── InvoiceOut ────────────────────────────────────────────────────────────────
 type TimeRegistryRaw = {
   id: string
   startTime: Date
@@ -92,9 +86,7 @@ type TrainingRaw = {
     description: string | null
     location: string | null
     targetId: string | null
-    Certificate: {
-      descriptionShort: string | null
-    } | null
+    Certificate: {descriptionShort: string | null} | null
   } | null
 }
 
@@ -111,10 +103,7 @@ type WorkOrderRaw = {
     projectName: string
     companyId: string
     Company: {id: string; name: string}
-    PriceList: {
-      id: string
-      PriceListItem: PriceListItemRaw[]
-    } | null
+    // No PriceList here anymore
   }
   TimeRegistry: TimeRegistryRaw[]
   WorkOrderStructure: WorkOrderStructureRaw[]
@@ -152,12 +141,19 @@ type InvoiceOutRaw = {
   invoiceSentTypeId: string
   invoiceStatusId: string
   vatMarginId: string
+  priceListId: string | null
   InvoiceType: {id: string; name: string}
   Employee: {id: string; firstName: string; lastName: string}
   PaymentMethod: {id: string; name: string}
   InvoiceSentType: {id: string; name: string}
   InvoiceStatus: {id: string; name: string}
   VatMargin: {id: string; vat: number}
+  // ← Price list at invoice level
+  PriceList: {
+    id: string
+    name: string
+    PriceListItem: PriceListItemRaw[]
+  } | null
   InvoiceOutContact: {
     id: string
     contactId: string
@@ -173,14 +169,16 @@ type InvoiceOutRaw = {
   WorkOrderInvoice: WorkOrderInvoiceRaw[]
 }
 
-function mapWorkOrderWithLines(w: WorkOrderInvoiceRaw, costMargin: number): MappedInvoiceOutWorkOrder {
+// Now takes priceMap and costMargin directly — sourced from invoice.PriceList
+function mapWorkOrderWithLines(
+  w: WorkOrderInvoiceRaw,
+  priceMap: Map<string, {itemId: string; unit: string; basePrice: number}>,
+  costMargin: number,
+): MappedInvoiceOutWorkOrder {
   const wo = w.WorkOrder
-  const priceItems = wo.Project.PriceList?.PriceListItem ?? []
-  const priceMap = buildTargetPriceMap(priceItems)
-
   const lines: MappedBillingLine[] = []
 
-  // ── Hour lines: group TimeRegistry by HourType ────────────────────────────
+  // ── Hour lines ────────────────────────────────────────────────────────────
   const hoursByType = new Map<string, {label: string; targetId: string | null; totalHours: number}>()
   for (const tr of wo.TimeRegistry) {
     const existing = hoursByType.get(tr.hourTypeId)
@@ -198,7 +196,6 @@ function mapWorkOrderWithLines(w: WorkOrderInvoiceRaw, costMargin: number): Mapp
 
   for (const [hourTypeId, {label, targetId, totalHours}] of hoursByType) {
     const match = targetId ? priceMap.get(targetId) : undefined
-    const unmatched = !match
     lines.push({
       workOrderId: wo.id,
       type: 'hours',
@@ -210,7 +207,7 @@ function mapWorkOrderWithLines(w: WorkOrderInvoiceRaw, costMargin: number): Mapp
       unitPriceBase: match?.basePrice ?? null,
       unitPriceFinal: match ? applyMargin(match.basePrice, costMargin) : null,
       lineTotalFinal: match ? applyMargin(match.basePrice, costMargin) * totalHours : null,
-      unmatched,
+      unmatched: !match,
     })
   }
 
@@ -219,7 +216,6 @@ function mapWorkOrderWithLines(w: WorkOrderInvoiceRaw, costMargin: number): Mapp
     const mat = wos.Material
     const qty = wos.quantity ?? 1
     const match = mat.targetId ? priceMap.get(mat.targetId) : undefined
-    const unmatched = !match
     lines.push({
       workOrderId: wo.id,
       type: 'material',
@@ -231,34 +227,28 @@ function mapWorkOrderWithLines(w: WorkOrderInvoiceRaw, costMargin: number): Mapp
       unitPriceBase: match?.basePrice ?? null,
       unitPriceFinal: match ? applyMargin(match.basePrice, costMargin) : null,
       lineTotalFinal: match ? applyMargin(match.basePrice, costMargin) * qty : null,
-      unmatched,
+      unmatched: !match,
     })
   }
 
-  // ── Training lines ─────────────────────────────────────────────────────────
+  // ── Training lines ────────────────────────────────────────────────────────
   for (const tr of wo.Training ?? []) {
     const targetId = tr.targetId ?? tr.TrainingStandard?.targetId ?? null
-
     const match = targetId ? priceMap.get(targetId) : undefined
-    const unmatched = !match
-
     const label =
       tr.TrainingStandard?.descriptionShort ?? tr.TrainingStandard?.description ?? `Training ${tr.trainingNumber}`
-
-    const qty = 1
-
     lines.push({
       workOrderId: wo.id,
       type: 'training',
       sourceId: tr.id,
       sourceLabel: label,
-      quantity: qty,
+      quantity: 1,
       unit: match?.unit ?? 'T',
       priceListItemId: match?.itemId ?? null,
       unitPriceBase: match?.basePrice ?? null,
       unitPriceFinal: match ? applyMargin(match.basePrice, costMargin) : null,
-      lineTotalFinal: match ? applyMargin(match.basePrice, costMargin) * qty : null,
-      unmatched,
+      lineTotalFinal: match ? applyMargin(match.basePrice, costMargin) * 1 : null,
+      unmatched: !match,
     })
   }
 
@@ -281,22 +271,14 @@ function mapWorkOrderWithLines(w: WorkOrderInvoiceRaw, costMargin: number): Mapp
 export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
   const vatPct = r.VatMargin.vat
 
-  // Find cost margin from any work order's pricelist (they share the same project pricelist)
-  let costMargin = 0
-  for (const wi of r.WorkOrderInvoice) {
-    const items = wi.WorkOrder.Project.PriceList?.PriceListItem ?? []
-    const marginItem = items.find(i => i.isCostMargin)
-    if (marginItem) {
-      costMargin = marginItem.price.toNumber()
-      break
-    }
-  }
+  // Build price map from invoice-level price list
+  const priceItems = r.PriceList?.PriceListItem ?? []
+  const priceMap = buildTargetPriceMap(priceItems)
+  const costMargin = priceItems.find(i => i.isCostMargin)?.price.toNumber() ?? 0
 
-  const workOrders = r.WorkOrderInvoice.map(w => mapWorkOrderWithLines(w, costMargin))
+  const workOrders = r.WorkOrderInvoice.map(w => mapWorkOrderWithLines(w, priceMap, costMargin))
 
-  // Compute totals from all billing lines that have a price
   const subtotalExVat = workOrders.flatMap(wo => wo.billingLines).reduce((sum, l) => sum + (l.lineTotalFinal ?? 0), 0)
-
   const vatAmount = subtotalExVat * (vatPct / 100)
   const totalInclVat = subtotalExVat + vatAmount
 
@@ -331,6 +313,8 @@ export function mapInvoiceOut(r: InvoiceOutRaw): MappedInvoiceOut {
     invoiceStatusName: r.InvoiceStatus.name,
     vatMarginId: r.vatMarginId,
     vatMarginVat: vatPct,
+    priceListId: r.priceListId,
+    priceListName: r.PriceList?.name ?? null,
     contacts: r.InvoiceOutContact.map(
       (c): MappedInvoiceOutContact => ({
         id: c.id,

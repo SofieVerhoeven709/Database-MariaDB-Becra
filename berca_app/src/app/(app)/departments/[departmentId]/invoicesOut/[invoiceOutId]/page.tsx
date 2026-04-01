@@ -7,6 +7,7 @@ import {
   getInvoiceStatuses,
   getVatMargins,
   getCompanyContactsForInvoice,
+  getPriceListsForCompanies,
 } from '@/dal/invoices'
 import {mapInvoiceOut} from '@/extra/invoices'
 import {InvoiceOutDetail} from '@/components/custom/invoiceOutDetail'
@@ -63,9 +64,13 @@ export default async function InvoiceOutDetailPage({params}: PageProps) {
   const invoice = mapInvoiceOut(invoiceRawFixed as any)
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
-  // Derive company IDs from linked work orders → projects
   const companyIds = [...new Set(invoice.workOrders.map(wo => wo.companyId))]
-  const companyContacts = await getCompanyContactsForInvoice(companyIds)
+
+  const [companyContacts, priceListOptions] = await Promise.all([
+    getCompanyContactsForInvoice(companyIds),
+    getPriceListsForCompanies(companyIds),
+  ])
+
   const contactOptions = companyContacts.map(cc => ({
     id: cc.Contact.id,
     name: `${cc.Contact.firstName} ${cc.Contact.lastName}`,
@@ -82,6 +87,7 @@ export default async function InvoiceOutDetailPage({params}: PageProps) {
           invoiceStatuses={invoiceStatuses}
           vatMargins={vatMargins}
           contactOptions={contactOptions}
+          priceListOptions={priceListOptions}
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           departmentId={departmentId}

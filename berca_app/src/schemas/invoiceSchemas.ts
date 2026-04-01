@@ -25,6 +25,7 @@ export const invoiceOutSchema = z.object({
   invoiceSentTypeId: z.string(),
   invoiceStatusId: z.string(),
   vatMarginId: z.string(),
+  priceListId: z.string().nullable().optional(), // ← new
 })
 
 export const createInvoiceOutSchema = invoiceOutSchema
@@ -41,8 +42,6 @@ export const createInvoiceOutSchema = invoiceOutSchema
     targetId: true,
   })
   .extend({
-    // When provided, the server uses this number directly instead of auto-generating.
-    // When absent, the server queries the DB for the next sequence and generates one.
     invoiceNumber: z.string().min(1).max(255).optional(),
   })
 
@@ -97,8 +96,6 @@ export const createInvoiceInSchema = invoiceInSchema
     targetId: true,
   })
   .extend({
-    // When provided, the server uses this number directly instead of auto-generating.
-    // When absent, the server queries the DB for the next sequence and generates one.
     invoiceNumber: z.string().min(1).max(255).optional(),
   })
 

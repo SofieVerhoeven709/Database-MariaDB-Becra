@@ -396,9 +396,9 @@ export type DocumentPlaceMinOrderByAggregateInput = {
   deletedBy?: Prisma.SortOrder
 }
 
-export type DocumentPlaceScalarRelationFilter = {
-  is?: Prisma.DocumentPlaceWhereInput
-  isNot?: Prisma.DocumentPlaceWhereInput
+export type DocumentPlaceNullableScalarRelationFilter = {
+  is?: Prisma.DocumentPlaceWhereInput | null
+  isNot?: Prisma.DocumentPlaceWhereInput | null
 }
 
 export type DocumentPlaceListRelationFilter = {
@@ -411,21 +411,18 @@ export type DocumentPlaceOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type DocumentPlaceNullableScalarRelationFilter = {
-  is?: Prisma.DocumentPlaceWhereInput | null
-  isNot?: Prisma.DocumentPlaceWhereInput | null
-}
-
 export type DocumentPlaceCreateNestedOneWithoutDocumentStructureInput = {
   create?: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutDocumentStructureInput, Prisma.DocumentPlaceUncheckedCreateWithoutDocumentStructureInput>
   connectOrCreate?: Prisma.DocumentPlaceCreateOrConnectWithoutDocumentStructureInput
   connect?: Prisma.DocumentPlaceWhereUniqueInput
 }
 
-export type DocumentPlaceUpdateOneRequiredWithoutDocumentStructureNestedInput = {
+export type DocumentPlaceUpdateOneWithoutDocumentStructureNestedInput = {
   create?: Prisma.XOR<Prisma.DocumentPlaceCreateWithoutDocumentStructureInput, Prisma.DocumentPlaceUncheckedCreateWithoutDocumentStructureInput>
   connectOrCreate?: Prisma.DocumentPlaceCreateOrConnectWithoutDocumentStructureInput
   upsert?: Prisma.DocumentPlaceUpsertWithoutDocumentStructureInput
+  disconnect?: Prisma.DocumentPlaceWhereInput | boolean
+  delete?: Prisma.DocumentPlaceWhereInput | boolean
   connect?: Prisma.DocumentPlaceWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.DocumentPlaceUpdateToOneWithWhereWithoutDocumentStructureInput, Prisma.DocumentPlaceUpdateWithoutDocumentStructureInput>, Prisma.DocumentPlaceUncheckedUpdateWithoutDocumentStructureInput>
 }

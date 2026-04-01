@@ -17,14 +17,12 @@ const priceListInclude = {
       createdAt?: 'asc' | 'desc'
     }[],
   },
-  Project: {
-    where: {deleted: false},
+  PriceListCompany: {
+    where: {Company: {deleted: false}},
     select: {
       id: true,
-      projectNumber: true,
-      projectName: true,
       companyId: true,
-      Company: {select: {id: true, name: true}},
+      Company: {select: {id: true, number: true, name: true}},
     },
   },
 }
@@ -44,26 +42,26 @@ export async function getPriceListById(id: string) {
   })
 }
 
-// Projects that are open (isClosed = false) and have no pricelist assigned yet
-export async function getUnassignedOpenProjects() {
-  return prismaClient.project.findMany({
+// Search companies by name or number, excluding already-assigned ones
+export async function searchCompanies(query: string, excludeIds: string[] = []) {
+  const q = query.trim()
+  return prismaClient.company.findMany({
     where: {
       deleted: false,
-      isClosed: false,
+      id: {notIn: excludeIds},
+      ...(q
+        ? {
+            OR: [{name: {contains: q}}, {number: {contains: q}}],
+          }
+        : {}),
     },
-    select: {
-      id: true,
-      projectNumber: true,
-      projectName: true,
-      Company: {select: {name: true}},
-    },
-    orderBy: {projectNumber: 'asc'},
+    select: {id: true, number: true, name: true},
+    orderBy: {name: 'asc'},
+    take: 20,
   })
 }
 
-// ─── Enrich linked target labels for a set of targetIds ───────────────────────
-// Called from the detail page server component after the main query.
-// Returns a map of targetId -> {targetType, displayLabel} for all linked items.
+// ─── Enrich linked target labels ───────────────────────────────────────────────
 export async function enrichLinkedTargets(
   targetIds: string[],
 ): Promise<Map<string, {targetType: LinkableTargetType; displayLabel: string}>> {
@@ -95,8 +93,7 @@ export async function enrichLinkedTargets(
   }
   for (const r of materials) {
     if (r.targetId) {
-      const label = r.name ?? r.shortDescription ?? r.beNumber
-      result.set(r.targetId, {targetType: 'Material', displayLabel: label})
+      result.set(r.targetId, {targetType: 'Material', displayLabel: r.name ?? r.shortDescription ?? r.beNumber})
     }
   }
   for (const r of trainings) {
@@ -106,24 +103,20 @@ export async function enrichLinkedTargets(
   }
   for (const r of trainingStandards) {
     if (r.targetId) {
-      result.set(r.targetId, {
-        targetType: 'TrainingStandard',
-        displayLabel: r.descriptionShort ?? r.targetId,
-      })
+      result.set(r.targetId, {targetType: 'TrainingStandard', displayLabel: r.descriptionShort ?? r.targetId})
     }
   }
 
   return result
 }
+
+// ─── Linkable target search ────────────────────────────────────────────────────
 export async function searchLinkableTargets(type: LinkableTargetType, query: string) {
   const q = query.trim()
 
   if (type === 'HourType') {
     return prismaClient.hourType.findMany({
-      where: {
-        deleted: false,
-        ...(q ? {name: {contains: q}} : {}),
-      },
+      where: {deleted: false, ...(q ? {name: {contains: q}} : {})},
       select: {id: true, name: true, info: true, targetId: true},
       orderBy: {name: 'asc'},
       take: 20,
@@ -134,11 +127,7 @@ export async function searchLinkableTargets(type: LinkableTargetType, query: str
     return prismaClient.material.findMany({
       where: {
         deleted: false,
-        ...(q
-          ? {
-              OR: [{name: {contains: q}}, {shortDescription: {contains: q}}, {beNumber: {contains: q}}],
-            }
-          : {}),
+        ...(q ? {OR: [{name: {contains: q}}, {shortDescription: {contains: q}}, {beNumber: {contains: q}}]} : {}),
       },
       select: {id: true, name: true, shortDescription: true, beNumber: true, targetId: true},
       orderBy: {beNumber: 'asc'},
@@ -148,10 +137,7 @@ export async function searchLinkableTargets(type: LinkableTargetType, query: str
 
   if (type === 'Training') {
     return prismaClient.training.findMany({
-      where: {
-        deleted: false,
-        ...(q ? {trainingNumber: {contains: q}} : {}),
-      },
+      where: {deleted: false, ...(q ? {trainingNumber: {contains: q}} : {})},
       select: {id: true, trainingNumber: true, targetId: true},
       orderBy: {trainingNumber: 'asc'},
       take: 20,
@@ -160,10 +146,7 @@ export async function searchLinkableTargets(type: LinkableTargetType, query: str
 
   if (type === 'TrainingStandard') {
     return prismaClient.trainingStandard.findMany({
-      where: {
-        deleted: false,
-        ...(q ? {descriptionShort: {contains: q}} : {}),
-      },
+      where: {deleted: false, ...(q ? {descriptionShort: {contains: q}} : {})},
       select: {id: true, descriptionShort: true, targetId: true},
       orderBy: {descriptionShort: 'asc'},
       take: 20,

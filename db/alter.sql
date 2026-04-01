@@ -571,23 +571,32 @@ UPDATE Company SET officialName = name WHERE officialName IS NULL;
 ALTER TABLE Company MODIFY COLUMN officialName VARCHAR(255) NOT NULL;
 
 
--- ALTER TABLE MaterialSerialTrack
--- DROP COLUMN IF EXISTS beNumber;
+ALTER TABLE MaterialSerialTrack
+DROP COLUMN IF EXISTS beNumber;
 
 
 -- Add the materialId column (nullable)
 ALTER TABLE MaterialSerialTrack
 ADD COLUMN IF NOT EXISTS materialId CHAR(36) NULL;
 
--- Add an index for performance (optional but recommended)
--- CREATE INDEX idx_materialId ON MaterialSerialTrack(materialId);
+-- Add the foreign key constraint only when missing
+SET @fk_material_id_exists = (
+  SELECT COUNT(*)
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MaterialSerialTrack'
+    AND COLUMN_NAME = 'materialId'
+    AND REFERENCED_TABLE_NAME = 'Material'
+);
+SET @sql_material_id_fk = IF(
+  @fk_material_id_exists = 0,
+  'ALTER TABLE MaterialSerialTrack ADD CONSTRAINT fk_material_serialtrack_materialId FOREIGN KEY (materialId) REFERENCES Material(id) ON DELETE SET NULL ON UPDATE RESTRICT',
+  'SELECT ''Skipping FK create: MaterialSerialTrack.materialId already linked to Material'''
+);
+PREPARE stmt_material_id_fk FROM @sql_material_id_fk;
+EXECUTE stmt_material_id_fk;
+DEALLOCATE PREPARE stmt_material_id_fk;
 
--- Add the foreign key constraint
-ALTER TABLE MaterialSerialTrack
-ADD CONSTRAINT fk_material_serialtrack_materialId
-FOREIGN KEY (materialId) REFERENCES Material(id)
-ON DELETE SET NULL
-ON UPDATE RESTRICT;
 
 -- Add a serial tracked boolean to the materials
 ALTER TABLE Material

@@ -461,7 +461,7 @@ export function ProjectBOMTable({
                   className={`border-border/40 hover:bg-secondary/50 ${bom.deleted ? 'opacity-50' : ''}`}>
                   <TableCell className={`${tdClass} text-foreground font-medium`}>
                     <Link
-                      href={`/departments/${departmentId}/projectBOM/${bom.id}` as Route}
+                      href={`/departments/${departmentId}/projectBom/${bom.id}` as Route}
                       className="hover:text-accent hover:underline transition-colors">
                       {bom.description ?? '—'}
                     </Link>
@@ -510,7 +510,7 @@ export function ProjectBOMTable({
                   )}
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <Link href={`/departments/${departmentId}/projectBOM/${bom.id}` as Route}>
+                      <Link href={`/departments/${departmentId}/projectBom/${bom.id}` as Route}>
                         <Button
                           variant="ghost"
                           size="icon"

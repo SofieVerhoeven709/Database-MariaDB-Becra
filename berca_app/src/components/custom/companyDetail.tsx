@@ -745,7 +745,7 @@ export function CompanyDetail({
                 <TableRow className="hover:bg-transparent border-border/60">
                   <TableHead className={thClass}>Name</TableHead>
                   <TableHead className={thClass}>Role at Company</TableHead>
-                  <TableHead className={thClass}>Location</TableHead> {/* ← add */}
+                  <TableHead className={thClass}>Location</TableHead>
                   <TableHead className={thClass}>Email</TableHead>
                   <TableHead className={thClass}>Phone</TableHead>
                   <TableHead className={thClass}>Mobile</TableHead>

@@ -11,39 +11,61 @@ import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
-import type {MappedDocument, DocumentGroupOption, DocumentPlaceOption} from '@/types/document'
+import type {MappedDocument, MappedDocumentGroup, DocumentPlaceOption, DocumentStatusOption} from '@/types/document'
+import {type DocumentTargetTypeName} from '@/types/document'
 import type {RoleLevelOption} from '@/types/roleLevel'
-import {generatedocumentNumber} from '@/lib/utils'
+import {generateDocumentNumber} from '@/lib/utils'
+import {Badge} from '@/components/ui/badge'
 
 interface SelectOption {
   id: string
   name: string
 }
 
+interface GroupOption {
+  id: string
+  name: string | null
+}
+
+// What gets passed back to the save handler for target assignments
+export interface DocumentTargetAssignment {
+  typeName: DocumentTargetTypeName
+  targetId: string // the Target.id (not entity id)
+}
+
 interface DocumentFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   document: MappedDocument | null
-  onSave: (document: MappedDocument, visibilityRows: VisibilityRow[]) => Promise<void>
+  onSave: (
+    document: MappedDocument,
+    visibilityRows: VisibilityRow[],
+    targetAssignments: DocumentTargetAssignment[],
+  ) => Promise<void>
   isAdmin: boolean
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
   employeeOptions: SelectOption[]
-  roleOptions: SelectOption[]
-  groupAOptions: DocumentGroupOption[]
-  groupBOptions: DocumentGroupOption[]
-  groupCOptions: DocumentGroupOption[]
-  groupDOptions: DocumentGroupOption[]
+  groupAOptions: GroupOption[]
+  groupBOptions: GroupOption[]
+  groupCOptions: GroupOption[]
+  groupDOptions: GroupOption[]
+  // All existing DocumentGroup junction rows — used for cascading filtering
+  documentGroups: MappedDocumentGroup[]
   placeOptions: DocumentPlaceOption[]
-  documentOptions: SelectOption[] // for referenceDocId
+  statusOptions: DocumentStatusOption[]
+  documentOptions: SelectOption[]
+  // targetOptions maps type name → [{id: Target.id, name: string}]
+  targetOptions: Record<DocumentTargetTypeName, SelectOption[]>
   canManageVisibility: boolean
   canEditNumber: boolean
+  existingTargets?: {targetTypeName: string; targetDisplayName: string | null}[]
 }
 
 function emptyDocument(): MappedDocument {
   return {
     id: '',
-    documentNumber: generatedocumentNumber(),
+    documentNumber: generateDocumentNumber(),
     description: null,
     descriptionShort: '',
     createdAt: new Date().toISOString(),
@@ -52,27 +74,26 @@ function emptyDocument(): MappedDocument {
     revisionDetail: null,
     valid: true,
     process: false,
+    canCopy: false,
     additionalInfo: null,
     referenceDocId: null,
     referenceDocNumber: null,
-    roleId: null,
-    roleName: null,
-    documentGroupAId: '',
-    documentGroupAName: null,
-    documentGroupBId: null,
-    documentGroupBName: null,
-    documentGroupCId: null,
-    documentGroupCName: null,
-    documentGroupDId: null,
-    documentGroupDName: null,
+    documentGroup: null,
+    documentGroupId: null,
     documentPlaceId: '',
     documentPlaceLabel: '',
+    documentStatusId: null,
+    documentStatusName: null,
     createdBy: '',
     createdByName: '',
-    revisedById: '',
-    revisedByName: '',
-    managedById: '',
-    managedByName: '',
+    revisedById: null,
+    revisedByName: null,
+    managedById: null,
+    managedByName: null,
+    documentTargetId: null,
+    documentTargetTargetId: null,
+    documentTargetTypeName: null,
+    documentStructureTargets: [],
     targetId: '',
     visibilityForRoles: [],
     deleted: false,
@@ -91,15 +112,18 @@ export function DocumentFormDialog({
   roleLevelOptions,
   defaultVisibleRoleNames,
   employeeOptions,
-  roleOptions,
   groupAOptions,
   groupBOptions,
   groupCOptions,
   groupDOptions,
+  documentGroups,
   placeOptions,
+  statusOptions,
   documentOptions,
+  targetOptions,
   canManageVisibility,
   canEditNumber,
+  existingTargets,
 }: DocumentFormDialogProps) {
   const [form, setForm] = useState<MappedDocument>(emptyDocument())
   const [saving, setSaving] = useState(false)
@@ -108,26 +132,112 @@ export function DocumentFormDialog({
     buildInitialVisibilityRows(document?.visibilityForRoles ?? [], roleLevelOptions, defaultVisibleRoleNames),
   )
 
+  // ─── Group cascade state ───────────────────────────────────────────────────
+  // These mirror the A/B/C/D ids the user is selecting in the form
+  const [selAId, setSelAId] = useState('')
+  const [selBId, setSelBId] = useState('')
+  const [selCId, setSelCId] = useState('')
+  const [selDId, setSelDId] = useState('')
+
+  // ─── Target assignments (all 3 types at once) ──────────────────────────────
+  const [targetMaterial, setTargetMaterial] = useState('')
+  const [targetProject, setTargetProject] = useState('')
+  const [targetCompany, setTargetCompany] = useState('')
+
   const isEdit = !!document
+  const numberEditable = !isEdit || canEditNumber
+
+  // ─── Reset on open/document change ────────────────────────────────────────
 
   useEffect(() => {
     const next = document ?? emptyDocument()
     setForm(next)
     setNumberError(null)
     setVisibilityRows(buildInitialVisibilityRows(next.visibilityForRoles, roleLevelOptions, defaultVisibleRoleNames))
+    // Seed group selectors from the document
+    setSelAId(next.documentGroup?.groupAId ?? '')
+    setSelBId(next.documentGroup?.groupBId ?? '')
+    setSelCId(next.documentGroup?.groupCId ?? '')
+    setSelDId(next.documentGroup?.groupDId ?? '')
+    // Reset targets on open
+    setTargetMaterial('')
+    setTargetProject('')
+    setTargetCompany('')
   }, [document?.id, open])
 
   function set<K extends keyof MappedDocument>(key: K, value: MappedDocument[K]) {
     setForm(prev => ({...prev, [key]: value}))
   }
 
+  // ─── Cascading group filtering ─────────────────────────────────────────────
+  // documentGroups are junction rows: {groupAId, groupBId, groupCId, groupDId}
+  // To get valid B options given A: find all group junctions where groupAId === selAId,
+  // then return the unique B ids from those junctions.
+
+  const validBIds = new Set(documentGroups.filter(g => g.groupAId === selAId && g.groupBId).map(g => g.groupBId!))
+  const validCIds = new Set(
+    documentGroups.filter(g => g.groupAId === selAId && g.groupBId === selBId && g.groupCId).map(g => g.groupCId!),
+  )
+  const validDIds = new Set(
+    documentGroups
+      .filter(g => g.groupAId === selAId && g.groupBId === selBId && g.groupCId === selCId && g.groupDId)
+      .map(g => g.groupDId!),
+  )
+
+  const filteredGroupBs = groupBOptions.filter(o => validBIds.has(o.id))
+  const filteredGroupCs = groupCOptions.filter(o => validCIds.has(o.id))
+  const filteredGroupDs = groupDOptions.filter(o => validDIds.has(o.id))
+
+  function handleSelectA(v: string) {
+    const id = v === 'none' ? '' : v
+    setSelAId(id)
+    setSelBId('')
+    setSelCId('')
+    setSelDId('')
+    setForm(f => ({...f, documentGroupAId: id, documentGroupBId: null, documentGroupCId: null, documentGroupDId: null}))
+  }
+
+  function handleSelectB(v: string) {
+    const id = v === 'none' ? '' : v
+    setSelBId(id)
+    setSelCId('')
+    setSelDId('')
+    setForm(f => ({...f, documentGroupBId: id || null, documentGroupCId: null, documentGroupDId: null}))
+  }
+
+  function handleSelectC(v: string) {
+    const id = v === 'none' ? '' : v
+    setSelCId(id)
+    setSelDId('')
+    setForm(f => ({...f, documentGroupCId: id || null, documentGroupDId: null}))
+  }
+
+  function handleSelectD(v: string) {
+    const id = v === 'none' ? '' : v
+    setSelDId(id)
+    setForm(f => ({...f, documentGroupDId: id || null}))
+  }
+
+  // ─── Submit ────────────────────────────────────────────────────────────────
+
   async function handleSubmit() {
     if (!form.documentNumber.trim()) {
-      setNumberError('Company number is required.')
+      setNumberError('Document number is required.')
       return
     }
     setSaving(true)
     try {
+      const assignments: DocumentTargetAssignment[] = []
+      if (targetMaterial) assignments.push({typeName: 'Material', targetId: targetMaterial})
+      if (targetProject) assignments.push({typeName: 'Project', targetId: targetProject})
+      if (targetCompany) assignments.push({typeName: 'Company', targetId: targetCompany})
+      const docGroup = documentGroups.find(
+        group =>
+          group.groupAId === selAId &&
+          group.groupBId === selBId &&
+          group.groupCId === selCId &&
+          group.groupDId === selDId,
+      )
       await onSave(
         {
           ...form,
@@ -136,8 +246,10 @@ export function DocumentFormDialog({
           additionalInfo: form.additionalInfo?.trim() || null,
           revisionDetail: form.revisionDetail?.trim() || null,
           documentNumber: form.documentNumber.trim(),
+          documentGroupId: docGroup!.id,
         },
         visibilityRows,
+        assignments,
       )
     } finally {
       setSaving(false)
@@ -145,29 +257,7 @@ export function DocumentFormDialog({
   }
 
   const isValid =
-    form.documentNumber.trim() !== '' &&
-    form.descriptionShort.trim() !== '' &&
-    form.documentGroupAId !== '' &&
-    form.documentPlaceId !== '' &&
-    form.revisedById !== '' &&
-    form.managedById !== ''
-
-  // ─── Filtered group options (cascading) ────────────────────────────────────
-  const filteredGroupBs = groupBOptions.filter(b => {
-    // Need to know the parent — we stored documentGroupAId in the option list payload
-    // The groupBOptions are raw DocumentGroupOption; for cascade we need the parentId too.
-    // We pass the full b items with an optional parentId via a cast trick below.
-    const bWithParent = b as DocumentGroupOption & {documentGroupAId?: string}
-    return !form.documentGroupAId || bWithParent.documentGroupAId === form.documentGroupAId
-  })
-  const filteredGroupCs = groupCOptions.filter(c => {
-    const cWithParent = c as DocumentGroupOption & {documentGroupBId?: string}
-    return !form.documentGroupBId || cWithParent.documentGroupBId === form.documentGroupBId
-  })
-  const filteredGroupDs = groupDOptions.filter(d => {
-    const dWithParent = d as DocumentGroupOption & {documentGroupCId?: string}
-    return !form.documentGroupCId || dWithParent.documentGroupCId === form.documentGroupCId
-  })
+    form.documentNumber.trim() !== '' && form.descriptionShort.trim() !== '' && form.documentPlaceId !== ''
 
   // ─── Field helpers ─────────────────────────────────────────────────────────
 
@@ -179,25 +269,6 @@ export function DocumentFormDialog({
         onChange={e => set(key, (e.target.value || null) as MappedDocument[typeof key])}
         rows={rows}
         className="bg-secondary border-border resize-none"
-      />
-    </div>
-  )
-
-  const inputField = (key: keyof MappedDocument, label: string, required = false, type = 'text') => (
-    <div className="flex flex-col gap-1.5">
-      <Label className="text-xs text-muted-foreground">
-        {label}
-        {required && ' *'}
-      </Label>
-      <Input
-        type={type}
-        value={(form[key] as string | number | null) ?? ''}
-        onChange={e => {
-          const v = e.target.value
-          if (type === 'number') set(key, (v ? parseInt(v, 10) : null) as MappedDocument[typeof key])
-          else set(key, (v || null) as MappedDocument[typeof key])
-        }}
-        className="bg-secondary border-border"
       />
     </div>
   )
@@ -219,9 +290,8 @@ export function DocumentFormDialog({
   const selectField = (
     key: keyof MappedDocument,
     label: string,
-    options: SelectOption[],
+    options: {id: string; name: string | null}[],
     required = false,
-    onChange?: (v: string) => void,
   ) => (
     <div className="flex flex-col gap-1.5">
       <Label className="text-xs text-muted-foreground">
@@ -230,11 +300,7 @@ export function DocumentFormDialog({
       </Label>
       <Select
         value={(form[key] as string | null) ?? 'none'}
-        onValueChange={v => {
-          const val = v === 'none' ? null : v
-          set(key, val as MappedDocument[typeof key])
-          onChange?.(v)
-        }}>
+        onValueChange={v => set(key, (v === 'none' ? null : v) as MappedDocument[typeof key])}>
         <SelectTrigger className="bg-secondary border-border">
           <SelectValue placeholder="Select…" />
         </SelectTrigger>
@@ -242,7 +308,7 @@ export function DocumentFormDialog({
           {!required && <SelectItem value="none">None</SelectItem>}
           {options.map(o => (
             <SelectItem key={o.id} value={o.id}>
-              {o.name}
+              {o.name ?? o.id}
             </SelectItem>
           ))}
         </SelectContent>
@@ -256,7 +322,25 @@ export function DocumentFormDialog({
       <Switch checked={form[key] as boolean} onCheckedChange={v => set(key, v as MappedDocument[typeof key])} />
     </div>
   )
-  const numberEditable = !isEdit || canEditNumber
+
+  const targetSelectField = (label: DocumentTargetTypeName, value: string, onChange: (v: string) => void) => (
+    <div className="flex flex-col gap-1.5">
+      <Label className="text-xs text-muted-foreground">{label}</Label>
+      <Select value={value || 'none'} onValueChange={v => onChange(v === 'none' ? '' : v)}>
+        <SelectTrigger className="bg-secondary border-border">
+          <SelectValue placeholder="None" />
+        </SelectTrigger>
+        <SelectContent className="bg-card border-border">
+          <SelectItem value="none">None</SelectItem>
+          {(targetOptions[label] ?? []).map(o => (
+            <SelectItem key={o.id} value={o.id}>
+              {o.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  )
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -270,6 +354,7 @@ export function DocumentFormDialog({
             <TabsTrigger value="details">Details</TabsTrigger>
             <TabsTrigger value="grouping">Grouping</TabsTrigger>
             <TabsTrigger value="people">People</TabsTrigger>
+            <TabsTrigger value="target">Target</TabsTrigger>
             <TabsTrigger value="flags">Flags</TabsTrigger>
             {canManageVisibility && <TabsTrigger value="visibility">Visibility</TabsTrigger>}
           </TabsList>
@@ -277,6 +362,7 @@ export function DocumentFormDialog({
           {/* ── Details ──────────────────────────────────────────────────── */}
           <TabsContent value="details">
             <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
+              {/* Document number */}
               <div className="sm:col-span-2">
                 <div className="flex flex-col gap-1.5">
                   <Label className="text-xs text-muted-foreground">
@@ -287,7 +373,10 @@ export function DocumentFormDialog({
                       <div className="flex gap-2">
                         <Input
                           value={form.documentNumber}
-                          onChange={e => set('documentNumber', e.target.value)}
+                          onChange={e => {
+                            set('documentNumber', e.target.value)
+                            if (numberError) setNumberError(null)
+                          }}
                           className={`bg-secondary border-border flex-1 ${numberError ? 'border-destructive' : ''}`}
                         />
                         {!isEdit && (
@@ -296,7 +385,7 @@ export function DocumentFormDialog({
                             variant="outline"
                             size="sm"
                             className="h-10 px-3 border-border text-xs shrink-0"
-                            onClick={() => set('documentNumber', generatedocumentNumber())}>
+                            onClick={() => set('documentNumber', generateDocumentNumber())}>
                             Regenerate
                           </Button>
                         )}
@@ -310,6 +399,7 @@ export function DocumentFormDialog({
                   )}
                 </div>
               </div>
+
               <div className="sm:col-span-2">
                 <div className="flex flex-col gap-1.5">
                   <Label className="text-xs text-muted-foreground">Short Description *</Label>
@@ -323,113 +413,27 @@ export function DocumentFormDialog({
               <div className="sm:col-span-2">{textareaField('description', 'Description', 3)}</div>
               <div className="sm:col-span-2">{textareaField('additionalInfo', 'Additional Info', 2)}</div>
               {dateField('expiryDate', 'Expiry Date')}
-              {inputField('revisionNumber', 'Revision Number', false, 'number')}
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Revision Number</Label>
+                <Input
+                  type="number"
+                  value={form.revisionNumber ?? ''}
+                  onChange={e => set('revisionNumber', e.target.value ? parseInt(e.target.value, 10) : null)}
+                  className="bg-secondary border-border"
+                />
+              </div>
               <div className="sm:col-span-2">{textareaField('revisionDetail', 'Revision Detail', 2)}</div>
               {selectField('referenceDocId', 'Reference Document', documentOptions)}
-              {selectField('roleId', 'Role', roleOptions)}
+              {selectField('documentStatusId', 'Status', statusOptions)}
             </div>
           </TabsContent>
 
           {/* ── Grouping ─────────────────────────────────────────────────── */}
           <TabsContent value="grouping">
             <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
-              {/* Group A */}
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Group A *</Label>
-                <Select
-                  value={form.documentGroupAId || 'none'}
-                  onValueChange={v => {
-                    const val = v === 'none' ? '' : v
-                    setForm(f => ({
-                      ...f,
-                      documentGroupAId: val,
-                    }))
-                  }}>
-                  <SelectTrigger className="bg-secondary border-border">
-                    <SelectValue placeholder="Select…" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-card border-border">
-                    <SelectItem value="none">Select…</SelectItem>
-                    {groupAOptions.map(o => (
-                      <SelectItem key={o.id} value={o.id}>
-                        {o.name ?? o.id}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Group B */}
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Group B *</Label>
-                <Select
-                  value={form.documentGroupBId || 'none'}
-                  disabled={!form.documentGroupAId}
-                  onValueChange={v => {
-                    const val = v === 'none' ? '' : v
-                    setForm(f => ({...f, documentGroupBId: val, documentGroupCId: '', documentGroupDId: ''}))
-                  }}>
-                  <SelectTrigger className="bg-secondary border-border">
-                    <SelectValue placeholder={!form.documentGroupAId ? 'Select A first…' : 'Select…'} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-card border-border">
-                    <SelectItem value="none">Select…</SelectItem>
-                    {filteredGroupBs.map(o => (
-                      <SelectItem key={o.id} value={o.id}>
-                        {o.name ?? o.id}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Group C */}
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Group C *</Label>
-                <Select
-                  value={form.documentGroupCId || 'none'}
-                  disabled={!form.documentGroupBId}
-                  onValueChange={v => {
-                    const val = v === 'none' ? '' : v
-                    setForm(f => ({...f, documentGroupCId: val, documentGroupDId: ''}))
-                  }}>
-                  <SelectTrigger className="bg-secondary border-border">
-                    <SelectValue placeholder={!form.documentGroupBId ? 'Select B first…' : 'Select…'} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-card border-border">
-                    <SelectItem value="none">Select…</SelectItem>
-                    {filteredGroupCs.map(o => (
-                      <SelectItem key={o.id} value={o.id}>
-                        {o.name ?? o.id}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Group D */}
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">Group D *</Label>
-                <Select
-                  value={form.documentGroupDId || 'none'}
-                  disabled={!form.documentGroupCId}
-                  onValueChange={v => {
-                    const val = v === 'none' ? '' : v
-                    setForm(f => ({...f, documentGroupDId: val}))
-                  }}>
-                  <SelectTrigger className="bg-secondary border-border">
-                    <SelectValue placeholder={!form.documentGroupCId ? 'Select C first…' : 'Select…'} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-card border-border">
-                    <SelectItem value="none">Select…</SelectItem>
-                    {filteredGroupDs.map(o => (
-                      <SelectItem key={o.id} value={o.id}>
-                        {o.name ?? o.id}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <p className="sm:col-span-2 text-xs text-muted-foreground">
+                Select Group A first. B, C and D are filtered based on existing group combinations.
+              </p>
 
               {/* Place */}
               <div className="sm:col-span-2 flex flex-col gap-1.5">
@@ -450,14 +454,133 @@ export function DocumentFormDialog({
                   </SelectContent>
                 </Select>
               </div>
+
+              {/* Group A */}
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Group A *</Label>
+                <Select value={selAId || 'none'} onValueChange={handleSelectA}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue placeholder="Select…" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="none">None</SelectItem>
+                    {groupAOptions.map(o => (
+                      <SelectItem key={o.id} value={o.id}>
+                        {o.name ?? o.id}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Group B */}
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Group B</Label>
+                <Select
+                  value={selBId || 'none'}
+                  disabled={!selAId || filteredGroupBs.length === 0}
+                  onValueChange={handleSelectB}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue
+                      placeholder={!selAId ? 'Select A first' : filteredGroupBs.length === 0 ? 'No B options' : 'None'}
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="none">None</SelectItem>
+                    {filteredGroupBs.map(o => (
+                      <SelectItem key={o.id} value={o.id}>
+                        {o.name ?? o.id}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Group C */}
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Group C</Label>
+                <Select
+                  value={selCId || 'none'}
+                  disabled={!selBId || filteredGroupCs.length === 0}
+                  onValueChange={handleSelectC}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue
+                      placeholder={!selBId ? 'Select B first' : filteredGroupCs.length === 0 ? 'No C options' : 'None'}
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="none">None</SelectItem>
+                    {filteredGroupCs.map(o => (
+                      <SelectItem key={o.id} value={o.id}>
+                        {o.name ?? o.id}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Group D */}
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">Group D</Label>
+                <Select
+                  value={selDId || 'none'}
+                  disabled={!selCId || filteredGroupDs.length === 0}
+                  onValueChange={handleSelectD}>
+                  <SelectTrigger className="bg-secondary border-border">
+                    <SelectValue
+                      placeholder={!selCId ? 'Select C first' : filteredGroupDs.length === 0 ? 'No D options' : 'None'}
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="bg-card border-border">
+                    <SelectItem value="none">None</SelectItem>
+                    {filteredGroupDs.map(o => (
+                      <SelectItem key={o.id} value={o.id}>
+                        {o.name ?? o.id}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </TabsContent>
 
           {/* ── People ───────────────────────────────────────────────────── */}
           <TabsContent value="people">
             <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
-              {selectField('revisedById', 'Revised By', employeeOptions, true)}
-              {selectField('managedById', 'Managed By', employeeOptions, true)}
+              {selectField('revisedById', 'Revised By', employeeOptions)}
+              {selectField('managedById', 'Managed By', employeeOptions)}
+            </div>
+          </TabsContent>
+
+          {/* ── Target ───────────────────────────────────────────────────── */}
+          <TabsContent value="target">
+            <div className="grid grid-cols-1 gap-4 py-3 sm:grid-cols-2">
+              <p className="sm:col-span-2 text-xs text-muted-foreground">
+                Link this document to a material, project and/or company. All are optional and can be assigned
+                independently.
+              </p>
+              <div className="sm:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                {targetSelectField('Material', targetMaterial, setTargetMaterial)}
+                {targetSelectField('Project', targetProject, setTargetProject)}
+                {targetSelectField('Company', targetCompany, setTargetCompany)}
+              </div>
+              {isEdit && existingTargets && existingTargets.length > 0 && (
+                <div className="sm:col-span-2 flex flex-col gap-1.5">
+                  <p className="text-xs font-medium text-muted-foreground">Currently linked:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {existingTargets.map((t, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-1.5 rounded-lg border border-border bg-secondary px-3 py-1.5">
+                        <Badge variant="outline" className="text-xs border-border">
+                          {t.targetTypeName}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">{t.targetDisplayName ?? '—'}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </TabsContent>
 
@@ -466,6 +589,7 @@ export function DocumentFormDialog({
             <div className="grid grid-cols-2 gap-3 py-3">
               {toggleField('valid', 'Valid')}
               {toggleField('process', 'Process')}
+              {toggleField('canCopy', 'Can Copy')}
             </div>
           </TabsContent>
 
@@ -492,6 +616,91 @@ export function DocumentFormDialog({
             disabled={saving || !isValid}
             className="bg-accent text-accent-foreground hover:bg-accent/80">
             {saving ? 'Saving…' : isEdit ? 'Save Changes' : 'Create Document'}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+// ─── Copy Document Dialog ─────────────────────────────────────────────────────
+
+interface CopyDocumentDialogProps {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  sourceDocument: MappedDocument
+  onCopy: (documentNumber: string, descriptionShort: string) => Promise<void>
+}
+
+export function CopyDocumentDialog({open, onOpenChange, sourceDocument, onCopy}: CopyDocumentDialogProps) {
+  const [documentNumber, setDocumentNumber] = useState('')
+  const [descriptionShort, setDescriptionShort] = useState('')
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    if (open) {
+      setDocumentNumber(generateDocumentNumber())
+      setDescriptionShort(sourceDocument.descriptionShort)
+    }
+  }, [open, sourceDocument.id])
+
+  async function handleCopy() {
+    setSaving(true)
+    try {
+      await onCopy(documentNumber.trim(), descriptionShort.trim())
+      onOpenChange(false)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-md bg-card border-border">
+        <DialogHeader>
+          <DialogTitle className="text-foreground">Copy Document</DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-4 py-2">
+          <p className="text-xs text-muted-foreground">
+            Copying <span className="font-medium text-foreground">{sourceDocument.documentNumber}</span>. Provide a new
+            document number and short description for the copy.
+          </p>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">New Document Number *</Label>
+            <div className="flex gap-2">
+              <Input
+                value={documentNumber}
+                onChange={e => setDocumentNumber(e.target.value)}
+                className="bg-secondary border-border flex-1"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-10 px-3 border-border text-xs shrink-0"
+                onClick={() => setDocumentNumber(generateDocumentNumber())}>
+                Regenerate
+              </Button>
+            </div>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">New Short Description *</Label>
+            <Input
+              value={descriptionShort}
+              onChange={e => setDescriptionShort(e.target.value)}
+              className="bg-secondary border-border"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)} className="border-border">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleCopy}
+            disabled={saving || !documentNumber.trim() || !descriptionShort.trim()}
+            className="bg-accent text-accent-foreground hover:bg-accent/80">
+            {saving ? 'Copying…' : 'Copy Document'}
           </Button>
         </DialogFooter>
       </DialogContent>

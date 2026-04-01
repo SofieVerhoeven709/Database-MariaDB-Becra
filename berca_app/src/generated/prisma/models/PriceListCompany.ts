@@ -211,7 +211,7 @@ export type PriceListCompanyScalarWhereWithAggregatesInput = {
 export type PriceListCompanyCreateInput = {
   id: string
   Company: Prisma.CompanyCreateNestedOneWithoutPriceListCompanyInput
-  PriceList: Prisma.PriceListCreateNestedOneWithoutPriceListCompaniesInput
+  PriceList: Prisma.PriceListCreateNestedOneWithoutPriceListCompanyInput
 }
 
 export type PriceListCompanyUncheckedCreateInput = {
@@ -223,7 +223,7 @@ export type PriceListCompanyUncheckedCreateInput = {
 export type PriceListCompanyUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   Company?: Prisma.CompanyUpdateOneRequiredWithoutPriceListCompanyNestedInput
-  PriceList?: Prisma.PriceListUpdateOneRequiredWithoutPriceListCompaniesNestedInput
+  PriceList?: Prisma.PriceListUpdateOneRequiredWithoutPriceListCompanyNestedInput
 }
 
 export type PriceListCompanyUncheckedUpdateInput = {
@@ -368,7 +368,7 @@ export type PriceListCompanyUncheckedUpdateManyWithoutPriceListNestedInput = {
 
 export type PriceListCompanyCreateWithoutCompanyInput = {
   id: string
-  PriceList: Prisma.PriceListCreateNestedOneWithoutPriceListCompaniesInput
+  PriceList: Prisma.PriceListCreateNestedOneWithoutPriceListCompanyInput
 }
 
 export type PriceListCompanyUncheckedCreateWithoutCompanyInput = {
@@ -454,7 +454,7 @@ export type PriceListCompanyCreateManyCompanyInput = {
 
 export type PriceListCompanyUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  PriceList?: Prisma.PriceListUpdateOneRequiredWithoutPriceListCompaniesNestedInput
+  PriceList?: Prisma.PriceListUpdateOneRequiredWithoutPriceListCompanyNestedInput
 }
 
 export type PriceListCompanyUncheckedUpdateWithoutCompanyInput = {

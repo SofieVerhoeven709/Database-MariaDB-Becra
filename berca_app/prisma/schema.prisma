@@ -259,35 +259,32 @@ model DocumentStructure {
   revisionDetail                                                                                  String?                          @db.Text
   valid                                                                                           Boolean                          @default(true)
   process                                                                                         Boolean                          @default(false)
+  canCopy                                                                                         Boolean                          @default(false)
   additionalInfo                                                                                  String?                          @db.Text
   referenceDocId                                                                                  String?                          @db.Char(36)
-  roleId                                                                                          String?                          @db.Char(36)
   deleted                                                                                         Boolean                          @default(false)
   deletedAt                                                                                       DateTime?                        @db.DateTime(0)
   createdBy                                                                                       String                           @db.Char(36)
-  revisedById                                                                                     String                           @db.Char(36)
-  managedById                                                                                     String                           @db.Char(36)
+  revisedById                                                                                     String?                          @db.Char(36)
+  managedById                                                                                     String?                          @db.Char(36)
   targetId                                                                                        String                           @db.Char(36)
   deletedBy                                                                                       String?                          @db.Char(36)
-  documentGroupAId                                                                                String                           @db.Char(36)
-  documentGroupBId                                                                                String?                          @db.Char(36)
-  documentGroupCId                                                                                String?                          @db.Char(36)
-  documentGroupDId                                                                                String?                          @db.Char(36)
-  documentPlaceId                                                                                 String                           @db.Char(36)
+  documentGroupId                                                                                 String?                          @db.Char(36)
+  documentPlaceId                                                                                 String?                          @db.Char(36)
+  documentStatusId                                                                                String?                          @db.Char(36)
   Contact                                                                                         Contact[]
+  DocumentRevision                                                                                DocumentRevision[]
   DocumentStructure                                                                               DocumentStructure?               @relation("DocumentStructureToDocumentStructure", fields: [referenceDocId], references: [id], onUpdate: Restrict, map: "DocumentStructure_ibfk_1")
   other_DocumentStructure                                                                         DocumentStructure[]              @relation("DocumentStructureToDocumentStructure")
-  Role                                                                                            Role?                            @relation(fields: [roleId], references: [id], onUpdate: Restrict, map: "DocumentStructure_ibfk_2")
   Employee_DocumentStructure_createdByToEmployee                                                  Employee                         @relation("DocumentStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_documentStructure_createdBy")
-  Employee_DocumentStructure_deletedByToEmployee                                                  Employee?                        @relation("DocumentStructure_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_documentStructure_deletedBy")
-  DocumentGroupA                                                                                  DocumentGroupA                   @relation(fields: [documentGroupAId], references: [id], onUpdate: Restrict, map: "fk_documentStructure_documentGroupA")
-  DocumentGroupB                                                                                  DocumentGroupB?                  @relation(fields: [documentGroupBId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_documentStructure_documentGroupB")
-  DocumentGroupC                                                                                  DocumentGroupC?                  @relation(fields: [documentGroupCId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_documentStructure_documentGroupC")
-  DocumentGroupD                                                                                  DocumentGroupD?                  @relation(fields: [documentGroupDId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_documentStructure_documentGroupD")
-  DocumentPlace                                                                                   DocumentPlace                    @relation(fields: [documentPlaceId], references: [id], onUpdate: Restrict, map: "fk_documentStructure_documentPlace")
-  Employee_DocumentStructure_managedByIdToEmployee                                                Employee                         @relation("DocumentStructure_managedByIdToEmployee", fields: [managedById], references: [id], onUpdate: Restrict, map: "fk_documentStructure_managedBy")
-  Employee_DocumentStructure_revisedByIdToEmployee                                                Employee                         @relation("DocumentStructure_revisedByIdToEmployee", fields: [revisedById], references: [id], onUpdate: Restrict, map: "fk_documentStructure_revisedBy")
+  Employee_DocumentStructure_deletedByToEmployee                                                  Employee?                        @relation("DocumentStructure_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "fk_documentStructure_deletedBy")
+  DocumentGroup                                                                                   DocumentGroup?                   @relation(fields: [documentGroupId], references: [id], onUpdate: Restrict, map: "fk_documentStructure_documentGroup")
+  DocumentPlace                                                                                   DocumentPlace?                   @relation(fields: [documentPlaceId], references: [id], onUpdate: Restrict, map: "fk_documentStructure_documentPlace")
+  DocumentStatus                                                                                  DocumentStatus?                  @relation(fields: [documentStatusId], references: [id], onUpdate: Restrict, map: "fk_documentStructure_documentStatus")
+  Employee_DocumentStructure_managedByIdToEmployee                                                Employee?                        @relation("DocumentStructure_managedByIdToEmployee", fields: [managedById], references: [id], onUpdate: Restrict, map: "fk_documentStructure_managedBy")
+  Employee_DocumentStructure_revisedByIdToEmployee                                                Employee?                        @relation("DocumentStructure_revisedByIdToEmployee", fields: [revisedById], references: [id], onUpdate: Restrict, map: "fk_documentStructure_revisedBy")
   Target                                                                                          Target                           @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_documentStructure_target")
+  DocumentStructureTarget                                                                         DocumentStructureTarget[]
   Employee_Employee_pictureIdToDocumentStructure                                                  Employee[]                       @relation("Employee_pictureIdToDocumentStructure")
   FollowUp                                                                                        FollowUp[]
   FollowUpStructure                                                                               FollowUpStructure[]
@@ -301,13 +298,10 @@ model DocumentStructure {
   @@index([revisedById], map: "fk_documentStructure_revisedBy")
   @@index([targetId], map: "fk_documentStructure_target")
   @@index([referenceDocId], map: "referenceDocId")
-  @@index([roleId], map: "roleId")
   @@index([deletedBy], map: "fk_documentStructure_deletedBy")
-  @@index([documentGroupAId], map: "fk_documentStructure_documentGroupA")
-  @@index([documentGroupBId], map: "fk_documentStructure_documentGroupB")
-  @@index([documentGroupCId], map: "fk_documentStructure_documentGroupC")
-  @@index([documentGroupDId], map: "fk_documentStructure_documentGroupD")
   @@index([documentPlaceId], map: "fk_documentStructure_documentPlace")
+  @@index([documentGroupId], map: "fk_documentStructure_documentGroup")
+  @@index([documentStatusId], map: "fk_documentStructure_documentStatus")
 }
 
 model EmergencyContact {
@@ -381,6 +375,10 @@ model Employee {
   DocumentGroupD_DocumentGroupD_createdByToEmployee                                 DocumentGroupD[]                 @relation("DocumentGroupD_createdByToEmployee")
   DocumentPlace                                                                     DocumentPlace[]
   DocumentPlace_DocumentPlace_createdByToEmployee                                   DocumentPlace[]                  @relation("DocumentPlace_createdByToEmployee")
+  DocumentRevision_DocumentRevision_deletedByToEmployee                             DocumentRevision[]               @relation("DocumentRevision_deletedByToEmployee")
+  DocumentRevision_DocumentRevision_createdByToEmployee                             DocumentRevision[]               @relation("DocumentRevision_createdByToEmployee")
+  DocumentStatus_DocumentStatus_deletedByToEmployee                                 DocumentStatus[]                 @relation("DocumentStatus_deletedByToEmployee")
+  DocumentStatus_DocumentStatus_createdByToEmployee                                 DocumentStatus[]                 @relation("DocumentStatus_createdByToEmployee")
   DocumentStructure_DocumentStructure_createdByToEmployee                           DocumentStructure[]              @relation("DocumentStructure_createdByToEmployee")
   DocumentStructure_DocumentStructure_deletedByToEmployee                           DocumentStructure[]              @relation("DocumentStructure_deletedByToEmployee")
   DocumentStructure_DocumentStructure_managedByIdToEmployee                         DocumentStructure[]              @relation("DocumentStructure_managedByIdToEmployee")
@@ -903,7 +901,9 @@ model InvoiceOut {
   invoiceSentTypeId                        String              @db.Char(36)
   invoiceStatusId                          String              @db.Char(36)
   vatMarginId                              String              @db.Char(36)
+  priceListId                              String?             @db.Char(36)
   InvoiceType                              InvoiceType         @relation(fields: [invoiceTypeId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_1")
+  PriceList                                PriceList?          @relation(fields: [priceListId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "InvoiceOut_ibfk_10")
   Employee                                 Employee            @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_2")
   Target                                   Target              @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_3")
   Employee_InvoiceOut_deletedByToEmployee  Employee?           @relation("InvoiceOut_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "InvoiceOut_ibfk_4")
@@ -924,6 +924,7 @@ model InvoiceOut {
   @@index([modifiedBy], map: "modifiedBy")
   @@index([paymentMethodId], map: "paymentMethodId")
   @@index([vatMarginId], map: "vatMarginId")
+  @@index([priceListId], map: "priceListId")
 }
 
 model InvoiceType {
@@ -964,7 +965,7 @@ model Material {
   deleted                                                  Boolean               @default(false)
   deletedAt                                                DateTime?             @db.DateTime(0)
   deletedBy                                                String?               @db.Char(36)
-  targetId                                                 String                @db.VarChar(255)
+  targetId                                                 String                @db.Char(36)
   isSerialTracked                                          Boolean               @default(false)
   Inventory_Inventory_materialIdToMaterial                 Inventory[]           @relation("Inventory_materialIdToMaterial")
   Inventory_Inventory_beNumberToMaterial                   Inventory?            @relation("Inventory_beNumberToMaterial")
@@ -1605,16 +1606,15 @@ model QuoteSupplier {
 }
 
 model Role {
-  id                                String              @id @db.Char(36)
-  name                              String              @db.VarChar(100)
-  createdAt                         DateTime            @db.DateTime(0)
-  deleted                           Boolean             @default(false)
-  deletedAt                         DateTime?           @db.DateTime(0)
-  createdBy                         String              @db.Char(36)
-  deletedBy                         String?             @db.Char(36)
-  DocumentStructure                 DocumentStructure[]
-  Employee_Role_createdByToEmployee Employee            @relation("Role_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_role_createdBy")
-  Employee_Role_deletedByToEmployee Employee?           @relation("Role_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_role_deletedBy")
+  id                                String      @id @db.Char(36)
+  name                              String      @db.VarChar(100)
+  createdAt                         DateTime    @db.DateTime(0)
+  deleted                           Boolean     @default(false)
+  deletedAt                         DateTime?   @db.DateTime(0)
+  createdBy                         String      @db.Char(36)
+  deletedBy                         String?     @db.Char(36)
+  Employee_Role_createdByToEmployee Employee    @relation("Role_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "fk_role_createdBy")
+  Employee_Role_deletedByToEmployee Employee?   @relation("Role_deletedByToEmployee", fields: [deletedBy], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_role_deletedBy")
   RoleLevel                         RoleLevel[]
 
   @@index([createdBy], map: "fk_role_createdBy")
@@ -1671,19 +1671,20 @@ model SupplierDeliveryNoteFollowUp {
 }
 
 model Target {
-  id                                  String                @id @db.Char(36)
-  createdAt                           DateTime              @db.DateTime(0)
-  createdBy                           String                @db.Char(36)
-  targetTypeId                        String                @db.Char(36)
-  deleted                             Boolean               @default(false)
-  deletedAt                           DateTime?             @db.DateTime(0)
-  deletedBy                           String?               @db.Char(36)
+  id                                  String                    @id @db.Char(36)
+  createdAt                           DateTime                  @db.DateTime(0)
+  createdBy                           String                    @db.Char(36)
+  targetTypeId                        String                    @db.Char(36)
+  deleted                             Boolean                   @default(false)
+  deletedAt                           DateTime?                 @db.DateTime(0)
+  deletedBy                           String?                   @db.Char(36)
   Certificate                         Certificate[]
   Company                             Company[]
   Contact                             Contact[]
   Department                          Department[]
   DepartmentExtern                    DepartmentExtern[]
   DocumentStructure                   DocumentStructure[]
+  DocumentStructureTarget             DocumentStructureTarget[]
   FollowUp                            FollowUp[]
   FollowUpStructure                   FollowUpStructure[]
   FollowUpTarget                      FollowUpTarget[]
@@ -1695,9 +1696,9 @@ model Target {
   PriceList                           PriceList[]
   PriceListItemTarget                 PriceListItemTarget[]
   Project                             Project[]
-  Employee                            Employee              @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_1")
-  TargetType                          TargetType            @relation(fields: [targetTypeId], references: [id], onUpdate: Restrict, map: "Target_ibfk_2")
-  Employee_Target_deletedByToEmployee Employee?             @relation("Target_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_3")
+  Employee                            Employee                  @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_1")
+  TargetType                          TargetType                @relation(fields: [targetTypeId], references: [id], onUpdate: Restrict, map: "Target_ibfk_2")
+  Employee_Target_deletedByToEmployee Employee?                 @relation("Target_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Target_ibfk_3")
   Training                            Training[]
   TrainingStandard                    TrainingStandard[]
   VisibilityForRole                   VisibilityForRole[]
@@ -2241,10 +2242,11 @@ model PriceList {
   deletedAt                              DateTime?          @db.DateTime(0)
   deletedBy                              String?            @db.Char(36)
   targetId                               String             @db.Char(36)
+  InvoiceOut                             InvoiceOut[]
   Employee_PriceList_createdByToEmployee Employee           @relation("PriceList_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_1")
   Employee_PriceList_deletedByToEmployee Employee?          @relation("PriceList_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_2")
   Target                                 Target             @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "PriceList_ibfk_3")
-  priceListCompanies                     PriceListCompany[]
+  PriceListCompany                       PriceListCompany[]
   PriceListItem                          PriceListItem[]
 
   @@index([createdBy], map: "createdBy")
@@ -2312,79 +2314,67 @@ model PriceListItemTarget {
 }
 
 model DocumentGroupA {
-  id                                          String              @id @db.Char(36)
-  name                                        String?             @db.VarChar(255)
-  createdBy                                   String              @db.Char(36)
-  createdAt                                   DateTime            @db.DateTime(0)
-  deleted                                     Boolean             @default(false)
-  deletedAt                                   DateTime?           @db.DateTime(0)
-  deletedBy                                   String?             @db.Char(36)
-  Employee_DocumentGroupA_deletedByToEmployee Employee?           @relation("DocumentGroupA_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentGroupA_ibfk_1")
-  Employee_DocumentGroupA_createdByToEmployee Employee            @relation("DocumentGroupA_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentGroupA_ibfk_2")
-  DocumentGroupB                              DocumentGroupB[]
-  DocumentStructure                           DocumentStructure[]
+  id                                          String          @id @db.Char(36)
+  name                                        String?         @db.VarChar(255)
+  createdBy                                   String          @db.Char(36)
+  createdAt                                   DateTime        @db.DateTime(0)
+  deleted                                     Boolean         @default(false)
+  deletedAt                                   DateTime?       @db.DateTime(0)
+  deletedBy                                   String?         @db.Char(36)
+  DocumentGroup                               DocumentGroup[]
+  Employee_DocumentGroupA_deletedByToEmployee Employee?       @relation("DocumentGroupA_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentGroupA_ibfk_1")
+  Employee_DocumentGroupA_createdByToEmployee Employee        @relation("DocumentGroupA_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentGroupA_ibfk_2")
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
 }
 
 model DocumentGroupB {
-  id                                          String              @id @db.Char(36)
-  documentGroupAId                            String              @db.Char(36)
-  name                                        String?             @db.VarChar(255)
-  createdBy                                   String              @db.Char(36)
-  createdAt                                   DateTime            @db.DateTime(0)
-  deleted                                     Boolean             @default(false)
-  deletedAt                                   DateTime?           @db.DateTime(0)
-  deletedBy                                   String?             @db.Char(36)
-  Employee_DocumentGroupB_deletedByToEmployee Employee?           @relation("DocumentGroupB_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentGroupB_ibfk_1")
-  Employee_DocumentGroupB_createdByToEmployee Employee            @relation("DocumentGroupB_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentGroupB_ibfk_2")
-  DocumentGroupA                              DocumentGroupA      @relation(fields: [documentGroupAId], references: [id], onUpdate: Restrict, map: "DocumentGroupB_ibfk_3")
-  DocumentGroupC                              DocumentGroupC[]
-  DocumentStructure                           DocumentStructure[]
+  id                                          String          @id @db.Char(36)
+  name                                        String?         @db.VarChar(255)
+  createdBy                                   String          @db.Char(36)
+  createdAt                                   DateTime        @db.DateTime(0)
+  deleted                                     Boolean         @default(false)
+  deletedAt                                   DateTime?       @db.DateTime(0)
+  deletedBy                                   String?         @db.Char(36)
+  DocumentGroup                               DocumentGroup[]
+  Employee_DocumentGroupB_deletedByToEmployee Employee?       @relation("DocumentGroupB_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentGroupB_ibfk_1")
+  Employee_DocumentGroupB_createdByToEmployee Employee        @relation("DocumentGroupB_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentGroupB_ibfk_2")
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
-  @@index([documentGroupAId], map: "documentGroupAId")
 }
 
 model DocumentGroupC {
-  id                                          String              @id @db.Char(36)
-  documentGroupBId                            String              @db.Char(36)
-  name                                        String?             @db.VarChar(255)
-  createdBy                                   String              @db.Char(36)
-  createdAt                                   DateTime            @db.DateTime(0)
-  deleted                                     Boolean             @default(false)
-  deletedAt                                   DateTime?           @db.DateTime(0)
-  deletedBy                                   String?             @db.Char(36)
-  Employee_DocumentGroupC_deletedByToEmployee Employee?           @relation("DocumentGroupC_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentGroupC_ibfk_1")
-  Employee_DocumentGroupC_createdByToEmployee Employee            @relation("DocumentGroupC_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentGroupC_ibfk_2")
-  DocumentGroupB                              DocumentGroupB      @relation(fields: [documentGroupBId], references: [id], onUpdate: Restrict, map: "DocumentGroupC_ibfk_3")
-  DocumentGroupD                              DocumentGroupD[]
-  DocumentStructure                           DocumentStructure[]
+  id                                          String          @id @db.Char(36)
+  name                                        String?         @db.VarChar(255)
+  createdBy                                   String          @db.Char(36)
+  createdAt                                   DateTime        @db.DateTime(0)
+  deleted                                     Boolean         @default(false)
+  deletedAt                                   DateTime?       @db.DateTime(0)
+  deletedBy                                   String?         @db.Char(36)
+  DocumentGroup                               DocumentGroup[]
+  Employee_DocumentGroupC_deletedByToEmployee Employee?       @relation("DocumentGroupC_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentGroupC_ibfk_1")
+  Employee_DocumentGroupC_createdByToEmployee Employee        @relation("DocumentGroupC_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentGroupC_ibfk_2")
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
-  @@index([documentGroupBId], map: "documentGroupBId")
 }
 
 model DocumentGroupD {
-  id                                          String              @id @db.Char(36)
-  documentGroupCId                            String              @db.Char(36)
-  name                                        String?             @db.VarChar(255)
-  createdBy                                   String              @db.Char(36)
-  createdAt                                   DateTime            @db.DateTime(0)
-  deleted                                     Boolean             @default(false)
-  deletedAt                                   DateTime?           @db.DateTime(0)
-  deletedBy                                   String?             @db.Char(36)
-  Employee_DocumentGroupD_deletedByToEmployee Employee?           @relation("DocumentGroupD_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentGroupD_ibfk_1")
-  Employee_DocumentGroupD_createdByToEmployee Employee            @relation("DocumentGroupD_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentGroupD_ibfk_2")
-  DocumentGroupC                              DocumentGroupC      @relation(fields: [documentGroupCId], references: [id], onUpdate: Restrict, map: "DocumentGroupD_ibfk_3")
-  DocumentStructure                           DocumentStructure[]
+  id                                          String          @id @db.Char(36)
+  name                                        String?         @db.VarChar(255)
+  createdBy                                   String          @db.Char(36)
+  createdAt                                   DateTime        @db.DateTime(0)
+  deleted                                     Boolean         @default(false)
+  deletedAt                                   DateTime?       @db.DateTime(0)
+  deletedBy                                   String?         @db.Char(36)
+  DocumentGroup                               DocumentGroup[]
+  Employee_DocumentGroupD_deletedByToEmployee Employee?       @relation("DocumentGroupD_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentGroupD_ibfk_1")
+  Employee_DocumentGroupD_createdByToEmployee Employee        @relation("DocumentGroupD_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentGroupD_ibfk_2")
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
-  @@index([documentGroupCId], map: "documentGroupCId")
 }
 
 model PriceListCompany {
@@ -2396,4 +2386,68 @@ model PriceListCompany {
 
   @@index([companyId], map: "companyId")
   @@index([priceListId], map: "priceListId")
+}
+
+model DocumentGroup {
+  id                String              @id @db.Char(36)
+  groupAId          String?             @db.VarChar(255)
+  groupBId          String?             @db.VarChar(255)
+  groupCId          String?             @db.VarChar(255)
+  groupDId          String?             @db.VarChar(255)
+  DocumentGroupA    DocumentGroupA?     @relation(fields: [groupAId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "DocumentGroup_ibfk_1")
+  DocumentGroupB    DocumentGroupB?     @relation(fields: [groupBId], references: [id], onUpdate: Restrict, map: "DocumentGroup_ibfk_2")
+  DocumentGroupC    DocumentGroupC?     @relation(fields: [groupCId], references: [id], onUpdate: Restrict, map: "DocumentGroup_ibfk_3")
+  DocumentGroupD    DocumentGroupD?     @relation(fields: [groupDId], references: [id], onUpdate: Restrict, map: "DocumentGroup_ibfk_4")
+  DocumentStructure DocumentStructure[]
+
+  @@index([groupAId], map: "groupAId")
+  @@index([groupBId], map: "groupBId")
+  @@index([groupCId], map: "groupCId")
+  @@index([groupDId], map: "groupDId")
+}
+
+model DocumentRevision {
+  id                                            String            @id @db.Char(36)
+  documentId                                    String            @db.Char(36)
+  shortDescription                              String?           @db.VarChar(255)
+  longDescription                               String?           @db.Text
+  createdBy                                     String            @db.Char(36)
+  createdAt                                     DateTime          @db.DateTime(0)
+  deleted                                       Boolean           @default(false)
+  deletedAt                                     DateTime?         @db.DateTime(0)
+  deletedBy                                     String?           @db.Char(36)
+  Employee_DocumentRevision_deletedByToEmployee Employee?         @relation("DocumentRevision_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentRevision_ibfk_1")
+  DocumentStructure                             DocumentStructure @relation(fields: [documentId], references: [id], onUpdate: Restrict, map: "DocumentRevision_ibfk_2")
+  Employee_DocumentRevision_createdByToEmployee Employee          @relation("DocumentRevision_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentRevision_ibfk_3")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([documentId], map: "documentId")
+}
+
+model DocumentStatus {
+  id                                          String              @id @db.Char(36)
+  name                                        String?             @db.VarChar(255)
+  createdBy                                   String              @db.Char(36)
+  createdAt                                   DateTime            @db.DateTime(0)
+  deleted                                     Boolean             @default(false)
+  deletedAt                                   DateTime?           @db.DateTime(0)
+  deletedBy                                   String?             @db.Char(36)
+  Employee_DocumentStatus_deletedByToEmployee Employee?           @relation("DocumentStatus_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "DocumentStatus_ibfk_1")
+  Employee_DocumentStatus_createdByToEmployee Employee            @relation("DocumentStatus_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "DocumentStatus_ibfk_2")
+  DocumentStructure                           DocumentStructure[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+}
+
+model DocumentStructureTarget {
+  id                  String            @id @db.Char(36)
+  documentStructureId String            @db.Char(36)
+  targetId            String            @db.Char(36)
+  DocumentStructure   DocumentStructure @relation(fields: [documentStructureId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "DocumentStructureTarget_ibfk_1")
+  Target              Target            @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "DocumentStructureTarget_ibfk_2")
+
+  @@index([documentStructureId], map: "documentStructureId")
+  @@index([targetId], map: "targetId")
 }

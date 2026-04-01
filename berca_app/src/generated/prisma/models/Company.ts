@@ -403,6 +403,7 @@ export type CompanyWhereInput = {
   MaterialPrice?: Prisma.MaterialPriceListRelationFilter
   MaterialSerialTrack?: Prisma.MaterialSerialTrackListRelationFilter
   MaterialSupplier?: Prisma.MaterialSupplierListRelationFilter
+  PriceListCompany?: Prisma.PriceListCompanyListRelationFilter
   Project?: Prisma.ProjectListRelationFilter
   Purchase?: Prisma.PurchaseListRelationFilter
 }
@@ -452,6 +453,7 @@ export type CompanyOrderByWithRelationInput = {
   MaterialPrice?: Prisma.MaterialPriceOrderByRelationAggregateInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackOrderByRelationAggregateInput
   MaterialSupplier?: Prisma.MaterialSupplierOrderByRelationAggregateInput
+  PriceListCompany?: Prisma.PriceListCompanyOrderByRelationAggregateInput
   Project?: Prisma.ProjectOrderByRelationAggregateInput
   Purchase?: Prisma.PurchaseOrderByRelationAggregateInput
   _relevance?: Prisma.CompanyOrderByRelevanceInput
@@ -505,6 +507,7 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   MaterialPrice?: Prisma.MaterialPriceListRelationFilter
   MaterialSerialTrack?: Prisma.MaterialSerialTrackListRelationFilter
   MaterialSupplier?: Prisma.MaterialSupplierListRelationFilter
+  PriceListCompany?: Prisma.PriceListCompanyListRelationFilter
   Project?: Prisma.ProjectListRelationFilter
   Purchase?: Prisma.PurchaseListRelationFilter
 }, "id">
@@ -624,6 +627,7 @@ export type CompanyCreateInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -669,6 +673,7 @@ export type CompanyUncheckedCreateInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -714,6 +719,7 @@ export type CompanyUpdateInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -759,6 +765,7 @@ export type CompanyUncheckedUpdateInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -1321,6 +1328,20 @@ export type CompanyUpdateOneRequiredWithoutCompanyAddressNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutCompanyAddressInput, Prisma.CompanyUpdateWithoutCompanyAddressInput>, Prisma.CompanyUncheckedUpdateWithoutCompanyAddressInput>
 }
 
+export type CompanyCreateNestedOneWithoutPriceListCompanyInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutPriceListCompanyInput, Prisma.CompanyUncheckedCreateWithoutPriceListCompanyInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutPriceListCompanyInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutPriceListCompanyNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutPriceListCompanyInput, Prisma.CompanyUncheckedCreateWithoutPriceListCompanyInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutPriceListCompanyInput
+  upsert?: Prisma.CompanyUpsertWithoutPriceListCompanyInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutPriceListCompanyInput, Prisma.CompanyUpdateWithoutPriceListCompanyInput>, Prisma.CompanyUncheckedUpdateWithoutPriceListCompanyInput>
+}
+
 export type CompanyCreateWithoutOther_CompanyInput = {
   id: string
   name: string
@@ -1361,6 +1382,7 @@ export type CompanyCreateWithoutOther_CompanyInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -1405,6 +1427,7 @@ export type CompanyUncheckedCreateWithoutOther_CompanyInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -1454,6 +1477,7 @@ export type CompanyCreateWithoutCompanyInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -1498,6 +1522,7 @@ export type CompanyUncheckedCreateWithoutCompanyInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -1563,6 +1588,7 @@ export type CompanyUpdateWithoutOther_CompanyInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -1607,6 +1633,7 @@ export type CompanyUncheckedUpdateWithoutOther_CompanyInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -1704,6 +1731,7 @@ export type CompanyCreateWithoutCompanyContactInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -1748,6 +1776,7 @@ export type CompanyUncheckedCreateWithoutCompanyContactInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -1808,6 +1837,7 @@ export type CompanyUpdateWithoutCompanyContactInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -1852,6 +1882,7 @@ export type CompanyUncheckedUpdateWithoutCompanyContactInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -1896,6 +1927,7 @@ export type CompanyCreateWithoutDeliveryNoteSupplierInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -1940,6 +1972,7 @@ export type CompanyUncheckedCreateWithoutDeliveryNoteSupplierInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -2000,6 +2033,7 @@ export type CompanyUpdateWithoutDeliveryNoteSupplierInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -2044,6 +2078,7 @@ export type CompanyUncheckedUpdateWithoutDeliveryNoteSupplierInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -2088,6 +2123,7 @@ export type CompanyCreateWithoutEmployeeInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -2132,6 +2168,7 @@ export type CompanyUncheckedCreateWithoutEmployeeInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -2186,6 +2223,7 @@ export type CompanyCreateWithoutEmployee_Company_deletedByToEmployeeInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -2230,6 +2268,7 @@ export type CompanyUncheckedCreateWithoutEmployee_Company_deletedByToEmployeeInp
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -2316,6 +2355,7 @@ export type CompanyCreateWithoutInvoiceInInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -2360,6 +2400,7 @@ export type CompanyUncheckedCreateWithoutInvoiceInInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -2420,6 +2461,7 @@ export type CompanyUpdateWithoutInvoiceInInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -2464,6 +2506,7 @@ export type CompanyUncheckedUpdateWithoutInvoiceInInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -2508,6 +2551,7 @@ export type CompanyCreateWithoutMaterial_Material_preferredSupplierCompanyIdToCo
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -2552,6 +2596,7 @@ export type CompanyUncheckedCreateWithoutMaterial_Material_preferredSupplierComp
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -2612,6 +2657,7 @@ export type CompanyUpdateWithoutMaterial_Material_preferredSupplierCompanyIdToCo
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -2656,6 +2702,7 @@ export type CompanyUncheckedUpdateWithoutMaterial_Material_preferredSupplierComp
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -2700,6 +2747,7 @@ export type CompanyCreateWithoutMaterialSupplierInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -2744,6 +2792,7 @@ export type CompanyUncheckedCreateWithoutMaterialSupplierInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -2804,6 +2853,7 @@ export type CompanyUpdateWithoutMaterialSupplierInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -2848,6 +2898,7 @@ export type CompanyUncheckedUpdateWithoutMaterialSupplierInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -2892,6 +2943,7 @@ export type CompanyCreateWithoutMaterialPriceInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -2936,6 +2988,7 @@ export type CompanyUncheckedCreateWithoutMaterialPriceInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -2996,6 +3049,7 @@ export type CompanyUpdateWithoutMaterialPriceInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -3040,6 +3094,7 @@ export type CompanyUncheckedUpdateWithoutMaterialPriceInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -3084,6 +3139,7 @@ export type CompanyCreateWithoutMaterialSerialTrackInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -3128,6 +3184,7 @@ export type CompanyUncheckedCreateWithoutMaterialSerialTrackInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -3188,6 +3245,7 @@ export type CompanyUpdateWithoutMaterialSerialTrackInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -3232,6 +3290,7 @@ export type CompanyUncheckedUpdateWithoutMaterialSerialTrackInput = {
   Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -3277,6 +3336,7 @@ export type CompanyCreateWithoutProjectInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
 
@@ -3321,6 +3381,7 @@ export type CompanyUncheckedCreateWithoutProjectInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
 
@@ -3381,6 +3442,7 @@ export type CompanyUpdateWithoutProjectInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
 
@@ -3425,6 +3487,7 @@ export type CompanyUncheckedUpdateWithoutProjectInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
@@ -3469,6 +3532,7 @@ export type CompanyCreateWithoutPurchaseInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
 }
 
@@ -3513,6 +3577,7 @@ export type CompanyUncheckedCreateWithoutPurchaseInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
 }
 
@@ -3573,6 +3638,7 @@ export type CompanyUpdateWithoutPurchaseInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
 }
 
@@ -3617,6 +3683,7 @@ export type CompanyUncheckedUpdateWithoutPurchaseInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
@@ -3660,6 +3727,7 @@ export type CompanyCreateWithoutTargetInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -3704,6 +3772,7 @@ export type CompanyUncheckedCreateWithoutTargetInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -3774,6 +3843,7 @@ export type CompanyCreateWithoutCompanyAddressInput = {
   MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
 }
@@ -3818,6 +3888,7 @@ export type CompanyUncheckedCreateWithoutCompanyAddressInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedCreateNestedManyWithoutCompanyInput
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
   Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
 }
@@ -3878,6 +3949,7 @@ export type CompanyUpdateWithoutCompanyAddressInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -3915,6 +3987,203 @@ export type CompanyUncheckedUpdateWithoutCompanyAddressInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
+  Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedUpdateManyWithoutPreferredSupplierCompanyNestedInput
+  MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
+  MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
+  Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutPriceListCompanyInput = {
+  id: string
+  name: string
+  officialName: string
+  number: string
+  idOld?: string | null
+  mail?: string | null
+  businessPhone?: string | null
+  website?: string | null
+  vatNumber?: string | null
+  bankNumber?: string | null
+  iban?: string | null
+  bic?: string | null
+  becraCustomerNumber?: string | null
+  becraWebsiteLogin?: string | null
+  supplier?: boolean
+  preferredSupplier?: boolean
+  companyActive?: boolean
+  newsLetter?: boolean
+  customer?: boolean
+  potentialCustomer?: boolean
+  headQuarters?: boolean
+  potentialSubContractor?: boolean
+  subContractor?: boolean
+  notes?: string | null
+  createdAt: Date | string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  Employee: Prisma.EmployeeCreateNestedOneWithoutCompanyInput
+  Company?: Prisma.CompanyCreateNestedOneWithoutOther_CompanyInput
+  other_Company?: Prisma.CompanyCreateNestedManyWithoutCompanyInput
+  Target: Prisma.TargetCreateNestedOneWithoutCompanyInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutCompany_Company_deletedByToEmployeeInput
+  CompanyAddress?: Prisma.CompanyAddressCreateNestedManyWithoutCompanyInput
+  CompanyContact?: Prisma.CompanyContactCreateNestedManyWithoutCompanyInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierCreateNestedManyWithoutCompanyInput
+  InvoiceIn?: Prisma.InvoiceInCreateNestedManyWithoutCompanyInput
+  Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialCreateNestedManyWithoutPreferredSupplierCompanyInput
+  MaterialPrice?: Prisma.MaterialPriceCreateNestedManyWithoutCompanyInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedManyWithoutCompanyInput
+  MaterialSupplier?: Prisma.MaterialSupplierCreateNestedManyWithoutCompanyInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutCompanyInput
+  Purchase?: Prisma.PurchaseCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutPriceListCompanyInput = {
+  id: string
+  name: string
+  officialName: string
+  number: string
+  idOld?: string | null
+  mail?: string | null
+  businessPhone?: string | null
+  website?: string | null
+  vatNumber?: string | null
+  bankNumber?: string | null
+  iban?: string | null
+  bic?: string | null
+  becraCustomerNumber?: string | null
+  becraWebsiteLogin?: string | null
+  supplier?: boolean
+  preferredSupplier?: boolean
+  companyActive?: boolean
+  newsLetter?: boolean
+  customer?: boolean
+  potentialCustomer?: boolean
+  headQuarters?: boolean
+  potentialSubContractor?: boolean
+  subContractor?: boolean
+  notes?: string | null
+  createdAt: Date | string
+  createdBy: string
+  companyId?: string | null
+  targetId: string
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+  other_Company?: Prisma.CompanyUncheckedCreateNestedManyWithoutCompanyInput
+  CompanyAddress?: Prisma.CompanyAddressUncheckedCreateNestedManyWithoutCompanyInput
+  CompanyContact?: Prisma.CompanyContactUncheckedCreateNestedManyWithoutCompanyInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  InvoiceIn?: Prisma.InvoiceInUncheckedCreateNestedManyWithoutCompanyInput
+  Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUncheckedCreateNestedManyWithoutPreferredSupplierCompanyInput
+  MaterialPrice?: Prisma.MaterialPriceUncheckedCreateNestedManyWithoutCompanyInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedCreateNestedManyWithoutCompanyInput
+  MaterialSupplier?: Prisma.MaterialSupplierUncheckedCreateNestedManyWithoutCompanyInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutCompanyInput
+  Purchase?: Prisma.PurchaseUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutPriceListCompanyInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutPriceListCompanyInput, Prisma.CompanyUncheckedCreateWithoutPriceListCompanyInput>
+}
+
+export type CompanyUpsertWithoutPriceListCompanyInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutPriceListCompanyInput, Prisma.CompanyUncheckedUpdateWithoutPriceListCompanyInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutPriceListCompanyInput, Prisma.CompanyUncheckedCreateWithoutPriceListCompanyInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutPriceListCompanyInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutPriceListCompanyInput, Prisma.CompanyUncheckedUpdateWithoutPriceListCompanyInput>
+}
+
+export type CompanyUpdateWithoutPriceListCompanyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iban?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialCustomer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  headQuarters?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialSubContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  Employee?: Prisma.EmployeeUpdateOneRequiredWithoutCompanyNestedInput
+  Company?: Prisma.CompanyUpdateOneWithoutOther_CompanyNestedInput
+  other_Company?: Prisma.CompanyUpdateManyWithoutCompanyNestedInput
+  Target?: Prisma.TargetUpdateOneRequiredWithoutCompanyNestedInput
+  Employee_Company_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutCompany_Company_deletedByToEmployeeNestedInput
+  CompanyAddress?: Prisma.CompanyAddressUpdateManyWithoutCompanyNestedInput
+  CompanyContact?: Prisma.CompanyContactUpdateManyWithoutCompanyNestedInput
+  DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUpdateManyWithoutCompanyNestedInput
+  InvoiceIn?: Prisma.InvoiceInUpdateManyWithoutCompanyNestedInput
+  Material_Material_preferredSupplierCompanyIdToCompany?: Prisma.MaterialUpdateManyWithoutPreferredSupplierCompanyNestedInput
+  MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
+  MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
+  Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutPriceListCompanyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  officialName?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  idOld?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iban?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraCustomerNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  becraWebsiteLogin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  preferredSupplier?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  companyActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newsLetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  customer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialCustomer?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  headQuarters?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  potentialSubContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  subContractor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  targetId?: Prisma.StringFieldUpdateOperationsInput | string
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  other_Company?: Prisma.CompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  CompanyAddress?: Prisma.CompanyAddressUncheckedUpdateManyWithoutCompanyNestedInput
   CompanyContact?: Prisma.CompanyContactUncheckedUpdateManyWithoutCompanyNestedInput
   DeliveryNoteSupplier?: Prisma.DeliveryNoteSupplierUncheckedUpdateManyWithoutCompanyNestedInput
   InvoiceIn?: Prisma.InvoiceInUncheckedUpdateManyWithoutCompanyNestedInput
@@ -3999,6 +4268,7 @@ export type CompanyUpdateWithoutCompanyInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -4043,6 +4313,7 @@ export type CompanyUncheckedUpdateWithoutCompanyInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -4186,6 +4457,7 @@ export type CompanyUpdateWithoutEmployeeInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -4230,6 +4502,7 @@ export type CompanyUncheckedUpdateWithoutEmployeeInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -4307,6 +4580,7 @@ export type CompanyUpdateWithoutEmployee_Company_deletedByToEmployeeInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -4351,6 +4625,7 @@ export type CompanyUncheckedUpdateWithoutEmployee_Company_deletedByToEmployeeInp
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -4461,6 +4736,7 @@ export type CompanyUpdateWithoutTargetInput = {
   MaterialPrice?: Prisma.MaterialPriceUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUpdateManyWithoutCompanyNestedInput
 }
@@ -4505,6 +4781,7 @@ export type CompanyUncheckedUpdateWithoutTargetInput = {
   MaterialPrice?: Prisma.MaterialPriceUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUncheckedUpdateManyWithoutCompanyNestedInput
   MaterialSupplier?: Prisma.MaterialSupplierUncheckedUpdateManyWithoutCompanyNestedInput
+  PriceListCompany?: Prisma.PriceListCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutCompanyNestedInput
   Purchase?: Prisma.PurchaseUncheckedUpdateManyWithoutCompanyNestedInput
 }
@@ -4557,6 +4834,7 @@ export type CompanyCountOutputType = {
   MaterialPrice: number
   MaterialSerialTrack: number
   MaterialSupplier: number
+  PriceListCompany: number
   Project: number
   Purchase: number
 }
@@ -4571,6 +4849,7 @@ export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   MaterialPrice?: boolean | CompanyCountOutputTypeCountMaterialPriceArgs
   MaterialSerialTrack?: boolean | CompanyCountOutputTypeCountMaterialSerialTrackArgs
   MaterialSupplier?: boolean | CompanyCountOutputTypeCountMaterialSupplierArgs
+  PriceListCompany?: boolean | CompanyCountOutputTypeCountPriceListCompanyArgs
   Project?: boolean | CompanyCountOutputTypeCountProjectArgs
   Purchase?: boolean | CompanyCountOutputTypeCountPurchaseArgs
 }
@@ -4651,6 +4930,13 @@ export type CompanyCountOutputTypeCountMaterialSupplierArgs<ExtArgs extends runt
 /**
  * CompanyCountOutputType without action
  */
+export type CompanyCountOutputTypeCountPriceListCompanyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PriceListCompanyWhereInput
+}
+
+/**
+ * CompanyCountOutputType without action
+ */
 export type CompanyCountOutputTypeCountProjectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ProjectWhereInput
 }
@@ -4708,6 +4994,7 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   MaterialPrice?: boolean | Prisma.Company$MaterialPriceArgs<ExtArgs>
   MaterialSerialTrack?: boolean | Prisma.Company$MaterialSerialTrackArgs<ExtArgs>
   MaterialSupplier?: boolean | Prisma.Company$MaterialSupplierArgs<ExtArgs>
+  PriceListCompany?: boolean | Prisma.Company$PriceListCompanyArgs<ExtArgs>
   Project?: boolean | Prisma.Company$ProjectArgs<ExtArgs>
   Purchase?: boolean | Prisma.Company$PurchaseArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
@@ -4764,6 +5051,7 @@ export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   MaterialPrice?: boolean | Prisma.Company$MaterialPriceArgs<ExtArgs>
   MaterialSerialTrack?: boolean | Prisma.Company$MaterialSerialTrackArgs<ExtArgs>
   MaterialSupplier?: boolean | Prisma.Company$MaterialSupplierArgs<ExtArgs>
+  PriceListCompany?: boolean | Prisma.Company$PriceListCompanyArgs<ExtArgs>
   Project?: boolean | Prisma.Company$ProjectArgs<ExtArgs>
   Purchase?: boolean | Prisma.Company$PurchaseArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
@@ -4785,6 +5073,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     MaterialPrice: Prisma.$MaterialPricePayload<ExtArgs>[]
     MaterialSerialTrack: Prisma.$MaterialSerialTrackPayload<ExtArgs>[]
     MaterialSupplier: Prisma.$MaterialSupplierPayload<ExtArgs>[]
+    PriceListCompany: Prisma.$PriceListCompanyPayload<ExtArgs>[]
     Project: Prisma.$ProjectPayload<ExtArgs>[]
     Purchase: Prisma.$PurchasePayload<ExtArgs>[]
   }
@@ -5173,6 +5462,7 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   MaterialPrice<T extends Prisma.Company$MaterialPriceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$MaterialPriceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialPricePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   MaterialSerialTrack<T extends Prisma.Company$MaterialSerialTrackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$MaterialSerialTrackArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   MaterialSupplier<T extends Prisma.Company$MaterialSupplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$MaterialSupplierArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaterialSupplierPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  PriceListCompany<T extends Prisma.Company$PriceListCompanyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$PriceListCompanyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceListCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Project<T extends Prisma.Company$ProjectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$ProjectArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Purchase<T extends Prisma.Company$PurchaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$PurchaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -5829,6 +6119,30 @@ export type Company$MaterialSupplierArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.MaterialSupplierScalarFieldEnum | Prisma.MaterialSupplierScalarFieldEnum[]
+}
+
+/**
+ * Company.PriceListCompany
+ */
+export type Company$PriceListCompanyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PriceListCompany
+   */
+  select?: Prisma.PriceListCompanySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PriceListCompany
+   */
+  omit?: Prisma.PriceListCompanyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PriceListCompanyInclude<ExtArgs> | null
+  where?: Prisma.PriceListCompanyWhereInput
+  orderBy?: Prisma.PriceListCompanyOrderByWithRelationInput | Prisma.PriceListCompanyOrderByWithRelationInput[]
+  cursor?: Prisma.PriceListCompanyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PriceListCompanyScalarFieldEnum | Prisma.PriceListCompanyScalarFieldEnum[]
 }
 
 /**

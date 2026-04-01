@@ -122,7 +122,12 @@ const segmentToTitle = (segment: string): string => {
 export function DashboardNavbar({employee, roleContext, roleContextInput}: DashboardNavbarProps) {
   const [departmentMap, setDepartmentMap] = useState<Record<string, string>>({})
   const [entityNames, setEntityNames] = useState<Record<string, string>>({})
+  const [mounted, setMounted] = useState(false)
   const {theme, resolvedTheme, setTheme} = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const applyTheme = (nextTheme: AppTheme) => {
     setTheme(nextTheme)
@@ -291,49 +296,64 @@ export function DashboardNavbar({employee, roleContext, roleContextInput}: Dashb
         )}
       </div>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-secondary outline-none">
-            <div className="flex flex-col items-end gap-0.5">
-              <span className="text-sm font-medium text-foreground">{employee.username}</span>
-              <span className="text-xs text-muted-foreground capitalize">{displayRole}</span>
-            </div>
-            <Avatar className="h-8 w-8">
-              <AvatarFallback className="bg-secondary text-foreground text-xs font-medium">{initials}</AvatarFallback>
-            </Avatar>
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-48 bg-card border-border">
-          <DropdownMenuLabel className="text-foreground">My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator className="bg-border" />
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Theme</DropdownMenuSubTrigger>
-            <DropdownMenuSubContent className="w-44">
-              <DropdownMenuItem onSelect={() => applyTheme('light')}>
-                Light
-                {activeTheme === 'light' && <Check className="ml-auto h-4 w-4" />}
-              </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => applyTheme('dark')}>
-                Dark
-                {activeTheme === 'dark' && <Check className="ml-auto h-4 w-4" />}
-              </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => applyTheme('high-contrast')}>
-                High contrast
-                {activeTheme === 'high-contrast' && <Check className="ml-auto h-4 w-4" />}
-              </DropdownMenuItem>
-            </DropdownMenuSubContent>
-          </DropdownMenuSub>
-          <DropdownMenuSeparator className="bg-border" />
-          <DropdownMenuItem asChild className="cursor-pointer">
-            <Link
-              href="/"
-              className="flex items-center gap-2 text-destructive focus:bg-destructive/10 focus:text-destructive">
-              <LogOut className="h-4 w-4" />
-              Sign out
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {mounted ? (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-secondary outline-none">
+              <div className="flex flex-col items-end gap-0.5">
+                <span className="text-sm font-medium text-foreground">{employee.username}</span>
+                <span className="text-xs text-muted-foreground capitalize">{displayRole}</span>
+              </div>
+              <Avatar className="h-8 w-8">
+                <AvatarFallback className="bg-secondary text-foreground text-xs font-medium">{initials}</AvatarFallback>
+              </Avatar>
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48 bg-card border-border">
+            <DropdownMenuLabel className="text-foreground">My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-border" />
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>Theme</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent className="w-44">
+                <DropdownMenuItem onSelect={() => applyTheme('light')}>
+                  Light
+                  {activeTheme === 'light' && <Check className="ml-auto h-4 w-4" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => applyTheme('dark')}>
+                  Dark
+                  {activeTheme === 'dark' && <Check className="ml-auto h-4 w-4" />}
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => applyTheme('high-contrast')}>
+                  High contrast
+                  {activeTheme === 'high-contrast' && <Check className="ml-auto h-4 w-4" />}
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuSeparator className="bg-border" />
+            <DropdownMenuItem asChild className="cursor-pointer">
+              <Link
+                href="/"
+                className="flex items-center gap-2 text-destructive focus:bg-destructive/10 focus:text-destructive">
+                <LogOut className="h-4 w-4" />
+                Sign out
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <button
+          type="button"
+          className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-secondary outline-none"
+          aria-label="User menu loading">
+          <div className="flex flex-col items-end gap-0.5">
+            <span className="text-sm font-medium text-foreground">{employee.username}</span>
+            <span className="text-xs text-muted-foreground capitalize">{displayRole}</span>
+          </div>
+          <Avatar className="h-8 w-8">
+            <AvatarFallback className="bg-secondary text-foreground text-xs font-medium">{initials}</AvatarFallback>
+          </Avatar>
+        </button>
+      )}
     </header>
   )
 }

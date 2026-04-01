@@ -5,6 +5,15 @@ import {NextResponse} from 'next/server'
 type EntityResolver = (id: string) => Promise<string | null>
 
 const entityResolvers: Record<string, EntityResolver> = {
+  serialTracked: async id => {
+    const item = await prismaClient.materialSerialTrack.findUnique({
+      where: { id },
+      select: {
+        shortDescription: true,
+      },
+    });
+    return item?.shortDescription || null;
+  },
   departments: async id => {
     const item = await prismaClient.department.findUnique({where: {id}, select: {name: true}})
     return item?.name ?? null

@@ -17,7 +17,7 @@ export interface MappedWorkOrderStructure {
   createdByName: string
   deletedByName: string | null
   materialName: string
-  materialBeNumber: string
+  materialBeNumber: string | null
   workOrderNumber: string | null
 }
 

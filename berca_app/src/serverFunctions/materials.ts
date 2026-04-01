@@ -2,7 +2,7 @@
 
 import {revalidatePath} from 'next/cache'
 import {randomUUID} from 'crypto'
-import {createMaterial, updateMaterial, softDeleteMaterial} from '@/dal/materials'
+import {createMaterial, updateMaterial, softDeleteMaterial, restoreMaterial, cloneMaterial} from '@/dal/materials'
 import {prismaClient} from '@/dal/prismaClient'
 import {protectedFormAction} from '@/lib/serverFunctions'
 import {createMaterialSchema, updateMaterialSchema, deleteMaterialSchema} from '@/schemas/materialSchemas'
@@ -19,7 +19,7 @@ async function generateBeNumber() {
   const START_NUMBER = 1000000
 
   const numericBeNumbers = materials
-    .map(({beNumber}) => beNumber.trim())
+    .map(({beNumber}) => (beNumber ?? '').trim()) // Ensure beNumber is always a string
     .filter(beNumber => /^\d+$/.test(beNumber))
     .map(Number)
 
@@ -69,6 +69,12 @@ export const createMaterialAction = protectedFormAction({
       targetId: target.id,
     })
 
+    if (!material) {
+      return {
+        success: false,
+        errors: {global: ['Material could not be created. Please try again.']},
+      }
+    }
     logger.info(`Material created: ${material.id}`)
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)
@@ -113,5 +119,32 @@ export const deleteMaterialAction = protectedFormAction({
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)
     revalidatePath(`${REVALIDATE_MATERIAL}/${data.id}`)
+  },
+})
+
+export const restoreMaterialAction = protectedFormAction({
+  schema: deleteMaterialSchema,
+  functionName: 'Restore material',
+  globalErrorMessage: 'Could not restore the material, please try again.',
+  serverFn: async ({data, logger}) => {
+    await restoreMaterial(data.id)
+    logger.info(`Material restored: ${data.id}`)
+    revalidatePath(REVALIDATE_MATERIAL)
+    revalidatePath(REVALIDATE_INVENTORY)
+    revalidatePath(`${REVALIDATE_MATERIAL}/${data.id}`)
+  },
+})
+
+export const cloneMaterialAction = protectedFormAction({
+  schema: updateMaterialSchema, // Accepts an id for the material to clone
+  functionName: 'Clone material',
+  globalErrorMessage: 'Could not clone the material, please try again.',
+  serverFn: async ({data, profile, logger}) => {
+    const {id} = data
+    const cloned = await cloneMaterial(id)
+    logger.info(`Material cloned: ${cloned.id} from ${id}`)
+    revalidatePath(REVALIDATE_MATERIAL)
+    revalidatePath(REVALIDATE_INVENTORY)
+    return {success: true, id: cloned.id}
   },
 })

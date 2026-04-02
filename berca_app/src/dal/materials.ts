@@ -70,6 +70,28 @@ export type MaterialWithRelations = Prisma.MaterialGetPayload<{
     Inventory_Inventory_materialIdToMaterial: {
       where: {deleted: false}
       orderBy: {createdAt: 'asc'}
+      include: {
+        InventoryStructure: {
+          where: {deleted: false},
+          orderBy: {createdAt: 'asc'},
+          select: {
+            id: true,
+            inventoryPlaceId: true,
+            place: true,
+            warehousePlaceId: true,
+            information: true,
+            coordinate: true,
+            inventoryId: true,
+            forInventory: true,
+            forProject: true,
+            active: true,
+            materialActive: true,
+            valid: true,
+            createdAt: true,
+            createdBy: true,
+          },
+        },
+      }
     }
   }
 }>
@@ -118,6 +140,28 @@ export async function getMaterialById(id: string): Promise<MaterialWithRelations
       Inventory_Inventory_materialIdToMaterial: {
         where: {deleted: false},
         orderBy: {createdAt: 'asc'},
+        include: {
+          InventoryStructure: {
+            where: {deleted: false},
+            orderBy: {createdAt: 'asc'},
+            select: {
+              id: true,
+              inventoryPlaceId: true,
+              place: true,
+              warehousePlaceId: true,
+              information: true,
+              coordinate: true,
+              inventoryId: true,
+              forInventory: true,
+              forProject: true,
+              active: true,
+              materialActive: true,
+              valid: true,
+              createdAt: true,
+              createdBy: true,
+            },
+          },
+        }
       },
     },
   })
@@ -447,27 +491,3 @@ export async function restoreMaterial(id: string) {
   })
 }
 
-export async function cloneMaterial(id: string) {
-  const original = await prismaClient.material.findUniqueOrThrow({where: {id}})
-  const {id: _oldId, deleted: _deleted, deletedAt: _deletedAt, deletedBy: _deletedBy, beNumber, ...rest} = original
-  const newId = randomUUID()
-
-  let baseBeNumber = beNumber ? String(beNumber) : 'CLONE'
-  let newBeNumber = baseBeNumber + '-copy'
-  let counter = 1
-  while (await prismaClient.material.findUnique({where: {beNumber: newBeNumber}})) {
-    newBeNumber = `${baseBeNumber}-copy${counter}`
-    counter++
-  }
-
-  return prismaClient.material.create({
-    data: {
-      ...rest,
-      id: newId,
-      beNumber: newBeNumber,
-      deleted: false,
-      deletedAt: null,
-      deletedBy: null,
-    },
-  })
-}

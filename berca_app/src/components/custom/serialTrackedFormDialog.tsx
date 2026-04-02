@@ -40,6 +40,7 @@ interface MaterialSerialTrackedFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   materialSerialTracked: MaterialSerialTrackedFormValue | null
+  mode?: 'create' | 'edit' | 'duplicate'
   companyOptions: {id: string; name: string}[]
   projectOptions: {id: string; name: string}[]
   materialGroupOptions: {id: string; name: string}[]
@@ -102,13 +103,16 @@ const emptyForm: FormState = {
   warehousePlaceId: '',
 }
 
-function toFormState(item: MaterialSerialTrackedFormValue | null): FormState {
+function toFormState(item: MaterialSerialTrackedFormValue | null, mode: 'create' | 'edit' | 'duplicate'): FormState {
   if (!item) return emptyForm
 
+  const isDuplicate = mode === 'duplicate'
+
   return {
-    id: item.id,
+    id: isDuplicate ? undefined : item.id,
     materialId: '',
-    beNumber: item.beNumber ?? '',
+    // Force user to pick a BE/material when duplicating, so create validation stays correct.
+    beNumber: isDuplicate ? '' : (item.beNumber ?? ''),
     brandName: item.brandName ?? '',
     management: item.management ?? '',
     brandOrderNumber: item.brandOrderNumber ?? '',
@@ -140,6 +144,7 @@ export function MaterialSerialTrackedFormDialog({
   open,
   onOpenChange,
   materialSerialTracked,
+  mode,
   companyOptions,
   materialGroupOptions,
   warehousePlaceOptions,
@@ -151,15 +156,20 @@ export function MaterialSerialTrackedFormDialog({
   const [error, setError] = useState<string | null>(null)
   const [createdId] = useState<string | null>(null)
   const idInputRef = useRef<HTMLInputElement>(null)
-  const isEditing = !!materialSerialTracked
+  const resolvedMode: 'create' | 'edit' | 'duplicate' = mode ?? (materialSerialTracked ? 'edit' : 'create')
+  const isEditing = resolvedMode === 'edit' && !!materialSerialTracked
 
   useEffect(() => {
     if (open) {
-      setForm(toFormState(materialSerialTracked))
+      setForm(toFormState(materialSerialTracked, resolvedMode))
     }
-  }, [open, materialSerialTracked])
+  }, [open, materialSerialTracked, resolvedMode])
 
-  const title = useMemo(() => (isEditing ? 'Edit Serial Tracked Item' : 'New Serial Tracked Item'), [isEditing])
+  const title = useMemo(() => {
+    if (resolvedMode === 'edit') return 'Edit Serial Tracked Item'
+    if (resolvedMode === 'duplicate') return 'Duplicate Serial Tracked Item'
+    return 'New Serial Tracked Item'
+  }, [resolvedMode])
 
   function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm(prev => ({...prev, [key]: value}))
@@ -256,7 +266,11 @@ export function MaterialSerialTrackedFormDialog({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
-            {isEditing ? 'Update the serial tracked item details.' : 'Create a new serial tracked item.'}
+            {resolvedMode === 'edit'
+              ? 'Update the serial tracked item details.'
+              : resolvedMode === 'duplicate'
+                ? 'Create a new item from copied values. Select a new BE Number before saving.'
+                : 'Create a new serial tracked item.'}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6">

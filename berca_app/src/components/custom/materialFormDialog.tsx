@@ -9,6 +9,7 @@ import {Textarea} from '@/components/ui/textarea'
 import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedMaterial} from '@/types/material'
+import type {WarehousePlaceOption} from '@/types/warehousePlace'
 
 interface MaterialGroup {
   id: string
@@ -35,15 +36,12 @@ interface ParentPartOption {
   shortDescription: string
 }
 
-interface WarehousePlaceOption {
-  id: string
-  label: string
-}
 
 interface MaterialFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   material: MappedMaterial | null
+  mode?: 'create' | 'edit' | 'duplicate'
   materialGroups: MaterialGroup[]
   units: Unit[]
   supplierCompanies: SupplierCompanyOption[]
@@ -198,6 +196,7 @@ export function MaterialFormDialog({
   open,
   onOpenChange,
   material,
+  mode,
   materialGroups,
   units,
   supplierCompanies,
@@ -208,10 +207,15 @@ export function MaterialFormDialog({
   saving = false,
   saveError = null,
 }: MaterialFormDialogProps) {
-  const isEditing = material !== null
+  const resolvedMode: 'create' | 'edit' | 'duplicate' = mode ?? (material ? 'edit' : 'create')
+  const isEditing = resolvedMode === 'edit' && material !== null
 
   const makeForm = (): Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean} =>
-    material ? {...material} : {...EMPTY_MATERIAL, id: crypto.randomUUID()}
+    material
+      ? resolvedMode === 'duplicate'
+        ? {...material, id: crypto.randomUUID(), beNumber: ''}
+        : {...material}
+      : {...EMPTY_MATERIAL, id: crypto.randomUUID()}
 
   const [form, setForm] = useState<
     Partial<MappedMaterial> & {id: string; isSerialTracked: boolean; isParentPart: boolean}
@@ -236,7 +240,7 @@ export function MaterialFormDialog({
       setIsSerialTracked(nextForm.isSerialTracked ?? false)
       setNumberKind(detectNumberKind(nextForm.beNumber))
     }
-  }, [open, material?.id])
+  }, [open, material?.id, resolvedMode])
 
   function update<K extends keyof MappedMaterial>(field: K, value: MappedMaterial[K]) {
     setForm(prev => ({...prev, [field]: value}))
@@ -389,10 +393,14 @@ export function MaterialFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-card border-border max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-foreground">{isEditing ? 'Edit Material' : 'New Material'}</DialogTitle>
+          <DialogTitle className="text-foreground">
+            {isEditing ? 'Edit Material' : resolvedMode === 'duplicate' ? 'Copy Material' : 'New Material'}
+          </DialogTitle>
           <DialogDescription>
             {isEditing
               ? `Editing ${material.beNumber} – ${material.shortDescription}`
+              : resolvedMode === 'duplicate'
+                ? 'Copied fields loaded. Choose a new number and save as a new material.'
               : 'Fill in the details to register a new material.'}
           </DialogDescription>
         </DialogHeader>

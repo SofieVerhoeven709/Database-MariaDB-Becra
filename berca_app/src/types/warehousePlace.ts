@@ -17,3 +17,15 @@ export interface MappedWarehousePlace {
   deletedAt: string | null
   deletedBy: string | null
 }
+
+export interface WarehousePlaceOption {
+  id: string
+  label: string
+  abbreviation: string | null
+  place: string | null
+  shelf: string | null
+  column: string | null
+  layer: string | null
+  layerPlace: string | null
+}
+

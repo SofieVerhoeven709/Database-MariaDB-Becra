@@ -13,6 +13,7 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import {Switch} from '@/components/ui/switch'
 import {updateMaterialAction} from '@/serverFunctions/materials'
+import type {WarehousePlaceOption} from '@/types/warehousePlace'
 
 interface InventoryItem {
   id: string
@@ -25,6 +26,24 @@ interface InventoryItem {
   information: string | null
   valid: boolean
   noValidDate: string
+  inventoryStructures: InventoryStructureItem[]
+}
+
+interface InventoryStructureItem {
+  id: string
+  inventoryPlaceId: string
+  place: string | null
+  warehousePlaceId: string | null
+  information: string | null
+  coordinate: boolean
+  inventoryId: string
+  forInventory: boolean
+  forProject: boolean
+  active: boolean
+  materialActive: boolean
+  valid: boolean
+  createdAt: string
+  createdBy: string
 }
 
 interface MappedMaterialDetail {
@@ -88,11 +107,6 @@ interface SupplierCompanyOption {
   number: string
 }
 
-interface WarehousePlaceOption {
-  id: string
-  label: string
-}
-
 interface MaterialDetailProps {
   material: MappedMaterialDetail
   materialGroups: MaterialGroup[]
@@ -107,6 +121,12 @@ const thClass = 'whitespace-nowrap text-xs'
 function formatDate(iso: string | null | undefined) {
   if (!iso) return '-'
   return new Date(iso).toLocaleDateString('en-GB', {day: '2-digit', month: 'short', year: 'numeric'})
+}
+
+function formatWarehousePlace(place: WarehousePlaceOption) {
+  return [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
+    .filter(Boolean)
+    .join(' - ')
 }
 
 export function MaterialDetail({material, materialGroups, units, supplierCompanies, warehousePlaces = []}: MaterialDetailProps) {
@@ -153,9 +173,19 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
     }
   }
 
-  const warehousePlaceById = new Map(warehousePlaces.map(place => [place.id, place.label]))
-  const resolvedWarehousePlace =
-    form.documentationPlace ? warehousePlaceById.get(form.documentationPlace) ?? form.documentationPlace : null
+  const warehousePlaceById = new Map(warehousePlaces.map(place => [place.id, place]))
+
+  const resolvedWarehousePlace = form.documentationPlace ? warehousePlaceById.get(form.documentationPlace) ?? null : null
+
+  function formatInventoryStructureLocation(structure: InventoryStructureItem) {
+    const warehousePlace = structure.warehousePlaceId ? warehousePlaceById.get(structure.warehousePlaceId) ?? null : null
+    const warehouseLabel = warehousePlace ? formatWarehousePlace(warehousePlace) : structure.place || structure.warehousePlaceId || structure.inventoryPlaceId
+    const statusParts = [structure.coordinate ? 'coordinate' : 'no coordinate', structure.valid ? 'valid' : 'invalid']
+
+    return [warehouseLabel ?? '-', `inventoryPlaceId: ${structure.inventoryPlaceId}`, `inventoryId: ${structure.inventoryId}`, ...statusParts]
+      .filter(Boolean)
+      .join(' | ')
+  }
 
   async function handleSave() {
     setSaving(true)
@@ -652,23 +682,46 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Warehouse Place</Label>
               {editing ? (
-                <Select
-                  value={form.documentationPlace || '__none__'}
-                  onValueChange={value => handleField('documentationPlace', value === '__none__' ? '' : value)}>
-                  <SelectTrigger className="bg-secondary border-border">
-                    <SelectValue placeholder="Select warehouse place" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="__none__">None</SelectItem>
-                    {warehousePlaces.map(place => (
-                      <SelectItem key={place.id} value={place.id}>
-                        {place.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="space-y-2">
+                  <Select
+                    value={form.documentationPlace || '__none__'}
+                    onValueChange={value => handleField('documentationPlace', value === '__none__' ? '' : value)}>
+                    <SelectTrigger className="bg-secondary border-border">
+                      <SelectValue placeholder="Select warehouse place" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="__none__">None</SelectItem>
+                      {warehousePlaces.map(place => (
+                        <SelectItem key={place.id} value={place.id}>
+                          {place.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {resolvedWarehousePlace && (
+                    <div className="text-xs text-muted-foreground space-y-0.5">
+                      <p>Abbr: {resolvedWarehousePlace.abbreviation ?? '-'}</p>
+                      <p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
+                      <p>Shelf: {resolvedWarehousePlace.shelf ?? '-'}</p>
+                      <p>Column: {resolvedWarehousePlace.column ?? '-'}</p>
+                      <p>Layer: {resolvedWarehousePlace.layer ?? '-'}</p>
+                      <p>Layer place: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
+                    </div>
+                  )}
+                </div>
               ) : (
-                <p className="text-sm">{resolvedWarehousePlace ?? <span className="text-muted-foreground">—</span>}</p>
+                resolvedWarehousePlace ? (
+                  <div className="text-sm space-y-0.5">
+                    <p>Abbr: {resolvedWarehousePlace.abbreviation ?? '-'}</p>
+                    <p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
+                    <p>Shelf: {resolvedWarehousePlace.shelf ?? '-'}</p>
+                    <p>Column: {resolvedWarehousePlace.column ?? '-'}</p>
+                    <p>Layer: {resolvedWarehousePlace.layer ?? '-'}</p>
+                    <p>Layer place: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">—</p>
+                )
               )}
             </div>
 
@@ -762,7 +815,19 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                     <TableRow key={inv.id} className="hover:bg-secondary/50">
                       <TableCell className={`${tdClass} font-mono`}>{inv.beNumber}</TableCell>
                       <TableCell className={tdClass}>
-                        {inv.place ?? <span className="text-muted-foreground">—</span>}
+                        <div className="space-y-1">
+                          <p>{inv.place ?? <span className="text-muted-foreground">—</span>}</p>
+                          {inv.inventoryStructures.length > 0 && (
+                            <div className="space-y-1 text-xs text-muted-foreground">
+                              {inv.inventoryStructures.map(structure => (
+                                <div key={structure.id} className="rounded-md border border-border bg-secondary/30 px-2 py-1">
+                                  <p className="font-mono">{formatInventoryStructureLocation(structure)}</p>
+                                  {structure.information && <p className="whitespace-pre-wrap">{structure.information}</p>}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </TableCell>
                       <TableCell className="text-sm font-semibold">{inv.quantityInStock}</TableCell>
                       <TableCell className={tdClass}>{inv.minQuantityInStock}</TableCell>

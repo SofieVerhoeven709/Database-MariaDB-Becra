@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink} from 'lucide-react'
+import {Search, Plus, Pencil, ChevronDown, ChevronUp, Trash2, ExternalLink, Copy} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
@@ -145,6 +145,7 @@ export function SerialTrackedTable({
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<MappedMaterialSerialTracked | null>(null)
+  const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
 
   const companyMap = new Map(companyOptions.map(c => [c.id, c.name]))
   const projectMap = new Map(projectOptions.map(p => [p.id, p.name]))
@@ -269,6 +270,7 @@ export function SerialTrackedTable({
         {canDelete && (
           <Button
             onClick={() => {
+              setDialogMode('create')
               setEditingItem(null)
               setDialogOpen(true)
             }}
@@ -414,10 +416,24 @@ export function SerialTrackedTable({
                             size="icon"
                             className="h-8 w-8 text-muted-foreground hover:bg-secondary hover:text-foreground"
                             onClick={() => {
+                              setDialogMode('edit')
                               setEditingItem(item)
                               setDialogOpen(true)
                             }}>
                             <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                            onClick={() => {
+                              setDialogMode('duplicate')
+                              setEditingItem(item)
+                              setDialogOpen(true)
+                            }}>
+                            <Copy className="h-3.5 w-3.5" />
+                            <span className="sr-only">Duplicate {item.beNumber ?? item.id}</span>
                           </Button>
 
                           {canDelete && (
@@ -471,6 +487,7 @@ export function SerialTrackedTable({
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         materialSerialTracked={editingItem as any}
+        mode={dialogMode}
         companyOptions={companyOptions}
         projectOptions={projectOptions}
         materialGroupOptions={materialGroupOptions}

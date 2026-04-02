@@ -10,6 +10,7 @@ interface MaterialPlaceFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   item: MappedMaterialPlace | null
+  mode?: 'create' | 'edit' | 'duplicate'
   materials: {id: string; beNumber: string; name: string | null; shortDescription: string}[]
   onSave: (item: Partial<MappedMaterialPlace> & {id: string}) => Promise<void>
 }
@@ -109,10 +110,15 @@ const EMPTY: Partial<MappedMaterialPlace> & {id: string} = {
   quantityInStock: 0,
 }
 
-export function MaterialPlaceFormDialog({open, onOpenChange, item, materials, onSave}: MaterialPlaceFormDialogProps) {
-  const isEditing = item !== null
+export function MaterialPlaceFormDialog({open, onOpenChange, item, mode, materials, onSave}: MaterialPlaceFormDialogProps) {
+  const resolvedMode: 'create' | 'edit' | 'duplicate' = mode ?? (item ? 'edit' : 'create')
+  const isEditing = resolvedMode === 'edit' && item !== null
   const makeForm = (): Partial<MappedMaterialPlace> & {id: string} =>
-    item ? {...item} : {...EMPTY, id: crypto.randomUUID()}
+    item
+      ? resolvedMode === 'duplicate'
+        ? {...item, id: crypto.randomUUID()}
+        : {...item}
+      : {...EMPTY, id: crypto.randomUUID()}
   const [form, setForm] = useState(makeForm)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -123,7 +129,7 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, materials, on
       setError(null)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, item?.id])
+  }, [open, item?.id, resolvedMode])
 
   function update<K extends keyof MappedMaterialPlace>(field: K, value: MappedMaterialPlace[K]) {
     setForm(prev => ({...prev, [field]: value}))
@@ -146,9 +152,15 @@ export function MaterialPlaceFormDialog({open, onOpenChange, item, materials, on
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-card border-border max-w-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-foreground">{isEditing ? 'Edit Warehouse Place' : 'New Warehouse Place'}</DialogTitle>
+          <DialogTitle className="text-foreground">
+            {isEditing ? 'Edit Warehouse Place' : resolvedMode === 'duplicate' ? 'Duplicate Warehouse Place' : 'New Warehouse Place'}
+          </DialogTitle>
           <DialogDescription>
-            {isEditing ? `Editing place: ${item.abbreviation ?? item.id}` : 'Register a new warehouse storage location.'}
+            {isEditing
+              ? `Editing place: ${item.abbreviation ?? item.id}`
+              : resolvedMode === 'duplicate'
+                ? 'Create a new warehouse place from copied values.'
+                : 'Register a new warehouse storage location.'}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">

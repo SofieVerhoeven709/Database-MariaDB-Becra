@@ -4,6 +4,7 @@ import {notFound} from 'next/navigation'
 import {getSupplierCompanies} from '@/dal/companies'
 import {getSerialTrackedStructureBySerialTrackedId} from '@/dal/materialSerialTrackedStructure'
 import {getWarehousePlaces} from '@/dal/warehousePlace'
+import type {WarehousePlaceOption} from '@/types/warehousePlace'
 
 interface MaterialDetailPageProps {
   params: Promise<{materialId: string}>
@@ -110,6 +111,23 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
       information: inv.information ?? null,
       valid: inv.valid,
       noValidDate: inv.noValidDate.toISOString(),
+      inventoryStructures:
+        inv.InventoryStructure?.map((structure: any) => ({
+          id: structure.id,
+          inventoryPlaceId: structure.inventoryPlaceId,
+          place: structure.place ?? null,
+          warehousePlaceId: structure.warehousePlaceId ?? null,
+          information: structure.information ?? null,
+          coordinate: structure.coordinate ?? false,
+          inventoryId: structure.inventoryId,
+          forInventory: structure.forInventory,
+          forProject: structure.forProject,
+          active: structure.active,
+          materialActive: structure.materialActive,
+          valid: structure.valid,
+          createdAt: structure.createdAt.toISOString(),
+          createdBy: structure.createdBy,
+        })) ?? [],
     })),
     isSerialTracked: (material as any).isSerialTracked ?? false,
     serialTrackedId: (material as any).MaterialSerialTrack?.[0]?.id ?? null,
@@ -138,11 +156,17 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     number: c.number,
   }))
 
-  const mappedWarehousePlaces = warehousePlaces.map((place: any) => ({
+  const mappedWarehousePlaces: WarehousePlaceOption[] = warehousePlaces.map((place: any) => ({
     id: place.id,
     label: [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
       .filter(Boolean)
       .join(' - '),
+    abbreviation: place.abbreviation ?? null,
+    place: place.place ?? null,
+    shelf: place.shelf ?? null,
+    column: place.column ?? null,
+    layer: place.layer ?? null,
+    layerPlace: place.layerPlace ?? null,
   }))
 
   return (

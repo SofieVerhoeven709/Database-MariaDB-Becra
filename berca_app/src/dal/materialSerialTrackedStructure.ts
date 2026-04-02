@@ -43,3 +43,22 @@ export async function getSerialTrackedStructureByBeNumber(beNumber: string) {
     },
   });
 }
+
+export async function getSerialTrackedStructuresBySerialTrackedIds(serialTrackedIds: string[]) {
+  if (serialTrackedIds.length === 0) return []
+
+  return prismaClient.materialSerialTrackedStructure.findMany({
+    where: {
+      serialTrackedId: {in: serialTrackedIds},
+      deleted: false,
+    },
+    orderBy: {shortDescription: 'asc'},
+    select: {
+      id: true,
+      serialTrackedId: true,
+      shortDescription: true,
+      longDescription: true,
+    },
+  })
+}
+

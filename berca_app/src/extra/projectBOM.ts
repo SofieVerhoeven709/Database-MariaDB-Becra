@@ -1,6 +1,8 @@
-import type {MappedProjectBOM, MappedProjectBOMStructure} from '@/types/projectBOM'
+import type {MappedProjectBOM, MappedProjectBOMStructure, ChildProjectBOM} from '@/types/projectBOM'
 
-// ─── Raw types (matching Prisma include shape) ─────────────────────────────────
+// ─── Raw types (matching updated Prisma include shape) ─────────────────────────
+type StructureEmployeeRaw = {id: string; firstName: string; lastName: string}
+
 type ProjectBOMStructureRaw = {
   id: string
   projectBOMId: string
@@ -15,17 +17,34 @@ type ProjectBOMStructureRaw = {
   readyForPurchaseDate: Date | null
   createdAt: Date
   createdBy: string
+  readyForPurchase: boolean
+  notDeliverable: boolean
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
   Material: {id: string; name: string | null; beNumber: string | null; shortDescription: string | null}
-  Employee_ProjectBOMStructure_createdByToEmployee: {id: string; firstName: string; lastName: string}
+  Employee_ProjectBOMStructure_createdByToEmployee: StructureEmployeeRaw
+  Employee_ProjectBOMStructure_deletedByToEmployee: StructureEmployeeRaw | null
+}
+
+type ChildBOMRaw = {
+  id: string
+  projectBomNumber: string
+  description: string | null
+  shortDescription: string
+  closed: boolean
+  materialClosed: boolean
+  readyForPurchase: boolean
+  deleted: boolean
+  ProjectBOMStructure: {id: string}[]
 }
 
 type ProjectBOMRaw = {
   id: string
   projectId: string
-  parentPart: string | null
+  projectBomId: string | null
+  projectBomNumber: string
+  shortDescription: string
   additionalInfo: string | null
   description: string | null
   startDate: Date
@@ -39,8 +58,9 @@ type ProjectBOMRaw = {
   deletedAt: Date | null
   deletedBy: string | null
   Project: {id: string; projectNumber: string | null; projectName: string | null}
-  Employee_ProjectBOM_createdByToEmployee: {id: string; firstName: string; lastName: string}
-  Employee_ProjectBOM_deletedByToEmployee: {id: string; firstName: string; lastName: string} | null
+  Employee_ProjectBOM_createdByToEmployee: StructureEmployeeRaw
+  Employee_ProjectBOM_deletedByToEmployee: StructureEmployeeRaw | null
+  other_ProjectBOM: ChildBOMRaw[]
   ProjectBOMStructure: ProjectBOMStructureRaw[]
 }
 
@@ -62,9 +82,28 @@ function mapStructure(r: ProjectBOMStructureRaw): MappedProjectBOMStructure {
     createdAt: r.createdAt.toISOString(),
     createdBy: r.createdBy,
     createdByName: `${r.Employee_ProjectBOMStructure_createdByToEmployee.firstName} ${r.Employee_ProjectBOMStructure_createdByToEmployee.lastName}`,
+    readyForPurchase: r.readyForPurchase,
+    notDeliverable: r.notDeliverable,
     deleted: r.deleted,
     deletedAt: r.deletedAt?.toISOString() ?? null,
     deletedBy: r.deletedBy,
+    deletedByName: r.Employee_ProjectBOMStructure_deletedByToEmployee
+      ? `${r.Employee_ProjectBOMStructure_deletedByToEmployee.firstName} ${r.Employee_ProjectBOMStructure_deletedByToEmployee.lastName}`
+      : null,
+  }
+}
+
+function mapChild(r: ChildBOMRaw): ChildProjectBOM {
+  return {
+    id: r.id,
+    projectBomNumber: r.projectBomNumber,
+    description: r.description,
+    shortDescription: r.shortDescription,
+    structureCount: r.ProjectBOMStructure.length,
+    closed: r.closed,
+    materialClosed: r.materialClosed,
+    readyForPurchase: r.readyForPurchase,
+    deleted: r.deleted,
   }
 }
 
@@ -75,7 +114,9 @@ export function mapProjectBOM(r: ProjectBOMRaw): MappedProjectBOM {
     projectId: r.projectId,
     projectName: r.Project.projectName,
     projectNumber: r.Project.projectNumber,
-    parentPart: r.parentPart,
+    projectBomId: r.projectBomId,
+    projectBomNumber: r.projectBomNumber,
+    shortDescription: r.shortDescription,
     additionalInfo: r.additionalInfo,
     description: r.description,
     startDate: r.startDate.toISOString(),
@@ -94,5 +135,6 @@ export function mapProjectBOM(r: ProjectBOMRaw): MappedProjectBOM {
       : null,
     structures,
     structureCount: structures.filter(s => !s.deleted).length,
+    children: r.other_ProjectBOM.map(mapChild),
   }
 }

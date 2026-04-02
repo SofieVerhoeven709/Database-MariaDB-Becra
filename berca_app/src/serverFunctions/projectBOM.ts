@@ -10,10 +10,11 @@ import {
   projectBOMStructureIdSchema,
 } from '@/schemas/projectBOMSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
-import {searchProjects} from '@/dal/projectBOM'
+import {searchProjects, getDescendantBOMIds, getAncestorBOMIds} from '@/dal/projectBOM'
 import type {ProjectOption} from '@/types/projectBOM'
 
 // ─── ProjectBOM CRUD ───────────────────────────────────────────────────────────
+
 export const createProjectBOMAction = protectedServerFunction({
   schema: createProjectBOMSchema,
   functionName: 'Create project BOM action',
@@ -37,8 +38,42 @@ export const updateProjectBOMAction = protectedServerFunction({
   schema: updateProjectBOMSchema,
   functionName: 'Update project BOM action',
   serverFn: async ({data: {id, ...data}, logger}) => {
+    // Check if readyForPurchase is being set to true
+    const wasReadyForPurchase = data.readyForPurchase
+
     await prismaClient.projectBOM.update({where: {id}, data})
     logger.info(`Project BOM updated: ${id}`)
+
+    if (wasReadyForPurchase) {
+      // ── Cascade readyForPurchase=true to all structures of this BOM ──────────
+      const now = new Date()
+      await prismaClient.projectBOMStructure.updateMany({
+        where: {projectBOMId: id, deleted: false},
+        data: {
+          readyForPurchase: true,
+          readyForPurchaseDate: now,
+        },
+      })
+      logger.info(`Cascaded readyForPurchase=true to structures of BOM: ${id}`)
+
+      // ── Cascade readyForPurchase=true to all descendant BOMs + their structures
+      const descendantIds = await getDescendantBOMIds(id)
+      if (descendantIds.length > 0) {
+        await prismaClient.projectBOM.updateMany({
+          where: {id: {in: descendantIds}},
+          data: {readyForPurchase: true},
+        })
+        await prismaClient.projectBOMStructure.updateMany({
+          where: {projectBOMId: {in: descendantIds}, deleted: false},
+          data: {
+            readyForPurchase: true,
+            readyForPurchaseDate: now,
+          },
+        })
+        logger.info(`Cascaded readyForPurchase=true to ${descendantIds.length} descendant BOM(s): ${id}`)
+      }
+    }
+
     revalidatePath('/projectBOMs')
   },
 })
@@ -80,10 +115,21 @@ export const undeleteProjectBOMAction = protectedServerFunction({
 })
 
 // ─── ProjectBOMStructure CRUD ──────────────────────────────────────────────────
+
 export const createProjectBOMStructureAction = protectedServerFunction({
   schema: createProjectBOMStructureSchema,
   functionName: 'Create project BOM structure action',
   serverFn: async ({data, logger, profile}) => {
+    // ── Guard: block creation if the BOM is materialClosed ───────────────────
+    const bom = await prismaClient.projectBOM.findUniqueOrThrow({
+      where: {id: data.projectBOMId},
+      select: {materialClosed: true, readyForPurchase: true},
+    })
+
+    if (bom.materialClosed) {
+      throw new Error('Cannot add structures to a material-closed BOM.')
+    }
+
     const id = crypto.randomUUID()
     await prismaClient.projectBOMStructure.create({
       data: {
@@ -94,6 +140,21 @@ export const createProjectBOMStructureAction = protectedServerFunction({
       },
     })
     logger.info(`Project BOM structure created: ${id}`)
+
+    // ── If the BOM (or any ancestor) was readyForPurchase=true, flip it back ─
+    // We reset the BOM itself and all its ancestors.
+    const bomIdsToReset: string[] = [data.projectBOMId]
+    const ancestorIds = await getAncestorBOMIds(data.projectBOMId)
+    bomIdsToReset.push(...ancestorIds)
+
+    if (bomIdsToReset.length > 0) {
+      await prismaClient.projectBOM.updateMany({
+        where: {id: {in: bomIdsToReset}, readyForPurchase: true},
+        data: {readyForPurchase: false},
+      })
+      logger.info(`Reset readyForPurchase=false on BOM(s) [${bomIdsToReset.join(', ')}] after new structure added`)
+    }
+
     revalidatePath('/projectBOMs')
   },
 })

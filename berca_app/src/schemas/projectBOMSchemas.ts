@@ -4,9 +4,11 @@ import {z} from 'zod/v4'
 export const projectBOMSchema = z.object({
   id: z.string(),
   projectId: z.string(),
-  parentPart: z.string().max(255).nullable().optional(),
+  projectBomId: z.string().nullable().optional(),
+  projectBomNumber: z.string(),
   additionalInfo: z.string().max(255).nullable().optional(),
   description: z.string().max(255).nullable().optional(),
+  shortDescription: z.string().max(255),
   startDate: z.date(),
   endDate: z.date().nullable().optional(),
   createdAt: z.date(),
@@ -30,9 +32,11 @@ export const createProjectBOMSchema = projectBOMSchema.omit({
 
 export const updateProjectBOMSchema = projectBOMSchema.pick({
   id: true,
-  parentPart: true,
+  projectBomId: true,
+  projectBomNumber: true,
   additionalInfo: true,
   description: true,
+  shortDescription: true,
   startDate: true,
   endDate: true,
   closed: true,
@@ -57,6 +61,8 @@ export const projectBOMStructureSchema = z.object({
   readyForPurchaseDate: z.date().nullable().optional(),
   createdAt: z.date(),
   createdBy: z.string(),
+  readyForPurchase: z.boolean().default(false),
+  notDeliverable: z.boolean().default(false),
   deleted: z.boolean().default(false),
   deletedAt: z.date().nullable().optional(),
   deletedBy: z.string().nullable().optional(),
@@ -82,6 +88,8 @@ export const updateProjectBOMStructureSchema = projectBOMStructureSchema.pick({
   reservedQuantity: true,
   issuedQuantity: true,
   readyForPurchaseDate: true,
+  readyForPurchase: true,
+  notDeliverable: true,
 })
 
 export const projectBOMStructureIdSchema = projectBOMStructureSchema.pick({id: true})

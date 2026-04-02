@@ -1838,9 +1838,11 @@ export type DocumentStructureTargetScalarFieldEnum = (typeof DocumentStructureTa
 
 export const ProjectBOMScalarFieldEnum = {
   id: 'id',
-  parentPart: 'parentPart',
+  projectBomNumber: 'projectBomNumber',
+  projectBomId: 'projectBomId',
   additionalInfo: 'additionalInfo',
   description: 'description',
+  shortDescription: 'shortDescription',
   startDate: 'startDate',
   endDate: 'endDate',
   createdAt: 'createdAt',
@@ -1869,6 +1871,8 @@ export const ProjectBOMStructureScalarFieldEnum = {
   createdAt: 'createdAt',
   readyForPurchaseDate: 'readyForPurchaseDate',
   deletedAt: 'deletedAt',
+  readyForPurchase: 'readyForPurchase',
+  notDeliverable: 'notDeliverable',
   deleted: 'deleted',
   createdBy: 'createdBy',
   materialId: 'materialId',
@@ -3167,9 +3171,11 @@ export type DocumentStructureTargetOrderByRelevanceFieldEnum = (typeof DocumentS
 
 export const ProjectBOMOrderByRelevanceFieldEnum = {
   id: 'id',
-  parentPart: 'parentPart',
+  projectBomNumber: 'projectBomNumber',
+  projectBomId: 'projectBomId',
   additionalInfo: 'additionalInfo',
   description: 'description',
+  shortDescription: 'shortDescription',
   createdBy: 'createdBy',
   projectId: 'projectId',
   deletedBy: 'deletedBy'

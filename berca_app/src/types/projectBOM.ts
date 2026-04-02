@@ -13,12 +13,28 @@ export interface MappedProjectBOMStructure {
   reservedQuantity: number | null
   issuedQuantity: number | null
   readyForPurchaseDate: string | null
+  readyForPurchase: boolean
+  notDeliverable: boolean
   createdAt: string
   createdBy: string
   createdByName: string
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
+  deletedByName: string | null
+}
+
+// ─── Child BOM summary (lightweight, no nested children to avoid infinite type) ─
+export interface ChildProjectBOM {
+  id: string
+  projectBomNumber: string
+  description: string | null
+  shortDescription: string
+  structureCount: number
+  closed: boolean
+  materialClosed: boolean
+  readyForPurchase: boolean
+  deleted: boolean
 }
 
 // ─── ProjectBOM ────────────────────────────────────────────────────────────────
@@ -27,9 +43,12 @@ export interface MappedProjectBOM {
   projectId: string
   projectName: string | null
   projectNumber: string | null
-  parentPart: string | null
+  projectBomNumber: string
+  /** ID of the parent BOM (self-relation foreign key) */
+  projectBomId: string | null
   additionalInfo: string | null
   description: string | null
+  shortDescription: string
   startDate: string
   endDate: string | null
   createdAt: string
@@ -44,13 +63,15 @@ export interface MappedProjectBOM {
   deletedByName: string | null
   structures: MappedProjectBOMStructure[]
   structureCount: number
+  /** Direct children of this BOM (one level deep) */
+  children: ChildProjectBOM[]
 }
 
 // ─── Project option (for search/select) ───────────────────────────────────────
 export interface ProjectOption {
   id: string
-  projectNumber: string
-  projectName: string
+  projectNumber: string | null
+  projectName: string | null
 }
 
 // ─── Material option ───────────────────────────────────────────────────────────

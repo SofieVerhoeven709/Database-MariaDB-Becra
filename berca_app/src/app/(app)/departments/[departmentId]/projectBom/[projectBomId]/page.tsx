@@ -1,5 +1,5 @@
 import {notFound} from 'next/navigation'
-import {getProjectBOMById, getMaterialOptions} from '@/dal/projectBOM'
+import {getProjectBOMById, getMaterialOptions, getProjectBOMs} from '@/dal/projectBOM'
 import {mapProjectBOM} from '@/extra/projectBOM'
 import {ProjectBOMDetail} from '@/components/custom/projectBOMDetail'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
@@ -13,9 +13,10 @@ interface PageProps {
 export default async function ProjectBOMDetailPage({params}: PageProps) {
   const {departmentId, projectBomId} = await params
 
-  const [department, bomRaw, materialOptions, profile] = await Promise.all([
+  const [department, bomRaw, allBomsRaw, materialOptions, profile] = await Promise.all([
     getDepartmentById(departmentId),
     getProjectBOMById(projectBomId).catch(() => null),
+    getProjectBOMs(),
     getMaterialOptions(),
     getSessionProfileFromCookieOrThrow(),
   ])
@@ -24,6 +25,7 @@ export default async function ProjectBOMDetailPage({params}: PageProps) {
   if (!bomRaw) notFound()
 
   const bom = mapProjectBOM(bomRaw)
+  const allBOMs = allBomsRaw.map(r => mapProjectBOM(r))
   const {currentUserRole, currentUserLevel} = getDepartmentRoleInfo(profile, department.name)
 
   return (
@@ -35,6 +37,7 @@ export default async function ProjectBOMDetailPage({params}: PageProps) {
           currentUserRole={currentUserRole}
           currentUserLevel={currentUserLevel}
           departmentId={departmentId}
+          allBOMs={allBOMs}
         />
       </div>
     </main>

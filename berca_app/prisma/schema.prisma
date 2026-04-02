@@ -2465,9 +2465,11 @@ model DocumentStructureTarget {
 
 model ProjectBOM {
   id                                      String                @id @db.Char(36)
-  parentPart                              String?               @db.VarChar(255)
+  projectBomNumber                        String                @db.VarChar(255)
+  projectBomId                            String?               @db.Char(36)
   additionalInfo                          String?               @db.VarChar(255)
   description                             String?               @db.VarChar(255)
+  shortDescription                        String                @db.VarChar(255)
   startDate                               DateTime              @db.DateTime(0)
   endDate                                 DateTime?             @db.DateTime(0)
   createdAt                               DateTime              @db.DateTime(0)
@@ -2482,11 +2484,14 @@ model ProjectBOM {
   Project                                 Project               @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "ProjectBOM_ibfk_1")
   Employee_ProjectBOM_createdByToEmployee Employee              @relation("ProjectBOM_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "ProjectBOM_ibfk_2")
   Employee_ProjectBOM_deletedByToEmployee Employee?             @relation("ProjectBOM_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "ProjectBOM_ibfk_3")
+  ProjectBOM                              ProjectBOM?           @relation("ProjectBOMToProjectBOM", fields: [projectBomId], references: [id], onUpdate: Restrict, map: "ProjectBOM_ibfk_4")
+  other_ProjectBOM                        ProjectBOM[]          @relation("ProjectBOMToProjectBOM")
   ProjectBOMStructure                     ProjectBOMStructure[]
 
   @@index([createdBy], map: "createdBy")
   @@index([deletedBy], map: "deletedBy")
   @@index([projectId], map: "projectId")
+  @@index([projectBomId], map: "projectBomId")
 }
 
 model ProjectBOMStructure {
@@ -2501,6 +2506,8 @@ model ProjectBOMStructure {
   createdAt                                        DateTime   @db.DateTime(0)
   readyForPurchaseDate                             DateTime?  @db.DateTime(0)
   deletedAt                                        DateTime?  @db.DateTime(0)
+  readyForPurchase                                 Boolean    @default(false)
+  notDeliverable                                   Boolean    @default(false)
   deleted                                          Boolean    @default(false)
   createdBy                                        String     @db.Char(36)
   materialId                                       String     @db.Char(36)

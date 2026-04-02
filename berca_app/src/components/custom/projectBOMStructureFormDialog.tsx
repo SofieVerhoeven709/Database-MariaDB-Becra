@@ -6,6 +6,7 @@ import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Textarea} from '@/components/ui/textarea'
+import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {createProjectBOMStructureAction, updateProjectBOMStructureAction} from '@/serverFunctions/projectBOM'
 import type {MappedProjectBOMStructure, BomMaterialOption} from '@/types/projectBOM'
@@ -30,6 +31,8 @@ function emptyForm() {
     reservedQuantity: '',
     issuedQuantity: '',
     readyForPurchaseDate: '',
+    readyForPurchase: false,
+    notDeliverable: false,
   }
 }
 
@@ -59,6 +62,8 @@ export function ProjectBOMStructureFormDialog({
         readyForPurchaseDate: structure.readyForPurchaseDate
           ? new Date(structure.readyForPurchaseDate).toISOString().slice(0, 10)
           : '',
+        readyForPurchase: structure.readyForPurchase,
+        notDeliverable: structure.notDeliverable,
       })
     } else if (open) {
       setForm(emptyForm())
@@ -82,6 +87,8 @@ export function ProjectBOMStructureFormDialog({
         reservedQuantity: form.reservedQuantity ? parseInt(form.reservedQuantity) : null,
         issuedQuantity: form.issuedQuantity ? parseInt(form.issuedQuantity) : null,
         readyForPurchaseDate: form.readyForPurchaseDate ? new Date(form.readyForPurchaseDate) : null,
+        readyForPurchase: form.readyForPurchase,
+        notDeliverable: form.notDeliverable,
       }
       if (isEdit) {
         await updateProjectBOMStructureAction({...payload, id: structure.id})
@@ -201,6 +208,23 @@ export function ProjectBOMStructureFormDialog({
               rows={2}
               className="bg-secondary border-border resize-none"
             />
+          </div>
+
+          {/* Toggles */}
+          <div className="sm:col-span-2 flex flex-col gap-2">
+            {(
+              [
+                {key: 'readyForPurchase', label: 'Ready for Purchase'},
+                {key: 'notDeliverable', label: 'Not Deliverable'},
+              ] as {key: 'readyForPurchase' | 'notDeliverable'; label: string}[]
+            ).map(({key, label}) => (
+              <div
+                key={key}
+                className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <Label className="text-xs text-muted-foreground">{label}</Label>
+                <Switch checked={form[key]} onCheckedChange={v => set(key, v)} />
+              </div>
+            ))}
           </div>
         </div>
 

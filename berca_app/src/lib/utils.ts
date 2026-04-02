@@ -106,6 +106,20 @@ export function generateDocumentNumber() {
   return `DOC${year}${month}${day}${random}`
 }
 
+export function generateBomNumber() {
+  const now = new Date()
+
+  const year = now.getFullYear().toString().slice(-2) // 26
+  const month = String(now.getMonth() + 1).padStart(2, '0') // 02
+  const day = String(now.getDate()).padStart(2, '0') // 24
+
+  const random = Math.floor(Math.random() * 100)
+    .toString()
+    .padStart(2, '0') // two random digits
+
+  return `BOM${year}${month}${day}${random}`
+}
+
 // Used for admin/global pages
 export function getGlobalRoleInfo(profile: Profile) {
   const entries = profile.RoleLevelEmployee ?? []

@@ -8,8 +8,8 @@ import {Label} from '@/components/ui/label'
 import {Textarea} from '@/components/ui/textarea'
 import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
-import {createProjectBOMStructureAction, updateProjectBOMStructureAction} from '@/serverFunctions/projectBOM'
-import type {MappedProjectBOMStructure, BomMaterialOption} from '@/types/projectBOM'
+import {createProjectBOMStructureAction, updateProjectBOMStructureAction} from '@/serverFunctions/projectBom'
+import type {MappedProjectBOMStructure, BomMaterialOption} from '@/types/projectBom'
 import {useRouter} from 'next/navigation'
 
 interface ProjectBOMStructureFormDialogProps {

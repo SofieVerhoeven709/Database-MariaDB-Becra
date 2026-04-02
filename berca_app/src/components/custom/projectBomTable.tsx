@@ -10,13 +10,13 @@ import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
-import type {MappedProjectBOM} from '@/types/projectBOM'
+import type {MappedProjectBOM} from '@/types/projectBom'
 import {
   softDeleteProjectBOMAction,
   hardDeleteProjectBOMAction,
   undeleteProjectBOMAction,
-} from '@/serverFunctions/projectBOM'
-import {ProjectBOMFormDialog} from '@/components/custom/projectBOMFormDialog'
+} from '@/serverFunctions/projectBom'
+import {ProjectBOMFormDialog} from '@/components/custom/projectBomFormDialog'
 
 type SortField =
   | 'description'

@@ -8,10 +8,10 @@ import {
   createProjectBOMStructureSchema,
   updateProjectBOMStructureSchema,
   projectBOMStructureIdSchema,
-} from '@/schemas/projectBOMSchemas'
+} from '@/schemas/projectBomSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
-import {searchProjects, getDescendantBOMIds, getAncestorBOMIds} from '@/dal/projectBOM'
-import type {ProjectOption} from '@/types/projectBOM'
+import {searchProjects, getDescendantBOMIds, getAncestorBOMIds} from '@/dal/projectBoms'
+import type {ProjectOption} from '@/types/projectBom'
 
 // ─── ProjectBOM CRUD ───────────────────────────────────────────────────────────
 

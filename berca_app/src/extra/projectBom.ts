@@ -1,4 +1,4 @@
-import type {MappedProjectBOM, MappedProjectBOMStructure, ChildProjectBOM} from '@/types/projectBOM'
+import type {MappedProjectBOM, MappedProjectBOMStructure, ChildProjectBOM} from '@/types/projectBom'
 
 // ─── Raw types (matching updated Prisma include shape) ─────────────────────────
 type StructureEmployeeRaw = {id: string; firstName: string; lastName: string}

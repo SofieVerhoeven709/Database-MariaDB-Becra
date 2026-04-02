@@ -145,7 +145,9 @@ export const ModelName = {
   DocumentStatus: 'DocumentStatus',
   DocumentStructureTarget: 'DocumentStructureTarget',
   ProjectBOM: 'ProjectBOM',
-  ProjectBOMStructure: 'ProjectBOMStructure'
+  ProjectBOMStructure: 'ProjectBOMStructure',
+  PurchaseBOM: 'PurchaseBOM',
+  PurchaseBOMStructure: 'PurchaseBOMStructure'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1883,6 +1885,53 @@ export const ProjectBOMStructureScalarFieldEnum = {
 export type ProjectBOMStructureScalarFieldEnum = (typeof ProjectBOMStructureScalarFieldEnum)[keyof typeof ProjectBOMStructureScalarFieldEnum]
 
 
+export const PurchaseBOMScalarFieldEnum = {
+  id: 'id',
+  purchaseBomNumber: 'purchaseBomNumber',
+  purchaseBomId: 'purchaseBomId',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  shortDescription: 'shortDescription',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  createdAt: 'createdAt',
+  deletedAt: 'deletedAt',
+  closed: 'closed',
+  materialClosed: 'materialClosed',
+  readyForPurchase: 'readyForPurchase',
+  deleted: 'deleted',
+  createdBy: 'createdBy',
+  projectId: 'projectId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type PurchaseBOMScalarFieldEnum = (typeof PurchaseBOMScalarFieldEnum)[keyof typeof PurchaseBOMScalarFieldEnum]
+
+
+export const PurchaseBOMStructureScalarFieldEnum = {
+  id: 'id',
+  shortDescription: 'shortDescription',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  tag: 'tag',
+  requiredQuantity: 'requiredQuantity',
+  reservedQuantity: 'reservedQuantity',
+  issuedQuantity: 'issuedQuantity',
+  createdAt: 'createdAt',
+  readyForPurchaseDate: 'readyForPurchaseDate',
+  deletedAt: 'deletedAt',
+  readyForPurchase: 'readyForPurchase',
+  notDeliverable: 'notDeliverable',
+  deleted: 'deleted',
+  createdBy: 'createdBy',
+  materialId: 'materialId',
+  purchaseBOMId: 'purchaseBOMId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type PurchaseBOMStructureScalarFieldEnum = (typeof PurchaseBOMStructureScalarFieldEnum)[keyof typeof PurchaseBOMStructureScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3197,4 +3246,34 @@ export const ProjectBOMStructureOrderByRelevanceFieldEnum = {
 } as const
 
 export type ProjectBOMStructureOrderByRelevanceFieldEnum = (typeof ProjectBOMStructureOrderByRelevanceFieldEnum)[keyof typeof ProjectBOMStructureOrderByRelevanceFieldEnum]
+
+
+export const PurchaseBOMOrderByRelevanceFieldEnum = {
+  id: 'id',
+  purchaseBomNumber: 'purchaseBomNumber',
+  purchaseBomId: 'purchaseBomId',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  shortDescription: 'shortDescription',
+  createdBy: 'createdBy',
+  projectId: 'projectId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type PurchaseBOMOrderByRelevanceFieldEnum = (typeof PurchaseBOMOrderByRelevanceFieldEnum)[keyof typeof PurchaseBOMOrderByRelevanceFieldEnum]
+
+
+export const PurchaseBOMStructureOrderByRelevanceFieldEnum = {
+  id: 'id',
+  shortDescription: 'shortDescription',
+  additionalInfo: 'additionalInfo',
+  description: 'description',
+  tag: 'tag',
+  createdBy: 'createdBy',
+  materialId: 'materialId',
+  purchaseBOMId: 'purchaseBOMId',
+  deletedBy: 'deletedBy'
+} as const
+
+export type PurchaseBOMStructureOrderByRelevanceFieldEnum = (typeof PurchaseBOMStructureOrderByRelevanceFieldEnum)[keyof typeof PurchaseBOMStructureOrderByRelevanceFieldEnum]
 

@@ -529,3 +529,13 @@ export type ProjectBOM = Prisma.ProjectBOMModel
  * 
  */
 export type ProjectBOMStructure = Prisma.ProjectBOMStructureModel
+/**
+ * Model PurchaseBOM
+ * 
+ */
+export type PurchaseBOM = Prisma.PurchaseBOMModel
+/**
+ * Model PurchaseBOMStructure
+ * 
+ */
+export type PurchaseBOMStructure = Prisma.PurchaseBOMStructureModel

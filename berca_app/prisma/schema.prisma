@@ -479,6 +479,10 @@ model Employee {
   ProjectType_ProjectType_deletedByToEmployee                                       ProjectType[]                    @relation("ProjectType_deletedByToEmployee")
   Purchase                                                                          Purchase[]
   Purchase_Purchase_deletedByToEmployee                                             Purchase[]                       @relation("Purchase_deletedByToEmployee")
+  PurchaseBOM_PurchaseBOM_createdByToEmployee                                       PurchaseBOM[]                    @relation("PurchaseBOM_createdByToEmployee")
+  PurchaseBOM_PurchaseBOM_deletedByToEmployee                                       PurchaseBOM[]                    @relation("PurchaseBOM_deletedByToEmployee")
+  PurchaseBOMStructure_PurchaseBOMStructure_createdByToEmployee                     PurchaseBOMStructure[]           @relation("PurchaseBOMStructure_createdByToEmployee")
+  PurchaseBOMStructure_PurchaseBOMStructure_deletedByToEmployee                     PurchaseBOMStructure[]           @relation("PurchaseBOMStructure_deletedByToEmployee")
   PurchaseDetail                                                                    PurchaseDetail[]
   PurchaseDetail_PurchaseDetail_deletedByToEmployee                                 PurchaseDetail[]                 @relation("PurchaseDetail_deletedByToEmployee")
   PurchaseOrderBecra                                                                PurchaseOrderBecra[]
@@ -949,48 +953,49 @@ model InvoiceType {
 }
 
 model Material {
-  id                                                       String                @id @db.Char(36)
-  beNumber                                                 String?               @unique(map: "uq_material_beNumber") @db.VarChar(255)
-  name                                                     String?               @db.VarChar(255)
-  brandOrderNr                                             String?               @db.VarChar(255)
-  shortDescription                                         String                @db.VarChar(255)
-  longDescription                                          String?               @db.Text
-  preferredSupplier                                        String?               @db.VarChar(255)
-  brandName                                                String?               @db.VarChar(255)
-  documentationPlace                                       String?               @db.VarChar(255)
-  bePartDoc                                                String?               @db.VarChar(255)
-  rejected                                                 Boolean?              @default(false)
-  isSerialTracked                                          Boolean               @default(false)
-  materialGroupIdA                                         String?               @db.Char(36)
-  materialGroupIdB                                         String?               @db.Char(36)
-  materialGroupIdC                                         String?               @db.Char(36)
-  materialGroupIdD                                         String?               @db.Char(36)
-  preferredSupplierCompanyId                               String?               @db.Char(36)
-  unitId                                                   String                @db.Char(36)
-  createdBy                                                String                @db.Char(36)
-  deleted                                                  Boolean               @default(false)
-  deletedAt                                                DateTime?             @db.DateTime(0)
-  deletedBy                                                String?               @db.Char(36)
-  targetId                                                 String                @db.Char(36)
-  Inventory_Inventory_materialIdToMaterial                 Inventory[]           @relation("Inventory_materialIdToMaterial")
-  Inventory_Inventory_beNumberToMaterial                   Inventory?            @relation("Inventory_beNumberToMaterial")
-  MaterialGroup_Material_materialGroupIdAToMaterialGroup   MaterialGroup?        @relation("Material_materialGroupIdAToMaterialGroup", fields: [materialGroupIdA], references: [id], onUpdate: Restrict, map: "fk_material_group_a")
-  MaterialGroup_Material_materialGroupIdBToMaterialGroup   MaterialGroup?        @relation("Material_materialGroupIdBToMaterialGroup", fields: [materialGroupIdB], references: [id], onUpdate: Restrict, map: "fk_material_group_b")
-  MaterialGroup_Material_materialGroupIdCToMaterialGroup   MaterialGroup?        @relation("Material_materialGroupIdCToMaterialGroup", fields: [materialGroupIdC], references: [id], onUpdate: Restrict, map: "fk_material_group_c")
-  MaterialGroup_Material_materialGroupIdDToMaterialGroup   MaterialGroup?        @relation("Material_materialGroupIdDToMaterialGroup", fields: [materialGroupIdD], references: [id], onUpdate: Restrict, map: "fk_material_group_d")
-  Unit                                                     Unit                  @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "Material_ibfk_2")
-  Employee                                                 Employee              @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")
-  Employee_Material_deletedByToEmployee                    Employee?             @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_6")
-  PreferredSupplierCompany                                 Company?              @relation("Material_preferredSupplierCompanyIdToCompany", fields: [preferredSupplierCompanyId], references: [id], onUpdate: Restrict, map: "Material_ibfk_5")
-  Target                                                   Target                @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_material_target")
+  id                                                       String                 @id @db.Char(36)
+  beNumber                                                 String?                @unique(map: "uq_material_beNumber") @db.VarChar(255)
+  name                                                     String?                @db.VarChar(255)
+  brandOrderNr                                             String?                @db.VarChar(255)
+  shortDescription                                         String                 @db.VarChar(255)
+  longDescription                                          String?                @db.Text
+  preferredSupplier                                        String?                @db.VarChar(255)
+  brandName                                                String?                @db.VarChar(255)
+  documentationPlace                                       String?                @db.VarChar(255)
+  bePartDoc                                                String?                @db.VarChar(255)
+  rejected                                                 Boolean?               @default(false)
+  isSerialTracked                                          Boolean                @default(false)
+  materialGroupIdA                                         String?                @db.Char(36)
+  materialGroupIdB                                         String?                @db.Char(36)
+  materialGroupIdC                                         String?                @db.Char(36)
+  materialGroupIdD                                         String?                @db.Char(36)
+  preferredSupplierCompanyId                               String?                @db.Char(36)
+  unitId                                                   String                 @db.Char(36)
+  createdBy                                                String                 @db.Char(36)
+  deleted                                                  Boolean                @default(false)
+  deletedAt                                                DateTime?              @db.DateTime(0)
+  deletedBy                                                String?                @db.Char(36)
+  targetId                                                 String                 @db.Char(36)
+  Inventory_Inventory_materialIdToMaterial                 Inventory[]            @relation("Inventory_materialIdToMaterial")
+  Inventory_Inventory_beNumberToMaterial                   Inventory?             @relation("Inventory_beNumberToMaterial")
+  MaterialGroup_Material_materialGroupIdAToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdAToMaterialGroup", fields: [materialGroupIdA], references: [id], onUpdate: Restrict, map: "fk_material_group_a")
+  MaterialGroup_Material_materialGroupIdBToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdBToMaterialGroup", fields: [materialGroupIdB], references: [id], onUpdate: Restrict, map: "fk_material_group_b")
+  MaterialGroup_Material_materialGroupIdCToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdCToMaterialGroup", fields: [materialGroupIdC], references: [id], onUpdate: Restrict, map: "fk_material_group_c")
+  MaterialGroup_Material_materialGroupIdDToMaterialGroup   MaterialGroup?         @relation("Material_materialGroupIdDToMaterialGroup", fields: [materialGroupIdD], references: [id], onUpdate: Restrict, map: "fk_material_group_d")
+  Unit                                                     Unit                   @relation(fields: [unitId], references: [id], onUpdate: Restrict, map: "Material_ibfk_2")
+  Employee                                                 Employee               @relation(fields: [createdBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_3")
+  Employee_Material_deletedByToEmployee                    Employee?              @relation("Material_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "Material_ibfk_6")
+  PreferredSupplierCompany                                 Company?               @relation("Material_preferredSupplierCompanyIdToCompany", fields: [preferredSupplierCompanyId], references: [id], onUpdate: Restrict, map: "Material_ibfk_5")
+  Target                                                   Target                 @relation(fields: [targetId], references: [id], onUpdate: Restrict, map: "fk_material_target")
   MaterialMovement                                         MaterialMovement[]
   MaterialOther                                            MaterialOther[]
   MaterialSerialTrack                                      MaterialSerialTrack[]
-  MaterialStructure_MaterialStructure_materialIdToMaterial MaterialStructure[]   @relation("MaterialStructure_materialIdToMaterial")
-  MaterialStructure_MaterialStructure_beNumberToMaterial   MaterialStructure[]   @relation("MaterialStructure_beNumberToMaterial")
+  MaterialStructure_MaterialStructure_materialIdToMaterial MaterialStructure[]    @relation("MaterialStructure_materialIdToMaterial")
+  MaterialStructure_MaterialStructure_beNumberToMaterial   MaterialStructure[]    @relation("MaterialStructure_beNumberToMaterial")
   MaterialSupplier                                         MaterialSupplier[]
   Product                                                  Product[]
   ProjectBOMStructure                                      ProjectBOMStructure[]
+  PurchaseBOMStructure                                     PurchaseBOMStructure[]
   WorkOrderStructure                                       WorkOrderStructure[]
 
   @@index([createdBy], map: "createdBy")
@@ -1460,6 +1465,7 @@ model Project {
   ProjectBOM                           ProjectBOM[]
   ProjectContact                       ProjectContact[]
   Purchase                             Purchase[]
+  PurchaseBOM                          PurchaseBOM[]
   PurchaseDetail                       PurchaseDetail[]
   QuoteSupplier                        QuoteSupplier[]
   WorkOrder                            WorkOrder[]
@@ -2522,4 +2528,65 @@ model ProjectBOMStructure {
   @@index([deletedBy], map: "deletedBy")
   @@index([materialId], map: "materialId")
   @@index([projectBOMId], map: "projectBOMId")
+}
+
+model PurchaseBOM {
+  id                                       String                 @id @db.Char(36)
+  purchaseBomNumber                        String                 @db.VarChar(255)
+  purchaseBomId                            String?                @db.Char(36)
+  additionalInfo                           String?                @db.VarChar(255)
+  description                              String?                @db.VarChar(255)
+  shortDescription                         String                 @db.VarChar(255)
+  startDate                                DateTime               @db.DateTime(0)
+  endDate                                  DateTime?              @db.DateTime(0)
+  createdAt                                DateTime               @db.DateTime(0)
+  deletedAt                                DateTime?              @db.DateTime(0)
+  closed                                   Boolean                @default(false)
+  materialClosed                           Boolean                @default(false)
+  readyForPurchase                         Boolean                @default(false)
+  deleted                                  Boolean                @default(false)
+  createdBy                                String                 @db.Char(36)
+  projectId                                String                 @db.Char(36)
+  deletedBy                                String?                @db.Char(36)
+  Project                                  Project                @relation(fields: [projectId], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_1")
+  Employee_PurchaseBOM_createdByToEmployee Employee               @relation("PurchaseBOM_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_2")
+  Employee_PurchaseBOM_deletedByToEmployee Employee?              @relation("PurchaseBOM_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_3")
+  PurchaseBOM                              PurchaseBOM?           @relation("PurchaseBOMToPurchaseBOM", fields: [purchaseBomId], references: [id], onUpdate: Restrict, map: "PurchaseBOM_ibfk_4")
+  other_PurchaseBOM                        PurchaseBOM[]          @relation("PurchaseBOMToPurchaseBOM")
+  PurchaseBOMStructure                     PurchaseBOMStructure[]
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([projectId], map: "projectId")
+  @@index([purchaseBomId], map: "purchaseBomId")
+}
+
+model PurchaseBOMStructure {
+  id                                                String      @id @db.Char(36)
+  shortDescription                                  String?     @db.VarChar(255)
+  additionalInfo                                    String?     @db.VarChar(255)
+  description                                       String?     @db.VarChar(255)
+  tag                                               String?     @db.VarChar(255)
+  requiredQuantity                                  Int?
+  reservedQuantity                                  Int?
+  issuedQuantity                                    Int?
+  createdAt                                         DateTime    @db.DateTime(0)
+  readyForPurchaseDate                              DateTime?   @db.DateTime(0)
+  deletedAt                                         DateTime?   @db.DateTime(0)
+  readyForPurchase                                  Boolean     @default(false)
+  notDeliverable                                    Boolean     @default(false)
+  deleted                                           Boolean     @default(false)
+  createdBy                                         String      @db.Char(36)
+  materialId                                        String      @db.Char(36)
+  purchaseBOMId                                     String      @db.Char(36)
+  deletedBy                                         String?     @db.Char(36)
+  Material                                          Material    @relation(fields: [materialId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_1")
+  PurchaseBOM                                       PurchaseBOM @relation(fields: [purchaseBOMId], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_2")
+  Employee_PurchaseBOMStructure_createdByToEmployee Employee    @relation("PurchaseBOMStructure_createdByToEmployee", fields: [createdBy], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_3")
+  Employee_PurchaseBOMStructure_deletedByToEmployee Employee?   @relation("PurchaseBOMStructure_deletedByToEmployee", fields: [deletedBy], references: [id], onUpdate: Restrict, map: "PurchaseBOMStructure_ibfk_4")
+
+  @@index([createdBy], map: "createdBy")
+  @@index([deletedBy], map: "deletedBy")
+  @@index([materialId], map: "materialId")
+  @@index([purchaseBOMId], map: "purchaseBOMId")
 }

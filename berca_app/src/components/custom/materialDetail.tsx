@@ -58,6 +58,7 @@ interface MappedMaterialDetail {
   unitAbbreviation: string
   createdBy: string
   createdByName: string
+  createdAt: string | null
   deleted: boolean
   deletedAt: string | null
   deletedBy: string | null
@@ -725,7 +726,9 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
 
             <div className="flex flex-col gap-1.5 md:col-span-2 pt-4 border-t border-border">
               <p className="text-xs text-muted-foreground">
-                Created by <span className="font-medium text-foreground">{material.createdByName}</span>
+                Created by <span className="font-medium text-foreground">{material.createdByName || '-'}</span>
+                {' on '}
+                <span className="font-medium text-foreground">{formatDate(material.createdAt)}</span>
               </p>
             </div>
           </div>

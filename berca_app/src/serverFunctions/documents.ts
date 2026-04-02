@@ -114,22 +114,26 @@ export const updateDocumentAction = protectedServerFunction({
       select: {targetId: true},
     })
 
-
     // Fix: Only add DocumentStructure relation if referenceDocId is defined
-    const { referenceDocId, ...restData } = data;
-    let updateData = { ...restData };
+    const {referenceDocId, ...restData} = data
+    let updateData = {...restData}
     if (typeof referenceDocId !== 'undefined') {
       Object.assign(updateData, {
-        DocumentStructure: referenceDocId
-          ? { connect: { id: referenceDocId } }
-          : { disconnect: true },
-      });
+        DocumentStructure: referenceDocId ? {connect: {id: referenceDocId}} : {disconnect: true},
+      })
     }
 
     await Promise.all([
-      prismaClient.documentStructure.update({ where: { id }, data: updateData }),
+      prismaClient.documentStructure.update({
+        where: {id},
+        data: {
+          ...data,
+          revisedById: data.revisedById ?? null,
+          managedById: data.managedById ?? null,
+        },
+      }),
       upsertVisibilityRows(targetId, visibilityForRoles),
-    ]);
+    ])
 
     if (targetAssignments && targetAssignments.length > 0) {
       for (const a of targetAssignments) {

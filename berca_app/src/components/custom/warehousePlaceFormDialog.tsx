@@ -185,11 +185,17 @@ export function WarehousePlaceFormDialog({open, onOpenChange, item, materials, o
         shortDescription,
         name: name || undefined,
       })
+      const createdOption: MaterialOption = {
+        id: created.id,
+        beNumber: created.beNumber ?? '',
+        name: created.name,
+        shortDescription: created.shortDescription,
+      }
       setMaterialOptions(prev => {
-        if (prev.some(m => m.beNumber === created.beNumber)) return prev
-        return [created, ...prev]
+        if (prev.some(m => m.beNumber === createdOption.beNumber)) return prev
+        return [createdOption, ...prev]
       })
-      update('beNumber', created.beNumber)
+      update('beNumber', createdOption.beNumber)
       setShowCreateMaterial(false)
       setNewMaterialBeNumber('')
       setNewMaterialName('')

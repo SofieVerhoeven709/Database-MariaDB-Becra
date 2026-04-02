@@ -8,7 +8,7 @@ export default async function WarehousePlacePage() {
   const mappedPlaces = places.map(mapWarehousePlace)
   const materialOptions = materials.map(m => ({
     id: m.id,
-    beNumber: m.beNumber,
+    beNumber: m.beNumber ?? '',
     name: m.name,
     shortDescription: m.shortDescription,
   }))

@@ -1,6 +1,6 @@
 'use client'
 import {useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Copy} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -42,6 +42,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<MappedMaterialPlace | null>(null)
+  const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -85,7 +86,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
     })
 
   async function handleSave(form: Partial<MappedMaterialPlace> & {id: string}) {
-    if (editingItem) {
+    if (dialogMode === 'edit' && editingItem) {
       await updateMaterialPlaceAction({
         id: form.id,
         abbreviation: form.abbreviation || undefined,
@@ -154,6 +155,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
         </Select>
         <Button
           onClick={() => {
+            setDialogMode('create')
             setEditingItem(null)
             setDialogOpen(true)
           }}
@@ -238,11 +240,25 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
                         variant="ghost"
                         className="h-7 w-7"
                         onClick={() => {
+                          setDialogMode('edit')
                           setEditingItem(item)
                           setDialogOpen(true)
                         }}>
                         <Pencil className="h-3.5 w-3.5" />
                       </Button>
+                      {!item.deleted && (
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-7 w-7"
+                          onClick={() => {
+                            setDialogMode('duplicate')
+                            setEditingItem(item)
+                            setDialogOpen(true)
+                          }}>
+                          <Copy className="h-3.5 w-3.5" />
+                        </Button>
+                      )}
                       <Button
                         size="icon"
                         variant="ghost"
@@ -270,6 +286,7 @@ export function MaterialPlaceTable({initialItems, materials}: MaterialPlaceTable
           if (!open) setEditingItem(null)
         }}
         item={editingItem}
+        mode={dialogMode}
         materials={materials}
         onSave={handleSave}
       />

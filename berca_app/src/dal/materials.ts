@@ -7,6 +7,8 @@ const PARENT_PART_MANAGEMENT = 'PARENT_PART'
 
 const materialListInclude = {
   Unit: true,
+  Employee: {select: {firstName: true, lastName: true}},
+  Target: {select: {createdAt: true}},
   Employee_Material_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
   PreferredSupplierCompany: {select: {id: true, name: true}},
   MaterialSupplier: {

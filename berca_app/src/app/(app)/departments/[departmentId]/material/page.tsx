@@ -50,6 +50,8 @@ export default async function MaterialPage({params}: PageProps) {
   const groupById = new Map(groups.map(g => [g.id, g]))
 
   const mappedMaterials: MappedMaterial[] = materials.map((m: MaterialRow) => {
+    const createdByName = [m.Employee?.firstName, m.Employee?.lastName].filter(Boolean).join(' ').trim()
+
     const preferredSupplierEntry =
       m.MaterialSupplier.find(s => s.companyId === m.preferredSupplierCompanyId) ??
       m.MaterialSupplier.find(s => s.isPreferred) ??
@@ -93,8 +95,8 @@ export default async function MaterialPage({params}: PageProps) {
       unitName: m.Unit.unitName,
       unitAbbreviation: m.Unit.abbreviation,
       createdBy: m.createdBy,
-      createdByName: '',
-      createdAt: null,
+      createdByName,
+      createdAt: m.Target?.createdAt?.toISOString() ?? null,
       deleted: m.deleted,
       deletedAt: m.deletedAt?.toISOString() ?? null,
       deletedBy: m.deletedBy ?? null,

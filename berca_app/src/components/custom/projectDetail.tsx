@@ -1168,7 +1168,7 @@ export function ProjectDetail({
                           )}
                         </TableCell>
                         <TableCell>
-                          <Link href={`/departments/${departmentId}/bom/${b.id}` as Route}>
+                          <Link href={`/departments/${departmentId}/projectBom/${b.id}` as Route}>
                             <Button
                               variant="ghost"
                               size="icon"

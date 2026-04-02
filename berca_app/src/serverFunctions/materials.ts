@@ -2,7 +2,7 @@
 
 import {revalidatePath} from 'next/cache'
 import {randomUUID} from 'crypto'
-import {createMaterial, updateMaterial, softDeleteMaterial, restoreMaterial, cloneMaterial} from '@/dal/materials'
+import {createMaterial, updateMaterial, softDeleteMaterial, restoreMaterial} from '@/dal/materials'
 import {prismaClient} from '@/dal/prismaClient'
 import {protectedFormAction} from '@/lib/serverFunctions'
 import {createMaterialSchema, updateMaterialSchema, deleteMaterialSchema} from '@/schemas/materialSchemas'
@@ -150,19 +150,6 @@ export const restoreMaterialAction = protectedFormAction({
   },
 })
 
-export const cloneMaterialAction = protectedFormAction({
-  schema: updateMaterialSchema, // Accepts an id for the material to clone
-  functionName: 'Clone material',
-  globalErrorMessage: 'Could not clone the material, please try again.',
-  serverFn: async ({data, profile, logger}) => {
-    const {id} = data
-    const cloned = await cloneMaterial(id)
-    logger.info(`Material cloned: ${cloned.id} from ${id}`)
-    revalidatePath(REVALIDATE_MATERIAL)
-    revalidatePath(REVALIDATE_INVENTORY)
-    return {success: true, id: cloned.id}
-  },
-})
 
 export async function createMaterialForPlaceAction(unvalidatedData: z.infer<typeof createMaterialForPlaceSchema>) {
   const logger = await getLogger()

@@ -11,7 +11,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
 import type {MappedMaterial} from '@/types/material'
 import type {WarehousePlaceOption} from '@/types/warehousePlace'
-import {createMaterialAction, updateMaterialAction, deleteMaterialAction, cloneMaterialAction} from '@/serverFunctions/materials'
+import {createMaterialAction, updateMaterialAction, deleteMaterialAction} from '@/serverFunctions/materials'
 import {useRouter} from 'next/navigation'
 
 interface MaterialGroup {
@@ -113,6 +113,7 @@ export function MaterialTable({
   const [filterNumberKind, setFilterNumberKind] = useState<FilterNumberKind>('all')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingMaterial, setEditingMaterial] = useState<MappedMaterial | null>(null)
+  const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
   const [alert, setAlert] = useState<{
@@ -284,7 +285,7 @@ export function MaterialTable({
         fd.append(k, String(v))
       })
 
-      const result = editingMaterial
+      const result = dialogMode === 'edit' && editingMaterial
         ? await updateMaterialAction({success: false}, fd)
         : await createMaterialAction({success: false}, fd)
 
@@ -312,27 +313,6 @@ export function MaterialTable({
     const fd = new FormData()
     fd.append('id', id)
     await deleteMaterialAction({success: false}, fd)
-    router.refresh()
-  }
-
-  async function handleClone(id: string) {
-    const fd = new FormData()
-    fd.append('id', id)
-
-    const result = await cloneMaterialAction({success: false}, fd)
-    if (result && !result.success) {
-      const msgs = Object.entries(result.errors ?? {}).flatMap(([field, errs]) =>
-        (errs ?? []).map(e => `${field}: ${e}`),
-      )
-      setAlert({
-        title: 'Clone failed',
-        description: msgs.length ? msgs.join(' | ') : 'Could not clone this material.',
-        type: 'error',
-      })
-      return
-    }
-
-    setAlert({title: 'Material cloned', description: 'A new cloned row was created.', type: 'success'})
     router.refresh()
   }
 
@@ -426,6 +406,7 @@ export function MaterialTable({
 
         <Button
           onClick={() => {
+            setDialogMode('create')
             setEditingMaterial(null)
             setDialogOpen(true)
           }}
@@ -551,6 +532,7 @@ export function MaterialTable({
                         variant="ghost"
                         className="h-7 w-7"
                         onClick={() => {
+                          setDialogMode('edit')
                           setEditingMaterial(m)
                           setDialogOpen(true)
                         }}>
@@ -560,8 +542,12 @@ export function MaterialTable({
                         size="icon"
                         variant="ghost"
                         className="h-7 w-7"
-                        onClick={() => handleClone(m.id)}
-                        title="Clone row">
+                        onClick={() => {
+                          setDialogMode('duplicate')
+                          setEditingMaterial(m)
+                          setDialogOpen(true)
+                        }}
+                        title="Copy row">
                         <Copy className="h-3.5 w-3.5" />
                       </Button>
                       <Button
@@ -590,10 +576,12 @@ export function MaterialTable({
           setDialogOpen(open)
           if (!open) {
             setEditingMaterial(null)
+            setDialogMode('create')
             setSaveError(null)
           }
         }}
         material={editingMaterial}
+        mode={dialogMode}
         materialGroups={materialGroups}
         units={units}
         supplierCompanies={supplierCompanies}

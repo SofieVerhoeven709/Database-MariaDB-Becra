@@ -70,6 +70,28 @@ export type MaterialWithRelations = Prisma.MaterialGetPayload<{
     Inventory_Inventory_materialIdToMaterial: {
       where: {deleted: false}
       orderBy: {createdAt: 'asc'}
+      include: {
+        InventoryStructure: {
+          where: {deleted: false},
+          orderBy: {createdAt: 'asc'},
+          select: {
+            id: true,
+            inventoryPlaceId: true,
+            place: true,
+            warehousePlaceId: true,
+            information: true,
+            coordinate: true,
+            inventoryId: true,
+            forInventory: true,
+            forProject: true,
+            active: true,
+            materialActive: true,
+            valid: true,
+            createdAt: true,
+            createdBy: true,
+          },
+        },
+      }
     }
   }
 }>
@@ -118,6 +140,28 @@ export async function getMaterialById(id: string): Promise<MaterialWithRelations
       Inventory_Inventory_materialIdToMaterial: {
         where: {deleted: false},
         orderBy: {createdAt: 'asc'},
+        include: {
+          InventoryStructure: {
+            where: {deleted: false},
+            orderBy: {createdAt: 'asc'},
+            select: {
+              id: true,
+              inventoryPlaceId: true,
+              place: true,
+              warehousePlaceId: true,
+              information: true,
+              coordinate: true,
+              inventoryId: true,
+              forInventory: true,
+              forProject: true,
+              active: true,
+              materialActive: true,
+              valid: true,
+              createdAt: true,
+              createdBy: true,
+            },
+          },
+        }
       },
     },
   })

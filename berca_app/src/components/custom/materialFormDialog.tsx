@@ -9,6 +9,7 @@ import {Textarea} from '@/components/ui/textarea'
 import {Switch} from '@/components/ui/switch'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import type {MappedMaterial} from '@/types/material'
+import type {WarehousePlaceOption} from '@/types/warehousePlace'
 
 interface MaterialGroup {
   id: string
@@ -35,10 +36,6 @@ interface ParentPartOption {
   shortDescription: string
 }
 
-interface WarehousePlaceOption {
-  id: string
-  label: string
-}
 
 interface MaterialFormDialogProps {
   open: boolean

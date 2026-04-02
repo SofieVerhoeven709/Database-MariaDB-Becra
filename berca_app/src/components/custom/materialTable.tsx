@@ -1,7 +1,7 @@
 'use client'
 
 import {useMemo, useState} from 'react'
-import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye} from 'lucide-react'
+import {Search, Plus, Pencil, Trash2, ChevronUp, ChevronDown, Eye, Copy} from 'lucide-react'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
@@ -10,7 +10,8 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import {MaterialFormDialog} from '@/components/custom/materialFormDialog'
 import type {MappedMaterial} from '@/types/material'
-import {createMaterialAction, updateMaterialAction, deleteMaterialAction} from '@/serverFunctions/materials'
+import type {WarehousePlaceOption} from '@/types/warehousePlace'
+import {createMaterialAction, updateMaterialAction, deleteMaterialAction, cloneMaterialAction} from '@/serverFunctions/materials'
 import {useRouter} from 'next/navigation'
 
 interface MaterialGroup {
@@ -38,16 +39,16 @@ interface ParentPartOption {
   shortDescription: string
 }
 
-interface WarehousePlaceOption {
-  id: string
-  label: string
-}
-
 type SortField =
   | 'beNumber'
   | 'name'
   | 'shortDescription'
-  | 'documentationPlace'
+  | 'warehouseAbbreviation'
+  | 'warehousePlace'
+  | 'warehouseShelf'
+  | 'warehouseColumn'
+  | 'warehouseLayer'
+  | 'warehouseLayerPlace'
   | 'brandName'
   | 'materialGroupLabelA'
   | 'materialGroupLabelB'
@@ -136,11 +137,53 @@ export function MaterialTable({
     return normalized.startsWith('4') ? 'ios' : 'be'
   }
 
-  const warehousePlaceById = useMemo(() => new Map(warehousePlaces.map(place => [place.id, place.label])), [warehousePlaces])
+  const warehousePlaceById = useMemo(() => new Map(warehousePlaces.map(place => [place.id, place])), [warehousePlaces])
+
+  function formatWarehouseCoordinates(place: WarehousePlaceOption): string {
+    const parts = [
+      place.abbreviation && `Abbr: ${place.abbreviation}`,
+      place.place && `Place: ${place.place}`,
+      place.shelf && `Shelf: ${place.shelf}`,
+      place.column && `Column: ${place.column}`,
+      place.layer && `Layer: ${place.layer}`,
+      place.layerPlace && `Layer place: ${place.layerPlace}`,
+    ].filter(Boolean)
+
+    return parts.length > 0 ? parts.join(' | ') : place.label
+  }
 
   function resolveMaterialPlace(value: string | null): string {
     if (!value) return ''
-    return warehousePlaceById.get(value) ?? value
+    const place = warehousePlaceById.get(value)
+    if (!place) return value
+    return formatWarehouseCoordinates(place)
+  }
+
+  function getWarehousePart(value: string | null, part: keyof WarehousePlaceOption): string {
+    if (!value) return ''
+    const place = warehousePlaceById.get(value)
+    if (!place) return ''
+    const partValue = place[part]
+    return typeof partValue === 'string' ? partValue : ''
+  }
+
+  function getSortValue(material: MappedMaterial, field: SortField): string {
+    switch (field) {
+      case 'warehouseAbbreviation':
+        return getWarehousePart(material.documentationPlace, 'abbreviation')
+      case 'warehousePlace':
+        return getWarehousePart(material.documentationPlace, 'place')
+      case 'warehouseShelf':
+        return getWarehousePart(material.documentationPlace, 'shelf')
+      case 'warehouseColumn':
+        return getWarehousePart(material.documentationPlace, 'column')
+      case 'warehouseLayer':
+        return getWarehousePart(material.documentationPlace, 'layer')
+      case 'warehouseLayerPlace':
+        return getWarehousePart(material.documentationPlace, 'layerPlace')
+      default:
+        return String(material[field] ?? '')
+    }
   }
 
   const filtered = materials
@@ -173,9 +216,9 @@ export function MaterialTable({
         m.supplierCompanyNames.some(name => name.toLowerCase().includes(q))
       )
     })
-    .sort((a, b) => {
-      const aVal = sortField === 'documentationPlace' ? resolveMaterialPlace(a.documentationPlace) : String(a[sortField] ?? '')
-      const bVal = sortField === 'documentationPlace' ? resolveMaterialPlace(b.documentationPlace) : String(b[sortField] ?? '')
+      .sort((a, b) => {
+      const aVal = getSortValue(a, sortField)
+      const bVal = getSortValue(b, sortField)
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
     })
 
@@ -272,6 +315,27 @@ export function MaterialTable({
     router.refresh()
   }
 
+  async function handleClone(id: string) {
+    const fd = new FormData()
+    fd.append('id', id)
+
+    const result = await cloneMaterialAction({success: false}, fd)
+    if (result && !result.success) {
+      const msgs = Object.entries(result.errors ?? {}).flatMap(([field, errs]) =>
+        (errs ?? []).map(e => `${field}: ${e}`),
+      )
+      setAlert({
+        title: 'Clone failed',
+        description: msgs.length ? msgs.join(' | ') : 'Could not clone this material.',
+        type: 'error',
+      })
+      return
+    }
+
+    setAlert({title: 'Material cloned', description: 'A new cloned row was created.', type: 'success'})
+    router.refresh()
+  }
+
   async function handleViewSerialTracked(
     serialTrackedId: string | null,
     beNumber: string,
@@ -303,7 +367,12 @@ export function MaterialTable({
     {key: 'beNumber', label: 'Number'},
     {key: 'name', label: 'Name'},
     {key: 'shortDescription', label: 'Description'},
-    {key: 'documentationPlace', label: 'Warehouse Place'},
+    {key: 'warehouseAbbreviation', label: 'Abbr'},
+    {key: 'warehousePlace', label: 'Place'},
+    {key: 'warehouseShelf', label: 'Shelf'},
+    {key: 'warehouseColumn', label: 'Column'},
+    {key: 'warehouseLayer', label: 'Layer'},
+    {key: 'warehouseLayerPlace', label: 'Layer Place'},
     {key: 'brandName', label: 'Brand'},
     {key: 'materialGroupLabelA', label: 'Group A'},
     {key: 'materialGroupLabelB', label: 'Group B'},
@@ -408,9 +477,12 @@ export function MaterialTable({
                   <TableCell className="text-sm max-w-55 truncate" title={m.shortDescription}>
                     {m.shortDescription}
                   </TableCell>
-                  <TableCell className="text-sm">
-                    {resolveMaterialPlace(m.documentationPlace) || <span className="text-muted-foreground">—</span>}
-                  </TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'abbreviation') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'place') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'shelf') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'column') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'layer') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'layerPlace') || '—'}</TableCell>
                   <TableCell className="text-sm">
                     {m.brandName ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
@@ -483,6 +555,14 @@ export function MaterialTable({
                           setDialogOpen(true)
                         }}>
                         <Pencil className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-7 w-7"
+                        onClick={() => handleClone(m.id)}
+                        title="Clone row">
+                        <Copy className="h-3.5 w-3.5" />
                       </Button>
                       <Button
                         size="icon"

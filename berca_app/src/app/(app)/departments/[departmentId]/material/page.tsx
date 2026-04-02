@@ -4,6 +4,7 @@ import {getDepartmentById} from '@/dal/department'
 import {getSupplierCompanies} from '@/dal/companies'
 import {getWarehousePlaces} from '@/dal/warehousePlace'
 import type {MappedMaterial} from '@/types/material'
+import type {WarehousePlaceOption} from '@/types/warehousePlace'
 
 interface PageProps {
   params: Promise<{departmentId: string}>
@@ -127,11 +128,17 @@ export default async function MaterialPage({params}: PageProps) {
     number: c.number,
   }))
 
-  const mappedWarehousePlaces = warehousePlaces.map(place => ({
+  const mappedWarehousePlaces: WarehousePlaceOption[] = warehousePlaces.map(place => ({
     id: place.id,
     label: [place.abbreviation, place.place, place.shelf, place.column, place.layer, place.layerPlace]
       .filter(Boolean)
       .join(' - '),
+    abbreviation: place.abbreviation ?? null,
+    place: place.place ?? null,
+    shelf: place.shelf ?? null,
+    column: place.column ?? null,
+    layer: place.layer ?? null,
+    layerPlace: place.layerPlace ?? null,
   }))
 
   const mappedParentPartOptions = materials

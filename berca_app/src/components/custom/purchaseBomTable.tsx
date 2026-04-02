@@ -256,7 +256,7 @@ export function PurchaseBOMTable({
             </SelectContent>
           </Select>
         </div>
-        {canCreate && (
+        {isAdmin && (
           <Button
             onClick={() => {
               setEditingBOM(null)

@@ -345,8 +345,8 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
     },
     {
       id: 'purchaseBom',
-      name: 'Purchase BOM Structure',
-      description: 'Maintain purchasing bill of materials structures',
+      name: 'Purchase Bill Of Material',
+      description: 'Maintain purchasing bill of materials',
       icon: 'ListTree',
       owner: 'purchasing',
     },

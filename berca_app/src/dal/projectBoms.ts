@@ -2,7 +2,7 @@ import 'server-only'
 import {prismaClient} from '@/dal/prismaClient'
 
 // ─── Shared include ────────────────────────────────────────────────────────────
-const projectBOMInclude = {
+export const projectBOMInclude = {
   Employee_ProjectBOM_createdByToEmployee: {select: {id: true, firstName: true, lastName: true}},
   Employee_ProjectBOM_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
   Project: {select: {id: true, projectNumber: true, projectName: true}},

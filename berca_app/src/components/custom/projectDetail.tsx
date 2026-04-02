@@ -2,7 +2,7 @@
 
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
-import {ArrowLeft, Pencil, X, Save, Plus, ExternalLink, Link2, Trash2, Trash, Undo2} from 'lucide-react'
+import {ArrowLeft, Pencil, X, Save, Plus, ExternalLink, Trash2, Trash} from 'lucide-react'
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
@@ -16,14 +16,6 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/c
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog'
 import {updateProjectAction} from '@/serverFunctions/projects'
 import {
-  createPurchaseAction,
-  updatePurchaseAction,
-  softDeletePurchaseAction,
-  hardDeletePurchaseAction,
-  undeletePurchaseAction,
-} from '@/serverFunctions/purchases'
-import {createContactAndReturnIdAction} from '@/serverFunctions/contacts'
-import {
   createProjectContactAction,
   updateProjectContactAction,
   softDeleteProjectContactAction,
@@ -35,16 +27,25 @@ import {
   hardDeleteWorkOrderAction,
   undeleteWorkOrderAction,
 } from '@/serverFunctions/workOrders'
+import {
+  softDeleteProjectBOMAction,
+  hardDeleteProjectBOMAction,
+  undeleteProjectBOMAction,
+} from '@/serverFunctions/projectBom'
+import {createContactAndReturnIdAction} from '@/serverFunctions/contacts'
 import type {Route} from 'next'
 import type {ProjectDetailData} from '@/extra/projectDetails'
 import type {MappedVisibilityForRole} from '@/types/visibilityForRole'
 import type {RoleLevelOption} from '@/types/roleLevel'
 import type {MappedContact} from '@/types/contact'
+import type {MappedProjectBOM} from '@/types/projectBom'
 import {VisibilityForRoleTab, buildInitialVisibilityRows} from '@/components/custom/visibilityForRoleTab'
 import type {VisibilityRow} from '@/components/custom/visibilityForRoleTab'
 import {ContactFormDialog} from '@/components/custom/contactFormDialog'
 import {WorkOrderFormDialog} from '@/components/custom/workOrderFormDialog'
+import {ProjectBOMFormDialog} from '@/components/custom/projectBomFormDialog'
 import type {CountryOption} from '@/components/custom/countrySelect'
+import {mapProjectBOM} from '@/extra/projectBom'
 
 interface Option {
   id: string
@@ -55,12 +56,6 @@ interface EmployeeOption {
   firstName: string
   lastName: string
 }
-interface AvailablePurchase {
-  id: string
-  orderNumber: string | null
-  companyName: string | null
-  status: string | null
-}
 
 interface ProjectDetailProps {
   project: ProjectDetailData
@@ -70,7 +65,7 @@ interface ProjectDetailProps {
   contacts: Option[]
   currentUserRole: string
   currentUserLevel: number
-  availablePurchases: AvailablePurchase[]
+  projectBoms: MappedProjectBOM[]
   roleLevelOptions: RoleLevelOption[]
   defaultVisibleRoleNames: string[]
   visibilityForRoles: MappedVisibilityForRole[]
@@ -94,14 +89,11 @@ function toInputDate(date: Date | null) {
 const tdClass = 'whitespace-nowrap text-muted-foreground text-sm'
 const thClass = 'whitespace-nowrap text-xs'
 
-const PERM = {contacts: 20, purchases: 60, materials: 80, workOrders: 80, delete: 80} as const
-const PURCHASE_STATUS_OPTIONS = ['Pending', 'Ordered', 'Delivered', 'Cancelled', 'On Hold']
+const PERM = {contacts: 20, boms: 60, materials: 80, workOrders: 80, delete: 80} as const
 
 const emptyContact = () => ({contactId: '', description: ''})
-const emptyPurchase = () => ({orderNumber: '', shortDescription: '', status: '', companyId: ''})
 const emptyMaterial = () => ({becraCode: '', shortDescription: '', brandName: '', transactionType: ''})
 const emptyContactEdit = () => ({id: '', description: '', extraInfo: '', isValid: true})
-const emptyPurchaseEdit = () => ({id: '', orderNumber: '', shortDescription: '', status: '', companyId: ''})
 
 export function ProjectDetail({
   project,
@@ -111,7 +103,7 @@ export function ProjectDetail({
   contacts,
   currentUserRole,
   currentUserLevel,
-  availablePurchases,
+  projectBoms,
   roleLevelOptions,
   defaultVisibleRoleNames,
   visibilityForRoles: initialVisibilityForRoles,
@@ -126,10 +118,12 @@ export function ProjectDetail({
   const [saving, setSaving] = useState(false)
   const [showDeletedContacts, setShowDeletedContacts] = useState(false)
   const [showDeletedWorkOrders, setShowDeletedWorkOrders] = useState(false)
-  const [showDeletedPurchases, setShowDeletedPurchases] = useState(false)
+  const [showDeletedBoms, setShowDeletedBoms] = useState(false)
   const [showDeletedMaterials, setShowDeletedMaterials] = useState(false)
   const [showDeletedSubProjects, setShowDeletedSubProjects] = useState(false)
   const [workOrderDialogOpen, setWorkOrderDialogOpen] = useState(false)
+  const [bomDialogOpen, setBomDialogOpen] = useState(false)
+  const [editBom, setEditBom] = useState<MappedProjectBOM | null>(null)
 
   const [form, setForm] = useState({
     projectNumber: project.projectNumber,
@@ -149,33 +143,23 @@ export function ProjectDetail({
   })
 
   const [showInlineContact, setShowInlineContact] = useState(false)
-  const [showInlinePurchase, setShowInlinePurchase] = useState(false)
   const [showInlineMaterial, setShowInlineMaterial] = useState(false)
   const [inlineContact, setInlineContact] = useState(emptyContact())
-  const [inlinePurchase, setInlinePurchase] = useState(emptyPurchase())
   const [inlineMaterial, setInlineMaterial] = useState(emptyMaterial())
   const [dialogContact, setDialogContact] = useState(false)
-  const [dialogPurchase, setDialogPurchase] = useState(false)
-  const [dialogLinkPurchase, setDialogLinkPurchase] = useState(false)
   const [dialogMaterial, setDialogMaterial] = useState(false)
   const [nestedContactDialog, setNestedContactDialog] = useState(false)
   const [editContactDialog, setEditContactDialog] = useState(false)
-  const [editPurchaseDialog, setEditPurchaseDialog] = useState(false)
   const [editContactForm, setEditContactForm] = useState(emptyContactEdit())
-  const [editPurchaseForm, setEditPurchaseForm] = useState(emptyPurchaseEdit())
   const [deleteTarget, setDeleteTarget] = useState<{
-    type: 'contact' | 'purchase' | 'workorder'
+    type: 'contact' | 'bom' | 'workorder'
     id: string
     label: string
     action: 'soft' | 'hard' | 'undelete'
   } | null>(null)
   const [dialogContactForm, setDialogContactForm] = useState(emptyContact())
-  const [dialogPurchaseForm, setDialogPurchaseForm] = useState(emptyPurchase())
   const [dialogMaterialForm, setDialogMaterialForm] = useState(emptyMaterial())
   const [localContacts, setLocalContacts] = useState(contacts)
-  const [linkPurchaseId, setLinkPurchaseId] = useState('')
-  const [savingNewPurchase, setSavingNewPurchase] = useState(false)
-  const [savingLinkPurchase, setSavingLinkPurchase] = useState(false)
   const [savingContact, setSavingContact] = useState(false)
   const [savingEdit, setSavingEdit] = useState(false)
   const [savingDelete, setSavingDelete] = useState(false)
@@ -186,16 +170,15 @@ export function ProjectDetail({
 
   const can = (level: number) => currentUserLevel >= level
   const isAdmin = currentUserRole === 'Administrator' || currentUserLevel >= 100
-  // Level thresholds:
-  //   >= 40  can edit project fields
-  //   >= 60  can add contacts / purchases (via PERM.contacts / PERM.purchases)
-  //   >= 80  can delete + manage work orders + manage visibility
   const canEdit = currentUserLevel >= 40
   const canDelete = currentUserLevel >= 80
   const canManageWorkOrders = currentUserLevel >= 80
   const canManageVisibility = currentUserLevel >= 80
 
   const workOrderProjectOptions = [{id: project.id, name: `${project.projectNumber} — ${project.projectName}`}]
+
+  // All BOMs scoped to this project (for parent BOM selector inside the dialog)
+  const projectScopedBoms: MappedProjectBOM[] = projectBoms.filter(b => b.projectId === project.id)
 
   function handleCancel() {
     setForm({
@@ -262,19 +245,6 @@ export function ProjectDetail({
     })
     setInlineContact(emptyContact())
     setShowInlineContact(false)
-    router.refresh()
-  }
-
-  async function handleInlinePurchaseSave() {
-    await createPurchaseAction({
-      orderNumber: inlinePurchase.orderNumber || null,
-      shortDescription: inlinePurchase.shortDescription || null,
-      status: inlinePurchase.status || null,
-      companyId: inlinePurchase.companyId || null,
-      projectId: project.id,
-    })
-    setInlinePurchase(emptyPurchase())
-    setShowInlinePurchase(false)
     router.refresh()
   }
 
@@ -349,37 +319,6 @@ export function ProjectDetail({
     router.refresh()
   }
 
-  async function handleDialogPurchaseSave() {
-    setSavingNewPurchase(true)
-    try {
-      await createPurchaseAction({
-        orderNumber: dialogPurchaseForm.orderNumber || null,
-        shortDescription: dialogPurchaseForm.shortDescription || null,
-        status: dialogPurchaseForm.status || null,
-        companyId: dialogPurchaseForm.companyId || null,
-        projectId: project.id,
-      })
-      setDialogPurchaseForm(emptyPurchase())
-      setDialogPurchase(false)
-      router.refresh()
-    } finally {
-      setSavingNewPurchase(false)
-    }
-  }
-
-  async function handleDialogLinkPurchaseSave() {
-    if (!linkPurchaseId) return
-    setSavingLinkPurchase(true)
-    try {
-      await updatePurchaseAction({id: linkPurchaseId, projectId: project.id})
-      setLinkPurchaseId('')
-      setDialogLinkPurchase(false)
-      router.refresh()
-    } finally {
-      setSavingLinkPurchase(false)
-    }
-  }
-
   async function handleDialogMaterialSave() {
     setDialogMaterialForm(emptyMaterial())
     setDialogMaterial(false)
@@ -413,40 +352,6 @@ export function ProjectDetail({
     }
   }
 
-  function openEditPurchase(p: {
-    id: string
-    orderNumber: string | null
-    shortDescription: string | null
-    status: string | null
-    companyId: string | null
-  }) {
-    setEditPurchaseForm({
-      id: p.id,
-      orderNumber: p.orderNumber ?? '',
-      shortDescription: p.shortDescription ?? '',
-      status: p.status ?? '',
-      companyId: p.companyId ?? '',
-    })
-    setEditPurchaseDialog(true)
-  }
-
-  async function handleSavePurchaseEdit() {
-    setSavingEdit(true)
-    try {
-      await updatePurchaseAction({
-        id: editPurchaseForm.id,
-        orderNumber: editPurchaseForm.orderNumber || null,
-        shortDescription: editPurchaseForm.shortDescription || null,
-        status: editPurchaseForm.status || null,
-        companyId: editPurchaseForm.companyId || null,
-      })
-      setEditPurchaseDialog(false)
-      router.refresh()
-    } finally {
-      setSavingEdit(false)
-    }
-  }
-
   async function handleConfirmDelete() {
     if (!deleteTarget) return
     setSavingDelete(true)
@@ -456,10 +361,10 @@ export function ProjectDetail({
         if (action === 'hard') await hardDeleteProjectContactAction({id, projectId: project.id})
         else if (action === 'undelete') await undeleteProjectContactAction({id, projectId: project.id})
         else await softDeleteProjectContactAction({id, projectId: project.id})
-      } else if (type === 'purchase') {
-        if (action === 'hard') await hardDeletePurchaseAction({id})
-        else if (action === 'undelete') await undeletePurchaseAction({id})
-        else await softDeletePurchaseAction({id})
+      } else if (type === 'bom') {
+        if (action === 'hard') await hardDeleteProjectBOMAction({id})
+        else if (action === 'undelete') await undeleteProjectBOMAction({id})
+        else await softDeleteProjectBOMAction({id})
       } else if (type === 'workorder') {
         if (action === 'hard') await hardDeleteWorkOrderAction({id})
         else if (action === 'undelete') await undeleteWorkOrderAction({id})
@@ -562,6 +467,9 @@ export function ProjectDetail({
       </div>
     )
   }
+
+  // BOMs scoped to this project from the ProjectBOM relation on the project itself
+  const bomsOnProject: MappedProjectBOM[] = project.ProjectBOM.map(b => mapProjectBOM(b as any)) ?? []
 
   return (
     <div className="flex flex-col gap-6">
@@ -826,10 +734,10 @@ export function ProjectDetail({
               {project.WorkOrder.length}
             </Badge>
           </TabsTrigger>
-          <TabsTrigger value="purchases">
-            Purchases
+          <TabsTrigger value="boms">
+            Project BOMs
             <Badge variant="secondary" className="ml-2 text-xs">
-              {project.Purchase.length}
+              {bomsOnProject.filter(b => !b.deleted).length}
             </Badge>
           </TabsTrigger>
           <TabsTrigger value="materials">
@@ -1160,47 +1068,19 @@ export function ProjectDetail({
           </div>
         </TabsContent>
 
-        {/* ── Purchases ── */}
-        <TabsContent value="purchases" className="mt-3">
-          {can(PERM.purchases) && (
+        {/* ── Project BOMs ── */}
+        <TabsContent value="boms" className="mt-3">
+          {can(PERM.boms) && (
             <div className="flex items-center gap-2 mb-3">
-              <Button
-                size="sm"
-                variant="outline"
-                className="gap-1.5 border-border text-xs h-7"
-                onClick={() => {
-                  setShowInlinePurchase(v => !v)
-                  setInlinePurchase(emptyPurchase())
-                }}>
-                <Plus className="h-3 w-3" />
-                {showInlinePurchase ? 'Cancel inline' : 'Add inline'}
-              </Button>
               <Button
                 size="sm"
                 className="gap-1.5 bg-accent text-accent-foreground hover:bg-accent/80 text-xs h-7"
                 onClick={() => {
-                  setDialogPurchaseForm(emptyPurchase())
-                  setDialogPurchase(true)
+                  setEditBom(null)
+                  setBomDialogOpen(true)
                 }}>
                 <Plus className="h-3 w-3" />
-                Create new
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="gap-1.5 border-border text-xs h-7"
-                disabled={availablePurchases.length === 0}
-                onClick={() => {
-                  setLinkPurchaseId('')
-                  setDialogLinkPurchase(true)
-                }}>
-                <Link2 className="h-3 w-3" />
-                Link existing
-                {availablePurchases.length > 0 && (
-                  <Badge variant="secondary" className="ml-1 text-xs px-1 py-0">
-                    {availablePurchases.length}
-                  </Badge>
-                )}
+                New BOM
               </Button>
             </div>
           )}
@@ -1210,8 +1090,8 @@ export function ProjectDetail({
                 size="sm"
                 variant="ghost"
                 className="text-xs h-7 text-muted-foreground gap-1.5"
-                onClick={() => setShowDeletedPurchases(v => !v)}>
-                {showDeletedPurchases ? 'Hide deleted' : 'Show deleted'}
+                onClick={() => setShowDeletedBoms(v => !v)}>
+                {showDeletedBoms ? 'Hide deleted' : 'Show deleted'}
               </Button>
             </div>
           )}
@@ -1219,12 +1099,13 @@ export function ProjectDetail({
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent border-border/60">
-                  <TableHead className={thClass}>Order #</TableHead>
-                  <TableHead className={thClass}>Description</TableHead>
-                  <TableHead className={thClass}>Status</TableHead>
-                  <TableHead className={thClass}>Supplier</TableHead>
-                  <TableHead className={thClass}>Purchase Date</TableHead>
-                  <TableHead className={thClass}>Created By</TableHead>
+                  <TableHead className={thClass}>BOM #</TableHead>
+                  <TableHead className={thClass}>Short Description</TableHead>
+                  <TableHead className={thClass}>Start Date</TableHead>
+                  <TableHead className={thClass}>End Date</TableHead>
+                  <TableHead className={thClass}>Closed</TableHead>
+                  <TableHead className={thClass}>Material Closed</TableHead>
+                  <TableHead className={thClass}>Ready for Purchase</TableHead>
                   <TableHead className="w-10">
                     <span className="sr-only">Open</span>
                   </TableHead>
@@ -1236,155 +1117,103 @@ export function ProjectDetail({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {showInlinePurchase && (
-                  <TableRow className="bg-secondary/30 border-border/40">
-                    <TableCell>
-                      <Input
-                        placeholder="Order #"
-                        value={inlinePurchase.orderNumber}
-                        onChange={e => setInlinePurchase(f => ({...f, orderNumber: e.target.value}))}
-                        className="h-7 text-xs bg-secondary border-border"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Input
-                        placeholder="Description"
-                        value={inlinePurchase.shortDescription}
-                        onChange={e => setInlinePurchase(f => ({...f, shortDescription: e.target.value}))}
-                        className="h-7 text-xs bg-secondary border-border"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        value={inlinePurchase.status}
-                        onValueChange={v => setInlinePurchase(f => ({...f, status: v}))}>
-                        <SelectTrigger className="h-7 text-xs bg-secondary border-border">
-                          <SelectValue placeholder="Status" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-card border-border">
-                          {PURCHASE_STATUS_OPTIONS.map(s => (
-                            <SelectItem key={s} value={s}>
-                              {s}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        value={inlinePurchase.companyId}
-                        onValueChange={v => setInlinePurchase(f => ({...f, companyId: v}))}>
-                        <SelectTrigger className="h-7 text-xs bg-secondary border-border">
-                          <SelectValue placeholder="Supplier" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-card border-border">
-                          {companies.map(c => (
-                            <SelectItem key={c.id} value={c.id}>
-                              {c.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                    <TableCell colSpan={canDelete ? 4 : 3}>
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          className="h-7 text-xs bg-accent text-accent-foreground hover:bg-accent/80"
-                          onClick={handleInlinePurchaseSave}>
-                          Save
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="h-7 text-xs border-border"
-                          onClick={() => setShowInlinePurchase(false)}>
-                          Cancel
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                )}
-                {project.Purchase.filter(p => (showDeletedPurchases ? !!p.deleted : !p.deleted)).length === 0 &&
-                !showInlinePurchase ? (
+                {bomsOnProject.filter(b => (showDeletedBoms ? !!b.deleted : !b.deleted)).length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={canDelete ? 8 : 7} className="h-24 text-center text-muted-foreground">
-                      No purchases found.
+                    <TableCell colSpan={canDelete ? 9 : 8} className="h-24 text-center text-muted-foreground">
+                      No project BOMs found.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  project.Purchase.filter(p => (showDeletedPurchases ? !!p.deleted : !p.deleted)).map(p => (
-                    <TableRow key={p.id} className="border-border/40 hover:bg-secondary/50">
-                      <TableCell className={`${tdClass} text-foreground font-medium`}>{p.orderNumber ?? '-'}</TableCell>
-                      <TableCell className={tdClass}>
-                        <span className="max-w-[200px] truncate inline-block">{p.shortDescription ?? '-'}</span>
-                      </TableCell>
-                      <TableCell>
-                        {p.status ? (
-                          <Badge variant="outline" className="border-border text-muted-foreground font-normal">
-                            {p.status}
-                          </Badge>
-                        ) : (
-                          <span className="text-muted-foreground text-sm">-</span>
-                        )}
-                      </TableCell>
-                      <TableCell className={tdClass}>{p.Company?.name ?? '-'}</TableCell>
-                      <TableCell className={tdClass}>{formatDate(p.purchaseDate)}</TableCell>
-                      <TableCell className={tdClass}>
-                        {p.Employee.firstName} {p.Employee.lastName}
-                      </TableCell>
-                      <TableCell>
-                        <Link href={`/departments/purchasing/orders/${p.id}` as Route}>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </Button>
-                        </Link>
-                      </TableCell>
-                      {canDelete && (
-                        <TableCell>
-                          <RowActions
-                            isDeleted={!!p.deleted}
-                            onEdit={() =>
-                              openEditPurchase({
-                                id: p.id,
-                                orderNumber: p.orderNumber,
-                                shortDescription: p.shortDescription,
-                                status: p.status,
-                                companyId: p.companyId,
-                              })
-                            }
-                            onSoftDelete={() =>
-                              setDeleteTarget({
-                                type: 'purchase',
-                                id: p.id,
-                                label: p.orderNumber ?? p.id,
-                                action: 'soft',
-                              })
-                            }
-                            onHardDelete={() =>
-                              setDeleteTarget({
-                                type: 'purchase',
-                                id: p.id,
-                                label: p.orderNumber ?? p.id,
-                                action: 'hard',
-                              })
-                            }
-                            onUndelete={() =>
-                              setDeleteTarget({
-                                type: 'purchase',
-                                id: p.id,
-                                label: p.orderNumber ?? p.id,
-                                action: 'undelete',
-                              })
-                            }
-                          />
+                  bomsOnProject
+                    .filter(b => (showDeletedBoms ? !!b.deleted : !b.deleted))
+                    .map(b => (
+                      <TableRow
+                        key={b.id}
+                        className={`border-border/40 hover:bg-secondary/50 ${b.deleted ? 'opacity-50' : ''}`}>
+                        <TableCell className={`${tdClass} text-foreground font-medium`}>
+                          {b.projectBomNumber ?? '-'}
                         </TableCell>
-                      )}
-                    </TableRow>
-                  ))
+                        <TableCell className={tdClass}>
+                          <span className="max-w-[200px] truncate inline-block">{b.shortDescription ?? '-'}</span>
+                        </TableCell>
+                        <TableCell className={tdClass}>
+                          {b.startDate ? formatDate(new Date(b.startDate)) : '-'}
+                        </TableCell>
+                        <TableCell className={tdClass}>{b.endDate ? formatDate(new Date(b.endDate)) : '-'}</TableCell>
+                        <TableCell>
+                          {b.closed ? (
+                            <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-muted-foreground font-medium">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {b.materialClosed ? (
+                            <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-muted-foreground font-medium">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {b.readyForPurchase ? (
+                            <Badge className="bg-accent/15 text-accent border-0 font-medium">Yes</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-muted-foreground font-medium">
+                              No
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/departments/${departmentId}/bom/${b.id}` as Route}>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-muted-foreground hover:text-accent hover:bg-accent/10">
+                              <ExternalLink className="h-3.5 w-3.5" />
+                            </Button>
+                          </Link>
+                        </TableCell>
+                        {canDelete && (
+                          <TableCell>
+                            <RowActions
+                              isDeleted={!!b.deleted}
+                              onEdit={() => {
+                                setEditBom(b)
+                                setBomDialogOpen(true)
+                              }}
+                              onSoftDelete={() =>
+                                setDeleteTarget({
+                                  type: 'bom',
+                                  id: b.id,
+                                  label: b.projectBomNumber ?? b.id,
+                                  action: 'soft',
+                                })
+                              }
+                              onHardDelete={() =>
+                                setDeleteTarget({
+                                  type: 'bom',
+                                  id: b.id,
+                                  label: b.projectBomNumber ?? b.id,
+                                  action: 'hard',
+                                })
+                              }
+                              onUndelete={() =>
+                                setDeleteTarget({
+                                  type: 'bom',
+                                  id: b.id,
+                                  label: b.projectBomNumber ?? b.id,
+                                  action: 'undelete',
+                                })
+                              }
+                            />
+                          </TableCell>
+                        )}
+                      </TableRow>
+                    ))
                 )}
               </TableBody>
             </Table>
@@ -1729,6 +1558,19 @@ export function ProjectDetail({
         projectOptions={workOrderProjectOptions}
       />
 
+      {/* ── Project BOM Dialog ── */}
+      <ProjectBOMFormDialog
+        open={bomDialogOpen}
+        onOpenChange={open => {
+          setBomDialogOpen(open)
+          if (!open) setEditBom(null)
+        }}
+        bom={editBom}
+        defaultProjectId={project.id}
+        allBOMs={projectScopedBoms}
+        canEditNumber={isAdmin}
+      />
+
       {/* ── Edit Contact Dialog ── */}
       <Dialog open={editContactDialog} onOpenChange={setEditContactDialog}>
         <DialogContent className="bg-card border-border max-w-md">
@@ -1768,78 +1610,6 @@ export function ProjectDetail({
             </Button>
             <Button
               onClick={handleSaveContactEdit}
-              disabled={savingEdit}
-              className="bg-accent text-accent-foreground hover:bg-accent/80">
-              {savingEdit ? 'Saving…' : 'Save'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* ── Edit Purchase Dialog ── */}
-      <Dialog open={editPurchaseDialog} onOpenChange={setEditPurchaseDialog}>
-        <DialogContent className="bg-card border-border max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-foreground">Edit Purchase</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-2">
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Order Number</Label>
-              <Input
-                value={editPurchaseForm.orderNumber}
-                onChange={e => setEditPurchaseForm(f => ({...f, orderNumber: e.target.value}))}
-                className="bg-secondary border-border"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Description</Label>
-              <Input
-                value={editPurchaseForm.shortDescription}
-                onChange={e => setEditPurchaseForm(f => ({...f, shortDescription: e.target.value}))}
-                className="bg-secondary border-border"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Status</Label>
-              <Select
-                value={editPurchaseForm.status}
-                onValueChange={v => setEditPurchaseForm(f => ({...f, status: v}))}>
-                <SelectTrigger className="bg-secondary border-border">
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-border">
-                  {PURCHASE_STATUS_OPTIONS.map(s => (
-                    <SelectItem key={s} value={s}>
-                      {s}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Supplier</Label>
-              <Select
-                value={editPurchaseForm.companyId}
-                onValueChange={v => setEditPurchaseForm(f => ({...f, companyId: v}))}>
-                <SelectTrigger className="bg-secondary border-border">
-                  <SelectValue placeholder="Select supplier" />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-border">
-                  {companies.map(c => (
-                    <SelectItem key={c.id} value={c.id}>
-                      {c.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setEditPurchaseDialog(false)} className="border-border">
-              Cancel
-            </Button>
-            <Button
-              onClick={handleSavePurchaseEdit}
               disabled={savingEdit}
               className="bg-accent text-accent-foreground hover:bg-accent/80">
               {savingEdit ? 'Saving…' : 'Save'}
@@ -1888,129 +1658,6 @@ export function ProjectDetail({
                   : deleteTarget?.action === 'hard'
                     ? 'Permanently Delete'
                     : 'Delete'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* ── Create Purchase Dialog ── */}
-      <Dialog open={dialogPurchase} onOpenChange={setDialogPurchase}>
-        <DialogContent className="bg-card border-border max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-foreground">Create New Purchase</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-2">
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Order Number</Label>
-              <Input
-                value={dialogPurchaseForm.orderNumber}
-                onChange={e => setDialogPurchaseForm(f => ({...f, orderNumber: e.target.value}))}
-                placeholder="e.g. PO-2026-001"
-                className="bg-secondary border-border"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Description</Label>
-              <Input
-                value={dialogPurchaseForm.shortDescription}
-                onChange={e => setDialogPurchaseForm(f => ({...f, shortDescription: e.target.value}))}
-                className="bg-secondary border-border"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Status</Label>
-              <Select
-                value={dialogPurchaseForm.status ?? ''}
-                onValueChange={v => setDialogPurchaseForm(f => ({...f, status: v}))}>
-                <SelectTrigger className="bg-secondary border-border">
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-border">
-                  {PURCHASE_STATUS_OPTIONS.map(s => (
-                    <SelectItem key={s} value={s}>
-                      {s}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Supplier</Label>
-              <Select
-                value={dialogPurchaseForm.companyId}
-                onValueChange={v => setDialogPurchaseForm(f => ({...f, companyId: v}))}>
-                <SelectTrigger className="bg-secondary border-border">
-                  <SelectValue placeholder="Select supplier" />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-border">
-                  {companies.map(c => (
-                    <SelectItem key={c.id} value={c.id}>
-                      {c.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setDialogPurchase(false)}
-              disabled={savingNewPurchase}
-              className="border-border">
-              Cancel
-            </Button>
-            <Button
-              onClick={handleDialogPurchaseSave}
-              disabled={savingNewPurchase}
-              className="bg-accent text-accent-foreground hover:bg-accent/80">
-              {savingNewPurchase ? 'Creating…' : 'Create Purchase'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* ── Link Existing Purchase Dialog ── */}
-      <Dialog open={dialogLinkPurchase} onOpenChange={setDialogLinkPurchase}>
-        <DialogContent className="bg-card border-border max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-foreground">Link Existing Purchase</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-2">
-            <p className="text-sm text-muted-foreground">
-              Select an unassigned purchase order to link to this project.
-            </p>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">Purchase Order</Label>
-              <Select value={linkPurchaseId} onValueChange={setLinkPurchaseId}>
-                <SelectTrigger className="bg-secondary border-border">
-                  <SelectValue placeholder="Select purchase order" />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-border">
-                  {availablePurchases.map(p => (
-                    <SelectItem key={p.id} value={p.id}>
-                      {p.orderNumber ?? '(no order #)'}
-                      {p.companyName ? ` · ${p.companyName}` : ''}
-                      {p.status ? ` · ${p.status}` : ''}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setDialogLinkPurchase(false)}
-              disabled={savingLinkPurchase}
-              className="border-border">
-              Cancel
-            </Button>
-            <Button
-              onClick={handleDialogLinkPurchaseSave}
-              disabled={!linkPurchaseId || savingLinkPurchase}
-              className="bg-accent text-accent-foreground hover:bg-accent/80">
-              {savingLinkPurchase ? 'Linking…' : 'Link Purchase'}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -196,13 +196,6 @@ export const DEPARTMENT_ACTIONS: Record<string, DepartmentAction[]> = {
       owner: 'project',
     },
     {
-      id: 'projectBomStructure',
-      name: 'Project Bill Of Material Structure',
-      description: 'Configure hierarchical BOM structures for projects',
-      icon: 'Network',
-      owner: 'project',
-    },
-    {
       id: 'workOrderStructure',
       name: 'Work Order Structure',
       description: 'Define work order flow and structural setup',

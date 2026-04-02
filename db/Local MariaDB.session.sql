@@ -1841,7 +1841,7 @@ CREATE TABLE
 CREATE TABLE
       IF NOT EXISTS ProjectBOM (
             id CHAR(36) NOT NULL PRIMARY KEY,
-            parentPart VARCHAR(255),
+            ProjectBomId VARCHAR(255),
             additionalInfo VARCHAR(255),
             description VARCHAR(255),
             startDate DATETIME NOT NULL,
@@ -1857,7 +1857,8 @@ CREATE TABLE
             deletedBy CHAR(36),
             FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
+            FOREIGN KEY (projectId) REFERENCES Project (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -1873,6 +1874,7 @@ CREATE TABLE
             createdAt DATETIME NOT NULL,
             readyForPurchaseDate DATETIME,
             deletedAt DATETIME,
+            readyForPurchase BOOLEAN NOT NULL DEFAULT 0,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             materialId CHAR(36) NOT NULL,

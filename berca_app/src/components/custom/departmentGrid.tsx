@@ -11,6 +11,7 @@ interface Department {
   description: string
   icon: string
   color: string
+  number: number
 }
 
 interface DepartmentGridProps {
@@ -67,7 +68,9 @@ export function DepartmentGrid({roleContextInput}: DepartmentGridProps) {
             </div>
 
             <div className="flex flex-col gap-1">
-              <span className="text-sm font-semibold">{dept.name}</span>
+              <span className="text-sm font-semibold">
+                {dept.number}. {dept.name}
+              </span>
               <span className="text-xs text-muted-foreground">{dept.description}</span>
             </div>
 

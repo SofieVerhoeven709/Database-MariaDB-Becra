@@ -64,7 +64,7 @@ export default async function SerialTrackedDetailPage({params}: PageProps) {
   // Map materials for dialog
   const materialOptions = materialsFromDAL.map(m => ({
     id: m.id,
-    beNumber: m.beNumber,
+    beNumber: m.beNumber ?? '',
     brandName: m.brandName,
     brandOrderNr: m.brandOrderNr,
     shortDescription: m.shortDescription,

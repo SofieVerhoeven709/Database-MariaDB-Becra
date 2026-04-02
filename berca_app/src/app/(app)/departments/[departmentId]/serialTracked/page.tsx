@@ -76,7 +76,7 @@ export default async function SerialTrackedPage({params}: PageProps) {
   // Map materials to the shape expected by materialOptions, only include global materialGroupId
   const materialOptions = materialsFromDAL.map((m: any) => ({
     id: m.id,
-    beNumber: m.beNumber,
+    beNumber: m.beNumber ?? '',
     brandName: m.brandName ?? '',
     management: m.management ?? '',
     brandOrderNr: m.brandOrderNr ?? '',

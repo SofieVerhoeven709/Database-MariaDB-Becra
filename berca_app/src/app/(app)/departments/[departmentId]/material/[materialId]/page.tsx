@@ -40,6 +40,8 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     material.MaterialSupplier.find((s: any) => s.isPreferred) ??
     null
 
+  const createdByName = [material.Employee?.firstName, material.Employee?.lastName].filter(Boolean).join(' ').trim()
+
   const mappedMaterial = {
     id: material.id,
     beNumber: material.beNumber ?? '',
@@ -92,7 +94,8 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     unitName: material.Unit.unitName,
     unitAbbreviation: material.Unit.abbreviation,
     createdBy: material.createdBy,
-    createdByName: '', // No relation available; would require separate lookup
+    createdByName,
+    createdAt: material.Target?.createdAt?.toISOString() ?? null,
     deleted: material.deleted,
     deletedAt: material.deletedAt?.toISOString() ?? null,
     deletedBy: material.deletedBy ?? null,

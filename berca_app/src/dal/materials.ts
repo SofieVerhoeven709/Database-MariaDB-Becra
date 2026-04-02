@@ -7,6 +7,8 @@ const PARENT_PART_MANAGEMENT = 'PARENT_PART'
 
 const materialListInclude = {
   Unit: true,
+  Employee: {select: {firstName: true, lastName: true}},
+  Target: {select: {createdAt: true}},
   Employee_Material_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}},
   PreferredSupplierCompany: {select: {id: true, name: true}},
   MaterialSupplier: {
@@ -48,6 +50,8 @@ export type MaterialGroupOption = {
 export type MaterialWithRelations = Prisma.MaterialGetPayload<{
   include: {
     Unit: true
+    Employee: {select: {firstName: true; lastName: true}}
+    Target: {select: {createdAt: true}}
     Employee_Material_deletedByToEmployee: {select: {id: true; firstName: true; lastName: true}}
     PreferredSupplierCompany: {select: {id: true; name: true}}
     MaterialSupplier: {include: {Company: {select: {id: true; name: true}}}}
@@ -84,6 +88,8 @@ export async function getMaterialById(id: string): Promise<MaterialWithRelations
     where: {id},
     include: {
       Unit: true,
+      Employee: {select: {firstName: true, lastName: true}},
+      Target: {select: {createdAt: true}},
       Employee_Material_deletedByToEmployee: {select: {id: true, firstName: true, lastName: true}}, // deleter
       PreferredSupplierCompany: {
         select: {id: true, name: true},

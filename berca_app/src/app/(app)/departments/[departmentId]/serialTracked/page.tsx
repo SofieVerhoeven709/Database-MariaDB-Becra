@@ -95,61 +95,61 @@ export default async function SerialTrackedPage({params}: PageProps) {
 
     return (
       <main className="px-6 py-8 lg:px-10 lg:py-10">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <h1 className="text-lg font-semibold text-foreground">Serial Tracked</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Manage serial tracked items</p>
-        </div>
-        <Tabs defaultValue="serialTracked">
-          <TabsList>
-            <TabsTrigger value="serialTracked">Serial Tracked</TabsTrigger>
-            <TabsTrigger value="structure">Structure</TabsTrigger>
-          </TabsList>
-          <TabsContent value="serialTracked">
-            <SerialTrackedTable
-              initialSerialTracked={serialTracked}
-              companyOptions={companyOptions}
-              projectOptions={projectOptions}
-              materialGroupOptions={materialGroupOptions}
-              warehousePlaceOptions={warehousePlaceOptions}
-              currentUserRole={currentUserRole}
-              currentUserLevel={currentUserLevel}
-              departmentId={departmentId}
-              materialOptions={materialOptions}
-            />
-          </TabsContent>
-          <TabsContent value="structure">
-            <div className="overflow-x-auto rounded-xl border border-border/60 bg-card p-4 mt-4">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Serial Tracked BE Number</TableHead>
-                    <TableHead>Short Description</TableHead>
-                    <TableHead>Long Description</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {flatStructures.length === 0 ? (
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8">
+            <h1 className="text-lg font-semibold text-foreground">Serial Tracked</h1>
+            <p className="mt-1 text-sm text-muted-foreground">Manage serial tracked items</p>
+          </div>
+          <Tabs defaultValue="serialTracked">
+            <TabsList>
+              <TabsTrigger value="serialTracked">Serial Tracked</TabsTrigger>
+              <TabsTrigger value="structure">Structure</TabsTrigger>
+            </TabsList>
+            <TabsContent value="serialTracked">
+              <SerialTrackedTable
+                initialSerialTracked={serialTracked}
+                companyOptions={companyOptions}
+                projectOptions={projectOptions}
+                materialGroupOptions={materialGroupOptions}
+                warehousePlaceOptions={warehousePlaceOptions}
+                currentUserRole={currentUserRole}
+                currentUserLevel={currentUserLevel}
+                departmentId={departmentId}
+                materialOptions={materialOptions}
+              />
+            </TabsContent>
+            <TabsContent value="structure">
+              <div className="overflow-x-auto rounded-xl border border-border/60 bg-card p-4 mt-4">
+                <Table>
+                  <TableHeader>
                     <TableRow>
-                      <TableCell colSpan={3} className="text-center text-muted-foreground">
-                        No structure found.
-                      </TableCell>
+                      <TableHead>Serial Tracked BE Number</TableHead>
+                      <TableHead>Short Description</TableHead>
+                      <TableHead>Long Description</TableHead>
                     </TableRow>
-                  ) : (
-                    flatStructures.map((s: any) => (
-                      <TableRow key={s.id}>
-                        <TableCell>{s.serialTrackedBeNumber ?? '-'}</TableCell>
-                        <TableCell>{s.shortDescription ?? '-'}</TableCell>
-                        <TableCell>{s.longDescription ?? '-'}</TableCell>
+                  </TableHeader>
+                  <TableBody>
+                    {flatStructures.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={3} className="text-center text-muted-foreground">
+                          No structure found.
+                        </TableCell>
                       </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-          </TabsContent>
-        </Tabs>
-      </div>
+                    ) : (
+                      flatStructures.map((s: any) => (
+                        <TableRow key={s.id}>
+                          <TableCell>{s.serialTrackedBeNumber ?? '-'}</TableCell>
+                          <TableCell>{s.shortDescription ?? '-'}</TableCell>
+                          <TableCell>{s.longDescription ?? '-'}</TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
       </main>
     )
   } catch (error) {

@@ -19,9 +19,14 @@ interface Props {
   currentUserLevel: number
 }
 
-export function MaterialSerialTrackedDetail({item, companies, projects, materialGroups, warehousePlaces, materialOptions, currentUserRole, currentUserLevel}: Props) {
+export function MaterialSerialTrackedDetail({item, companies, projects, materialGroups, warehousePlaces, materialOptions}: Props) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [structure, setStructure] = useState<any[]>([])
+
+  const formatDate = (value?: string | null) => (value ? new Date(value).toLocaleDateString('en-GB') : null)
+  const formatInspectionInterval = (value?: number | null, unit?: string | null) =>
+    value ? `${value} ${unit ? unit.toLowerCase() + (value === 1 ? '' : 's') : 'days'}` : null
+
   useEffect(() => {
     async function fetchStructure() {
       // Fetch from API route instead of direct DAL call
@@ -85,6 +90,12 @@ export function MaterialSerialTrackedDetail({item, companies, projects, material
             />
             <Field label="From Location" value={item.fromLocation} />
             <Field label="To Location" value={item.toLocation} />
+            <Field label="Last Inspection Date" value={formatDate(item.lastInspectionDate)} />
+            <Field
+              label="Inspection Interval"
+              value={formatInspectionInterval(item.inspectionIntervalValue, item.inspectionIntervalUnit)}
+            />
+            <Field label="Next Inspection Date" value={formatDate(item.nextInspectionDate)} />
             <Field label="Preferred Supplier" value={item.preferredSupplier} />
             <Field label="Becra Code" value={item.becraCode} />
 

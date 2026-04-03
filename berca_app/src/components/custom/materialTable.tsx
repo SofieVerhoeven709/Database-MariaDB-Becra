@@ -59,6 +59,7 @@ type SortField =
   | 'createdByName'
   | 'createdAt'
   | 'rejected'
+  | 'longLeadTime'
 type SortDir = 'asc' | 'desc'
 type FilterRejected = 'all' | 'active' | 'rejected'
 type FilterNumberKind = 'all' | 'be' | 'ios'
@@ -171,17 +172,17 @@ export function MaterialTable({
   function getSortValue(material: MappedMaterial, field: SortField): string {
     switch (field) {
       case 'warehouseAbbreviation':
-        return getWarehousePart(material.documentationPlace, 'abbreviation')
+        return getWarehousePart(material.warehousePlace, 'abbreviation')
       case 'warehousePlace':
-        return getWarehousePart(material.documentationPlace, 'place')
+        return getWarehousePart(material.warehousePlace, 'place')
       case 'warehouseShelf':
-        return getWarehousePart(material.documentationPlace, 'shelf')
+        return getWarehousePart(material.warehousePlace, 'shelf')
       case 'warehouseColumn':
-        return getWarehousePart(material.documentationPlace, 'column')
+        return getWarehousePart(material.warehousePlace, 'column')
       case 'warehouseLayer':
-        return getWarehousePart(material.documentationPlace, 'layer')
+        return getWarehousePart(material.warehousePlace, 'layer')
       case 'warehouseLayerPlace':
-        return getWarehousePart(material.documentationPlace, 'layerPlace')
+        return getWarehousePart(material.warehousePlace, 'layerPlace')
       default:
         return String(material[field] ?? '')
     }
@@ -204,7 +205,7 @@ export function MaterialTable({
         m.beNumber.toLowerCase().includes(q) ||
         (m.name ?? '').toLowerCase().includes(q) ||
         m.shortDescription.toLowerCase().includes(q) ||
-        resolveMaterialPlace(m.documentationPlace).toLowerCase().includes(q) ||
+        resolveMaterialPlace(m.warehousePlace).toLowerCase().includes(q) ||
         (m.brandName ?? '').toLowerCase().includes(q) ||
         m.materialGroupLabel.toLowerCase().includes(q) ||
         m.materialGroupLabelA.toLowerCase().includes(q) ||
@@ -217,7 +218,7 @@ export function MaterialTable({
         m.supplierCompanyNames.some(name => name.toLowerCase().includes(q))
       )
     })
-      .sort((a, b) => {
+    .sort((a, b) => {
       const aVal = getSortValue(a, sortField)
       const bVal = getSortValue(b, sortField)
       return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
@@ -241,9 +242,11 @@ export function MaterialTable({
         'supplierCompanyIds',
         'parentBeNumbers',
         'brandName',
-        'documentationPlace',
-        'bePartDoc',
+        'warehousePlace',
         'rejected',
+        'longLeadTime',
+        'leadTimeValue',
+        'leadTimeUnit',
         'materialGroupIdA',
         'materialGroupIdB',
         'materialGroupIdC',
@@ -261,8 +264,9 @@ export function MaterialTable({
         'preferredSupplierOrderId',
         'preferredSupplierShortDescription',
         'brandName',
-        'documentationPlace',
-        'bePartDoc',
+        'warehousePlace',
+        'leadTimeValue',
+        'leadTimeUnit',
         'materialGroupIdB',
         'materialGroupIdC',
         'materialGroupIdD',
@@ -285,9 +289,10 @@ export function MaterialTable({
         fd.append(k, String(v))
       })
 
-      const result = dialogMode === 'edit' && editingMaterial
-        ? await updateMaterialAction({success: false}, fd)
-        : await createMaterialAction({success: false}, fd)
+      const result =
+        dialogMode === 'edit' && editingMaterial
+          ? await updateMaterialAction({success: false}, fd)
+          : await createMaterialAction({success: false}, fd)
 
       if (result && !result.success) {
         console.error('Material save failed:', result.errors)
@@ -362,6 +367,7 @@ export function MaterialTable({
     {key: 'parentBeNumbers', label: 'Parent Parts'},
     {key: 'createdByName', label: 'Created'},
     {key: 'rejected', label: 'Status'},
+    {key: 'longLeadTime', label: 'Long Lead'},
   ]
 
   return (
@@ -458,12 +464,12 @@ export function MaterialTable({
                   <TableCell className="text-sm max-w-55 truncate" title={m.shortDescription}>
                     {m.shortDescription}
                   </TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'abbreviation') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'place') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'shelf') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'column') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'layer') || '—'}</TableCell>
-                  <TableCell className="text-sm">{getWarehousePart(m.documentationPlace, 'layerPlace') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'abbreviation') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'place') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'shelf') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'column') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'layer') || '—'}</TableCell>
+                  <TableCell className="text-sm">{getWarehousePart(m.warehousePlace, 'layerPlace') || '—'}</TableCell>
                   <TableCell className="text-sm">
                     {m.brandName ?? <span className="text-muted-foreground">—</span>}
                   </TableCell>
@@ -500,6 +506,15 @@ export function MaterialTable({
                       <Badge variant="secondary" className="text-xs bg-green-500/15 text-green-700 dark:text-green-400">
                         Active
                       </Badge>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {m.longLeadTime ? (
+                      <Badge variant="secondary" className="text-xs bg-amber-500/15 text-amber-700 dark:text-amber-400">
+                        Yes
+                      </Badge>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">No</span>
                     )}
                   </TableCell>
                   {/* Serial Tracked Button Column */}

@@ -13,9 +13,11 @@ export interface MappedMaterial {
   supplierCompanyNames: string[]
   parentBeNumbers: string[]
   brandName: string | null
-  documentationPlace: string | null
-  bePartDoc: number | null
+  warehousePlace: string | null
   rejected: boolean | null
+  longLeadTime: boolean
+  leadTimeValue: number | null
+  leadTimeUnit: 'days' | 'weeks' | null
   materialGroupIdA: string | null
   materialGroupIdB: string | null
   materialGroupIdC: string | null

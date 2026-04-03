@@ -10,6 +10,7 @@ import {createTargetForType} from '@/dal/targets'
 import {z} from 'zod/v4'
 import {getSessionProfileFromCookieOrThrow} from '@/lib/sessionUtils'
 import {getLogger} from '@/lib/logger'
+import {Prisma} from '@/generated/prisma/client'
 
 const REVALIDATE_MATERIAL = '/departments/engineering/material'
 const REVALIDATE_INVENTORY = '/departments/warehouse/inventory'
@@ -46,6 +47,23 @@ async function generateBeNumber() {
   return String(Math.max(maxBeNumber + 1, START_NUMBER))
 }
 
+async function resolveValidWarehousePlaceId(warehousePlaceId: string | null | undefined) {
+  if (!warehousePlaceId) return null
+
+  const place = await prismaClient.warehousePlace.findUnique({
+    where: {id: warehousePlaceId},
+    select: {id: true},
+  })
+
+  return place ? warehousePlaceId : null
+}
+
+function isWarehousePlaceForeignKeyError(error: unknown): boolean {
+  if (!(error instanceof Prisma.PrismaClientKnownRequestError)) return false
+  if (error.code !== 'P2003') return false
+  return /warehousePlaceId/i.test(error.message)
+}
+
 export const createMaterialAction = protectedFormAction({
   schema: createMaterialSchema,
   functionName: 'Create material',
@@ -62,27 +80,48 @@ export const createMaterialAction = protectedFormAction({
       ]),
     )
 
+    const warehousePlaceId = await resolveValidWarehousePlaceId(data.warehousePlace ?? null)
+    if (data.warehousePlace && !warehousePlaceId) {
+      return {
+        success: false,
+        errors: {warehousePlace: ['Selected warehouse place does not exist anymore. Please select a valid one.']},
+      }
+    }
+
     if (!beNumber) {
       beNumber = await generateBeNumber()
     }
 
-    const material = await createMaterial({
-      ...restData,
-      id: data.id || randomUUID(),
-      beNumber,
-      brandOrderNr: brandOrderNr ?? null,
-      preferredSupplierCompanyId,
-      preferredSupplierOrderId: data.preferredSupplierOrderId ?? null,
-      preferredSupplierShortDescription: data.preferredSupplierShortDescription ?? null,
-      supplierCompanyIds,
-      bePartDoc: data.bePartDoc != null ? Number(data.bePartDoc) : null,
-      materialGroupIdA: data.materialGroupIdA,
-      materialGroupIdB: data.materialGroupIdB ?? null,
-      materialGroupIdC: data.materialGroupIdC ?? null,
-      materialGroupIdD: data.materialGroupIdD ?? null,
-      createdBy: profile.id,
-      targetId: target.id,
-    })
+    let material
+    try {
+      material = await createMaterial({
+        ...restData,
+        id: data.id || randomUUID(),
+        beNumber,
+        brandOrderNr: brandOrderNr ?? null,
+        preferredSupplierCompanyId,
+        preferredSupplierOrderId: data.preferredSupplierOrderId ?? null,
+        preferredSupplierShortDescription: data.preferredSupplierShortDescription ?? null,
+        supplierCompanyIds,
+        warehousePlace: warehousePlaceId,
+        leadTimeValue: data.longLeadTime ? (data.leadTimeValue ?? null) : null,
+        leadTimeUnit: data.longLeadTime ? (data.leadTimeUnit ?? null) : null,
+        materialGroupIdA: data.materialGroupIdA,
+        materialGroupIdB: data.materialGroupIdB ?? null,
+        materialGroupIdC: data.materialGroupIdC ?? null,
+        materialGroupIdD: data.materialGroupIdD ?? null,
+        createdBy: profile.id,
+        targetId: target.id,
+      })
+    } catch (error) {
+      if (isWarehousePlaceForeignKeyError(error)) {
+        return {
+          success: false,
+          errors: {warehousePlace: ['Selected warehouse place is invalid. Please choose another place.']},
+        }
+      }
+      throw error
+    }
 
     if (!material) {
       return {
@@ -110,13 +149,34 @@ export const updateMaterialAction = protectedFormAction({
       ]),
     )
 
-    const updated = await updateMaterial(id, {
-      ...rest,
-      brandOrderNr: rest.brandOrderNr ?? null,
-      preferredSupplierCompanyId,
-      supplierCompanyIds,
-      bePartDoc: rest.bePartDoc != null ? Number(rest.bePartDoc) : rest.bePartDoc,
-    })
+    const warehousePlaceId = await resolveValidWarehousePlaceId(rest.warehousePlace ?? null)
+    if (rest.warehousePlace && !warehousePlaceId) {
+      return {
+        success: false,
+        errors: {warehousePlace: ['Selected warehouse place does not exist anymore. Please select a valid one.']},
+      }
+    }
+
+    let updated
+    try {
+      updated = await updateMaterial(id, {
+        ...rest,
+        brandOrderNr: rest.brandOrderNr ?? null,
+        preferredSupplierCompanyId,
+        supplierCompanyIds,
+        warehousePlace: warehousePlaceId,
+        leadTimeValue: rest.longLeadTime ? (rest.leadTimeValue ?? null) : null,
+        leadTimeUnit: rest.longLeadTime ? (rest.leadTimeUnit ?? null) : null,
+      })
+    } catch (error) {
+      if (isWarehousePlaceForeignKeyError(error)) {
+        return {
+          success: false,
+          errors: {warehousePlace: ['Selected warehouse place is invalid. Please choose another place.']},
+        }
+      }
+      throw error
+    }
     logger.info(`Material updated: ${updated.id}`)
     revalidatePath(REVALIDATE_MATERIAL)
     revalidatePath(REVALIDATE_INVENTORY)
@@ -149,7 +209,6 @@ export const restoreMaterialAction = protectedFormAction({
     revalidatePath(`${REVALIDATE_MATERIAL}/${data.id}`)
   },
 })
-
 
 export async function createMaterialForPlaceAction(unvalidatedData: z.infer<typeof createMaterialForPlaceSchema>) {
   const logger = await getLogger()

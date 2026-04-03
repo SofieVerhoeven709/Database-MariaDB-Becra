@@ -203,6 +203,16 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
+      IF NOT EXISTS MaterialLeadTime (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            materialId CHAR(36) NOT NULL,
+            leadTimeValue INT NOT NULL,
+            leadTimeUnit VARCHAR(10) NOT NULL,
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
+            UNIQUE (materialId)
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
       IF NOT EXISTS Session (
             id CHAR(36) NOT NULL PRIMARY KEY,
             activeFrom DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

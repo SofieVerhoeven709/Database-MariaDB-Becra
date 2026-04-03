@@ -60,9 +60,11 @@ interface MappedMaterialDetail {
   supplierCompanyIds: string[]
   supplierCompanyNames: string[]
   brandName: string | null
-  documentationPlace: string | null
-  bePartDoc: number | null
+  warehousePlace: string | null
   rejected: boolean | null
+  longLeadTime: boolean
+  leadTimeValue: number | null
+  leadTimeUnit: 'days' | 'weeks' | null
   materialGroupIdA: string | null
   materialGroupIdB: string | null
   materialGroupIdC: string | null
@@ -129,7 +131,13 @@ function formatWarehousePlace(place: WarehousePlaceOption) {
     .join(' - ')
 }
 
-export function MaterialDetail({material, materialGroups, units, supplierCompanies, warehousePlaces = []}: MaterialDetailProps) {
+export function MaterialDetail({
+  material,
+  materialGroups,
+  units,
+  supplierCompanies,
+  warehousePlaces = [],
+}: MaterialDetailProps) {
   const router = useRouter()
   const [editing, setEditing] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -146,9 +154,11 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
     preferredSupplierShortDescription: material.preferredSupplierShortDescription ?? '',
     supplierCompanyIds: material.supplierCompanyIds ?? [],
     brandName: material.brandName ?? '',
-    documentationPlace: material.documentationPlace ?? '',
-    bePartDoc: material.bePartDoc !== null ? material.bePartDoc : ('' as number | ''),
+    warehousePlace: material.warehousePlace ?? '',
     rejected: material.rejected ?? false,
+    longLeadTime: material.longLeadTime ?? false,
+    leadTimeValue: material.leadTimeValue ?? null,
+    leadTimeUnit: material.leadTimeUnit ?? null,
     isSerialTracked: material.isSerialTracked ?? false,
     isParentPart: (material.parentBeNumbers && material.parentBeNumbers.length > 0) ?? false,
     materialGroupIdA: material.materialGroupIdA ?? '',
@@ -175,14 +185,23 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
 
   const warehousePlaceById = new Map(warehousePlaces.map(place => [place.id, place]))
 
-  const resolvedWarehousePlace = form.documentationPlace ? warehousePlaceById.get(form.documentationPlace) ?? null : null
+  const resolvedWarehousePlace = form.warehousePlace ? (warehousePlaceById.get(form.warehousePlace) ?? null) : null
 
   function formatInventoryStructureLocation(structure: InventoryStructureItem) {
-    const warehousePlace = structure.warehousePlaceId ? warehousePlaceById.get(structure.warehousePlaceId) ?? null : null
-    const warehouseLabel = warehousePlace ? formatWarehousePlace(warehousePlace) : structure.place || structure.warehousePlaceId || structure.inventoryPlaceId
+    const warehousePlace = structure.warehousePlaceId
+      ? (warehousePlaceById.get(structure.warehousePlaceId) ?? null)
+      : null
+    const warehouseLabel = warehousePlace
+      ? formatWarehousePlace(warehousePlace)
+      : structure.place || structure.warehousePlaceId || structure.inventoryPlaceId
     const statusParts = [structure.coordinate ? 'coordinate' : 'no coordinate', structure.valid ? 'valid' : 'invalid']
 
-    return [warehouseLabel ?? '-', `inventoryPlaceId: ${structure.inventoryPlaceId}`, `inventoryId: ${structure.inventoryId}`, ...statusParts]
+    return [
+      warehouseLabel ?? '-',
+      `inventoryPlaceId: ${structure.inventoryPlaceId}`,
+      `inventoryId: ${structure.inventoryId}`,
+      ...statusParts,
+    ]
       .filter(Boolean)
       .join(' | ')
   }
@@ -206,9 +225,13 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
         fd.append('preferredSupplierShortDescription', form.preferredSupplierShortDescription)
       form.supplierCompanyIds.forEach(id => fd.append('supplierCompanyIds', id))
       if (form.brandName) fd.append('brandName', form.brandName)
-      if (form.documentationPlace) fd.append('documentationPlace', form.documentationPlace)
-      if (form.bePartDoc !== '') fd.append('bePartDoc', String(form.bePartDoc))
+      if (form.warehousePlace) fd.append('warehousePlace', form.warehousePlace)
       fd.append('rejected', String(form.rejected))
+      fd.append('longLeadTime', String(form.longLeadTime))
+      if (form.longLeadTime) {
+        if (form.leadTimeValue !== null) fd.append('leadTimeValue', String(form.leadTimeValue))
+        if (form.leadTimeUnit) fd.append('leadTimeUnit', form.leadTimeUnit)
+      }
       fd.append('isSerialTracked', String(form.isSerialTracked))
       fd.append('isParentPart', String(form.isParentPart))
       fd.append('materialGroupIdA', form.materialGroupIdA)
@@ -684,8 +707,8 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
               {editing ? (
                 <div className="space-y-2">
                   <Select
-                    value={form.documentationPlace || '__none__'}
-                    onValueChange={value => handleField('documentationPlace', value === '__none__' ? '' : value)}>
+                    value={form.warehousePlace || '__none__'}
+                    onValueChange={value => handleField('warehousePlace', value === '__none__' ? '' : value)}>
                     <SelectTrigger className="bg-secondary border-border">
                       <SelectValue placeholder="Select warehouse place" />
                     </SelectTrigger>
@@ -709,33 +732,17 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                     </div>
                   )}
                 </div>
+              ) : resolvedWarehousePlace ? (
+                <div className="text-sm space-y-0.5">
+                  <p>Abbr: {resolvedWarehousePlace.abbreviation ?? '-'}</p>
+                  <p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
+                  <p>Shelf: {resolvedWarehousePlace.shelf ?? '-'}</p>
+                  <p>Column: {resolvedWarehousePlace.column ?? '-'}</p>
+                  <p>Layer: {resolvedWarehousePlace.layer ?? '-'}</p>
+                  <p>Layer place: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
+                </div>
               ) : (
-                resolvedWarehousePlace ? (
-                  <div className="text-sm space-y-0.5">
-                    <p>Abbr: {resolvedWarehousePlace.abbreviation ?? '-'}</p>
-                    <p>Place: {resolvedWarehousePlace.place ?? '-'}</p>
-                    <p>Shelf: {resolvedWarehousePlace.shelf ?? '-'}</p>
-                    <p>Column: {resolvedWarehousePlace.column ?? '-'}</p>
-                    <p>Layer: {resolvedWarehousePlace.layer ?? '-'}</p>
-                    <p>Layer place: {resolvedWarehousePlace.layerPlace ?? '-'}</p>
-                  </div>
-                ) : (
-                  <p className="text-sm text-muted-foreground">—</p>
-                )
-              )}
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs text-muted-foreground">BE Part Doc</Label>
-              {editing ? (
-                <Input
-                  type="number"
-                  value={form.bePartDoc === '' ? '' : String(form.bePartDoc)}
-                  onChange={e => handleField('bePartDoc', e.target.value === '' ? '' : Number(e.target.value))}
-                  placeholder="—"
-                />
-              ) : (
-                <p className="text-sm">{material.bePartDoc ?? <span className="text-muted-foreground">—</span>}</p>
+                <p className="text-sm text-muted-foreground">—</p>
               )}
             </div>
 
@@ -760,6 +767,63 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                 </div>
               ) : (
                 <p className="text-sm">{material.isSerialTracked ? 'Yes' : 'No'}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Long Lead Time</Label>
+              {editing ? (
+                <div className="flex items-center gap-2 h-9">
+                  <Switch
+                    checked={form.longLeadTime}
+                    onCheckedChange={v => {
+                      handleField('longLeadTime', v)
+                      if (!v) {
+                        handleField('leadTimeValue', null)
+                        handleField('leadTimeUnit', null)
+                      }
+                    }}
+                  />
+                  <span className="text-sm text-muted-foreground">{form.longLeadTime ? 'Yes' : 'No'}</span>
+                </div>
+              ) : (
+                <p className="text-sm">{material.longLeadTime ? 'Yes' : 'No'}</p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">Lead Time Period</Label>
+              {editing ? (
+                form.longLeadTime ? (
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="number"
+                      min={1}
+                      value={form.leadTimeValue ?? ''}
+                      onChange={e => handleField('leadTimeValue', e.target.value ? Number(e.target.value) : null)}
+                      className="w-28"
+                      placeholder="Value"
+                    />
+                    <Select
+                      value={form.leadTimeUnit ?? '__none__'}
+                      onValueChange={v => handleField('leadTimeUnit', v === '__none__' ? null : (v as 'days' | 'weeks'))}>
+                      <SelectTrigger className="bg-secondary border-border w-32">
+                        <SelectValue placeholder="Unit" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="__none__">None</SelectItem>
+                        <SelectItem value="days">Days</SelectItem>
+                        <SelectItem value="weeks">Weeks</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">Enable Long Lead Time first.</p>
+                )
+              ) : material.longLeadTime && material.leadTimeValue && material.leadTimeUnit ? (
+                <p className="text-sm">{material.leadTimeValue} {material.leadTimeUnit}</p>
+              ) : (
+                <p className="text-sm text-muted-foreground">—</p>
               )}
             </div>
 
@@ -820,9 +884,13 @@ export function MaterialDetail({material, materialGroups, units, supplierCompani
                           {inv.inventoryStructures.length > 0 && (
                             <div className="space-y-1 text-xs text-muted-foreground">
                               {inv.inventoryStructures.map(structure => (
-                                <div key={structure.id} className="rounded-md border border-border bg-secondary/30 px-2 py-1">
+                                <div
+                                  key={structure.id}
+                                  className="rounded-md border border-border bg-secondary/30 px-2 py-1">
                                   <p className="font-mono">{formatInventoryStructureLocation(structure)}</p>
-                                  {structure.information && <p className="whitespace-pre-wrap">{structure.information}</p>}
+                                  {structure.information && (
+                                    <p className="whitespace-pre-wrap">{structure.information}</p>
+                                  )}
                                 </div>
                               ))}
                             </div>

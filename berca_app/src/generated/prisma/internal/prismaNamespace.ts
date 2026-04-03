@@ -484,7 +484,8 @@ export const ModelName = {
   DocumentGroup: 'DocumentGroup',
   DocumentRevision: 'DocumentRevision',
   DocumentStatus: 'DocumentStatus',
-  DocumentStructureTarget: 'DocumentStructureTarget'
+  DocumentStructureTarget: 'DocumentStructureTarget',
+  MaterialLeadTime: 'MaterialLeadTime'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -500,7 +501,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget"
+    modelProps: "certificate" | "certificateType" | "company" | "companyContact" | "contact" | "deliveryNoteSupplier" | "department" | "documentPlace" | "documentStructure" | "emergencyContact" | "employee" | "followUp" | "followUpStructure" | "followUpTarget" | "followUpType" | "function" | "hourType" | "inventory" | "inventoryChange" | "inventoryOrder" | "inventoryStructure" | "invoiceIn" | "invoiceInTarget" | "invoiceOut" | "invoiceType" | "material" | "materialSupplier" | "materialAssembly" | "materialCode" | "materialDimension" | "materialFamily" | "materialGroup" | "materialMovement" | "materialOther" | "materialPerformance" | "materialPrice" | "materialSerialTrack" | "materialSerialTrackedStructure" | "materialSpec" | "materialStructure" | "part" | "phantom" | "product" | "project" | "projectContact" | "projectType" | "purchase" | "purchaseDetail" | "purchaseOrderBecra" | "quoteSupplier" | "role" | "session" | "status" | "supplierDeliveryNoteFollowUp" | "target" | "targetType" | "testProcedure" | "timeRegistry" | "timeRegistryEmployee" | "title" | "training" | "trainingContact" | "trainingDocument" | "trainingStandard" | "unit" | "urgencyType" | "visibilityForRole" | "warehousePlace" | "workOrder" | "workOrderInvoice" | "workOrderStructure" | "roleLevel" | "subRole" | "departmentExtern" | "quoteBecra" | "roleLevelEmployee" | "country" | "invoiceOutContact" | "invoiceSentType" | "invoiceStatus" | "paymentMethod" | "vatMargin" | "priceList" | "priceListItem" | "companyAddress" | "priceListItemTarget" | "documentGroupA" | "documentGroupB" | "documentGroupC" | "documentGroupD" | "priceListCompany" | "documentGroup" | "documentRevision" | "documentStatus" | "documentStructureTarget" | "materialLeadTime"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -6774,6 +6775,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MaterialLeadTime: {
+      payload: Prisma.$MaterialLeadTimePayload<ExtArgs>
+      fields: Prisma.MaterialLeadTimeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MaterialLeadTimeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialLeadTimePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MaterialLeadTimeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialLeadTimePayload>
+        }
+        findFirst: {
+          args: Prisma.MaterialLeadTimeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialLeadTimePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MaterialLeadTimeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialLeadTimePayload>
+        }
+        findMany: {
+          args: Prisma.MaterialLeadTimeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialLeadTimePayload>[]
+        }
+        create: {
+          args: Prisma.MaterialLeadTimeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialLeadTimePayload>
+        }
+        createMany: {
+          args: Prisma.MaterialLeadTimeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MaterialLeadTimeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialLeadTimePayload>
+        }
+        update: {
+          args: Prisma.MaterialLeadTimeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialLeadTimePayload>
+        }
+        deleteMany: {
+          args: Prisma.MaterialLeadTimeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MaterialLeadTimeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MaterialLeadTimeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MaterialLeadTimePayload>
+        }
+        aggregate: {
+          args: Prisma.MaterialLeadTimeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMaterialLeadTime>
+        }
+        groupBy: {
+          args: Prisma.MaterialLeadTimeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MaterialLeadTimeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MaterialLeadTimeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MaterialLeadTimeCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -7361,8 +7428,7 @@ export const MaterialScalarFieldEnum = {
   longDescription: 'longDescription',
   preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
-  documentationPlace: 'documentationPlace',
-  bePartDoc: 'bePartDoc',
+  warehousePlaceId: 'warehousePlaceId',
   rejected: 'rejected',
   isSerialTracked: 'isSerialTracked',
   materialGroupIdA: 'materialGroupIdA',
@@ -7371,6 +7437,7 @@ export const MaterialScalarFieldEnum = {
   materialGroupIdD: 'materialGroupIdD',
   preferredSupplierCompanyId: 'preferredSupplierCompanyId',
   unitId: 'unitId',
+  longLeadTime: 'longLeadTime',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -7591,8 +7658,7 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   management: 'management',
   date: 'date',
   expiredDate: 'expiredDate',
-  documentationPlace: 'documentationPlace',
-  docRevision: 'docRevision',
+  warehousePlaceId: 'warehousePlaceId',
   valid: 'valid',
   additionalInfo: 'additionalInfo',
   beNumber: 'beNumber',
@@ -8485,6 +8551,16 @@ export const DocumentStructureTargetScalarFieldEnum = {
 export type DocumentStructureTargetScalarFieldEnum = (typeof DocumentStructureTargetScalarFieldEnum)[keyof typeof DocumentStructureTargetScalarFieldEnum]
 
 
+export const MaterialLeadTimeScalarFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  leadTimeValue: 'leadTimeValue',
+  leadTimeUnit: 'leadTimeUnit'
+} as const
+
+export type MaterialLeadTimeScalarFieldEnum = (typeof MaterialLeadTimeScalarFieldEnum)[keyof typeof MaterialLeadTimeScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -8900,8 +8976,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   longDescription: 'longDescription',
   preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
-  documentationPlace: 'documentationPlace',
-  bePartDoc: 'bePartDoc',
+  warehousePlaceId: 'warehousePlaceId',
   materialGroupIdA: 'materialGroupIdA',
   materialGroupIdB: 'materialGroupIdB',
   materialGroupIdC: 'materialGroupIdC',
@@ -9089,7 +9164,7 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   management: 'management',
-  documentationPlace: 'documentationPlace',
+  warehousePlaceId: 'warehousePlaceId',
   additionalInfo: 'additionalInfo',
   beNumber: 'beNumber',
   beParentPart: 'beParentPart',
@@ -9771,6 +9846,15 @@ export const DocumentStructureTargetOrderByRelevanceFieldEnum = {
 export type DocumentStructureTargetOrderByRelevanceFieldEnum = (typeof DocumentStructureTargetOrderByRelevanceFieldEnum)[keyof typeof DocumentStructureTargetOrderByRelevanceFieldEnum]
 
 
+export const MaterialLeadTimeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  leadTimeUnit: 'leadTimeUnit'
+} as const
+
+export type MaterialLeadTimeOrderByRelevanceFieldEnum = (typeof MaterialLeadTimeOrderByRelevanceFieldEnum)[keyof typeof MaterialLeadTimeOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -10000,6 +10084,7 @@ export type GlobalOmitConfig = {
   documentRevision?: Prisma.DocumentRevisionOmit
   documentStatus?: Prisma.DocumentStatusOmit
   documentStructureTarget?: Prisma.DocumentStructureTargetOmit
+  materialLeadTime?: Prisma.MaterialLeadTimeOmit
 }
 
 /* Types for Logging */

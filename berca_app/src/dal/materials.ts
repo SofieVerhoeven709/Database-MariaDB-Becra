@@ -32,6 +32,7 @@ const materialListInclude = {
     select: {id: true},
     orderBy: {updatedAt: 'desc'},
   },
+  MaterialLeadTime: true,
 } as const
 
 export type MaterialListItem = Prisma.MaterialGetPayload<{
@@ -67,30 +68,31 @@ export type MaterialWithRelations = Prisma.MaterialGetPayload<{
       select: {id: true}
       orderBy: {updatedAt: 'desc'}
     }
+    MaterialLeadTime: true
     Inventory_Inventory_materialIdToMaterial: {
       where: {deleted: false}
       orderBy: {createdAt: 'asc'}
       include: {
         InventoryStructure: {
-          where: {deleted: false},
-          orderBy: {createdAt: 'asc'},
+          where: {deleted: false}
+          orderBy: {createdAt: 'asc'}
           select: {
-            id: true,
-            inventoryPlaceId: true,
-            place: true,
-            warehousePlaceId: true,
-            information: true,
-            coordinate: true,
-            inventoryId: true,
-            forInventory: true,
-            forProject: true,
-            active: true,
-            materialActive: true,
-            valid: true,
-            createdAt: true,
-            createdBy: true,
-          },
-        },
+            id: true
+            inventoryPlaceId: true
+            place: true
+            warehousePlaceId: true
+            information: true
+            coordinate: true
+            inventoryId: true
+            forInventory: true
+            forProject: true
+            active: true
+            materialActive: true
+            valid: true
+            createdAt: true
+            createdBy: true
+          }
+        }
       }
     }
   }
@@ -137,6 +139,7 @@ export async function getMaterialById(id: string): Promise<MaterialWithRelations
         select: {id: true},
         orderBy: {updatedAt: 'desc'},
       },
+      MaterialLeadTime: true,
       Inventory_Inventory_materialIdToMaterial: {
         where: {deleted: false},
         orderBy: {createdAt: 'asc'},
@@ -161,7 +164,7 @@ export async function getMaterialById(id: string): Promise<MaterialWithRelations
               createdBy: true,
             },
           },
-        }
+        },
       },
     },
   })
@@ -201,9 +204,11 @@ export async function createMaterial(data: {
   supplierCompanyIds?: string[]
   parentBeNumbers?: string[]
   brandName?: string | null
-  documentationPlace?: string | null
-  bePartDoc?: number | null
+  warehousePlace?: string | null
   rejected?: boolean | null
+  longLeadTime?: boolean
+  leadTimeValue?: number | null
+  leadTimeUnit?: 'days' | 'weeks' | null
   materialGroupIdA: string | null
   materialGroupIdB?: string | null
   materialGroupIdC?: string | null
@@ -217,10 +222,12 @@ export async function createMaterial(data: {
   const {
     supplierCompanyIds = [],
     parentBeNumbers = [],
-    bePartDoc,
+    warehousePlace,
     preferredSupplierCompanyId,
     preferredSupplierOrderId,
     preferredSupplierShortDescription,
+    leadTimeValue,
+    leadTimeUnit,
     isParentPart,
     ...materialData
   } = data
@@ -239,8 +246,8 @@ export async function createMaterial(data: {
     const material = await tx.material.create({
       data: {
         ...materialData,
+        warehousePlaceId: warehousePlace ?? null,
         isSerialTracked: data.isSerialTracked ?? false,
-        bePartDoc: bePartDoc != null ? String(bePartDoc) : null,
         MaterialSupplier:
           supplierCompanyIds.length > 0
             ? {
@@ -309,6 +316,20 @@ export async function createMaterial(data: {
         trackedStruct.serialTrackedId,
       )
     }
+
+    if (material.longLeadTime && leadTimeValue != null && leadTimeUnit) {
+      await tx.materialLeadTime.upsert({
+        where: {materialId: material.id},
+        update: {leadTimeValue, leadTimeUnit},
+        create: {
+          id: randomUUID(),
+          materialId: material.id,
+          leadTimeValue,
+          leadTimeUnit,
+        },
+      })
+    }
+
     return material
   })
 }
@@ -327,9 +348,11 @@ export async function updateMaterial(
     supplierCompanyIds?: string[]
     parentBeNumbers?: string[]
     brandName?: string | null
-    documentationPlace?: string | null
-    bePartDoc?: number | null
+    warehousePlace?: string | null
     rejected?: boolean | null
+    longLeadTime?: boolean
+    leadTimeValue?: number | null
+    leadTimeUnit?: 'days' | 'weeks' | null
     materialGroupIdA?: string | null
     materialGroupIdB?: string | null
     materialGroupIdC?: string | null
@@ -342,17 +365,17 @@ export async function updateMaterial(
   const {
     supplierCompanyIds,
     parentBeNumbers,
-    bePartDoc,
+    warehousePlace,
     preferredSupplierCompanyId,
     preferredSupplierOrderId,
     preferredSupplierShortDescription,
+    leadTimeValue,
+    leadTimeUnit,
     isParentPart,
     ...materialData
   } = data
 
-  let uniqueParentBeNumbers = parentBeNumbers
-    ? Array.from(new Set(parentBeNumbers)).filter(parentBeNumber => parentBeNumber !== materialData.beNumber)
-    : undefined
+  let uniqueParentBeNumbers = parentBeNumbers ? Array.from(new Set(parentBeNumbers)) : undefined
 
   if (isParentPart === false) {
     uniqueParentBeNumbers = []
@@ -367,6 +390,7 @@ export async function updateMaterial(
           select: {id: true},
           orderBy: {updatedAt: 'desc'},
         },
+        MaterialLeadTime: true,
       },
     })
 
@@ -374,11 +398,16 @@ export async function updateMaterial(
       throw new Error(`Material not found: ${id}`)
     }
 
+    if (uniqueParentBeNumbers !== undefined) {
+      const currentBeNumber = materialData.beNumber ?? existing.beNumber
+      uniqueParentBeNumbers = uniqueParentBeNumbers.filter(parentBeNumber => parentBeNumber !== currentBeNumber)
+    }
+
     const updated = await tx.material.update({
       where: {id},
       data: {
         ...materialData,
-        bePartDoc: bePartDoc !== undefined ? (bePartDoc != null ? String(bePartDoc) : null) : undefined,
+        warehousePlaceId: warehousePlace !== undefined ? warehousePlace : undefined,
         MaterialSupplier:
           supplierCompanyIds === undefined
             ? undefined
@@ -465,6 +494,30 @@ export async function updateMaterial(
       })
     }
 
+    const longLeadTimeEnabled = updated.longLeadTime ?? false
+    if (!longLeadTimeEnabled) {
+      await tx.materialLeadTime.deleteMany({where: {materialId: updated.id}})
+    } else {
+      const nextLeadTimeValue = leadTimeValue ?? existing.MaterialLeadTime?.leadTimeValue ?? null
+      const nextLeadTimeUnit = leadTimeUnit ?? existing.MaterialLeadTime?.leadTimeUnit ?? null
+
+      if (nextLeadTimeValue != null && nextLeadTimeUnit) {
+        await tx.materialLeadTime.upsert({
+          where: {materialId: updated.id},
+          update: {
+            leadTimeValue: nextLeadTimeValue,
+            leadTimeUnit: nextLeadTimeUnit,
+          },
+          create: {
+            id: randomUUID(),
+            materialId: updated.id,
+            leadTimeValue: nextLeadTimeValue,
+            leadTimeUnit: nextLeadTimeUnit,
+          },
+        })
+      }
+    }
+
     return updated
   })
 }
@@ -490,4 +543,3 @@ export async function restoreMaterial(id: string) {
     },
   })
 }
-

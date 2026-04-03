@@ -9,7 +9,11 @@
 * 🟢 You can import this file directly.
 */
 
+export const MaterialSerialTrack_inspectionIntervalUnit = {
+  DAY: 'DAY',
+  WEEK: 'WEEK',
+  MONTH: 'MONTH',
+  YEAR: 'YEAR'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type MaterialSerialTrack_inspectionIntervalUnit = (typeof MaterialSerialTrack_inspectionIntervalUnit)[keyof typeof MaterialSerialTrack_inspectionIntervalUnit]

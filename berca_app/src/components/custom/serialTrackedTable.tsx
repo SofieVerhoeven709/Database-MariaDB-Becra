@@ -58,6 +58,10 @@ export type MappedMaterialSerialTracked = {
   deleted: boolean
   deletedAt?: string | null
   deletedByName?: string | null
+  lastInspectionDate?: string | null
+  nextInspectionDate?: string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: string | null
 }
 
 function SortIcon({field, sortField, sortDir}: {field: SortField; sortField: SortField; sortDir: SortDir}) {
@@ -147,6 +151,10 @@ export function SerialTrackedTable({
   const [editingItem, setEditingItem] = useState<MappedMaterialSerialTracked | null>(null)
   const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'duplicate'>('create')
 
+  const formatDate = (value?: string | null) => (value ? new Date(value).toLocaleDateString('en-GB') : '-')
+  const formatInspectionInterval = (value?: number | null, unit?: string | null) =>
+    value ? `${value} ${unit ? unit.toLowerCase() + (value === 1 ? '' : 's') : 'days'}` : '-'
+
   const companyMap = new Map(companyOptions.map(c => [c.id, c.name]))
   const projectMap = new Map(projectOptions.map(p => [p.id, p.name]))
   const materialGroupMap = new Map(materialGroupOptions.map(mg => [mg.id, mg.name]))
@@ -222,7 +230,6 @@ export function SerialTrackedTable({
       }
     })
 
-
   async function handleSoftDelete(item: MappedMaterialSerialTracked) {
     await deleteMaterialSerialTrackedAction({id: item.id})
     router.refresh()
@@ -239,7 +246,7 @@ export function SerialTrackedTable({
   }
 
   const showDeletedCols = filterDeleted !== 'not-deleted'
-  const colCount = showDeletedCols ? 17 : 14
+  const colCount = showDeletedCols ? 20 : 17
 
   return (
     <div className="flex flex-col gap-6">
@@ -315,6 +322,9 @@ export function SerialTrackedTable({
               <TableHead className="whitespace-nowrap text-xs">Stock Location</TableHead>
               <Th field="fromLocation" label="From" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="toLocation" label="To" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
+              <TableHead className="whitespace-nowrap text-xs">Last Inspection</TableHead>
+              <TableHead className="whitespace-nowrap text-xs">Inspection Interval</TableHead>
+              <TableHead className="whitespace-nowrap text-xs">Next Inspection</TableHead>
               <Th field="rejected" label="Rejected" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
               <Th field="createdBy" label="Created By" sortField={sortField} sortDir={sortDir} onSort={toggleSort} />
 
@@ -372,6 +382,11 @@ export function SerialTrackedTable({
                   <TableCell className={tdClass}>{item.warehousePlaceLabel ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{item.fromLocation ?? '-'}</TableCell>
                   <TableCell className={tdClass}>{item.toLocation ?? '-'}</TableCell>
+                  <TableCell className={tdClass}>{formatDate(item.lastInspectionDate)}</TableCell>
+                  <TableCell className={tdClass}>
+                    {formatInspectionInterval(item.inspectionIntervalValue, item.inspectionIntervalUnit)}
+                  </TableCell>
+                  <TableCell className={tdClass}>{formatDate(item.nextInspectionDate)}</TableCell>
 
                   <TableCell>
                     <YesNoBadge value={!!item.rejected} />

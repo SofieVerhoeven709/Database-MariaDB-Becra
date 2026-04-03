@@ -20,14 +20,28 @@ export type MaterialSerialTrackModel = runtime.Types.Result.DefaultSelection<Pri
 
 export type AggregateMaterialSerialTrack = {
   _count: MaterialSerialTrackCountAggregateOutputType | null
+  _avg: MaterialSerialTrackAvgAggregateOutputType | null
+  _sum: MaterialSerialTrackSumAggregateOutputType | null
   _min: MaterialSerialTrackMinAggregateOutputType | null
   _max: MaterialSerialTrackMaxAggregateOutputType | null
+}
+
+export type MaterialSerialTrackAvgAggregateOutputType = {
+  inspectionIntervalValue: number | null
+}
+
+export type MaterialSerialTrackSumAggregateOutputType = {
+  inspectionIntervalValue: number | null
 }
 
 export type MaterialSerialTrackMinAggregateOutputType = {
   id: string | null
   materialId: string | null
   beNumber: string | null
+  lastInspectionDate: Date | null
+  inspectionIntervalValue: number | null
+  inspectionIntervalUnit: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate: Date | null
   brandName: string | null
   management: string | null
   brandOrderNumber: string | null
@@ -55,6 +69,10 @@ export type MaterialSerialTrackMaxAggregateOutputType = {
   id: string | null
   materialId: string | null
   beNumber: string | null
+  lastInspectionDate: Date | null
+  inspectionIntervalValue: number | null
+  inspectionIntervalUnit: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate: Date | null
   brandName: string | null
   management: string | null
   brandOrderNumber: string | null
@@ -82,6 +100,10 @@ export type MaterialSerialTrackCountAggregateOutputType = {
   id: number
   materialId: number
   beNumber: number
+  lastInspectionDate: number
+  inspectionIntervalValue: number
+  inspectionIntervalUnit: number
+  nextInspectionDate: number
   brandName: number
   management: number
   brandOrderNumber: number
@@ -107,10 +129,22 @@ export type MaterialSerialTrackCountAggregateOutputType = {
 }
 
 
+export type MaterialSerialTrackAvgAggregateInputType = {
+  inspectionIntervalValue?: true
+}
+
+export type MaterialSerialTrackSumAggregateInputType = {
+  inspectionIntervalValue?: true
+}
+
 export type MaterialSerialTrackMinAggregateInputType = {
   id?: true
   materialId?: true
   beNumber?: true
+  lastInspectionDate?: true
+  inspectionIntervalValue?: true
+  inspectionIntervalUnit?: true
+  nextInspectionDate?: true
   brandName?: true
   management?: true
   brandOrderNumber?: true
@@ -138,6 +172,10 @@ export type MaterialSerialTrackMaxAggregateInputType = {
   id?: true
   materialId?: true
   beNumber?: true
+  lastInspectionDate?: true
+  inspectionIntervalValue?: true
+  inspectionIntervalUnit?: true
+  nextInspectionDate?: true
   brandName?: true
   management?: true
   brandOrderNumber?: true
@@ -165,6 +203,10 @@ export type MaterialSerialTrackCountAggregateInputType = {
   id?: true
   materialId?: true
   beNumber?: true
+  lastInspectionDate?: true
+  inspectionIntervalValue?: true
+  inspectionIntervalUnit?: true
+  nextInspectionDate?: true
   brandName?: true
   management?: true
   brandOrderNumber?: true
@@ -227,6 +269,18 @@ export type MaterialSerialTrackAggregateArgs<ExtArgs extends runtime.Types.Exten
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: MaterialSerialTrackAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: MaterialSerialTrackSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: MaterialSerialTrackMinAggregateInputType
@@ -257,6 +311,8 @@ export type MaterialSerialTrackGroupByArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   _count?: MaterialSerialTrackCountAggregateInputType | true
+  _avg?: MaterialSerialTrackAvgAggregateInputType
+  _sum?: MaterialSerialTrackSumAggregateInputType
   _min?: MaterialSerialTrackMinAggregateInputType
   _max?: MaterialSerialTrackMaxAggregateInputType
 }
@@ -265,6 +321,10 @@ export type MaterialSerialTrackGroupByOutputType = {
   id: string
   materialId: string | null
   beNumber: string | null
+  lastInspectionDate: Date | null
+  inspectionIntervalValue: number | null
+  inspectionIntervalUnit: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate: Date | null
   brandName: string | null
   management: string | null
   brandOrderNumber: string | null
@@ -287,6 +347,8 @@ export type MaterialSerialTrackGroupByOutputType = {
   deletedAt: Date | null
   deletedBy: string | null
   _count: MaterialSerialTrackCountAggregateOutputType | null
+  _avg: MaterialSerialTrackAvgAggregateOutputType | null
+  _sum: MaterialSerialTrackSumAggregateOutputType | null
   _min: MaterialSerialTrackMinAggregateOutputType | null
   _max: MaterialSerialTrackMaxAggregateOutputType | null
 }
@@ -313,6 +375,10 @@ export type MaterialSerialTrackWhereInput = {
   id?: Prisma.StringFilter<"MaterialSerialTrack"> | string
   materialId?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
   beNumber?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
+  lastInspectionDate?: Prisma.DateTimeNullableFilter<"MaterialSerialTrack"> | Date | string | null
+  inspectionIntervalValue?: Prisma.IntNullableFilter<"MaterialSerialTrack"> | number | null
+  inspectionIntervalUnit?: Prisma.EnumMaterialSerialTrack_inspectionIntervalUnitNullableFilter<"MaterialSerialTrack"> | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.DateTimeNullableFilter<"MaterialSerialTrack"> | Date | string | null
   brandName?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
   management?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
   brandOrderNumber?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
@@ -349,6 +415,10 @@ export type MaterialSerialTrackOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   materialId?: Prisma.SortOrderInput | Prisma.SortOrder
   beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastInspectionDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  inspectionIntervalValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  inspectionIntervalUnit?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextInspectionDate?: Prisma.SortOrderInput | Prisma.SortOrder
   brandName?: Prisma.SortOrderInput | Prisma.SortOrder
   management?: Prisma.SortOrderInput | Prisma.SortOrder
   brandOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -389,6 +459,10 @@ export type MaterialSerialTrackWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.MaterialSerialTrackWhereInput | Prisma.MaterialSerialTrackWhereInput[]
   materialId?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
   beNumber?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
+  lastInspectionDate?: Prisma.DateTimeNullableFilter<"MaterialSerialTrack"> | Date | string | null
+  inspectionIntervalValue?: Prisma.IntNullableFilter<"MaterialSerialTrack"> | number | null
+  inspectionIntervalUnit?: Prisma.EnumMaterialSerialTrack_inspectionIntervalUnitNullableFilter<"MaterialSerialTrack"> | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.DateTimeNullableFilter<"MaterialSerialTrack"> | Date | string | null
   brandName?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
   management?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
   brandOrderNumber?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
@@ -425,6 +499,10 @@ export type MaterialSerialTrackOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   materialId?: Prisma.SortOrderInput | Prisma.SortOrder
   beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastInspectionDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  inspectionIntervalValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  inspectionIntervalUnit?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextInspectionDate?: Prisma.SortOrderInput | Prisma.SortOrder
   brandName?: Prisma.SortOrderInput | Prisma.SortOrder
   management?: Prisma.SortOrderInput | Prisma.SortOrder
   brandOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -447,8 +525,10 @@ export type MaterialSerialTrackOrderByWithAggregationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MaterialSerialTrackCountOrderByAggregateInput
+  _avg?: Prisma.MaterialSerialTrackAvgOrderByAggregateInput
   _max?: Prisma.MaterialSerialTrackMaxOrderByAggregateInput
   _min?: Prisma.MaterialSerialTrackMinOrderByAggregateInput
+  _sum?: Prisma.MaterialSerialTrackSumOrderByAggregateInput
 }
 
 export type MaterialSerialTrackScalarWhereWithAggregatesInput = {
@@ -458,6 +538,10 @@ export type MaterialSerialTrackScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"MaterialSerialTrack"> | string
   materialId?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrack"> | string | null
   beNumber?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrack"> | string | null
+  lastInspectionDate?: Prisma.DateTimeNullableWithAggregatesFilter<"MaterialSerialTrack"> | Date | string | null
+  inspectionIntervalValue?: Prisma.IntNullableWithAggregatesFilter<"MaterialSerialTrack"> | number | null
+  inspectionIntervalUnit?: Prisma.EnumMaterialSerialTrack_inspectionIntervalUnitNullableWithAggregatesFilter<"MaterialSerialTrack"> | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.DateTimeNullableWithAggregatesFilter<"MaterialSerialTrack"> | Date | string | null
   brandName?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrack"> | string | null
   management?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrack"> | string | null
   brandOrderNumber?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrack"> | string | null
@@ -484,6 +568,10 @@ export type MaterialSerialTrackScalarWhereWithAggregatesInput = {
 export type MaterialSerialTrackCreateInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -515,6 +603,10 @@ export type MaterialSerialTrackUncheckedCreateInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -544,6 +636,10 @@ export type MaterialSerialTrackUncheckedCreateInput = {
 export type MaterialSerialTrackUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -575,6 +671,10 @@ export type MaterialSerialTrackUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -605,6 +705,10 @@ export type MaterialSerialTrackCreateManyInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -631,6 +735,10 @@ export type MaterialSerialTrackCreateManyInput = {
 export type MaterialSerialTrackUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -653,6 +761,10 @@ export type MaterialSerialTrackUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -701,6 +813,10 @@ export type MaterialSerialTrackCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
+  lastInspectionDate?: Prisma.SortOrder
+  inspectionIntervalValue?: Prisma.SortOrder
+  inspectionIntervalUnit?: Prisma.SortOrder
+  nextInspectionDate?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   management?: Prisma.SortOrder
   brandOrderNumber?: Prisma.SortOrder
@@ -724,10 +840,18 @@ export type MaterialSerialTrackCountOrderByAggregateInput = {
   deletedBy?: Prisma.SortOrder
 }
 
+export type MaterialSerialTrackAvgOrderByAggregateInput = {
+  inspectionIntervalValue?: Prisma.SortOrder
+}
+
 export type MaterialSerialTrackMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
+  lastInspectionDate?: Prisma.SortOrder
+  inspectionIntervalValue?: Prisma.SortOrder
+  inspectionIntervalUnit?: Prisma.SortOrder
+  nextInspectionDate?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   management?: Prisma.SortOrder
   brandOrderNumber?: Prisma.SortOrder
@@ -755,6 +879,10 @@ export type MaterialSerialTrackMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   materialId?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
+  lastInspectionDate?: Prisma.SortOrder
+  inspectionIntervalValue?: Prisma.SortOrder
+  inspectionIntervalUnit?: Prisma.SortOrder
+  nextInspectionDate?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   management?: Prisma.SortOrder
   brandOrderNumber?: Prisma.SortOrder
@@ -776,6 +904,10 @@ export type MaterialSerialTrackMinOrderByAggregateInput = {
   deleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   deletedBy?: Prisma.SortOrder
+}
+
+export type MaterialSerialTrackSumOrderByAggregateInput = {
+  inspectionIntervalValue?: Prisma.SortOrder
 }
 
 export type MaterialSerialTrackScalarRelationFilter = {
@@ -1009,6 +1141,10 @@ export type MaterialSerialTrackUpdateOneWithoutMaterialMovementNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialSerialTrackUpdateToOneWithWhereWithoutMaterialMovementInput, Prisma.MaterialSerialTrackUpdateWithoutMaterialMovementInput>, Prisma.MaterialSerialTrackUncheckedUpdateWithoutMaterialMovementInput>
 }
 
+export type NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput = {
+  set?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+}
+
 export type MaterialSerialTrackCreateNestedOneWithoutMaterialSerialTrackedStructureInput = {
   create?: Prisma.XOR<Prisma.MaterialSerialTrackCreateWithoutMaterialSerialTrackedStructureInput, Prisma.MaterialSerialTrackUncheckedCreateWithoutMaterialSerialTrackedStructureInput>
   connectOrCreate?: Prisma.MaterialSerialTrackCreateOrConnectWithoutMaterialSerialTrackedStructureInput
@@ -1084,6 +1220,10 @@ export type MaterialSerialTrackUpdateOneWithoutWarehousePlaceNestedInput = {
 export type MaterialSerialTrackCreateWithoutCompanyInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1114,6 +1254,10 @@ export type MaterialSerialTrackUncheckedCreateWithoutCompanyInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1172,6 +1316,10 @@ export type MaterialSerialTrackScalarWhereInput = {
   id?: Prisma.StringFilter<"MaterialSerialTrack"> | string
   materialId?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
   beNumber?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
+  lastInspectionDate?: Prisma.DateTimeNullableFilter<"MaterialSerialTrack"> | Date | string | null
+  inspectionIntervalValue?: Prisma.IntNullableFilter<"MaterialSerialTrack"> | number | null
+  inspectionIntervalUnit?: Prisma.EnumMaterialSerialTrack_inspectionIntervalUnitNullableFilter<"MaterialSerialTrack"> | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.DateTimeNullableFilter<"MaterialSerialTrack"> | Date | string | null
   brandName?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
   management?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
   brandOrderNumber?: Prisma.StringNullableFilter<"MaterialSerialTrack"> | string | null
@@ -1198,6 +1346,10 @@ export type MaterialSerialTrackScalarWhereInput = {
 export type MaterialSerialTrackCreateWithoutEmployeeInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1228,6 +1380,10 @@ export type MaterialSerialTrackUncheckedCreateWithoutEmployeeInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1266,6 +1422,10 @@ export type MaterialSerialTrackCreateManyEmployeeInputEnvelope = {
 export type MaterialSerialTrackCreateWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1296,6 +1456,10 @@ export type MaterialSerialTrackUncheckedCreateWithoutEmployee_MaterialSerialTrac
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1366,6 +1530,10 @@ export type MaterialSerialTrackUpdateManyWithWhereWithoutEmployee_MaterialSerial
 export type MaterialSerialTrackCreateWithoutMaterialInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1395,6 +1563,10 @@ export type MaterialSerialTrackCreateWithoutMaterialInput = {
 export type MaterialSerialTrackUncheckedCreateWithoutMaterialInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1450,6 +1622,10 @@ export type MaterialSerialTrackUpdateManyWithWhereWithoutMaterialInput = {
 export type MaterialSerialTrackCreateWithoutMaterialGroupInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1480,6 +1656,10 @@ export type MaterialSerialTrackUncheckedCreateWithoutMaterialGroupInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1534,6 +1714,10 @@ export type MaterialSerialTrackUpdateManyWithWhereWithoutMaterialGroupInput = {
 export type MaterialSerialTrackCreateWithoutMaterialMovementInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1564,6 +1748,10 @@ export type MaterialSerialTrackUncheckedCreateWithoutMaterialMovementInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1608,6 +1796,10 @@ export type MaterialSerialTrackUpdateToOneWithWhereWithoutMaterialMovementInput 
 export type MaterialSerialTrackUpdateWithoutMaterialMovementInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1638,6 +1830,10 @@ export type MaterialSerialTrackUncheckedUpdateWithoutMaterialMovementInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1666,6 +1862,10 @@ export type MaterialSerialTrackUncheckedUpdateWithoutMaterialMovementInput = {
 export type MaterialSerialTrackCreateWithoutMaterialSerialTrackedStructureInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1696,6 +1896,10 @@ export type MaterialSerialTrackUncheckedCreateWithoutMaterialSerialTrackedStruct
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1740,6 +1944,10 @@ export type MaterialSerialTrackUpdateToOneWithWhereWithoutMaterialSerialTrackedS
 export type MaterialSerialTrackUpdateWithoutMaterialSerialTrackedStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1770,6 +1978,10 @@ export type MaterialSerialTrackUncheckedUpdateWithoutMaterialSerialTrackedStruct
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1798,6 +2010,10 @@ export type MaterialSerialTrackUncheckedUpdateWithoutMaterialSerialTrackedStruct
 export type MaterialSerialTrackCreateWithoutProjectInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1828,6 +2044,10 @@ export type MaterialSerialTrackUncheckedCreateWithoutProjectInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1882,6 +2102,10 @@ export type MaterialSerialTrackUpdateManyWithWhereWithoutProjectInput = {
 export type MaterialSerialTrackCreateWithoutWarehousePlaceInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1912,6 +2136,10 @@ export type MaterialSerialTrackUncheckedCreateWithoutWarehousePlaceInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -1956,6 +2184,10 @@ export type MaterialSerialTrackUpdateToOneWithWhereWithoutWarehousePlaceInput = 
 export type MaterialSerialTrackUpdateWithoutWarehousePlaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1986,6 +2218,10 @@ export type MaterialSerialTrackUncheckedUpdateWithoutWarehousePlaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2015,6 +2251,10 @@ export type MaterialSerialTrackCreateManyCompanyInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -2040,6 +2280,10 @@ export type MaterialSerialTrackCreateManyCompanyInput = {
 export type MaterialSerialTrackUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2070,6 +2314,10 @@ export type MaterialSerialTrackUncheckedUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2099,6 +2347,10 @@ export type MaterialSerialTrackUncheckedUpdateManyWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2125,6 +2377,10 @@ export type MaterialSerialTrackCreateManyEmployeeInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -2151,6 +2407,10 @@ export type MaterialSerialTrackCreateManyEmployee_MaterialSerialTrack_deletedByT
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -2176,6 +2436,10 @@ export type MaterialSerialTrackCreateManyEmployee_MaterialSerialTrack_deletedByT
 export type MaterialSerialTrackUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2206,6 +2470,10 @@ export type MaterialSerialTrackUncheckedUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2235,6 +2503,10 @@ export type MaterialSerialTrackUncheckedUpdateManyWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2260,6 +2532,10 @@ export type MaterialSerialTrackUncheckedUpdateManyWithoutEmployeeInput = {
 export type MaterialSerialTrackUpdateWithoutEmployee_MaterialSerialTrack_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2290,6 +2566,10 @@ export type MaterialSerialTrackUncheckedUpdateWithoutEmployee_MaterialSerialTrac
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2319,6 +2599,10 @@ export type MaterialSerialTrackUncheckedUpdateManyWithoutEmployee_MaterialSerial
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2344,6 +2628,10 @@ export type MaterialSerialTrackUncheckedUpdateManyWithoutEmployee_MaterialSerial
 export type MaterialSerialTrackCreateManyMaterialInput = {
   id: string
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -2370,6 +2658,10 @@ export type MaterialSerialTrackCreateManyMaterialInput = {
 export type MaterialSerialTrackUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2399,6 +2691,10 @@ export type MaterialSerialTrackUpdateWithoutMaterialInput = {
 export type MaterialSerialTrackUncheckedUpdateWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2428,6 +2724,10 @@ export type MaterialSerialTrackUncheckedUpdateWithoutMaterialInput = {
 export type MaterialSerialTrackUncheckedUpdateManyWithoutMaterialInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2455,6 +2755,10 @@ export type MaterialSerialTrackCreateManyMaterialGroupInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -2480,6 +2784,10 @@ export type MaterialSerialTrackCreateManyMaterialGroupInput = {
 export type MaterialSerialTrackUpdateWithoutMaterialGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2510,6 +2818,10 @@ export type MaterialSerialTrackUncheckedUpdateWithoutMaterialGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2539,6 +2851,10 @@ export type MaterialSerialTrackUncheckedUpdateManyWithoutMaterialGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2565,6 +2881,10 @@ export type MaterialSerialTrackCreateManyProjectInput = {
   id: string
   materialId?: string | null
   beNumber?: string | null
+  lastInspectionDate?: Date | string | null
+  inspectionIntervalValue?: number | null
+  inspectionIntervalUnit?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Date | string | null
   brandName?: string | null
   management?: string | null
   brandOrderNumber?: string | null
@@ -2590,6 +2910,10 @@ export type MaterialSerialTrackCreateManyProjectInput = {
 export type MaterialSerialTrackUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2620,6 +2944,10 @@ export type MaterialSerialTrackUncheckedUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2649,6 +2977,10 @@ export type MaterialSerialTrackUncheckedUpdateManyWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   materialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  inspectionIntervalValue?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  inspectionIntervalUnit?: Prisma.NullableEnumMaterialSerialTrack_inspectionIntervalUnitFieldUpdateOperationsInput | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brandOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2724,6 +3056,10 @@ export type MaterialSerialTrackSelect<ExtArgs extends runtime.Types.Extensions.I
   id?: boolean
   materialId?: boolean
   beNumber?: boolean
+  lastInspectionDate?: boolean
+  inspectionIntervalValue?: boolean
+  inspectionIntervalUnit?: boolean
+  nextInspectionDate?: boolean
   brandName?: boolean
   management?: boolean
   brandOrderNumber?: boolean
@@ -2763,6 +3099,10 @@ export type MaterialSerialTrackSelectScalar = {
   id?: boolean
   materialId?: boolean
   beNumber?: boolean
+  lastInspectionDate?: boolean
+  inspectionIntervalValue?: boolean
+  inspectionIntervalUnit?: boolean
+  nextInspectionDate?: boolean
   brandName?: boolean
   management?: boolean
   brandOrderNumber?: boolean
@@ -2786,7 +3126,7 @@ export type MaterialSerialTrackSelectScalar = {
   deletedBy?: boolean
 }
 
-export type MaterialSerialTrackOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "beNumber" | "brandName" | "management" | "brandOrderNumber" | "companyId" | "orderNumber" | "shortDescription" | "longDescription" | "transactionType" | "materialGroupId" | "fromLocation" | "toLocation" | "updatedAt" | "preferredSupplier" | "rejected" | "additionalInfo" | "projectId" | "becraCode" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["materialSerialTrack"]>
+export type MaterialSerialTrackOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "materialId" | "beNumber" | "lastInspectionDate" | "inspectionIntervalValue" | "inspectionIntervalUnit" | "nextInspectionDate" | "brandName" | "management" | "brandOrderNumber" | "companyId" | "orderNumber" | "shortDescription" | "longDescription" | "transactionType" | "materialGroupId" | "fromLocation" | "toLocation" | "updatedAt" | "preferredSupplier" | "rejected" | "additionalInfo" | "projectId" | "becraCode" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["materialSerialTrack"]>
 export type MaterialSerialTrackInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   MaterialMovement?: boolean | Prisma.MaterialSerialTrack$MaterialMovementArgs<ExtArgs>
   Company?: boolean | Prisma.MaterialSerialTrack$CompanyArgs<ExtArgs>
@@ -2817,6 +3157,10 @@ export type $MaterialSerialTrackPayload<ExtArgs extends runtime.Types.Extensions
     id: string
     materialId: string | null
     beNumber: string | null
+    lastInspectionDate: Date | null
+    inspectionIntervalValue: number | null
+    inspectionIntervalUnit: $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+    nextInspectionDate: Date | null
     brandName: string | null
     management: string | null
     brandOrderNumber: string | null
@@ -3219,6 +3563,10 @@ export interface MaterialSerialTrackFieldRefs {
   readonly id: Prisma.FieldRef<"MaterialSerialTrack", 'String'>
   readonly materialId: Prisma.FieldRef<"MaterialSerialTrack", 'String'>
   readonly beNumber: Prisma.FieldRef<"MaterialSerialTrack", 'String'>
+  readonly lastInspectionDate: Prisma.FieldRef<"MaterialSerialTrack", 'DateTime'>
+  readonly inspectionIntervalValue: Prisma.FieldRef<"MaterialSerialTrack", 'Int'>
+  readonly inspectionIntervalUnit: Prisma.FieldRef<"MaterialSerialTrack", 'MaterialSerialTrack_inspectionIntervalUnit'>
+  readonly nextInspectionDate: Prisma.FieldRef<"MaterialSerialTrack", 'DateTime'>
   readonly brandName: Prisma.FieldRef<"MaterialSerialTrack", 'String'>
   readonly management: Prisma.FieldRef<"MaterialSerialTrack", 'String'>
   readonly brandOrderNumber: Prisma.FieldRef<"MaterialSerialTrack", 'String'>

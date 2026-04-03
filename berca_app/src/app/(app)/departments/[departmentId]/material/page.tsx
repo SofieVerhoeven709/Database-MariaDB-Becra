@@ -29,12 +29,6 @@ function getParentBeNumbers(material: unknown): string[] {
 type MaterialRow = Awaited<ReturnType<typeof getMaterials>>[number]
 
 export default async function MaterialPage({params}: PageProps) {
-  const parseBePartDoc = (value: string | null) => {
-    if (value == null || value === '') return null
-    const parsed = Number(value)
-    return Number.isFinite(parsed) ? parsed : null
-  }
-
   const {departmentId} = await params
 
   const [department, materials, groups, units, supplierCompanies, warehousePlaces] = await Promise.all([
@@ -73,8 +67,10 @@ export default async function MaterialPage({params}: PageProps) {
       supplierCompanyNames: m.MaterialSupplier.map(s => s.Company.name),
       parentBeNumbers: getParentBeNumbers(m),
       brandName: m.brandName ?? null,
-      documentationPlace: m.documentationPlace ?? null,
-      bePartDoc: parseBePartDoc(m.bePartDoc),
+      warehousePlace: m.warehousePlaceId ?? null,
+      longLeadTime: m.longLeadTime ?? false,
+      leadTimeValue: m.MaterialLeadTime?.leadTimeValue ?? null,
+      leadTimeUnit: (m.MaterialLeadTime?.leadTimeUnit as 'days' | 'weeks' | null) ?? null,
       rejected: m.rejected ?? false,
       materialGroupIdA: m.materialGroupIdA ?? null,
       materialGroupIdB: m.materialGroupIdB ?? null,

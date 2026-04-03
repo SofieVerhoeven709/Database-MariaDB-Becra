@@ -36,7 +36,6 @@ interface ParentPartOption {
   shortDescription: string
 }
 
-
 interface MaterialFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -180,9 +179,11 @@ const EMPTY_MATERIAL: Partial<MappedMaterial> & {id: string; isSerialTracked: bo
   supplierCompanyNames: [],
   parentBeNumbers: [],
   brandName: null,
-  documentationPlace: null,
-  bePartDoc: null,
+  warehousePlace: null,
   rejected: false,
+  longLeadTime: false,
+  leadTimeValue: null,
+  leadTimeUnit: null,
   materialGroupIdA: '',
   materialGroupIdB: null,
   materialGroupIdC: null,
@@ -401,7 +402,7 @@ export function MaterialFormDialog({
               ? `Editing ${material.beNumber} – ${material.shortDescription}`
               : resolvedMode === 'duplicate'
                 ? 'Copied fields loaded. Choose a new number and save as a new material.'
-              : 'Fill in the details to register a new material.'}
+                : 'Fill in the details to register a new material.'}
           </DialogDescription>
         </DialogHeader>
 
@@ -586,25 +587,6 @@ export function MaterialFormDialog({
             </div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <Label className="text-xs text-muted-foreground">Warehouse Place</Label>
-            <Select
-              value={form.documentationPlace ?? '__none__'}
-              onValueChange={value => update('documentationPlace', value === '__none__' ? null : value)}>
-              <SelectTrigger className={inputStyles}>
-                <SelectValue placeholder="Select warehouse place..." />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="__none__">None</SelectItem>
-                {warehousePlaces.map(place => (
-                  <SelectItem key={place.id} value={place.id}>
-                    {place.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
           {/* Row 4: Optional Material Group B/C */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
@@ -678,7 +660,6 @@ export function MaterialFormDialog({
               />
             </div>
           </div>
-
           {/* Preferred Supplier Short Description */}
           {/* <div className="flex flex-col gap-2">
             <Label htmlFor="preferredSupplierShortDescription" className="text-xs text-muted-foreground">
@@ -710,23 +691,6 @@ export function MaterialFormDialog({
               <p className="text-xs text-muted-foreground">Preferred supplier is selected from your supplier list.</p>
             ) : null}
           </div>
-          {/* Row 6: Warehouse Place
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2" />
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="documentationPlace" className="text-xs text-muted-foreground">
-                Warehouse Place
-              </Label>
-              <Input
-                id="documentationPlace"
-                className={inputStyles}
-                value={form.documentationPlace ?? ''}
-                onChange={e => update('documentationPlace', e.target.value || null)}
-                placeholder="e.g. SharePoint / Cabinet A"
-              />
-            </div>
-          </div>
-*/}
           <div className="flex flex-col gap-2">
             <Label className="text-xs text-muted-foreground">Suppliers</Label>
             <div className="rounded-md border border-border bg-secondary/40 p-3 max-h-44 overflow-y-auto space-y-2">
@@ -750,6 +714,26 @@ export function MaterialFormDialog({
             <p className="text-xs text-muted-foreground">
               Select one or more suppliers. Preferred supplier must be selected from this list.
             </p>
+          </div>
+
+          {/*Row 6: WarehousePlace */}
+          <div className="flex flex-col gap-2">
+            <Label className="text-xs text-muted-foreground">Warehouse Place</Label>
+            <Select
+              value={form.warehousePlace ?? '__none__'}
+              onValueChange={value => update('warehousePlace', value === '__none__' ? null : value)}>
+              <SelectTrigger className={inputStyles}>
+                <SelectValue placeholder="Select warehouse place..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="__none__">None</SelectItem>
+                {warehousePlaces.map(place => (
+                  <SelectItem key={place.id} value={place.id}>
+                    {place.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Parent Parts Button */}
@@ -827,7 +811,57 @@ export function MaterialFormDialog({
                 <span className="text-sm text-muted-foreground">{form.rejected ? 'Yes' : 'No'}</span>
               </div>
             </div>
+            <div className="flex flex-col gap-2">
+              <Label className="text-xs text-muted-foreground">Long Lead Time</Label>
+              <div className="flex items-center gap-3 pt-1">
+                <Switch
+                  checked={form.longLeadTime ?? false}
+                  onCheckedChange={v => {
+                    update('longLeadTime', v)
+                    if (!v) {
+                      update('leadTimeValue', null)
+                      update('leadTimeUnit', null)
+                    }
+                  }}
+                />
+                <span className="text-sm text-muted-foreground">{form.longLeadTime ? 'Yes' : 'No'}</span>
+              </div>
+            </div>
           </div>
+
+          {form.longLeadTime ? (
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="leadTimeValue" className="text-xs text-muted-foreground">
+                  Lead Time Value
+                </Label>
+                <Input
+                  id="leadTimeValue"
+                  type="number"
+                  min={1}
+                  className={inputStyles}
+                  value={form.leadTimeValue ?? ''}
+                  onChange={e => update('leadTimeValue', e.target.value ? Number(e.target.value) : null)}
+                  placeholder="bijv. 5"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label className="text-xs text-muted-foreground">Lead Time Unit</Label>
+                <Select
+                  value={form.leadTimeUnit ?? '__none__'}
+                  onValueChange={value => update('leadTimeUnit', value === '__none__' ? null : (value as 'days' | 'weeks'))}>
+                  <SelectTrigger className={inputStyles}>
+                    <SelectValue placeholder="Select unit..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="__none__">None</SelectItem>
+                    <SelectItem value="days">Days</SelectItem>
+                    <SelectItem value="weeks">Weeks</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          ) : null}
           {saveError && (
             <div className="rounded-md bg-destructive/10 border border-destructive/30 px-3 py-2 text-sm text-destructive">
               {saveError}

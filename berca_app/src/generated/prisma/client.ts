@@ -519,3 +519,8 @@ export type DocumentStatus = Prisma.DocumentStatusModel
  * 
  */
 export type DocumentStructureTarget = Prisma.DocumentStructureTargetModel
+/**
+ * Model MaterialLeadTime
+ * 
+ */
+export type MaterialLeadTime = Prisma.MaterialLeadTimeModel

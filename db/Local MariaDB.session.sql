@@ -169,6 +169,28 @@ CREATE TABLE
       ) ENGINE = InnoDB;
 
 CREATE TABLE
+      IF NOT EXISTS WarehousePlace (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            abbreviation VARCHAR(255) NOT NULL,
+            beNumber VARCHAR(255),
+            serialTrackedId CHAR(36),
+            place VARCHAR(255),
+            shelf VARCHAR(255),
+            `column` VARCHAR(255),
+            layer VARCHAR(255),
+            layerPlace VARCHAR(255),
+            information VARCHAR(255),
+            quantityInStock INT NOT NULL,
+            createdAt DATETIME NOT NULL,
+            createdBy CHAR(36) NOT NULL,
+            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
+            deleted BOOLEAN NOT NULL DEFAULT 0,
+            deletedAt DATETIME,
+            deletedBy CHAR(36),
+            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
       IF NOT EXISTS Material (
             id CHAR(36) NOT NULL PRIMARY KEY,
             beNumber VARCHAR(255),
@@ -178,8 +200,7 @@ CREATE TABLE
             longDescription TEXT,
             preferredSupplier VARCHAR(255),
             brandName VARCHAR(255),
-            documentationPlace VARCHAR(255),
-            bePartDoc VARCHAR(255) NULL,
+            warehousePlaceId CHAR(36),
             rejected BOOLEAN DEFAULT FALSE,
             isSerialTracked BOOLEAN NOT NULL DEFAULT 0,
             materialGroupIdA CHAR(36) NULL,
@@ -188,18 +209,30 @@ CREATE TABLE
             materialGroupIdD CHAR(36) NULL,
             preferredSupplierCompanyId CHAR(36) NULL,
             unitId CHAR(36) NOT NULL,
+            longLeadTime BOOLEAN,
             createdBy CHAR(36) NOT NULL,
             CONSTRAINT uq_material_beNumber UNIQUE (beNumber),
             FOREIGN KEY (materialGroupIdA) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
             FOREIGN KEY (materialGroupIdB) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
             FOREIGN KEY (materialGroupIdC) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
             FOREIGN KEY (materialGroupIdD) REFERENCES MaterialGroup (id) ON DELETE SET NULL,
+            FOREIGN KEY (warehousePlaceId) REFERENCES WarehousePlace (id) ON DELETE SET NULL,
             FOREIGN KEY (unitId) REFERENCES Unit (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             deletedAt DATETIME,
             deletedBy CHAR(36),
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
+      ) ENGINE = InnoDB;
+
+CREATE TABLE
+      IF NOT EXISTS MaterialLeadTime (
+            id CHAR(36) NOT NULL PRIMARY KEY,
+            materialId CHAR(36) NOT NULL,
+            leadTimeValue INT NOT NULL,
+            leadTimeUnit VARCHAR(10) NOT NULL,
+            FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE,
+            UNIQUE (materialId)
       ) ENGINE = InnoDB;
 
 CREATE TABLE
@@ -1453,28 +1486,9 @@ CREATE TABLE
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
       ) ENGINE = InnoDB;
 
-CREATE TABLE
-      IF NOT EXISTS WarehousePlace (
-            id CHAR(36) NOT NULL PRIMARY KEY,
-            abbreviation VARCHAR(255) NOT NULL,
-            beNumber VARCHAR(255),
-            serialTrackedId CHAR(36),
-            place VARCHAR(255),
-            shelf VARCHAR(255),
-            `column` VARCHAR(255),
-            layer VARCHAR(255),
-            layerPlace VARCHAR(255),
-            information VARCHAR(255),
-            quantityInStock INT NOT NULL,
-            createdAt DATETIME NOT NULL,
-            createdBy CHAR(36) NOT NULL,
-            FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
-            FOREIGN KEY (serialTrackedId) REFERENCES MaterialSerialTrack (id) ON DELETE SET NULL,
-            deleted BOOLEAN NOT NULL DEFAULT 0,
-            deletedAt DATETIME,
-            deletedBy CHAR(36),
-            FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL
-      ) ENGINE = InnoDB;
+ALTER TABLE WarehousePlace
+      ADD CONSTRAINT fk_warehouseplace_serialtrack
+            FOREIGN KEY (serialTrackedId) REFERENCES MaterialSerialTrack (id) ON DELETE SET NULL;
 
 ALTER TABLE Inventory ADD CONSTRAINT uq_inventory_beNumber UNIQUE (beNumber);
 
@@ -1568,8 +1582,7 @@ CREATE TABLE
             management VARCHAR(255),
             date DATETIME,
             expiredDate DATETIME,
-            documentationPlace VARCHAR(255),
-            docRevision INT,
+            warehousePlaceId CHAR(36),
             valid BOOLEAN,
             additionalInfo VARCHAR(255),
             beNumber VARCHAR(255),
@@ -1592,7 +1605,7 @@ CREATE TABLE
             FOREIGN KEY (serialTrackedId) REFERENCES MaterialSerialTrack (id) ON DELETE RESTRICT,
             FOREIGN KEY (certificateId) REFERENCES Certificate (id) ON DELETE RESTRICT,
             FOREIGN KEY (materialSpecId) REFERENCES MaterialSpec (id) ON DELETE RESTRICT,
-            FOREIGN KEY (referenceDocId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
+            FOREIGN KEY (warehousePlaceId) REFERENCES WarehousePlace (id) ON DELETE RESTRICT,
             FOREIGN KEY (materialGroupId) REFERENCES MaterialGroup (id) ON DELETE RESTRICT,
             FOREIGN KEY (documentId) REFERENCES DocumentStructure (id) ON DELETE RESTRICT,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,

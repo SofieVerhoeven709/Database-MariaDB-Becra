@@ -2,7 +2,6 @@ import {getMaterialById, getMaterialGroups, getUnits} from '@/dal/materials'
 import {MaterialDetail} from '@/components/custom/materialDetail'
 import {notFound} from 'next/navigation'
 import {getSupplierCompanies} from '@/dal/companies'
-import {getSerialTrackedStructureBySerialTrackedId} from '@/dal/materialSerialTrackedStructure'
 import {getWarehousePlaces} from '@/dal/warehousePlace'
 import type {WarehousePlaceOption} from '@/types/warehousePlace'
 
@@ -11,12 +10,6 @@ interface MaterialDetailPageProps {
 }
 
 export default async function MaterialDetailPage({params}: MaterialDetailPageProps) {
-  const parseBePartDoc = (value: string | null) => {
-    if (value == null || value === '') return null
-    const parsed = Number(value)
-    return Number.isFinite(parsed) ? parsed : null
-  }
-
   const {materialId} = await params
   const [material, groups, units, supplierCompanies, warehousePlaces] = await Promise.all([
     getMaterialById(materialId).catch(() => null),
@@ -27,12 +20,6 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
   ])
 
   if (!material) notFound()
-
-  // Fetch serial tracked structure if serialTrackedId exists
-  const serialTrackedId = (material as any).MaterialSerialTrack?.[0]?.id ?? null
-  const [serialTrackedStructure] = await Promise.all([
-    serialTrackedId ? getSerialTrackedStructureBySerialTrackedId(serialTrackedId) : [],
-  ])
 
   const groupById = new Map(groups.map((g: any) => [g.id, g]))
 
@@ -57,9 +44,11 @@ export default async function MaterialDetailPage({params}: MaterialDetailPagePro
     supplierCompanyIds: material.MaterialSupplier.map((s: any) => s.companyId),
     supplierCompanyNames: material.MaterialSupplier.map((s: any) => s.Company.name),
     brandName: material.brandName ?? null,
-    documentationPlace: material.documentationPlace ?? null,
-    bePartDoc: parseBePartDoc(material.bePartDoc),
+    warehousePlace: material.warehousePlaceId ?? null,
     rejected: material.rejected ?? false,
+    longLeadTime: material.longLeadTime ?? false,
+    leadTimeValue: material.MaterialLeadTime?.leadTimeValue ?? null,
+    leadTimeUnit: (material.MaterialLeadTime?.leadTimeUnit as 'days' | 'weeks' | null) ?? null,
     materialGroupIdA: material.materialGroupIdA ?? null,
     materialGroupIdB: material.materialGroupIdB ?? null,
     materialGroupIdC: material.materialGroupIdC ?? null,

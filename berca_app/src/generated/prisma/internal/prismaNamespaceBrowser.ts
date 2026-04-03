@@ -143,7 +143,8 @@ export const ModelName = {
   DocumentGroup: 'DocumentGroup',
   DocumentRevision: 'DocumentRevision',
   DocumentStatus: 'DocumentStatus',
-  DocumentStructureTarget: 'DocumentStructureTarget'
+  DocumentStructureTarget: 'DocumentStructureTarget',
+  MaterialLeadTime: 'MaterialLeadTime'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -710,8 +711,7 @@ export const MaterialScalarFieldEnum = {
   longDescription: 'longDescription',
   preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
-  documentationPlace: 'documentationPlace',
-  bePartDoc: 'bePartDoc',
+  warehousePlaceId: 'warehousePlaceId',
   rejected: 'rejected',
   isSerialTracked: 'isSerialTracked',
   materialGroupIdA: 'materialGroupIdA',
@@ -720,6 +720,7 @@ export const MaterialScalarFieldEnum = {
   materialGroupIdD: 'materialGroupIdD',
   preferredSupplierCompanyId: 'preferredSupplierCompanyId',
   unitId: 'unitId',
+  longLeadTime: 'longLeadTime',
   createdBy: 'createdBy',
   deleted: 'deleted',
   deletedAt: 'deletedAt',
@@ -940,8 +941,7 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   management: 'management',
   date: 'date',
   expiredDate: 'expiredDate',
-  documentationPlace: 'documentationPlace',
-  docRevision: 'docRevision',
+  warehousePlaceId: 'warehousePlaceId',
   valid: 'valid',
   additionalInfo: 'additionalInfo',
   beNumber: 'beNumber',
@@ -1834,6 +1834,16 @@ export const DocumentStructureTargetScalarFieldEnum = {
 export type DocumentStructureTargetScalarFieldEnum = (typeof DocumentStructureTargetScalarFieldEnum)[keyof typeof DocumentStructureTargetScalarFieldEnum]
 
 
+export const MaterialLeadTimeScalarFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  leadTimeValue: 'leadTimeValue',
+  leadTimeUnit: 'leadTimeUnit'
+} as const
+
+export type MaterialLeadTimeScalarFieldEnum = (typeof MaterialLeadTimeScalarFieldEnum)[keyof typeof MaterialLeadTimeScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2249,8 +2259,7 @@ export const MaterialOrderByRelevanceFieldEnum = {
   longDescription: 'longDescription',
   preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
-  documentationPlace: 'documentationPlace',
-  bePartDoc: 'bePartDoc',
+  warehousePlaceId: 'warehousePlaceId',
   materialGroupIdA: 'materialGroupIdA',
   materialGroupIdB: 'materialGroupIdB',
   materialGroupIdC: 'materialGroupIdC',
@@ -2438,7 +2447,7 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   management: 'management',
-  documentationPlace: 'documentationPlace',
+  warehousePlaceId: 'warehousePlaceId',
   additionalInfo: 'additionalInfo',
   beNumber: 'beNumber',
   beParentPart: 'beParentPart',
@@ -3118,4 +3127,13 @@ export const DocumentStructureTargetOrderByRelevanceFieldEnum = {
 } as const
 
 export type DocumentStructureTargetOrderByRelevanceFieldEnum = (typeof DocumentStructureTargetOrderByRelevanceFieldEnum)[keyof typeof DocumentStructureTargetOrderByRelevanceFieldEnum]
+
+
+export const MaterialLeadTimeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  materialId: 'materialId',
+  leadTimeUnit: 'leadTimeUnit'
+} as const
+
+export type MaterialLeadTimeOrderByRelevanceFieldEnum = (typeof MaterialLeadTimeOrderByRelevanceFieldEnum)[keyof typeof MaterialLeadTimeOrderByRelevanceFieldEnum]
 

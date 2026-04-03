@@ -283,6 +283,16 @@ SET @sql = IF(@fk_exists = 0,
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
+
+-- 32d. MaterialLeadTime: add per-material lead time value and unit
+CREATE TABLE IF NOT EXISTS MaterialLeadTime (
+  id CHAR(36) NOT NULL PRIMARY KEY,
+  materialId CHAR(36) NOT NULL,
+  leadTimeValue INT NOT NULL,
+  leadTimeUnit VARCHAR(10) NOT NULL,
+  UNIQUE (materialId),
+  FOREIGN KEY (materialId) REFERENCES Material (id) ON DELETE CASCADE
+) ENGINE = InnoDB;
  
 -- 33. Add MaterialSupplier junction table (material <-> company many-to-many)
 CREATE TABLE
@@ -981,3 +991,7 @@ ALTER TABLE MaterialSerialTrack
 ALTER TABLE MaterialSerialTrack
   ADD CONSTRAINT fk_materialSerialTrack_materialGroupId
   FOREIGN KEY (`materialGroupId`) REFERENCES MaterialGroup(`id`) ON DELETE SET NULL;
+
+ALTER TABLE Material
+  ADD CONSTRAINT fk_material_warehousePlaceId
+  FOREIGN KEY (`warehousePlaceId`) REFERENCES WarehousePlace(`id`) ON DELETE SET NULL;

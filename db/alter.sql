@@ -266,18 +266,18 @@ PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
  
--- 32c. Material: add FK Material_ibfk_5 on preferredSupplierCompanyId (skip if already exists)
+-- 32c. Material: add FK on preferredSupplierCompanyId (skip if already exists)
 SET @fk_exists = (
   SELECT COUNT(*)
   FROM information_schema.TABLE_CONSTRAINTS
   WHERE TABLE_SCHEMA = DATABASE()
     AND TABLE_NAME = 'Material'
-    AND CONSTRAINT_NAME = 'Material_ibfk_5'
+    AND CONSTRAINT_NAME IN ('fk_material_preferredSupplierCompanyId', 'Material_ibfk_5')
 );
  
 SET @sql = IF(@fk_exists = 0,
-  'ALTER TABLE `Material` ADD CONSTRAINT `Material_ibfk_5` FOREIGN KEY (`preferredSupplierCompanyId`) REFERENCES `Company`(`id`) ON DELETE SET NULL',
-  'SELECT ''FK Material_ibfk_5 already exists'''
+  'ALTER TABLE `Material` ADD CONSTRAINT `fk_material_preferredSupplierCompanyId` FOREIGN KEY (`preferredSupplierCompanyId`) REFERENCES `Company`(`id`) ON DELETE SET NULL',
+  'SELECT ''FK for Material.preferredSupplierCompanyId already exists'''
 );
  
 PREPARE stmt FROM @sql;
@@ -995,3 +995,32 @@ ALTER TABLE MaterialSerialTrack
 ALTER TABLE Material
   ADD CONSTRAINT fk_material_warehousePlaceId
   FOREIGN KEY (`warehousePlaceId`) REFERENCES WarehousePlace(`id`) ON DELETE SET NULL;
+  
+  
+  -- Idempotent hotfix for environments where Material.warehousePlaceId is missing.
+ALTER TABLE `Material`
+  ADD COLUMN IF NOT EXISTS `warehousePlaceId` CHAR(36) NULL;
+
+-- Keep lookup performance consistent with schema index.
+CREATE INDEX IF NOT EXISTS `warehousePlaceId` ON `Material` (`warehousePlaceId`);
+
+-- Add FK only when it is not already present.
+SET @fk_exists := (
+  SELECT COUNT(*)
+  FROM information_schema.KEY_COLUMN_USAGE
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'Material'
+    AND COLUMN_NAME = 'warehousePlaceId'
+    AND REFERENCED_TABLE_NAME = 'WarehousePlace'
+);
+
+SET @fk_sql := IF(
+  @fk_exists = 0,
+  'ALTER TABLE `Material` ADD CONSTRAINT `fk_material_warehousePlaceId` FOREIGN KEY (`warehousePlaceId`) REFERENCES `WarehousePlace`(`id`) ON DELETE SET NULL ON UPDATE RESTRICT',
+  'SELECT 1'
+);
+
+PREPARE fk_stmt FROM @fk_sql;
+EXECUTE fk_stmt;
+DEALLOCATE PREPARE fk_stmt;
+

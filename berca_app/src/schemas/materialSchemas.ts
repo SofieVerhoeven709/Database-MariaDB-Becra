@@ -62,6 +62,15 @@ const leadTimeUnitSchema = z.preprocess(
   z.enum(['days', 'weeks']).nullable().optional(),
 )
 
+const documentFlagSchema = z
+  .preprocess(val => {
+    if (val === undefined) return false
+    if (val === 'false' || val === false || val === 0) return false
+    if (val === 'true' || val === true || val === 1) return true
+    return val
+  }, z.boolean())
+  .default(false)
+
 const materialSchemaBase = z.object({
   id: z.string().uuid(),
   beNumber: z.preprocess(
@@ -103,6 +112,15 @@ const materialSchemaBase = z.object({
       return val
     }, z.boolean())
     .default(false),
+  hasAtex: documentFlagSchema,
+  hasCe: documentFlagSchema,
+  hasRohs: documentFlagSchema,
+  hasDs: documentFlagSchema,
+  hasDoc: documentFlagSchema,
+  has3dCad: documentFlagSchema,
+  has2dCad: documentFlagSchema,
+  hasBdoc: documentFlagSchema,
+  hasInsp: documentFlagSchema,
   isParentPart: z
     .preprocess(val => {
       if (val === undefined) return false

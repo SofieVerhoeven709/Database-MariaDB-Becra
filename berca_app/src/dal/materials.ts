@@ -209,6 +209,15 @@ export async function createMaterial(data: {
   longLeadTime?: boolean
   leadTimeValue?: number | null
   leadTimeUnit?: 'days' | 'weeks' | null
+  hasAtex?: boolean
+  hasCe?: boolean
+  hasRohs?: boolean
+  hasDs?: boolean
+  hasDoc?: boolean
+  has3dCad?: boolean
+  has2dCad?: boolean
+  hasBdoc?: boolean
+  hasInsp?: boolean
   materialGroupIdA: string | null
   materialGroupIdB?: string | null
   materialGroupIdC?: string | null
@@ -353,6 +362,15 @@ export async function updateMaterial(
     longLeadTime?: boolean
     leadTimeValue?: number | null
     leadTimeUnit?: 'days' | 'weeks' | null
+    hasAtex?: boolean
+    hasCe?: boolean
+    hasRohs?: boolean
+    hasDs?: boolean
+    hasDoc?: boolean
+    has3dCad?: boolean
+    has2dCad?: boolean
+    hasBdoc?: boolean
+    hasInsp?: boolean
     materialGroupIdA?: string | null
     materialGroupIdB?: string | null
     materialGroupIdC?: string | null

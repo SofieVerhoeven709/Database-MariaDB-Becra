@@ -37,6 +37,15 @@ export interface MappedMaterial {
   deletedAt: string | null
   deletedBy: string | null
   isSerialTracked: boolean
+  hasAtex: boolean
+  hasCe: boolean
+  hasRohs: boolean
+  hasDs: boolean
+  hasDoc: boolean
+  has3dCad: boolean
+  has2dCad: boolean
+  hasBdoc: boolean
+  hasInsp: boolean
   serialTrackedId: string | null
   isParentPart: boolean
 }

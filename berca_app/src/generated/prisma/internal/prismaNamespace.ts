@@ -7622,6 +7622,10 @@ export const MaterialSerialTrackScalarFieldEnum = {
   id: 'id',
   materialId: 'materialId',
   beNumber: 'beNumber',
+  lastInspectionDate: 'lastInspectionDate',
+  inspectionIntervalValue: 'inspectionIntervalValue',
+  inspectionIntervalUnit: 'inspectionIntervalUnit',
+  nextInspectionDate: 'nextInspectionDate',
   brandName: 'brandName',
   management: 'management',
   brandOrderNumber: 'brandOrderNumber',
@@ -9897,6 +9901,13 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'MaterialSerialTrack_inspectionIntervalUnit'
+ */
+export type EnumMaterialSerialTrack_inspectionIntervalUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MaterialSerialTrack_inspectionIntervalUnit'>
     
 
 

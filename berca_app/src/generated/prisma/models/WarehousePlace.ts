@@ -46,8 +46,8 @@ export type WarehousePlaceMinAggregateOutputType = {
   layerPlace: string | null
   information: string | null
   quantityInStock: number | null
-  createdBy: string | null
   createdAt: Date | null
+  createdBy: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
@@ -65,8 +65,8 @@ export type WarehousePlaceMaxAggregateOutputType = {
   layerPlace: string | null
   information: string | null
   quantityInStock: number | null
-  createdBy: string | null
   createdAt: Date | null
+  createdBy: string | null
   deleted: boolean | null
   deletedAt: Date | null
   deletedBy: string | null
@@ -84,8 +84,8 @@ export type WarehousePlaceCountAggregateOutputType = {
   layerPlace: number
   information: number
   quantityInStock: number
-  createdBy: number
   createdAt: number
+  createdBy: number
   deleted: number
   deletedAt: number
   deletedBy: number
@@ -113,8 +113,8 @@ export type WarehousePlaceMinAggregateInputType = {
   layerPlace?: true
   information?: true
   quantityInStock?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
@@ -132,8 +132,8 @@ export type WarehousePlaceMaxAggregateInputType = {
   layerPlace?: true
   information?: true
   quantityInStock?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
@@ -151,8 +151,8 @@ export type WarehousePlaceCountAggregateInputType = {
   layerPlace?: true
   information?: true
   quantityInStock?: true
-  createdBy?: true
   createdAt?: true
+  createdBy?: true
   deleted?: true
   deletedAt?: true
   deletedBy?: true
@@ -257,8 +257,8 @@ export type WarehousePlaceGroupByOutputType = {
   layerPlace: string | null
   information: string | null
   quantityInStock: number
-  createdBy: string
   createdAt: Date
+  createdBy: string
   deleted: boolean
   deletedAt: Date | null
   deletedBy: string | null
@@ -357,10 +357,9 @@ export type WarehousePlaceWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"WarehousePlace"> | Date | string | null
   deletedBy?: Prisma.StringNullableFilter<"WarehousePlace"> | string | null
   Material?: Prisma.MaterialListRelationFilter
-  MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureListRelationFilter
   Employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
-  Employee_WarehousePlace_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   MaterialSerialTrack?: Prisma.XOR<Prisma.MaterialSerialTrackNullableScalarRelationFilter, Prisma.MaterialSerialTrackWhereInput> | null
+  Employee_WarehousePlace_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }, "id">
 
 export type WarehousePlaceOrderByWithAggregationInput = {
@@ -427,7 +426,6 @@ export type WarehousePlaceCreateInput = {
   MaterialSerialTrackedStructure?: Prisma.MaterialSerialTrackedStructureCreateNestedManyWithoutWarehousePlaceInput
   Employee: Prisma.EmployeeCreateNestedOneWithoutWarehousePlaceInput
   Employee_WarehousePlace_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutWarehousePlace_WarehousePlace_deletedByToEmployeeInput
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackCreateNestedOneWithoutWarehousePlaceInput
 }
 
 export type WarehousePlaceUncheckedCreateInput = {

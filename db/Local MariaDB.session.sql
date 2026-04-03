@@ -1457,6 +1457,10 @@ CREATE TABLE
             id CHAR(36) NOT NULL PRIMARY KEY,
             materialId CHAR(36) NULL,
             beNumber VARCHAR(255),
+            lastInspectionDate DATE,
+            inspectionIntervalValue INT,
+            inspectionIntervalUnit ENUM('DAY','WEEK','MONTH','YEAR'),
+            nextInspectionDate DATE,
             brandName VARCHAR(255),
             management VARCHAR(255),
             brandOrderNumber VARCHAR(255),
@@ -1850,3 +1854,33 @@ CREATE TABLE
             FOREIGN KEY (employeeId) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (roleLevelId) REFERENCES RoleLevel (id) ON DELETE RESTRICT
       ) ENGINE = InnoDB;
+
+CREATE OR REPLACE VIEW vw_materialSerialTrackInspectionAlerts AS
+SELECT
+      mst.id,
+      mst.materialId,
+      mst.beNumber,
+      mst.shortDescription,
+      mst.nextInspectionDate,
+      DATEDIFF(mst.nextInspectionDate, CURDATE()) AS daysUntilInspection,
+      (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 30) AS remindMonthBefore,
+      (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 7) AS remindWeekBefore,
+      (DATEDIFF(mst.nextInspectionDate, CURDATE()) BETWEEN 0 AND 1) AS remindDayBefore,
+      (DATEDIFF(mst.nextInspectionDate, CURDATE()) < 0) AS isOverdue
+FROM MaterialSerialTrack mst
+WHERE mst.deleted = 0
+  AND mst.nextInspectionDate IS NOT NULL;
+
+CREATE OR REPLACE VIEW vw_materialSerialTrackDueCurrentMonth AS
+SELECT
+      mst.id,
+      mst.materialId,
+      mst.beNumber,
+      mst.shortDescription,
+      mst.nextInspectionDate,
+      DATEDIFF(mst.nextInspectionDate, CURDATE()) AS daysUntilInspection
+FROM MaterialSerialTrack mst
+WHERE mst.deleted = 0
+  AND mst.nextInspectionDate IS NOT NULL
+  AND YEAR(mst.nextInspectionDate) = YEAR(CURDATE())
+  AND MONTH(mst.nextInspectionDate) = MONTH(CURDATE());

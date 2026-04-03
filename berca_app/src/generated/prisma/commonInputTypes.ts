@@ -242,6 +242,23 @@ export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
 }
 
+export type EnumMaterialSerialTrack_inspectionIntervalUnitNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | Prisma.EnumMaterialSerialTrack_inspectionIntervalUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MaterialSerialTrack_inspectionIntervalUnit[] | null
+  notIn?: $Enums.MaterialSerialTrack_inspectionIntervalUnit[] | null
+  not?: Prisma.NestedEnumMaterialSerialTrack_inspectionIntervalUnitNullableFilter<$PrismaModel> | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+}
+
+export type EnumMaterialSerialTrack_inspectionIntervalUnitNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | Prisma.EnumMaterialSerialTrack_inspectionIntervalUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MaterialSerialTrack_inspectionIntervalUnit[] | null
+  notIn?: $Enums.MaterialSerialTrack_inspectionIntervalUnit[] | null
+  not?: Prisma.NestedEnumMaterialSerialTrack_inspectionIntervalUnitNullableWithAggregatesFilter<$PrismaModel> | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMaterialSerialTrack_inspectionIntervalUnitNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMaterialSerialTrack_inspectionIntervalUnitNullableFilter<$PrismaModel>
+}
+
 export type FloatFilter<$PrismaModel = never> = {
   equals?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   in?: number[]
@@ -539,6 +556,23 @@ export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumMaterialSerialTrack_inspectionIntervalUnitNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | Prisma.EnumMaterialSerialTrack_inspectionIntervalUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MaterialSerialTrack_inspectionIntervalUnit[] | null
+  notIn?: $Enums.MaterialSerialTrack_inspectionIntervalUnit[] | null
+  not?: Prisma.NestedEnumMaterialSerialTrack_inspectionIntervalUnitNullableFilter<$PrismaModel> | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+}
+
+export type NestedEnumMaterialSerialTrack_inspectionIntervalUnitNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MaterialSerialTrack_inspectionIntervalUnit | Prisma.EnumMaterialSerialTrack_inspectionIntervalUnitFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MaterialSerialTrack_inspectionIntervalUnit[] | null
+  notIn?: $Enums.MaterialSerialTrack_inspectionIntervalUnit[] | null
+  not?: Prisma.NestedEnumMaterialSerialTrack_inspectionIntervalUnitNullableWithAggregatesFilter<$PrismaModel> | $Enums.MaterialSerialTrack_inspectionIntervalUnit | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMaterialSerialTrack_inspectionIntervalUnitNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMaterialSerialTrack_inspectionIntervalUnitNullableFilter<$PrismaModel>
 }
 
 export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {

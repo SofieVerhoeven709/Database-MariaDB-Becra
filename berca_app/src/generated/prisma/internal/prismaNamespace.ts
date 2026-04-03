@@ -7428,7 +7428,8 @@ export const MaterialScalarFieldEnum = {
   longDescription: 'longDescription',
   preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
-  warehousePlaceId: 'warehousePlaceId',
+  documentationPlace: 'documentationPlace',
+  bePartDoc: 'bePartDoc',
   rejected: 'rejected',
   isSerialTracked: 'isSerialTracked',
   materialGroupIdA: 'materialGroupIdA',
@@ -7442,7 +7443,8 @@ export const MaterialScalarFieldEnum = {
   deleted: 'deleted',
   deletedAt: 'deletedAt',
   deletedBy: 'deletedBy',
-  targetId: 'targetId'
+  targetId: 'targetId',
+  warehousePlaceId: 'warehousePlaceId'
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
@@ -7651,14 +7653,14 @@ export const MaterialSerialTrackedStructureScalarFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
-  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   management: 'management',
   date: 'date',
   expiredDate: 'expiredDate',
-  warehousePlaceId: 'warehousePlaceId',
+  documentationPlace: 'documentationPlace',
+  docRevision: 'docRevision',
   valid: 'valid',
   additionalInfo: 'additionalInfo',
   beNumber: 'beNumber',
@@ -8976,7 +8978,8 @@ export const MaterialOrderByRelevanceFieldEnum = {
   longDescription: 'longDescription',
   preferredSupplier: 'preferredSupplier',
   brandName: 'brandName',
-  warehousePlaceId: 'warehousePlaceId',
+  documentationPlace: 'documentationPlace',
+  bePartDoc: 'bePartDoc',
   materialGroupIdA: 'materialGroupIdA',
   materialGroupIdB: 'materialGroupIdB',
   materialGroupIdC: 'materialGroupIdC',
@@ -8985,7 +8988,8 @@ export const MaterialOrderByRelevanceFieldEnum = {
   unitId: 'unitId',
   createdBy: 'createdBy',
   deletedBy: 'deletedBy',
-  targetId: 'targetId'
+  targetId: 'targetId',
+  warehousePlaceId: 'warehousePlaceId'
 } as const
 
 export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevanceFieldEnum)[keyof typeof MaterialOrderByRelevanceFieldEnum]
@@ -9159,12 +9163,11 @@ export const MaterialSerialTrackedStructureOrderByRelevanceFieldEnum = {
   certificateId: 'certificateId',
   materialSpecId: 'materialSpecId',
   referenceDocId: 'referenceDocId',
-  materialGroupId: 'materialGroupId',
   documentId: 'documentId',
   shortDescription: 'shortDescription',
   longDescription: 'longDescription',
   management: 'management',
-  warehousePlaceId: 'warehousePlaceId',
+  documentationPlace: 'documentationPlace',
   additionalInfo: 'additionalInfo',
   beNumber: 'beNumber',
   beParentPart: 'beParentPart',

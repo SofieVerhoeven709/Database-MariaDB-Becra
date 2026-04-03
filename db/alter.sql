@@ -1,4 +1,4 @@
-﻿USE BecraBV;
+﻿USE app_db;
  
 -- ============================================================
 -- Idempotent migrations.
@@ -183,6 +183,10 @@ ALTER TABLE Material
     ADD COLUMN IF NOT EXISTS `materialGroupIdB` CHAR(36) NULL,
     ADD COLUMN IF NOT EXISTS `materialGroupIdC` CHAR(36) NULL,
     ADD COLUMN IF NOT EXISTS `materialGroupIdD` CHAR(36) NULL;
+
+-- 31a. Material: ensure longLeadTime exists for Prisma model compatibility
+ALTER TABLE Material
+  ADD COLUMN IF NOT EXISTS `longLeadTime` BOOLEAN NULL;
  
 -- 31b. Copy existing single materialGroupId into materialGroupIdA (only if column still exists)
 SET @col_exists = (
@@ -991,10 +995,6 @@ ALTER TABLE MaterialSerialTrack
 ALTER TABLE MaterialSerialTrack
   ADD CONSTRAINT fk_materialSerialTrack_materialGroupId
   FOREIGN KEY (`materialGroupId`) REFERENCES MaterialGroup(`id`) ON DELETE SET NULL;
-
-ALTER TABLE Material
-  ADD CONSTRAINT fk_material_warehousePlaceId
-  FOREIGN KEY (`warehousePlaceId`) REFERENCES WarehousePlace(`id`) ON DELETE SET NULL;
   
   
   -- Idempotent hotfix for environments where Material.warehousePlaceId is missing.

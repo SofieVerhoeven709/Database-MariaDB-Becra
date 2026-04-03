@@ -27,6 +27,7 @@ export type AggregateMaterialSerialTrackedStructure = {
 }
 
 export type MaterialSerialTrackedStructureAvgAggregateOutputType = {
+  docRevision: number | null
   unitPieces: number | null
   unitWeightKg: number | null
   quantityRequired: number | null
@@ -35,6 +36,7 @@ export type MaterialSerialTrackedStructureAvgAggregateOutputType = {
 }
 
 export type MaterialSerialTrackedStructureSumAggregateOutputType = {
+  docRevision: number | null
   unitPieces: number | null
   unitWeightKg: number | null
   quantityRequired: number | null
@@ -48,14 +50,14 @@ export type MaterialSerialTrackedStructureMinAggregateOutputType = {
   certificateId: string | null
   materialSpecId: string | null
   referenceDocId: string | null
-  materialGroupId: string | null
   documentId: string | null
   shortDescription: string | null
   longDescription: string | null
   management: string | null
   date: Date | null
   expiredDate: Date | null
-  warehousePlaceId: string | null
+  documentationPlace: string | null
+  docRevision: number | null
   valid: boolean | null
   additionalInfo: string | null
   beNumber: string | null
@@ -86,14 +88,14 @@ export type MaterialSerialTrackedStructureMaxAggregateOutputType = {
   certificateId: string | null
   materialSpecId: string | null
   referenceDocId: string | null
-  materialGroupId: string | null
   documentId: string | null
   shortDescription: string | null
   longDescription: string | null
   management: string | null
   date: Date | null
   expiredDate: Date | null
-  warehousePlaceId: string | null
+  documentationPlace: string | null
+  docRevision: number | null
   valid: boolean | null
   additionalInfo: string | null
   beNumber: string | null
@@ -124,14 +126,14 @@ export type MaterialSerialTrackedStructureCountAggregateOutputType = {
   certificateId: number
   materialSpecId: number
   referenceDocId: number
-  materialGroupId: number
   documentId: number
   shortDescription: number
   longDescription: number
   management: number
   date: number
   expiredDate: number
-  warehousePlaceId: number
+  documentationPlace: number
+  docRevision: number
   valid: number
   additionalInfo: number
   beNumber: number
@@ -159,6 +161,7 @@ export type MaterialSerialTrackedStructureCountAggregateOutputType = {
 
 
 export type MaterialSerialTrackedStructureAvgAggregateInputType = {
+  docRevision?: true
   unitPieces?: true
   unitWeightKg?: true
   quantityRequired?: true
@@ -167,6 +170,7 @@ export type MaterialSerialTrackedStructureAvgAggregateInputType = {
 }
 
 export type MaterialSerialTrackedStructureSumAggregateInputType = {
+  docRevision?: true
   unitPieces?: true
   unitWeightKg?: true
   quantityRequired?: true
@@ -180,14 +184,14 @@ export type MaterialSerialTrackedStructureMinAggregateInputType = {
   certificateId?: true
   materialSpecId?: true
   referenceDocId?: true
-  materialGroupId?: true
   documentId?: true
   shortDescription?: true
   longDescription?: true
   management?: true
   date?: true
   expiredDate?: true
-  warehousePlaceId?: true
+  documentationPlace?: true
+  docRevision?: true
   valid?: true
   additionalInfo?: true
   beNumber?: true
@@ -218,14 +222,14 @@ export type MaterialSerialTrackedStructureMaxAggregateInputType = {
   certificateId?: true
   materialSpecId?: true
   referenceDocId?: true
-  materialGroupId?: true
   documentId?: true
   shortDescription?: true
   longDescription?: true
   management?: true
   date?: true
   expiredDate?: true
-  warehousePlaceId?: true
+  documentationPlace?: true
+  docRevision?: true
   valid?: true
   additionalInfo?: true
   beNumber?: true
@@ -256,14 +260,14 @@ export type MaterialSerialTrackedStructureCountAggregateInputType = {
   certificateId?: true
   materialSpecId?: true
   referenceDocId?: true
-  materialGroupId?: true
   documentId?: true
   shortDescription?: true
   longDescription?: true
   management?: true
   date?: true
   expiredDate?: true
-  warehousePlaceId?: true
+  documentationPlace?: true
+  docRevision?: true
   valid?: true
   additionalInfo?: true
   beNumber?: true
@@ -381,14 +385,14 @@ export type MaterialSerialTrackedStructureGroupByOutputType = {
   certificateId: string | null
   materialSpecId: string | null
   referenceDocId: string | null
-  materialGroupId: string | null
   documentId: string | null
   shortDescription: string | null
   longDescription: string | null
   management: string | null
   date: Date | null
   expiredDate: Date | null
-  warehousePlaceId: string | null
+  documentationPlace: string | null
+  docRevision: number | null
   valid: boolean | null
   additionalInfo: string | null
   beNumber: string | null
@@ -442,14 +446,14 @@ export type MaterialSerialTrackedStructureWhereInput = {
   certificateId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   materialSpecId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   referenceDocId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
-  materialGroupId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   documentId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   shortDescription?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   longDescription?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   management?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   date?: Prisma.DateTimeNullableFilter<"MaterialSerialTrackedStructure"> | Date | string | null
   expiredDate?: Prisma.DateTimeNullableFilter<"MaterialSerialTrackedStructure"> | Date | string | null
-  warehousePlaceId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
+  documentationPlace?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
+  docRevision?: Prisma.IntNullableFilter<"MaterialSerialTrackedStructure"> | number | null
   valid?: Prisma.BoolNullableFilter<"MaterialSerialTrackedStructure"> | boolean | null
   additionalInfo?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   beNumber?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
@@ -475,8 +479,7 @@ export type MaterialSerialTrackedStructureWhereInput = {
   MaterialSerialTrack?: Prisma.XOR<Prisma.MaterialSerialTrackScalarRelationFilter, Prisma.MaterialSerialTrackWhereInput>
   Certificate?: Prisma.XOR<Prisma.CertificateNullableScalarRelationFilter, Prisma.CertificateWhereInput> | null
   MaterialSpec?: Prisma.XOR<Prisma.MaterialSpecNullableScalarRelationFilter, Prisma.MaterialSpecWhereInput> | null
-  WarehousePlace?: Prisma.XOR<Prisma.WarehousePlaceNullableScalarRelationFilter, Prisma.WarehousePlaceWhereInput> | null
-  MaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
@@ -488,14 +491,14 @@ export type MaterialSerialTrackedStructureOrderByWithRelationInput = {
   certificateId?: Prisma.SortOrderInput | Prisma.SortOrder
   materialSpecId?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceDocId?: Prisma.SortOrderInput | Prisma.SortOrder
-  materialGroupId?: Prisma.SortOrderInput | Prisma.SortOrder
   documentId?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   management?: Prisma.SortOrderInput | Prisma.SortOrder
   date?: Prisma.SortOrderInput | Prisma.SortOrder
   expiredDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  warehousePlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  documentationPlace?: Prisma.SortOrderInput | Prisma.SortOrder
+  docRevision?: Prisma.SortOrderInput | Prisma.SortOrder
   valid?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -521,8 +524,7 @@ export type MaterialSerialTrackedStructureOrderByWithRelationInput = {
   MaterialSerialTrack?: Prisma.MaterialSerialTrackOrderByWithRelationInput
   Certificate?: Prisma.CertificateOrderByWithRelationInput
   MaterialSpec?: Prisma.MaterialSpecOrderByWithRelationInput
-  WarehousePlace?: Prisma.WarehousePlaceOrderByWithRelationInput
-  MaterialGroup?: Prisma.MaterialGroupOrderByWithRelationInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureOrderByWithRelationInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureOrderByWithRelationInput
   Employee?: Prisma.EmployeeOrderByWithRelationInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeOrderByWithRelationInput
@@ -538,14 +540,14 @@ export type MaterialSerialTrackedStructureWhereUniqueInput = Prisma.AtLeast<{
   certificateId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   materialSpecId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   referenceDocId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
-  materialGroupId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   documentId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   shortDescription?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   longDescription?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   management?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   date?: Prisma.DateTimeNullableFilter<"MaterialSerialTrackedStructure"> | Date | string | null
   expiredDate?: Prisma.DateTimeNullableFilter<"MaterialSerialTrackedStructure"> | Date | string | null
-  warehousePlaceId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
+  documentationPlace?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
+  docRevision?: Prisma.IntNullableFilter<"MaterialSerialTrackedStructure"> | number | null
   valid?: Prisma.BoolNullableFilter<"MaterialSerialTrackedStructure"> | boolean | null
   additionalInfo?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   beNumber?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
@@ -571,8 +573,7 @@ export type MaterialSerialTrackedStructureWhereUniqueInput = Prisma.AtLeast<{
   MaterialSerialTrack?: Prisma.XOR<Prisma.MaterialSerialTrackScalarRelationFilter, Prisma.MaterialSerialTrackWhereInput>
   Certificate?: Prisma.XOR<Prisma.CertificateNullableScalarRelationFilter, Prisma.CertificateWhereInput> | null
   MaterialSpec?: Prisma.XOR<Prisma.MaterialSpecNullableScalarRelationFilter, Prisma.MaterialSpecWhereInput> | null
-  WarehousePlace?: Prisma.XOR<Prisma.WarehousePlaceNullableScalarRelationFilter, Prisma.WarehousePlaceWhereInput> | null
-  MaterialGroup?: Prisma.XOR<Prisma.MaterialGroupNullableScalarRelationFilter, Prisma.MaterialGroupWhereInput> | null
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.XOR<Prisma.DocumentStructureNullableScalarRelationFilter, Prisma.DocumentStructureWhereInput> | null
   Employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
@@ -584,14 +585,14 @@ export type MaterialSerialTrackedStructureOrderByWithAggregationInput = {
   certificateId?: Prisma.SortOrderInput | Prisma.SortOrder
   materialSpecId?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceDocId?: Prisma.SortOrderInput | Prisma.SortOrder
-  materialGroupId?: Prisma.SortOrderInput | Prisma.SortOrder
   documentId?: Prisma.SortOrderInput | Prisma.SortOrder
   shortDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   longDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   management?: Prisma.SortOrderInput | Prisma.SortOrder
   date?: Prisma.SortOrderInput | Prisma.SortOrder
   expiredDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  warehousePlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  documentationPlace?: Prisma.SortOrderInput | Prisma.SortOrder
+  docRevision?: Prisma.SortOrderInput | Prisma.SortOrder
   valid?: Prisma.SortOrderInput | Prisma.SortOrder
   additionalInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   beNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -630,14 +631,14 @@ export type MaterialSerialTrackedStructureScalarWhereWithAggregatesInput = {
   certificateId?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   materialSpecId?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   referenceDocId?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
-  materialGroupId?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   documentId?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   shortDescription?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   longDescription?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   management?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   date?: Prisma.DateTimeNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | Date | string | null
   expiredDate?: Prisma.DateTimeNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | Date | string | null
-  warehousePlaceId?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
+  documentationPlace?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
+  docRevision?: Prisma.IntNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | number | null
   valid?: Prisma.BoolNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | boolean | null
   additionalInfo?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
   beNumber?: Prisma.StringNullableWithAggregatesFilter<"MaterialSerialTrackedStructure"> | string | null
@@ -664,12 +665,13 @@ export type MaterialSerialTrackedStructureScalarWhereWithAggregatesInput = {
 
 export type MaterialSerialTrackedStructureCreateInput = {
   id: string
-  referenceDocId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -693,8 +695,7 @@ export type MaterialSerialTrackedStructureCreateInput = {
   MaterialSerialTrack: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   Certificate?: Prisma.CertificateCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   MaterialSpec?: Prisma.MaterialSpecCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  WarehousePlace?: Prisma.WarehousePlaceCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackedStructureInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeInput
@@ -706,14 +707,14 @@ export type MaterialSerialTrackedStructureUncheckedCreateInput = {
   certificateId?: string | null
   materialSpecId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -740,12 +741,13 @@ export type MaterialSerialTrackedStructureUncheckedCreateInput = {
 
 export type MaterialSerialTrackedStructureUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -769,8 +771,7 @@ export type MaterialSerialTrackedStructureUpdateInput = {
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneRequiredWithoutMaterialSerialTrackedStructureNestedInput
   Certificate?: Prisma.CertificateUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
   MaterialSpec?: Prisma.MaterialSpecUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
@@ -782,14 +783,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateInput = {
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -820,14 +821,14 @@ export type MaterialSerialTrackedStructureCreateManyInput = {
   certificateId?: string | null
   materialSpecId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -854,12 +855,13 @@ export type MaterialSerialTrackedStructureCreateManyInput = {
 
 export type MaterialSerialTrackedStructureUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -888,14 +890,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyInput = {
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -942,14 +944,14 @@ export type MaterialSerialTrackedStructureCountOrderByAggregateInput = {
   certificateId?: Prisma.SortOrder
   materialSpecId?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
-  materialGroupId?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   management?: Prisma.SortOrder
   date?: Prisma.SortOrder
   expiredDate?: Prisma.SortOrder
-  warehousePlaceId?: Prisma.SortOrder
+  documentationPlace?: Prisma.SortOrder
+  docRevision?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
@@ -975,6 +977,7 @@ export type MaterialSerialTrackedStructureCountOrderByAggregateInput = {
 }
 
 export type MaterialSerialTrackedStructureAvgOrderByAggregateInput = {
+  docRevision?: Prisma.SortOrder
   unitPieces?: Prisma.SortOrder
   unitWeightKg?: Prisma.SortOrder
   quantityRequired?: Prisma.SortOrder
@@ -988,14 +991,14 @@ export type MaterialSerialTrackedStructureMaxOrderByAggregateInput = {
   certificateId?: Prisma.SortOrder
   materialSpecId?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
-  materialGroupId?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   management?: Prisma.SortOrder
   date?: Prisma.SortOrder
   expiredDate?: Prisma.SortOrder
-  warehousePlaceId?: Prisma.SortOrder
+  documentationPlace?: Prisma.SortOrder
+  docRevision?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
@@ -1026,14 +1029,14 @@ export type MaterialSerialTrackedStructureMinOrderByAggregateInput = {
   certificateId?: Prisma.SortOrder
   materialSpecId?: Prisma.SortOrder
   referenceDocId?: Prisma.SortOrder
-  materialGroupId?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   shortDescription?: Prisma.SortOrder
   longDescription?: Prisma.SortOrder
   management?: Prisma.SortOrder
   date?: Prisma.SortOrder
   expiredDate?: Prisma.SortOrder
-  warehousePlaceId?: Prisma.SortOrder
+  documentationPlace?: Prisma.SortOrder
+  docRevision?: Prisma.SortOrder
   valid?: Prisma.SortOrder
   additionalInfo?: Prisma.SortOrder
   beNumber?: Prisma.SortOrder
@@ -1059,6 +1062,7 @@ export type MaterialSerialTrackedStructureMinOrderByAggregateInput = {
 }
 
 export type MaterialSerialTrackedStructureSumOrderByAggregateInput = {
+  docRevision?: Prisma.SortOrder
   unitPieces?: Prisma.SortOrder
   unitWeightKg?: Prisma.SortOrder
   quantityRequired?: Prisma.SortOrder
@@ -1108,10 +1112,24 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutCertificateN
   deleteMany?: Prisma.MaterialSerialTrackedStructureScalarWhereInput | Prisma.MaterialSerialTrackedStructureScalarWhereInput[]
 }
 
+export type MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
+  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInputEnvelope
+  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
+}
+
 export type MaterialSerialTrackedStructureCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput = {
   create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput[]
   connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput[]
   createMany?: Prisma.MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInputEnvelope
+  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
+}
+
+export type MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
+  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInputEnvelope
   connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
 }
 
@@ -1120,6 +1138,20 @@ export type MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutDocume
   connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput[]
   createMany?: Prisma.MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInputEnvelope
   connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
+}
+
+export type MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  upsert?: Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInputEnvelope
+  set?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
+  disconnect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
+  delete?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
+  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
+  update?: Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  updateMany?: Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  deleteMany?: Prisma.MaterialSerialTrackedStructureScalarWhereInput | Prisma.MaterialSerialTrackedStructureScalarWhereInput[]
 }
 
 export type MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput = {
@@ -1133,6 +1165,20 @@ export type MaterialSerialTrackedStructureUpdateManyWithoutDocumentStructure_Mat
   connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
   update?: Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput[]
   updateMany?: Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput[]
+  deleteMany?: Prisma.MaterialSerialTrackedStructureScalarWhereInput | Prisma.MaterialSerialTrackedStructureScalarWhereInput[]
+}
+
+export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  upsert?: Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInputEnvelope
+  set?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
+  disconnect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
+  delete?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
+  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
+  update?: Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  updateMany?: Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
   deleteMany?: Prisma.MaterialSerialTrackedStructureScalarWhereInput | Prisma.MaterialSerialTrackedStructureScalarWhereInput[]
 }
 
@@ -1234,48 +1280,6 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployee_Mat
   deleteMany?: Prisma.MaterialSerialTrackedStructureScalarWhereInput | Prisma.MaterialSerialTrackedStructureScalarWhereInput[]
 }
 
-export type MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialGroupInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutMaterialGroupInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutMaterialGroupInput[]
-  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyMaterialGroupInputEnvelope
-  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-}
-
-export type MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutMaterialGroupInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutMaterialGroupInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutMaterialGroupInput[]
-  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyMaterialGroupInputEnvelope
-  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-}
-
-export type MaterialSerialTrackedStructureUpdateManyWithoutMaterialGroupNestedInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutMaterialGroupInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutMaterialGroupInput[]
-  upsert?: Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutMaterialGroupInput | Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutMaterialGroupInput[]
-  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyMaterialGroupInputEnvelope
-  set?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  disconnect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  delete?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  update?: Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutMaterialGroupInput | Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutMaterialGroupInput[]
-  updateMany?: Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutMaterialGroupInput | Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutMaterialGroupInput[]
-  deleteMany?: Prisma.MaterialSerialTrackedStructureScalarWhereInput | Prisma.MaterialSerialTrackedStructureScalarWhereInput[]
-}
-
-export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupNestedInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutMaterialGroupInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutMaterialGroupInput[]
-  upsert?: Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutMaterialGroupInput | Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutMaterialGroupInput[]
-  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyMaterialGroupInputEnvelope
-  set?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  disconnect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  delete?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  update?: Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutMaterialGroupInput | Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutMaterialGroupInput[]
-  updateMany?: Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutMaterialGroupInput | Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutMaterialGroupInput[]
-  deleteMany?: Prisma.MaterialSerialTrackedStructureScalarWhereInput | Prisma.MaterialSerialTrackedStructureScalarWhereInput[]
-}
-
 export type MaterialSerialTrackedStructureCreateNestedManyWithoutMaterialSerialTrackInput = {
   create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialSerialTrackInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialSerialTrackInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialSerialTrackInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialSerialTrackInput[]
   connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutMaterialSerialTrackInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutMaterialSerialTrackInput[]
@@ -1360,56 +1364,15 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSpec
   deleteMany?: Prisma.MaterialSerialTrackedStructureScalarWhereInput | Prisma.MaterialSerialTrackedStructureScalarWhereInput[]
 }
 
-export type MaterialSerialTrackedStructureCreateNestedManyWithoutWarehousePlaceInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutWarehousePlaceInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutWarehousePlaceInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutWarehousePlaceInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutWarehousePlaceInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutWarehousePlaceInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutWarehousePlaceInput[]
-  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyWarehousePlaceInputEnvelope
-  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-}
-
-export type MaterialSerialTrackedStructureUncheckedCreateNestedManyWithoutWarehousePlaceInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutWarehousePlaceInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutWarehousePlaceInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutWarehousePlaceInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutWarehousePlaceInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutWarehousePlaceInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutWarehousePlaceInput[]
-  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyWarehousePlaceInputEnvelope
-  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-}
-
-export type MaterialSerialTrackedStructureUpdateManyWithoutWarehousePlaceNestedInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutWarehousePlaceInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutWarehousePlaceInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutWarehousePlaceInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutWarehousePlaceInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutWarehousePlaceInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutWarehousePlaceInput[]
-  upsert?: Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutWarehousePlaceInput | Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutWarehousePlaceInput[]
-  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyWarehousePlaceInputEnvelope
-  set?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  disconnect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  delete?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  update?: Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutWarehousePlaceInput | Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutWarehousePlaceInput[]
-  updateMany?: Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutWarehousePlaceInput | Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutWarehousePlaceInput[]
-  deleteMany?: Prisma.MaterialSerialTrackedStructureScalarWhereInput | Prisma.MaterialSerialTrackedStructureScalarWhereInput[]
-}
-
-export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutWarehousePlaceNestedInput = {
-  create?: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutWarehousePlaceInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutWarehousePlaceInput> | Prisma.MaterialSerialTrackedStructureCreateWithoutWarehousePlaceInput[] | Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutWarehousePlaceInput[]
-  connectOrCreate?: Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutWarehousePlaceInput | Prisma.MaterialSerialTrackedStructureCreateOrConnectWithoutWarehousePlaceInput[]
-  upsert?: Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutWarehousePlaceInput | Prisma.MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutWarehousePlaceInput[]
-  createMany?: Prisma.MaterialSerialTrackedStructureCreateManyWarehousePlaceInputEnvelope
-  set?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  disconnect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  delete?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  connect?: Prisma.MaterialSerialTrackedStructureWhereUniqueInput | Prisma.MaterialSerialTrackedStructureWhereUniqueInput[]
-  update?: Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutWarehousePlaceInput | Prisma.MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutWarehousePlaceInput[]
-  updateMany?: Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutWarehousePlaceInput | Prisma.MaterialSerialTrackedStructureUpdateManyWithWhereWithoutWarehousePlaceInput[]
-  deleteMany?: Prisma.MaterialSerialTrackedStructureScalarWhereInput | Prisma.MaterialSerialTrackedStructureScalarWhereInput[]
-}
-
 export type MaterialSerialTrackedStructureCreateWithoutCertificateInput = {
   id: string
-  referenceDocId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -1432,8 +1395,7 @@ export type MaterialSerialTrackedStructureCreateWithoutCertificateInput = {
   deletedAt?: Date | string | null
   MaterialSerialTrack: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   MaterialSpec?: Prisma.MaterialSpecCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  WarehousePlace?: Prisma.WarehousePlaceCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackedStructureInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeInput
@@ -1444,14 +1406,14 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutCertificateInput
   serialTrackedId: string
   materialSpecId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -1511,14 +1473,14 @@ export type MaterialSerialTrackedStructureScalarWhereInput = {
   certificateId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   materialSpecId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   referenceDocId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
-  materialGroupId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   documentId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   shortDescription?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   longDescription?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   management?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   date?: Prisma.DateTimeNullableFilter<"MaterialSerialTrackedStructure"> | Date | string | null
   expiredDate?: Prisma.DateTimeNullableFilter<"MaterialSerialTrackedStructure"> | Date | string | null
-  warehousePlaceId?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
+  documentationPlace?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
+  docRevision?: Prisma.IntNullableFilter<"MaterialSerialTrackedStructure"> | number | null
   valid?: Prisma.BoolNullableFilter<"MaterialSerialTrackedStructure"> | boolean | null
   additionalInfo?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
   beNumber?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
@@ -1543,14 +1505,15 @@ export type MaterialSerialTrackedStructureScalarWhereInput = {
   deletedBy?: Prisma.StringNullableFilter<"MaterialSerialTrackedStructure"> | string | null
 }
 
-export type MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput = {
+export type MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
   id: string
-  referenceDocId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -1574,8 +1537,91 @@ export type MaterialSerialTrackedStructureCreateWithoutDocumentStructure_Materia
   MaterialSerialTrack: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   Certificate?: Prisma.CertificateCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   MaterialSpec?: Prisma.MaterialSpecCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  WarehousePlace?: Prisma.WarehousePlaceCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackedStructureInput
+  DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
+  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructureInput
+  Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeInput
+}
+
+export type MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
+  id: string
+  serialTrackedId: string
+  certificateId?: string | null
+  materialSpecId?: string | null
+  documentId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  beNumber?: string | null
+  beParentPart?: string | null
+  serialCode?: string | null
+  tag?: string | null
+  preferredSupplier?: string | null
+  brandName?: string | null
+  brandOrderNr?: string | null
+  unit?: string | null
+  unitQuantity?: string | null
+  unitPieces?: number | null
+  unitWeightKg?: number | null
+  quantityRequired?: number | null
+  quantityReserved?: number | null
+  quantityIssued?: number | null
+  rejected?: boolean | null
+  updatedAt?: Date | string | null
+  createdBy?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type MaterialSerialTrackedStructureCreateOrConnectWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
+  where: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
+  create: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput>
+}
+
+export type MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInputEnvelope = {
+  data: Prisma.MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput | Prisma.MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput[]
+  skipDuplicates?: boolean
+}
+
+export type MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput = {
+  id: string
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  beNumber?: string | null
+  beParentPart?: string | null
+  serialCode?: string | null
+  tag?: string | null
+  preferredSupplier?: string | null
+  brandName?: string | null
+  brandOrderNr?: string | null
+  unit?: string | null
+  unitQuantity?: string | null
+  unitPieces?: number | null
+  unitWeightKg?: number | null
+  quantityRequired?: number | null
+  quantityReserved?: number | null
+  quantityIssued?: number | null
+  rejected?: boolean | null
+  updatedAt?: Date | string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  MaterialSerialTrack: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialSerialTrackedStructureInput
+  Certificate?: Prisma.CertificateCreateNestedOneWithoutMaterialSerialTrackedStructureInput
+  MaterialSpec?: Prisma.MaterialSpecCreateNestedOneWithoutMaterialSerialTrackedStructureInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeInput
 }
@@ -1586,13 +1632,13 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructur
   certificateId?: string | null
   materialSpecId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -1627,6 +1673,22 @@ export type MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSe
   skipDuplicates?: boolean
 }
 
+export type MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
+  where: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
+  update: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput>
+  create: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput>
+}
+
+export type MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
+  where: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
+  data: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput>
+}
+
+export type MaterialSerialTrackedStructureUpdateManyWithWhereWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
+  where: Prisma.MaterialSerialTrackedStructureScalarWhereInput
+  data: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateManyMutationInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput>
+}
+
 export type MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput = {
   where: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
   update: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput>
@@ -1645,12 +1707,13 @@ export type MaterialSerialTrackedStructureUpdateManyWithWhereWithoutDocumentStru
 
 export type MaterialSerialTrackedStructureCreateWithoutEmployeeInput = {
   id: string
-  referenceDocId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -1674,8 +1737,7 @@ export type MaterialSerialTrackedStructureCreateWithoutEmployeeInput = {
   MaterialSerialTrack: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   Certificate?: Prisma.CertificateCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   MaterialSpec?: Prisma.MaterialSpecCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  WarehousePlace?: Prisma.WarehousePlaceCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackedStructureInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeInput
 }
@@ -1686,14 +1748,14 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutEmployeeInput = 
   certificateId?: string | null
   materialSpecId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -1729,12 +1791,13 @@ export type MaterialSerialTrackedStructureCreateManyEmployeeInputEnvelope = {
 
 export type MaterialSerialTrackedStructureCreateWithoutEmployee_MaterialSerialTrackedStructure_deletedByToEmployeeInput = {
   id: string
-  referenceDocId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -1758,8 +1821,7 @@ export type MaterialSerialTrackedStructureCreateWithoutEmployee_MaterialSerialTr
   MaterialSerialTrack: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   Certificate?: Prisma.CertificateCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   MaterialSpec?: Prisma.MaterialSpecCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  WarehousePlace?: Prisma.WarehousePlaceCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackedStructureInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructureInput
 }
@@ -1770,14 +1832,14 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutEmployee_Materia
   certificateId?: string | null
   materialSpecId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -1843,114 +1905,15 @@ export type MaterialSerialTrackedStructureUpdateManyWithWhereWithoutEmployee_Mat
   data: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateManyMutationInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployee_MaterialSerialTrackedStructure_deletedByToEmployeeInput>
 }
 
-export type MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput = {
-  id: string
-  referenceDocId?: string | null
-  shortDescription?: string | null
-  longDescription?: string | null
-  management?: string | null
-  date?: Date | string | null
-  expiredDate?: Date | string | null
-  valid?: boolean | null
-  additionalInfo?: string | null
-  beNumber?: string | null
-  beParentPart?: string | null
-  serialCode?: string | null
-  tag?: string | null
-  preferredSupplier?: string | null
-  brandName?: string | null
-  brandOrderNr?: string | null
-  unit?: string | null
-  unitQuantity?: string | null
-  unitPieces?: number | null
-  unitWeightKg?: number | null
-  quantityRequired?: number | null
-  quantityReserved?: number | null
-  quantityIssued?: number | null
-  rejected?: boolean | null
-  updatedAt?: Date | string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  MaterialSerialTrack: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  Certificate?: Prisma.CertificateCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  MaterialSpec?: Prisma.MaterialSpecCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  WarehousePlace?: Prisma.WarehousePlaceCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
-  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeInput
-}
-
-export type MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInput = {
-  id: string
-  serialTrackedId: string
-  certificateId?: string | null
-  materialSpecId?: string | null
-  referenceDocId?: string | null
-  documentId?: string | null
-  shortDescription?: string | null
-  longDescription?: string | null
-  management?: string | null
-  date?: Date | string | null
-  expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
-  valid?: boolean | null
-  additionalInfo?: string | null
-  beNumber?: string | null
-  beParentPart?: string | null
-  serialCode?: string | null
-  tag?: string | null
-  preferredSupplier?: string | null
-  brandName?: string | null
-  brandOrderNr?: string | null
-  unit?: string | null
-  unitQuantity?: string | null
-  unitPieces?: number | null
-  unitWeightKg?: number | null
-  quantityRequired?: number | null
-  quantityReserved?: number | null
-  quantityIssued?: number | null
-  rejected?: boolean | null
-  updatedAt?: Date | string | null
-  createdBy?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-}
-
-export type MaterialSerialTrackedStructureCreateOrConnectWithoutMaterialGroupInput = {
-  where: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInput>
-}
-
-export type MaterialSerialTrackedStructureCreateManyMaterialGroupInputEnvelope = {
-  data: Prisma.MaterialSerialTrackedStructureCreateManyMaterialGroupInput | Prisma.MaterialSerialTrackedStructureCreateManyMaterialGroupInput[]
-  skipDuplicates?: boolean
-}
-
-export type MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutMaterialGroupInput = {
-  where: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateWithoutMaterialGroupInput>
-  create: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialGroupInput>
-}
-
-export type MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutMaterialGroupInput = {
-  where: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateWithoutMaterialGroupInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateWithoutMaterialGroupInput>
-}
-
-export type MaterialSerialTrackedStructureUpdateManyWithWhereWithoutMaterialGroupInput = {
-  where: Prisma.MaterialSerialTrackedStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateManyMutationInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupInput>
-}
-
 export type MaterialSerialTrackedStructureCreateWithoutMaterialSerialTrackInput = {
   id: string
-  referenceDocId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -1973,8 +1936,7 @@ export type MaterialSerialTrackedStructureCreateWithoutMaterialSerialTrackInput 
   deletedAt?: Date | string | null
   Certificate?: Prisma.CertificateCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   MaterialSpec?: Prisma.MaterialSpecCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  WarehousePlace?: Prisma.WarehousePlaceCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackedStructureInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeInput
@@ -1985,14 +1947,14 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialSerialTr
   certificateId?: string | null
   materialSpecId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -2045,12 +2007,13 @@ export type MaterialSerialTrackedStructureUpdateManyWithWhereWithoutMaterialSeri
 
 export type MaterialSerialTrackedStructureCreateWithoutMaterialSpecInput = {
   id: string
-  referenceDocId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -2073,8 +2036,7 @@ export type MaterialSerialTrackedStructureCreateWithoutMaterialSpecInput = {
   deletedAt?: Date | string | null
   MaterialSerialTrack: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   Certificate?: Prisma.CertificateCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  WarehousePlace?: Prisma.WarehousePlaceCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackedStructureInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
   Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructureInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeInput
@@ -2085,14 +2047,14 @@ export type MaterialSerialTrackedStructureUncheckedCreateWithoutMaterialSpecInpu
   serialTrackedId: string
   certificateId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -2143,119 +2105,19 @@ export type MaterialSerialTrackedStructureUpdateManyWithWhereWithoutMaterialSpec
   data: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateManyMutationInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSpecInput>
 }
 
-export type MaterialSerialTrackedStructureCreateWithoutWarehousePlaceInput = {
-  id: string
-  referenceDocId?: string | null
-  shortDescription?: string | null
-  longDescription?: string | null
-  management?: string | null
-  date?: Date | string | null
-  expiredDate?: Date | string | null
-  valid?: boolean | null
-  additionalInfo?: string | null
-  beNumber?: string | null
-  beParentPart?: string | null
-  serialCode?: string | null
-  tag?: string | null
-  preferredSupplier?: string | null
-  brandName?: string | null
-  brandOrderNr?: string | null
-  unit?: string | null
-  unitQuantity?: string | null
-  unitPieces?: number | null
-  unitWeightKg?: number | null
-  quantityRequired?: number | null
-  quantityReserved?: number | null
-  quantityIssued?: number | null
-  rejected?: boolean | null
-  updatedAt?: Date | string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  MaterialSerialTrack: Prisma.MaterialSerialTrackCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  Certificate?: Prisma.CertificateCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  MaterialSpec?: Prisma.MaterialSpecCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  MaterialGroup?: Prisma.MaterialGroupCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput
-  Employee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructureInput
-  Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeCreateNestedOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeInput
-}
-
-export type MaterialSerialTrackedStructureUncheckedCreateWithoutWarehousePlaceInput = {
-  id: string
-  serialTrackedId: string
-  certificateId?: string | null
-  materialSpecId?: string | null
-  referenceDocId?: string | null
-  materialGroupId?: string | null
-  documentId?: string | null
-  shortDescription?: string | null
-  longDescription?: string | null
-  management?: string | null
-  date?: Date | string | null
-  expiredDate?: Date | string | null
-  valid?: boolean | null
-  additionalInfo?: string | null
-  beNumber?: string | null
-  beParentPart?: string | null
-  serialCode?: string | null
-  tag?: string | null
-  preferredSupplier?: string | null
-  brandName?: string | null
-  brandOrderNr?: string | null
-  unit?: string | null
-  unitQuantity?: string | null
-  unitPieces?: number | null
-  unitWeightKg?: number | null
-  quantityRequired?: number | null
-  quantityReserved?: number | null
-  quantityIssued?: number | null
-  rejected?: boolean | null
-  updatedAt?: Date | string | null
-  createdBy?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-}
-
-export type MaterialSerialTrackedStructureCreateOrConnectWithoutWarehousePlaceInput = {
-  where: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
-  create: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutWarehousePlaceInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutWarehousePlaceInput>
-}
-
-export type MaterialSerialTrackedStructureCreateManyWarehousePlaceInputEnvelope = {
-  data: Prisma.MaterialSerialTrackedStructureCreateManyWarehousePlaceInput | Prisma.MaterialSerialTrackedStructureCreateManyWarehousePlaceInput[]
-  skipDuplicates?: boolean
-}
-
-export type MaterialSerialTrackedStructureUpsertWithWhereUniqueWithoutWarehousePlaceInput = {
-  where: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
-  update: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateWithoutWarehousePlaceInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateWithoutWarehousePlaceInput>
-  create: Prisma.XOR<Prisma.MaterialSerialTrackedStructureCreateWithoutWarehousePlaceInput, Prisma.MaterialSerialTrackedStructureUncheckedCreateWithoutWarehousePlaceInput>
-}
-
-export type MaterialSerialTrackedStructureUpdateWithWhereUniqueWithoutWarehousePlaceInput = {
-  where: Prisma.MaterialSerialTrackedStructureWhereUniqueInput
-  data: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateWithoutWarehousePlaceInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateWithoutWarehousePlaceInput>
-}
-
-export type MaterialSerialTrackedStructureUpdateManyWithWhereWithoutWarehousePlaceInput = {
-  where: Prisma.MaterialSerialTrackedStructureScalarWhereInput
-  data: Prisma.XOR<Prisma.MaterialSerialTrackedStructureUpdateManyMutationInput, Prisma.MaterialSerialTrackedStructureUncheckedUpdateManyWithoutWarehousePlaceInput>
-}
-
 export type MaterialSerialTrackedStructureCreateManyCertificateInput = {
   id: string
   serialTrackedId: string
   materialSpecId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -2282,12 +2144,13 @@ export type MaterialSerialTrackedStructureCreateManyCertificateInput = {
 
 export type MaterialSerialTrackedStructureUpdateWithoutCertificateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2310,8 +2173,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutCertificateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneRequiredWithoutMaterialSerialTrackedStructureNestedInput
   MaterialSpec?: Prisma.MaterialSpecUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
@@ -2322,14 +2184,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutCertificateInput
   serialTrackedId?: Prisma.StringFieldUpdateOperationsInput | string
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2359,14 +2221,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutCertificateI
   serialTrackedId?: Prisma.StringFieldUpdateOperationsInput | string
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2391,19 +2253,19 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutCertificateI
   deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput = {
+export type MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
   id: string
   serialTrackedId: string
   certificateId?: string | null
   materialSpecId?: string | null
-  referenceDocId?: string | null
-  materialGroupId?: string | null
+  documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -2428,14 +2290,52 @@ export type MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSe
   deletedBy?: string | null
 }
 
-export type MaterialSerialTrackedStructureUpdateWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput = {
+export type MaterialSerialTrackedStructureCreateManyDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput = {
+  id: string
+  serialTrackedId: string
+  certificateId?: string | null
+  materialSpecId?: string | null
+  referenceDocId?: string | null
+  shortDescription?: string | null
+  longDescription?: string | null
+  management?: string | null
+  date?: Date | string | null
+  expiredDate?: Date | string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
+  valid?: boolean | null
+  additionalInfo?: string | null
+  beNumber?: string | null
+  beParentPart?: string | null
+  serialCode?: string | null
+  tag?: string | null
+  preferredSupplier?: string | null
+  brandName?: string | null
+  brandOrderNr?: string | null
+  unit?: string | null
+  unitQuantity?: string | null
+  unitPieces?: number | null
+  unitWeightKg?: number | null
+  quantityRequired?: number | null
+  quantityReserved?: number | null
+  quantityIssued?: number | null
+  rejected?: boolean | null
+  updatedAt?: Date | string | null
+  createdBy?: string | null
+  deleted?: boolean
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
+}
+
+export type MaterialSerialTrackedStructureUpdateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2459,8 +2359,118 @@ export type MaterialSerialTrackedStructureUpdateWithoutDocumentStructure_Materia
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneRequiredWithoutMaterialSerialTrackedStructureNestedInput
   Certificate?: Prisma.CertificateUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
   MaterialSpec?: Prisma.MaterialSpecUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
+  DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
+  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
+  Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
+}
+
+export type MaterialSerialTrackedStructureUncheckedUpdateWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  serialTrackedId?: Prisma.StringFieldUpdateOperationsInput | string
+  certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitQuantity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitWeightKg?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantityRequired?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantityReserved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantityIssued?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  serialTrackedId?: Prisma.StringFieldUpdateOperationsInput | string
+  certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitQuantity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitWeightKg?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantityRequired?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantityReserved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantityIssued?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MaterialSerialTrackedStructureUpdateWithoutDocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitQuantity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unitWeightKg?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantityRequired?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantityReserved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  quantityIssued?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneRequiredWithoutMaterialSerialTrackedStructureNestedInput
+  Certificate?: Prisma.CertificateUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
+  MaterialSpec?: Prisma.MaterialSpecUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
 }
@@ -2471,13 +2481,13 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutDocumentStructur
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2508,13 +2518,13 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutDocumentStru
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2545,14 +2555,14 @@ export type MaterialSerialTrackedStructureCreateManyEmployeeInput = {
   certificateId?: string | null
   materialSpecId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -2582,14 +2592,14 @@ export type MaterialSerialTrackedStructureCreateManyEmployee_MaterialSerialTrack
   certificateId?: string | null
   materialSpecId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -2615,12 +2625,13 @@ export type MaterialSerialTrackedStructureCreateManyEmployee_MaterialSerialTrack
 
 export type MaterialSerialTrackedStructureUpdateWithoutEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2644,8 +2655,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutEmployeeInput = {
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneRequiredWithoutMaterialSerialTrackedStructureNestedInput
   Certificate?: Prisma.CertificateUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
   MaterialSpec?: Prisma.MaterialSpecUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
 }
@@ -2656,14 +2666,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutEmployeeInput = 
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2693,14 +2703,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployeeInpu
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2726,12 +2736,13 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployeeInpu
 
 export type MaterialSerialTrackedStructureUpdateWithoutEmployee_MaterialSerialTrackedStructure_deletedByToEmployeeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2755,8 +2766,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutEmployee_MaterialSerialTr
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneRequiredWithoutMaterialSerialTrackedStructureNestedInput
   Certificate?: Prisma.CertificateUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
   MaterialSpec?: Prisma.MaterialSpecUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
 }
@@ -2767,14 +2777,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutEmployee_Materia
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2804,14 +2814,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployee_Mat
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2833,154 +2843,6 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutEmployee_Mat
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-}
-
-export type MaterialSerialTrackedStructureCreateManyMaterialGroupInput = {
-  id: string
-  serialTrackedId: string
-  certificateId?: string | null
-  materialSpecId?: string | null
-  referenceDocId?: string | null
-  documentId?: string | null
-  shortDescription?: string | null
-  longDescription?: string | null
-  management?: string | null
-  date?: Date | string | null
-  expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
-  valid?: boolean | null
-  additionalInfo?: string | null
-  beNumber?: string | null
-  beParentPart?: string | null
-  serialCode?: string | null
-  tag?: string | null
-  preferredSupplier?: string | null
-  brandName?: string | null
-  brandOrderNr?: string | null
-  unit?: string | null
-  unitQuantity?: string | null
-  unitPieces?: number | null
-  unitWeightKg?: number | null
-  quantityRequired?: number | null
-  quantityReserved?: number | null
-  quantityIssued?: number | null
-  rejected?: boolean | null
-  updatedAt?: Date | string | null
-  createdBy?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-}
-
-export type MaterialSerialTrackedStructureUpdateWithoutMaterialGroupInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitQuantity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  unitWeightKg?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityRequired?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityReserved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityIssued?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneRequiredWithoutMaterialSerialTrackedStructureNestedInput
-  Certificate?: Prisma.CertificateUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  MaterialSpec?: Prisma.MaterialSpecUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
-  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
-}
-
-export type MaterialSerialTrackedStructureUncheckedUpdateWithoutMaterialGroupInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  serialTrackedId?: Prisma.StringFieldUpdateOperationsInput | string
-  certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitQuantity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  unitWeightKg?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityRequired?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityReserved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityIssued?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialGroupInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  serialTrackedId?: Prisma.StringFieldUpdateOperationsInput | string
-  certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitQuantity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  unitWeightKg?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityRequired?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityReserved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityIssued?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MaterialSerialTrackedStructureCreateManyMaterialSerialTrackInput = {
@@ -2988,14 +2850,14 @@ export type MaterialSerialTrackedStructureCreateManyMaterialSerialTrackInput = {
   certificateId?: string | null
   materialSpecId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -3022,12 +2884,13 @@ export type MaterialSerialTrackedStructureCreateManyMaterialSerialTrackInput = {
 
 export type MaterialSerialTrackedStructureUpdateWithoutMaterialSerialTrackInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3050,8 +2913,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutMaterialSerialTrackInput 
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Certificate?: Prisma.CertificateUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
   MaterialSpec?: Prisma.MaterialSpecUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
@@ -3062,14 +2924,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutMaterialSerialTr
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3099,14 +2961,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSeri
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3136,14 +2998,14 @@ export type MaterialSerialTrackedStructureCreateManyMaterialSpecInput = {
   serialTrackedId: string
   certificateId?: string | null
   referenceDocId?: string | null
-  materialGroupId?: string | null
   documentId?: string | null
   shortDescription?: string | null
   longDescription?: string | null
   management?: string | null
   date?: Date | string | null
   expiredDate?: Date | string | null
-  warehousePlaceId?: string | null
+  documentationPlace?: string | null
+  docRevision?: number | null
   valid?: boolean | null
   additionalInfo?: string | null
   beNumber?: string | null
@@ -3170,12 +3032,13 @@ export type MaterialSerialTrackedStructureCreateManyMaterialSpecInput = {
 
 export type MaterialSerialTrackedStructureUpdateWithoutMaterialSpecInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3198,8 +3061,7 @@ export type MaterialSerialTrackedStructureUpdateWithoutMaterialSpecInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneRequiredWithoutMaterialSerialTrackedStructureNestedInput
   Certificate?: Prisma.CertificateUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  WarehousePlace?: Prisma.WarehousePlaceUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureNestedInput
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
   Employee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
@@ -3210,14 +3072,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateWithoutMaterialSpecInpu
   serialTrackedId?: Prisma.StringFieldUpdateOperationsInput | string
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3247,162 +3109,14 @@ export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutMaterialSpec
   serialTrackedId?: Prisma.StringFieldUpdateOperationsInput | string
   certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  warehousePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitQuantity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  unitWeightKg?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityRequired?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityReserved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityIssued?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type MaterialSerialTrackedStructureCreateManyWarehousePlaceInput = {
-  id: string
-  serialTrackedId: string
-  certificateId?: string | null
-  materialSpecId?: string | null
-  referenceDocId?: string | null
-  materialGroupId?: string | null
-  documentId?: string | null
-  shortDescription?: string | null
-  longDescription?: string | null
-  management?: string | null
-  date?: Date | string | null
-  expiredDate?: Date | string | null
-  valid?: boolean | null
-  additionalInfo?: string | null
-  beNumber?: string | null
-  beParentPart?: string | null
-  serialCode?: string | null
-  tag?: string | null
-  preferredSupplier?: string | null
-  brandName?: string | null
-  brandOrderNr?: string | null
-  unit?: string | null
-  unitQuantity?: string | null
-  unitPieces?: number | null
-  unitWeightKg?: number | null
-  quantityRequired?: number | null
-  quantityReserved?: number | null
-  quantityIssued?: number | null
-  rejected?: boolean | null
-  updatedAt?: Date | string | null
-  createdBy?: string | null
-  deleted?: boolean
-  deletedAt?: Date | string | null
-  deletedBy?: string | null
-}
-
-export type MaterialSerialTrackedStructureUpdateWithoutWarehousePlaceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitQuantity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  unitWeightKg?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityRequired?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityReserved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityIssued?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  MaterialSerialTrack?: Prisma.MaterialSerialTrackUpdateOneRequiredWithoutMaterialSerialTrackedStructureNestedInput
-  Certificate?: Prisma.CertificateUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  MaterialSpec?: Prisma.MaterialSpecUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  MaterialGroup?: Prisma.MaterialGroupUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: Prisma.DocumentStructureUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureNestedInput
-  Employee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructureNestedInput
-  Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: Prisma.EmployeeUpdateOneWithoutMaterialSerialTrackedStructure_MaterialSerialTrackedStructure_deletedByToEmployeeNestedInput
-}
-
-export type MaterialSerialTrackedStructureUncheckedUpdateWithoutWarehousePlaceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  serialTrackedId?: Prisma.StringFieldUpdateOperationsInput | string
-  certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  beParentPart?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serialCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  preferredSupplier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brandOrderNr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitQuantity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  unitPieces?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  unitWeightKg?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityRequired?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityReserved?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  quantityIssued?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejected?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type MaterialSerialTrackedStructureUncheckedUpdateManyWithoutWarehousePlaceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  serialTrackedId?: Prisma.StringFieldUpdateOperationsInput | string
-  certificateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialSpecId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceDocId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  materialGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  shortDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  management?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  expiredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  documentationPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  docRevision?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   valid?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   additionalInfo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   beNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3435,14 +3149,14 @@ export type MaterialSerialTrackedStructureSelect<ExtArgs extends runtime.Types.E
   certificateId?: boolean
   materialSpecId?: boolean
   referenceDocId?: boolean
-  materialGroupId?: boolean
   documentId?: boolean
   shortDescription?: boolean
   longDescription?: boolean
   management?: boolean
   date?: boolean
   expiredDate?: boolean
-  warehousePlaceId?: boolean
+  documentationPlace?: boolean
+  docRevision?: boolean
   valid?: boolean
   additionalInfo?: boolean
   beNumber?: boolean
@@ -3468,8 +3182,7 @@ export type MaterialSerialTrackedStructureSelect<ExtArgs extends runtime.Types.E
   MaterialSerialTrack?: boolean | Prisma.MaterialSerialTrackDefaultArgs<ExtArgs>
   Certificate?: boolean | Prisma.MaterialSerialTrackedStructure$CertificateArgs<ExtArgs>
   MaterialSpec?: boolean | Prisma.MaterialSerialTrackedStructure$MaterialSpecArgs<ExtArgs>
-  WarehousePlace?: boolean | Prisma.MaterialSerialTrackedStructure$WarehousePlaceArgs<ExtArgs>
-  MaterialGroup?: boolean | Prisma.MaterialSerialTrackedStructure$MaterialGroupArgs<ExtArgs>
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: boolean | Prisma.MaterialSerialTrackedStructure$DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureArgs<ExtArgs>
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: boolean | Prisma.MaterialSerialTrackedStructure$DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureArgs<ExtArgs>
   Employee?: boolean | Prisma.MaterialSerialTrackedStructure$EmployeeArgs<ExtArgs>
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: boolean | Prisma.MaterialSerialTrackedStructure$Employee_MaterialSerialTrackedStructure_deletedByToEmployeeArgs<ExtArgs>
@@ -3483,14 +3196,14 @@ export type MaterialSerialTrackedStructureSelectScalar = {
   certificateId?: boolean
   materialSpecId?: boolean
   referenceDocId?: boolean
-  materialGroupId?: boolean
   documentId?: boolean
   shortDescription?: boolean
   longDescription?: boolean
   management?: boolean
   date?: boolean
   expiredDate?: boolean
-  warehousePlaceId?: boolean
+  documentationPlace?: boolean
+  docRevision?: boolean
   valid?: boolean
   additionalInfo?: boolean
   beNumber?: boolean
@@ -3515,13 +3228,12 @@ export type MaterialSerialTrackedStructureSelectScalar = {
   deletedBy?: boolean
 }
 
-export type MaterialSerialTrackedStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "serialTrackedId" | "certificateId" | "materialSpecId" | "referenceDocId" | "materialGroupId" | "documentId" | "shortDescription" | "longDescription" | "management" | "date" | "expiredDate" | "warehousePlaceId" | "valid" | "additionalInfo" | "beNumber" | "beParentPart" | "serialCode" | "tag" | "preferredSupplier" | "brandName" | "brandOrderNr" | "unit" | "unitQuantity" | "unitPieces" | "unitWeightKg" | "quantityRequired" | "quantityReserved" | "quantityIssued" | "rejected" | "updatedAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["materialSerialTrackedStructure"]>
+export type MaterialSerialTrackedStructureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "serialTrackedId" | "certificateId" | "materialSpecId" | "referenceDocId" | "documentId" | "shortDescription" | "longDescription" | "management" | "date" | "expiredDate" | "documentationPlace" | "docRevision" | "valid" | "additionalInfo" | "beNumber" | "beParentPart" | "serialCode" | "tag" | "preferredSupplier" | "brandName" | "brandOrderNr" | "unit" | "unitQuantity" | "unitPieces" | "unitWeightKg" | "quantityRequired" | "quantityReserved" | "quantityIssued" | "rejected" | "updatedAt" | "createdBy" | "deleted" | "deletedAt" | "deletedBy", ExtArgs["result"]["materialSerialTrackedStructure"]>
 export type MaterialSerialTrackedStructureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   MaterialSerialTrack?: boolean | Prisma.MaterialSerialTrackDefaultArgs<ExtArgs>
   Certificate?: boolean | Prisma.MaterialSerialTrackedStructure$CertificateArgs<ExtArgs>
   MaterialSpec?: boolean | Prisma.MaterialSerialTrackedStructure$MaterialSpecArgs<ExtArgs>
-  WarehousePlace?: boolean | Prisma.MaterialSerialTrackedStructure$WarehousePlaceArgs<ExtArgs>
-  MaterialGroup?: boolean | Prisma.MaterialSerialTrackedStructure$MaterialGroupArgs<ExtArgs>
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure?: boolean | Prisma.MaterialSerialTrackedStructure$DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureArgs<ExtArgs>
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure?: boolean | Prisma.MaterialSerialTrackedStructure$DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureArgs<ExtArgs>
   Employee?: boolean | Prisma.MaterialSerialTrackedStructure$EmployeeArgs<ExtArgs>
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee?: boolean | Prisma.MaterialSerialTrackedStructure$Employee_MaterialSerialTrackedStructure_deletedByToEmployeeArgs<ExtArgs>
@@ -3533,8 +3245,7 @@ export type $MaterialSerialTrackedStructurePayload<ExtArgs extends runtime.Types
     MaterialSerialTrack: Prisma.$MaterialSerialTrackPayload<ExtArgs>
     Certificate: Prisma.$CertificatePayload<ExtArgs> | null
     MaterialSpec: Prisma.$MaterialSpecPayload<ExtArgs> | null
-    WarehousePlace: Prisma.$WarehousePlacePayload<ExtArgs> | null
-    MaterialGroup: Prisma.$MaterialGroupPayload<ExtArgs> | null
+    DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs> | null
     DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure: Prisma.$DocumentStructurePayload<ExtArgs> | null
     Employee: Prisma.$EmployeePayload<ExtArgs> | null
     Employee_MaterialSerialTrackedStructure_deletedByToEmployee: Prisma.$EmployeePayload<ExtArgs> | null
@@ -3545,14 +3256,14 @@ export type $MaterialSerialTrackedStructurePayload<ExtArgs extends runtime.Types
     certificateId: string | null
     materialSpecId: string | null
     referenceDocId: string | null
-    materialGroupId: string | null
     documentId: string | null
     shortDescription: string | null
     longDescription: string | null
     management: string | null
     date: Date | null
     expiredDate: Date | null
-    warehousePlaceId: string | null
+    documentationPlace: string | null
+    docRevision: number | null
     valid: boolean | null
     additionalInfo: string | null
     beNumber: string | null
@@ -3918,8 +3629,7 @@ export interface Prisma__MaterialSerialTrackedStructureClient<T, Null = never, E
   MaterialSerialTrack<T extends Prisma.MaterialSerialTrackDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrackDefaultArgs<ExtArgs>>): Prisma.Prisma__MaterialSerialTrackClient<runtime.Types.Result.GetResult<Prisma.$MaterialSerialTrackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Certificate<T extends Prisma.MaterialSerialTrackedStructure$CertificateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrackedStructure$CertificateArgs<ExtArgs>>): Prisma.Prisma__CertificateClient<runtime.Types.Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   MaterialSpec<T extends Prisma.MaterialSerialTrackedStructure$MaterialSpecArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrackedStructure$MaterialSpecArgs<ExtArgs>>): Prisma.Prisma__MaterialSpecClient<runtime.Types.Result.GetResult<Prisma.$MaterialSpecPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  WarehousePlace<T extends Prisma.MaterialSerialTrackedStructure$WarehousePlaceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrackedStructure$WarehousePlaceArgs<ExtArgs>>): Prisma.Prisma__WarehousePlaceClient<runtime.Types.Result.GetResult<Prisma.$WarehousePlacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  MaterialGroup<T extends Prisma.MaterialSerialTrackedStructure$MaterialGroupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrackedStructure$MaterialGroupArgs<ExtArgs>>): Prisma.Prisma__MaterialGroupClient<runtime.Types.Result.GetResult<Prisma.$MaterialGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure<T extends Prisma.MaterialSerialTrackedStructure$DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrackedStructure$DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureArgs<ExtArgs>>): Prisma.Prisma__DocumentStructureClient<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructure<T extends Prisma.MaterialSerialTrackedStructure$DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrackedStructure$DocumentStructure_MaterialSerialTrackedStructure_documentIdToDocumentStructureArgs<ExtArgs>>): Prisma.Prisma__DocumentStructureClient<runtime.Types.Result.GetResult<Prisma.$DocumentStructurePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee<T extends Prisma.MaterialSerialTrackedStructure$EmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrackedStructure$EmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Employee_MaterialSerialTrackedStructure_deletedByToEmployee<T extends Prisma.MaterialSerialTrackedStructure$Employee_MaterialSerialTrackedStructure_deletedByToEmployeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MaterialSerialTrackedStructure$Employee_MaterialSerialTrackedStructure_deletedByToEmployeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -3957,14 +3667,14 @@ export interface MaterialSerialTrackedStructureFieldRefs {
   readonly certificateId: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly materialSpecId: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly referenceDocId: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
-  readonly materialGroupId: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly documentId: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly shortDescription: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly longDescription: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly management: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly date: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'DateTime'>
   readonly expiredDate: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'DateTime'>
-  readonly warehousePlaceId: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
+  readonly documentationPlace: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
+  readonly docRevision: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'Int'>
   readonly valid: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'Boolean'>
   readonly additionalInfo: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
   readonly beNumber: Prisma.FieldRef<"MaterialSerialTrackedStructure", 'String'>
@@ -4368,41 +4078,22 @@ export type MaterialSerialTrackedStructure$MaterialSpecArgs<ExtArgs extends runt
 }
 
 /**
- * MaterialSerialTrackedStructure.WarehousePlace
+ * MaterialSerialTrackedStructure.DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructure
  */
-export type MaterialSerialTrackedStructure$WarehousePlaceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type MaterialSerialTrackedStructure$DocumentStructure_MaterialSerialTrackedStructure_referenceDocIdToDocumentStructureArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the WarehousePlace
+   * Select specific fields to fetch from the DocumentStructure
    */
-  select?: Prisma.WarehousePlaceSelect<ExtArgs> | null
+  select?: Prisma.DocumentStructureSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the WarehousePlace
+   * Omit specific fields from the DocumentStructure
    */
-  omit?: Prisma.WarehousePlaceOmit<ExtArgs> | null
+  omit?: Prisma.DocumentStructureOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.WarehousePlaceInclude<ExtArgs> | null
-  where?: Prisma.WarehousePlaceWhereInput
-}
-
-/**
- * MaterialSerialTrackedStructure.MaterialGroup
- */
-export type MaterialSerialTrackedStructure$MaterialGroupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the MaterialGroup
-   */
-  select?: Prisma.MaterialGroupSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the MaterialGroup
-   */
-  omit?: Prisma.MaterialGroupOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.MaterialGroupInclude<ExtArgs> | null
-  where?: Prisma.MaterialGroupWhereInput
+  include?: Prisma.DocumentStructureInclude<ExtArgs> | null
+  where?: Prisma.DocumentStructureWhereInput
 }
 
 /**

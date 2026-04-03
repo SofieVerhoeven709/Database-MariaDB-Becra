@@ -1,5 +1,7 @@
-CREATE DATABASE BecraBV;
-USE BecraBV;
+DROP DATABASE app_db;
+
+CREATE DATABASE app_db;
+USE app_db;
 
 CREATE TABLE
       IF NOT EXISTS Role (
@@ -188,6 +190,7 @@ CREATE TABLE
             materialGroupIdD CHAR(36) NULL,
             preferredSupplierCompanyId CHAR(36) NULL,
             unitId CHAR(36) NOT NULL,
+            longLeadTime BOOLEAN,
             createdBy CHAR(36) NOT NULL,
             CONSTRAINT uq_material_beNumber UNIQUE (beNumber),
             FOREIGN KEY (materialGroupIdA) REFERENCES MaterialGroup (id) ON DELETE SET NULL,

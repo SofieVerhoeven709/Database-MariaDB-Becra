@@ -7,6 +7,7 @@ import {
   purchaseBOMIdSchema,
   updatePurchaseBOMStructureSchema,
   purchaseBOMStructureIdSchema,
+  createPurchaseBOMStructureSchema,
 } from '@/schemas/purchaseBomSchemas'
 import {protectedServerFunction} from '@/lib/serverFunctions'
 import {searchProjects, getDescendantBOMIds, getAncestorBOMIds} from '@/dal/purchaseBoms'
@@ -100,13 +101,31 @@ export const undeletePurchaseBOMAction = protectedServerFunction({
 // Structures are never created directly on the purchase side.
 // They are auto-created by syncPurchaseBOMStructure when a ProjectBOMStructure
 // is marked readyForPurchase=true on the project side.
+export const createPurchaseBOMStructureAction = protectedServerFunction({
+  schema: createPurchaseBOMStructureSchema,
+  functionName: 'Create purchase BOM structure action',
+  serverFn: async ({data, logger, profile}) => {
+    const id = crypto.randomUUID()
+    await prismaClient.purchaseBOMStructure.create({
+      data: {
+        ...data,
+        id,
+        createdBy: profile.id,
+        createdAt: new Date(),
+      },
+    })
+    logger.info(`Purchase BOM structure created: ${id}`)
+
+    revalidatePath('/purchaseBOMs')
+  },
+})
 
 export const updatePurchaseBOMStructureAction = protectedServerFunction({
   schema: updatePurchaseBOMStructureSchema,
   functionName: 'Update purchase BOM structure action',
   serverFn: async ({data: {id, ...data}, logger}) => {
     // Only reservedQuantity and issuedQuantity are allowed through the schema.
-    await prismaClient.bOMExecution.update({where: {id}, data})
+    await prismaClient.bOMExecution.update({where: {projectBOMStructureId: data.projectBOMStructureId}, data})
     logger.info(`Purchase BOM structure updated (execution fields): ${id}`)
     revalidatePath('/purchaseBOMs')
   },

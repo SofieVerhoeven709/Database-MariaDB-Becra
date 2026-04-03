@@ -1904,6 +1904,7 @@ CREATE TABLE
             deletedAt DATETIME,
             closed BOOLEAN NOT NULL DEFAULT 0,
             materialClosed BOOLEAN NOT NULL DEFAULT 0,
+            purchased BOOLEAN NOT NULL DEFAULT 0,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             projectId CHAR(36) NOT NULL,
@@ -1930,6 +1931,7 @@ CREATE TABLE
             createdAt DATETIME NOT NULL,
             readyForPurchaseDate DATETIME,
             deletedAt DATETIME,
+            purchased BOOLEAN NOT NULL DEFAULT 0,
             deleted BOOLEAN NOT NULL DEFAULT 0,
             createdBy CHAR(36) NOT NULL,
             materialId CHAR(36) NOT NULL,
@@ -1942,7 +1944,7 @@ CREATE TABLE
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
             FOREIGN KEY (projectBOMStructureId) REFERENCES ProjectBOMStructure (id) ON DELETE Restrict,
-            FOREIGN KEY (purchaseBOMStructureId) REFERENCES PurchaseBOMStructure (id) ON DELETE Cascade,
+            FOREIGN KEY (purchaseBOMStructureId) REFERENCES PurchaseBOMStructure (id) ON DELETE CASCADE,
             UNIQUE(purchaseBOMId, projectBOMStructureId)
       ) ENGINE = InnoDB;
 
@@ -1961,7 +1963,7 @@ CREATE TABLE
             createdBy CHAR(36) NOT NULL,
             projectBOMStructureId CHAR(36) NOT NULL,
             deletedBy CHAR(36),
-            FOREIGN KEY (projectBOMStructureId) REFERENCES ProjectBOMStructure (id) ON DELETE RESTRICT,
+            FOREIGN KEY (projectBOMStructureId) REFERENCES ProjectBOMStructure (id) ON DELETE CASCADE,
             FOREIGN KEY (createdBy) REFERENCES Employee (id) ON DELETE RESTRICT,
             FOREIGN KEY (deletedBy) REFERENCES Employee (id) ON DELETE SET NULL,
             UNIQUE(projectBOMStructureId)

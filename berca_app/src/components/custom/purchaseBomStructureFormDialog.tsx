@@ -5,18 +5,17 @@ import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter} from '@/
 import {Button} from '@/components/ui/button'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
-import {Badge} from '@/components/ui/badge'
 import {updatePurchaseBOMStructureAction} from '@/serverFunctions/purchaseBoms'
 import type {MappedPurchaseBOMStructure, BomMaterialOption} from '@/types/purchaseBom'
 import {useRouter} from 'next/navigation'
+import {Switch} from '@/components/ui/switch'
+import {AlertCircle} from 'lucide-react'
 
 interface PurchaseBOMStructureFormDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  /** null = dialog closed / no structure selected */
   structure: MappedPurchaseBOMStructure | null
   purchaseBOMId: string
-  /** kept in props for API compatibility but not used — material is read-only */
   materialOptions: BomMaterialOption[]
 }
 
@@ -40,17 +39,19 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
   const router = useRouter()
   const [saving, setSaving] = useState(false)
 
-  // ── Only the execution fields are editable ───────────────────────────────────
   const [reservedQuantity, setReservedQuantity] = useState('')
   const [issuedQuantity, setIssuedQuantity] = useState('')
+  const [notDeliverable, setNotDeliverable] = useState(false)
 
   useEffect(() => {
     if (structure) {
       setReservedQuantity(structure.reservedQuantity?.toString() ?? '')
       setIssuedQuantity(structure.issuedQuantity?.toString() ?? '')
+      setNotDeliverable(structure.notDeliverable ?? false)
     } else {
       setReservedQuantity('')
       setIssuedQuantity('')
+      setNotDeliverable(false)
     }
   }, [structure?.id, open])
 
@@ -60,8 +61,10 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
     try {
       await updatePurchaseBOMStructureAction({
         id: structure.id,
+        projectBOMStructureId: structure.projectBOMStructureId,
         reservedQuantity: reservedQuantity !== '' ? parseInt(reservedQuantity) : null,
         issuedQuantity: issuedQuantity !== '' ? parseInt(issuedQuantity) : null,
+        notDeliverable,
       })
       onOpenChange(false)
       router.refresh()
@@ -104,26 +107,13 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
                 label="Ready for Purchase Date"
                 value={formatDate(structure?.readyForPurchaseDate ?? null)}
               />
-              <div className="flex flex-col gap-1">
-                <Label className="text-xs text-muted-foreground">Not Deliverable</Label>
-                <div className="flex h-9 items-center px-1">
-                  {structure?.notDeliverable ? (
-                    <Badge className="text-xs text-red-600 bg-red-600/15 border-0">Yes</Badge>
-                  ) : (
-                    <Badge variant="secondary" className="text-xs text-muted-foreground/60">
-                      No
-                    </Badge>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
 
           {/* ── Editable execution fields ─────────────────────────────────────── */}
-          <div className="flex flex-col gap-1.5">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
-              Execution Quantities
-            </p>
+          <div className="flex flex-col gap-3">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Execution Quantities</p>
+
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs text-muted-foreground">Reserved Qty</Label>
@@ -148,6 +138,36 @@ export function PurchaseBOMStructureFormDialog({open, onOpenChange, structure}: 
                   className="bg-secondary border-border"
                   placeholder="0"
                 />
+              </div>
+            </div>
+
+            {/* ── Toggles / status flags ──────────────────────────────────────── */}
+            <div className="flex flex-col gap-2">
+              {/* Not Deliverable — editable */}
+              <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+                <Label className="text-xs text-muted-foreground">Not Deliverable</Label>
+                <Switch checked={notDeliverable} onCheckedChange={setNotDeliverable} />
+              </div>
+
+              {/* Not Correct — read-only status */}
+              <div
+                className={`flex flex-col gap-1.5 rounded-lg border px-3 py-2 transition-colors ${
+                  structure?.notCorrect ? 'border-destructive/50 bg-destructive/10' : 'border-border bg-secondary'
+                }`}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    {structure?.notCorrect && <AlertCircle className="h-3.5 w-3.5 text-destructive" />}
+                    <Label className="text-xs text-muted-foreground">Not Correct</Label>
+                  </div>
+                  {/* Visual-only indicator, not interactive */}
+                  <Switch checked={structure?.notCorrect ?? false} disabled />
+                </div>
+                {structure?.notCorrect && structure?.notCorrectReason && (
+                  <p className="text-xs text-destructive/80 pl-0.5">{structure.notCorrectReason}</p>
+                )}
+                {structure?.notCorrect && !structure?.notCorrectReason && (
+                  <p className="text-xs text-muted-foreground/60 italic pl-0.5">No reason provided</p>
+                )}
               </div>
             </div>
           </div>

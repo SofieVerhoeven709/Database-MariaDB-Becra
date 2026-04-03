@@ -59,11 +59,24 @@ export const purchaseBOMStructureSchema = z.object({
   reservedQuantity: z.number().int().nullable().optional(),
   issuedQuantity: z.number().int().nullable().optional(),
   readyForPurchaseDate: z.date().nullable().optional(),
+  notDeliverable: z.boolean().default(false),
   createdAt: z.date(),
   createdBy: z.string(),
   deleted: z.boolean().default(false),
   deletedAt: z.date().nullable().optional(),
   deletedBy: z.string().nullable().optional(),
+})
+
+export const createPurchaseBOMStructureSchema = purchaseBOMStructureSchema.omit({
+  id: true,
+  createdAt: true,
+  createdBy: true,
+  deleted: true,
+  deletedAt: true,
+  deletedBy: true,
+  reservedQuantity: true,
+  issuedQuantity: true,
+  notDeliverable: true,
 })
 
 // ── Purchase structures are NEVER created directly from the purchase side ──────
@@ -75,6 +88,8 @@ export const updatePurchaseBOMStructureSchema = purchaseBOMStructureSchema.pick(
   // ── Only execution fields are editable on the purchase side ─────────────────
   reservedQuantity: true,
   issuedQuantity: true,
+  notDeliverable: true,
+  projectBOMStructureId: true,
 })
 
 export const purchaseBOMStructureIdSchema = purchaseBOMStructureSchema.pick({id: true})

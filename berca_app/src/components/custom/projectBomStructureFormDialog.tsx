@@ -186,10 +186,7 @@ export function ProjectBOMStructureFormDialog({
           {/* Toggles */}
           <div className="sm:col-span-2 flex flex-col gap-2">
             {(
-              [
-                {key: 'readyForPurchase', label: 'Ready for Purchase'},
-                {key: 'notDeliverable', label: 'Not Deliverable'},
-              ] as {key: 'readyForPurchase' | 'notDeliverable'; label: string}[]
+              [{key: 'readyForPurchase', label: 'Ready for Purchase'}] as {key: 'readyForPurchase'; label: string}[]
             ).map(({key, label}) => (
               <div
                 key={key}

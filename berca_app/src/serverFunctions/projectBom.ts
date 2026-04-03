@@ -13,7 +13,7 @@ import {protectedServerFunction} from '@/lib/serverFunctions'
 import {searchProjects, getDescendantBOMIds, getAncestorBOMIds} from '@/dal/projectBoms'
 import type {ProjectOption} from '@/types/projectBom'
 import {createTargetForType} from '@/dal/targets'
-import {createPurchaseBOMAction} from '@/serverFunctions/purchaseBoms'
+import {createPurchaseBOMAction, createPurchaseBOMStructureAction} from '@/serverFunctions/purchaseBoms'
 
 // ─── ProjectBOM CRUD ───────────────────────────────────────────────────────────
 
@@ -72,11 +72,18 @@ export const updateProjectBOMAction = protectedServerFunction({
     const purchaseExists = await prismaClient.purchaseBOM.findFirst({
       where: {projectBOMId: id},
     })
-
+    let bom = null
     if (data.readyForPurchase && !purchaseExists) {
-      const bom = await prismaClient.purchaseBOM.findFirst({
-        where: {projectBOMId: data.projectBomId!},
+      if (data.projectBomId) {
+        bom = await prismaClient.purchaseBOM.findFirst({
+          where: {projectBOMId: data.projectBomId},
+        })
+      }
+
+      const structures = await prismaClient.projectBOMStructure.findMany({
+        where: {projectBOMId: id, deleted: false},
       })
+
       let payload
       if (bom) {
         payload = {
@@ -108,6 +115,28 @@ export const updateProjectBOMAction = protectedServerFunction({
       }
 
       await createPurchaseBOMAction(payload)
+
+      const purchaseBom = await prismaClient.purchaseBOM.findFirst({
+        where: {projectBOMId: id},
+      })
+
+      if (purchaseBom) {
+        for (const structure of structures) {
+          const structurePayload = {
+            purchaseBOMId: purchaseBom.id,
+            projectBOMStructureId: structure.id,
+            materialId: structure.materialId,
+            shortDescription: structure.shortDescription,
+            additionalInfo: structure.additionalInfo,
+            description: structure.description,
+            tag: structure.tag,
+            requiredQuantity: structure.requiredQuantity,
+            readyForPurchaseDate: structure.readyForPurchaseDate,
+          }
+
+          await createPurchaseBOMStructureAction(structurePayload)
+        }
+      }
     }
 
     revalidatePath('/projectBOMs')
@@ -167,12 +196,19 @@ export const createProjectBOMStructureAction = protectedServerFunction({
     }
 
     const id = crypto.randomUUID()
-    const structure = await prismaClient.projectBOMStructure.create({
+    await prismaClient.projectBOMStructure.create({
       data: {
         ...data,
         id,
         createdBy: profile.id,
         createdAt: new Date(),
+        BOMExecution: {
+          create: {
+            id: crypto.randomUUID(),
+            createdBy: profile.id,
+            createdAt: new Date(),
+          },
+        },
       },
     })
     logger.info(`Project BOM structure created: ${id}`)
@@ -209,6 +245,56 @@ export const updateProjectBOMStructureAction = protectedServerFunction({
     })
 
     await prismaClient.projectBOMStructure.update({where: {id}, data})
+
+    const purchaseBomExists = await prismaClient.purchaseBOM.findFirst({
+      where: {projectBOMId: existing.projectBOMId},
+    })
+
+    if (!purchaseBomExists) {
+      const projectBom = await prismaClient.projectBOM.findFirst({
+        where: {id: existing.projectBOMId},
+      })
+
+      if (projectBom) {
+        const payload = {
+          projectId: projectBom.projectId,
+          projectBOMId: projectBom.id,
+          description: projectBom.description,
+          shortDescription: projectBom.shortDescription,
+          purchaseBomNumber: projectBom.projectBomNumber,
+          additionalInfo: projectBom.additionalInfo,
+          startDate: projectBom.startDate,
+          endDate: projectBom.endDate,
+          closed: projectBom.closed,
+          materialClosed: projectBom.materialClosed,
+        }
+        await createPurchaseBOMAction(payload)
+      }
+    }
+
+    const purchaseBom = await prismaClient.purchaseBOM.findFirst({
+      where: {projectBOMId: existing.projectBOMId},
+    })
+
+    const purchaseStructure = await prismaClient.purchaseBOMStructure.findFirst({
+      where: {projectBOMStructureId: id},
+    })
+
+    if (purchaseBom && !purchaseStructure) {
+      const structurePayload = {
+        purchaseBOMId: purchaseBom.id,
+        projectBOMStructureId: id,
+        materialId: data.materialId,
+        shortDescription: data.shortDescription,
+        additionalInfo: data.additionalInfo,
+        description: data.description,
+        tag: data.tag,
+        requiredQuantity: data.requiredQuantity,
+        readyForPurchaseDate: data.readyForPurchaseDate,
+      }
+      await createPurchaseBOMStructureAction(structurePayload)
+    }
+
     logger.info(`Project BOM structure updated: ${id}`)
 
     revalidatePath('/projectBOMs')

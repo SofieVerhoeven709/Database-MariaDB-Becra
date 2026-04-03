@@ -450,16 +450,13 @@ export function ProjectBOMDetail({
                       <TableHead className={thClass}>Tag</TableHead>
                       <TableHead className={thClass}>Req. Qty</TableHead>
                       <TableHead className={thClass}>Ready</TableHead>
-                      <TableHead className={thClass}>Not Deliv.</TableHead>
                       <TableHead className={thClass}>Ready Date</TableHead>
                       {/* ── Execution columns (read-only, from BOMExecution) ── */}
-                      <TableHead className={`${thClass} border-l border-border/40 text-muted-foreground/60`}>
-                        Exec. Res. Qty
-                      </TableHead>
-                      <TableHead className={`${thClass} text-muted-foreground/60`}>Exec. Issued Qty</TableHead>
-                      <TableHead className={`${thClass} text-muted-foreground/60`}>Exec. Not Deliv.</TableHead>
-                      <TableHead className={`${thClass} text-muted-foreground/60`}>Exec. Not Correct</TableHead>
-                      <TableHead className={`${thClass} text-muted-foreground/60`}>Completed</TableHead>
+                      <TableHead className={thClass}>Res. Qty</TableHead>
+                      <TableHead className={thClass}>Issued Qty</TableHead>
+                      <TableHead className={thClass}>Not Deliv.</TableHead>
+                      <TableHead className={thClass}>Not Correct</TableHead>
+                      <TableHead className={thClass}>Completed</TableHead>
                       {/* ─────────────────────────────────────────────────────── */}
                       <TableHead className={thClass}>Added By</TableHead>
                       <TableHead className={thClass}>Added At</TableHead>
